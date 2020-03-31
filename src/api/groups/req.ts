@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import { IGroupListAxiosResponsePromise, IGroupAxoisResponsePromise, IGroup, IGroupList } from './types'
 import { IDRFRequestListParameters } from '@/api/types'
 
-export const getGroups = (params: IDRFRequestListParameters): IGroupListAxiosResponsePromise =>
+export const getGroups = (params?: IDRFRequestListParameters): IGroupListAxiosResponsePromise =>
   request.get<IGroupList>('/groups/', { params })
 
 export const getGroup = (groupId: number): IGroupAxoisResponsePromise =>

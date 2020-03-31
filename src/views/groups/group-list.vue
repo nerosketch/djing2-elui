@@ -48,10 +48,6 @@ export default class extends Vue {
   }
   private groups: IGroup[] = []
   private dialogVisible = false
-  private defListQuery: IDRFRequestListParameters = {
-    page: 1,
-    page_size: 20
-  }
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -77,7 +73,7 @@ export default class extends Vue {
   ]
 
   created() {
-    this.loadGroups(this.defListQuery)
+    this.loadGroups()
   }
 
   private async openEdit(group: IGroup) {
@@ -85,8 +81,7 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private async loadGroups(params: IDRFRequestListParameters) {
-    this.defListQuery = params
+  private async loadGroups(params?: IDRFRequestListParameters) {
     const r = await getGroups(params)
     this.groups = r.data.results
     return r
@@ -102,7 +97,7 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs['table'].GetTableData()
-    this.loadGroups(this.defListQuery)
+    this.loadGroups()
   }
 }
 </script>

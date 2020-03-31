@@ -6,9 +6,6 @@ import lang from 'element-ui/lib/locale/lang/ru-RU'
 import locale from 'element-ui/lib/locale'
 import SvgIcon from 'vue-svgicon'
 
-// configure language
-locale.use(lang)
-
 import '@/styles/element-variables.scss'
 import '@/styles/index.scss'
 
@@ -17,6 +14,9 @@ import store from '@/store'
 import router from '@/router'
 import '@/icons/components'
 import '@/permission'
+
+// configure language
+locale.use(lang)
 
 Vue.use(ElementUI)
 Vue.use(SvgIcon, {

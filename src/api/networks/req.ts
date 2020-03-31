@@ -11,61 +11,59 @@ import {
   ICustomerIpLeaseListAxiosResponsePromise
 } from './types'
 
+const baseVlanUrl = '/networks/vlan/'
+
 // VlanIf
-export const getVlans = (params: IDRFRequestListParameters): IVlanIfListAxiosResponsePromise =>
-  request.get<IVlanIfList>('/networks/vlan/', { params })
+export const getVlans = (params?: IDRFRequestListParameters): IVlanIfListAxiosResponsePromise =>
+  request.get<IVlanIfList>(baseVlanUrl, { params })
 
 export const getVlanIf = (vlanId: number): IVlanIfAxoisResponsePromise =>
-  request.get<IVlanIf>(`/networks/vlan/${vlanId}/`)
+  request.get<IVlanIf>(`${baseVlanUrl}${vlanId}/`)
 
 export const addVlanIf = (newVlan: IVlanIf): IVlanIfAxoisResponsePromise =>
-  request.post<IVlanIf>('/networks/vlan/', newVlan)
+  request.post<IVlanIf>(baseVlanUrl, newVlan)
 
 export const changeVlanIf = (vlanId: number, newData: IVlanIf): IVlanIfAxoisResponsePromise =>
-  request.put<IVlanIf>(`/networks/vlan/${vlanId}/`, newData)
+  request.put<IVlanIf>(`${baseVlanUrl}${vlanId}/`, newData)
 
 export const delVlanIf = (vlanId: number) =>
-  request({
-    url: `/networks/vlan/${vlanId}/`,
-    method: 'delete'
-  })
+  request.delete(`${baseVlanUrl}${vlanId}/`)
 
+const baseNetUrl = '/networks/pool/'
 
 // NetworkIpPool
-export const getNetworkIpPools = (params: IDRFRequestListParameters): INetworkIpPoolListAxiosResponsePromise =>
-  request.get<INetworkIpPoolList>('/networks/vlan/', { params })
+export const getNetworkIpPools = (params?: IDRFRequestListParameters): INetworkIpPoolListAxiosResponsePromise =>
+  request.get<INetworkIpPoolList>(baseNetUrl, { params })
 
-export const getNetworkIpPool = (vlanId: number): INetworkIpPoolAxoisResponsePromise =>
-  request.get<INetworkIpPool>(`/networks/vlan/${vlanId}/`)
+export const getNetworkIpPool = (poolId: number): INetworkIpPoolAxoisResponsePromise =>
+  request.get<INetworkIpPool>(`${baseNetUrl}${poolId}/`)
 
-export const addNetworkIpPool = (newVlan: IVlanIf): INetworkIpPoolAxoisResponsePromise =>
-  request.post<INetworkIpPool>('/networks/vlan/', newVlan)
+export const addNetworkIpPool = (newPool: INetworkIpPool): INetworkIpPoolAxoisResponsePromise =>
+  request.post<INetworkIpPool>(baseNetUrl, newPool)
 
-export const changeNetworkIpPool = (vlanId: number, newData: IVlanIf): INetworkIpPoolAxoisResponsePromise =>
-  request.put<INetworkIpPool>(`/networks/vlan/${vlanId}/`, newData)
+export const changeNetworkIpPool = (poolId: number, newData: INetworkIpPool): INetworkIpPoolAxoisResponsePromise =>
+  request.put<INetworkIpPool>(`${baseNetUrl}${poolId}/`, newData)
 
-export const delNetworkIpPool = (vlanId: number) =>
-  request({
-    url: `/networks/vlan/${vlanId}/`,
-    method: 'delete'
-  })
+export const delNetworkIpPool = (poolId: number) =>
+  request.delete(`${baseNetUrl}${poolId}/`)
 
+export const groupAttach = (poolId: number, groups: number[]) =>
+  request.post(`${baseNetUrl}${poolId}/`, { gr: groups })
+
+const baseLeaseUrl = '/networks/lease/'
 
 // CustomerIpLease
-export const getCustomerIpLeases = (params: IDRFRequestListParameters): ICustomerIpLeaseListAxiosResponsePromise =>
-  request.get<ICustomerIpLeaseList>('/networks/vlan/', { params })
+export const getCustomerIpLeases = (params?: IDRFRequestListParameters): ICustomerIpLeaseListAxiosResponsePromise =>
+  request.get<ICustomerIpLeaseList>(baseLeaseUrl, { params })
 
-export const getCustomerIpLease = (vlanId: number): ICustomerIpLeaseAxoisResponsePromise =>
-  request.get<ICustomerIpLease>(`/networks/vlan/${vlanId}/`)
+export const getCustomerIpLease = (leaseId: number): ICustomerIpLeaseAxoisResponsePromise =>
+  request.get<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`)
 
-export const addCustomerIpLease = (newVlan: ICustomerIpLease): ICustomerIpLeaseAxoisResponsePromise =>
-  request.post<ICustomerIpLease>('/networks/vlan/', newVlan)
+export const addCustomerIpLease = (newLease: ICustomerIpLease): ICustomerIpLeaseAxoisResponsePromise =>
+  request.post<ICustomerIpLease>(baseLeaseUrl, newLease)
 
-export const changeCustomerIpLease = (vlanId: number, newData: ICustomerIpLease): ICustomerIpLeaseAxoisResponsePromise =>
-  request.put<ICustomerIpLease>(`/networks/vlan/${vlanId}/`, newData)
+export const changeCustomerIpLease = (leaseId: number, newData: ICustomerIpLease): ICustomerIpLeaseAxoisResponsePromise =>
+  request.put<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`, newData)
 
-export const delCustomerIpLease = (vlanId: number) =>
-  request({
-    url: `/networks/vlan/${vlanId}/`,
-    method: 'delete'
-  })
+export const delCustomerIpLease = (leaseId: number) =>
+  request.delete(`${baseLeaseUrl}${leaseId}/`)

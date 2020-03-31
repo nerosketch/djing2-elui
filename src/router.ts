@@ -91,6 +91,20 @@ export default new Router({
       ]
     },
     {
+      path: '/network',
+      component: Layout,
+      children: [
+        {
+          path: '',
+          component: () => import(/* webpackChunkName: "network" */ '@/views/networks/index.vue'),
+          meta: {
+            title: 'Сеть',
+            icon: 'dashboard'
+          }
+        }
+      ]
+    },
+    {
       path: '/example',
       component: Layout,
       redirect: '/example/tree',
@@ -184,7 +198,7 @@ export default new Router({
       ]
     },
     {
-      path: 'external-link',
+      path: '/external-link',
       component: Layout,
       children: [
         {

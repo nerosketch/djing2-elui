@@ -1,6 +1,6 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import { getGroup, delGroup, addGroup, changeGroup } from '@/api/groups/req'
-import { IGroup, IGroupAxoisResponsePromise } from '@/api/groups/types'
+import { IGroup } from '@/api/groups/types'
 import store from '@/store'
 
 @Module({ dynamic: true, store, name: 'group' })

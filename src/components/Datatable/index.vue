@@ -1,10 +1,11 @@
 <template>
   <div>
     <el-table
-      v-loading="loading"
+      v-loading="intLoading"
       :data="tableData"
       v-bind="$attrs"
       style="width: 100%"
+      border
       v-on="listeners"
     >
       <slot name="columns">
@@ -33,7 +34,6 @@
       :total="total"
     >
       <pagination
-        v-show="total>0"
         :total="total"
         :page.sync="page"
         :limit.sync="pageSize"
@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Pagination from '@/components/Pagination/index.vue'
 import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters, IDRFAxiosResponseListPromise } from '@/api/types'
 
@@ -82,6 +82,12 @@ export default class <T> extends Vue {
   @Prop({ default: () => [] }) private columns!: IDataTableColumn[]
   @Prop({ default: () => Promise.resolve([]) }) private getData!: (params: IDRFRequestListParameters) => IDRFAxiosResponseListPromise<T>
   @Prop({ default: null }) private fields!: string | null
+  @Prop({ default: false }) private loading!: boolean
+
+  @Watch('loading')
+  private onChangeLoading(l: boolean) {
+    this.intLoading = l
+  }
 
   private responseData: IDRFListResponse<T> = {
     count: 10,
@@ -93,7 +99,7 @@ export default class <T> extends Vue {
   private page = 1
   private pageSize = 10
   private orderField: string | null = null
-  private loading = true
+  private intLoading = true
 
   get listeners() {
     return {
@@ -107,7 +113,7 @@ export default class <T> extends Vue {
   }
 
   public async GetTableData(params: getTableDataParam = { page: 1, limit: 20 }) {
-    this.loading = true
+    this.intLoading = true
     const { page, limit } = params
     const reqPage = page || this.page
     try {
@@ -120,7 +126,7 @@ export default class <T> extends Vue {
       this.responseData = response.data
       this.tableData = this.responseData.results
     } finally {
-      this.loading = false
+      this.intLoading = false
     }
   }
 

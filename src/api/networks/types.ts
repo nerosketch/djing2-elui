@@ -1,7 +1,7 @@
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
 
 export interface IVlanIf {
-  pk: number
+  id: number
   title: string
   vid: number
   is_management: boolean
@@ -21,14 +21,13 @@ export enum INetworkIpPoolKind {
 }
 
 export interface INetworkIpPool {
-  pk: number
+  id: number
   network: string
   kind: INetworkIpPoolKind
   description: string
   groups: number[]
   ip_start: string
   ip_end: string
-  vlanIf: IVlanIf
   gateway: string
 }
 export type INetworkIpPoolList = IDRFListResponse<INetworkIpPool>
@@ -36,9 +35,10 @@ export type INetworkIpPoolAxoisResponsePromise = IDRFAxiosResponsePromise<INetwo
 export type INetworkIpPoolListAxiosResponsePromise = IDRFAxiosResponsePromise<INetworkIpPoolList>
 
 export interface ICustomerIpLease {
-  pk: number
+  id: number
   ip_address: string
-  pool: INetworkIpPool
+  pool: number
+  customer: number
   lease_time: number
   mac_address: string
   is_dynamic: boolean
