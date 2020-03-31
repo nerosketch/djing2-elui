@@ -105,6 +105,30 @@ export default new Router({
       ]
     },
     {
+      path: '/devices',
+      component: Layout,
+      children: [
+        {
+          path: '',
+          component: () => import(/* webpackChunkName: "device-groups" */ '@/views/devices/dev-group-list.vue'),
+          meta: {
+            title: 'Устройства',
+            icon: 'dashboard'
+          }
+        },
+        {
+          path: ':groupId',
+          component: () => import(/* webpackChunkName: "devices" */ '@/views/devices/dev-list.vue'),
+          name: 'devicesList',
+          props: true,
+          meta: {
+            title: 'Устройства',
+            hidden: true
+          }
+        }
+      ]
+    },
+    {
       path: '/example',
       component: Layout,
       redirect: '/example/tree',

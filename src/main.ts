@@ -2,8 +2,8 @@ import Vue from 'vue'
 
 import 'normalize.css'
 import ElementUI from 'element-ui'
-import lang from 'element-ui/lib/locale/lang/ru-RU'
-import locale from 'element-ui/lib/locale'
+// import lang from 'element-ui/lib/locale/lang/ru-RU'
+// import locale from 'element-ui/lib/locale'
 import SvgIcon from 'vue-svgicon'
 
 import '@/styles/element-variables.scss'
@@ -16,7 +16,7 @@ import '@/icons/components'
 import '@/permission'
 
 // configure language
-locale.use(lang)
+// locale.use(lang)
 
 Vue.use(ElementUI)
 Vue.use(SvgIcon, {
