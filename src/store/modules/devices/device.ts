@@ -2,12 +2,24 @@ import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-dec
 import store from '@/store'
 import {
   getDevice, delDevice,
-  addDevice, changeDevice
+  addDevice, changeDevice, scanAllDevVlans, scanAllDevMac, scanOltFibers, scanPorts, scanUnitsUnregistered
 } from '@/api/devices/req'
-import { IDevice, IDeviceTypeEnum } from '@/api/devices/types'
+import { IDevice, IDeviceInterace, IDeviceTypeEnum } from '@/api/devices/types'
+// import { IDevice, IDeviceInterace, IDeviceTypeEnum, IDeviceList, IDeviceAxoisResponsePromise,
+//   IDeviceListAxiosResponsePromise,
+//   IPort, IPortList, IPortAxoisResponsePromise,
+//   IPortListAxiosResponsePromise,
+//   IDevGroupList, IDevGroupListAxiosResponsePromise,
+//   IDRFRequestListParametersDevGroup,
+//   IDevPortState, IDevMacPort, IDevMacPortListAxiosResponsePromise,
+//   IDevVlan, IDevVlanListAxiosResponsePromise, IPortVlanConfig,
+//   IDevFiber, IDevFiberListAxiosResponsePromise,
+//   IScannedPort, IScannedPortListAxiosPromise,
+//   IUnitUnregistered, IUnitUnregisteredListAxiosPromise } from '@/api/devices/types'
+
 
 @Module({ dynamic: true, store, name: 'vlan' })
-class Device extends VuexModule implements IDevice {
+class Device extends VuexModule implements IDeviceInterace {
   pk = 0
   ip_address = ''
   mac_addr = ''
@@ -94,6 +106,36 @@ class Device extends VuexModule implements IDevice {
   public async DelDevice(id: number) {
     await delDevice(id)
     this.RESET_ALL()
+  }
+
+  @Action
+  public async ScanAllDevVlans(devId: number) {
+    const { data } = await scanAllDevVlans(devId)
+    return data
+  }
+
+  @Action
+  public async ScanAllDevMac(devId: number, vid: number) {
+    const { data } = await scanAllDevMac(devId, vid)
+    return data
+  }
+
+  @Action
+  public async ScanOltFibers(devId: number) {
+    const { data } = await scanOltFibers(devId)
+    return data
+  }
+
+  @Action
+  public async ScanPorts(devId: number) {
+    const { data } = await scanPorts(devId)
+    return data
+  }
+
+  @Action
+  public async ScanUnitsUnregistered(devId: number) {
+    const { data } = await scanUnitsUnregistered(devId)
+    return data
   }
 }
 

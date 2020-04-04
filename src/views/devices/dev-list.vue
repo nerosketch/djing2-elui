@@ -5,8 +5,10 @@
       :getData="loadDevs"
       ref='table'
     )
-      span(slot="pk" slot-scope="{row}") {{ row.pk }}
-      span(slot="ip_address" slot-scope="{row}") {{ row.ip_address }}
+      span(slot="pk" slot-scope="{row}")
+        el-link(type="primary")
+          router-link(:to="{name: 'device-view', params:{ devId: row.pk, devType: row.dev_type }}") {{ row.pk }}
+      span(slot="ip_address" slot-scope="{row}") {{ row.ip_address || '-' }}
       span(slot="comment" slot-scope="{row}") {{ row.comment }}
       span(slot="mac_addr" slot-scope="{row}") {{ row.mac_addr }}
       span(slot="dev_type" slot-scope="{row}") {{ row.dev_type_str }}
@@ -126,7 +128,7 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs['table'].GetTableData()
-    this.loadDevs(<IDRFRequestListParametersDevGroup>{
+    this.loadDevs(<IDRFRequestListParametersDevGroup> {
       group: this.groupId
     })
   }

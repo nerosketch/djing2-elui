@@ -1,3 +1,4 @@
+import Axios, { AxiosPromise } from 'axios'
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
 import { IDRFRequestListParameters } from '@/api/types'
 
@@ -33,6 +34,13 @@ export interface IDevice {
   status: number
   is_noticeable: boolean
 }
+export interface IDeviceInterace extends IDevice {
+  ScanAllDevVlans(devId: number): Promise<IDevVlan[]>
+  ScanAllDevMac(devId: number, vid: number): Promise<IDevMacPort[]>
+  ScanOltFibers(devId: number): Promise<IDevFiber[]>
+  ScanPorts(devId: number): Promise<IScannedPort[]>
+  ScanUnitsUnregistered(devId: number): Promise<IUnitUnregistered[]>
+}
 
 export interface IDRFRequestListParametersDevGroup extends IDRFRequestListParameters {
   group: number
@@ -43,21 +51,16 @@ export type IDeviceAxoisResponsePromise = IDRFAxiosResponsePromise<IDevice>
 export type IDeviceListAxiosResponsePromise = IDRFAxiosResponsePromise<IDeviceList>
 
 // IPort
-export enum IOperatingModes {
-  NOT_CHOSEN = 0,
-  ACCESS = 1,
-  TRUNK = 2,
-  HYBRID = 3,
-  GENERAL = 4
+export enum IDevPortState {
+  UP = 'up',
+  DOWN = 'down'
 }
-
 export interface IPort {
-  id: number
+  pk: number
   device: number
   num: number
   descr: string
-  operating_mode: IOperatingModes.NOT_CHOSEN
-  vlans: number[]
+  user_count: number
 }
 export type IPortList = IDRFListResponse<IPort>
 export type IPortAxoisResponsePromise = IDRFAxiosResponsePromise<IPort>
@@ -69,6 +72,65 @@ export interface IDevGroup {
   title: string
   device_count: number
 }
-
 export type IDevGroupList = IDRFListResponse<IDevGroup>
 export type IDevGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevGroupList>
+
+export interface IPortVlanConfigMember {
+  vid: number
+  title: string
+  is_management?: boolean
+  native: boolean
+}
+export interface IPortVlanConfig {
+  port_num: number
+  vlans: IPortVlanConfigMember[]
+}
+
+// IScannedPort
+export interface IScannedPort {
+  num: number
+  snmp_number: number
+  name: string
+  status: boolean
+  mac_addr: string
+  speed: number
+  uptime: string
+  user_count?: number
+}
+export type IScannedPortListAxiosPromise = AxiosPromise<IScannedPort[]>
+
+// IUnitUnregistered
+export interface IUnitUnregistered {
+  mac: string
+  firmware_ver?: string
+  loid_passw?: string
+  loid?: string
+  sn: string
+}
+export type IUnitUnregisteredListAxiosPromise = AxiosPromise<IUnitUnregistered[]>
+
+// IDevVlan
+export interface IDevVlan {
+  vid: number
+  title: string
+  native: boolean
+  is_management: boolean
+}
+export type IDevVlanListAxiosResponsePromise = AxiosPromise<IDevVlan[]>
+
+// IDevMacPort
+export interface IDevMacPort {
+  vid: number
+  name: string
+  mac: string
+  port: number
+}
+export type IDevMacPortListAxiosResponsePromise = AxiosPromise<IDevMacPort[]>
+
+// IDevFiber
+export interface IDevFiber {
+  fb_id: number
+  fb_name: string
+  fb_onu_num: number
+}
+export type IDevFiberListAxiosResponsePromise = AxiosPromise<IDevFiber[]>

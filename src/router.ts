@@ -117,12 +117,20 @@ export default new Router({
           }
         },
         {
-          path: ':groupId',
+          path: 'group:groupId',
           component: () => import(/* webpackChunkName: "devices" */ '@/views/devices/dev-list.vue'),
           name: 'devicesList',
           props: true,
           meta: {
-            title: 'Устройства',
+            hidden: true
+          }
+        },
+        {
+          path: 'device:devId',
+          component: () => import(/* webpackChunkName: "dev-view" */ '@/views/devices/specefic-devs/switch-view.vue'),
+          name: 'device-view',
+          props: true,
+          meta: {
             hidden: true
           }
         }
