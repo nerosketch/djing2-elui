@@ -18,7 +18,7 @@ import { IDevice, IDeviceInterace, IDeviceTypeEnum } from '@/api/devices/types'
 //   IUnitUnregistered, IUnitUnregisteredListAxiosPromise } from '@/api/devices/types'
 
 
-@Module({ dynamic: true, store, name: 'vlan' })
+@Module({ dynamic: true, store, name: 'device' })
 class Device extends VuexModule implements IDeviceInterace {
   pk = 0
   ip_address = ''

@@ -11,10 +11,9 @@ div
     span(slot="lease_time" slot-scope="{row}") {{ row.lease_time }}
     span(slot="mac_address" slot-scope="{row}") {{ row.mac_address }}
     el-checkbox(v-model="row.is_dynamic" slot="is_dynamic" slot-scope="{row}" disabled) {{ row.is_dynamic ? 'Да' : 'Нет' }}
-    div(slot="oper" slot-scope="{row}")
-      el-button-group
-        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
+    el-button-group(slot="oper" slot-scope="{row}")
+      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
 
   el-dialog(
     title="Изменение Сессии"

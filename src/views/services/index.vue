@@ -13,44 +13,44 @@
       type="border-card"
     )
       el-tab-pane(
-        label='Вланы'
-        name='vlans'
+        label='Тарифы'
+        name='services'
         lazy
       )
         keep-alive
-          vlan-list
+          service-list
       el-tab-pane(
-        label='Подсети'
-        name='pools'
+        label='Периодические платежи'
+        name='periodicpays'
         lazy
       )
         keep-alive
-          pool-list
+          periodic-pay-list
       el-tab-pane(
-        label='Сессии'
-        name='leases'
+        label='Единоразовые платежи'
+        name='shots'
         lazy
       )
         keep-alive
-          lease-list
+          shot-list
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import VlanList from './components/vlanlist.vue'
-import LeaseList from './components/leaselist.vue'
-import PoolList from './components/poollist.vue'
+import ServiceList from './services-list.vue'
+import ShotList from './shot-list.vue'
+import PeriodicPayList from './periodicpay-list.vue'
 
 @Component({
-  name: 'NetworksIndex',
+  name: 'ServicesIndex',
   components: {
-    VlanList,
-    LeaseList,
-    PoolList
+    ServiceList,
+    ShotList,
+    PeriodicPayList
   }
 })
 export default class extends Vue {
-  private activeName = 'vlans'
+  private activeName = 'services'
 
   @Watch('activeName')
   private onActiveNameChange(value: string) {

@@ -1,4 +1,4 @@
-import Axios, { AxiosPromise } from 'axios'
+import { AxiosPromise } from 'axios'
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
 import { IDRFRequestListParameters } from '@/api/types'
 

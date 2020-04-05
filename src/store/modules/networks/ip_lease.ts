@@ -6,7 +6,7 @@ import {
 } from '@/api/networks/req'
 import { ICustomerIpLease } from '@/api/networks/types'
 
-@Module({ dynamic: true, store, name: 'vlan' })
+@Module({ dynamic: true, store, name: 'iplease' })
 class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   id = 0
   ip_address = ''

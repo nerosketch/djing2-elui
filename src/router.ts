@@ -137,6 +137,20 @@ export default new Router({
       ]
     },
     {
+      path: '/services',
+      component: Layout,
+      children: [
+        {
+          path: '',
+          component: () => import(/* webpackChunkName: "servicesindex" */ '@/views/services/index.vue'),
+          meta: {
+            title: 'Тарифы',
+            icon: 'dashboard'
+          }
+        }
+      ]
+    },
+    {
       path: '/example',
       component: Layout,
       redirect: '/example/tree',

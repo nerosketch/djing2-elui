@@ -12,10 +12,9 @@ div
     span(slot="ipstart" slot-scope="{row}") {{ row.ip_start }}
     span(slot="ipend" slot-scope="{row}") {{ row.ip_end }}
     span(slot="gw" slot-scope="{row}") {{ row.gateway }}
-    div(slot="oper" slot-scope="{row}")
-      el-button-group
-        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
+    el-button-group(slot="oper" slot-scope="{row}")
+      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
 
   el-dialog(
     title="Изменение Подсети"

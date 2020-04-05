@@ -8,7 +8,7 @@ import {
 } from '@/api/devices/req'
 import { IPort, IDevPortState, IPortVlanConfig } from '@/api/devices/types'
 
-@Module({ dynamic: true, store, name: 'vlan' })
+@Module({ dynamic: true, store, name: 'port' })
 class Port extends VuexModule implements IPort {
   pk = 0
   device = 0

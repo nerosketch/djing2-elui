@@ -1,0 +1,101 @@
+<template lang="pug">
+div
+  datatable(
+    :columns="tableColumns"
+    :getData="loadShots"
+    :loading="loading"
+    ref='table'
+  )
+    span(slot="pk" slot-scope="{row}") {{ row.pk }}
+    span(slot="name" slot-scope="{row}") {{ row.name }}
+    span(slot="cost" slot-scope="{row}") {{ row.cost }}
+    el-button-group(slot="oper" slot-scope="{row}")
+      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delShot(row)")
+
+  el-dialog(
+    title="Изменение одноразового платежа"
+    :visible.sync="dialogVisible"
+    width="30%"
+  )
+    shot-form(
+      v-on:done="frmDone"
+    )
+</template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import { IDRFRequestListParameters } from '@/api/types'
+import { IOneShotPay } from '@/api/services/types'
+import { getOneShotPays } from '@/api/services/req'
+import { OneShotPayModule } from '@/store/modules/services/one-shot-pay'
+import ShotForm from './shot-form.vue'
+
+class DataTableComp extends DataTable<IOneShotPay> {}
+
+@Component({
+  name: 'ShotList',
+  components: { 'datatable': DataTableComp, ShotForm }
+})
+export default class extends Vue {
+  public readonly $refs!: {
+    table: DataTableComp
+  }
+  private tableColumns: IDataTableColumn[] = [
+    {
+      prop: 'pk',
+      label: 'ID',
+      width: 70
+    },
+    {
+      prop: 'name',
+      label: 'Название платежа'
+    },
+    {
+      prop: 'cost',
+      label: 'Стоимость',
+      width: 150,
+      align: DataTableColumnAlign.CENTER
+    },
+    {
+      prop: 'oper',
+      label: 'Oper',
+      width: 130,
+      align: DataTableColumnAlign.CENTER
+    }
+  ]
+  private shots: IOneShotPay[] = []
+  private dialogVisible = false
+  private loading = false
+
+  created() {
+    this.loadShots()
+  }
+
+  private async openEdit(shot: IOneShotPay) {
+    await OneShotPayModule.SET_ALL(shot)
+    this.dialogVisible = true
+  }
+
+  private async delShot(shot: IOneShotPay) {
+    if (confirm(`Вы действительно хотите удалить платёж "${shot.name}"?`)) {
+      await OneShotPayModule.DelOneShotPay(shot.pk)
+      this.$refs['table'].GetTableData()
+    }
+  }
+
+  private async loadShots(params?: IDRFRequestListParameters) {
+    this.loading = true
+    const r = await getOneShotPays(params)
+    this.loading = false
+    return r
+  }
+
+  private frmDone() {
+    this.dialogVisible = false
+    this.$refs['table'].GetTableData()
+    this.loadShots()
+  }
+}
+</script>

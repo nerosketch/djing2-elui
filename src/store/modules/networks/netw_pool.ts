@@ -7,7 +7,7 @@ import {
 } from '@/api/networks/req'
 import { INetworkIpPool, INetworkIpPoolKind } from '@/api/networks/types'
 
-@Module({ dynamic: true, store, name: 'vlan' })
+@Module({ dynamic: true, store, name: 'netpool' })
 class NetworkIpPool extends VuexModule implements INetworkIpPool {
   id = 0
   network = ''
@@ -78,8 +78,8 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   }
 
   @Action
-  public async DelPool(vlanId: number) {
-    await delNetworkIpPool(vlanId)
+  public async DelPool(id: number) {
+    await delNetworkIpPool(id)
     this.RESET_ALL()
   }
 

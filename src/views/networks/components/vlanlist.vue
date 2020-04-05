@@ -10,10 +10,9 @@ div
     span(slot="title" slot-scope="{row}") {{ row.title }}
     span(slot="vid" slot-scope="{row}") {{ row.vid }}
     el-checkbox(v-model="row.is_management" slot="ismng" slot-scope="{row}" disabled) {{ row.is_management ? 'Да' : 'Нет'}}
-    div(slot="oper" slot-scope="{row}")
-      el-button-group
-        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delVlan(row)")
+    el-button-group(slot="oper" slot-scope="{row}")
+      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delVlan(row)")
 
   el-dialog(
     title="Изменение vlan"
@@ -97,7 +96,6 @@ export default class extends Vue {
   private async loadVlans(params?: IDRFRequestListParameters) {
     this.vlansLoading = true
     const r = await getVlans(params)
-    let vlans = r.data.results
     this.vlansLoading = false
     return r
   }
