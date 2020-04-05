@@ -35,7 +35,7 @@ div
 import { Component, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
-import { IService } from '@/api/services/types'
+import { IService, IDRFRequestListParametersService } from '@/api/services/types'
 import { getServices } from '@/api/services/req'
 import { ServiceModule } from '@/store/modules/services/service'
 import ServiceForm from './service-form.vue'
@@ -128,7 +128,7 @@ export default class extends Vue {
     }
   }
 
-  private async loadServices(params?: IDRFRequestListParameters) {
+  private async loadServices(params?: IDRFRequestListParametersService) {
     this.loading = true
     const r = await getServices(params)
     this.loading = false

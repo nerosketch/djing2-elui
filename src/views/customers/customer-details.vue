@@ -6,7 +6,8 @@
         info(v-if='loaded')
       el-tab-pane(label="Тарифы" lazy)
         services(v-if='loaded')
-      el-tab-pane(label="Финансы" lazy) Финансы
+      el-tab-pane(label="Финансы" lazy)
+        finance
       el-tab-pane(label="История задач" lazy) История задач
 </template>
 
@@ -14,11 +15,12 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
+import Finance from './customers-details/finance.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 
 @Component({
   name: 'CustomerDetails',
-  components: { Info, Services }
+  components: { Info, Services, Finance }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private uid!: number

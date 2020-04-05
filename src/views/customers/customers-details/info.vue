@@ -7,6 +7,8 @@
         customer-form
     el-col(:span='12')
       device
+    el-col(:span='12')
+      network
 
 </template>
 
@@ -14,10 +16,11 @@
 import { Component, Vue } from 'vue-property-decorator'
 import CustomerForm from '@/views/customers/customer-form.vue'
 import Device from '@/views/customers/device.vue'
+import Network from './network.vue'
 
 @Component({
   name: 'Info',
-  components: { CustomerForm, Device }
+  components: { CustomerForm, Device, Network }
 })
 export default class extends Vue {}
 </script>

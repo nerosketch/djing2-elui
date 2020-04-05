@@ -1,4 +1,4 @@
-import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
+import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '../types'
 
 export enum IServiceTypeEnum {
   BASE = 0,
@@ -25,6 +25,10 @@ export interface IService {
 export type IServiceList = IDRFListResponse<IService>
 export type IServiceAxoisResponsePromise = IDRFAxiosResponsePromise<IService>
 export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList>
+
+export interface IDRFRequestListParametersService extends IDRFRequestListParameters {
+  groups: number
+}
 
 // IPeriodicPay
 export interface IPeriodicPay {

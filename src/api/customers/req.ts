@@ -16,7 +16,14 @@ import {
   ICustomerStreet,
   ICustomerStreetList,
   ICustomerStreetAxoisResponsePromise,
-  ICustomerStreetListAxiosResponsePromise
+  ICustomerStreetListAxiosResponsePromise,
+  IDRFRequestListParametersInvoice,
+  IInvoice4Payment,
+  IInvoice4PaymentAxoisResponsePromise,
+  IInvoice4PaymentList,
+  IInvoice4PaymentListAxiosResponsePromise,
+  ICustomerLogList,
+  ICustomerLogListAxiosResponsePromise
 } from './types'
 
 // ICustomer
@@ -92,3 +99,25 @@ export const changeStreet = (id: number, newData: ICustomerStreet): ICustomerStr
 
 export const delStreet = (id: number) =>
   request.delete(`${streetBaseUrl}${id}/`)
+
+// IInvoice4Payment
+const invBaseUrl = '/customers/invoices/'
+
+export const getInvoices = (params?: IDRFRequestListParametersInvoice): IInvoice4PaymentListAxiosResponsePromise =>
+  request.get<IInvoice4PaymentList>(invBaseUrl, { params })
+
+export const getInvoice = (id: number): IInvoice4PaymentAxoisResponsePromise =>
+  request.get<IInvoice4Payment>(`${invBaseUrl}${id}/`)
+
+export const addInvoice = (inv: IInvoice4Payment): IInvoice4PaymentAxoisResponsePromise =>
+  request.post<IInvoice4Payment>(invBaseUrl, inv)
+
+export const changeInvoice = (id: number, newData: IInvoice4Payment): IInvoice4PaymentAxoisResponsePromise =>
+  request.patch<IInvoice4Payment>(`${invBaseUrl}${id}/`, newData)
+
+export const delInvoice = (id: number) =>
+  request.delete(`${invBaseUrl}${id}/`)
+
+// CustomerLog
+export const getCustomerPayLog = (params?: IDRFRequestListParametersInvoice): ICustomerLogListAxiosResponsePromise =>
+  request.get<ICustomerLogList>('/customers/customer-log/', { params })

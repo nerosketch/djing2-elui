@@ -72,13 +72,15 @@ export type IAdditionalTelephoneListAxiosResponsePromise = IDRFAxiosResponseProm
 
 // ICustomerLog
 export interface ICustomerLog {
-  pk: number
   customer: number
   cost: number
-  author: number
+  author: number | null
+  author_name?: string
   comment: string
   date: string
 }
+export type ICustomerLogList = IDRFListResponse<ICustomerLog>
+export type ICustomerLogListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLogList>
 
 // ICustomerStreet
 export interface ICustomerStreet {
@@ -91,9 +93,32 @@ export type ICustomerStreetAxoisResponsePromise = IDRFAxiosResponsePromise<ICust
 export type ICustomerStreetListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerStreetList>
 
 // ICustomerService
-export interface ICustomerService {
-  pk: number
-  service: number
-  start_time: string
-  deadline: string
+// export interface ICustomerService {
+//   pk: number
+//   service: number
+//   start_time: string
+//   deadline: string
+// }
+// export type ICustomerServiceList = IDRFListResponse<ICustomerService>
+// export type ICustomerServiceAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerService>
+// export type ICustomerServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerServiceList>
+
+// IInvoice4Payment
+export interface IInvoice4Payment {
+  id: number
+  author_name: string
+  author_uname: string
+  status: boolean
+  cost: number
+  comment: string
+  date_create: string
+  date_pay: string | null
+  customer: number
+  author: number
+}
+export type IInvoice4PaymentList = IDRFListResponse<IInvoice4Payment>
+export type IInvoice4PaymentAxoisResponsePromise = IDRFAxiosResponsePromise<IInvoice4Payment>
+export type IInvoice4PaymentListAxiosResponsePromise = IDRFAxiosResponsePromise<IInvoice4PaymentList>
+export interface IDRFRequestListParametersInvoice extends IDRFRequestListParameters {
+  customer: number
 }

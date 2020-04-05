@@ -9,13 +9,14 @@ import {
   IPeriodicPayListAxiosResponsePromise,
   IOneShotPay, IOneShotPayPayList,
   IOneShotPayPayAxoisResponsePromise,
-  IOneShotPayPayListAxiosResponsePromise
+  IOneShotPayPayListAxiosResponsePromise,
+  IDRFRequestListParametersService
 } from './types'
 
 const baseSrvUrl = '/services/'
 
 // IService
-export const getServices = (params?: IDRFRequestListParameters): IServiceListAxiosResponsePromise =>
+export const getServices = (params?: IDRFRequestListParametersService): IServiceListAxiosResponsePromise =>
   request.get<IServiceList>(baseSrvUrl, { params })
 
 export const getService = (id: number): IServiceAxoisResponsePromise =>
