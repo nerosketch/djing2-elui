@@ -70,16 +70,7 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: INetworkIpPool = {
-    id: NetworkIpPoolModule.id,
-    network: NetworkIpPoolModule.network,
-    kind: NetworkIpPoolModule.kind,
-    description: NetworkIpPoolModule.description,
-    groups: NetworkIpPoolModule.groups,
-    ip_start: NetworkIpPoolModule.ip_start,
-    ip_end: NetworkIpPoolModule.ip_end,
-    gateway: NetworkIpPoolModule.gateway
-  }
+  private frmMod: INetworkIpPool = <INetworkIpPool>NetworkIpPoolModule.context.state
 
   private onSubmit() {
     (this.$refs['poolfrm'] as Form).validate(async valid => {

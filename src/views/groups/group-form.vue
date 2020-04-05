@@ -43,10 +43,7 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod = {
-    title: GroupModule.title,
-    code: GroupModule.code
-  }
+  private frmMod: IGroup = <IGroup>GroupModule.context.state
 
   private async onSubmit() {
     this.isLoading = true

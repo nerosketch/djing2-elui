@@ -1,7 +1,7 @@
 <template lang="pug">
-  el-row
+  el-row(:gutter="5")
     el-col(:span='12')
-      el-card.box-card
+      el-card(shadow="never")
         .clearfix(slot='header')
           span Изменение абонента
         customer-form

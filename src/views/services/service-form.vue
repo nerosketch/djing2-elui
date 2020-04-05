@@ -94,17 +94,7 @@ export default class extends Vue {
     { nm: 'Суточная', v: IServiceTypeEnum.DAILY }
   ]
 
-  private frmMod: IService = <IService>{
-    pk: ServiceModule.pk,
-    title: ServiceModule.title,
-    descr: ServiceModule.descr,
-    speed_in: ServiceModule.speed_in,
-    speed_out: ServiceModule.speed_out,
-    speed_burst: ServiceModule.speed_burst,
-    cost: ServiceModule.cost,
-    is_admin: ServiceModule.is_admin,
-    calc_type: ServiceModule.calc_type
-  }
+  private frmMod: IService = <IService>ServiceModule.context.state
 
   private onSubmit() {
     (this.$refs['srvfrm'] as Form).validate(async valid => {

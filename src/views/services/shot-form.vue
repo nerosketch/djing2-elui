@@ -43,11 +43,7 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: IOneShotPay = {
-    pk: OneShotPayModule.pk,
-    name: OneShotPayModule.name,
-    cost: OneShotPayModule.cost
-  }
+  private frmMod: IOneShotPay = <IOneShotPay>OneShotPayModule.context.state
 
   private onSubmit() {
     (this.$refs['shotfrm'] as Form).validate(async valid => {

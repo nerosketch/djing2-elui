@@ -59,25 +59,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { ICustomer } from '@/api/customers/types'
 import { getCustomers } from '@/api/customers/req'
 
 @Component({
-  name: 'CustomersList',
-  props: {
-    groupId: {
-      type: Number,
-      required: true
-    },
-    groupName: {
-      type: String,
-      default: null
-    }
-  }
+  name: 'CustomersList'
 })
 export default class extends Vue {
-  private customersLoading: boolean = true
+  @Prop({ default: 0 }) private groupId!: number
+
+private customersLoading: boolean = true
   private customersList: ICustomer[] = []
 
   created() {
@@ -86,7 +78,11 @@ export default class extends Vue {
 
   private async getAllCustomers() {
     this.customersLoading = true
-    const { data } = await getCustomers()
+    const { data } = await getCustomers({
+      page: 1,
+      page_size: 10,
+      group: this.groupId
+    })
     this.customersList = data.results
     this.customersLoading = false
   }

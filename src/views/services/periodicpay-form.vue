@@ -43,11 +43,7 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: IPeriodicPay = <IPeriodicPay> {
-    pk: PeriodicPayModule.pk,
-    name: PeriodicPayModule.name,
-    amount: PeriodicPayModule.amount
-  }
+  private frmMod: IPeriodicPay = <IPeriodicPay>PeriodicPayModule.context.state
 
   private onSubmit() {
     (this.$refs['perfrm'] as Form).validate(async valid => {

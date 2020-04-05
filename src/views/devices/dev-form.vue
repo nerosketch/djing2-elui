@@ -82,22 +82,7 @@ export default class extends Vue {
     { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }
   ]
 
-  private frmMod: IDevice = {
-    pk: DeviceModule.pk,
-    ip_address: DeviceModule.ip_address,
-    mac_addr: DeviceModule.mac_addr,
-    comment: DeviceModule.comment,
-    dev_type: DeviceModule.dev_type,
-    dev_type_str: DeviceModule.dev_type_str,
-    man_passw: DeviceModule.man_passw,
-    group: DeviceModule.group,
-    parent_dev: DeviceModule.parent_dev,
-    snmp_extra: DeviceModule.snmp_extra,
-    extra_data: DeviceModule.extra_data,
-    vlans: DeviceModule.vlans,
-    status: DeviceModule.status,
-    is_noticeable: DeviceModule.is_noticeable
-  }
+  private frmMod: IDevice = <IDevice>DeviceModule.context.state
 
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {

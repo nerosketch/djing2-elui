@@ -1,6 +1,8 @@
 <template lang="pug">
   el-form(
-    rel='form'
+    ref='customerfrm'
+    label-width="100px"
+    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -43,15 +45,10 @@
     )
       el-checkbox(v-model="frmMod.is_active") - {{ frmMod.is_active ? 'Да' : 'Нет' }}
     el-form-item(
-      label="Авто продление услуги"
-      prop='auto_renewal_service'
+      label="Опции"
     )
-      el-checkbox(v-model="frmMod.auto_renewal_service") - {{ frmMod.auto_renewal_service ? 'Да' : 'Нет' }}
-    el-form-item(
-      label="Динамические настройки по dhcp"
-      prop='is_dynamic_ip'
-    )
-      el-checkbox(v-model="frmMod.is_dynamic_ip") - {{ frmMod.is_dynamic_ip ? 'Да' : 'Нет' }}
+      el-checkbox(v-model="frmMod.auto_renewal_service") - Авто продление услуги: {{ frmMod.auto_renewal_service ? 'Да' : 'Нет' }}
+      el-checkbox(v-model="frmMod.is_dynamic_ip") - Динамические настройки по dhcp: {{ frmMod.is_dynamic_ip ? 'Да' : 'Нет' }}
     el-form-item(
       label="Группа"
       prop='group'
@@ -99,25 +96,11 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: ICustomer = <ICustomer>{
-    pk: CustomerModule.pk,
-    username: CustomerModule.username,
-    fio: CustomerModule.fio,
-    telephone: CustomerModule.telephone,
-    group: CustomerModule.group,
-    description: CustomerModule.description,
-    street: CustomerModule.street,
-    house: CustomerModule.house,
-    gateway: CustomerModule.gateway,
-    auto_renewal_service: CustomerModule.auto_renewal_service,
-    is_dynamic_ip: CustomerModule.is_dynamic_ip
-  }
+  private frmMod: ICustomer = <ICustomer>Object.assign({}, CustomerModule.context.state)
 
   created() {
-    console.log('Load CustomerForm')
     this.loadGroups()
     this.loadStreets()
-    console.log('End LoadCustomerForm')
   }
 
   private async loadStreets() {
@@ -138,8 +121,12 @@ export default class extends Vue {
     this.isLoading = false
   }
 
+  get gcm () {
+    return CustomerModule.context.state
+  }
+
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs['customerfrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
         await CustomerModule.SET_ALL(this.frmMod)

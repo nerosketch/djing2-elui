@@ -28,10 +28,10 @@ class Customer extends VuexModule implements ICustomer {
   auto_renewal_service = false
   device = 0
   device_comment = ''
-  dev_port = 0!
-  last_connected_service = 0!
-  current_service = 0!
-  service_title = ''!
+  dev_port = 0
+  last_connected_service = 0
+  current_service = 0
+  service_title = ''
   is_dynamic_ip = false
   full_name = ''
   raw_password = ''
@@ -53,7 +53,7 @@ class Customer extends VuexModule implements ICustomer {
     this.gateway = data.gateway
     this.gateway_title = data.gateway_title
     this.auto_renewal_service = data.auto_renewal_service
-    this.device = data.device
+    this.device = data.device!
     this.device_comment = data.device_comment
     this.dev_port = data.dev_port!
     this.last_connected_service = data.last_connected_service!
@@ -107,7 +107,6 @@ class Customer extends VuexModule implements ICustomer {
       throw Error('Verification failed, please Login again.')
     }
     this.SET_ALL(data)
-    return data
   }
 
   @Action
@@ -132,7 +131,8 @@ class Customer extends VuexModule implements ICustomer {
       device: this.device,
       dev_port: this.dev_port,
       is_dynamic_ip: this.is_dynamic_ip,
-      raw_password: this.raw_password
+      raw_password: this.raw_password,
+      description: this.description
     })
     this.SET_ALL(r.data)
     return r
@@ -162,6 +162,16 @@ class Customer extends VuexModule implements ICustomer {
   @Action
   public async AddBalance(cost: number, comment?: string) {
     await addBalance(this.pk, cost, comment)
+  }
+
+  @Action
+  public async ClearDevice() {
+    const r = await changeCustomer(this.pk, <ICustomer>{
+      device: null,
+      dev_port: null
+    })
+    this.SET_ALL(r.data)
+    return r
   }
 }
 

@@ -24,7 +24,7 @@ export const addVlanIf = (newVlan: IVlanIf): IVlanIfAxoisResponsePromise =>
   request.post<IVlanIf>(baseVlanUrl, newVlan)
 
 export const changeVlanIf = (vlanId: number, newData: IVlanIf): IVlanIfAxoisResponsePromise =>
-  request.put<IVlanIf>(`${baseVlanUrl}${vlanId}/`, newData)
+  request.patch<IVlanIf>(`${baseVlanUrl}${vlanId}/`, newData)
 
 export const delVlanIf = (vlanId: number) =>
   request.delete(`${baseVlanUrl}${vlanId}/`)
@@ -42,7 +42,7 @@ export const addNetworkIpPool = (newPool: INetworkIpPool): INetworkIpPoolAxoisRe
   request.post<INetworkIpPool>(baseNetUrl, newPool)
 
 export const changeNetworkIpPool = (poolId: number, newData: INetworkIpPool): INetworkIpPoolAxoisResponsePromise =>
-  request.put<INetworkIpPool>(`${baseNetUrl}${poolId}/`, newData)
+  request.patch<INetworkIpPool>(`${baseNetUrl}${poolId}/`, newData)
 
 export const delNetworkIpPool = (poolId: number) =>
   request.delete(`${baseNetUrl}${poolId}/`)
@@ -63,7 +63,7 @@ export const addCustomerIpLease = (newLease: ICustomerIpLease): ICustomerIpLease
   request.post<ICustomerIpLease>(baseLeaseUrl, newLease)
 
 export const changeCustomerIpLease = (leaseId: number, newData: ICustomerIpLease): ICustomerIpLeaseAxoisResponsePromise =>
-  request.put<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`, newData)
+  request.patch<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`, newData)
 
 export const delCustomerIpLease = (leaseId: number) =>
   request.delete(`${baseLeaseUrl}${leaseId}/`)

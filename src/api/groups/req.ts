@@ -12,7 +12,7 @@ export const addGroup = (newGroup: IGroup): IGroupAxoisResponsePromise =>
   request.post<IGroup>('/groups/', newGroup)
 
 export const changeGroup = (groupId: number, newData: IGroup): IGroupAxoisResponsePromise =>
-  request.put<IGroup>(`/groups/${groupId}/`, newData)
+  request.patch<IGroup>(`/groups/${groupId}/`, newData)
 
 export const delGroup = (groupId: number) =>
   request({

@@ -18,11 +18,11 @@
         el-link(slot-scope="scope" type="primary")
           router-link(:to="{name: 'customersList', params:{groupId: scope.row.pk}}") {{ scope.row.title }}
       el-table-column(
-        label="Code"
+        label="Абонентов"
         width="140"
         align="center"
       )
-        template(slot-scope="scope") {{ scope.row.code }}
+        template(slot-scope="scope") {{ scope.row.usercount }}
 
 </template>
 

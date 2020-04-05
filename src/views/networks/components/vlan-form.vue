@@ -44,12 +44,7 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: IVlanIf = {
-    id: VlanIfModule.id,
-    title: VlanIfModule.title,
-    vid: VlanIfModule.vid,
-    is_management: VlanIfModule.is_management
-  }
+  private frmMod: IVlanIf = <IVlanIf>VlanIfModule.context.state
 
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {

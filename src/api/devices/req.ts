@@ -27,7 +27,7 @@ export const addDevice = (newDev: IDevice): IDeviceAxoisResponsePromise =>
   request.post<IDevice>(baseDevUrl, newDev)
 
 export const changeDevice = (devId: number, newData: IDevice): IDeviceAxoisResponsePromise =>
-  request.put<IDevice>(`${baseDevUrl}${devId}/`, newData)
+  request.patch<IDevice>(`${baseDevUrl}${devId}/`, newData)
 
 export const delDevice = (devId: number) =>
   request.delete(`${baseDevUrl}${devId}/`)
@@ -78,7 +78,7 @@ export const addPort = (newDev: IPort): IPortAxoisResponsePromise =>
   request.post<IPort>(basePortUrl, newDev)
 
 export const changePort = (portId: number, newData: IPort): IPortAxoisResponsePromise =>
-  request.put<IPort>(`${basePortUrl}${portId}/`, newData)
+  request.patch<IPort>(`${basePortUrl}${portId}/`, newData)
 
 export const delPort = (portId: number) =>
   request.delete(`${basePortUrl}${portId}/`)

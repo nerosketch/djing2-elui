@@ -22,7 +22,6 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private uid!: number
-  @Prop({ default: 0 }) private groupId!: number
 
   private loaded = false
 

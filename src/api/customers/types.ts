@@ -18,7 +18,7 @@ export interface ICustomer {
   gateway: number
   gateway_title: string
   auto_renewal_service: boolean
-  device: number
+  device: number | null
   device_comment: string
   dev_port: number | null
   last_connected_service: number | null

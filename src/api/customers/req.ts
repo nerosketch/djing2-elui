@@ -34,7 +34,7 @@ export const addCustomer = (data: ICustomer): ICustomerAxoisResponsePromise =>
   request.post<ICustomer>(custApiUrl, data)
 
 export const changeCustomer = (id: number, newData: ICustomer): ICustomerAxoisResponsePromise =>
-  request.put<ICustomer>(`${custApiUrl}${id}/`, newData)
+  request.patch<ICustomer>(`${custApiUrl}${id}/`, newData)
 
 export const delCustomer = (id: number) =>
   request.delete(`${custApiUrl}${id}/`)
@@ -70,7 +70,7 @@ export const addTelephone = (data: IAdditionalTelephone): IAdditionalTelephoneAx
   request.post<IAdditionalTelephone>(telBaseUrl, data)
 
 export const changeTelephone = (id: number, newData: IAdditionalTelephone): IAdditionalTelephoneAxoisResponsePromise =>
-  request.put<IAdditionalTelephone>(`${telBaseUrl}${id}/`, newData)
+  request.patch<IAdditionalTelephone>(`${telBaseUrl}${id}/`, newData)
 
 export const delTelephone = (id: number) =>
   request.delete(`${telBaseUrl}${id}/`)
@@ -88,7 +88,7 @@ export const addStreet = (street: ICustomerStreet): ICustomerStreetAxoisResponse
   request.post<ICustomerStreet>(streetBaseUrl, street)
 
 export const changeStreet = (id: number, newData: ICustomerStreet): ICustomerStreetAxoisResponsePromise =>
-  request.put<ICustomerStreet>(`${streetBaseUrl}${id}/`, newData)
+  request.patch<ICustomerStreet>(`${streetBaseUrl}${id}/`, newData)
 
 export const delStreet = (id: number) =>
   request.delete(`${streetBaseUrl}${id}/`)
