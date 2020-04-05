@@ -83,9 +83,8 @@ export const changePort = (portId: number, newData: IPort): IPortAxoisResponsePr
 export const delPort = (portId: number) =>
   request.delete(`${basePortUrl}${portId}/`)
 
-
 export const togglePort = (portId: number, state: IDevPortState) =>
-  request.get(`${basePortUrl}${portId}/toggle_port/`, {params:{ state }})
+  request.get(`${basePortUrl}${portId}/toggle_port/`, { params: { state } })
 
 export const scanMacAddressPort = (portId: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${basePortUrl}${portId}/scan_mac_address_port/`)

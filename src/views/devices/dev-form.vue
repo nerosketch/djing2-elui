@@ -4,6 +4,7 @@
     status-icon
     :rules='frmRules'
     :model='frmMod'
+    v-loading='isLoading'
   )
     el-form-item(
       label="IP Адрес"
@@ -34,7 +35,7 @@
     el-form-item(
       prop="is_noticeable"
     )
-      el-checkbox(v-model="frmMod.is_management") Оповещать при событиях мониторинга&#58; 
+      el-checkbox(v-model="frmMod.is_management") Оповещать при событиях мониторинга&#58;
         b {{ frmMod.is_management ? 'Да' : 'Нет' }}
     el-form-item
       el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить

@@ -81,7 +81,7 @@ export default class extends Vue {
     {
       prop: 'speed_burst',
       label: 'Бурст',
-      width: 90,
+      width: 90
     },
     {
       prop: 'cost',

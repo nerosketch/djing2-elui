@@ -48,8 +48,9 @@ class Group extends VuexModule implements IGroup {
   }
 
   @Action
-  public async AddGroup(data: IGroup) {
-    return await addGroup(data)
+  public async AddGroup(grp: IGroup) {
+    const { data } = await addGroup(grp)
+    return data
   }
 
   @Action

@@ -4,6 +4,7 @@
     status-icon
     :rules='frmRules'
     :model='frmMod'
+    v-loading='isLoading'
   )
     el-form-item(
       label="Название"

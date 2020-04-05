@@ -6,7 +6,6 @@ import {
 } from '@/api/services/req'
 import { IOneShotPay } from '@/api/services/types'
 
-
 @Module({ dynamic: true, store, name: 'OneShotPay' })
 class OneShotPay extends VuexModule implements IOneShotPay {
   pk = 0

@@ -8,7 +8,6 @@ import {
   IServiceTypeEnum, IService
 } from '@/api/services/types'
 
-
 @Module({ dynamic: true, store, name: 'service' })
 class Service extends VuexModule implements IService {
   pk = 0

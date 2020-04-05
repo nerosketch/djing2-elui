@@ -1,93 +1,167 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { getCustomers, getCustomer } from '@/api/customers'
+import { ICustomer } from '@/api/customers/types'
+import {
+  getCustomer, addCustomer,
+  getCustomerFormInitial,
+  changeCustomer, delCustomer,
+  pickService, makeShot,
+  stopService, addBalance
+} from '@/api/customers/req'
 import store from '@/store'
 
-export interface ICustomerState {
-  balance: number
-  description: string
-  street: string
-  house: string
-  device: string
-  devPort: number
-  autoRenewalService: boolean
-  service: string
-}
-
-@Module({ dynamic: true, store, name: 'street' })
-class Customer extends VuexModule implements ICustomerState {
-  public balance = 0.0
-  public description = ''
-  public street = ''
-  public house = ''
-  public device = ''
-  public devPort = 0
-  public autoRenewalService = false
-  public service = ''
+@Module({ dynamic: true, store, name: 'customer' })
+class Customer extends VuexModule implements ICustomer {
+  pk = 0
+  username = ''
+  telephone = ''
+  fio = ''
+  group = 0
+  group_title = ''
+  balance = 0.0
+  description = ''
+  street = 0
+  street_name = ''
+  house = ''
+  is_active = false
+  gateway = 0
+  gateway_title = ''
+  auto_renewal_service = false
+  device = 0
+  device_comment = ''
+  dev_port = 0!
+  last_connected_service = 0!
+  current_service = 0!
+  service_title = ''!
+  is_dynamic_ip = false
+  full_name = ''
+  raw_password = ''
 
   @Mutation
-  private SET_BALANCE(balance: number) {
-    this.balance = balance
+  public SET_ALL(data: ICustomer) {
+    this.pk = data.pk
+    this.username = data.username
+    this.telephone = data.telephone
+    this.fio = data.fio
+    this.group = data.group
+    this.group_title = data.group_title
+    this.balance = data.balance
+    this.description = data.description
+    this.street = data.street
+    this.street_name = data.street_name
+    this.house = data.house
+    this.is_active = data.is_active
+    this.gateway = data.gateway
+    this.gateway_title = data.gateway_title
+    this.auto_renewal_service = data.auto_renewal_service
+    this.device = data.device
+    this.device_comment = data.device_comment
+    this.dev_port = data.dev_port!
+    this.last_connected_service = data.last_connected_service!
+    this.current_service = data.current_service!
+    this.service_title = data.service_title!
+    this.is_dynamic_ip = data.is_dynamic_ip
+    this.full_name = data.full_name
+    this.raw_password = data.raw_password
+    return this
   }
 
   @Mutation
-  private SET_DESCRIPTION(descr: string) {
-    this.description = descr
+  public RESET_ALL() {
+    this.pk = 0
+    this.username = ''
+    this.telephone = ''
+    this.fio = ''
+    this.group = 0
+    this.group_title = ''
+    this.balance = 0.0
+    this.description = ''
+    this.street = 0
+    this.street_name = ''
+    this.house = ''
+    this.is_active = false
+    this.gateway = 0
+    this.gateway_title = ''
+    this.auto_renewal_service = false
+    this.device = 0
+    this.device_comment = ''
+    this.dev_port = 0!
+    this.last_connected_service = 0!
+    this.current_service = 0!
+    this.service_title = ''!
+    this.is_dynamic_ip = false
+    this.full_name = ''
+    this.raw_password = ''
+    return this
   }
 
   @Mutation
-  private SET_STREET(street: string) {
-    this.street = street
-  }
-
-  @Mutation
-  private SET_HOUSE(house: string) {
-    this.house = house
-  }
-
-  @Mutation
-  private SET_DEVICE(dev: string) {
-    this.device = dev
-  }
-
-  @Mutation
-  private SET_PORT_NUM(num: number) {
-    this.devPort = num
-  }
-
-  @Mutation
-  private SET_AUTORENEWAL_SERVICE(ars: boolean) {
-    this.autoRenewalService = ars
-  }
-
-  @Mutation
-  private SET_SERVICE(srv: string) {
-    this.service = srv
+  public async INIT_DEFAULTS() {
+    const { data } = await getCustomerFormInitial()
+    this.SET_ALL(data)
   }
 
   @Action
-  public async GetAllCustomers() {
-    const { data } = await getCustomers()
+  public async GetCustomer(id: number) {
+    const { data } = await getCustomer(id)
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
-    return data.results
-  }
-
-  @Action
-  public async GetCustomer(customerId: number) {
-    const { data } = await getCustomer(customerId)
-    if (!data) {
-      throw Error('Verification failed, please Login again.')
-    }
-    this.SET_BALANCE(data.balance)
-    this.SET_DESCRIPTION(data.description)
-    this.SET_STREET(data.street_name)
-    this.SET_HOUSE(data.house)
-    this.SET_DEVICE(data.device_comment)
-    this.SET_PORT_NUM(data.dev_port)
-    this.SET_AUTORENEWAL_SERVICE(data.auto_renewal_service)
-    this.SET_SERVICE(data.service_title)
+    this.SET_ALL(data)
     return data
+  }
+
+  @Action
+  public async AddCustomer(data: ICustomer) {
+    await addCustomer(data)
+    this.SET_ALL(data)
+  }
+
+  @Action
+  public async SaveCustomer() {
+    const r = await changeCustomer(this.pk, <ICustomer>{
+      username: this.username,
+      telephone: this.telephone,
+      fio: this.fio,
+      group: this.group,
+      balance: this.balance,
+      street: this.street,
+      house: this.house,
+      is_active: this.is_active,
+      gateway: this.gateway,
+      auto_renewal_service: this.auto_renewal_service,
+      device: this.device,
+      dev_port: this.dev_port,
+      is_dynamic_ip: this.is_dynamic_ip,
+      raw_password: this.raw_password
+    })
+    this.SET_ALL(r.data)
+    return r
+  }
+
+  @Action
+  public async DelCustomer(id: number) {
+    await delCustomer(id)
+    this.RESET_ALL()
+  }
+
+  @Action
+  public async PickService(serviceId: number, deadline?: string) {
+    await pickService(this.pk, serviceId, deadline)
+  }
+
+  @Action
+  public async MakeShot(shotId: number) {
+    await makeShot(this.pk, shotId)
+  }
+
+  @Action
+  public async StopService() {
+    await stopService(this.pk)
+  }
+
+  @Action
+  public async AddBalance(cost: number, comment?: string) {
+    await addBalance(this.pk, cost, comment)
   }
 }
 

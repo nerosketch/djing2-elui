@@ -4,6 +4,7 @@
     status-icon
     :rules='frmRules'
     :model='frmMod'
+    v-loading='isLoading'
   )
     h2 {{ frmMod }}
     el-form-item(

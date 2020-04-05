@@ -28,8 +28,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { getCustomerGroups } from '@/api/customers'
-import { ICustomerGroup } from '@/store/modules/customers/customer-groups'
+import { getCustomerGroups } from '@/api/customers/req'
+import { ICustomerGroup } from '@/api/customers/types'
 
 @Component({
   name: 'CustomerGroupList'
@@ -37,10 +37,6 @@ import { ICustomerGroup } from '@/store/modules/customers/customer-groups'
 export default class extends Vue {
   private groupsLoading = true
   private groupList: ICustomerGroup[] = []
-  private groupsQuery = {
-    page: 1,
-    page_size: 20
-  }
 
   created() {
     this.getGroups()
@@ -48,7 +44,7 @@ export default class extends Vue {
 
   private async getGroups() {
     this.groupsLoading = true
-    const { data } = await getCustomerGroups(this.groupsQuery)
+    const { data } = await getCustomerGroups()
     this.groupList = data.results
     this.groupsLoading = false
   }

@@ -1,6 +1,5 @@
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
 
-
 export enum IServiceTypeEnum {
   BASE = 0,
   IS = 1,
@@ -27,7 +26,6 @@ export type IServiceList = IDRFListResponse<IService>
 export type IServiceAxoisResponsePromise = IDRFAxiosResponsePromise<IService>
 export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList>
 
-
 // IPeriodicPay
 export interface IPeriodicPay {
   pk: number
@@ -38,7 +36,6 @@ export interface IPeriodicPay {
 export type IPeriodicPayList = IDRFListResponse<IPeriodicPay>
 export type IPeriodicPayAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPay>
 export type IPeriodicPayListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayList>
-
 
 // IOneShotPay
 export interface IOneShotPay {

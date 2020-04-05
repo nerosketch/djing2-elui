@@ -1,30 +1,28 @@
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
+import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-
-export interface ICustomerGroup {
-  pk: number
-  title: string
-  code: string
-}
+import { ICustomerGroup, ICustomer } from '@/api/customers/types'
 
 @Module({ dynamic: true, store, name: 'customer-group' })
 class CustomerGroup extends VuexModule implements ICustomerGroup {
   public pk = 0
   public title = ''
   public code = ''
+  public usercount = 0
 
   @Mutation
-  private SET_PK(pk: number) {
-    this.pk = pk
+  public SET_ALL(data: ICustomerGroup) {
+    this.pk = data.pk
+    this.title = data.title
+    this.code = data.code
+    this.usercount = data.usercount
   }
 
   @Mutation
-  private SET_TITLE(title: string) {
-    this.title = title
-  }
-
-  @Mutation
-  private SET_CODE(code: string) {
-    this.code = code
+  public RESET_ALL() {
+    this.pk = 0
+    this.title = ''
+    this.code = ''
+    this.usercount = 0
   }
 }
+export const CustomerGroupModule = getModule(CustomerGroup)

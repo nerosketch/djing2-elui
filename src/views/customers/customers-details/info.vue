@@ -5,22 +5,19 @@
         .clearfix(slot='header')
           span Изменение абонента
         customer-form
+    el-col(:span='12')
+      device
 
-    h4 Баланс 0.4
-    el-tabs.border-card
-      el-tab-pane(label="Инфо" lazy) User
-      el-tab-pane(label="Тарифы" lazy) Тарифы
-      el-tab-pane(label="Финансы" lazy) Финансы
-      el-tab-pane(label="История задач" lazy) История задач
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import CustomerForm from '@/views/customers/customer-form.vue'
+import Device from '@/views/customers/device.vue'
 
 @Component({
   name: 'Info',
-  components: { CustomerForm }
+  components: { CustomerForm, Device }
 })
 export default class extends Vue {}
 </script>

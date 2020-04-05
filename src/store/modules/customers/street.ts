@@ -1,23 +1,56 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-
-export interface IStreet {
-  name: string
-}
+import { ICustomerStreet } from '@/api/customers/types'
+import { getStreet, addStreet, changeStreet, delStreet } from '@/api/customers/req'
 
 @Module({ dynamic: true, store, name: 'street' })
-class Street extends VuexModule implements IStreet {
-  public name: string = ''
+class CustomerStreet extends VuexModule implements ICustomerStreet {
+  pk = 0
+  name = ''
+  group = 0
 
   @Mutation
-  private SET_NAME(name: string) {
-    this.name = name
+  private RESET_ALL() {
+    this.pk = 0
+    this.name = ''
+    this.group = 0
+  }
+
+  @Mutation
+  private SET_ALL(street: ICustomerStreet) {
+    this.pk = street.pk
+    this.name = street.name
+    this.group = street.group
   }
 
   @Action
-  public async getStreets() {
+  public async GetStreet(id: number) {
+    const r = await getStreet(id)
+    this.SET_ALL(r.data)
+    return r
+  }
 
+  @Action
+  public async AddStreet(data: ICustomerStreet) {
+    await addStreet(data)
+    this.SET_ALL(data)
+  }
+
+  @Action
+  public async SaveStreet() {
+    const r = await changeStreet(this.pk, <ICustomerStreet>{
+      name: this.name,
+      group: this.group
+    })
+    this.SET_ALL(r.data)
+    return r
+  }
+
+  @Action
+  public async DelStreet(id: number) {
+    await delStreet(id)
+    this.RESET_ALL()
   }
 }
 
-export const StreetModule = getModule(Street)
+export const CustomerStreetModule = getModule(CustomerStreet)

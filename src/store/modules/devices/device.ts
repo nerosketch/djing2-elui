@@ -17,7 +17,6 @@ import { IDevice, IDeviceInterace, IDeviceTypeEnum } from '@/api/devices/types'
 //   IScannedPort, IScannedPortListAxiosPromise,
 //   IUnitUnregistered, IUnitUnregisteredListAxiosPromise } from '@/api/devices/types'
 
-
 @Module({ dynamic: true, store, name: 'device' })
 class Device extends VuexModule implements IDeviceInterace {
   pk = 0

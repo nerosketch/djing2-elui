@@ -3,7 +3,7 @@
     el-table(
       v-loading='customersLoading'
       :data="customersList"
-      element-loading-text="Loading"
+      element-loading-text="Загрузка"
       border
       fit
       highlight-current-row
@@ -19,7 +19,8 @@
         label="Логин"
         width="90"
       )
-        el-link(slot-scope="scope" type="primary" href="#sodf") {{ scope.row.username }}
+        el-link(slot-scope="scope" type="primary")
+          router-link(:to="{name: 'customerDetails', params:{uid: scope.row.pk }}") {{ scope.row.username }}
       el-table-column(
         label="ФИО"
       )
@@ -39,7 +40,7 @@
       el-table-column(
         label="Услуга"
       )
-        el-link(slot-scope="scope" type="primary" href='#sdf') {{ scope.row.service_title }}
+        template(slot-scope="scope") {{ scope.row.service_title }}
       el-table-column(
         label="Баланс"
       )
@@ -59,8 +60,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { ICustomerState } from '@/store/modules/customers/customer'
-import { getCustomers } from '@/api/customers'
+import { ICustomer } from '@/api/customers/types'
+import { getCustomers } from '@/api/customers/req'
 
 @Component({
   name: 'CustomersList',
@@ -77,11 +78,7 @@ import { getCustomers } from '@/api/customers'
 })
 export default class extends Vue {
   private customersLoading: boolean = true
-  private customersList: ICustomerState[] = []
-  // private groupsQuery = {
-  //   page: 1,
-  //   page_size: 20
-  // }
+  private customersList: ICustomer[] = []
 
   created() {
     this.getAllCustomers()

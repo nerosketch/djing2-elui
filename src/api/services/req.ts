@@ -30,7 +30,6 @@ export const changeService = (id: number, newData: IService): IServiceAxoisRespo
 export const delService = (id: number) =>
   request.delete(`${baseSrvUrl}${id}/`)
 
-
 // IPeriodicPay
 const basePPUrl = '/services/periodic/'
 
@@ -49,8 +48,7 @@ export const changePeriodicPay = (id: number, newPP: IPeriodicPay): IPeriodicPay
 export const delPeriodicPay = (id: number) =>
   request.delete(`${basePPUrl}${id}/`)
 
-
-//IOneShotPay
+// IOneShotPay
 const baseOSPUrl = '/services/shot/'
 
 export const getOneShotPays = (params?: IDRFRequestListParameters): IOneShotPayPayListAxiosResponsePromise =>

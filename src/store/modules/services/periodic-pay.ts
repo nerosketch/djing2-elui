@@ -6,7 +6,6 @@ import {
 } from '@/api/services/req'
 import { IPeriodicPay } from '@/api/services/types'
 
-
 @Module({ dynamic: true, store, name: 'periodicpay' })
 class PeriodicPay extends VuexModule implements IPeriodicPay {
   pk = 0

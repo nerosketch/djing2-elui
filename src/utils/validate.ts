@@ -20,7 +20,7 @@ export const macAddrValidator = _regexpVal(/^([0-9A-Fa-f]{1,2}[:-]){5}([0-9A-Fa-
 export const emailValidator = _regexpVal(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i)
 
 export const positiveValidator = (rule: any, value: number, callback: Function) => {
-  if(value >= 0) {
+  if (value >= 0) {
     callback()
   } else {
     callback(new Error(rule.message))
