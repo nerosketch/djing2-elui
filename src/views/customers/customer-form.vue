@@ -23,6 +23,11 @@
       prop='telephone'
     )
       el-input(v-model="frmMod.telephone")
+        template(slot='append')
+          el-button
+            a(:href="`tel:${frmMod.telephone}`") call
+          el-button(@click="openTelsDlg=true") tels
+          el-button Add
     el-form-item(
       label="Улица"
       prop='street'
@@ -40,14 +45,9 @@
     )
       el-input(v-model="frmMod.house" :maxlength='12')
     el-form-item(
-      label="Активный"
-      prop='is_active'
-    )
-      el-checkbox(v-model="frmMod.is_active") - {{ frmMod.is_active ? 'Да' : 'Нет' }}
-    el-form-item(
       label="Опции"
     )
-      el-checkbox(v-model="frmMod.auto_renewal_service") - Авто продление услуги: {{ frmMod.auto_renewal_service ? 'Да' : 'Нет' }}
+      el-checkbox(v-model="frmMod.is_active") - Активный: {{ frmMod.is_active ? 'Да' : 'Нет' }}
       el-checkbox(v-model="frmMod.is_dynamic_ip") - Динамические настройки по dhcp: {{ frmMod.is_dynamic_ip ? 'Да' : 'Нет' }}
     el-form-item(
       label="Группа"
@@ -66,7 +66,25 @@
     )
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button-group
+        el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+        el-button(@click="openPasportDlg = true") Паспорт
+        el-button(
+          type='danger'
+          title="Полное удаление учётной записи абонента из билинга"
+          @click="delCustomer"
+        ) Удалить уч.
+    el-dialog(
+      title="Паспортные данные"
+      :visible.sync="openPasportDlg"
+      width="30%"
+    )
+      passport
+    el-dialog(
+      title="Дополнительные телефоны"
+      :visible.sync="openTelsDlg"
+    )
+      additional-tels
 </template>
 
 <script lang="ts">
@@ -77,14 +95,19 @@ import { ICustomer, ICustomerStreet, ICustomerGroup } from '@/api/customers/type
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
 import { CustomerStreetModule } from '@/store/modules/customers/street'
 import { CustomerModule } from '@/store/modules/customers/customer'
+import Passport from './passport.vue'
+import AdditionalTels from './customers-details/additional-tels.vue'
 
 @Component({
-  name: 'customer-form'
+  name: 'customer-form',
+  components: { Passport, AdditionalTels }
 })
 export default class extends Vue {
   private isLoading = false
   private customerStreets: ICustomerStreet[] = []
   private groups: ICustomerGroup[] = []
+  private openPasportDlg = false
+  private openTelsDlg = false
 
   private frmRules = {
     username: [
@@ -134,8 +157,26 @@ export default class extends Vue {
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error('Исправьте ошибки в форме')
+        this.$message.error('Исправь ошибки в форме')
       }
+    })
+  }
+
+  private delCustomer() {
+    this.$confirm("Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.", 'Внимание', {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Отмена',
+    }).then(() => {
+      CustomerModule.DelCustomer()
+      this.$message({
+        type: 'success',
+        message: 'Учётка удалена'
+      })
+    }).catch(() => {
+      this.$message({
+        type: 'info',
+        message: 'Отмена удаления'
+      })
     })
   }
 }

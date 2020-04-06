@@ -119,7 +119,7 @@ export default class extends Vue {
   }
 
   private async delDevice(dev: IDevice) {
-    if (confirm(`Вы действительно хотите удалить устройство "${dev.comment}"?`)) {
+    if (confirm(`Ты действительно хочешь удалить устройство "${dev.comment}"?`)) {
       await DeviceModule.DelDevice(dev.pk)
       this.$refs['table'].GetTableData()
     }

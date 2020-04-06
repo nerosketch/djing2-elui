@@ -84,7 +84,7 @@ export default class extends Vue {
   }
 
   private async delPerPay(pay: IPeriodicPay) {
-    if (confirm(`Вы действительно хотите удалить квитанцию "${pay.name}"?`)) {
+    if (confirm(`Ты действительно хочешь удалить квитанцию "${pay.name}"?`)) {
       await PeriodicPayModule.DelPeriodicPay(pay.pk)
       this.$refs['table'].GetTableData()
     }

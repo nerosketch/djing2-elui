@@ -79,7 +79,7 @@ export default class extends Vue {
   }
 
   private async delShot(shot: IOneShotPay) {
-    if (confirm(`Вы действительно хотите удалить платёж "${shot.name}"?`)) {
+    if (confirm(`Ты действительно хочешь удалить платёж "${shot.name}"?`)) {
       await OneShotPayModule.DelOneShotPay(shot.pk)
       this.$refs['table'].GetTableData()
     }

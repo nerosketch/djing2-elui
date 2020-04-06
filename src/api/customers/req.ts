@@ -23,7 +23,9 @@ import {
   IInvoice4PaymentList,
   IInvoice4PaymentListAxiosResponsePromise,
   ICustomerLogList,
-  ICustomerLogListAxiosResponsePromise
+  ICustomerLogListAxiosResponsePromise,
+  IPassportInfoListAxiosResponsePromise,
+  IPassportInfoList
 } from './types'
 
 // ICustomer
@@ -121,3 +123,9 @@ export const delInvoice = (id: number) =>
 // CustomerLog
 export const getCustomerPayLog = (params?: IDRFRequestListParametersInvoice): ICustomerLogListAxiosResponsePromise =>
   request.get<ICustomerLogList>('/customers/customer-log/', { params })
+
+// IPassportInfo
+const pspBaseUrl = '/customers/passport/'
+
+export const findPassportInfo = (customerId: number): IPassportInfoListAxiosResponsePromise =>
+  request.get<IPassportInfoList>(pspBaseUrl, { params: {customer: customerId} })

@@ -90,7 +90,7 @@ export default class extends Vue {
   }
 
   private async delLease(lease: ICustomerIpLease) {
-    if (confirm(`Вы действительно хотите удалить сессию "${lease.ip_address}"?`)) {
+    if (confirm(`Ты действительно хочешь удалить сессию "${lease.ip_address}"?`)) {
       await CustomerIpLeaseModule.DelLease(lease.id)
       this.$refs['table'].GetTableData()
     }

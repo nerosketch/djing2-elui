@@ -122,3 +122,15 @@ export type IInvoice4PaymentListAxiosResponsePromise = IDRFAxiosResponsePromise<
 export interface IDRFRequestListParametersInvoice extends IDRFRequestListParameters {
   customer: number
 }
+
+// IPassportInfo
+export interface IPassportInfo {
+  id: number
+  series: string
+  number: string
+  distributor: string
+  date_of_acceptance: string
+}
+export type IPassportInfoList = IDRFListResponse<IPassportInfo>
+export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
+export type IPassportInfoListAxiosResponsePromise = IDRFAxiosResponsePromise<IPassportInfoList>

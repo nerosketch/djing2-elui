@@ -47,16 +47,14 @@ export default class extends Vue {
 
   private onSubmit() {
     (this.$refs['perfrm'] as Form).validate(async valid => {
-      console.log('this.frmMod', this.frmMod)
       if (valid) {
         this.isLoading = true
-        console.log('this.frmMod', this.frmMod)
         await PeriodicPayModule.SET_ALL(this.frmMod)
         const newDat = await PeriodicPayModule.SavePeriodicPay()
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error('Исправьте ошибки в форме')
+        this.$message.error('Исправь ошибки в форме')
       }
     })
   }

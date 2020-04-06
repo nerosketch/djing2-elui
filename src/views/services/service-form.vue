@@ -105,7 +105,7 @@ export default class extends Vue {
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error('Исправьте ошибки в форме')
+        this.$message.error('Исправь ошибки в форме')
       }
     })
   }

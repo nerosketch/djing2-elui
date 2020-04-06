@@ -99,7 +99,7 @@ export default class extends Vue {
   }
 
   private async delPool(vlan: INetworkIpPool) {
-    if (confirm(`Вы действительно хотите удалить пул "${vlan.network}"?`)) {
+    if (confirm(`Ты действительно хочешь удалить пул "${vlan.network}"?`)) {
       await NetworkIpPoolModule.DelPool(vlan.id)
       this.$refs['table'].GetTableData()
     }

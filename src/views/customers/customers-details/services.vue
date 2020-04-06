@@ -39,20 +39,25 @@
           )
             template(slot-scope="{row}") {{ row.speed_out }}
     el-col(:span='12')
-      el-card(shadow="never")
+      el-card(shadow="never" :loading="!serviceAvailable")
         .clearfix(slot='header')
           span Текущая услуга абонента
-        h3 {{ currentServiceName }}
-        el-row
+        h3 {{ serviceInfo.service_title }}
+        el-row(v-if="lastConnectedExists")
           el-col(:span='12')
             span Последняя подключённая
           el-col(:span='12')
             b -Название последней-
+            br
+            b {{ serviceInfo.speed_in }} / {{ serviceInfo.speed_out }}
         el-row
           el-col(:span='12')
             span Автопродление услуги
           el-col(:span='12')
-            el-checkbox(v-model="isDynamicIp") {{ isDynamicIp ? 'Да' : 'Нет' }}
+            el-checkbox(
+              v-model="autoRenewalService"
+              v-loading='serviceBlockLoad'
+            ) {{ autoRenewalService ? 'Да' : 'Нет' }}
     el-col(:span='12')
       el-card(shadow="never")
         .clearfix(slot='header')
@@ -61,10 +66,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { IService } from '@/api/services/types'
 import { getServices } from '@/api/services/req'
-import { CustomerModule } from '../../../store/modules/customers/customer'
+import { CustomerModule } from '@/store/modules/customers/customer'
+import { ICustomer } from '@/api/customers/types'
+import { ServiceModule } from '@/store/modules/services/service'
 
 @Component({
   name: 'Services'
@@ -72,7 +79,8 @@ import { CustomerModule } from '../../../store/modules/customers/customer'
 export default class extends Vue {
   private services: IService[] = []
   private servicesLoading = false
-  private isDynamicIp = false
+  private autoRenewalService = CustomerModule.auto_renewal_service
+  private serviceBlockLoad = false
 
   private async loadServices() {
     this.servicesLoading = true
@@ -85,12 +93,37 @@ export default class extends Vue {
     this.servicesLoading = false
   }
 
-  created() {
-    this.loadServices()
+  @Watch('autoRenewalService')
+  private async onChangeAutoConnect(v: boolean) {
+    this.serviceBlockLoad = true
+    await CustomerModule.SET_AUTO_RENEWAL_SERV(v)
+    await CustomerModule.SaveCustomer()
+    this.serviceBlockLoad = false
+    this.$message.success('Автопродление сохранено')
   }
 
-  get currentServiceName() {
-    return CustomerModule.service_title
+  async created() {
+    await this.loadServices()
+    if(CustomerModule.current_service !== 0){
+      await this.loadService(CustomerModule.current_service)
+    }
+  }
+
+  get lastConnectedExists() {
+    return CustomerModule.last_connected_service !== null
+  }
+  get serviceAvailable() {
+    return ServiceModule.pk !== 0
+  }
+
+  private async loadService(id: number) {
+    this.serviceBlockLoad = true
+    const r = await ServiceModule.GetService(id)
+    this.serviceBlockLoad = false
+  }
+
+  get serviceInfo() {
+    return ServiceModule.context.state
   }
 }
 </script>

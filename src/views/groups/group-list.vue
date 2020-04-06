@@ -88,7 +88,7 @@ export default class extends Vue {
   }
 
   private async delGroup(group: IGroup) {
-    if (confirm(`Вы действительно хотите удалить группу "${group.title}"?`)) {
+    if (confirm(`Ты действительно хочешь удалить группу "${group.title}"?`)) {
       await GroupModule.DelGroup(group.pk)
       this.$refs['table'].GetTableData()
     }

@@ -63,7 +63,7 @@ export default class extends Vue {
       { validator: macAddrValidator, trigger: 'change', message: 'Пример mac: 0a:0b:cc:dd::ee:ff' }
     ],
     comment: [
-      { required: true, message: 'Укажите устройству какое-то имя', trigger: 'blur' }
+      { required: true, message: 'Укажи устройству какое-то имя', trigger: 'blur' }
     ]
   }
 
@@ -93,7 +93,7 @@ export default class extends Vue {
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error('Исправьте ошибки в форме')
+        this.$message.error('Исправь ошибки в форме')
       }
     })
   }

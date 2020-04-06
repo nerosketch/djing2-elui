@@ -79,8 +79,8 @@ private customersLoading: boolean = true
   private async getAllCustomers() {
     this.customersLoading = true
     const { data } = await getCustomers({
-      page: 1,
-      page_size: 10,
+      page: 3,
+      page_size: 40,
       group: this.groupId
     })
     this.customersList = data.results

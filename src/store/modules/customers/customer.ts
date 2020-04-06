@@ -95,6 +95,11 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Mutation
+  public SET_AUTO_RENEWAL_SERV(v: boolean) {
+    this.auto_renewal_service = v
+  }
+
+  @Mutation
   public async INIT_DEFAULTS() {
     const { data } = await getCustomerFormInitial()
     this.SET_ALL(data)
@@ -139,8 +144,12 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async DelCustomer(id: number) {
-    await delCustomer(id)
+  public async DelCustomer(id?: number) {
+    if(id) {
+      await delCustomer(id)
+    } else {
+      await delCustomer(this.pk)
+    }
     this.RESET_ALL()
   }
 
