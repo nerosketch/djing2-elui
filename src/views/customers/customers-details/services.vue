@@ -12,13 +12,14 @@
         )
           el-table-column(
             align="center"
-            label="Заказать"
-            width="80"
+            label="Заказ."
+            width="60"
           )
             el-button(
-              type='primary' slot-scope="{row}" size='mini'
+              type='primary' slot-scope="{row}" size='small'
               @click="buyOpen(row)" :disabled="isServiceAvailable"
-            ) Cart
+              icon='el-icon-shopping-cart-2' circle
+            )
           el-table-column(
             align="center"
             label="ID"
