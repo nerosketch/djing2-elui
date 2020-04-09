@@ -25,7 +25,9 @@ import {
   ICustomerLogList,
   ICustomerLogListAxiosResponsePromise,
   IPassportInfoListAxiosResponsePromise,
-  IPassportInfoList
+  IPassportInfoList,
+  ICustomerServiceAxoisResponsePromise,
+  ICustomerService
 } from './types'
 
 // ICustomer
@@ -58,10 +60,13 @@ export const getServiceUsers = (serviceId: number): IServiceUserListAxiosRespons
   request.get<IServiceUserList>(`${custApiUrl}service_users/`, { params: { service_id: serviceId } })
 
 export const stopService = (id: number) =>
-  request.get(`${custApiUrl}${id}/`)
+  request.get(`${custApiUrl}${id}/stop_service/`)
 
 export const addBalance = (id: number, cost: number, comment?: string) =>
   request.post(`${custApiUrl}${id}/add_balance/`, { cost, comment })
+
+export const getCurrentService = (id: number): ICustomerServiceAxoisResponsePromise =>
+  request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)
 
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>

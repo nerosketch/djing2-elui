@@ -19,7 +19,7 @@ export interface IService {
   calc_type: IServiceTypeEnum
   is_admin: boolean
   usercount: number
-  planned_deadline: Date
+  planned_deadline: string
   calc_type_name: string
 }
 export type IServiceList = IDRFListResponse<IService>

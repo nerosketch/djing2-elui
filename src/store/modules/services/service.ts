@@ -20,7 +20,7 @@ class Service extends VuexModule implements IService {
   calc_type = IServiceTypeEnum.BASE
   is_admin = false
   usercount = 0
-  planned_deadline = new Date()
+  planned_deadline = ''
   calc_type_name = ''
 
   @Mutation
@@ -51,7 +51,7 @@ class Service extends VuexModule implements IService {
     this.calc_type = IServiceTypeEnum.BASE
     this.is_admin = false
     this.usercount = 0
-    this.planned_deadline = new Date()
+    this.planned_deadline = ''
     this.calc_type_name = ''
     return this
   }

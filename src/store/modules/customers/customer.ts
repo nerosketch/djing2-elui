@@ -5,7 +5,8 @@ import {
   getCustomerFormInitial,
   changeCustomer, delCustomer,
   pickService, makeShot,
-  stopService, addBalance
+  stopService, addBalance,
+  getCurrentService
 } from '@/api/customers/req'
 import store from '@/store'
 
@@ -32,6 +33,7 @@ class Customer extends VuexModule implements ICustomer {
   last_connected_service = 0
   current_service = 0
   service_title = ''
+  service_id = 0
   is_dynamic_ip = false
   full_name = ''
   raw_password = ''
@@ -59,6 +61,7 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = data.last_connected_service!
     this.current_service = data.current_service!
     this.service_title = data.service_title!
+    this.service_id = data.service_id!
     this.is_dynamic_ip = data.is_dynamic_ip
     this.full_name = data.full_name
     this.raw_password = data.raw_password
@@ -88,6 +91,7 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = 0!
     this.current_service = 0!
     this.service_title = ''!
+    this.service_id = 0
     this.is_dynamic_ip = false
     this.full_name = ''
     this.raw_password = ''
@@ -112,6 +116,11 @@ class Customer extends VuexModule implements ICustomer {
       throw Error('Verification failed, please Login again.')
     }
     this.SET_ALL(data)
+  }
+
+  @Action
+  public async UpdateCustomer() {
+    await this.GetCustomer(this.pk)
   }
 
   @Action
@@ -171,6 +180,12 @@ class Customer extends VuexModule implements ICustomer {
   @Action
   public async AddBalance(cost: number, comment?: string) {
     await addBalance(this.pk, cost, comment)
+  }
+
+  @Action
+  public async GetCurrentServiceDetails() {
+    const { data } = await getCurrentService(this.pk)
+    return data
   }
 
   @Action

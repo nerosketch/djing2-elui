@@ -1,5 +1,6 @@
 import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '@/api/types'
 import { IGroup } from '@/api/groups/types'
+import { IService } from '@/api/services/types'
 
 // ICustomer
 export interface ICustomer {
@@ -24,6 +25,7 @@ export interface ICustomer {
   last_connected_service: number | null
   current_service: number | null
   service_title: string | null
+  service_id: number | null
   is_dynamic_ip: boolean
   full_name: string
   raw_password: string
@@ -93,15 +95,14 @@ export type ICustomerStreetAxoisResponsePromise = IDRFAxiosResponsePromise<ICust
 export type ICustomerStreetListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerStreetList>
 
 // ICustomerService
-// export interface ICustomerService {
-//   pk: number
-//   service: number
-//   start_time: string
-//   deadline: string
-// }
-// export type ICustomerServiceList = IDRFListResponse<ICustomerService>
-// export type ICustomerServiceAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerService>
-// export type ICustomerServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerServiceList>
+export interface ICustomerService {
+  pk: number
+  service: IService
+  start_time: string
+  deadline: string
+  last_connected_service_title?: string
+}
+export type ICustomerServiceAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerService>
 
 // IInvoice4Payment
 export interface IInvoice4Payment {

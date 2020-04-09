@@ -15,7 +15,10 @@
             label="Заказать"
             width="80"
           )
-            el-button(type='primary' slot-scope="{row}" size='mini') Cart
+            el-button(
+              type='primary' slot-scope="{row}" size='mini'
+              @click="buyOpen(row)" :disabled="isServiceAvailable"
+            ) Cart
           el-table-column(
             align="center"
             label="ID"
@@ -39,30 +42,69 @@
           )
             template(slot-scope="{row}") {{ row.speed_out }}
     el-col(:span='12')
-      el-card(shadow="never" :loading="!serviceAvailable")
+      el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
         .clearfix(slot='header')
           span Текущая услуга абонента
-        h3 {{ serviceInfo.service_title }}
-        el-row(v-if="lastConnectedExists")
-          el-col(:span='12')
-            span Последняя подключённая
-          el-col(:span='12')
-            b -Название последней-
-            br
-            b {{ serviceInfo.speed_in }} / {{ serviceInfo.speed_out }}
-        el-row
-          el-col(:span='12')
-            span Автопродление услуги
-          el-col(:span='12')
-            el-checkbox(
-              v-model="autoRenewalService"
-              v-loading='serviceBlockLoad'
-            ) {{ autoRenewalService ? 'Да' : 'Нет' }}
+        div(v-if="isServiceAvailable")
+          h3 {{ currentService.service.title }}
+          i {{ currentService.service.descr }}
+
+          dl
+            dt
+              b Сумма
+            dd {{ currentService.service.cost }} руб.
+            dt
+              b Входящая скорость
+            dd {{ currentService.service.speed_in }}
+            dt
+              b Исходящая скорость
+            dd {{ currentService.service.speed_out }}
+            dt
+              b Ускорение(burst (не доделан))
+            dd {{ currentService.service.speed_burst }}
+            dt
+              b Дата начала
+            dd {{ currentService.start_time }}
+            dt
+              b Действует до
+            dd {{ currentService.deadline }}
+
+          el-row(v-if="lastConnectedExists")
+            el-col(:span='12')
+              span Последняя подключённая
+            el-col(:span='12')
+              b {{ currentService.last_connected_service_title }}
+          el-row
+            el-col(:span='12')
+              span Автопродление услуги
+            el-col(:span='12')
+              el-checkbox(
+                v-model="autoRenewalService"
+              ) {{ autoRenewalService ? 'Да' : 'Нет' }}
+          el-button(
+            type='danger' size='mini'
+            icon='el-icon-delete'
+            @click="onStopService"
+          ) Завершить услугу
+
+        b(v-else) Услуга не подключена
+
     el-col(:span='12')
       el-card(shadow="never")
         .clearfix(slot='header')
           span Периодический платёж
         el-button(type='primary' size='mini') Добавить периодический платёж
+
+    el-dialog(
+      title="Купить услугу"
+      :visible.sync="buyDialog"
+      width="30%"
+    )
+      buy-service(
+        v-on:done="buyDone"
+        :services="services"
+        :selectedServiceId="selectedServiceId"
+      )
 </template>
 
 <script lang="ts">
@@ -70,17 +112,22 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { IService } from '@/api/services/types'
 import { getServices } from '@/api/services/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { ICustomer } from '@/api/customers/types'
+import { ICustomer, ICustomerService } from '@/api/customers/types'
 import { ServiceModule } from '@/store/modules/services/service'
+import BuyService from './buyService.vue'
 
 @Component({
-  name: 'Services'
+  name: 'Services',
+  components: { BuyService }
 })
 export default class extends Vue {
   private services: IService[] = []
   private servicesLoading = false
   private autoRenewalService = CustomerModule.auto_renewal_service
   private serviceBlockLoad = false
+  private currentService: ICustomerService | null = null
+  private buyDialog = false
+  private selectedServiceId = 0
 
   private async loadServices() {
     this.servicesLoading = true
@@ -104,26 +151,75 @@ export default class extends Vue {
 
   async created() {
     await this.loadServices()
-    if(CustomerModule.current_service !== 0){
-      await this.loadService(CustomerModule.current_service)
-    }
+    await this.loadCurrentService()
   }
 
   get lastConnectedExists() {
-    return CustomerModule.last_connected_service !== null
-  }
-  get serviceAvailable() {
-    return ServiceModule.pk !== 0
+    return CustomerModule.last_connected_service > 0
   }
 
-  private async loadService(id: number) {
+  get isServiceAvailable() {
+    return this.currentService !== null
+  }
+
+  async loadCurrentService() {
     this.serviceBlockLoad = true
-    const r = await ServiceModule.GetService(id)
+    const currsrv = await CustomerModule.GetCurrentServiceDetails()
+    if(currsrv) {
+      this.currentService = currsrv
+    } else {
+      this.currentService = null
+    }
     this.serviceBlockLoad = false
   }
 
-  get serviceInfo() {
-    return ServiceModule.context.state
+  buyDone() {
+    this.buyDialog = false
+    this.$message.success('Услуга успешно куплена')
+    this.loadCurrentService()
+    CustomerModule.UpdateCustomer()
+  }
+  buyOpen(s: IService) {
+    if(s.cost > CustomerModule.balance) {
+      this.$confirm('У абонента не достаточно средств для включения услуги, включить её в минус?', {
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет, не надо',
+        type: 'warning'
+      }).then(() => {
+        this.selectedServiceId = s.pk
+        this.buyDialog = true
+      }).catch(() => {
+        this.$message.info('Отмена покупки услуги')
+      })
+    } else {
+      this.selectedServiceId = s.pk
+      this.buyDialog = true
+    }
+  }
+
+  onStopService() {
+    this.$confirm('Завершить услугу абонента досрочно?', {
+      confirmButtonText: 'Да',
+      cancelButtonText: 'Нет, не надо',
+      type: 'info'
+    }).then(async () => {
+      await CustomerModule.StopService()
+      await CustomerModule.UpdateCustomer()
+      await this.loadCurrentService()
+      this.$message.success('Услуга остановлена досрочно')
+    })
   }
 }
 </script>
+
+<style>
+dl > dt {
+  float: left;
+  width: 47%;
+  border-bottom: 1px #dfe4ed solid;
+}
+dl > dd {
+  margin-left: 48%;
+  border-bottom: 1px #dfe4ed solid;
+}
+</style>

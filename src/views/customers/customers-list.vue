@@ -69,7 +69,7 @@ import { getCustomers } from '@/api/customers/req'
 export default class extends Vue {
   @Prop({ default: 0 }) private groupId!: number
 
-private customersLoading: boolean = true
+  private customersLoading: boolean = true
   private customersList: ICustomer[] = []
 
   created() {
