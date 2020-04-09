@@ -68,6 +68,12 @@ export const addBalance = (id: number, cost: number, comment?: string) =>
 export const getCurrentService = (id: number): ICustomerServiceAxoisResponsePromise =>
   request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)
 
+export const setGroupAccessory = (id: number, groupId: number, services: number[]) =>
+  request.post(`${custApiUrl}${id}/set_group_accessory/`, {
+    group_id: groupId,
+    services
+  })
+
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>
   request.get<ICustomerGroupList>(`${custApiUrl}groups/`, { params })
@@ -133,4 +139,4 @@ export const getCustomerPayLog = (params?: IDRFRequestListParametersInvoice): IC
 const pspBaseUrl = '/customers/passport/'
 
 export const findPassportInfo = (customerId: number): IPassportInfoListAxiosResponsePromise =>
-  request.get<IPassportInfoList>(pspBaseUrl, { params: {customer: customerId} })
+  request.get<IPassportInfoList>(pspBaseUrl, { params: { customer: customerId } })

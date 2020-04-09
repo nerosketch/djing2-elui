@@ -52,8 +52,8 @@ export default class extends Vue {
 
   @Watch('serviceId')
   private onServiceIdChanged(v: number) {
-    for(const srv of this.services) {
-      if(srv.pk === v) {
+    for (const srv of this.services) {
+      if (srv.pk === v) {
         this.deadline = srv.planned_deadline
         return
       }
@@ -61,16 +61,16 @@ export default class extends Vue {
   }
 
   created() {
-    if(this.selectedServiceId > 0) {
+    if (this.selectedServiceId > 0) {
       this.serviceId = this.selectedServiceId
-    } else if(this.services.length > 0) {
+    } else if (this.services.length > 0) {
       this.serviceId = this.services[0].pk
     }
   }
 
   private async onSubmit() {
     this.loading = true
-    if(this.serviceId === 0) {
+    if (this.serviceId === 0) {
       this.$message.error('Надо выбрать услугу')
       return
     }

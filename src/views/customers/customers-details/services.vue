@@ -41,6 +41,7 @@
             label="Исходящая скорость"
           )
             template(slot-scope="{row}") {{ row.speed_out }}
+        el-button(@click="srvAccDialog=true" icon="el-icon-s-tools" type="primary" size='mini') Привязать услуги к этой группе
     el-col(:span='12')
       el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
         .clearfix(slot='header')
@@ -93,7 +94,7 @@
       el-card(shadow="never")
         .clearfix(slot='header')
           span Периодический платёж
-        el-button(type='primary' size='mini') Добавить периодический платёж
+        el-button(type='primary' size='mini' disabled) Добавить периодический платёж
 
     el-dialog(
       title="Купить услугу"
@@ -105,6 +106,12 @@
         :services="services"
         :selectedServiceId="selectedServiceId"
       )
+    el-dialog(
+      title="Принадлежность услуг к группам"
+      :visible.sync="srvAccDialog"
+      width="30%"
+    )
+      service-accessory(v-on:done="srvAccDone")
 </template>
 
 <script lang="ts">
@@ -115,10 +122,11 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomer, ICustomerService } from '@/api/customers/types'
 import { ServiceModule } from '@/store/modules/services/service'
 import BuyService from './buyService.vue'
+import ServiceAccessory from './service-accessory.vue'
 
 @Component({
   name: 'Services',
-  components: { BuyService }
+  components: { BuyService, ServiceAccessory }
 })
 export default class extends Vue {
   private services: IService[] = []
@@ -128,6 +136,7 @@ export default class extends Vue {
   private currentService: ICustomerService | null = null
   private buyDialog = false
   private selectedServiceId = 0
+  private srvAccDialog = false
 
   private async loadServices() {
     this.servicesLoading = true
@@ -165,7 +174,7 @@ export default class extends Vue {
   async loadCurrentService() {
     this.serviceBlockLoad = true
     const currsrv = await CustomerModule.GetCurrentServiceDetails()
-    if(currsrv) {
+    if (currsrv) {
       this.currentService = currsrv
     } else {
       this.currentService = null
@@ -180,7 +189,7 @@ export default class extends Vue {
     CustomerModule.UpdateCustomer()
   }
   buyOpen(s: IService) {
-    if(s.cost > CustomerModule.balance) {
+    if (s.cost > CustomerModule.balance) {
       this.$confirm('У абонента не достаточно средств для включения услуги, включить её в минус?', {
         confirmButtonText: 'Да',
         cancelButtonText: 'Нет, не надо',
@@ -202,12 +211,17 @@ export default class extends Vue {
       confirmButtonText: 'Да',
       cancelButtonText: 'Нет, не надо',
       type: 'info'
-    }).then(async () => {
+    }).then(async() => {
       await CustomerModule.StopService()
       await CustomerModule.UpdateCustomer()
       await this.loadCurrentService()
       this.$message.success('Услуга остановлена досрочно')
     })
+  }
+
+  srvAccDone() {
+    this.srvAccDialog = false
+    this.loadServices()
   }
 }
 </script>

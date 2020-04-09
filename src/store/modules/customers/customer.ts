@@ -6,7 +6,8 @@ import {
   changeCustomer, delCustomer,
   pickService, makeShot,
   stopService, addBalance,
-  getCurrentService
+  getCurrentService,
+  setGroupAccessory
 } from '@/api/customers/req'
 import store from '@/store'
 
@@ -154,7 +155,7 @@ class Customer extends VuexModule implements ICustomer {
 
   @Action
   public async DelCustomer(id?: number) {
-    if(id) {
+    if (id) {
       await delCustomer(id)
     } else {
       await delCustomer(this.pk)
@@ -196,6 +197,11 @@ class Customer extends VuexModule implements ICustomer {
     })
     this.SET_ALL(r.data)
     return r
+  }
+
+  @Action
+  public async SetGroupAccessory(services: number[]) {
+    await setGroupAccessory(this.pk, this.group, services)
   }
 }
 
