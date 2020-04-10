@@ -55,7 +55,6 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   @Action
   public async SaveLease() {
     const r = await changeCustomerIpLease(this.id, <ICustomerIpLease>{
-      id: this.id,
       ip_address: this.ip_address,
       lease_time: this.lease_time,
       mac_address: this.mac_address,
@@ -65,6 +64,12 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
     })
     this.SET_ALL(r.data)
     return r
+  }
+
+  @Action
+  public async PatchLease(info: any) {
+    const { data } = await changeCustomerIpLease(this.id, info)
+    this.SET_ALL(data)
   }
 
   @Action

@@ -23,7 +23,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { regexpVal } from '@/utils/validate'
 import { CustomerModule } from '@/store/modules/customers/customer'
 
 @Component({

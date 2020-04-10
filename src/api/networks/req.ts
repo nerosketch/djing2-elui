@@ -48,13 +48,16 @@ export const delNetworkIpPool = (poolId: number) =>
   request.delete(`${baseNetUrl}${poolId}/`)
 
 export const groupAttach = (poolId: number, groups: number[]) =>
-  request.post(`${baseNetUrl}${poolId}/`, { gr: groups })
+  request.post(`${baseNetUrl}${poolId}/group_attach/`, { gr: groups })
+
+export const getFreeIP = (id: number) =>
+  request.get(`${baseNetUrl}${id}/get_free_ip/`)
 
 const baseLeaseUrl = '/networks/lease/'
 
 // CustomerIpLease
-export const getCustomerIpLeases = (params?: IDRFRequestListParameters): ICustomerIpLeaseListAxiosResponsePromise =>
-  request.get<ICustomerIpLeaseList>(baseLeaseUrl, { params })
+export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseListAxiosResponsePromise =>
+  request.get<ICustomerIpLeaseList>(baseLeaseUrl, { params: { params, customer } })
 
 export const getCustomerIpLease = (leaseId: number): ICustomerIpLeaseAxoisResponsePromise =>
   request.get<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`)

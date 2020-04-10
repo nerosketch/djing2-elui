@@ -3,7 +3,8 @@ import store from '@/store'
 import {
   getNetworkIpPool, delNetworkIpPool,
   addNetworkIpPool, changeNetworkIpPool,
-  groupAttach
+  groupAttach,
+  getFreeIP
 } from '@/api/networks/req'
 import { INetworkIpPool, INetworkIpPoolKind } from '@/api/networks/types'
 
@@ -21,6 +22,11 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   @Mutation
   private SET_GROUPS(groups: number[]) {
     this.groups = groups
+  }
+
+  @Mutation
+  public SET_ID(id: number) {
+    this.id = id
   }
 
   @Mutation
@@ -87,6 +93,12 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   public async GroupAttach(groups: number[]) {
     await groupAttach(this.id, groups)
     this.SET_GROUPS(groups)
+  }
+
+  @Action
+  public async GetFreeIP() {
+    const { data } = await getFreeIP(this.id)
+    return data
   }
 }
 

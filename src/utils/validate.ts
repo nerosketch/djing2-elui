@@ -1,6 +1,10 @@
 'use strict'
 
 export const regexpVal = (expr: RegExp) => (rule: any, value: string, callback: Function) => {
+  if (!value) {
+    callback()
+    return
+  }
   if (!expr.test(value)) {
     callback(new Error(rule.message))
   } else {

@@ -79,7 +79,7 @@ export default class extends Vue {
   private async getAllCustomers() {
     this.customersLoading = true
     const { data } = await getCustomers({
-      page: 3,
+      page: 1,
       page_size: 40,
       group: this.groupId
     })
