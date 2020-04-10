@@ -56,7 +56,6 @@ class Group extends VuexModule implements IGroup {
   @Action
   public async SaveGroup() {
     const r = await changeGroup(this.pk, <IGroup>{
-      pk: 0,
       title: this.title,
       code: this.code
     })

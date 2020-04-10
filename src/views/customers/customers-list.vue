@@ -37,7 +37,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomer, IDRFRequestListParametersCustomer } from '@/api/customers/types'
 import { getCustomers } from '@/api/customers/req'
-import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
+import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -88,7 +88,9 @@ export default class extends Vue {
     },
     {
       prop: 'btn',
-      label: 'Ping'
+      label: 'Ping',
+      width: 90,
+      align: DataTableColumnAlign.CENTER
     }
   ]
 
