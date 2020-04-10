@@ -1,31 +1,15 @@
 <template lang="pug">
 div
-  el-table(
-    v-loading='loading'
-    :data='finlog'
-    border fit
-    size='small'
+  datatable(
+    :columns="tableColumns"
+    :getData="loadLog"
+    :loading="loading"
   )
-    el-table-column(
-      align="center"
-      label="Сумма"
-      width="80"
-    )
-      template(slot-scope="{row}") {{ row.cost }}
-    el-table-column(
-      label="Дата оплаты"
-      width='160'
-    )
-      template(slot-scope="{row}") {{ row.date }}
-    el-table-column(
-      label="Назначил"
-      width='180'
-    )
-      template(slot-scope="{row}") {{ row.author_name || 'Система' }}
-    el-table-column(
-      label="Комментарий"
-    )
-      template(slot-scope="{row}") {{ row.comment }}
+    span(slot="cost" slot-scope="{row}") {{ row.cost }}
+    span(slot="date" slot-scope="{row}") {{ row.date }}
+    span(slot="author_name" slot-scope="{row}") {{ row.author_name || 'Система' }}
+    span(slot="comment" slot-scope="{row}") {{ row.comment }}
+
   el-button(type="primary" @click="addCashDialog=true" size='small') Пополнить счёт
   el-dialog(
     title="Пополнить счёт"
@@ -37,29 +21,56 @@ div
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomerLog } from '@/api/customers/types'
 import { getCustomerPayLog } from '@/api/customers/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
+import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import AddCash from './add-cash.vue'
+
+class DataTableComp extends DataTable<ICustomerLog> {}
 
 @Component({
   name: 'Finance',
-  components: { AddCash }
+  components: { AddCash, 'datatable': DataTableComp }
 })
 export default class extends Vue {
-  private finlog: ICustomerLog[] = []
   private loading = false
   private addCashDialog = false
 
-  private async loadLog() {
+  private tableColumns: IDataTableColumn[] = [
+    {
+      prop: 'cost',
+      label: 'Сумма',
+      width: 80
+    },
+    {
+      prop: 'date',
+      label: 'Дата оплаты',
+      width: 160
+    },
+    {
+      prop: 'author_name',
+      label: 'Назначил',
+      width: 180
+    },
+    {
+      prop: 'comment',
+      label: 'Комментарий'
+    }
+  ]
+
+  private async loadLog(params?: IDRFRequestListParameters) {
+    let r
     this.loading = true
-    const r = await getCustomerPayLog({
-      page: 1,
-      page_size: 500,
-      customer: CustomerModule.pk
-    })
-    this.finlog = r.data.results
+    if(params) {
+      const newParams = Object.assign({ customer: CustomerModule.pk }, params)
+      r = await getCustomerPayLog(newParams)
+    } else {
+      r = await getCustomerPayLog()
+    }
     this.loading = false
+    return r
   }
 
   created() {

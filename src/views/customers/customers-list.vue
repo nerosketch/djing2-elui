@@ -1,90 +1,114 @@
 <template lang="pug">
   .app-container
-    el-table(
-      v-loading='customersLoading'
-      :data="customersList"
-      element-loading-text="Загрузка"
-      border
-      fit
-      highlight-current-row
-      size='small'
+    datatable(
+      :columns="tableColumns"
+      :getData="getAllCustomers"
+      :loading="customersLoading"
     )
-      el-table-column(
-        align="center"
-        label="ID"
-        width="60"
+      span(slot="pk" slot-scope="{row}") {{ row.pk }}
+
+      el-link(slot="username" slot-scope="{row}" type="primary")
+        router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}") {{ row.username }}
+
+      span(slot="fio" slot-scope="{row}") {{ row.fio }}
+
+      span(slot="street_name" slot-scope="{row}") {{ row.street_name }}
+
+      span(slot="house" slot-scope="{row}") {{ row.house }}
+
+      el-link(slot="telephone" slot-scope="{row}" type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
+
+      span(slot="service_title" slot-scope="{row}") {{ row.service_title }}
+
+      span(slot="balance" slot-scope="{row}") {{ row.balance }}
+
+      span(slot="gateway_title" slot-scope="{row}") {{ row.gateway_title }}
+
+      el-button(
+        slot="btn" slot-scope="{row}"
+        type="primary" size="mini"
+        icon='el-icon-check' circle
       )
-        template(slot-scope="scope") {{ scope.$index }}
-      el-table-column(
-        label="Логин"
-        width="90"
-      )
-        el-link(slot-scope="scope" type="primary")
-          router-link(:to="{name: 'customerDetails', params:{uid: scope.row.pk }}") {{ scope.row.username }}
-      el-table-column(
-        label="ФИО"
-      )
-        template(slot-scope="scope") {{ scope.row.fio }}
-      el-table-column(
-        label="Улица"
-      )
-        template(slot-scope="scope") {{ scope.row.street_name }}
-      el-table-column(
-        label="Квартира"
-      )
-        template(slot-scope="scope") {{ scope.row.house }}
-      el-table-column(
-        label="Телефон"
-      )
-        el-link(slot-scope="scope" type="primary" :href="`tel:${scope.row.telephone}`") {{ scope.row.telephone }}
-      el-table-column(
-        label="Услуга"
-      )
-        template(slot-scope="scope") {{ scope.row.service_title }}
-      el-table-column(
-        label="Баланс"
-      )
-        template(slot-scope="scope") {{ scope.row.balance }}
-      el-table-column(
-        label="Шлюз"
-      )
-        template(slot-scope="scope") {{ scope.row.gateway_title }}
-      el-table-column(
-        label="Ping"
-        align="center"
-        width="90"
-      )
-        el-button(slot-scope="scope" type="primary" size="mini") Ping
 
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { ICustomer } from '@/api/customers/types'
+import { IDRFRequestListParameters } from '@/api/types'
+import { ICustomer, IDRFRequestListParametersCustomer } from '@/api/customers/types'
 import { getCustomers } from '@/api/customers/req'
+import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
+
+class DataTableComp extends DataTable<ICustomer> {}
 
 @Component({
-  name: 'CustomersList'
+  name: 'CustomersList',
+  components: { 'datatable': DataTableComp }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private groupId!: number
 
+  private tableColumns: IDataTableColumn[] = [
+    {
+      prop: 'pk',
+      label: 'ID',
+      width: 60
+    },
+    {
+      prop: 'username',
+      label: 'Логин'
+    },
+    {
+      prop: 'fio',
+      label: 'ФИО'
+    },
+    {
+      prop: 'street_name',
+      label: 'Улица'
+    },
+    {
+      prop: 'house',
+      label: 'Квартира'
+    },
+    {
+      prop: 'telephone',
+      label: 'Телефон'
+    },
+    {
+      prop: 'service_title',
+      label: 'Услуга'
+    },
+    {
+      prop: 'balance',
+      label: 'Баланс'
+    },
+    {
+      prop: 'gateway_title',
+      label: 'Шлюз'
+    },
+    {
+      prop: 'btn',
+      label: 'Ping'
+    }
+  ]
+
   private customersLoading: boolean = true
-  private customersList: ICustomer[] = []
 
   created() {
     this.getAllCustomers()
   }
 
-  private async getAllCustomers() {
+  private async getAllCustomers(params?: IDRFRequestListParameters) {
     this.customersLoading = true
-    const { data } = await getCustomers({
-      page: 1,
-      page_size: 40,
-      group: this.groupId
-    })
-    this.customersList = data.results
+    let r
+    if(params) {
+      const newParams: IDRFRequestListParametersCustomer = Object.assign({ group: this.groupId }, params)
+      r = await getCustomers(newParams)
+    } else {
+      r = await getCustomers()
+    }
     this.customersLoading = false
+    return r
   }
 }
 </script>

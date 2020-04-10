@@ -5,7 +5,7 @@
       :data="tableData"
       v-bind="$attrs"
       style="width: 100%"
-      border
+      border fit
       v-on="listeners"
     >
       <slot name="columns">

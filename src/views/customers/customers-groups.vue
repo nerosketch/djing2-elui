@@ -1,52 +1,58 @@
 <template lang="pug">
   .app-container
-    el-table(
-      v-loading='groupsLoading'
-      :data="groupList"
-      element-loading-text="Loading"
-      border
-      fit
-      highlight-current-row
+    datatable(
+      :columns="tableColumns"
+      :getData="getGroups"
+      :loading="groupsLoading"
     )
-      el-table-column(
-        align="center"
-        label="ID"
-        width="95"
-      )
-        template(slot-scope="scope") {{ scope.$index }}
-      el-table-column(label="Title")
-        el-link(slot-scope="scope" type="primary")
-          router-link(:to="{name: 'customersList', params:{groupId: scope.row.pk}}") {{ scope.row.title }}
-      el-table-column(
-        label="Абонентов"
-        width="140"
-        align="center"
-      )
-        template(slot-scope="scope") {{ scope.row.usercount }}
-
+      span(slot="pk" slot-scope="{row}") {{ row.pk }}
+      el-link(slot="title" slot-scope="{row}" type="primary")
+        router-link(:to="{name: 'customersList', params:{ groupId: row.pk }}") {{ row.title }}
+      span(slot="usercount" slot-scope="{row}") {{ row.usercount }}
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { IDRFRequestListParameters } from '@/api/types'
 import { getCustomerGroups } from '@/api/customers/req'
 import { ICustomerGroup } from '@/api/customers/types'
+import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
+
+class DataTableComp extends DataTable<ICustomerGroup> {}
 
 @Component({
-  name: 'CustomerGroupList'
+  name: 'CustomerGroupList',
+  components: { 'datatable': DataTableComp }
 })
 export default class extends Vue {
   private groupsLoading = true
-  private groupList: ICustomerGroup[] = []
+
+  private tableColumns: IDataTableColumn[] = [
+    {
+      prop: 'pk',
+      label: 'ID',
+      width: 60
+    },
+    {
+      prop: 'title',
+      label: 'Название'
+    },
+    {
+      prop: 'usercount',
+      label: 'Абонентов',
+      width: 140
+    }
+  ]
 
   created() {
     this.getGroups()
   }
 
-  private async getGroups() {
+  private async getGroups(params?: IDRFRequestListParameters) {
     this.groupsLoading = true
-    const { data } = await getCustomerGroups()
-    this.groupList = data.results
+    const r = await getCustomerGroups(params)
     this.groupsLoading = false
+    return r
   }
 }
 </script>
