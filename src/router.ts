@@ -121,6 +121,15 @@ export default new Router({
             title: 'Задачи',
             icon: 'dashboard'
           }
+        },
+        {
+          path: 't:taskId/',
+          name: 'taskDetails',
+          component: () => import(/* webpackChunkName: "taskdetails" */ '@/views/tasks/task-details.vue'),
+          props: ({ params }) => ({ taskId: Number(params.taskId || 0) }),
+          meta: {
+            hidden: true
+          }
         }
       ]
     },

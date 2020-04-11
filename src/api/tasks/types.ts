@@ -65,10 +65,10 @@ export interface ITask {
   descr: string
   priority: ITaskPriority
   out_date: string
-  state: ITaskState
+  task_state: ITaskState
   mode: ITaskType
   author: number
-  customer: number
+  customer?: number
   is_expired?: boolean
 }
 export type ITaskList = IDRFListResponse<ITask>

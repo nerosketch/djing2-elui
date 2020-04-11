@@ -7,7 +7,8 @@ div
     :tableRowClassName="tableRowClassName"
     ref='tbl'
   )
-    span(slot="id" slot-scope="{row}") {{ row.id }}
+    el-link(slot="id" slot-scope="{row}")
+      router-link(:to="{name: 'taskDetails', params:{ taskId: row.id }}") {{ row.id }}
 
     el-link(slot="customer_full_name" slot-scope="{row}" type="primary")
       router-link(:to="{name: 'customerDetails', params:{uid: row.customer }}") {{ row.customer_full_name }}
@@ -17,9 +18,9 @@ div
     span(slot="descr" slot-scope="{row}") {{ row.descr }}
     span(slot="state_str" slot-scope="{row}") {{ row.state_str }}
     span(slot="time_of_create" slot-scope="{row}") {{ row.time_of_create }}
-    el-button-group(slot="oper" slot-scope="{row}")
-      el-button(icon="el-icon-edit" size="mini")
-      el-button(type="danger" icon="el-icon-delete" size="mini")
+    //- el-button-group(slot="oper" slot-scope="{row}")
+      el-button(icon="el-icon-edit" size="mini" disabled)
+      el-button(type="danger" icon="el-icon-delete" size="mini" disabled)
 
   el-button(
     type="success"
@@ -98,12 +99,12 @@ export default class extends Vue {
       prop: 'time_of_create',
       label: 'Дата создания'
     },
-    {
+    /*{
       prop: 'oper',
       label: 'Действия',
       width: 130,
       align: DataTableColumnAlign.CENTER
-    }
+    }*/
   ]
   private loading = false
 

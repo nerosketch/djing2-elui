@@ -18,3 +18,6 @@ export const logout = () =>
     url: '/profiles/logout/',
     method: 'post'
   })
+
+export const getProfiles = () =>
+  request.get('/profiles/accounts/')

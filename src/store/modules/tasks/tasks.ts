@@ -7,44 +7,52 @@ import { getTask, addTask, changeTask, delTask, finishTask, failTask, remindTask
 @Module({ dynamic: true, store, name: 'task' })
 class Task extends VuexModule implements ITask {
   id = 0
+  author_full_name = ''
+  customer_full_name = ''
   recipients: number[] = []
   descr = ''
   priority = ITaskPriority.LOW
   out_date = ''
-  state = ITaskState.NEW
+  task_state = ITaskState.NEW
   mode = ITaskType.NOT_CHOSEN
   author = 0
   customer = 0
 
   @Mutation
   public SET_ALL(data: ITask) {
+    console.log('Set', data.customer_full_name)
     this.id = data.id
+    this.author_full_name = data.author_full_name!
+    this.customer_full_name = data.customer_full_name!
     this.recipients = data.recipients
     this.descr = data.descr
     this.priority = data.priority
     this.out_date = data.out_date
-    this.state = data.state
+    this.task_state = data.task_state
+    this.task_state = data.task_state
     this.mode = data.mode
     this.author = data.author
-    this.customer = data.customer
+    this.customer = data.customer!
   }
 
   @Mutation
   public RESET_ALL() {
     this.id = 0
+    this.author_full_name = ''
+    this.customer_full_name = ''
     this.recipients = []
     this.descr = ''
     this.priority = ITaskPriority.LOW
     this.out_date = ''
-    this.state = ITaskState.NEW
+    this.task_state = ITaskState.NEW
     this.mode = ITaskType.NOT_CHOSEN
     this.author = 0
     this.customer = 0
   }
 
   @Action
-  public async GetTask(TaskId: number) {
-    const r = await getTask(TaskId)
+  public async GetTask(id: number) {
+    const r = await getTask(id)
     this.SET_ALL(r.data)
     return r
   }

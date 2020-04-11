@@ -35,6 +35,9 @@ const custApiUrl = '/customers/'
 export const getCustomers = (params?: IDRFRequestListParametersCustomer): ICustomerListAxiosResponsePromise =>
   request.get<ICustomerList>(custApiUrl, { params })
 
+export const findCustomers = (name: string): ICustomerListAxiosResponsePromise =>
+  request.get<ICustomerList>(custApiUrl, { params: { search: name } })
+
 export const getCustomer = (id: number): ICustomerAxoisResponsePromise =>
   request.get<ICustomer>(`${custApiUrl}${id}/`)
 
