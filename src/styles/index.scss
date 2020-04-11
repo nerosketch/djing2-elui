@@ -49,3 +49,16 @@ div:focus {
 .el-card__header {
   background-color: aliceblue;
 }
+
+.tab-container {
+  margin: 30px;
+}
+
+.el-table {
+  .success-row {
+    background-color: #f0f9eb;
+  }
+  .error-row {
+    background-color: #ffdbdb;
+  }
+}

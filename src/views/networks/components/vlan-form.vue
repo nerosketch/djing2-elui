@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { IVlanIf } from '@/api/networks/types'
 import { VlanIfModule } from '@/store/modules/networks/vlan'

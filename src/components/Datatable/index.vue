@@ -3,6 +3,7 @@
     <el-table
       v-loading="intLoading"
       :data="tableData"
+      :row-class-name="tableRowClassName"
       v-bind="$attrs"
       style="width: 100%"
       border fit
@@ -83,6 +84,7 @@ export default class <T> extends Vue {
   @Prop({ default: () => Promise.resolve([]) }) private getData!: (params: IDRFRequestListParameters) => IDRFAxiosResponseListPromise<T>
   @Prop({ default: null }) private fields!: string | null
   @Prop({ default: false }) private loading!: boolean
+  @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {

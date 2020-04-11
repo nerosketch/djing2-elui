@@ -5,7 +5,7 @@
       :closable="false"
       style="width:200px; display:inline-block; vertical-align:middle; margin-left:30px;"
       title="Tab with keep-alive"
-      type="success"
+      type="info"
     )
     el-tabs(
       v-model="activeName"
@@ -66,9 +66,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.tab-container {
-  margin: 30px;
-}
-</style>

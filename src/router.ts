@@ -111,6 +111,20 @@ export default new Router({
       ]
     },
     {
+      path: '/tasks',
+      component: Layout,
+      children: [
+        {
+          path: '',
+          component: () => import(/* webpackChunkName: "tasks" */ '@/views/tasks/index.vue'),
+          meta: {
+            title: 'Задачи',
+            icon: 'dashboard'
+          }
+        }
+      ]
+    },
+    {
       path: '/devices',
       component: Layout,
       children: [

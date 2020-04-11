@@ -7,29 +7,8 @@ import { ITaskList, ITaskListAxiosResponsePromise, ITask, ITaskAxoisResponseProm
 // ITask
 const baseTaskUrl = '/tasks/'
 
-export const getTasks = (params: IDRFRequestListParameters): ITaskListAxiosResponsePromise =>
-  request.get<ITaskList>(baseTaskUrl, { params })
-
-export const getTasksAll = (params: IDRFRequestListParameters): ITaskListAxiosResponsePromise =>
-  request.get<ITaskList>(`${baseTaskUrl}get_all/`, { params })
-
-export const getTasksAllNew = (params: IDRFRequestListParameters): ITaskListAxiosResponsePromise =>
-  request.get<ITaskList>(`${baseTaskUrl}get_all_new/`, { params })
-
-export const getTasksNew = (params: IDRFRequestListParameters): ITaskListAxiosResponsePromise =>
-  request.get<ITaskList>(`${baseTaskUrl}get_new/`, { params })
-
-export const getTasksFailed = (params: IDRFRequestListParameters): ITaskListAxiosResponsePromise =>
-  request.get<ITaskList>(`${baseTaskUrl}get_failed/`, { params })
-
-export const getTasksFinished = (params: IDRFRequestListParameters): ITaskListAxiosResponsePromise =>
-  request.get<ITaskList>(`${baseTaskUrl}get_finished/`, { params })
-
-export const getTasksOwn = (params: IDRFRequestListParameters): ITaskListAxiosResponsePromise =>
-  request.get<ITaskList>(`${baseTaskUrl}get_own/`, { params })
-
-export const getTasksMy = (params: IDRFRequestListParameters): ITaskListAxiosResponsePromise =>
-  request.get<ITaskList>(`${baseTaskUrl}get_my/`, { params })
+export const getTasks = (params?: IDRFRequestListParameters, url: string = ''): ITaskListAxiosResponsePromise =>
+  request.get<ITaskList>(`${baseTaskUrl}${url ? (url + '/') : ''}`, { params })
 
 export const getTask = (id: number): ITaskAxoisResponsePromise =>
   request.get<ITask>(`${baseTaskUrl}${id}/`)

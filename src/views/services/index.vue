@@ -66,9 +66,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.tab-container {
-  margin: 30px;
-}
-</style>

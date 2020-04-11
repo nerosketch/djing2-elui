@@ -76,7 +76,6 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
-  private leases: ICustomerIpLease[] = []
   private dialogVisible = false
   private leaseLoading = false
 
@@ -99,7 +98,6 @@ export default class extends Vue {
   private async loadLeases(params?: IDRFRequestListParameters) {
     this.leaseLoading = true
     const r = await getCustomerIpLeases(params)
-    let leases = r.data.results
     this.leaseLoading = false
     return r
   }
