@@ -83,6 +83,19 @@ export default new Router({
       ]
     },
     {
+      path: '/search',
+      component: Layout,
+      meta: { hidden: true },
+      children: [
+        {
+          path: '',
+          name: 'searchPlace',
+          component: () => import(/* webpackChunkName: "search" */ '@/views/search-place.vue'),
+          meta: { hidden: true }
+        }
+      ]
+    },
+    {
       path: '/groups',
       component: Layout,
       children: [

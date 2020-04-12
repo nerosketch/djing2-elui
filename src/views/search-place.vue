@@ -1,0 +1,64 @@
+<template lang="pug">
+  .app-container
+    el-card(shadow="never" :loading='loading')
+      .clearfix(slot='header')
+        span Поиск по: {{ searchStr }}
+      el-row(:gutter='5')
+        el-col(:sm='24' :md='12')
+          el-card(
+            shadow="hover"
+            :body-style="defCardStyle"
+            v-for="(c, i) in customers"
+            :key="i"
+          )
+            div
+              i.el-icon-s-custom 
+              el-link(type="primary")
+                router-link(:to="{ name: 'customerDetails', params: {uid: c.id } }") {{ c.username }}
+            p {{ c.fio }}, {{ c.group_title }}. 
+              i {{ c.telephone }}
+        el-col(:sm='24' :md='12')
+          el-card(
+            shadow="hover"
+            :body-style="defCardStyle"
+            v-for="(d, i) in devices"
+            :key="i"
+          )
+            div
+              i.el-icon-cpu 
+              span {{ d.ip_address }} {{ d.mac_addr}} {{ d.dev_type_str }}
+            p {{ d.comment }}
+</template>
+
+<script lang="ts">
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import { SearchModule } from '@/store/modules/search'
+
+@Component({
+  name: 'SearchPlace'
+})
+export default class extends Vue {
+  private loading = false
+
+  get searchStr() {
+    return SearchModule.searchStr
+  }
+
+  get customers() {
+    return SearchModule.accounts
+  }
+
+  get devices() {
+    return SearchModule.devices
+  }
+
+  get defCardStyle() {
+    return { padding: '10px 13px' }
+  }
+
+  @Watch('searchStr')
+  private async doSearch() {
+    const r = SearchModule.DoSearch()
+  }
+}
+</script>

@@ -10,6 +10,18 @@
       id="breadcrumb-container"
       class="breadcrumb-container"
     />
+
+    <div class='center-header'>
+      <el-input
+        placeholder="Поиск"
+        prefix-icon="el-icon-search"
+        size='small'
+        v-model='searchStr'
+      >
+        <el-button slot="append" icon='el-icon-search' @click="doSearch"/>
+      </el-input>
+    </div>
+
     <div class="right-menu">
       <el-dropdown
         class="avatar-container right-menu-item hover-effect"
@@ -28,22 +40,6 @@
               Home
             </el-dropdown-item>
           </router-link>
-          <a
-            target="_blank"
-            href="https://github.com/armour/vue-typescript-admin-template/"
-          >
-            <el-dropdown-item>
-              Github
-            </el-dropdown-item>
-          </a>
-          <a
-            target="_blank"
-            href="https://armour.github.io/vue-typescript-admin-docs/"
-          >
-            <el-dropdown-item>
-              Docs
-            </el-dropdown-item>
-          </a>
           <el-dropdown-item divided>
             <span
               style="display:block;"
@@ -62,6 +58,7 @@ import { AppModule } from '@/store/modules/app'
 import { UserModule } from '@/store/modules/user'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
+import { SearchModule } from '@/store/modules/search'
 
 @Component({
   name: 'Navbar',
@@ -71,6 +68,7 @@ import Hamburger from '@/components/Hamburger/index.vue'
   }
 })
 export default class extends Vue {
+  private searchStr = ''
   get sidebar() {
     return AppModule.sidebar
   }
@@ -90,6 +88,13 @@ export default class extends Vue {
   private async logout() {
     await UserModule.LogOut()
     this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+  }
+
+  private async doSearch() {
+    await SearchModule.DoSearch(this.searchStr)
+    if (this.$route.path !== '/search/') {
+      this.$router.push({ name: 'searchPlace' })
+    }
   }
 }
 </script>
@@ -171,5 +176,12 @@ export default class extends Vue {
       }
     }
   }
+}
+
+.center-header {
+  display: inline-block;
+  width: 20%;
+  line-height: 50px;
+  margin-left: 3%;
 }
 </style>
