@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     :model='frmMod'
-    v-loading='loading'
+    :loading="loading"
   )
     el-form-item(
       label="Описание"
@@ -66,6 +66,7 @@
         type="datetime"
         value-format="yyyy-MM-ddTHH:mm"
       )
+    p {{ frmMod }}
     el-form-item
       el-button-group
         el-button(type="primary" @click="onSubmit" icon="el-icon-upload" size='small') Сохранить
@@ -74,10 +75,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IProfile } from '@/api/users-types'
 import { ITaskPriority, ITaskState, ITaskType, ITask } from '@/api/tasks/types'
-import { getProfiles } from '@/api/users'
 import CustomerField from '@/components/CustomerField/index.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 
@@ -86,8 +86,9 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
   components: { CustomerField }
 })
 export default class extends Vue {
+  @Prop({ default: [] })
+  private recipients!: IProfile[]
   private loading = false
-  private recipients: IProfile[] = []
 
   private taskTypes = [
     { nm: 'Не выбрано', v: ITaskType.NOT_CHOSEN },
@@ -130,19 +131,29 @@ export default class extends Vue {
     return TaskModule.customer_full_name
   }
 
-  private async loadRecipients() {
+  private async onSubmit() {
     this.loading = true
-    const r = await getProfiles()
-    this.recipients = r.data.results
+    await TaskModule.PatchTask(this.frmMod)
     this.loading = false
   }
-
-  created() {
-    this.loadRecipients()
+  private onDel() {
+    this.$confirm('Задача сейчас будет удалена, внимательно', {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Не нужно',
+    }).then(async () => {
+      await TaskModule.DelTask(this.frmMod.id)
+      this.$message.success('Задача удалена')
+      this.$router.push({
+        name: 'taskList'
+      })
+    })
   }
-
-  private onSubmit() {}
-  private onDel() {}
-  private onFinish() {}
+  private async onFinish() {
+    await TaskModule.FinishTask()
+    this.$message.success('Задача завершена')
+    this.$router.push({
+      name: 'taskList'
+    })
+  }
 }
 </script>

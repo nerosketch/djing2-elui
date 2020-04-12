@@ -9,6 +9,11 @@ class Task extends VuexModule implements ITask {
   id = 0
   author_full_name = ''
   customer_full_name = ''
+  priority_name = ''
+  time_of_create = ''
+  time_diff = ''
+  mode_str = ''
+  state_str = ''
   recipients: number[] = []
   descr = ''
   priority = ITaskPriority.LOW
@@ -20,10 +25,14 @@ class Task extends VuexModule implements ITask {
 
   @Mutation
   public SET_ALL(data: ITask) {
-    console.log('Set', data.customer_full_name)
     this.id = data.id
     this.author_full_name = data.author_full_name!
     this.customer_full_name = data.customer_full_name!
+    this.priority_name = data.priority_name!
+    this.time_of_create = data.time_of_create!
+    this.time_diff = data.time_diff!
+    this.mode_str = data.mode_str!
+    this.state_str = data.state_str!
     this.recipients = data.recipients
     this.descr = data.descr
     this.priority = data.priority
@@ -40,6 +49,11 @@ class Task extends VuexModule implements ITask {
     this.id = 0
     this.author_full_name = ''
     this.customer_full_name = ''
+    this.priority_name = ''
+    this.time_of_create = ''
+    this.time_diff = ''
+    this.mode_str = ''
+    this.state_str = ''
     this.recipients = []
     this.descr = ''
     this.priority = ITaskPriority.LOW

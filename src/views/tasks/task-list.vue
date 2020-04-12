@@ -7,7 +7,7 @@ div
     :tableRowClassName="tableRowClassName"
     ref='tbl'
   )
-    el-link(slot="id" slot-scope="{row}")
+    el-link(slot="id" slot-scope="{row}" type="primary")
       router-link(:to="{name: 'taskDetails', params:{ taskId: row.id }}") {{ row.id }}
 
     el-link(slot="customer_full_name" slot-scope="{row}" type="primary")

@@ -32,7 +32,7 @@ service.interceptors.response.use(
     // code == 50004: invalid user (user not exist)
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
-    if (response.status !== 200) {
+    if (![200,201,202,204].includes(response.status)) {
       Message({
         message: response.statusText || 'Error',
         type: 'error',

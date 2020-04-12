@@ -116,6 +116,7 @@ export default new Router({
       children: [
         {
           path: '',
+          name: 'taskList',
           component: () => import(/* webpackChunkName: "tasks" */ '@/views/tasks/index.vue'),
           meta: {
             title: 'Задачи',
