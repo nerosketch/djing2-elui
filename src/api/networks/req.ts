@@ -56,8 +56,12 @@ export const getFreeIP = (id: number) =>
 const baseLeaseUrl = '/networks/lease/'
 
 // CustomerIpLease
-export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseListAxiosResponsePromise =>
-  request.get<ICustomerIpLeaseList>(baseLeaseUrl, { params: { params, customer } })
+export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseListAxiosResponsePromise => {
+  if (customer) {
+    params = Object.assign({ customer }, params)
+  }
+  return request.get<ICustomerIpLeaseList>(baseLeaseUrl, { params })
+}
 
 export const getCustomerIpLease = (leaseId: number): ICustomerIpLeaseAxoisResponsePromise =>
   request.get<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`)

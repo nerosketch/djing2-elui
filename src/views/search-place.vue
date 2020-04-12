@@ -5,29 +5,43 @@
         span Поиск по: {{ searchStr }}
       el-row(:gutter='5')
         el-col(:sm='24' :md='12')
+          template(v-if="customers.length > 0")
+            el-card(
+              shadow="hover"
+              :body-style="defCardStyle"
+              v-for="(c, i) in customers"
+              :key="i"
+            )
+              div
+                i.el-icon-s-custom 
+                el-link(type="primary")
+                  router-link(:to="{ name: 'customerDetails', params: {uid: c.id } }") {{ c.username }}
+              p {{ c.fio }}, {{ c.group_title }}. 
+                i {{ c.telephone }}
           el-card(
+            v-else
             shadow="hover"
             :body-style="defCardStyle"
-            v-for="(c, i) in customers"
-            :key="i"
           )
-            div
-              i.el-icon-s-custom 
-              el-link(type="primary")
-                router-link(:to="{ name: 'customerDetails', params: {uid: c.id } }") {{ c.username }}
-            p {{ c.fio }}, {{ c.group_title }}. 
-              i {{ c.telephone }}
+            h3 Абоненты не найдены
         el-col(:sm='24' :md='12')
+          template(v-if="devices.length > 0")
+            el-card(
+              shadow="hover"
+              :body-style="defCardStyle"
+              v-for="(d, i) in devices"
+              :key="i"
+            )
+              div
+                i.el-icon-cpu 
+                span {{ d.ip_address }} {{ d.mac_addr}} {{ d.dev_type_str }}
+              p {{ d.comment }}
           el-card(
+            v-else
             shadow="hover"
             :body-style="defCardStyle"
-            v-for="(d, i) in devices"
-            :key="i"
           )
-            div
-              i.el-icon-cpu 
-              span {{ d.ip_address }} {{ d.mac_addr}} {{ d.dev_type_str }}
-            p {{ d.comment }}
+            h3 Устройства не найдены
 </template>
 
 <script lang="ts">

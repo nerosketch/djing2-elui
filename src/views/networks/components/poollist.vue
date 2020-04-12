@@ -8,10 +8,10 @@ div
   )
     span(slot="id" slot-scope="{row}") {{ row.id }}
     span(slot="network" slot-scope="{row}") {{ row.network }}
-    span(slot="descr" slot-scope="{row}") {{ row.description }}
-    span(slot="ipstart" slot-scope="{row}") {{ row.ip_start }}
-    span(slot="ipend" slot-scope="{row}") {{ row.ip_end }}
-    span(slot="gw" slot-scope="{row}") {{ row.gateway }}
+    span(slot="description" slot-scope="{row}") {{ row.description }}
+    span(slot="ip_start" slot-scope="{row}") {{ row.ip_start }}
+    span(slot="ip_end" slot-scope="{row}") {{ row.ip_end }}
+    span(slot="gateway" slot-scope="{row}") {{ row.gateway }}
     el-button-group(slot="oper" slot-scope="{row}")
       el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
       el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
@@ -57,23 +57,23 @@ export default class extends Vue {
       sortable: true
     },
     {
-      prop: 'descr',
+      prop: 'description',
       label: 'Описание'
     },
     {
-      prop: 'ipstart',
+      prop: 'ip_start',
       label: 'нач. ip',
       sortable: true,
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'ipend',
+      prop: 'ip_end',
       label: 'кон. ip',
       sortable: true,
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'gw',
+      prop: 'gateway',
       label: 'шлюз',
       sortable: true,
       align: DataTableColumnAlign.CENTER

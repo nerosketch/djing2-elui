@@ -62,7 +62,7 @@ export default class extends Vue {
     },
     {
       prop: 'mac_address',
-      label: 'MFC Адрес',
+      label: 'MAC Адрес',
       sortable: true
     },
     {

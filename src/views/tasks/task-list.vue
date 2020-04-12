@@ -79,13 +79,11 @@ export default class extends Vue {
     },
     {
       prop: 'customer_address',
-      label: 'Адрес',
-      sortable: true
+      label: 'Адрес'
     },
     {
       prop: 'mode_str',
-      label: 'Характер поломки',
-      sortable: true
+      label: 'Характер поломки'
     },
     {
       prop: 'descr',
