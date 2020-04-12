@@ -1,7 +1,7 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { IExtraComment } from '@/api/tasks/types'
-import { getComment, addComment, changeComment, delComment } from '@/api/tasks/req'
+import { getComment, changeComment, delComment } from '@/api/tasks/req'
 
 
 @Module({ dynamic: true, store, name: 'comment' })
@@ -13,6 +13,7 @@ class Comment extends VuexModule implements IExtraComment {
   text = ''
   date_create = ''
   task = 0
+  can_remove = false
 
   @Mutation
   public SET_ALL(data: IExtraComment) {
@@ -23,6 +24,7 @@ class Comment extends VuexModule implements IExtraComment {
     this.text = data.text
     this.date_create = data.date_create
     this.task = data.task
+    this.can_remove = data.can_remove!
   }
 
   @Mutation
@@ -34,6 +36,7 @@ class Comment extends VuexModule implements IExtraComment {
     this.text = ''
     this.date_create = ''
     this.task = 0
+    this.can_remove = false
   }
 
   @Action
@@ -41,12 +44,6 @@ class Comment extends VuexModule implements IExtraComment {
     const r = await getComment(id)
     this.SET_ALL(r.data)
     return r
-  }
-
-  @Action
-  public async AddComment(c: IExtraComment) {
-    const { data } = await addComment(c)
-    return data
   }
 
   @Action

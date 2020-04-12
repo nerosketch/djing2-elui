@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import { IDRFRequestListParameters } from '@/api/types'
 import { ITaskList, ITaskListAxiosResponsePromise, ITask, ITaskAxoisResponsePromise, IChangeLogList, IChangeLogListAxiosResponsePromise, IChangeLog, IChangeLogAxoisResponsePromise,
-  IExtraCommentList, IExtraCommentListAxiosResponsePromise, IExtraCommentAxoisResponsePromise, IExtraComment, IDRFRequestListParametersComment
+  IExtraCommentList, IExtraCommentListAxiosResponsePromise, IExtraCommentAxoisResponsePromise, IExtraComment
 } from './types'
 
 // ITask
@@ -53,14 +53,16 @@ export const delChangeLog = (id: number) =>
 
 // IExtraComment
 const baseCommentUrl = '/tasks/comments/'
-export const getComments = (params: IDRFRequestListParametersComment): IExtraCommentListAxiosResponsePromise =>
-  request.get<IExtraCommentList>(baseCommentUrl, { params })
+export const getComments = (task: number): IExtraCommentListAxiosResponsePromise =>
+  request.get<IExtraCommentList>(baseCommentUrl, { params: { task } })
 
 export const getComment = (id: number): IExtraCommentAxoisResponsePromise =>
   request.get<IExtraComment>(`${baseCommentUrl}${id}/`)
 
-export const addComment = (data: IExtraComment): IExtraCommentAxoisResponsePromise =>
-  request.post<IExtraComment>(baseCommentUrl, data)
+export const addComment = (text: string, taskId: number): IExtraCommentAxoisResponsePromise =>
+  request.post<IExtraComment>(baseCommentUrl, {
+    text, task: taskId
+  })
 
 export const changeComment = (id: number, data: IExtraComment): IExtraCommentAxoisResponsePromise =>
   request.patch<IExtraComment>(`${baseCommentUrl}${id}/`, data)

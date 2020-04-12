@@ -66,7 +66,6 @@
         type="datetime"
         value-format="yyyy-MM-ddTHH:mm"
       )
-    p {{ frmMod }}
     el-form-item
       el-button-group
         el-button(type="primary" @click="onSubmit" icon="el-icon-upload" size='small') Сохранить

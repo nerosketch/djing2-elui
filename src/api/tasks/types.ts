@@ -83,13 +83,8 @@ export interface IExtraComment {
   text: string
   date_create: string
   task: number
+  can_remove?: boolean
 }
 export type IExtraCommentList = IDRFListResponse<IExtraComment>
 export type IExtraCommentAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment>
 export type IExtraCommentListAxiosResponsePromise = IDRFAxiosResponsePromise<IExtraCommentList>
-
-export interface IDRFRequestListParametersComment extends IDRFRequestListParameters {
-  act_type?: number
-  who?: number
-  task?: number
-}

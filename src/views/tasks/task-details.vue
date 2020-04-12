@@ -1,12 +1,14 @@
 <template lang="pug">
   el-row.app-container(:gutter="5")
-    el-col(:span="12")
+    el-col(:lg="12" :sm='24')
       el-card(shadow="never")
         .clearfix(slot='header')
           span Редактировать задачу
         task-form(v-if='taskReady' :recipients="recipients")
-    el-col(:span='12')
+    el-col(:lg='12' :sm='24')
       task-info(v-if='taskReady' :recipients="recipients")
+    el-col(:lg='12' :sm='24')
+      comments(v-if='taskReady')
 </template>
 
 <script lang="ts">
@@ -16,10 +18,11 @@ import { getProfiles } from '@/api/users'
 import { IProfile } from '@/api/users-types'
 import TaskForm from './task-form.vue'
 import TaskInfo from './task-info.vue'
+import Comments from './comments.vue'
 
 @Component({
   name: 'TaskDetails',
-  components: { TaskForm, TaskInfo }
+  components: { TaskForm, TaskInfo, Comments }
 })
 export default class extends Vue {
   @Prop({ default: 0 })
