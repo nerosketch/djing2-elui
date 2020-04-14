@@ -104,8 +104,9 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
+    this.$message.success('Сессия изменена')
     this.$refs['table'].GetTableData()
-    this.loadLeases()
+    // this.loadLeases()
   }
 }
 </script>

@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { ICustomerIpLease } from '@/api/networks/types'
@@ -57,6 +57,14 @@ export default class extends Vue {
     lease_time: CustomerIpLeaseModule.lease_time,
     mac_address: CustomerIpLeaseModule.mac_address,
     is_dynamic: CustomerIpLeaseModule.is_dynamic
+  }
+
+  get leaseId() {
+    return CustomerIpLeaseModule.id
+  }
+  @Watch('leaseId')
+  private async onNetwCh() {
+    this.frmMod = await CustomerIpLeaseModule.GetAllState()
   }
 
   private onSubmit() {

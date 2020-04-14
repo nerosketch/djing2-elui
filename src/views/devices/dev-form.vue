@@ -33,6 +33,17 @@
     )
       el-input(v-model="frmMod.mac_addr")
     el-form-item(
+      label="Группа"
+      prop='group'
+    )
+      el-select(v-model="frmMod.group")
+        el-option(
+          v-for="g in groups"
+          :key="g.pk"
+          :label="g.title"
+          :value="g.pk"
+        )
+    el-form-item(
       prop="is_noticeable"
     )
       el-checkbox(v-model="frmMod.is_management") Оповещать при событиях мониторинга&#58;
@@ -42,17 +53,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { IDevice, IDeviceTypeEnum } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
+import { IGroup } from '@/api/groups/types'
+import { getGroups } from '@/api/groups/req'
 
 @Component({
   name: 'dev-form'
 })
 export default class extends Vue {
   private isLoading = false
+  private groups: IGroup[] = []
 
   private frmRules = {
     ip_address: [
@@ -82,7 +96,26 @@ export default class extends Vue {
     { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }
   ]
 
-  private frmMod: IDevice = <IDevice>DeviceModule.context.state
+  private frmMod: IDevice = <IDevice>{
+    pk: DeviceModule.pk,
+    ip_address: DeviceModule.ip_address,
+    mac_addr: DeviceModule.mac_addr,
+    comment: DeviceModule.comment,
+    dev_type: DeviceModule.dev_type,
+    man_passw: DeviceModule.man_passw,
+    group: DeviceModule.group,
+    parent_dev: DeviceModule.parent_dev,
+    snmp_extra: DeviceModule.snmp_extra,
+    extra_data: DeviceModule.extra_data
+  }
+
+  get devId() {
+    return DeviceModule.pk
+  }
+  @Watch('devId')
+  private async onDevCh() {
+    this.frmMod = await DeviceModule.GetAllState()
+  }
 
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {
@@ -96,6 +129,19 @@ export default class extends Vue {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  created() {
+    this.loadGroups()
+  }
+
+  private async loadGroups() {
+    const { data } = await getGroups({
+      page: 1,
+      page_size: 1000,
+      fields: 'pk,title'
+    })
+    this.groups = data.results
   }
 }
 </script>

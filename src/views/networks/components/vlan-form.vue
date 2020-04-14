@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { IVlanIf } from '@/api/networks/types'
 import { VlanIfModule } from '@/store/modules/networks/vlan'
@@ -44,7 +44,20 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: IVlanIf = <IVlanIf>VlanIfModule.context.state
+  private frmMod: IVlanIf = {
+    id: VlanIfModule.id,
+    title: VlanIfModule.title,
+    vid: VlanIfModule.vid,
+    is_management: VlanIfModule.is_management
+  }
+
+  get vId() {
+    return VlanIfModule.id
+  }
+  @Watch('vId')
+  private async onVlanCh() {
+    this.frmMod = await VlanIfModule.GetAllState()
+  }
 
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {

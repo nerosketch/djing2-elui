@@ -67,6 +67,19 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   }
 
   @Action
+  public async GetAllState() {
+    return {
+      id: this.id,
+      ip_address: this.ip_address,
+      pool: this.pool,
+      customer: this.customer,
+      lease_time: this.lease_time,
+      mac_address: this.mac_address,
+      is_dynamic: this.is_dynamic
+    }
+  }
+
+  @Action
   public async PatchLease(info: any) {
     const { data } = await changeCustomerIpLease(this.id, info)
     this.SET_ALL(data)

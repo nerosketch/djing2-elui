@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, ipAddrMaskValidator } from '@/utils/validate'
 import { INetworkIpPool } from '@/api/networks/types'
@@ -70,7 +70,24 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: INetworkIpPool = <INetworkIpPool>NetworkIpPoolModule.context.state
+  private frmMod: INetworkIpPool = {
+    id: NetworkIpPoolModule.id,
+    network: NetworkIpPoolModule.network,
+    kind: NetworkIpPoolModule.kind,
+    description: NetworkIpPoolModule.description,
+    groups: NetworkIpPoolModule.groups,
+    ip_start: NetworkIpPoolModule.ip_start,
+    ip_end: NetworkIpPoolModule.ip_end,
+    gateway: NetworkIpPoolModule.gateway
+  }
+
+  get netId() {
+    return NetworkIpPoolModule.id
+  }
+  @Watch('netId')
+  private async onNetwCh() {
+    this.frmMod = await NetworkIpPoolModule.GetAllState()
+  }
 
   private onSubmit() {
     (this.$refs['poolfrm'] as Form).validate(async valid => {

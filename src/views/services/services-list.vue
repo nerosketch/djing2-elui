@@ -138,7 +138,6 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs['table'].GetTableData()
-    this.loadServices()
   }
 }
 </script>

@@ -63,6 +63,20 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   }
 
   @Action
+  public async GetAllState() {
+    return {
+      id: this.id,
+      network: this.network,
+      kind: this.kind,
+      description: this.description,
+      groups: this.groups,
+      ip_start: this.ip_start,
+      ip_end: this.ip_end,
+      gateway: this.gateway
+    }
+  }
+
+  @Action
   public async AddPool(data: INetworkIpPool) {
     return await addNetworkIpPool(data)
   }

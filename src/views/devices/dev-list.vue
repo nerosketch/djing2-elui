@@ -24,6 +24,7 @@
       width="30%"
     )
       dev-form(
+        v-if="dialogVisible"
         v-on:done="frmDone"
       )
 
@@ -128,9 +129,6 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs['table'].GetTableData()
-    this.loadDevs(<IDRFRequestListParametersDevGroup> {
-      group: this.groupId
-    })
   }
 }
 </script>

@@ -76,6 +76,16 @@ class VlanIf extends VuexModule implements IVlanIf {
   }
 
   @Action
+  public async GetAllState() {
+    return {
+      id: this.id,
+      title: this.title,
+      vid: this.vid,
+      is_management: this.is_management
+    }
+  }
+
+  @Action
   public async DelVlan(vlanId: number) {
     await delVlanIf(vlanId)
     this.RESET_ALL()

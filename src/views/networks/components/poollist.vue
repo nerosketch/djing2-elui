@@ -115,8 +115,9 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
+    this.$message.success('Подсеть сохранена')
     this.$refs['table'].GetTableData()
-    this.loadPools()
+    // this.loadPools()
   }
 }
 </script>
