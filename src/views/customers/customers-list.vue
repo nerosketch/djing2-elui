@@ -4,6 +4,7 @@
       :columns="tableColumns"
       :getData="getAllCustomers"
       :loading="customersLoading"
+      ref='tbl'
     )
       span(slot="pk" slot-scope="{row}") {{ row.pk }}
 
@@ -29,6 +30,18 @@
         type="primary" size="mini"
         icon='el-icon-check' circle
       )
+    el-button(
+      type='primary'
+      size='small'
+      icom='el-icon-plus'
+      @click="addCustomerDialog=true"
+    ) Добавить абонента
+
+    el-dialog(
+      title='Добавить абонента'
+      :visible.sync='addCustomerDialog'
+    )
+      new-customer-form(:selectedGroup='groupId' v-on:done="addFrmDone")
 
 </template>
 
@@ -38,15 +51,20 @@ import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomer, IDRFRequestListParametersCustomer } from '@/api/customers/types'
 import { getCustomers } from '@/api/customers/req'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import NewCustomerForm from './new-customer-form.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
 @Component({
   name: 'CustomersList',
-  components: { 'datatable': DataTableComp }
+  components: { 'datatable': DataTableComp, NewCustomerForm }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private groupId!: number
+  private addCustomerDialog = false
+  public readonly $refs!: {
+    tbl: DataTableComp
+  }
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -111,6 +129,12 @@ export default class extends Vue {
     }
     this.customersLoading = false
     return r
+  }
+
+  private addFrmDone(newCustomer: ICustomer) {
+    this.addCustomerDialog = false
+    this.$message.success('Абонент добавлен')
+    this.$refs['tbl'].GetTableData()
   }
 }
 </script>

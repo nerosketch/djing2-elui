@@ -9,26 +9,26 @@ export interface ICustomer {
   telephone: string
   fio: string
   group: number
-  group_title: string
+  group_title?: string
   balance: number
   description: string
   street: number
-  street_name: string
+  street_name?: string
   house: string
   is_active: boolean
-  gateway: number
-  gateway_title: string
+  gateway: number | null
+  gateway_title?: string
   auto_renewal_service: boolean
   device: number | null
-  device_comment: string
+  device_comment?: string
   dev_port: number | null
   last_connected_service: number | null
   current_service: number | null
-  service_title: string | null
+  service_title?: string | null
   service_id: number | null
   is_dynamic_ip: boolean
-  full_name: string
-  raw_password: string
+  full_name?: string
+  raw_password?: string
 }
 export type ICustomerList = IDRFListResponse<ICustomer>
 export type ICustomerAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomer>
