@@ -119,7 +119,22 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: ICustomer = <ICustomer>Object.assign({}, CustomerModule.context.state)
+  private frmMod: ICustomer = <ICustomer>{
+    username: '',
+    telephone: '',
+    fio: '',
+    group: 0,
+    balance: 0.0,
+    street: 0,
+    house: '',
+    is_active: false,
+    gateway: 0,
+    auto_renewal_service: false,
+    device: 0,
+    dev_port: 0,
+    is_dynamic_ip: false,
+    description: ''
+  }
 
   created() {
     this.loadGroups()

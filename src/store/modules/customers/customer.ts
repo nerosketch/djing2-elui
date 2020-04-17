@@ -25,12 +25,12 @@ class Customer extends VuexModule implements ICustomer {
   street_name = ''
   house = ''
   is_active = false
-  gateway = 0
+  gateway = null
   gateway_title = ''
   auto_renewal_service = false
-  device = 0
+  device = null
   device_comment = ''
-  dev_port = 0
+  dev_port = null
   last_connected_service = 0
   current_service = 0
   service_title = ''
@@ -46,26 +46,26 @@ class Customer extends VuexModule implements ICustomer {
     this.telephone = data.telephone
     this.fio = data.fio
     this.group = data.group
-    this.group_title = data.group_title
+    this.group_title = data.group_title!
     this.balance = data.balance
     this.description = data.description
     this.street = data.street
-    this.street_name = data.street_name
+    this.street_name = data.street_name!
     this.house = data.house
     this.is_active = data.is_active
-    this.gateway = data.gateway
-    this.gateway_title = data.gateway_title
+    this.gateway = data.gateway!
+    this.gateway_title = data.gateway_title!
     this.auto_renewal_service = data.auto_renewal_service
     this.device = data.device!
-    this.device_comment = data.device_comment
+    this.device_comment = data.device_comment!
     this.dev_port = data.dev_port!
     this.last_connected_service = data.last_connected_service!
     this.current_service = data.current_service!
     this.service_title = data.service_title!
     this.service_id = data.service_id!
     this.is_dynamic_ip = data.is_dynamic_ip
-    this.full_name = data.full_name
-    this.raw_password = data.raw_password
+    this.full_name = data.full_name!
+    this.raw_password = data.raw_password!
     return this
   }
 
@@ -83,12 +83,12 @@ class Customer extends VuexModule implements ICustomer {
     this.street_name = ''
     this.house = ''
     this.is_active = false
-    this.gateway = 0
+    this.gateway = null
     this.gateway_title = ''
     this.auto_renewal_service = false
-    this.device = 0
+    this.device = null
     this.device_comment = ''
-    this.dev_port = 0!
+    this.dev_port = null
     this.last_connected_service = 0!
     this.current_service = 0!
     this.service_title = ''!
@@ -191,12 +191,34 @@ class Customer extends VuexModule implements ICustomer {
 
   @Action
   public async ClearDevice() {
-    const r = await changeCustomer(this.pk, <ICustomer>{
+    const r = await changeCustomer(this.pk, {
       device: null,
       dev_port: null
     })
     this.SET_ALL(r.data)
     return r
+  }
+
+  @Action
+  public async GetAllState() {
+    return {
+      pk: this.pk,
+      username: this.username,
+      telephone: this.telephone,
+      fio: this.fio,
+      group: this.group,
+      balance: this.balance,
+      street: this.street,
+      house: this.house,
+      is_active: this.is_active,
+      gateway: this.gateway,
+      auto_renewal_service: this.auto_renewal_service,
+      device: this.device,
+      dev_port: this.dev_port,
+      is_dynamic_ip: this.is_dynamic_ip,
+      raw_password: this.raw_password,
+      description: this.description
+    }
   }
 
   @Action

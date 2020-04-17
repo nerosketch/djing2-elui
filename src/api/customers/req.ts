@@ -47,7 +47,7 @@ export const getCustomerFormInitial = (): ICustomerAxoisResponsePromise =>
 export const addCustomer = (data: ICustomer): ICustomerAxoisResponsePromise =>
   request.post<ICustomer>(custApiUrl, data)
 
-export const changeCustomer = (id: number, newData: ICustomer): ICustomerAxoisResponsePromise =>
+export const changeCustomer = (id: number, newData: object): ICustomerAxoisResponsePromise =>
   request.patch<ICustomer>(`${custApiUrl}${id}/`, newData)
 
 export const delCustomer = (id: number) =>
