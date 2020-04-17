@@ -6,7 +6,6 @@
     :model='frmMod'
     v-loading='isLoading'
   )
-    h2 {{ frmMod }}
     el-form-item(
       label="Нахзвание"
       prop='title'
@@ -22,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
 import { IGroup } from '@/api/groups/types'
 import { latinValidator } from '@/utils/validate'
@@ -43,13 +42,36 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: IGroup = <IGroup>GroupModule.context.state
+  get onChId() {
+    return GroupModule.pk
+  }
+  @Watch('onChId')
+  private onChangeGroup() {
+    this.frmMod.title = GroupModule.title
+    this.frmMod.code = GroupModule.code
+  }
+
+  private frmMod = {
+    title: '',
+    code: ''
+  }
+  get isNew() {
+    return GroupModule.pk === 0
+  }
+
+  created() {
+    this.frmMod.title = GroupModule.title
+    this.frmMod.code = GroupModule.code
+  }
 
   private async onSubmit() {
     this.isLoading = true
-    GroupModule.ChangeParam({ key: 'title', value: this.frmMod.title })
-    GroupModule.ChangeParam({ key: 'code', value: this.frmMod.code })
-    const newDat = await GroupModule.SaveGroup()
+    let newDat
+    if (this.isNew) {
+      newDat = await GroupModule.AddGroup(this.frmMod)
+    } else {
+      newDat = await GroupModule.PatchGroup(this.frmMod)
+    }
     this.isLoading = false
     this.$emit('done', newDat)
   }

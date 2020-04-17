@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomer, ICustomerGroup, ICustomerStreet } from '@/api/customers/types'
@@ -78,16 +78,14 @@ export default class extends Vue {
   @Prop({ default: 0 })
   private selectedGroup!: number
 
-  private frmMod: ICustomer = <ICustomer>{
+  private frmMod = {
     username: '',
     telephone: '',
     fio: '',
     group: this.selectedGroup,
-    balance: 0.0,
     street: 0,
     house: '',
     is_active: false,
-    auto_renewal_service: false,
     is_dynamic_ip: false,
     description: ''
   }
@@ -105,6 +103,24 @@ export default class extends Vue {
     ]
   }
 
+  get onChId() {
+    return CustomerModule.pk
+  }
+  @Watch('onChId')
+  private onChangedId() {
+    this.frmMod = {
+      username: CustomerModule.username,
+      telephone: CustomerModule.telephone,
+      fio: CustomerModule.fio,
+      group: CustomerModule.group,
+      street: CustomerModule.street,
+      house: CustomerModule.house,
+      is_active: CustomerModule.is_active,
+      is_dynamic_ip: CustomerModule.is_dynamic_ip,
+      description: CustomerModule.description
+    }
+  }
+
   async created() {
     await this.loadGroups()
     await this.loadStreets()
@@ -114,7 +130,7 @@ export default class extends Vue {
     this.loading = true
     const { data } = await getStreets({
       page: 1,
-      page_size: 100,
+      page_size: 1000,
       group: this.selectedGroup
     })
     this.customerStreets = data.results

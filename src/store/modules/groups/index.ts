@@ -48,38 +48,29 @@ class Group extends VuexModule implements IGroup {
   }
 
   @Action
-  public async AddGroup(grp: IGroup) {
+  public async AddGroup(grp: object) {
     const { data } = await addGroup(grp)
-    return data
+    this.SET_ALL(data)
   }
 
   @Action
   public async SaveGroup() {
-    const r = await changeGroup(this.pk, <IGroup>{
+    await this.PatchGroup({
       title: this.title,
       code: this.code
     })
-    this.SET_ALL(r.data)
-    return r
+  }
+
+  @Action
+  public async PatchGroup(newData: object) {
+    const { data } = await changeGroup(this.pk, newData)
+    this.SET_ALL(data)
   }
 
   @Action
   public async DelGroup(groupId: number) {
     await delGroup(groupId)
     this.RESET_ALL()
-  }
-
-  @Mutation
-  private CHANGE_VAL(payload: { key: string, value: any }) {
-    const { key, value } = payload
-    if (Object.prototype.hasOwnProperty.call(this, key)) {
-      (this as any)[key] = value
-    }
-  }
-
-  @Action
-  public async ChangeParam(payload: { key: string, value: any}) {
-    await this.CHANGE_VAL(payload)
   }
 }
 

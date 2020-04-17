@@ -8,10 +8,10 @@ export const getGroups = (params?: IDRFRequestListParameters): IGroupListAxiosRe
 export const getGroup = (groupId: number): IGroupAxoisResponsePromise =>
   request.get<IGroup>(`/groups/${groupId}/`)
 
-export const addGroup = (newGroup: IGroup): IGroupAxoisResponsePromise =>
+export const addGroup = (newGroup: object): IGroupAxoisResponsePromise =>
   request.post<IGroup>('/groups/', newGroup)
 
-export const changeGroup = (groupId: number, newData: IGroup): IGroupAxoisResponsePromise =>
+export const changeGroup = (groupId: number, newData: object): IGroupAxoisResponsePromise =>
   request.patch<IGroup>(`/groups/${groupId}/`, newData)
 
 export const delGroup = (groupId: number) =>

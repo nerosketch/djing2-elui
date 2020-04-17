@@ -12,9 +12,16 @@
         el-button-group
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
           el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
+    
+    el-button(
+      type='success'
+      size='small'
+      icon='el-icon-plus'
+      @click='openNew'
+    ) Добавить группу
 
     el-dialog(
-      title="Tips"
+      :title="dialogTitle"
       :visible.sync="dialogVisible"
       width="30%"
     )
@@ -80,6 +87,18 @@ export default class extends Vue {
     await GroupModule.SET_ALL(group)
     this.dialogVisible = true
   }
+  private async openNew() {
+    await GroupModule.RESET_ALL()
+    this.dialogVisible = true
+  }
+
+  get dialogTitle() {
+    let t = 'Изменить'
+    if (GroupModule.pk === 0) {
+      t = 'Создать'
+    }
+    return `${t} группу`
+  }
 
   private async loadGroups(params?: IDRFRequestListParameters) {
     const r = await getGroups(params)
@@ -87,15 +106,17 @@ export default class extends Vue {
     return r
   }
 
-  private async delGroup(group: IGroup) {
-    if (confirm(`Ты действительно хочешь удалить группу "${group.title}"?`)) {
+  private delGroup(group: IGroup) {
+    this.$confirm(`Ты действительно хочешь удалить группу "${group.title}"?`).then(async() => {
       await GroupModule.DelGroup(group.pk)
+      this.$message.success(`Группа "${group.title}" удалена`)
       this.$refs['table'].GetTableData()
-    }
+    })
   }
 
   private frmDone() {
     this.dialogVisible = false
+    this.$message.success('Группа сохранена')
     this.$refs['table'].GetTableData()
   }
 }

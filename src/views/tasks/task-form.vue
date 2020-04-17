@@ -63,8 +63,8 @@
     )
       el-date-picker(
         v-model="frmMod.out_date"
-        type="datetime"
-        value-format="yyyy-MM-ddTHH:mm"
+        type="date"
+        value-format="yyyy-MM-dd"
       )
     el-form-item
       el-button-group
@@ -133,6 +133,7 @@ export default class extends Vue {
   private async onSubmit() {
     this.loading = true
     await TaskModule.PatchTask(this.frmMod)
+    this.$message.success('Задача сохранена')
     this.loading = false
   }
   private onDel() {

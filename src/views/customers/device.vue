@@ -10,24 +10,12 @@ el-form(
       el-col(:span='8')
         b Устройство
       el-col(:span='16')
-        el-select.input-with-select(v-model='selectedDevice' size="mini")
-          el-option(
-            v-for="dv in devices"
-            :key="dv.pk"
-            :label="dv.comment"
-            :value="dv.pk"
-          )
+        device-select(v-model="frmMod.device" :groupId="groupId")
     el-row
       el-col(:span='8')
         b Порт устройства
       el-col(:span='16')
-        el-select(v-model='frmMod.dev_port' size="mini")
-          el-option(
-            v-for="dp in devPorts"
-            :key="dp.pk"
-            :label="dp.descr"
-            :value="dp.pk"
-          )
+        selected-dev-port(v-model='frmMod.dev_port' :deviceId='frmMod.device')
     el-row
       el-col(:span='8')
         el-button-group
@@ -38,76 +26,51 @@ el-form(
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { IPort, IDevice } from '@/api/devices/types'
-import { ICustomer } from '@/api/customers/types'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { getPorts, getDevices } from '../../api/devices/req'
+import DeviceSelect from '@/components/DeviceSelect/index.vue'
+import SelectedDevPort from '@/components/DeviceSelect/selectDevPort.vue'
 
 @Component({
-  name: 'device'
+  name: 'device',
+  components: { DeviceSelect, SelectedDevPort }
 })
 export default class extends Vue {
-
   private isLoading = false
-  private devPorts: IPort[] = []
-  private devices: IDevice[] = []
-  private selectedDevice: number | null = null
 
-  private frmMod: ICustomer = <ICustomer> {
-    pk: CustomerModule.pk,
+  private frmMod = {
     device: CustomerModule.device,
     dev_port: CustomerModule.dev_port
   }
 
-  private async loadDevPorts(devId: number) {
-    this.isLoading = true
-    const { data } = await getPorts(devId)
-    this.devPorts = data.results
-    this.isLoading = false
-    
-    if(!this.devPorts.find(dp => dp.device === devId)){
-      this.frmMod.dev_port = null
-    } else {
-      this.frmMod.dev_port = CustomerModule.dev_port
+  get onChId() {
+    return CustomerModule.pk
+  }
+  @Watch('onChId')
+  private onChangedId() {
+    this.frmMod = {
+      device: CustomerModule.device,
+      dev_port: CustomerModule.dev_port
     }
   }
 
-  private async loadDevices() {
-    this.isLoading = true
-    const { data } = await getDevices({
-      page: 1,
-      page_size: 100,
-      group: CustomerModule.group
-    })
-    this.devices = data.results
-    this.selectedDevice = CustomerModule.device
-    this.isLoading = false
-  }
-
-  created() {
-    this.loadDevices()
-    // this.loadDevPorts(CustomerModule.device)
-  }
-
-  @Watch('selectedDevice')
-  private changedSelectedDevice(devId: number) {
-    this.frmMod.device = devId
-    this.loadDevPorts(devId)
+  get groupId() {
+    return CustomerModule.group
   }
 
   private async onSubmit() {
     this.isLoading = true
-    await CustomerModule.SET_ALL(this.frmMod)
-    const newDat = await CustomerModule.SaveCustomer()
+    const newDat = await CustomerModule.PatchCustomer(this.frmMod)
     this.isLoading = false
     this.$emit('done', newDat)
   }
 
   private async onClearDevice() {
     this.isLoading = true
-    const newDat = await CustomerModule.ClearDevice()
-    this.frmMod = newDat.data
-    this.selectedDevice = newDat.data.device!
-    this.$emit('done', newDat)
+    const { data } = await CustomerModule.ClearDevice()
+    this.frmMod.device = data.device
+    this.frmMod.dev_port = data.dev_port
+    this.$emit('done', data)
     this.isLoading = false
   }
 }

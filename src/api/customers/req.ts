@@ -44,7 +44,7 @@ export const getCustomer = (id: number): ICustomerAxoisResponsePromise =>
 export const getCustomerFormInitial = (): ICustomerAxoisResponsePromise =>
   request.get<ICustomer>(`${custApiUrl}get_initial/`)
 
-export const addCustomer = (data: ICustomer): ICustomerAxoisResponsePromise =>
+export const addCustomer = (data: object): ICustomerAxoisResponsePromise =>
   request.post<ICustomer>(custApiUrl, data)
 
 export const changeCustomer = (id: number, newData: object): ICustomerAxoisResponsePromise =>

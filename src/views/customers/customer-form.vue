@@ -88,10 +88,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { latinValidator,telephoneValidator } from '@/utils/validate'
-import { ICustomer, ICustomerStreet, ICustomerGroup } from '@/api/customers/types'
+import { ICustomerStreet, ICustomerGroup } from '@/api/customers/types'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
 import { CustomerStreetModule } from '@/store/modules/customers/street'
 import { CustomerModule } from '@/store/modules/customers/customer'
@@ -119,19 +119,14 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: ICustomer = <ICustomer>{
+  private frmMod = {
     username: '',
     telephone: '',
     fio: '',
     group: 0,
-    balance: 0.0,
     street: 0,
     house: '',
     is_active: false,
-    gateway: 0,
-    auto_renewal_service: false,
-    device: 0,
-    dev_port: 0,
     is_dynamic_ip: false,
     description: ''
   }
@@ -139,6 +134,25 @@ export default class extends Vue {
   created() {
     this.loadGroups()
     this.loadStreets()
+    this.onChangedId()
+  }
+
+  get onChId() {
+    return CustomerModule.pk
+  }
+  @Watch('onChId')
+  private onChangedId() {
+    this.frmMod = {
+      username: CustomerModule.username,
+      telephone: CustomerModule.telephone,
+      fio: CustomerModule.fio,
+      group: CustomerModule.group,
+      street: CustomerModule.street,
+      house: CustomerModule.house,
+      is_active: CustomerModule.is_active,
+      is_dynamic_ip: CustomerModule.is_dynamic_ip,
+      description: CustomerModule.description
+    }
   }
 
   private async loadStreets() {
@@ -159,18 +173,14 @@ export default class extends Vue {
     this.isLoading = false
   }
 
-  get gcm () {
-    return CustomerModule.context.state
-  }
-
   private onSubmit() {
     (this.$refs['customerfrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await CustomerModule.SET_ALL(this.frmMod)
-        const newDat = await CustomerModule.SaveCustomer()
+        const newDat = await CustomerModule.PatchCustomer(this.frmMod)
         this.isLoading = false
         this.$emit('done', newDat)
+        this.$message.success('Абонент сохранён')
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
@@ -178,20 +188,15 @@ export default class extends Vue {
   }
 
   private delCustomer() {
-    this.$confirm("Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.", 'Внимание', {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Отмена',
-    }).then(() => {
-      CustomerModule.DelCustomer()
+    
+    this.$confirm("Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.", 'Внимание').then(async () => {
+      const currGroup = CustomerModule.group
+      await CustomerModule.DelCustomer()
       this.$message({
         type: 'success',
         message: 'Учётка удалена'
       })
-    }).catch(() => {
-      this.$message({
-        type: 'info',
-        message: 'Отмена удаления'
-      })
+      this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() }} )
     })
   }
 }

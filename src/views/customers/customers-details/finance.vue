@@ -4,6 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadLog"
     :loading="loading"
+    ref='fintbl'
   )
     span(slot="cost" slot-scope="{row}") {{ row.cost }}
     span(slot="date" slot-scope="{row}") {{ row.date }}
@@ -35,6 +36,9 @@ class DataTableComp extends DataTable<ICustomerLog> {}
   components: { AddCash, 'datatable': DataTableComp }
 })
 export default class extends Vue {
+  public readonly $refs!: {
+    fintbl: DataTableComp
+  }
   private loading = false
   private addCashDialog = false
 
@@ -79,7 +83,7 @@ export default class extends Vue {
 
   private addCashDone(cost: number) {
     this.addCashDialog = false
-    this.loadLog()
+    this.$refs['fintbl'].GetTableData()
     this.$message.success(`Счёт пополнен на ${cost}`)
   }
 }

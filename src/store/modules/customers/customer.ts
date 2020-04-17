@@ -28,9 +28,9 @@ class Customer extends VuexModule implements ICustomer {
   gateway = null
   gateway_title = ''
   auto_renewal_service = false
-  device = null
+  device = 0
   device_comment = ''
-  dev_port = null
+  dev_port = 0
   last_connected_service = 0
   current_service = 0
   service_title = ''
@@ -86,9 +86,9 @@ class Customer extends VuexModule implements ICustomer {
     this.gateway = null
     this.gateway_title = ''
     this.auto_renewal_service = false
-    this.device = null
+    this.device = 0
     this.device_comment = ''
-    this.dev_port = null
+    this.dev_port = 0
     this.last_connected_service = 0!
     this.current_service = 0!
     this.service_title = ''!
@@ -125,32 +125,16 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async AddCustomer(data: ICustomer) {
-    await addCustomer(data)
+  public async AddCustomer(newData: object) {
+    const { data } = await addCustomer(newData)
     this.SET_ALL(data)
   }
 
   @Action
-  public async SaveCustomer() {
-    const r = await changeCustomer(this.pk, <ICustomer>{
-      username: this.username,
-      telephone: this.telephone,
-      fio: this.fio,
-      group: this.group,
-      balance: this.balance,
-      street: this.street,
-      house: this.house,
-      is_active: this.is_active,
-      gateway: this.gateway,
-      auto_renewal_service: this.auto_renewal_service,
-      device: this.device,
-      dev_port: this.dev_port,
-      is_dynamic_ip: this.is_dynamic_ip,
-      raw_password: this.raw_password,
-      description: this.description
-    })
-    this.SET_ALL(r.data)
-    return r
+  public async PatchCustomer(newData: object) {
+    const { data } = await changeCustomer(this.pk, newData)
+    this.SET_ALL(data)
+    return data
   }
 
   @Action
@@ -197,28 +181,6 @@ class Customer extends VuexModule implements ICustomer {
     })
     this.SET_ALL(r.data)
     return r
-  }
-
-  @Action
-  public async GetAllState() {
-    return {
-      pk: this.pk,
-      username: this.username,
-      telephone: this.telephone,
-      fio: this.fio,
-      group: this.group,
-      balance: this.balance,
-      street: this.street,
-      house: this.house,
-      is_active: this.is_active,
-      gateway: this.gateway,
-      auto_renewal_service: this.auto_renewal_service,
-      device: this.device,
-      dev_port: this.dev_port,
-      is_dynamic_ip: this.is_dynamic_ip,
-      raw_password: this.raw_password,
-      description: this.description
-    }
   }
 
   @Action
