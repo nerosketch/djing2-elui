@@ -64,7 +64,7 @@ export default class extends Vue {
   }
   @Watch('leaseId')
   private async onNetwCh() {
-    this.frmMod = await CustomerIpLeaseModule.GetAllState()
+    this.frmMod = await CustomerIpLeaseModule.GetAllLeaseState()
   }
 
   private onSubmit() {

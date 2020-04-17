@@ -63,7 +63,7 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   }
 
   @Action
-  public async GetAllState() {
+  public async GetAllPoolState() {
     return {
       id: this.id,
       network: this.network,
@@ -77,13 +77,13 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   }
 
   @Action
-  public async AddPool(data: INetworkIpPool) {
+  public async AddPool(data: object) {
     return await addNetworkIpPool(data)
   }
 
   @Action
   public async SavePool() {
-    const r = await changeNetworkIpPool(this.id, <INetworkIpPool>{
+    await this.PatchPool(<INetworkIpPool>{
       id: this.id,
       network: this.network,
       kind: this.kind,
@@ -93,8 +93,12 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
       ip_end: this.ip_end,
       gateway: this.gateway
     })
-    this.SET_ALL(r.data)
-    return r
+  }
+
+  @Action
+  public async PatchPool(newData: object) {
+    const { data } = await changeNetworkIpPool(this.id, newData)
+    this.SET_ALL(data)
   }
 
   @Action

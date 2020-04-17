@@ -76,7 +76,7 @@ class VlanIf extends VuexModule implements IVlanIf {
   }
 
   @Action
-  public async GetAllState() {
+  public async GetAllVlanState() {
     return {
       id: this.id,
       title: this.title,

@@ -70,15 +70,12 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: INetworkIpPool = {
-    id: NetworkIpPoolModule.id,
-    network: NetworkIpPoolModule.network,
-    kind: NetworkIpPoolModule.kind,
-    description: NetworkIpPoolModule.description,
-    groups: NetworkIpPoolModule.groups,
-    ip_start: NetworkIpPoolModule.ip_start,
-    ip_end: NetworkIpPoolModule.ip_end,
-    gateway: NetworkIpPoolModule.gateway
+  private frmMod = {
+    network: '',
+    description: '',
+    ip_start: '',
+    ip_end: '',
+    gateway: ''
   }
 
   get netId() {
@@ -86,15 +83,23 @@ export default class extends Vue {
   }
   @Watch('netId')
   private async onNetwCh() {
-    this.frmMod = await NetworkIpPoolModule.GetAllState()
+    this.frmMod = await NetworkIpPoolModule.GetAllPoolState()
+  }
+
+  get isNewPool() {
+    return NetworkIpPoolModule.id === 0
   }
 
   private onSubmit() {
     (this.$refs['poolfrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await NetworkIpPoolModule.SET_ALL(this.frmMod)
-        const newDat = await NetworkIpPoolModule.SavePool()
+        let newDat
+        if(this.isNewPool) {
+          newDat = await NetworkIpPoolModule.AddPool(this.frmMod)
+        } else {
+          newDat = await NetworkIpPoolModule.PatchPool(this.frmMod)
+        }
         this.isLoading = false
         this.$emit('done', newDat)
       } else {

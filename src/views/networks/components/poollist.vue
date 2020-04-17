@@ -16,8 +16,10 @@ div
       el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
       el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
 
+  el-button(type='success' icon='el-icon-plus' size='small' @click='openNew') Добавить
+
   el-dialog(
-    title="Изменение Подсети"
+    :title="dialogTitle"
     :visible.sync="dialogVisible"
     width="30%"
   )
@@ -38,7 +40,7 @@ import PoolForm from './pool-form.vue'
 class DataTableComp extends DataTable<INetworkIpPool> {}
 
 @Component({
-  name: 'VlanList',
+  name: 'PoolList',
   components: { 'datatable': DataTableComp, PoolForm }
 })
 export default class extends Vue {
@@ -93,16 +95,28 @@ export default class extends Vue {
     this.loadPools()
   }
 
+  get dialogTitle() {
+    let w = 'Изменить'
+    if (NetworkIpPoolModule.id === 0) {
+      w = 'Добавить'
+    }
+    return `${w} подсеть`
+  }
   private async openEdit(vlan: INetworkIpPool) {
     await NetworkIpPoolModule.SET_ALL(vlan)
     this.dialogVisible = true
   }
+  private async openNew() {
+    await NetworkIpPoolModule.RESET_ALL()
+    this.dialogVisible = true
+  }
 
-  private async delPool(vlan: INetworkIpPool) {
-    if (confirm(`Ты действительно хочешь удалить пул "${vlan.network}"?`)) {
+  private delPool(vlan: INetworkIpPool) {
+    this.$confirm(`Ты действительно хочешь удалить пул "${vlan.network}"?`).then(async() => {
       await NetworkIpPoolModule.DelPool(vlan.id)
+      this.$message.success('Подсеть удалена')
       this.$refs['table'].GetTableData()
-    }
+    })
   }
 
   private async loadPools(params?: IDRFRequestListParameters) {

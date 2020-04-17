@@ -56,7 +56,7 @@ export default class extends Vue {
   }
   @Watch('vId')
   private async onVlanCh() {
-    this.frmMod = await VlanIfModule.GetAllState()
+    this.frmMod = await VlanIfModule.GetAllVlanState()
   }
 
   private onSubmit() {

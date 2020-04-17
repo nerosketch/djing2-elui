@@ -38,10 +38,10 @@ export const getNetworkIpPools = (params?: IDRFRequestListParameters): INetworkI
 export const getNetworkIpPool = (poolId: number): INetworkIpPoolAxoisResponsePromise =>
   request.get<INetworkIpPool>(`${baseNetUrl}${poolId}/`)
 
-export const addNetworkIpPool = (newPool: INetworkIpPool): INetworkIpPoolAxoisResponsePromise =>
+export const addNetworkIpPool = (newPool: object): INetworkIpPoolAxoisResponsePromise =>
   request.post<INetworkIpPool>(baseNetUrl, newPool)
 
-export const changeNetworkIpPool = (poolId: number, newData: INetworkIpPool): INetworkIpPoolAxoisResponsePromise =>
+export const changeNetworkIpPool = (poolId: number, newData: object): INetworkIpPoolAxoisResponsePromise =>
   request.patch<INetworkIpPool>(`${baseNetUrl}${poolId}/`, newData)
 
 export const delNetworkIpPool = (poolId: number) =>

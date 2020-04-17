@@ -67,7 +67,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   }
 
   @Action
-  public async GetAllState() {
+  public async GetAllLeaseState() {
     return {
       id: this.id,
       ip_address: this.ip_address,
