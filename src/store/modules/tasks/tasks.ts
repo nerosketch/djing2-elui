@@ -78,8 +78,9 @@ class Task extends VuexModule implements ITask {
   }
 
   @Action
-  public async AddTask(task: ITask) {
+  public async AddTask(task: object) {
     const { data } = await addTask(task)
+    this.SET_ALL(data)
     return data
   }
 
@@ -91,7 +92,10 @@ class Task extends VuexModule implements ITask {
   }
 
   @Action
-  public async DelTask(id: number) {
+  public async DelTask(id?: number) {
+    if (!id) {
+      id = this.id
+    }
     await delTask(id)
     this.RESET_ALL()
   }

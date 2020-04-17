@@ -25,7 +25,7 @@ class Customer extends VuexModule implements ICustomer {
   street_name = ''
   house = ''
   is_active = false
-  gateway = null
+  gateway = 0
   gateway_title = ''
   auto_renewal_service = false
   device = 0
@@ -53,7 +53,7 @@ class Customer extends VuexModule implements ICustomer {
     this.street_name = data.street_name!
     this.house = data.house
     this.is_active = data.is_active
-    this.gateway = data.gateway!
+    this.gateway = data.gateway
     this.gateway_title = data.gateway_title!
     this.auto_renewal_service = data.auto_renewal_service
     this.device = data.device!
@@ -83,7 +83,7 @@ class Customer extends VuexModule implements ICustomer {
     this.street_name = ''
     this.house = ''
     this.is_active = false
-    this.gateway = null
+    this.gateway = 0
     this.gateway_title = ''
     this.auto_renewal_service = false
     this.device = 0
@@ -97,11 +97,6 @@ class Customer extends VuexModule implements ICustomer {
     this.full_name = ''
     this.raw_password = ''
     return this
-  }
-
-  @Mutation
-  public SET_AUTO_RENEWAL_SERV(v: boolean) {
-    this.auto_renewal_service = v
   }
 
   @Mutation

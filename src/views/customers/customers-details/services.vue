@@ -153,8 +153,9 @@ export default class extends Vue {
   @Watch('autoRenewalService')
   private async onChangeAutoConnect(v: boolean) {
     this.serviceBlockLoad = true
-    await CustomerModule.SET_AUTO_RENEWAL_SERV(v)
-    await CustomerModule.SaveCustomer()
+    await CustomerModule.PatchCustomer({
+      auto_renewal_service: v
+    })
     this.serviceBlockLoad = false
     this.$message.success('Автопродление сохранено')
   }

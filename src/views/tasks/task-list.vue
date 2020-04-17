@@ -18,15 +18,19 @@ div
     span(slot="descr" slot-scope="{row}") {{ row.descr }}
     span(slot="state_str" slot-scope="{row}") {{ row.state_str }}
     span(slot="time_of_create" slot-scope="{row}") {{ row.time_of_create }}
-    //- el-button-group(slot="oper" slot-scope="{row}")
-      el-button(icon="el-icon-edit" size="mini" disabled)
-      el-button(type="danger" icon="el-icon-delete" size="mini" disabled)
 
   el-button(
     type="success"
     icon="el-icon-plus"
     size='small'
+    @click="openNew"
   ) Добавить задачу
+
+  el-dialog(
+    title='Создание задачи'
+    :visible.sync='formDialog'
+  )
+    task-form()
 </template>
 
 <script lang="ts">
@@ -35,24 +39,28 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { IDRFRequestListParameters } from '@/api/types'
 import { ITask, ITaskPriority } from '@/api/tasks/types'
 import { getTasks } from '@/api/tasks/req'
+import TaskForm from './task-form.vue'
+import { TaskModule } from '@/store/modules/tasks/tasks'
 
 class DataTableComp extends DataTable<ITask> {}
 
 
 @Component({
   name: 'TaskList',
-  components: { 'datatable': DataTableComp }
+  components: { 'datatable': DataTableComp, TaskForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
-    table: DataTableComp
+    tbl: DataTableComp
   }
+  private formDialog = false
 
   @Prop({ default: '' })
   private tabUrl!: string
 
   @Watch('tabUrl')
   private onTabTypeChanged() {
+    this.$refs.tbl.GetTableData()
     this.loadTasks()
   }
 
@@ -97,14 +105,13 @@ export default class extends Vue {
       prop: 'time_of_create',
       label: 'Дата создания'
     },
-    /*{
-      prop: 'oper',
-      label: 'Действия',
-      width: 130,
-      align: DataTableColumnAlign.CENTER
-    }*/
   ]
   private loading = false
+
+  private async openNew() {
+    await TaskModule.RESET_ALL()
+    this.formDialog = true
+  }
 
   private async loadTasks(params?: IDRFRequestListParameters) {
     this.loading = true
@@ -112,11 +119,5 @@ export default class extends Vue {
     this.loading = false
     return r
   }
-
-  // private frmDone() {
-  //   this.dialogVisible = false
-  //   this.$refs['table'].GetTableData()
-  //   this.loadLeases()
-  // }
 }
 </script>

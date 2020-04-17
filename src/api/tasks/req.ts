@@ -13,7 +13,7 @@ export const getTasks = (params?: IDRFRequestListParameters, url: string = ''): 
 export const getTask = (id: number): ITaskAxoisResponsePromise =>
   request.get<ITask>(`${baseTaskUrl}${id}/`)
 
-export const addTask = (data: ITask): ITaskAxoisResponsePromise =>
+export const addTask = (data: object): ITaskAxoisResponsePromise =>
   request.post<ITask>(baseTaskUrl, data)
 
 export const changeTask = (id: number, data: ITask): ITaskAxoisResponsePromise =>

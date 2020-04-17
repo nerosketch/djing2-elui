@@ -25,6 +25,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
 import { IGroup } from '@/api/groups/types'
 import { latinValidator } from '@/utils/validate'
+import { Form } from 'element-ui'
 
 @Component({
   name: 'group-form'
@@ -64,16 +65,22 @@ export default class extends Vue {
     this.frmMod.code = GroupModule.code
   }
 
-  private async onSubmit() {
-    this.isLoading = true
-    let newDat
-    if (this.isNew) {
-      newDat = await GroupModule.AddGroup(this.frmMod)
-    } else {
-      newDat = await GroupModule.PatchGroup(this.frmMod)
-    }
-    this.isLoading = false
-    this.$emit('done', newDat)
+  private onSubmit() {
+    (this.$refs['form'] as Form).validate(async valid => {
+      if (valid) {
+        this.isLoading = true
+        let newDat
+        if (this.isNew) {
+          newDat = await GroupModule.AddGroup(this.frmMod)
+        } else {
+          newDat = await GroupModule.PatchGroup(this.frmMod)
+        }
+        this.isLoading = false
+        this.$emit('done', newDat)
+      } else {
+        this.$message.error('Исправь ошибки в форме')
+      }
+    })
   }
 }
 </script>

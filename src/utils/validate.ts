@@ -31,5 +31,13 @@ export const positiveValidator = (rule: any, value: number, callback: Function) 
   }
 }
 
+export const positiveNumberValueAvailable = (rule: any, value: number, callback: Function) => {
+  if (value && value > 0) {
+    callback()
+  } else {
+    callback(new Error(rule.message))
+  }
+}
+
 // Old, expired
 export const isExternal = (path: string) => /^(https?:|mailto:|tel:)/.test(path)

@@ -1,7 +1,9 @@
 <template lang="pug">
   el-form(
-    :model='frmMod'
+    ref='form'
+    :model="frmMod"
     :loading="loading"
+    :rules="frmRules"
   )
     el-form-item(
       label="Описание"
@@ -14,7 +16,7 @@
     )
       el-select(v-model="frmMod.recipients" multiple)
         el-option(
-          v-for="rec in recipients"
+          v-for="rec in intrnalRecipients"
           :key="rec.pk"
           :label="rec.full_name || rec.username"
           :value="rec.pk"
@@ -69,8 +71,8 @@
     el-form-item
       el-button-group
         el-button(type="primary" @click="onSubmit" icon="el-icon-upload" size='small') Сохранить
-        el-button(type="danger" @click="onDel" icon="el-icon-delete" size='small') Удалить
-        el-button(type="success" @click="onFinish" icon="el-icon-check" size='small') Завершить
+        el-button(v-if="!isNewTask" type="danger" @click="onDel" icon="el-icon-delete" size='small') Удалить
+        el-button(v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check" size='small') Завершить
 </template>
 
 <script lang="ts">
@@ -79,14 +81,20 @@ import { IProfile } from '@/api/users-types'
 import { ITaskPriority, ITaskState, ITaskType, ITask } from '@/api/tasks/types'
 import CustomerField from '@/components/CustomerField/index.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
+import { getProfiles } from '@/api/users'
+import { positiveNumberValueAvailable } from '@/utils/validate'
+import { Form } from 'element-ui'
 
 @Component({
   name: 'TaskForm',
   components: { CustomerField }
 })
 export default class extends Vue {
-  @Prop({ default: [] })
+  @Prop({ default: () => [] })
   private recipients!: IProfile[]
+
+  private intrnalRecipients: IProfile[] = []
+
   private loading = false
 
   private taskTypes = [
@@ -115,33 +123,76 @@ export default class extends Vue {
     { nm: 'Выполнена', v: ITaskState.COMPLETED }
   ]
 
-  private frmMod: ITask = {
-    id: TaskModule.id,
+  private frmMod = {
     recipients: TaskModule.recipients,
     descr: TaskModule.descr,
     priority: TaskModule.priority,
-    out_date: TaskModule.out_date,
     task_state: TaskModule.task_state,
     mode: TaskModule.mode,
-    author: TaskModule.author
+    customer: TaskModule.customer,
+    out_date: this.initialDate
+  }
+
+  private frmRules = {
+    recipients: [
+      { required: true, message: 'Надо выбрать хотябы одного исполнителя', trigger: 'blur' }
+    ],
+    customer: [
+      { validator: positiveNumberValueAvailable, trigger: 'blur', message: 'Нужно выбрать абонента' }
+    ]
   }
 
   get customerName() {
     return TaskModule.customer_full_name
   }
 
-  private async onSubmit() {
-    this.loading = true
-    await TaskModule.PatchTask(this.frmMod)
-    this.$message.success('Задача сохранена')
-    this.loading = false
+  get initialDate() {
+    let res = new Date()
+    if (!TaskModule.out_date || TaskModule.out_date === '') {
+      let newDate = new Date()
+      newDate.setDate(newDate.getDate() + 3)
+      res = newDate
+    }
+    return `${res.getFullYear()}-${res.getMonth()+1}-${res.getDate()}`
+  }
+
+  created() {
+    if (this.recipients.length < 1) {
+      this.loadRecipients()
+    } else {
+      this.intrnalRecipients = this.recipients
+    }
+  }
+
+  get isNewTask() {
+    return TaskModule.id === 0
+  }
+
+  private onSubmit() {
+    (this.$refs['form'] as Form).validate(async valid => {
+      if (valid) {
+        this.loading = true
+        if (this.isNewTask) {
+          const newTask = await TaskModule.AddTask(this.frmMod)
+          this.$message.success('Задача добавлена')
+          this.$router.push({
+            name: 'taskDetails',
+            params: { taskId: newTask.id.toString() }
+          })
+        } else {
+          await TaskModule.PatchTask(this.frmMod)
+          this.$message.success('Задача сохранена')
+        }
+        this.loading = false
+      } else {
+        this.$message.error('Исправь ошибки в форме')
+      }
+    })
   }
   private onDel() {
-    this.$confirm('Задача сейчас будет удалена, внимательно', {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Не нужно',
-    }).then(async () => {
-      await TaskModule.DelTask(this.frmMod.id)
+    if (this.isNewTask) return
+    this.$confirm('Задача сейчас будет удалена, внимательно').then(async() => {
+      await TaskModule.DelTask()
       this.$message.success('Задача удалена')
       this.$router.push({
         name: 'taskList'
@@ -149,11 +200,17 @@ export default class extends Vue {
     })
   }
   private async onFinish() {
+    if (this.isNewTask) return
     await TaskModule.FinishTask()
     this.$message.success('Задача завершена')
     this.$router.push({
       name: 'taskList'
     })
+  }
+
+  private async loadRecipients() {
+    const { data } = await getProfiles()
+    this.intrnalRecipients = data.results
   }
 }
 </script>

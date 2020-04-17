@@ -16,7 +16,7 @@ export interface ICustomer {
   street_name?: string
   house: string
   is_active: boolean
-  gateway: number | null
+  gateway: number
   gateway_title?: string
   auto_renewal_service: boolean
   device: number
