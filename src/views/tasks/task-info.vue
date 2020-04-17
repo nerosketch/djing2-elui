@@ -33,14 +33,14 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { TaskModule } from '@/store/modules/tasks/tasks'
-import { IProfile } from '@/api/users-types'
+import { IUserProfile } from '@/api/profiles/types'
 
 @Component({
   name: 'TaskInfo'
 })
 export default class extends Vue {
   @Prop({ default: [] })
-  private recipients!: IProfile[]
+  private recipients!: IUserProfile[]
 
   get taskCustomerLink() {
     return {

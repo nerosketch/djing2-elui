@@ -47,12 +47,30 @@ export default new Router({
       }
     },
     {
+      path: '/profiles',
+      component: Layout,
+      children: [
+        {
+          path: '',
+          component: () => import(/* webpackChunkName: "profileslist" */ '@/views/profiles/profiles-list.vue'),
+          meta: {
+            title: 'Сотрудники',
+            icon: 'dashboard'
+          }
+        },
+        {
+          path: 'p:profileUname/',
+          name: 'profileDetail',
+          component: () => import(/* webpackChunkName: "profileDetails" */ '@/views/profiles/profile-details.vue'),
+          props: true,
+          meta: { hidden: true }
+        }
+      ]
+    },
+    {
       path: '/customers',
       component: Layout,
-      meta: {
-        title: 'Customers',
-        icon: 'dashboard'
-      },
+      meta: { hidden: true },
       children: [
         {
           path: '',
@@ -68,18 +86,14 @@ export default new Router({
           name: 'customersList',
           component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customers-list.vue'),
           props: ({ params }) => ({ groupId: Number(params.groupId || 0) }),
-          meta: {
-            hidden: true
-          }
+          meta: { hidden: true }
         },
         {
           path: 'c:uid/',
           name: 'customerDetails',
           component: () => import(/* webpackChunkName: "customerdetails" */ '@/views/customers/customer-details.vue'),
           props: ({ params }) => ({ uid: Number(params.uid || 0) }),
-          meta: {
-            hidden: true
-          }
+          meta: { hidden: true }
         }
       ]
     },

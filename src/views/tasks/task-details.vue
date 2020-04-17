@@ -14,8 +14,8 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { TaskModule } from '../../store/modules/tasks/tasks'
-import { getProfiles } from '@/api/users'
-import { IProfile } from '@/api/users-types'
+import { getProfiles } from '@/api/profiles/req'
+import { IUserProfile } from '@/api/profiles/types'
 import TaskForm from './task-form.vue'
 import TaskInfo from './task-info.vue'
 import Comments from './comments.vue'
@@ -28,7 +28,7 @@ export default class extends Vue {
   @Prop({ default: 0 })
   private taskId!: number
   private taskReady = false
-  private recipients: IProfile[] = []
+  private recipients: IUserProfile[] = []
 
   private async loadTask() {
     if(this.taskId === 0) {

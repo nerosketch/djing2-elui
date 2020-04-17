@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { IAppState } from './modules/app'
-import { IUserState } from './modules/user'
+import { IUserProfile } from '@/api/profiles/types'
 
 Vue.use(Vuex)
 
 export interface IRootState {
   app: IAppState
-  user: IUserState
+  user: IUserProfile
 }
 
 // Declare empty store first, dynamically register all modules later.

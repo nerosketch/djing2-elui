@@ -1,10 +1,12 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { IUserProfile } from '@/api/profiles/types'
-import { getProfile, delProfile, changeProfile } from '@/api/profiles/req'
+import { getToken, setToken, removeToken } from '@/utils/cookies'
+import { getProfile, delProfile, changeProfile, getSelfProfile, login } from '@/api/profiles/req'
 
 @Module({ dynamic: true, store, name: 'userprofile' })
 class UserProfile extends VuexModule implements IUserProfile {
+  public token = getToken() || ''
   pk = 0
   username = ''
   fio = ''
@@ -41,22 +43,66 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.full_name = ''
   }
 
-  @Action
-  public async GetProfile(id: number) {
-    const { data } = await getProfile(id)
-    this.SET_ALL(data)
+  @Mutation
+  public SET_TOKEN(token: string) {
+    this.token = token
   }
 
   @Action
-  public async DelProfile(id: number) {
-    await delProfile(id)
+  public async GetProfile(uname: string) {
+    const { data } = await getProfile(uname)
+    this.SET_ALL(data)
+    return data
+  }
+
+  @Action
+  public async DelProfile(uname: string) {
+    await delProfile(uname)
     this.RESET_ALL()
   }
 
   @Action
   public async PatchProfile(info: object) {
-    const { data } = await changeProfile(this.pk, info)
+    const { data } = await changeProfile(this.username, info)
     this.SET_ALL(data)
+    return data
+  }
+
+  @Action
+  public async GetSelf() {
+    if (this.token === '') {
+      throw Error('GetUserInfo: token is undefined!')
+    }
+    const { data } = await getSelfProfile()
+    if (!data) {
+      throw Error('Verification failed, please Login again.')
+    }
+    this.SET_ALL(data)
+    return data
+  }
+
+  @Action
+  public async Login(userInfo: { username: string, password: string }) {
+    userInfo.username = userInfo.username.trim()
+    const { data } = await login(userInfo)
+    setToken(data.token)
+    this.SET_TOKEN(data.token)
+  }
+
+  @Action
+  public ResetToken() {
+    removeToken()
+    this.SET_TOKEN('')
+  }
+
+  @Action
+  public async LogOut() {
+    if (this.token === '') {
+      throw Error('LogOut: token is undefined!')
+    }
+    // await logout()
+    removeToken()
+    this.SET_TOKEN('')
   }
 }
 export const UserProfileModule = getModule(UserProfile)

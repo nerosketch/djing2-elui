@@ -76,7 +76,6 @@ interface getTableDataParam {
 }
 
 @Component({
-  name: 'Datatable',
   components: { Pagination }
 })
 export default class <T> extends Vue {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import { UserModule } from '@/store/modules/user'
+import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -11,8 +11,8 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // Add X-Access-Token header to every request, you can add other custom headers here
-    if (UserModule.token) {
-      config.headers.Authorization = `Token ${UserModule.token}`
+    if (UserProfileModule.token) {
+      config.headers.Authorization = `Token ${UserProfileModule.token}`
     }
     return config
   },

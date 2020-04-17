@@ -26,17 +26,33 @@ const baseAccUrl = '/profiles/'
 export const getProfiles = (params?: IDRFRequestListParameters): IUserProfileListAxiosResponsePromise =>
   request.get<IUserProfileList>(baseAccUrl, { params })
 
-export const getProfile = (id: number): IUserProfileAxoisResponsePromise =>
-  request.get<IUserProfile>(`${baseAccUrl}${id}/`)
+export const getProfile = (uname: string): IUserProfileAxoisResponsePromise =>
+  request.get<IUserProfile>(`${baseAccUrl}${uname}/`)
+
+export const getSelfProfile = (): IUserProfileAxoisResponsePromise =>
+  request.get<IUserProfile>(`${baseAccUrl}current/`)
 
 export const addProfile = (data: object): IUserProfileAxoisResponsePromise =>
   request.post<IUserProfile>(baseAccUrl, data)
 
-export const changeProfile = (id: number, newData: object): IUserProfileAxoisResponsePromise =>
-  request.patch<IUserProfile>(`${baseAccUrl}${id}/`, newData)
+export const changeProfile = (uname: string, newData: object): IUserProfileAxoisResponsePromise =>
+  request.patch<IUserProfile>(`${baseAccUrl}${uname}/`, newData)
 
-export const delProfile = (id: number) =>
-  request.delete(`${baseAccUrl}${id}/`)
+export const delProfile = (uname: string) =>
+  request.delete(`${baseAccUrl}${uname}/`)
 
 export const getResponsibilities4Group = (groupId: number): IDRFAxiosResponsePromise<number[]> =>
   request.get(`${baseAccUrl}get_responsibilities/${groupId}/`)
+
+export const login = (data: any) =>
+  request({
+    url: '/profiles/token-auth/',
+    method: 'post',
+    data
+  })
+
+export const logout = () =>
+  request({
+    url: '/profiles/logout/',
+    method: 'post'
+  })

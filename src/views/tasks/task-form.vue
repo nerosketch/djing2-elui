@@ -77,13 +77,13 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { IProfile } from '@/api/users-types'
 import { ITaskPriority, ITaskState, ITaskType, ITask } from '@/api/tasks/types'
 import CustomerField from '@/components/CustomerField/index.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
-import { getProfiles } from '@/api/users'
+import { getProfiles } from '@/api/profiles/req'
 import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
+import { IUserProfile } from '@/api/profiles/types'
 
 @Component({
   name: 'TaskForm',
@@ -91,9 +91,9 @@ import { Form } from 'element-ui'
 })
 export default class extends Vue {
   @Prop({ default: () => [] })
-  private recipients!: IProfile[]
+  private recipients!: IUserProfile[]
 
-  private intrnalRecipients: IProfile[] = []
+  private intrnalRecipients: IUserProfile[] = []
 
   private loading = false
 

@@ -3,11 +3,14 @@
     h4 Баланс: {{ balance }}
     el-tabs.border-card
       el-tab-pane(label="Инфо" lazy)
-        info(v-if='loaded')
+        keep-alive
+          info(v-if='loaded')
       el-tab-pane(label="Тарифы" lazy)
-        services(v-if='loaded')
+        keep-alive
+          services(v-if='loaded')
       el-tab-pane(label="Финансы" lazy)
-        finance
+        keep-alive
+          finance
       el-tab-pane(label="История задач" lazy) История задач
 </template>
 

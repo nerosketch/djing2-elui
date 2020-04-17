@@ -1,13 +1,11 @@
 <template>
   <div class="navbar">
     <hamburger
-      id="hamburger-container"
       :is-active="sidebar.opened"
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
     <breadcrumb
-      id="breadcrumb-container"
       class="breadcrumb-container"
     />
 
@@ -29,7 +27,7 @@
       >
         <div class="avatar-wrapper">
           <img
-            :src="avatar+'?imageView2/1/w/80/h/80'"
+            :src="avatar"
             class="user-avatar"
           >
           <i class="el-icon-caret-bottom" />
@@ -55,10 +53,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
-import { UserModule } from '@/store/modules/user'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { SearchModule } from '@/store/modules/search'
+import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 
 @Component({
   name: 'Navbar',
@@ -78,7 +76,7 @@ export default class extends Vue {
   }
 
   get avatar() {
-    return UserModule.avatar
+    return UserProfileModule.avatar
   }
 
   private toggleSideBar() {
@@ -86,7 +84,7 @@ export default class extends Vue {
   }
 
   private async logout() {
-    await UserModule.LogOut()
+    await UserProfileModule.LogOut()
     this.$router.push(`/login?redirect=${this.$route.fullPath}`)
   }
 
