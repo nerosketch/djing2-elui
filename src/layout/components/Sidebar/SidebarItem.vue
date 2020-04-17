@@ -19,7 +19,10 @@
           <span
             v-if="theOnlyOneChild.meta.title"
             slot="title"
-          >{{ theOnlyOneChild.meta.title }}</span>
+          >
+            {{ theOnlyOneChild.meta.title }}
+            <small v-if="childCalc" class="calc-place">{{ childCalc }}</small>
+          </span>
         </el-menu-item>
       </sidebar-item-link>
     </template>
@@ -104,6 +107,14 @@ export default class extends Vue {
     return { ...this.item, path: '' }
   }
 
+  get childCalc() {
+    let c = this.theOnlyOneChild
+    if (c && c.meta.calc) {
+      return c.meta.calc()
+    }
+    return null
+  }
+
   private resolvePath(routePath: string) {
     if (isExternal(routePath)) {
       return routePath
@@ -161,9 +172,15 @@ export default class extends Vue {
     }
   }
 }
-</style>
 
-<style lang="scss" scoped>
+.calc-place {
+  background-color: #bfcbd9;
+  border-radius: 11px;
+  padding: 5px 8px;
+  font-weight: bold;
+  color: #304156;
+}
+
 .svg-icon {
   margin-right: 16px;
 }

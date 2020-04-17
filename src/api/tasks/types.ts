@@ -70,6 +70,7 @@ export interface ITask {
   author: number
   customer?: number
   is_expired?: boolean
+  activeTaskCount?: number
 }
 export type ITaskList = IDRFListResponse<ITask>
 export type ITaskAxoisResponsePromise = IDRFAxiosResponsePromise<ITask>

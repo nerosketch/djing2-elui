@@ -1,7 +1,7 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { ITask, ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
-import { getTask, addTask, changeTask, delTask, finishTask, failTask, remindTask } from '@/api/tasks/req'
+import { getTask, addTask, changeTask, delTask, finishTask, failTask, remindTask, getActiveTaskCount } from '@/api/tasks/req'
 
 
 @Module({ dynamic: true, store, name: 'task' })
@@ -22,6 +22,7 @@ class Task extends VuexModule implements ITask {
   mode = ITaskType.NOT_CHOSEN
   author = 0
   customer = 0
+  activeTaskCount = 0
 
   @Mutation
   public SET_ALL(data: ITask) {
@@ -62,6 +63,11 @@ class Task extends VuexModule implements ITask {
     this.mode = ITaskType.NOT_CHOSEN
     this.author = 0
     this.customer = 0
+  }
+
+  @Mutation
+  private SET_TASK_COUNT(tc: number) {
+    this.activeTaskCount = tc
   }
 
   @Action
@@ -107,6 +113,14 @@ class Task extends VuexModule implements ITask {
   @Action
   public async RemindTask() {
     await remindTask(this.id)
+  }
+
+  @Action
+  public StartWatchActiveTaskCount() {
+    setInterval(async () => {
+      const { data } = await getActiveTaskCount()
+      this.SET_TASK_COUNT(data)
+    }, 5000)
   }
 }
 export const TaskModule = getModule(Task)

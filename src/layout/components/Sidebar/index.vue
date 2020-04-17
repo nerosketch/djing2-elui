@@ -25,6 +25,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/_variables.scss'
+import { TaskModule } from '@/store/modules/tasks/tasks'
 
 @Component({
   name: 'SideBar',
@@ -47,6 +48,10 @@ export default class extends Vue {
 
   get isCollapse() {
     return !this.sidebar.opened
+  }
+
+  created() {
+    TaskModule.StartWatchActiveTaskCount()
   }
 }
 </script>

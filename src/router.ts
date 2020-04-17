@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/layout/index.vue'
+import { TaskModule } from '@/store/modules/tasks/tasks'
 
 Vue.use(Router)
 
@@ -133,7 +134,8 @@ export default new Router({
           component: () => import(/* webpackChunkName: "tasks" */ '@/views/tasks/index.vue'),
           meta: {
             title: 'Задачи',
-            icon: 'dashboard'
+            icon: 'dashboard',
+            calc: () => TaskModule.activeTaskCount
           }
         },
         {
