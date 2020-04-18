@@ -10,7 +10,7 @@
     >
       <div class="title-container">
         <h3 class="title">
-          Login Form
+          Войти
         </h3>
       </div>
 
@@ -24,7 +24,7 @@
           name="username"
           type="text"
           autocomplete="on"
-          placeholder="username"
+          placeholder="логин"
         />
       </el-form-item>
 
@@ -37,7 +37,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="password"
+          placeholder="пароль"
           name="password"
           autocomplete="on"
           @keyup.enter.native="handleLogin"
@@ -56,7 +56,7 @@
         style="width:100%; margin-bottom:30px;"
         @click.native.prevent="handleLogin"
       >
-        Sign in
+        Войти
       </el-button>
     </el-form>
   </div>
@@ -68,7 +68,7 @@ import { Route } from 'vue-router'
 import { Dictionary } from 'vue-router/types/router'
 import { Form as ElForm, Input } from 'element-ui'
 import { latinValidator } from '@/utils/validate'
-import { UserProfileModule } from '@/store/modules/profiles/user-profile'
+import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 
 @Component({
   name: 'Login'
@@ -79,8 +79,12 @@ export default class extends Vue {
     password: ''
   }
   private loginRules = {
-    username: [{ validator: latinValidator, required: true, trigger: 'change' }],
+    username: [
+      { required: true, message: 'Логин не может быть пустым', trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: 'Нужен логин из латинских символов и цифр' }
+    ],
     password: [
+      { required: true, message: 'Пароль не может быть пустым', trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
     ]
@@ -125,7 +129,7 @@ export default class extends Vue {
     (this.$refs.loginForm as ElForm).validate(async(valid: boolean) => {
       if (valid) {
         this.loading = true
-        await UserProfileModule.Login(this.loginForm)
+        await CurrentUserProfileModule.Login(this.loginForm)
         this.$router.push({
           path: this.redirect || '/',
           query: this.otherQuery

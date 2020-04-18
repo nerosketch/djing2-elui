@@ -32,7 +32,7 @@ el-card(style='margin-bottom:20px;')
           span Какой-то другой прогресс
           el-progress(:percentage='45')
         .progress-item
-          span (Зависимость успешно завершённых задач от назначенных)
+          span ещё что-то
           el-progress(:percentage='4')
         .progress-item
           span Что-то завершённое

@@ -2,7 +2,7 @@ import router from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Route } from 'vue-router'
-import { UserProfileModule } from '@/store/modules/profiles/user-profile'
+import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 
 NProgress.configure({ showSpinner: false })
 
@@ -13,7 +13,7 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
   NProgress.start()
 
   // Determine whether the user has logged in
-  if (UserProfileModule.token) {
+  if (CurrentUserProfileModule.token) {
     if (to.path === '/login') {
       // If is logged in, redirect to the home page
       next({ path: '/' })

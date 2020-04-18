@@ -25,9 +25,9 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IUserProfile } from '@/api/profiles/types'
-import { getProfile } from '../../api/profiles/req'
+import { getProfile } from '@/api/profiles/req'
+import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
-import { UserProfileModule } from '../../store/modules/profiles/user-profile'
 import UserCard from './UserCard.vue'
 
 @Component({
@@ -38,7 +38,6 @@ export default class extends Vue {
   @Prop({ default: '' }) private profileUname!: string
 
   private userProfile: IUserProfile = {
-    token: UserProfileModule.token,
     pk: UserProfileModule.pk,
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,

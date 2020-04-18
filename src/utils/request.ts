@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import { UserProfileModule } from '@/store/modules/profiles/user-profile'
+import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -11,8 +11,8 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // Add X-Access-Token header to every request, you can add other custom headers here
-    if (UserProfileModule.token) {
-      config.headers.Authorization = `Token ${UserProfileModule.token}`
+    if (CurrentUserProfileModule.token) {
+      config.headers.Authorization = `Token ${CurrentUserProfileModule.token}`
     }
     return config
   },
@@ -32,7 +32,7 @@ service.interceptors.response.use(
     // code == 50004: invalid user (user not exist)
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
-    if (![200,201,202,204].includes(response.status)) {
+    if (![200, 201, 202, 204].includes(response.status)) {
       Message({
         message: response.statusText || 'Error',
         type: 'error',

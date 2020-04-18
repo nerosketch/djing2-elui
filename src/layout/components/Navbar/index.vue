@@ -56,7 +56,7 @@ import { AppModule } from '@/store/modules/app'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { SearchModule } from '@/store/modules/search'
-import { UserProfileModule } from '@/store/modules/profiles/user-profile'
+import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 
 @Component({
   name: 'Navbar',
@@ -76,7 +76,7 @@ export default class extends Vue {
   }
 
   get avatar() {
-    return UserProfileModule.avatar
+    return CurrentUserProfileModule.avatar
   }
 
   private toggleSideBar() {
@@ -84,7 +84,7 @@ export default class extends Vue {
   }
 
   private async logout() {
-    await UserProfileModule.LogOut()
+    await CurrentUserProfileModule.LogOut()
     this.$router.push(`/login?redirect=${this.$route.fullPath}`)
   }
 

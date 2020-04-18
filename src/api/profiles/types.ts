@@ -1,7 +1,6 @@
 import { IDRFListResponse, IDRFAxiosResponsePromise } from '@/api/types'
 
 export interface IUserProfile {
-  token: string
   pk: number
   username: string
   fio: string
