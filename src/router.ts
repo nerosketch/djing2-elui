@@ -70,7 +70,6 @@ export default new Router({
     {
       path: '/customers',
       component: Layout,
-      meta: { hidden: true },
       children: [
         {
           path: '',

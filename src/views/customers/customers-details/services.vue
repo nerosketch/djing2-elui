@@ -227,15 +227,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style>
-dl > dt {
-  float: left;
-  width: 47%;
-  border-bottom: 1px #dfe4ed solid;
-}
-dl > dd {
-  margin-left: 48%;
-  border-bottom: 1px #dfe4ed solid;
-}
-</style>

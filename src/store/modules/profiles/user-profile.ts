@@ -14,6 +14,8 @@ class UserProfile extends VuexModule implements IUserProfile {
   avatar = ''
   email = ''
   full_name = ''
+  last_login = ''
+  is_superuser = false
 
   @Mutation
   public SET_ALL_PROFILE(data: IUserProfile) {
@@ -26,6 +28,8 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.avatar = data.avatar!
     this.email = data.email
     this.full_name = data.full_name!
+    this.last_login = data.last_login!
+    this.is_superuser = data.is_superuser!
   }
 
   @Mutation
@@ -39,6 +43,8 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.avatar = ''
     this.email = ''
     this.full_name = ''
+    this.last_login = ''
+    this.is_superuser = false
   }
 
   @Action

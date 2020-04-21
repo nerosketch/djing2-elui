@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { latinValidator, telephoneValidator, emailValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'

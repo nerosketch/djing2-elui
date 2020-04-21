@@ -12,8 +12,8 @@
       )
         el-card
           el-tabs(v-model='activeTab')
-            el-tab-pane(label='Activity' name='activity' lazy)
-              p activity
+            el-tab-pane(label='Ответственность за группы' name='activity' lazy)
+              group-responsibility(:profileUname='profileUname')
             el-tab-pane(label='Timeline' name='timeline' lazy)
               p timeline
             el-tab-pane(label='Account' name='account' lazy v-if="userProfile")
@@ -29,10 +29,11 @@ import { getProfile } from '@/api/profiles/req'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
 import UserCard from './UserCard.vue'
+import GroupResponsibility from './group-responsibility.vue'
 
 @Component({
   name: 'ProfileDetails',
-  components: { ProfileForm, UserCard }
+  components: { ProfileForm, UserCard, GroupResponsibility }
 })
 export default class extends Vue {
   @Prop({ default: '' }) private profileUname!: string

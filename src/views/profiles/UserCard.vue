@@ -18,8 +18,27 @@ el-card(style='margin-bottom:20px;')
         svg-icon(name='education')
           span Education
       .user-bio-section-body
-        .text-muted
-          | Подробное описание учётки с правами и рассказом о владельце учётки
+        dl
+          dt
+            b Телефон
+          dd {{ user.telephone }}
+          dt
+            b Логин
+          dd {{ user.username }}
+          dt
+            b Имя и отчество
+          dd {{ user.fio }}
+          dt
+            b Включён-ли
+          dd
+            el-checkbox(v-model="user.is_active" disabled)
+          dt
+            b Последний вход
+          dd {{ user.last_login }}
+          dt
+            b Суперпользователь
+          dd
+            el-checkbox(v-model="user.is_superuser" disabled)
     .user-skills.user-bio-section
       .user-bio-section-header
         svg-icon(name='skill')
@@ -95,7 +114,7 @@ export default class extends Vue {
 }
 
 .user-bio {
-  margin-top: 20px;
+  // margin-top: 20px;
   color: #606266;
 
   span {
@@ -104,7 +123,7 @@ export default class extends Vue {
 
   .user-bio-section {
     font-size: 14px;
-    padding: 15px 0;
+    // padding: 15px 0;
 
     .user-bio-section-header {
       border-bottom: 1px solid #dfe6ec;

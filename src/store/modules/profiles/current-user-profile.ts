@@ -13,6 +13,8 @@ export interface ICurrentUserProfile {
   avatar?: string
   email: string
   full_name?: string
+  last_login?: string
+  is_superuser?: boolean
 }
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
@@ -25,6 +27,8 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
   public avatar = ''
   public email = ''
   public full_name = ''
+  public last_login = ''
+  public is_superuser = false
 
   @Mutation
   public SET_TOKEN(token: string) {
@@ -40,6 +44,8 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
     this.avatar = data.avatar!
     this.email = data.email
     this.full_name = data.full_name!
+    this.last_login = data.last_login!
+    this.is_superuser = data.is_superuser!
   }
 
   @Mutation
@@ -52,6 +58,8 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
     this.avatar = ''
     this.email = ''
     this.full_name = ''
+    this.last_login = ''
+    this.is_superuser = false
   }
 
   @Mutation
@@ -63,6 +71,8 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
     this.avatar = orig.avatar!
     this.email = orig.email
     this.full_name = orig.full_name!
+    this.last_login = orig.last_login!
+    this.is_superuser = orig.is_superuser!
   }
 
   @Action

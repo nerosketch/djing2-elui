@@ -41,8 +41,14 @@ export const changeProfile = (uname: string, newData: object): IUserProfileAxois
 export const delProfile = (uname: string) =>
   request.delete(`${baseAccUrl}${uname}/`)
 
-export const getResponsibilities4Group = (groupId: number): IDRFAxiosResponsePromise<number[]> =>
-  request.get(`${baseAccUrl}get_responsibilities/${groupId}/`)
+export const getProfilesByGroup = (groupId: number): IDRFAxiosResponsePromise<number[]> =>
+  request.get(`${baseAccUrl}get_profiles_by_group/${groupId}/`)
+
+export const getResponsibilityGroups = (uname: string): IDRFAxiosResponsePromise<number[]> =>
+  request.get(`${baseAccUrl}${uname}/get_responsibility_groups/`)
+
+export const setResponsibilityGroups = (uname: string, groups: number[]) =>
+  request.put(`${baseAccUrl}${uname}/set_responsibility_groups/`, { groups })
 
 export const login = (data: any) =>
   request({

@@ -6,7 +6,6 @@
       :label="srv.title"
       v-model="srv.state"
     )
-    span asd
     el-button(
       type='primary' size='mini'
       @click="saveAccessory"

@@ -10,6 +10,8 @@ export interface IUserProfile {
   avatar?: string
   email: string
   full_name?: string
+  last_login?: string
+  is_superuser?: boolean
 }
 export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>
