@@ -24,7 +24,7 @@ class Service extends VuexModule implements IService {
   calc_type_name = ''
 
   @Mutation
-  public SET_ALL(data: IService) {
+  public SET_ALL_SERVICE(data: IService) {
     this.pk = data.pk
     this.title = data.title
     this.descr = data.descr
@@ -40,7 +40,7 @@ class Service extends VuexModule implements IService {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_SERVICE() {
     this.pk = 0
     this.title = ''
     this.descr = ''
@@ -59,36 +59,26 @@ class Service extends VuexModule implements IService {
   @Action
   public async GetService(id: number) {
     const r = await getService(id)
-    this.SET_ALL(r.data)
+    this.SET_ALL_SERVICE(r.data)
     return r
   }
 
   @Action
-  public async AddService(data: IService) {
+  public async AddService(data: object) {
     await addService(data)
   }
 
   @Action
-  public async SaveService() {
-    const r = await changeService(this.pk, <IService> {
-      title: this.title,
-      descr: this.descr,
-      speed_in: this.speed_in,
-      speed_out: this.speed_out,
-      speed_burst: this.speed_burst,
-      cost: this.cost,
-      calc_type: this.calc_type,
-      is_admin: this.is_admin,
-      planned_deadline: this.planned_deadline
-    })
-    this.SET_ALL(r.data)
+  public async PatchService(newSrv: object) {
+    const r = await changeService(this.pk, newSrv)
+    this.SET_ALL_SERVICE(r.data)
     return r
   }
 
   @Action
   public async DelService(id: number) {
     await delService(id)
-    this.RESET_ALL()
+    this.RESET_ALL_SERVICE()
   }
 }
 export const ServiceModule = getModule(Service)

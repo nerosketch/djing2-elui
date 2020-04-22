@@ -35,7 +35,7 @@ class Device extends VuexModule implements IDeviceInterace {
   is_noticeable = false
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_DEV() {
     this.pk = 0
     this.ip_address = ''
     this.mac_addr = ''
@@ -54,7 +54,7 @@ class Device extends VuexModule implements IDeviceInterace {
   }
 
   @Mutation
-  public SET_ALL(data: IDevice) {
+  public SET_ALL_DEV(data: IDevice) {
     this.pk = data.pk
     this.ip_address = data.ip_address
     this.mac_addr = data.mac_addr
@@ -75,7 +75,7 @@ class Device extends VuexModule implements IDeviceInterace {
   @Action
   public async GetDevice(id: number) {
     const r = await getDevice(id)
-    this.SET_ALL(r.data)
+    this.SET_ALL_DEV(r.data)
     return r
   }
 
@@ -85,26 +85,16 @@ class Device extends VuexModule implements IDeviceInterace {
   }
 
   @Action
-  public async SaveDevice() {
-    const r = await changeDevice(this.pk, <IDevice>{
-      ip_address: this.ip_address,
-      mac_addr: this.mac_addr,
-      comment: this.comment,
-      dev_type: this.dev_type,
-      man_passw: this.man_passw,
-      group: this.group,
-      parent_dev: this.parent_dev,
-      snmp_extra: this.snmp_extra,
-      extra_data: this.extra_data
-    })
-    this.SET_ALL(r.data)
+  public async PatchDevice(newData: object) {
+    const r = await changeDevice(this.pk, newData)
+    this.SET_ALL_DEV(r.data)
     return r
   }
 
   @Action
   public async DelDevice(id: number) {
     await delDevice(id)
-    this.RESET_ALL()
+    this.RESET_ALL_DEV()
   }
 
   @Action

@@ -4,7 +4,7 @@
     status-icon
     :rules='frmRules'
     :model='frmMod'
-    v-loading='isLoading'
+    v-loading='loading'
   )
     el-form-item(
       label="IP Адрес"
@@ -49,7 +49,7 @@
       el-checkbox(v-model="frmMod.is_management") Оповещать при событиях мониторинга&#58;
         b {{ frmMod.is_management ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(type="primary" @click="onSubmit" :loading="loading") Сохранить
 </template>
 
 <script lang="ts">
@@ -65,7 +65,7 @@ import { getGroups } from '@/api/groups/req'
   name: 'dev-form'
 })
 export default class extends Vue {
-  private isLoading = false
+  private loading = false
   private groups: IGroup[] = []
 
   private frmRules = {
@@ -96,17 +96,12 @@ export default class extends Vue {
     { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }
   ]
 
-  private frmMod: IDevice = <IDevice>{
-    pk: DeviceModule.pk,
+  private frmMod = {
     ip_address: DeviceModule.ip_address,
     mac_addr: DeviceModule.mac_addr,
     comment: DeviceModule.comment,
     dev_type: DeviceModule.dev_type,
-    man_passw: DeviceModule.man_passw,
-    group: DeviceModule.group,
-    parent_dev: DeviceModule.parent_dev,
-    snmp_extra: DeviceModule.snmp_extra,
-    extra_data: DeviceModule.extra_data
+    group: DeviceModule.group
   }
 
   get devId() {
@@ -120,10 +115,9 @@ export default class extends Vue {
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {
       if (valid) {
-        this.isLoading = true
-        await DeviceModule.SET_ALL(this.frmMod)
-        const newDat = await DeviceModule.SaveDevice()
-        this.isLoading = false
+        this.loading = true
+        const newDat = await DeviceModule.PatchDevice(this.frmMod)
+        this.loading = false
         this.$emit('done', newDat)
       } else {
         this.$message.error('Исправь ошибки в форме')

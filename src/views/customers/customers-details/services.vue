@@ -100,7 +100,6 @@
     el-dialog(
       title="Купить услугу"
       :visible.sync="buyDialog"
-      width="30%"
     )
       buy-service(
         v-on:done="buyDone"
@@ -110,7 +109,6 @@
     el-dialog(
       title="Принадлежность услуг к группам"
       :visible.sync="srvAccDialog"
-      width="30%"
     )
       service-accessory(v-on:done="srvAccDone")
 </template>

@@ -94,14 +94,20 @@ export default class extends Vue {
     { nm: 'Суточная', v: IServiceTypeEnum.DAILY }
   ]
 
-  private frmMod: IService = <IService>ServiceModule.context.state
+  private frmMod = {
+    title: ServiceModule.title,
+    descr: ServiceModule.descr,
+    speed_in: ServiceModule.speed_in,
+    speed_out: ServiceModule.speed_out,
+    speed_burst: ServiceModule.speed_burst,
+    cost: ServiceModule.cost
+  }
 
   private onSubmit() {
     (this.$refs['srvfrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await ServiceModule.SET_ALL(this.frmMod)
-        const newDat = await ServiceModule.SaveService()
+        const newDat = await ServiceModule.PatchService(this.frmMod)
         this.isLoading = false
         this.$emit('done', newDat)
       } else {

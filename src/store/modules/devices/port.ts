@@ -17,7 +17,7 @@ class Port extends VuexModule implements IPort {
   user_count = 0
 
   @Mutation
-  private RESET_ALL() {
+  private RESET_ALL_PORT() {
     this.pk = 0
     this.device = 0
     this.num = 0
@@ -26,7 +26,7 @@ class Port extends VuexModule implements IPort {
   }
 
   @Mutation
-  private SET_ALL(port: IPort) {
+  private SET_ALL_PORT(port: IPort) {
     this.pk = port.pk
     this.device = port.device
     this.num = port.num
@@ -37,7 +37,7 @@ class Port extends VuexModule implements IPort {
   @Action
   public async GetPort(id: number) {
     const r = await getPort(id)
-    this.SET_ALL(r.data)
+    this.SET_ALL_PORT(r.data)
     return r
   }
 
@@ -55,14 +55,14 @@ class Port extends VuexModule implements IPort {
       descr: this.descr,
       user_count: this.user_count
     })
-    this.SET_ALL(r.data)
+    this.SET_ALL_PORT(r.data)
     return r
   }
 
   @Action
   public async DelPort(id: number) {
     await delPort(id)
-    this.RESET_ALL()
+    this.RESET_ALL_PORT()
   }
 
   @Action

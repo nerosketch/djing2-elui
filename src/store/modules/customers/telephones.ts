@@ -14,7 +14,7 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
   customer = 0
 
   @Mutation
-  private RESET_ALL() {
+  private RESET_ALL_TEL() {
     this.pk = 0
     this.telephone = ''
     this.owner_name = ''
@@ -22,7 +22,7 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
   }
 
   @Mutation
-  private SET_ALL(Telephone: IAdditionalTelephone) {
+  private SET_ALL_TEL(Telephone: IAdditionalTelephone) {
     this.pk = Telephone.pk
     this.telephone = Telephone.telephone
     this.owner_name = Telephone.owner_name
@@ -32,14 +32,14 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
   @Action
   public async GetTelephone(id: number) {
     const r = await getTelephone(id)
-    this.SET_ALL(r.data)
+    this.SET_ALL_TEL(r.data)
     return r
   }
 
   @Action
   public async AddTelephone(data: IAdditionalTelephone) {
     await addTelephone(data)
-    this.SET_ALL(data)
+    this.SET_ALL_TEL(data)
   }
 
   @Action
@@ -48,14 +48,14 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
       telephone: this.telephone,
       customer: this.customer
     })
-    this.SET_ALL(r.data)
+    this.SET_ALL_TEL(r.data)
     return r
   }
 
   @Action
   public async DelTelephone(id: number) {
     await delTelephone(id)
-    this.RESET_ALL()
+    this.RESET_ALL_TEL()
   }
 }
 

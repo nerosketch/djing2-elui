@@ -17,7 +17,7 @@
             el-tab-pane(label='Лог действий' name='timeline' lazy)
               keep-alive
                 profile-log
-            el-tab-pane(label='Account' name='account' lazy v-if="userProfile")
+            el-tab-pane(label='Изменить' name='account' lazy v-if="userProfile")
               keep-alive
                 profile-form(:user='userProfile')
 

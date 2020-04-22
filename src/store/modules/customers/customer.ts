@@ -40,7 +40,7 @@ class Customer extends VuexModule implements ICustomer {
   raw_password = ''
 
   @Mutation
-  public SET_ALL(data: ICustomer) {
+  public SET_ALL_CUSTOMER(data: ICustomer) {
     this.pk = data.pk
     this.username = data.username
     this.telephone = data.telephone
@@ -70,7 +70,7 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_CUSTOMER() {
     this.pk = 0
     this.username = ''
     this.telephone = ''
@@ -102,7 +102,7 @@ class Customer extends VuexModule implements ICustomer {
   @Mutation
   public async INIT_DEFAULTS() {
     const { data } = await getCustomerFormInitial()
-    this.SET_ALL(data)
+    this.SET_ALL_CUSTOMER(data)
   }
 
   @Action
@@ -111,7 +111,7 @@ class Customer extends VuexModule implements ICustomer {
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
-    this.SET_ALL(data)
+    this.SET_ALL_CUSTOMER(data)
   }
 
   @Action
@@ -122,13 +122,13 @@ class Customer extends VuexModule implements ICustomer {
   @Action
   public async AddCustomer(newData: object) {
     const { data } = await addCustomer(newData)
-    this.SET_ALL(data)
+    this.SET_ALL_CUSTOMER(data)
   }
 
   @Action
   public async PatchCustomer(newData: object) {
     const { data } = await changeCustomer(this.pk, newData)
-    this.SET_ALL(data)
+    this.SET_ALL_CUSTOMER(data)
     return data
   }
 
@@ -139,7 +139,7 @@ class Customer extends VuexModule implements ICustomer {
     } else {
       await delCustomer(this.pk)
     }
-    this.RESET_ALL()
+    this.RESET_ALL_CUSTOMER()
   }
 
   @Action
@@ -174,7 +174,7 @@ class Customer extends VuexModule implements ICustomer {
       device: null,
       dev_port: null
     })
-    this.SET_ALL(r.data)
+    this.SET_ALL_CUSTOMER(r.data)
     return r
   }
 

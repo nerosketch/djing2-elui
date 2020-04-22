@@ -49,7 +49,7 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_CURRENT_PROFILE() {
     this.token = ''
     this.username = ''
     this.fio = ''
@@ -111,7 +111,7 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
     // await logout()
     removeToken()
     this.SET_TOKEN('')
-    this.RESET_ALL()
+    this.RESET_ALL_CURRENT_PROFILE()
   }
 }
 export const CurrentUserProfileModule = getModule(CurrentUserProfile)

@@ -26,7 +26,7 @@ export const getDevice = (devId: number): IDeviceAxoisResponsePromise =>
 export const addDevice = (newDev: IDevice): IDeviceAxoisResponsePromise =>
   request.post<IDevice>(baseDevUrl, newDev)
 
-export const changeDevice = (devId: number, newData: IDevice): IDeviceAxoisResponsePromise =>
+export const changeDevice = (devId: number, newData: object): IDeviceAxoisResponsePromise =>
   request.patch<IDevice>(`${baseDevUrl}${devId}/`, newData)
 
 export const delDevice = (devId: number) =>

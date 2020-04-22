@@ -24,7 +24,6 @@ div
   el-dialog(
     title="Изменение Услуги"
     :visible.sync="dialogVisible"
-    width="30%"
   )
     service-form(
       v-on:done="frmDone"
@@ -117,7 +116,7 @@ export default class extends Vue {
   }
 
   private async openEdit(srv: IService) {
-    await ServiceModule.SET_ALL(srv)
+    await ServiceModule.SET_ALL_SERVICE(srv)
     this.dialogVisible = true
   }
 

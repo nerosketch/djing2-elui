@@ -21,7 +21,6 @@ div
   el-dialog(
     :title="dialogTitle"
     :visible.sync="dialogVisible"
-    width="30%"
   )
     pool-form(
       v-on:done="frmDone"
@@ -103,11 +102,11 @@ export default class extends Vue {
     return `${w} подсеть`
   }
   private async openEdit(vlan: INetworkIpPool) {
-    await NetworkIpPoolModule.SET_ALL(vlan)
+    await NetworkIpPoolModule.SET_ALL_POOL(vlan)
     this.dialogVisible = true
   }
   private async openNew() {
-    await NetworkIpPoolModule.RESET_ALL()
+    await NetworkIpPoolModule.RESET_ALL_POOL()
     this.dialogVisible = true
   }
 

@@ -1,16 +1,9 @@
-import { VuexModule, Module, Action, Mutation, MutationAction, getModule } from 'vuex-module-decorators'
-import { ICustomer, IPassportInfo } from '@/api/customers/types'
-import {
-  getCustomer, addCustomer,
-  getCustomerFormInitial,
-  changeCustomer, delCustomer,
-  pickService, makeShot,
-  stopService, addBalance
-} from '@/api/customers/req'
+import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators'
+import { IPassportInfo } from '@/api/customers/types'
 import store from '@/store'
 
 @Module({ dynamic: true, store, name: 'passport' })
-class PassportInfo extends VuexModule<IPassportInfo> implements IPassportInfo {
+class PassportInfo extends VuexModule implements IPassportInfo {
   id = 0
   series = ''
   number = ''
@@ -18,7 +11,7 @@ class PassportInfo extends VuexModule<IPassportInfo> implements IPassportInfo {
   date_of_acceptance = ''
 
   @Mutation
-  public SET_ALL(data: IPassportInfo) {
+  public SET_ALL_PASSPORT(data: IPassportInfo) {
     this.id = data.id
     this.series = data.series
     this.number = data.number
@@ -27,7 +20,7 @@ class PassportInfo extends VuexModule<IPassportInfo> implements IPassportInfo {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_PASSPORT() {
     this.id = 0
     this.series = ''
     this.number = ''
@@ -35,3 +28,4 @@ class PassportInfo extends VuexModule<IPassportInfo> implements IPassportInfo {
     this.date_of_acceptance = ''
   }
 }
+export const PassportInfoModule = getModule(PassportInfo)

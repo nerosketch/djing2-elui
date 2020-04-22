@@ -30,7 +30,7 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_POOL() {
     this.id = 0
     this.network = ''
     this.kind = INetworkIpPoolKind.NOT_DEFINED
@@ -43,7 +43,7 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   }
 
   @Mutation
-  public SET_ALL(data: INetworkIpPool) {
+  public SET_ALL_POOL(data: INetworkIpPool) {
     this.id = data.id
     this.network = data.network
     this.kind = data.kind
@@ -58,7 +58,7 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   @Action
   public async GetPool(poolId: number) {
     const r = await getNetworkIpPool(poolId)
-    this.SET_ALL(r.data)
+    this.SET_ALL_POOL(r.data)
     return r
   }
 
@@ -98,13 +98,13 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   @Action
   public async PatchPool(newData: object) {
     const { data } = await changeNetworkIpPool(this.id, newData)
-    this.SET_ALL(data)
+    this.SET_ALL_POOL(data)
   }
 
   @Action
   public async DelPool(id: number) {
     await delNetworkIpPool(id)
-    this.RESET_ALL()
+    this.RESET_ALL_POOL()
   }
 
   @Action

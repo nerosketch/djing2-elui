@@ -63,7 +63,7 @@ export default class extends Vue {
     (this.$refs['form'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await VlanIfModule.SET_ALL(this.frmMod)
+        await VlanIfModule.SET_ALL_VLAN(this.frmMod)
         const newDat = await VlanIfModule.SaveVlan()
         this.isLoading = false
         this.$emit('done', newDat)

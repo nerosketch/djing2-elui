@@ -18,7 +18,6 @@ div
   el-dialog(
     title="Изменение Сессии"
     :visible.sync="dialogVisible"
-    width="30%"
   )
     lease-form(
       v-on:done="frmDone"
@@ -84,7 +83,7 @@ export default class extends Vue {
   }
 
   private async openEdit(lease: ICustomerIpLease) {
-    await CustomerIpLeaseModule.SET_ALL(lease)
+    await CustomerIpLeaseModule.SET_ALL_LEASE(lease)
     this.dialogVisible = true
   }
 

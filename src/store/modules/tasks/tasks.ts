@@ -3,7 +3,6 @@ import store from '@/store'
 import { ITask, ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
 import { getTask, addTask, changeTask, delTask, finishTask, failTask, remindTask, getActiveTaskCount } from '@/api/tasks/req'
 
-
 @Module({ dynamic: true, store, name: 'task' })
 class Task extends VuexModule implements ITask {
   id = 0
@@ -25,7 +24,7 @@ class Task extends VuexModule implements ITask {
   activeTaskCount = 0
 
   @Mutation
-  public SET_ALL(data: ITask) {
+  public SET_ALL_TASK(data: ITask) {
     this.id = data.id
     this.author_full_name = data.author_full_name!
     this.customer_full_name = data.customer_full_name!
@@ -46,7 +45,7 @@ class Task extends VuexModule implements ITask {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_TASK() {
     this.id = 0
     this.author_full_name = ''
     this.customer_full_name = ''
@@ -73,21 +72,21 @@ class Task extends VuexModule implements ITask {
   @Action
   public async GetTask(id: number) {
     const r = await getTask(id)
-    this.SET_ALL(r.data)
+    this.SET_ALL_TASK(r.data)
     return r
   }
 
   @Action
   public async AddTask(task: object) {
     const { data } = await addTask(task)
-    this.SET_ALL(data)
+    this.SET_ALL_TASK(data)
     return data
   }
 
   @Action
   public async SaveTask() {
     const r = await changeTask(this.id, this)
-    this.SET_ALL(r.data)
+    this.SET_ALL_TASK(r.data)
     return r
   }
 
@@ -97,13 +96,13 @@ class Task extends VuexModule implements ITask {
       id = this.id
     }
     await delTask(id)
-    this.RESET_ALL()
+    this.RESET_ALL_TASK()
   }
 
   @Action
   public async PatchTask(info: any) {
     const { data } = await changeTask(this.id, info)
-    this.SET_ALL(data)
+    this.SET_ALL_TASK(data)
   }
 
   @Action
@@ -121,7 +120,7 @@ class Task extends VuexModule implements ITask {
 
   @Action
   public StartWatchActiveTaskCount() {
-    setInterval(async () => {
+    setInterval(async() => {
       const { data } = await getActiveTaskCount()
       this.SET_TASK_COUNT(data)
     }, 5000)
