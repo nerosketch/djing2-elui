@@ -44,12 +44,11 @@ export default class extends Vue {
     }
   ]
 
-  created() {
-    this.getGroups()
-  }
-
   private async getGroups(params?: IDRFRequestListParameters) {
     this.groupsLoading = true
+    if (params) {
+      params['fields'] = 'pk,title,usercount'
+    }
     const r = await getCustomerGroups(params)
     this.groupsLoading = false
     return r

@@ -66,18 +66,17 @@ export default class extends Vue {
   private async loadLog(params?: IDRFRequestListParameters) {
     let r
     this.loading = true
-    if(params) {
-      const newParams = Object.assign({ customer: CustomerModule.pk }, params)
+    if (params) {
+      const newParams = Object.assign({
+        customer: CustomerModule.pk,
+        fields: 'cost,date,author_name,comment'
+      }, params)
       r = await getCustomerPayLog(newParams)
     } else {
       r = await getCustomerPayLog()
     }
     this.loading = false
     return r
-  }
-
-  created() {
-    this.loadLog()
   }
 
   private addCashDone(cost: number) {

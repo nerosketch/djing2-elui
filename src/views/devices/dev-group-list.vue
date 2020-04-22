@@ -8,7 +8,7 @@
       span(slot="pk" slot-scope="{row}") {{ row.pk }}
 
       el-link(slot="title" slot-scope="{row}")
-        router-link(:to="{name: 'devicesList', params:{groupId: row.pk}}") {{ row.title }}
+        router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
 
       span(slot="device_count" slot-scope="{row}") {{ row.device_count }}
 
@@ -30,6 +30,9 @@ class DataTableComp extends DataTable<IDevGroup> {}
   }
 })
 export default class extends Vue {
+  public readonly $refs!: {
+    table: DataTableComp
+  }
   private groupDevs: IDevGroup[] = []
   private tableColumns: IDataTableColumn[] = [
     {
@@ -48,11 +51,10 @@ export default class extends Vue {
     }
   ]
 
-  created() {
-    this.loadDevGroups()
-  }
-
   private async loadDevGroups(params?: IDRFRequestListParameters) {
+    if (params) {
+      params['fields'] = 'pk,title,device_count'
+    }
     const r = await getDevGroups(params)
     this.groupDevs = r.data.results
     return r

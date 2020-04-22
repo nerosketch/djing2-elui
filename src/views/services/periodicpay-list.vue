@@ -73,10 +73,6 @@ export default class extends Vue {
   private dialogVisible = false
   private loading = false
 
-  created() {
-    this.loadPeriodics()
-  }
-
   private async openEdit(pay: IPeriodicPay) {
     await PeriodicPayModule.SET_ALL_PPAY(pay)
     this.dialogVisible = true
@@ -85,12 +81,15 @@ export default class extends Vue {
   private async delPerPay(pay: IPeriodicPay) {
     if (confirm(`Ты действительно хочешь удалить квитанцию "${pay.name}"?`)) {
       await PeriodicPayModule.DelPeriodicPay(pay.pk)
-      this.$refs['table'].GetTableData()
+      this.$refs.table.GetTableData()
     }
   }
 
   private async loadPeriodics(params?: IDRFRequestListParameters) {
     this.loading = true
+    if (params) {
+      params['fields'] = 'pk,name,when_add,amount'
+    }
     const r = await getPeriodicPays(params)
     this.loading = false
     return r
@@ -98,7 +97,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs['table'].GetTableData()
+    this.$refs.table.GetTableData()
   }
 }
 </script>

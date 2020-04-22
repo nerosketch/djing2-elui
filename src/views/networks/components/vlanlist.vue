@@ -76,10 +76,6 @@ export default class extends Vue {
   private dialogVisible = false
   private vlansLoading = false
 
-  created() {
-    this.loadVlans()
-  }
-
   private async openEdit(vlan: IVlanIf) {
     await VlanIfModule.SET_ALL_VLAN(vlan)
     this.dialogVisible = true
@@ -88,12 +84,15 @@ export default class extends Vue {
   private async delVlan(vlan: IVlanIf) {
     if (confirm(`Ты действительно хочешь удалить влан "${vlan.title}"?`)) {
       await VlanIfModule.DelVlan(vlan.id)
-      this.$refs['table'].GetTableData()
+      this.$refs.table.GetTableData()
     }
   }
 
   private async loadVlans(params?: IDRFRequestListParameters) {
     this.vlansLoading = true
+    if (params) {
+      params['fields'] = 'id,title,vid,is_management'
+    }
     const r = await getVlans(params)
     this.vlansLoading = false
     return r
@@ -101,7 +100,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs['table'].GetTableData()
+    this.$refs.table.GetTableData()
   }
 }
 </script>

@@ -60,7 +60,6 @@ export default class extends Vue {
   @Watch('tabUrl')
   private onTabTypeChanged() {
     this.$refs.tbl.GetTableData()
-    this.loadTasks()
   }
 
   private tableRowClassName(r: any) {
@@ -114,6 +113,9 @@ export default class extends Vue {
 
   private async loadTasks(params?: IDRFRequestListParameters) {
     this.loading = true
+    if (params) {
+      params['fields'] = 'id,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create'
+    }
     const r = await getTasks(params, this.tabUrl)
     this.loading = false
     return r

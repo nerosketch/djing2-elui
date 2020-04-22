@@ -114,15 +114,15 @@ export default class extends Vue {
 
   private customersLoading: boolean = true
 
-  created() {
-    this.getAllCustomers()
-  }
-
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     this.customersLoading = true
+    const fields = 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title'
     let r
-    if(params) {
-      const newParams: IDRFRequestListParametersCustomer = Object.assign({ group: this.groupId }, params)
+    if (params) {
+      const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
+        group: this.groupId,
+        fields
+      })
       r = await getCustomers(newParams)
     } else {
       r = await getCustomers()
@@ -134,7 +134,7 @@ export default class extends Vue {
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
     this.$message.success('Абонент добавлен')
-    this.$refs['tbl'].GetTableData()
+    this.$refs.tbl.GetTableData()
   }
 }
 </script>

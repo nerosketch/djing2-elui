@@ -13,7 +13,7 @@
       span(slot="mac_addr" slot-scope="{row}") {{ row.mac_addr }}
       span(slot="dev_type" slot-scope="{row}") {{ row.dev_type_str }}
       span(slot="status" slot-scope="{row}") {{ row.status ? 'Ok' : 'Не ok' }}
-      span(slot="is_noticeable" slot-scope="{row}") {{ row.is_noticeable ? 'Не' : 'Да' }}
+      span(slot="is_noticeable" slot-scope="{row}") {{ row.is_noticeable ? 'Да' : 'Не' }}
       el-button-group(slot="oper" slot-scope="{row}")
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
@@ -33,9 +33,8 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { IDRFRequestListParameters } from '@/api/types'
-import { IDRFRequestListParametersDevGroup } from '@/api/devices/types'
+import { IDRFRequestListParametersDevGroup, IDevice } from '@/api/devices/types'
 import { getDevices } from '@/api/devices/req'
-import { IDevice } from '@/api/devices/types'
 import DevForm from './dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 
@@ -93,14 +92,6 @@ export default class extends Vue {
     }
   ]
 
-  created() {
-    this.loadDevs({
-      page: 1,
-      page_size: 10,
-      group: this.groupId
-    })
-  }
-
   private async openEdit(dev: IDevice) {
     await DeviceModule.SET_ALL_DEV(dev)
     this.dialogVisible = true
@@ -112,7 +103,7 @@ export default class extends Vue {
       page_size: params.page_size,
       group: this.groupId,
       ordering: params.ordering,
-      fields:params.fields
+      fields: 'pk,ip_address,comment,dev_type,mac_addr,status,is_noticeable,group'
     })
     this.devs = r.data.results
     return r
@@ -121,13 +112,13 @@ export default class extends Vue {
   private async delDevice(dev: IDevice) {
     if (confirm(`Ты действительно хочешь удалить устройство "${dev.comment}"?`)) {
       await DeviceModule.DelDevice(dev.pk)
-      this.$refs['table'].GetTableData()
+      this.$refs.table.GetTableData()
     }
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs['table'].GetTableData()
+    this.$refs.table.GetTableData()
   }
 }
 </script>

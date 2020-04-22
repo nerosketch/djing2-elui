@@ -13,10 +13,8 @@ div
     span(slot="speed_out" slot-scope="{row}") {{ row.speed_out }}
     span(slot="speed_burst" slot-scope="{row}") {{ row.speed_burst }}
     span(slot="cost" slot-scope="{row}") {{ row.cost }}
-    span(slot="calc_type_name" slot-scope="{row}") {{ row.calc_type_name }}
     el-checkbox(v-model="row.is_admin" slot="isadm" slot-scope="{row}" disabled) {{ row.is_admin ? 'Да' : 'Нет'}}
     span(slot="usercount" slot-scope="{row}") {{ row.usercount }}
-    span(slot="planned_deadline" slot-scope="{row}") {{ row.planned_deadline }}
     el-button-group(slot="oper" slot-scope="{row}")
       el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
       el-button(type="danger" icon="el-icon-delete" size="mini" @click="delSrv(row)")
@@ -111,10 +109,6 @@ export default class extends Vue {
   private dialogVisible = false
   private loading = false
 
-  created() {
-    this.loadServices()
-  }
-
   private async openEdit(srv: IService) {
     await ServiceModule.SET_ALL_SERVICE(srv)
     this.dialogVisible = true
@@ -123,12 +117,15 @@ export default class extends Vue {
   private async delSrv(srv: IService) {
     if (confirm(`Ты действительно хочешь удалить услугу "${srv.title}"?`)) {
       await ServiceModule.DelService(srv.pk)
-      this.$refs['table'].GetTableData()
+      this.$refs.table.GetTableData()
     }
   }
 
   private async loadServices(params?: IDRFRequestListParametersService) {
     this.loading = true
+    if (params) {
+      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount'
+    }
     const r = await getServices(params)
     this.loading = false
     return r
@@ -136,7 +133,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs['table'].GetTableData()
+    this.$refs.table.GetTableData()
   }
 }
 </script>

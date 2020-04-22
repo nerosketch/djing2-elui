@@ -78,10 +78,6 @@ export default class extends Vue {
   private dialogVisible = false
   private leaseLoading = false
 
-  created() {
-    this.loadLeases()
-  }
-
   private async openEdit(lease: ICustomerIpLease) {
     await CustomerIpLeaseModule.SET_ALL_LEASE(lease)
     this.dialogVisible = true
@@ -90,12 +86,15 @@ export default class extends Vue {
   private async delLease(lease: ICustomerIpLease) {
     if (confirm(`Ты действительно хочешь удалить сессию "${lease.ip_address}"?`)) {
       await CustomerIpLeaseModule.DelLease(lease.id)
-      this.$refs['table'].GetTableData()
+      this.$refs.table.GetTableData()
     }
   }
 
   private async loadLeases(params?: IDRFRequestListParameters) {
     this.leaseLoading = true
+    if (params) {
+      params['fields'] = 'id,ip_address,lease_time,mac_address,is_dynamic'
+    }
     const r = await getCustomerIpLeases(params)
     this.leaseLoading = false
     return r
@@ -104,7 +103,7 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Сессия изменена')
-    this.$refs['table'].GetTableData()
+    this.$refs.table.GetTableData()
     // this.loadLeases()
   }
 }

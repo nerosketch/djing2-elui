@@ -46,8 +46,8 @@
     el-form-item(
       prop="is_noticeable"
     )
-      el-checkbox(v-model="frmMod.is_management") Оповещать при событиях мониторинга&#58;
-        b {{ frmMod.is_management ? 'Да' : 'Нет' }}
+      el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
+        b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
       el-button(type="primary" @click="onSubmit" :loading="loading") Сохранить
 </template>
@@ -101,7 +101,8 @@ export default class extends Vue {
     mac_addr: DeviceModule.mac_addr,
     comment: DeviceModule.comment,
     dev_type: DeviceModule.dev_type,
-    group: DeviceModule.group
+    group: DeviceModule.group,
+    is_noticeable: DeviceModule.is_noticeable
   }
 
   get devId() {

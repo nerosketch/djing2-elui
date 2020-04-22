@@ -44,8 +44,8 @@ export default class extends Vue {
   }
 
   private frmMod = {
-    name: '',
-    amount: 0.0
+    name: PeriodicPayModule.name,
+    amount: PeriodicPayModule.amount
   }
 
   private onSubmit() {

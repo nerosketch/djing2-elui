@@ -54,10 +54,6 @@ export default class extends Vue {
     }
   ]
 
-  async created() {
-    await this.getAllLog()
-  }
-
   private async getAllLog(params?: IDRFRequestListParameters) {
     this.loading = true
     const r = await getProfileLogs(params, UserProfileModule.pk)

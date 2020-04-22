@@ -90,10 +90,6 @@ export default class extends Vue {
   private dialogVisible = false
   private poolsLoading = false
 
-  created() {
-    this.loadPools()
-  }
-
   get dialogTitle() {
     let w = 'Изменить'
     if (NetworkIpPoolModule.id === 0) {
@@ -114,12 +110,15 @@ export default class extends Vue {
     this.$confirm(`Ты действительно хочешь удалить пул "${vlan.network}"?`).then(async() => {
       await NetworkIpPoolModule.DelPool(vlan.id)
       this.$message.success('Подсеть удалена')
-      this.$refs['table'].GetTableData()
+      this.$refs.table.GetTableData()
     })
   }
 
   private async loadPools(params?: IDRFRequestListParameters) {
     this.poolsLoading = true
+    if (params) {
+      params['fields'] = 'id,network,description,ip_start,ip_end,gateway'
+    }
     const r = await getNetworkIpPools(params)
     let vlans = r.data.results
     this.poolsLoading = false
@@ -129,7 +128,7 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Подсеть сохранена')
-    this.$refs['table'].GetTableData()
+    this.$refs.table.GetTableData()
     // this.loadPools()
   }
 }

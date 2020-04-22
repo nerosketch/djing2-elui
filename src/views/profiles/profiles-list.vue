@@ -91,12 +91,11 @@ export default class extends Vue {
     }
   ]
 
-  created() {
-    this.getAllProfiles()
-  }
-
   private async getAllProfiles(params?: IDRFRequestListParameters) {
     this.loading = true
+    if (params) {
+      params['fields'] = 'avatar,username,fio,telephone,email'
+    }
     const r = await getProfiles(params)
     this.loading = false
     return r

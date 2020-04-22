@@ -68,10 +68,6 @@ export default class extends Vue {
   private dialogVisible = false
   private loading = false
 
-  created() {
-    this.loadShots()
-  }
-
   private async openEdit(shot: IOneShotPay) {
     await OneShotPayModule.SET_ALL_OSPAY(shot)
     this.dialogVisible = true
@@ -80,12 +76,15 @@ export default class extends Vue {
   private async delShot(shot: IOneShotPay) {
     if (confirm(`Ты действительно хочешь удалить платёж "${shot.name}"?`)) {
       await OneShotPayModule.DelOneShotPay(shot.pk)
-      this.$refs['table'].GetTableData()
+      this.$refs.table.GetTableData()
     }
   }
 
   private async loadShots(params?: IDRFRequestListParameters) {
     this.loading = true
+    if (params) {
+      params['fields'] = 'pk,name,cost'
+    }
     const r = await getOneShotPays(params)
     this.loading = false
     return r
@@ -93,7 +92,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs['table'].GetTableData()
+    this.$refs.table.GetTableData()
   }
 }
 </script>

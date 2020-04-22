@@ -78,10 +78,6 @@ export default class extends Vue {
     }
   ]
 
-  created() {
-    this.loadGroups()
-  }
-
   private async openEdit(group: IGroup) {
     await GroupModule.SET_ALL_MGROUP(group)
     this.dialogVisible = true
@@ -100,6 +96,9 @@ export default class extends Vue {
   }
 
   private async loadGroups(params?: IDRFRequestListParameters) {
+    if (params) {
+      params['fields'] = 'pk,title,code'
+    }
     const r = await getGroups(params)
     this.groups = r.data.results
     return r
@@ -109,14 +108,14 @@ export default class extends Vue {
     this.$confirm(`Ты действительно хочешь удалить группу "${group.title}"?`).then(async() => {
       await GroupModule.DelGroup(group.pk)
       this.$message.success(`Группа "${group.title}" удалена`)
-      this.$refs['table'].GetTableData()
+      this.$refs.table.GetTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Группа сохранена')
-    this.$refs['table'].GetTableData()
+    this.$refs.table.GetTableData()
   }
 }
 </script>
