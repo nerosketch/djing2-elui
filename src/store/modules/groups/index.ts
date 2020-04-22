@@ -25,7 +25,7 @@ class Group extends VuexModule implements IGroup {
   }
 
   @Mutation
-  public SET_ALL(data: IGroup) {
+  public SET_ALL_MGROUP(data: IGroup) {
     this.pk = data.pk
     this.title = data.title
     this.code = data.code
@@ -33,7 +33,7 @@ class Group extends VuexModule implements IGroup {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_MGROUP() {
     this.pk = 0
     this.title = ''
     this.code = ''
@@ -43,14 +43,14 @@ class Group extends VuexModule implements IGroup {
   @Action
   public async GetGroup(groupId: number) {
     const r = await getGroup(groupId)
-    this.SET_ALL(r.data)
+    this.SET_ALL_MGROUP(r.data)
     return r
   }
 
   @Action
   public async AddGroup(grp: object) {
     const { data } = await addGroup(grp)
-    this.SET_ALL(data)
+    this.SET_ALL_MGROUP(data)
   }
 
   @Action
@@ -64,13 +64,13 @@ class Group extends VuexModule implements IGroup {
   @Action
   public async PatchGroup(newData: object) {
     const { data } = await changeGroup(this.pk, newData)
-    this.SET_ALL(data)
+    this.SET_ALL_MGROUP(data)
   }
 
   @Action
   public async DelGroup(groupId: number) {
     await delGroup(groupId)
-    this.RESET_ALL()
+    this.RESET_ALL_MGROUP()
   }
 }
 

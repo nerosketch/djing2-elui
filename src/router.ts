@@ -15,8 +15,6 @@ Vue.use(Router)
   }
 */
 
-const gidProp: any = (p: any) => ({ groupId: p.params.groupId })
-
 export default new Router({
   mode: 'history', // Enable this if you need.
   scrollBehavior: (to, from, savedPosition) => {

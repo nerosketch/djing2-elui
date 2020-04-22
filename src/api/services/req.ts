@@ -22,10 +22,10 @@ export const getServices = (params?: IDRFRequestListParametersService): IService
 export const getService = (id: number): IServiceAxoisResponsePromise =>
   request.get<IService>(`${baseSrvUrl}${id}/`)
 
-export const addService = (newSrv: IService): IServiceAxoisResponsePromise =>
+export const addService = (newSrv: object): IServiceAxoisResponsePromise =>
   request.post<IService>(baseSrvUrl, newSrv)
 
-export const changeService = (id: number, newData: IService): IServiceAxoisResponsePromise =>
+export const changeService = (id: number, newData: object): IServiceAxoisResponsePromise =>
   request.patch<IService>(`${baseSrvUrl}${id}/`, newData)
 
 export const delService = (id: number) =>
@@ -43,7 +43,7 @@ export const getPeriodicPay = (id: number): IPeriodicPayAxoisResponsePromise =>
 export const addPeriodicPay = (newPP: IPeriodicPay): IPeriodicPayAxoisResponsePromise =>
   request.post<IPeriodicPay>(basePPUrl, newPP)
 
-export const changePeriodicPay = (id: number, newPP: IPeriodicPay): IPeriodicPayAxoisResponsePromise =>
+export const changePeriodicPay = (id: number, newPP: object): IPeriodicPayAxoisResponsePromise =>
   request.patch<IPeriodicPay>(`${basePPUrl}${id}/`, newPP)
 
 export const delPeriodicPay = (id: number) =>
@@ -61,7 +61,7 @@ export const getOneShotPay = (id: number): IOneShotPayPayAxoisResponsePromise =>
 export const addOneShotPay = (newSrv: IOneShotPay): IOneShotPayPayAxoisResponsePromise =>
   request.post<IOneShotPay>(baseOSPUrl, newSrv)
 
-export const changeOneShotPay = (id: number, newData: IOneShotPay): IOneShotPayPayAxoisResponsePromise =>
+export const changeOneShotPay = (id: number, newData: object): IOneShotPayPayAxoisResponsePromise =>
   request.patch<IOneShotPay>(`${baseOSPUrl}${id}/`, newData)
 
 export const delOneShotPay = (id: number) =>

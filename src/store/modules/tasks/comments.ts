@@ -16,7 +16,7 @@ class Comment extends VuexModule implements IExtraComment {
   can_remove = false
 
   @Mutation
-  public SET_ALL(data: IExtraComment) {
+  public SET_ALL_COMMENT(data: IExtraComment) {
     this.id = data.id
     this.author_id = data.author_id
     this.author_name = data.author_name!
@@ -28,7 +28,7 @@ class Comment extends VuexModule implements IExtraComment {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_COMMENT() {
     this.id = 0
     this.author_id = 0
     this.author_name = ''
@@ -42,27 +42,27 @@ class Comment extends VuexModule implements IExtraComment {
   @Action
   public async GetComment(id: number) {
     const r = await getComment(id)
-    this.SET_ALL(r.data)
+    this.SET_ALL_COMMENT(r.data)
     return r
   }
 
   @Action
   public async SaveComment() {
     const r = await changeComment(this.id, this)
-    this.SET_ALL(r.data)
+    this.SET_ALL_COMMENT(r.data)
     return r
   }
 
   @Action
   public async DelComment(id: number) {
     await delComment(id)
-    this.RESET_ALL()
+    this.RESET_ALL_COMMENT()
   }
 
   @Action
   public async PatchComment(info: any) {
     const { data } = await changeComment(this.id, info)
-    this.SET_ALL(data)
+    this.SET_ALL_COMMENT(data)
   }
 }
 export const CommentModule = getModule(Comment)

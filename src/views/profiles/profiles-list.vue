@@ -22,6 +22,17 @@
         type="danger" size="mini"
         icon='el-icon-close' circle
       )
+    el-button(
+      type='success'
+      icon='el-icon-plus'
+      size='small'
+      @click="addNewProfile"
+    ) Добавить
+    el-dialog(
+      title="Добавить учётку"
+      :visible.sync="profileFormDialog"
+    )
+      profile-form(v-on:done="addProfileDone")
 </template>
 
 <script lang="ts">
@@ -30,13 +41,16 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { IUserProfile } from '@/api/profiles/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getProfiles } from '@/api/profiles/req'
+import ProfileForm from './profile-form.vue'
+import { UserProfileModule } from '../../store/modules/profiles/user-profile'
 
 class DataTableComp extends DataTable<IUserProfile> {}
 
 @Component({
   name: 'ProfilesList',
   components: {
-    'datatable': DataTableComp
+    'datatable': DataTableComp,
+    ProfileForm
   }
 })
 export default class extends Vue {
@@ -44,6 +58,7 @@ export default class extends Vue {
     tbl: DataTableComp
   }
   private loading = false
+  private profileFormDialog = false
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -85,6 +100,16 @@ export default class extends Vue {
     const r = await getProfiles(params)
     this.loading = false
     return r
+  }
+
+  private async addNewProfile() {
+    UserProfileModule.RESET_ALL_PROFILE()
+    this.profileFormDialog = true
+  }
+
+  private async addProfileDone(newProfile: IUserProfile) {
+    this.profileFormDialog = false
+    this.$router.push({ name: 'profileDetail', params: { profileUname: newProfile.username } })
   }
 }
 </script>

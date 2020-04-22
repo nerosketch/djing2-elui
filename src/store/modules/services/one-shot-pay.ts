@@ -13,14 +13,14 @@ class OneShotPay extends VuexModule implements IOneShotPay {
   cost = 0.0
 
   @Mutation
-  public SET_ALL(data: IOneShotPay) {
+  public SET_ALL_OSPAY(data: IOneShotPay) {
     this.pk = data.pk
     this.name = data.name
     this.cost = data.cost
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_OSPAY() {
     this.pk = 0
     this.name = ''
     this.cost = 0.0
@@ -30,7 +30,7 @@ class OneShotPay extends VuexModule implements IOneShotPay {
   @Action
   public async GetOneShotPay(id: number) {
     const r = await getOneShotPay(id)
-    this.SET_ALL(r.data)
+    this.SET_ALL_OSPAY(r.data)
     return r
   }
 
@@ -40,19 +40,16 @@ class OneShotPay extends VuexModule implements IOneShotPay {
   }
 
   @Action
-  public async SaveOneShotPay() {
-    const r = await changeOneShotPay(this.pk, <IOneShotPay> {
-      name: this.name,
-      cost: this.cost
-    })
-    this.SET_ALL(r.data)
+  public async PatchOneShotPay(newOSPay: object) {
+    const r = await changeOneShotPay(this.pk, newOSPay)
+    this.SET_ALL_OSPAY(r.data)
     return r
   }
 
   @Action
   public async DelOneShotPay(id: number) {
     await delOneShotPay(id)
-    this.RESET_ALL()
+    this.RESET_ALL_OSPAY()
   }
 }
 export const OneShotPayModule = getModule(OneShotPay)

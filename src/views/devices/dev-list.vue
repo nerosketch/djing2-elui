@@ -21,7 +21,6 @@
     el-dialog(
       title="Железка"
       :visible.sync="dialogVisible"
-      width="30%"
     )
       dev-form(
         v-if="dialogVisible"
@@ -103,7 +102,7 @@ export default class extends Vue {
   }
 
   private async openEdit(dev: IDevice) {
-    await DeviceModule.SET_ALL(dev)
+    await DeviceModule.SET_ALL_DEV(dev)
     this.dialogVisible = true
   }
 

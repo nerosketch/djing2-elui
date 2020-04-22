@@ -12,7 +12,7 @@
         el-button-group
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
           el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
-    
+
     el-button(
       type='success'
       size='small'
@@ -23,7 +23,6 @@
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
-      width="30%"
     )
       group-form(
         v-on:done="frmDone"
@@ -84,11 +83,11 @@ export default class extends Vue {
   }
 
   private async openEdit(group: IGroup) {
-    await GroupModule.SET_ALL(group)
+    await GroupModule.SET_ALL_MGROUP(group)
     this.dialogVisible = true
   }
   private async openNew() {
-    await GroupModule.RESET_ALL()
+    await GroupModule.RESET_ALL_MGROUP()
     this.dialogVisible = true
   }
 

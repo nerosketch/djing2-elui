@@ -44,7 +44,6 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
 
 class DataTableComp extends DataTable<ITask> {}
 
-
 @Component({
   name: 'TaskList',
   components: { 'datatable': DataTableComp, TaskForm }
@@ -65,9 +64,9 @@ export default class extends Vue {
   }
 
   private tableRowClassName(r: any) {
-    if(r.row.is_expired === undefined) return
-    if(!r.row.is_expired) {
-      if(r.row.priority === ITaskPriority.LOW) {
+    if (r.row.is_expired === undefined) return
+    if (!r.row.is_expired) {
+      if (r.row.priority === ITaskPriority.LOW) {
         return 'success-row'
       } else if (r.row.priority === ITaskPriority.HIGHER) {
         return 'error-row'
@@ -104,12 +103,12 @@ export default class extends Vue {
     {
       prop: 'time_of_create',
       label: 'Дата создания'
-    },
+    }
   ]
   private loading = false
 
   private async openNew() {
-    await TaskModule.RESET_ALL()
+    await TaskModule.RESET_ALL_TASK()
     this.formDialog = true
   }
 

@@ -17,7 +17,6 @@ div
   el-dialog(
     title="Изменение vlan"
     :visible.sync="dialogVisible"
-    width="30%"
   )
     vlan-form(
       v-on:done="frmDone"
@@ -82,7 +81,7 @@ export default class extends Vue {
   }
 
   private async openEdit(vlan: IVlanIf) {
-    await VlanIfModule.SET_ALL(vlan)
+    await VlanIfModule.SET_ALL_VLAN(vlan)
     this.dialogVisible = true
   }
 

@@ -71,7 +71,7 @@ export default class extends Vue {
     (this.$refs['leasefrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await CustomerIpLeaseModule.SET_ALL(this.frmMod)
+        await CustomerIpLeaseModule.SET_ALL_LEASE(this.frmMod)
         const newDat = await CustomerIpLeaseModule.SaveLease()
         this.isLoading = false
         this.$emit('done', newDat)

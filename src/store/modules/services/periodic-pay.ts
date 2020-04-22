@@ -14,7 +14,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
   amount = 0
 
   @Mutation
-  public SET_ALL(data: IPeriodicPay) {
+  public SET_ALL_PPAY(data: IPeriodicPay) {
     this.pk = data.pk
     this.name = data.name
     this.when_add = data.when_add!
@@ -22,7 +22,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_PPAY() {
     this.pk = 0
     this.name = ''
     this.when_add = ''
@@ -33,7 +33,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
   @Action
   public async GetPeriodicPay(id: number) {
     const r = await getPeriodicPay(id)
-    this.SET_ALL(r.data)
+    this.SET_ALL_PPAY(r.data)
     return r
   }
 
@@ -43,20 +43,16 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
   }
 
   @Action
-  public async SavePeriodicPay() {
-    const r = await changePeriodicPay(this.pk, <IPeriodicPay> {
-      name: this.name,
-      when_add: this.when_add,
-      amount: this.amount
-    })
-    this.SET_ALL(r.data)
+  public async PatchPeriodicPay(newPpay: object) {
+    const r = await changePeriodicPay(this.pk, newPpay)
+    this.SET_ALL_PPAY(r.data)
     return r
   }
 
   @Action
   public async DelPeriodicPay(id: number) {
     await delPeriodicPay(id)
-    this.RESET_ALL()
+    this.RESET_ALL_PPAY()
   }
 }
 export const PeriodicPayModule = getModule(PeriodicPay)

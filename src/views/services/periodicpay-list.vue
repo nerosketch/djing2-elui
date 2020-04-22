@@ -15,9 +15,8 @@ div
       el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPerPay(row)")
 
   el-dialog(
-    title="Изменение Квитанции"
+    title="Изменение квитанции"
     :visible.sync="dialogVisible"
-    width="30%"
   )
     periodicpay-form(
       v-on:done="frmDone"
@@ -79,7 +78,7 @@ export default class extends Vue {
   }
 
   private async openEdit(pay: IPeriodicPay) {
-    await PeriodicPayModule.SET_ALL(pay)
+    await PeriodicPayModule.SET_ALL_PPAY(pay)
     this.dialogVisible = true
   }
 

@@ -34,7 +34,7 @@ class VlanIf extends VuexModule implements IVlanIf {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_VLAN() {
     this.id = 0
     this.title = ''
     this.vid = 0
@@ -43,7 +43,7 @@ class VlanIf extends VuexModule implements IVlanIf {
   }
 
   @Mutation
-  public SET_ALL(data: IVlanIf) {
+  public SET_ALL_VLAN(data: IVlanIf) {
     this.id = data.id
     this.title = data.title
     this.vid = data.vid
@@ -54,7 +54,7 @@ class VlanIf extends VuexModule implements IVlanIf {
   @Action
   public async GetVlan(vlanId: number) {
     const r = await getVlanIf(vlanId)
-    this.SET_ALL(r.data)
+    this.SET_ALL_VLAN(r.data)
     return r
   }
 
@@ -71,7 +71,7 @@ class VlanIf extends VuexModule implements IVlanIf {
       vid: this.vid,
       is_management: this.is_management
     })
-    this.SET_ALL(r.data)
+    this.SET_ALL_VLAN(r.data)
     return r
   }
 
@@ -88,7 +88,7 @@ class VlanIf extends VuexModule implements IVlanIf {
   @Action
   public async DelVlan(vlanId: number) {
     await delVlanIf(vlanId)
-    this.RESET_ALL()
+    this.RESET_ALL_VLAN()
   }
 }
 

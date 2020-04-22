@@ -43,14 +43,16 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: IOneShotPay = <IOneShotPay>OneShotPayModule.context.state
+  private frmMod = {
+    name: OneShotPayModule.name,
+    cost: OneShotPayModule.cost
+  }
 
   private onSubmit() {
     (this.$refs['shotfrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await OneShotPayModule.SET_ALL(this.frmMod)
-        const newDat = await OneShotPayModule.SaveOneShotPay()
+        const newDat = await OneShotPayModule.PatchOneShotPay(this.frmMod)
         this.isLoading = false
         this.$emit('done', newDat)
       } else {

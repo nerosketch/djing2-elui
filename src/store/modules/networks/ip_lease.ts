@@ -17,7 +17,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   is_dynamic = false
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_LEASE() {
     this.id = 0
     this.ip_address = ''
     this.pool = 0
@@ -29,7 +29,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   }
 
   @Mutation
-  public SET_ALL(data: ICustomerIpLease) {
+  public SET_ALL_LEASE(data: ICustomerIpLease) {
     this.id = data.id
     this.ip_address = data.ip_address
     this.pool = data.pool
@@ -43,7 +43,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   @Action
   public async GetLease(leaseId: number) {
     const r = await getCustomerIpLease(leaseId)
-    this.SET_ALL(r.data)
+    this.SET_ALL_LEASE(r.data)
     return r
   }
 
@@ -62,7 +62,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
       customer: this.customer,
       is_dynamic: this.is_dynamic
     })
-    this.SET_ALL(r.data)
+    this.SET_ALL_LEASE(r.data)
     return r
   }
 
@@ -82,13 +82,13 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   @Action
   public async PatchLease(info: any) {
     const { data } = await changeCustomerIpLease(this.id, info)
-    this.SET_ALL(data)
+    this.SET_ALL_LEASE(data)
   }
 
   @Action
   public async DelLease(leaseId: number) {
     await delCustomerIpLease(leaseId)
-    this.RESET_ALL()
+    this.RESET_ALL_LEASE()
   }
 }
 

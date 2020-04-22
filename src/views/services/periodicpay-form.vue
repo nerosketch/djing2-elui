@@ -43,14 +43,16 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: IPeriodicPay = <IPeriodicPay>PeriodicPayModule.context.state
+  private frmMod = {
+    name: '',
+    amount: 0.0
+  }
 
   private onSubmit() {
     (this.$refs['perfrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await PeriodicPayModule.SET_ALL(this.frmMod)
-        const newDat = await PeriodicPayModule.SavePeriodicPay()
+        const newDat = await PeriodicPayModule.PatchPeriodicPay(this.frmMod)
         this.isLoading = false
         this.$emit('done', newDat)
       } else {

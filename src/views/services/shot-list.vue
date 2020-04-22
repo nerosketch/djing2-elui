@@ -16,7 +16,6 @@ div
   el-dialog(
     title="Изменение одноразового платежа"
     :visible.sync="dialogVisible"
-    width="30%"
   )
     shot-form(
       v-on:done="frmDone"
@@ -74,7 +73,7 @@ export default class extends Vue {
   }
 
   private async openEdit(shot: IOneShotPay) {
-    await OneShotPayModule.SET_ALL(shot)
+    await OneShotPayModule.SET_ALL_OSPAY(shot)
     this.dialogVisible = true
   }
 

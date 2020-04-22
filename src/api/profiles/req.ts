@@ -5,8 +5,8 @@ import { IUserProfileLogListAxiosResponsePromise, IUserProfileLogList, IUserProf
 
 // IUserProfileLog
 const baseLogUrl = '/profiles/log/'
-export const getProfileLogs = (params?: IDRFRequestListParameters): IUserProfileLogListAxiosResponsePromise =>
-  request.get<IUserProfileLogList>(baseLogUrl, { params })
+export const getProfileLogs = (params?: IDRFRequestListParameters, account?: number): IUserProfileLogListAxiosResponsePromise =>
+  request.get<IUserProfileLogList>(baseLogUrl, { params: Object.assign(params, { account }) })
 
 export const getProfileLog = (id: number): IUserProfileLogAxoisResponsePromise =>
   request.get<IUserProfileLog>(`${baseLogUrl}${id}/`)

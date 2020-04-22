@@ -10,7 +10,7 @@ class CustomerGroup extends VuexModule implements ICustomerGroup {
   public usercount = 0
 
   @Mutation
-  public SET_ALL(data: ICustomerGroup) {
+  public SET_ALL_GROUPS(data: ICustomerGroup) {
     this.pk = data.pk
     this.title = data.title
     this.code = data.code
@@ -18,7 +18,7 @@ class CustomerGroup extends VuexModule implements ICustomerGroup {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_GROUPS() {
     this.pk = 0
     this.title = ''
     this.code = ''

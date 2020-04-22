@@ -1,7 +1,7 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { IUserProfile } from '@/api/profiles/types'
-import { getProfile, delProfile, changeProfile } from '@/api/profiles/req'
+import { getProfile, delProfile, changeProfile, addProfile } from '@/api/profiles/req'
 
 @Module({ dynamic: true, store, name: 'userprofile' })
 class UserProfile extends VuexModule implements IUserProfile {
@@ -33,7 +33,7 @@ class UserProfile extends VuexModule implements IUserProfile {
   }
 
   @Mutation
-  public RESET_ALL() {
+  public RESET_ALL_PROFILE() {
     this.pk = 0
     this.username = ''
     this.fio = ''
@@ -55,9 +55,16 @@ class UserProfile extends VuexModule implements IUserProfile {
   }
 
   @Action
+  public async AddProfile(newData: object) {
+    const { data } = await addProfile(newData)
+    this.SET_ALL_PROFILE(data)
+    return data
+  }
+
+  @Action
   public async DelProfile(uname: string) {
     await delProfile(uname)
-    this.RESET_ALL()
+    this.RESET_ALL_PROFILE()
   }
 
   @Action

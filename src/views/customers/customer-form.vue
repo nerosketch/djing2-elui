@@ -77,7 +77,6 @@
     el-dialog(
       title="Паспортные данные"
       :visible.sync="openPasportDlg"
-      width="30%"
     )
       passport
     el-dialog(
