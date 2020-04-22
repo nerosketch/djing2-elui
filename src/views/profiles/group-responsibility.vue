@@ -50,11 +50,6 @@ export default class extends Vue {
       return
     }
     const checkedGroups = await this.loadChackedRespGroups()
-    if (checkedGroups.length < 1) {
-      this.loading = false
-      this.$message.error('Не удалось получить выбранные группы')
-      return
-    }
     for (const grp of data.results) {
       let state = checkedGroups.includes(grp.pk)
       this.groups.push(Object.assign({ state }, grp))
