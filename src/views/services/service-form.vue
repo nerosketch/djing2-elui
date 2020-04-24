@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { positiveValidator } from '@/utils/validate'
 import { IService, IServiceTypeEnum } from '@/api/services/types'
@@ -100,7 +100,26 @@ export default class extends Vue {
     speed_in: ServiceModule.speed_in,
     speed_out: ServiceModule.speed_out,
     speed_burst: ServiceModule.speed_burst,
-    cost: ServiceModule.cost
+    cost: ServiceModule.cost,
+    is_admin: ServiceModule.is_admin,
+    calc_type: ServiceModule.calc_type
+  }
+
+  get srvId() {
+    return ServiceModule.pk
+  }
+  @Watch('srvId')
+  private async onSrvCh() {
+    this.frmMod = {
+      title: ServiceModule.title,
+      descr: ServiceModule.descr,
+      speed_in: ServiceModule.speed_in,
+      speed_out: ServiceModule.speed_out,
+      speed_burst: ServiceModule.speed_burst,
+      cost: ServiceModule.cost,
+      is_admin: ServiceModule.is_admin,
+      calc_type: ServiceModule.calc_type
+    }
   }
 
   private onSubmit() {

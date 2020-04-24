@@ -25,11 +25,6 @@
 
       span(slot="gateway_title" slot-scope="{row}") {{ row.gateway_title }}
 
-      el-button(
-        slot="btn" slot-scope="{row}"
-        type="primary" size="mini"
-        icon='el-icon-check' circle
-      )
     el-button(
       type='primary'
       size='small'
@@ -50,7 +45,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomer, IDRFRequestListParametersCustomer } from '@/api/customers/types'
 import { getCustomers } from '@/api/customers/req'
-import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import NewCustomerForm from './new-customer-form.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
@@ -103,12 +98,6 @@ export default class extends Vue {
     {
       prop: 'gateway_title',
       label: 'Шлюз'
-    },
-    {
-      prop: 'btn',
-      label: 'Ping',
-      width: 90,
-      align: DataTableColumnAlign.CENTER
     }
   ]
 

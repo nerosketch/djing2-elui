@@ -103,7 +103,7 @@ export default class extends Vue {
       page_size: params.page_size,
       group: this.groupId,
       ordering: params.ordering,
-      fields: 'pk,ip_address,comment,dev_type,mac_addr,status,is_noticeable,group'
+      fields: 'pk,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group'
     })
     this.devs = r.data.results
     return r

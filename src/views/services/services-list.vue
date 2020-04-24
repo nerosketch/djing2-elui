@@ -124,7 +124,7 @@ export default class extends Vue {
   private async loadServices(params?: IDRFRequestListParametersService) {
     this.loading = true
     if (params) {
-      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount'
+      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type'
     }
     const r = await getServices(params)
     this.loading = false
