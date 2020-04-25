@@ -12,6 +12,7 @@ div
     span(slot="ip_start" slot-scope="{row}") {{ row.ip_start }}
     span(slot="ip_end" slot-scope="{row}") {{ row.ip_end }}
     span(slot="gateway" slot-scope="{row}") {{ row.gateway }}
+    el-checkbox(slot="is_dynamic" slot-scope="{row}" v-model="row.is_dynamic" disabled)
     el-button-group(slot="oper" slot-scope="{row}")
       el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
       el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
@@ -80,6 +81,12 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
+      prop: 'is_dynamic',
+      label: 'Д',
+      width: 40,
+      align: DataTableColumnAlign.CENTER
+    },
+    {
       prop: 'oper',
       label: 'Oper',
       width: 130,
@@ -117,7 +124,7 @@ export default class extends Vue {
   private async loadPools(params?: IDRFRequestListParameters) {
     this.poolsLoading = true
     if (params) {
-      params['fields'] = 'id,network,description,ip_start,ip_end,gateway'
+      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups'
     }
     const r = await getNetworkIpPools(params)
     let vlans = r.data.results

@@ -27,10 +27,26 @@
     )
       el-input(v-model="frmMod.ip_end")
     el-form-item(
+      label="Группы"
+      prop='groups'
+    )
+      el-select(v-model="frmMod.groups" multiple)
+        el-option(
+          v-for="g in groups"
+          :key="g.pk"
+          :label="g.title"
+          :value="g.pk"
+        )
+    el-form-item(
       label="Шлюз"
       prop='gateway'
     )
       el-input(v-model="frmMod.gateway")
+    el-form-item(
+      label='Динамический'
+      prop='is_dynamic'
+    )
+      el-checkbox(v-model="frmMod.is_dynamic") {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
     el-form-item
       el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
 </template>
@@ -41,12 +57,15 @@ import { Form } from 'element-ui'
 import { ipAddrValidator, ipAddrMaskValidator } from '@/utils/validate'
 import { INetworkIpPool } from '@/api/networks/types'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
+import { IGroup } from '@/api/groups/types'
+import { getGroups } from '@/api/groups/req'
 
 @Component({
   name: 'pool-form'
 })
 export default class extends Vue {
   private isLoading = false
+  private groups: IGroup[] = []
 
   private frmRules = {
     network: [
@@ -71,11 +90,13 @@ export default class extends Vue {
   }
 
   private frmMod = {
-    network: '',
-    description: '',
-    ip_start: '',
-    ip_end: '',
-    gateway: ''
+    network: NetworkIpPoolModule.network,
+    description: NetworkIpPoolModule.description,
+    groups: NetworkIpPoolModule.groups,
+    ip_start: NetworkIpPoolModule.ip_start,
+    ip_end: NetworkIpPoolModule.ip_end,
+    gateway: NetworkIpPoolModule.gateway,
+    is_dynamic: NetworkIpPoolModule.is_dynamic
   }
 
   get netId() {
@@ -88,6 +109,10 @@ export default class extends Vue {
 
   get isNewPool() {
     return NetworkIpPoolModule.id === 0
+  }
+
+  created() {
+    this.loadGroups()
   }
 
   private onSubmit() {
@@ -106,6 +131,17 @@ export default class extends Vue {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  private async loadGroups() {
+    this.isLoading = true
+    const { data } = await getGroups({
+      page: 1,
+      page_size: 500,
+      fields: 'pk,title'
+    })
+    this.groups = data.results
+    this.isLoading = false
   }
 }
 </script>

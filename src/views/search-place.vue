@@ -16,8 +16,11 @@
                 i.el-icon-s-custom 
                 el-link(type="primary")
                   router-link(:to="{ name: 'customerDetails', params: {uid: c.id } }") {{ c.username }}
-              p {{ c.fio }}, {{ c.group_title }}. 
-                i {{ c.telephone }}
+              span {{ c.fio }}, {{ c.group_title }}.
+              br
+              i {{ c.telephone }}
+              br
+              small {{ c.ips }}
           el-card(
             v-else
             shadow="hover"
