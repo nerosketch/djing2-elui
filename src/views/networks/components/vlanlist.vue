@@ -82,10 +82,11 @@ export default class extends Vue {
   }
 
   private async delVlan(vlan: IVlanIf) {
-    if (confirm(`Ты действительно хочешь удалить влан "${vlan.title}"?`)) {
+    this.$confirm(`Ты действительно хочешь удалить влан "${vlan.title}"?`).then(async() => {
       await VlanIfModule.DelVlan(vlan.id)
+      this.$message.success('Vlan удалён')
       this.$refs.table.GetTableData()
-    }
+    })
   }
 
   private async loadVlans(params?: IDRFRequestListParameters) {

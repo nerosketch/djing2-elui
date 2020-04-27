@@ -120,7 +120,7 @@ export default class extends Vue {
       if (valid) {
         this.isLoading = true
         let newDat
-        if(this.isNewPool) {
+        if (this.isNewPool) {
           newDat = await NetworkIpPoolModule.AddPool(this.frmMod)
         } else {
           newDat = await NetworkIpPoolModule.PatchPool(this.frmMod)

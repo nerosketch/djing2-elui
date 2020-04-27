@@ -13,7 +13,7 @@ div
     el-checkbox(v-model="row.is_dynamic" slot="is_dynamic" slot-scope="{row}" disabled) {{ row.is_dynamic ? 'Да' : 'Нет' }}
     el-button-group(slot="oper" slot-scope="{row}")
       el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
+      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delLease(row)")
 
   el-dialog(
     title="Изменение Сессии"
@@ -84,10 +84,11 @@ export default class extends Vue {
   }
 
   private async delLease(lease: ICustomerIpLease) {
-    if (confirm(`Ты действительно хочешь удалить сессию "${lease.ip_address}"?`)) {
+    this.$confirm(`Ты действительно хочешь удалить сессию "${lease.ip_address}"?`).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
+      this.$message.success('Сессия удалена')
       this.$refs.table.GetTableData()
-    }
+    })
   }
 
   private async loadLeases(params?: IDRFRequestListParameters) {

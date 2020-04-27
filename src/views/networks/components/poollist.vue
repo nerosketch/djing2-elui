@@ -104,8 +104,8 @@ export default class extends Vue {
     }
     return `${w} подсеть`
   }
-  private async openEdit(vlan: INetworkIpPool) {
-    await NetworkIpPoolModule.SET_ALL_POOL(vlan)
+  private async openEdit(pool: INetworkIpPool) {
+    await NetworkIpPoolModule.SET_ALL_POOL(pool)
     this.dialogVisible = true
   }
   private async openNew() {
@@ -113,9 +113,9 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private delPool(vlan: INetworkIpPool) {
-    this.$confirm(`Ты действительно хочешь удалить пул "${vlan.network}"?`).then(async() => {
-      await NetworkIpPoolModule.DelPool(vlan.id)
+  private delPool(pool: INetworkIpPool) {
+    this.$confirm(`Ты действительно хочешь удалить пул "${pool.network}"?`).then(async() => {
+      await NetworkIpPoolModule.DelPool(pool.id)
       this.$message.success('Подсеть удалена')
       this.$refs.table.GetTableData()
     })
@@ -127,7 +127,6 @@ export default class extends Vue {
       params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups'
     }
     const r = await getNetworkIpPools(params)
-    let vlans = r.data.results
     this.poolsLoading = false
     return r
   }
