@@ -7,8 +7,13 @@ div
     :tableRowClassName="tableRowClassName"
     ref='tbl'
   )
-    el-link(slot="id" slot-scope="{row}" type="primary")
-      router-link(:to="{name: 'taskDetails', params:{ taskId: row.id }}") {{ row.id }}
+    router-link(slot="id" slot-scope="{row}" :to="{name: 'taskDetails', params:{ taskId: row.id }}")
+      el-button(
+        :type="row.comment_count > 0 ? 'success' : 'primary'"
+        size='mini'
+      )
+        span(v-if="row.comment_count > 0") {{ row.comment_count }}
+        i.el-icon-view(v-else)
 
     el-link(slot="customer_full_name" slot-scope="{row}" type="primary")
       router-link(:to="{name: 'customerDetails', params:{uid: row.customer }}") {{ row.customer_full_name }}
@@ -63,21 +68,23 @@ export default class extends Vue {
   }
 
   private tableRowClassName(r: any) {
-    if (r.row.is_expired === undefined) return
+    if (r.row.is_expired === undefined) return ''
     if (!r.row.is_expired) {
-      if (r.row.priority === ITaskPriority.LOW) {
-        return 'success-row'
+      if (r.row.priority === ITaskPriority.AWARAGE) {
+        return 'warning-row'
       } else if (r.row.priority === ITaskPriority.HIGHER) {
         return 'error-row'
       }
     }
+    return ''
   }
 
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'id',
       label: 'ID',
-      width: 70
+      width: 80,
+      align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'customer_full_name',
@@ -114,7 +121,7 @@ export default class extends Vue {
   private async loadTasks(params?: IDRFRequestListParameters) {
     this.loading = true
     if (params) {
-      params['fields'] = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create'
+      params['fields'] = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
     }
     const r = await getTasks(params, this.tabUrl)
     this.loading = false
