@@ -5,7 +5,7 @@
       :data="tableData"
       :row-class-name="tableRowClassName"
       v-bind="$attrs"
-      style="width: 100%"
+      :height="tblHeight"
       border fit
       v-on="listeners"
     >
@@ -101,6 +101,7 @@ export default class <T> extends Vue {
   private pageSize = 10
   private orderField: string | null = null
   private intLoading = true
+  private tblHeight = 0
 
   get listeners() {
     return {
@@ -144,6 +145,15 @@ export default class <T> extends Vue {
 
   created() {
     this.GetTableData()
+    window.addEventListener('resize', this.onWinResize)
+    this.onWinResize()
+  }
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onWinResize)
+  }
+
+  private onWinResize() {
+    this.tblHeight = window.innerHeight - 218
   }
 }
 </script>

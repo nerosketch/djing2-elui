@@ -67,13 +67,13 @@ export default class extends mixins(ResizeMixin) {
 
 .main-container {
   min-height: 100%;
-  transition: margin-left .28s;
+  transition: margin-left .14s;
   margin-left: $sideBarWidth;
   position: relative;
 }
 
 .sidebar-container {
-  transition: width 0.28s;
+  transition: width 0.14s;
   width: $sideBarWidth !important;
   height: 100%;
   position: fixed;
@@ -102,7 +102,7 @@ export default class extends mixins(ResizeMixin) {
   }
 
   .sidebar-container {
-    transition: transform .28s;
+    transition: transform .14s;
     width: $sideBarWidth !important;
   }
 

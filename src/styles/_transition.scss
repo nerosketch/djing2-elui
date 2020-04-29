@@ -4,7 +4,7 @@
 // fade
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.28s;
+  transition: opacity 0.14s;
 }
 
 .fade-enter,
@@ -15,7 +15,7 @@
 // fade-transform
 .fade-transform-leave-active,
 .fade-transform-enter-active {
-  transition: all .5s;
+  transition: all .3s;
 }
 
 .fade-transform-enter {
@@ -31,7 +31,7 @@
 // breadcrumb
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  transition: all .5s;
+  transition: all .3s;
 }
 
 .breadcrumb-enter,
@@ -41,7 +41,7 @@
 }
 
 .breadcrumb-move {
-  transition: all .5s;
+  transition: all .3s;
 }
 
 .breadcrumb-leave-active {
