@@ -171,10 +171,10 @@ export default class extends Vue {
     this.$confirm('Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.', {
       confirmButtonText: 'OK',
       cancelButtonText: 'Нет'
-    }).then(() => {
-      CustomerIpLeaseModule.DelLease(lease.id)
-      this.loadLeases()
+    }).then(async() => {
+      await CustomerIpLeaseModule.DelLease(lease.id)
       this.$message.success('Аренда удалена')
+      this.loadLeases()
     })
   }
 

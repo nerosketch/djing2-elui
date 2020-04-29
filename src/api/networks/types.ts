@@ -30,6 +30,7 @@ export interface INetworkIpPool {
   ip_end: string
   gateway: string
   is_dynamic: boolean
+  pool_tag?: string
 }
 export type INetworkIpPoolList = IDRFListResponse<INetworkIpPool>
 export type INetworkIpPoolAxoisResponsePromise = IDRFAxiosResponsePromise<INetworkIpPool>

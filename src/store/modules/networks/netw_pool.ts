@@ -19,6 +19,7 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   ip_end = ''
   gateway = ''
   is_dynamic = false
+  pool_tag = ''
 
   @Mutation
   private SET_GROUPS(groups: number[]) {
@@ -41,6 +42,7 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
     this.ip_end = ''
     this.gateway = ''
     this.is_dynamic = false
+    this.pool_tag = ''
     return this
   }
 
@@ -55,6 +57,7 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
     this.ip_end = data.ip_end
     this.gateway = data.gateway
     this.is_dynamic = data.is_dynamic
+    this.pool_tag = data.pool_tag!
     return this
   }
 
@@ -76,7 +79,8 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
       ip_start: this.ip_start,
       ip_end: this.ip_end,
       gateway: this.gateway,
-      is_dynamic: this.is_dynamic
+      is_dynamic: this.is_dynamic,
+      pool_tag: this.pool_tag
     }
   }
 
