@@ -4,6 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadLeases"
     :loading="leaseLoading"
+    :heightDiff='329'
     ref='table'
   )
     span(slot="id" slot-scope="{row}") {{ row.id }}

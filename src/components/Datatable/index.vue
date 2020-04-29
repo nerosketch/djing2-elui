@@ -48,6 +48,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Pagination from '@/components/Pagination/index.vue'
 import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters, IDRFAxiosResponseListPromise } from '@/api/types'
+import { getDefaultPageSize } from '@/utils/cookies'
 
 export enum DataTableColumnAlign {
   CENTER = 'center',
@@ -84,6 +85,7 @@ export default class <T> extends Vue {
   @Prop({ default: null }) private fields!: string | null
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
+  @Prop({ default: 218 }) private heightDiff!: number
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {
@@ -91,14 +93,14 @@ export default class <T> extends Vue {
   }
 
   private responseData: IDRFListResponse<T> = {
-    count: 10,
+    count: getDefaultPageSize(),
     next: null,
     previous: null,
     results: []
   }
   private tableData: T[] = []
   private page = 1
-  private pageSize = 10
+  private pageSize = getDefaultPageSize()
   private orderField: string | null = null
   private intLoading = true
   private tblHeight = 0
@@ -153,7 +155,7 @@ export default class <T> extends Vue {
   }
 
   private onWinResize() {
-    this.tblHeight = window.innerHeight - 218
+    this.tblHeight = window.innerHeight - this.heightDiff
   }
 }
 </script>

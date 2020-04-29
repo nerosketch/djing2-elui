@@ -5,6 +5,7 @@ div
     :getData="loadTasks"
     :loading="loading"
     :tableRowClassName="tableRowClassName"
+    :heightDiff='360'
     ref='tbl'
   )
     router-link(slot="id" slot-scope="{row}" :to="{name: 'taskDetails', params:{ taskId: row.id }}")

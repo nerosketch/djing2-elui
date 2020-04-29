@@ -4,6 +4,7 @@
       :columns="tableColumns"
       :getData="getAllLog"
       :loading="loading"
+      :heightDiff='329'
       ref='tbl'
     )
       span(slot="action_date" slot-scope="{row}") {{ row.action_date }}

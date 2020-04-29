@@ -20,6 +20,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { scrollTo } from '@/utils/scroll-to'
+import { setDefaultPageSize } from '@/utils/cookies'
 
 @Component({
   name: 'Pagination'
@@ -28,7 +29,7 @@ export default class extends Vue {
   @Prop({ required: true }) private total!: number
   @Prop({ default: 1 }) private page!: number
   @Prop({ default: 20 }) private limit!: number
-  @Prop({ default: () => [10, 20, 30, 50] }) private pageSizes!: number[]
+  @Prop({ default: () => [20, 40, 60, 80] }) private pageSizes!: number[]
   @Prop({ default: 'total, sizes, prev, pager, next, jumper' }) private layout!: string
   @Prop({ default: true }) private background!: boolean
   @Prop({ default: true }) private autoScroll!: boolean
@@ -55,6 +56,7 @@ export default class extends Vue {
     if (this.autoScroll) {
       scrollTo(0, 800)
     }
+    setDefaultPageSize(value)
   }
 
   handleCurrentChange(value: number) {

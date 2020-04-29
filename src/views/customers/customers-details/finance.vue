@@ -4,6 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadLog"
     :loading="loading"
+    :heightDiff='345'
     ref='fintbl'
   )
     span(slot="cost" slot-scope="{row}") {{ row.cost }}

@@ -4,6 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadPeriodics"
     :loading="loading"
+    :heightDiff='329'
     ref='table'
   )
     span(slot="pk" slot-scope="{row}") {{ row.pk }}

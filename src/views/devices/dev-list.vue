@@ -3,6 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevs"
+      :heightDiff='187'
       ref='table'
     )
       span(slot="pk" slot-scope="{row}")

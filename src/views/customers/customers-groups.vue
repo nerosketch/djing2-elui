@@ -4,6 +4,7 @@
       :columns="tableColumns"
       :getData="getGroups"
       :loading="groupsLoading"
+      :heightDiff='189'
     )
       span(slot="pk" slot-scope="{row}") {{ row.pk }}
       el-link(slot="title" slot-scope="{row}" type="primary")
