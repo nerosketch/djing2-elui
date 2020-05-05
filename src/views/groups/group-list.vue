@@ -5,10 +5,16 @@
       :getData="loadGroups"
       ref='table'
     )
-      span(slot="pk" slot-scope="{row}") {{ row.pk }}
-      span(slot="title" slot-scope="{row}") {{ row.title }}
-      span(slot="code" slot-scope="{row}") {{ row.code }}
-      div(slot="oper" slot-scope="{row}")
+      template(v-slot:pk="{row}")
+        span {{ row.pk }}
+
+      template(v-slot:title="{row}")
+        span {{ row.title }}
+
+      template(v-slot:code="{row}")
+        span {{ row.code }}
+
+      template(v-slot:oper="{row}")
         el-button-group
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
           el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")

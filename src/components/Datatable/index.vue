@@ -18,7 +18,7 @@
           :width="column.width"
           v-bind="column"
         >
-          <template slot-scope="{row}">
+          <template v-slot:default="{row}">
             <slot
               :name="column.prop"
               :row="row"
@@ -116,17 +116,18 @@ export default class <T> extends Vue {
     return this.responseData.count
   }
 
-  public async GetTableData(params: getTableDataParam = { page: 1, limit: 20 }) {
+  public async GetTableData(params: getTableDataParam = { page: 1, limit: 20 }, otherParams: object = {}) {
     this.intLoading = true
     const { page, limit } = params
     const reqPage = page || this.page
+    const allParams = Object.assign(otherParams, {
+      page: reqPage,
+      page_size: this.pageSize,
+      ordering: this.orderField,
+      fields: this.fields
+    })
     try {
-      let response = await this.getData({
-        page: reqPage,
-        page_size: this.pageSize,
-        ordering: this.orderField,
-        fields: this.fields
-      })
+      let response = await this.getData(allParams)
       this.responseData = response.data
       this.tableData = this.responseData.results
     } finally {

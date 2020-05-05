@@ -1,7 +1,8 @@
 <template lang="pug">
   el-card(shadow="never" :loading="loading")
-    .clearfix(slot='header')
-      b Комментарии задачи
+    template(v-slot:header)
+      .clearfix
+        b Комментарии задачи
     div
       el-card(
         shadow="hover"
@@ -9,10 +10,11 @@
         v-for="c in comments"
         :key="c.id"
       )
-        .clearfix(slot='header')
-          span {{ c.author_name }} 
-          small {{ c.date_create }}
-          el-button(style="float: right; padding: 3px 0" type="text" icon='el-icon-close' v-if="c.can_remove" @click="delComment(c)")
+        template(v-slot:header)
+          .clearfix
+            span {{ c.author_name }} 
+            small {{ c.date_create }}
+            el-button(style="float: right; padding: 3px 0" type="text" icon='el-icon-close' v-if="c.can_remove" @click="delComment(c)")
         el-avatar(shape="square" size='medium' :src='c.author_avatar')
         span &nbsp; {{ c.text }}
     el-form

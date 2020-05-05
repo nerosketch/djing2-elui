@@ -1,7 +1,8 @@
 <template lang="pug">
 el-card(style='margin-bottom:20px;')
-  .clearfix(slot='header')
-    span Инфо
+  template(v-slot:header)
+    .clearfix
+      span Инфо
   .user-profile
     .box-center
       pan-thumb(:image='user.avatar', :height="'100px'", :width="'100px'", :hoverable='false')

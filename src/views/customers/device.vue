@@ -4,8 +4,9 @@ el-form(
   v-loading='isLoading'
 )
   el-card(shadow="never")
-    .clearfix(slot='header')
-      span Устройство
+    template(v-slot:header)
+      .clearfix
+        span Устройство
     el-row
       el-col(:span='8')
         b Устройство

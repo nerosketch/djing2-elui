@@ -6,22 +6,27 @@
       :loading="loading"
       ref='tbl'
     )
-      el-avatar(slot="ava" slot-scope="{row}" :src="row.avatar" size='medium' shape="square")
+      template(v-slot:ava="{row}")
+        el-avatar(:src="row.avatar" size='medium' shape="square")
 
-      el-link(slot="username" slot-scope="{row}" type="primary")
-        router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}") {{ row.username }}
+      template(v-slot:username="{row}")
+        el-link(type="primary")
+          router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}") {{ row.username }}
 
-      span(slot="fio" slot-scope="{row}") {{ row.fio }}
+      template(v-slot:fio="{row}")
+        span {{ row.fio }}
 
-      el-link(slot="telephone" slot-scope="{row}" type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
+      template(v-slot:telephone="{row}")
+        el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
 
-      span(slot="email" slot-scope="{row}") {{ row.email }}
+      template(v-slot:email="{row}")
+        span {{ row.email }}
 
-      el-button(
-        slot="btn" slot-scope="{row}"
-        type="danger" size="mini"
-        icon='el-icon-close' circle
-      )
+      template(v-slot:btn="{row}")
+        el-button(
+          type="danger" size="mini"
+          icon='el-icon-close' circle
+        )
     el-button(
       type='success'
       icon='el-icon-plus'

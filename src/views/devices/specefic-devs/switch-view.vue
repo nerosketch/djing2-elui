@@ -3,8 +3,9 @@
     el-row
       el-col(:span="24")
         el-card.box-card
-          div.clearfix(slot="header")
-            span Свич XXX. Время работы X дней
+          template(v-slot:header)
+            .clearfix
+              span Свич XXX. Время работы X дней
           el-row
             el-col(:span='2').text.item(
               v-for="(port, i) in ports"
@@ -17,8 +18,9 @@
                   el-button(type="primary" size="mini" icon="el-icon-poweroff")
       el-col(:span='12')
         el-card.box-card
-          .clearfix(slot="header")
-            span Управление портами
+          template(v-slot:header)
+            .clearfix
+              span Управление портами
           el-table(:data="ports" :size='mini' fit)
             el-table-column(
               prop='num'

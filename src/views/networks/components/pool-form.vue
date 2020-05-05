@@ -43,11 +43,6 @@
     )
       el-input(v-model="frmMod.gateway")
     el-form-item(
-      label="Метка"
-      prop="pool_tag"
-    )
-      el-input(v-model="frmMod.pool_tag")
-    el-form-item(
       label='Динамический'
       prop='is_dynamic'
     )
@@ -59,7 +54,7 @@
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { ipAddrValidator, ipAddrMaskValidator, latinValidator } from '@/utils/validate'
+import { ipAddrValidator, ipAddrMaskValidator } from '@/utils/validate'
 import { INetworkIpPool } from '@/api/networks/types'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
 import { IGroup } from '@/api/groups/types'
@@ -91,9 +86,6 @@ export default class extends Vue {
     gateway: [
       { required: true, message: 'Шлюз надо указать', trigger: 'blur' },
       { validator: ipAddrValidator, trigger: 'change', message: 'Пример шлюза: 192.168.0.1' }
-    ],
-    pool_tag: [
-      { validator: latinValidator, trigger: 'change', message: 'Только латинские символы' }
     ]
   }
 
@@ -104,8 +96,7 @@ export default class extends Vue {
     ip_start: NetworkIpPoolModule.ip_start,
     ip_end: NetworkIpPoolModule.ip_end,
     gateway: NetworkIpPoolModule.gateway,
-    is_dynamic: NetworkIpPoolModule.is_dynamic,
-    pool_tag: NetworkIpPoolModule.pool_tag
+    is_dynamic: NetworkIpPoolModule.is_dynamic
   }
 
   get netId() {

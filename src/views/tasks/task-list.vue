@@ -8,22 +8,33 @@ div
     :heightDiff='360'
     ref='tbl'
   )
-    router-link(slot="id" slot-scope="{row}" :to="{name: 'taskDetails', params:{ taskId: row.id }}")
-      el-button(
-        :type="row.comment_count > 0 ? 'success' : 'primary'"
-        size='mini'
-      )
-        span(v-if="row.comment_count > 0") {{ row.comment_count }}
-        i.el-icon-view(v-else)
+    template(v-slot:id="{row}")
+      router-link(:to="{name: 'taskDetails', params:{ taskId: row.id }}")
+        el-button(
+          :type="row.comment_count > 0 ? 'success' : 'primary'"
+          size='mini'
+        )
+          span(v-if="row.comment_count > 0") {{ row.comment_count }}
+          i.el-icon-view(v-else)
 
-    el-link(slot="customer_full_name" slot-scope="{row}" type="primary")
-      router-link(:to="{name: 'customerDetails', params:{uid: row.customer }}") {{ row.customer_full_name }}
+    template(v-slot:customer_full_name="{row}")
+      el-link(type="primary")
+        router-link(:to="{name: 'customerDetails', params:{uid: row.customer }}") {{ row.customer_full_name }}
 
-    span(slot="customer_address" slot-scope="{row}") {{ row.customer_address }}
-    span(slot="mode_str" slot-scope="{row}") {{ row.mode_str }}
-    span(slot="descr" slot-scope="{row}") {{ row.descr }}
-    span(slot="state_str" slot-scope="{row}") {{ row.state_str }}
-    span(slot="time_of_create" slot-scope="{row}") {{ row.time_of_create }}
+    template(v-slot:customer_address="{row}")
+      span {{ row.customer_address }}
+
+    template(v-slot:mode_str="{row}")
+      span {{ row.mode_str }}
+
+    template(v-slot:descr="{row}")
+      span {{ row.descr }}
+
+    template(v-slot:state_str="{row}")
+      span {{ row.state_str }}
+
+    template(v-slot:time_of_create="{row}")
+      span {{ row.time_of_create }}
 
   el-button(
     type="success"

@@ -107,10 +107,10 @@ export const getStreets = (params?: IDRFRequestListParametersCustomer): ICustome
 export const getStreet = (id: number): ICustomerStreetAxoisResponsePromise =>
   request.get<ICustomerStreet>(`${streetBaseUrl}${id}/`)
 
-export const addStreet = (street: ICustomerStreet): ICustomerStreetAxoisResponsePromise =>
+export const addStreet = (street: object): ICustomerStreetAxoisResponsePromise =>
   request.post<ICustomerStreet>(streetBaseUrl, street)
 
-export const changeStreet = (id: number, newData: ICustomerStreet): ICustomerStreetAxoisResponsePromise =>
+export const changeStreet = (id: number, newData: object): ICustomerStreetAxoisResponsePromise =>
   request.patch<ICustomerStreet>(`${streetBaseUrl}${id}/`, newData)
 
 export const delStreet = (id: number) =>

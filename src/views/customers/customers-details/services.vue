@@ -2,8 +2,9 @@
   el-row(:gutter='5')
     el-col(:span='12')
       el-card(shadow="never")
-        .clearfix(slot='header')
-          span Услуги для заказа
+        template(v-slot:header)
+          .clearfix
+            span Услуги для заказа
         el-table(
           v-loading='servicesLoading'
           :data='services'
@@ -15,38 +16,40 @@
             label="Заказ."
             width="60"
           )
-            el-button(
-              type='primary' slot-scope="{row}" size='small'
-              @click="buyOpen(row)" :disabled="isServiceAvailable"
-              icon='el-icon-shopping-cart-2' circle
-            )
+            template(v-slot:default="{row}")
+              el-button(
+                type='primary' size='small'
+                @click="buyOpen(row)" :disabled="isServiceAvailable"
+                icon='el-icon-shopping-cart-2' circle
+              )
           el-table-column(
             align="center"
             label="ID"
             width="60"
           )
-            template(slot-scope="{row}") {{ row.pk }}
+            template(v-slot:default="{row}") {{ row.pk }}
           el-table-column(
             label="Услуга"
           )
-            template(slot-scope="{row}") {{ row.title }}
+            template(v-slot:default="{row}") {{ row.title }}
           el-table-column(
             label="Сумма"
           )
-            template(slot-scope="{row}") {{ row.cost }}
+            template(v-slot:default="{row}") {{ row.cost }}
           el-table-column(
             label="Входящая скорость"
           )
-            template(slot-scope="{row}") {{ row.speed_in }}
+            template(v-slot:default="{row}") {{ row.speed_in }}
           el-table-column(
             label="Исходящая скорость"
           )
-            template(slot-scope="{row}") {{ row.speed_out }}
+            template(v-slot:default="{row}") {{ row.speed_out }}
         el-button(@click="srvAccDialog=true" icon="el-icon-s-tools" type="primary" size='mini') Привязать услуги к этой группе
     el-col(:span='12')
       el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
-        .clearfix(slot='header')
-          span Текущая услуга абонента
+        template(v-slot:header)
+          .clearfix
+            span Текущая услуга абонента
         div(v-if="isServiceAvailable")
           h3 {{ currentService.service.title }}
           i {{ currentService.service.descr }}
@@ -93,8 +96,9 @@
 
     el-col(:span='12')
       el-card(shadow="never")
-        .clearfix(slot='header')
-          span Периодический платёж
+        template(v-slot:header)
+          .clearfix
+            span Периодический платёж
         el-button(type='primary' size='mini' disabled) Добавить периодический платёж
 
     el-dialog(

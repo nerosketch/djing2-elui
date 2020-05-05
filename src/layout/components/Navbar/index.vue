@@ -16,7 +16,9 @@
         size='small'
         v-model='searchStr'
       >
-        <el-button slot="append" icon='el-icon-search' @click="doSearch"/>
+        <template v-slot:append>
+          <el-button icon='el-icon-search' @click="doSearch"/>
+        </template>
       </el-input>
     </div>
 
@@ -32,19 +34,21 @@
           >
           <i class="el-icon-caret-bottom" />
         </div>
-        <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
+        <template v-slot:dropdown>
+          <el-dropdown-menu>
+            <router-link to="/">
+              <el-dropdown-item>
+                Home
+              </el-dropdown-item>
+            </router-link>
+            <el-dropdown-item divided>
+              <span
+                style="display:block;"
+                @click="logout"
+              >LogOut</span>
             </el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided>
-            <span
-              style="display:block;"
-              @click="logout"
-            >LogOut</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
   </div>

@@ -7,17 +7,31 @@ div
     :heightDiff='361'
     ref='table'
   )
-    span(slot="id" slot-scope="{row}") {{ row.id }}
-    span(slot="network" slot-scope="{row}") {{ row.network }}
-    span(slot="description" slot-scope="{row}") {{ row.description }}
-    span(slot="ip_start" slot-scope="{row}") {{ row.ip_start }}
-    span(slot="ip_end" slot-scope="{row}") {{ row.ip_end }}
-    span(slot="gateway" slot-scope="{row}") {{ row.gateway }}
-    span(slot="pool_tag" slot-scope="{row}") {{ row.pool_tag }}
-    el-checkbox(slot="is_dynamic" slot-scope="{row}" v-model="row.is_dynamic" disabled)
-    el-button-group(slot="oper" slot-scope="{row}")
-      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
+    template(v-slot:id="{row}")
+      span {{ row.id }}
+
+    template(v-slot:network="{row}")
+      span {{ row.network }}
+
+    template(v-slot:description="{row}")
+      span {{ row.description }}
+
+    template(v-slot:ip_start="{row}")
+      span {{ row.ip_start }}
+
+    template(v-slot:ip_end="{row}")
+      span {{ row.ip_end }}
+
+    template(v-slot:gateway="{row}")
+      span {{ row.gateway }}
+
+    template(v-slot:is_dynamic="{row}")
+      el-checkbox(v-model="row.is_dynamic" disabled)
+
+    template(v-slot:oper="{row}")
+      el-button-group
+        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
 
   el-button(type='success' icon='el-icon-plus' size='small' @click='openNew') Добавить
 
@@ -83,10 +97,6 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'pool_tag',
-      label: 'метка'
-    },
-    {
       prop: 'is_dynamic',
       label: 'Д',
       width: 40,
@@ -130,7 +140,7 @@ export default class extends Vue {
   private async loadPools(params?: IDRFRequestListParameters) {
     this.poolsLoading = true
     if (params) {
-      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,pool_tag'
+      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups'
     }
     const r = await getNetworkIpPools(params)
     this.poolsLoading = false

@@ -1,7 +1,8 @@
 <template lang="pug">
   el-card(shadow="never")
-    .clearfix(slot='header')
-      span Сетевое
+    template(v-slot:header)
+      .clearfix
+        span Сетевое
     el-table(
       v-loading='loading'
       :data="leases"
@@ -10,38 +11,40 @@
       el-table-column(
         label="IP Адрес"
       )
-        template(slot-scope="{row}") {{ row.ip_address }}
+        template(v-slot:default="{row}") {{ row.ip_address }}
       el-table-column(
         label="MAC Адрес"
       )
-        template(slot-scope="{row}") {{ row.mac_address }}
+        template(v-slot:default="{row}") {{ row.mac_address }}
       el-table-column(
         label="Время аренды"
       )
-        template(slot-scope="{row}") {{ row.lease_time }}
+        template(v-slot:default="{row}") {{ row.lease_time }}
       el-table-column(
         label="Дин."
         align="center"
         width="50"
       )
-        el-checkbox(slot-scope="{row}" v-model="row.is_dynamic" disabled)
+        template(v-slot:default="{row}")
+          el-checkbox(v-model="row.is_dynamic" disabled)
       el-table-column(
         label="#"
         align="center"
         width="120"
       )
-        el-button-group(slot-scope="{row}")
-          el-button(
-            type='primary' size='mini'
-            icon='el-icon-edit'
-            @click="editLease(row)"
-            :disabled="row.is_dynamic"
-          )
-          el-button(
-            type='danger' size='mini'
-            icon='el-icon-delete'
-            @click="delLease(row)"
-          )
+        template(v-slot:default="{row}")
+          el-button-group
+            el-button(
+              type='primary' size='mini'
+              icon='el-icon-edit'
+              @click="editLease(row)"
+              :disabled="row.is_dynamic"
+            )
+            el-button(
+              type='danger' size='mini'
+              icon='el-icon-delete'
+              @click="delLease(row)"
+            )
     el-button(size='small' type='success' icon='el-icon-plus', @click="addLease") Добавить
 
     el-dialog(
@@ -60,11 +63,12 @@
           prop='ip_address'
         )
           el-input(v-model="frmMod.ip_address")
-            el-button(
-              slot='append' icon='el-icon-refresh'
-              @click="getFreeIp" :loading='getFreeIpLoad'
-              :disabled="frmMod.pool === 0"
-            )
+            template(v-slot:append)
+              el-button(
+                icon='el-icon-refresh'
+                @click="getFreeIp" :loading='getFreeIpLoad'
+                :disabled="frmMod.pool === 0"
+              )
         el-form-item(
           label="IP Pool"
           prop='pool'

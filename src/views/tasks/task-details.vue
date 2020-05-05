@@ -2,8 +2,9 @@
   el-row.app-container(:gutter="5")
     el-col(:lg="12" :sm='24')
       el-card(shadow="never")
-        .clearfix(slot='header')
-          span Редактировать задачу
+        template(v-slot:header)
+          .clearfix
+            span Редактировать задачу
         task-form(v-if='taskReady' :recipients="recipients")
     el-col(:lg='12' :sm='24')
       task-info(v-if='taskReady' :recipients="recipients")
@@ -31,7 +32,7 @@ export default class extends Vue {
   private recipients: IUserProfile[] = []
 
   private async loadTask() {
-    if(this.taskId === 0) {
+    if (this.taskId === 0) {
       this.$message.error('Не передан ID задачи')
       return
     }

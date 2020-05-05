@@ -7,13 +7,22 @@ div
     :heightDiff='329'
     ref='table'
   )
-    span(slot="pk" slot-scope="{row}") {{ row.pk }}
-    span(slot="name" slot-scope="{row}") {{ row.name }}
-    span(slot="when_add" slot-scope="{row}") {{ row.when_add }}
-    span(slot="amount" slot-scope="{row}") {{ row.amount }}
-    el-button-group(slot="oper" slot-scope="{row}")
-      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPerPay(row)")
+    template(v-slot:pk="{row}")
+      span {{ row.pk }}
+
+    template(v-slot:name="{row}")
+      span {{ row.name }}
+
+    template(v-slot:when_add="{row}")
+      span {{ row.when_add }}
+
+    template(v-slot:amount="{row}")
+      span {{ row.amount }}
+
+    template(v-slot:oper="{row}")
+      el-button-group
+        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPerPay(row)")
 
   el-dialog(
     title="Изменение квитанции"

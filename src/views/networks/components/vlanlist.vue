@@ -7,13 +7,22 @@ div
     :heightDiff='329'
     ref='table'
   )
-    span(slot="id" slot-scope="{row}") {{ row.id }}
-    span(slot="title" slot-scope="{row}") {{ row.title }}
-    span(slot="vid" slot-scope="{row}") {{ row.vid }}
-    el-checkbox(v-model="row.is_management" slot="ismng" slot-scope="{row}" disabled) {{ row.is_management ? 'Да' : 'Нет'}}
-    el-button-group(slot="oper" slot-scope="{row}")
-      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delVlan(row)")
+    template(v-slot:id="{row}")
+      span {{ row.id }}
+
+    template(v-slot:title="{row}")
+      span {{ row.title }}
+
+    template(v-slot:vid="{row}")
+      span {{ row.vid }}
+
+    template(v-slot:ismng="{row}")
+      el-checkbox(v-model="row.is_management" disabled) {{ row.is_management ? 'Да' : 'Нет'}}
+
+    template(v-slot:oper="{row}")
+      el-button-group
+        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delVlan(row)")
 
   el-dialog(
     title="Изменение vlan"

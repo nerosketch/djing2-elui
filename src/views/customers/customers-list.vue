@@ -1,58 +1,82 @@
 <template lang="pug">
   .app-container
-    datatable(
-      :columns="tableColumns"
-      :getData="getAllCustomers"
-      :loading="customersLoading"
-      ref='tbl'
-    )
-      span(slot="pk" slot-scope="{row}") {{ row.pk }}
+    el-row(:gutter="10")
+      el-col(:lg='20' :md='18')
+        datatable(
+          :columns="tableColumns"
+          :getData="getAllCustomers"
+          :loading="customersLoading"
+          ref='tbl'
+        )
+          template(v-slot:pk="{row}")
+            span {{ row.pk }}
 
-      el-link(slot="username" slot-scope="{row}" type="primary")
-        router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}") {{ row.username }}
+          template(v-slot:username="{row}")
+            el-link(type="primary")
+              router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}") {{ row.username }}
 
-      span(slot="fio" slot-scope="{row}") {{ row.fio }}
+          template(v-slot:fio="{row}")
+            span {{ row.fio }}
 
-      span(slot="street_name" slot-scope="{row}") {{ row.street_name }}
+          template(v-slot:street_name="{row}")
+            span {{ row.street_name }}
 
-      span(slot="house" slot-scope="{row}") {{ row.house }}
+          template(v-slot:house="{row}")
+            span {{ row.house }}
 
-      el-link(slot="telephone" slot-scope="{row}" type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
+          template(v-slot:telephone="{row}")
+            el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
 
-      span(slot="service_title" slot-scope="{row}") {{ row.service_title }}
+          template(v-slot:service_title="{row}")
+            span {{ row.service_title }}
 
-      span(slot="balance" slot-scope="{row}") {{ row.balance }}
+          template(v-slot:balance="{row}")
+            span {{ row.balance }}
 
-      span(slot="gateway_title" slot-scope="{row}") {{ row.gateway_title }}
+          template(v-slot:gateway_title="{row}")
+            span {{ row.gateway_title }}
 
-    el-button(
-      type='primary'
-      size='small'
-      icom='el-icon-plus'
-      @click="addCustomerDialog=true"
-    ) Добавить абонента
+        el-button(
+          type='primary'
+          size='small'
+          icom='el-icon-plus'
+          @click="addCustomerDialog=true"
+        ) Добавить абонента
 
-    el-dialog(
-      title='Добавить абонента'
-      :visible.sync='addCustomerDialog'
-    )
-      new-customer-form(:selectedGroup='groupId' v-on:done="addFrmDone")
+        el-dialog(
+          title='Добавить абонента'
+          :visible.sync='addCustomerDialog'
+        )
+          new-customer-form(:selectedGroup='groupId' v-on:done="addFrmDone")
+      el-col(:lg='4' :md='6')
+        list(
+          title="Улицы"
+          :items="streets"
+          :loading='streetsLoading'
+          itemText="name"
+          v-on:itemClick="onStreetClick"
+        )
+          template(v-slot:footer)
+            el-button-group
+              el-button(type='success' icon='el-icon-plus' size='mini') Доб.
+              el-button(type='primary' icon='el-icon-edit' size='mini') Изм.
 
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
-import { ICustomer, IDRFRequestListParametersCustomer } from '@/api/customers/types'
-import { getCustomers } from '@/api/customers/req'
+import { ICustomer, IDRFRequestListParametersCustomer, ICustomerStreet } from '@/api/customers/types'
+import { getCustomers, getStreets } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import NewCustomerForm from './new-customer-form.vue'
+import List from '@/components/List/index.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
 @Component({
   name: 'CustomersList',
-  components: { 'datatable': DataTableComp, NewCustomerForm }
+  components: { 'datatable': DataTableComp, NewCustomerForm, List }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private groupId!: number
@@ -101,7 +125,21 @@ export default class extends Vue {
     }
   ]
 
-  private customersLoading: boolean = true
+  private streets: ICustomerStreet[] = []
+
+  private customersLoading = true
+  private streetsLoading = false
+
+  private async loadStreets() {
+    this.streetsLoading = true
+    const { data } = await getStreets({
+      page: 1,
+      page_size: 9000,
+      group: this.groupId
+    })
+    this.streets = data.results
+    this.streetsLoading = false
+  }
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     this.customersLoading = true
@@ -124,6 +162,23 @@ export default class extends Vue {
     this.addCustomerDialog = false
     this.$message.success('Абонент добавлен')
     this.$refs.tbl.GetTableData()
+  }
+
+  private lastStreetId?: number = 0
+
+  private onStreetClick(item: ICustomerStreet, num: number) {
+    if (item.pk === this.lastStreetId) {
+      this.lastStreetId = undefined
+    } else {
+      this.lastStreetId = item.pk
+    }
+    this.$refs.tbl.GetTableData(undefined, {
+      street: this.lastStreetId
+    })
+  }
+
+  created() {
+    this.loadStreets()
   }
 }
 </script>

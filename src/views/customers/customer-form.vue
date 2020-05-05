@@ -23,7 +23,7 @@
       prop='telephone'
     )
       el-input(v-model="frmMod.telephone")
-        template(slot='append')
+        template(v-slot:append)
           el-button
             a(:href="`tel:${frmMod.telephone}`") call
           el-button(@click="openTelsDlg=true") tels
@@ -89,7 +89,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { latinValidator,telephoneValidator } from '@/utils/validate'
+import { latinValidator, telephoneValidator } from '@/utils/validate'
 import { ICustomerStreet, ICustomerGroup } from '@/api/customers/types'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
 import { CustomerStreetModule } from '@/store/modules/customers/street'
@@ -187,15 +187,14 @@ export default class extends Vue {
   }
 
   private delCustomer() {
-    
-    this.$confirm("Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.", 'Внимание').then(async () => {
+    this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
       const currGroup = CustomerModule.group
       await CustomerModule.DelCustomer()
       this.$message({
         type: 'success',
         message: 'Учётка удалена'
       })
-      this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() }} )
+      this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
     })
   }
 }

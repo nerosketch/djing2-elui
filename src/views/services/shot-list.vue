@@ -7,12 +7,19 @@ div
     :heightDiff='329'
     ref='table'
   )
-    span(slot="pk" slot-scope="{row}") {{ row.pk }}
-    span(slot="name" slot-scope="{row}") {{ row.name }}
-    span(slot="cost" slot-scope="{row}") {{ row.cost }}
-    el-button-group(slot="oper" slot-scope="{row}")
-      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delShot(row)")
+    template(v-slot:pk="{row}")
+      span {{ row.pk }}
+
+    template(v-slot:name="{row}")
+      span {{ row.name }}
+
+    template(v-slot:cost="{row}")
+      span {{ row.cost }}
+
+    template(v-slot:oper="{row}")
+      el-button-group
+        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delShot(row)")
 
   el-dialog(
     title="Изменение одноразового платежа"

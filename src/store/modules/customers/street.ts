@@ -31,17 +31,15 @@ class CustomerStreet extends VuexModule implements ICustomerStreet {
   }
 
   @Action
-  public async AddStreet(data: ICustomerStreet) {
-    await addStreet(data)
+  public async AddStreet(newData: object) {
+    const { data } = await addStreet(newData)
     this.SET_ALL_STREET(data)
+    return data
   }
 
   @Action
-  public async SaveStreet() {
-    const r = await changeStreet(this.pk, <ICustomerStreet>{
-      name: this.name,
-      group: this.group
-    })
+  public async PatchStreet(newData: object) {
+    const r = await changeStreet(this.pk, newData)
     this.SET_ALL_STREET(r.data)
     return r
   }

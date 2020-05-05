@@ -7,18 +7,37 @@ div
     :heightDiff='329'
     ref='table'
   )
-    span(slot="id" slot-scope="{row}") {{ row.pk }}
-    span(slot="title" slot-scope="{row}") {{ row.title }}
-    span(slot="descr" slot-scope="{row}") {{ row.descr }}
-    span(slot="speed_in" slot-scope="{row}") {{ row.speed_in }}
-    span(slot="speed_out" slot-scope="{row}") {{ row.speed_out }}
-    span(slot="speed_burst" slot-scope="{row}") {{ row.speed_burst }}
-    span(slot="cost" slot-scope="{row}") {{ row.cost }}
-    el-checkbox(v-model="row.is_admin" slot="isadm" slot-scope="{row}" disabled) {{ row.is_admin ? 'Да' : 'Нет'}}
-    span(slot="usercount" slot-scope="{row}") {{ row.usercount }}
-    el-button-group(slot="oper" slot-scope="{row}")
-      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delSrv(row)")
+    template(v-slot:id="{row}")
+      span {{ row.pk }}
+
+    template(v-slot:title="{row}")
+      span {{ row.title }}
+
+    template(v-slot:descr="{row}")
+      span {{ row.descr }}
+
+    template(v-slot:speed_in="{row}")
+      span {{ row.speed_in }}
+
+    template(v-slot:speed_out="{row}")
+      span {{ row.speed_out }}
+
+    template(v-slot:speed_burst="{row}")
+      span {{ row.speed_burst }}
+
+    template(v-slot:cost="{row}")
+      span {{ row.cost }}
+
+    template(v-slot:isadm="{row}")
+      el-checkbox(v-model="row.is_admin" disabled) {{ row.is_admin ? 'Да' : 'Нет'}}
+
+    template(v-slot:usercount="{row}")
+      span {{ row.usercount }}
+
+    template(v-slot:oper="{row}")
+      el-button-group
+        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delSrv(row)")
 
   el-dialog(
     title="Изменение Услуги"

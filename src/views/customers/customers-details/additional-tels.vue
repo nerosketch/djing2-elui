@@ -8,11 +8,13 @@
     el-table-column(
       label="Владелец телефона"
     )
-      template(slot-scope="{row}") {{ row.owner_name }}
+      template(v-slot:default="{row}") {{ row.owner_name }}
+
     el-table-column(
       label="Телефон"
     )
-      el-link(slot-scope="{row}" :href="`tel:${row.telephone}`") {{ row.telephone }}
+      template(v-slot:default="{row}")
+        el-link(:href="`tel:${row.telephone}`") {{ row.telephone }}
 </template>
 
 <script lang="ts">

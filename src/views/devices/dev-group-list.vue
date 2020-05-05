@@ -6,12 +6,15 @@
       :heightDiff='187'
       ref='table'
     )
-      span(slot="pk" slot-scope="{row}") {{ row.pk }}
+      template(v-slot:pk="{row}")
+        span {{ row.pk }}
 
-      el-link(slot="title" slot-scope="{row}")
-        router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
+      template(v-slot:title="{row}")
+        el-link
+          router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
 
-      span(slot="device_count" slot-scope="{row}") {{ row.device_count }}
+      template(v-slot:device_count="{row}")
+        span {{ row.device_count }}
 
 </template>
 

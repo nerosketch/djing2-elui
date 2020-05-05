@@ -7,14 +7,25 @@ div
     :heightDiff='329'
     ref='table'
   )
-    span(slot="id" slot-scope="{row}") {{ row.id }}
-    span(slot="ip_address" slot-scope="{row}") {{ row.ip_address }}
-    span(slot="lease_time" slot-scope="{row}") {{ row.lease_time }}
-    span(slot="mac_address" slot-scope="{row}") {{ row.mac_address }}
-    el-checkbox(v-model="row.is_dynamic" slot="is_dynamic" slot-scope="{row}" disabled) {{ row.is_dynamic ? 'Да' : 'Нет' }}
-    el-button-group(slot="oper" slot-scope="{row}")
-      el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-      el-button(type="danger" icon="el-icon-delete" size="mini" @click="delLease(row)")
+    template(v-slot:id="{row}")
+      span {{ row.id }}
+
+    template(v-slot:ip_address="{row}")
+      span {{ row.ip_address }}
+
+    template(v-slot:lease_time="{row}")
+      span {{ row.lease_time }}
+
+    template(v-slot:mac_address="{row}")
+      span {{ row.mac_address }}
+
+    template(v-slot:is_dynamic="{row}")
+      el-checkbox(v-model="row.is_dynamic" disabled) {{ row.is_dynamic ? 'Да' : 'Нет' }}
+
+    template(v-slot:oper="{row}")
+      el-button-group
+        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delLease(row)")
 
   el-dialog(
     title="Изменение Сессии"

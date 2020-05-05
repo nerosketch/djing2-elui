@@ -1,8 +1,9 @@
 <template lang="pug">
   .app-container
     el-card(shadow="never" :loading='loading')
-      .clearfix(slot='header')
-        span Поиск по: {{ searchStr }}
+      template(v-slot:header)
+        .clearfix
+          span Поиск по: {{ searchStr }}
       el-row(:gutter='5')
         el-col(:sm='24' :md='12')
           template(v-if="customers.length > 0")

@@ -7,10 +7,17 @@ div
     :heightDiff='345'
     ref='fintbl'
   )
-    span(slot="cost" slot-scope="{row}") {{ row.cost }}
-    span(slot="date" slot-scope="{row}") {{ row.date }}
-    span(slot="author_name" slot-scope="{row}") {{ row.author_name || 'Система' }}
-    span(slot="comment" slot-scope="{row}") {{ row.comment }}
+    template(v-slot:cost="{row}")
+      span {{ row.cost }}
+
+    template(v-slot:date="{row}")
+      span {{ row.date }}
+
+    template(v-slot:author_name="{row}")
+      span {{ row.author_name || 'Система' }}
+
+    template(v-slot:comment="{row}")
+      span {{ row.comment }}
 
   el-button(type="primary" @click="addCashDialog=true" size='small') Пополнить счёт
   el-dialog(

@@ -7,11 +7,14 @@
       :heightDiff='329'
       ref='tbl'
     )
-      span(slot="action_date" slot-scope="{row}") {{ row.action_date }}
+      template(v-slot:action_date="{row}")
+        span {{ row.action_date }}
 
-      span(slot="additional_text" slot-scope="{row}") {{ row.additional_text }}
+      template(v-slot:additional_text="{row}")
+        span {{ row.additional_text }}
 
-      span(slot="do_type_text" slot-scope="{row}") {{ row.do_type_text }}
+      template(v-slot:do_type_text="{row}")
+        span {{ row.do_type_text }}
 
 </template>
 

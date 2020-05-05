@@ -36,6 +36,7 @@ export type ICustomerListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustom
 
 export interface IDRFRequestListParametersCustomer extends IDRFRequestListParameters {
   group: number
+  street?: number
 }
 
 export interface ICustomerGroup extends IGroup {

@@ -6,18 +6,32 @@
       :heightDiff='187'
       ref='table'
     )
-      span(slot="pk" slot-scope="{row}")
+      template(v-slot:pk="{row}")
         el-link(type="primary")
           router-link(:to="{name: 'device-view', params:{ devId: row.pk, devType: row.dev_type }}") {{ row.pk }}
-      span(slot="ip_address" slot-scope="{row}") {{ row.ip_address || '-' }}
-      span(slot="comment" slot-scope="{row}") {{ row.comment }}
-      span(slot="mac_addr" slot-scope="{row}") {{ row.mac_addr }}
-      span(slot="dev_type" slot-scope="{row}") {{ row.dev_type_str }}
-      span(slot="status" slot-scope="{row}") {{ row.status ? 'Ok' : 'Не ok' }}
-      span(slot="is_noticeable" slot-scope="{row}") {{ row.is_noticeable ? 'Да' : 'Не' }}
-      el-button-group(slot="oper" slot-scope="{row}")
-        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
+
+      template(v-slot:ip_address="{row}")
+        span {{ row.ip_address || '-' }}
+
+      template(v-slot:comment="{row}")
+        span {{ row.comment }}
+
+      template(v-slot:mac_addr="{row}")
+        span {{ row.mac_addr }}
+
+      template(v-slot:dev_type="{row}")
+        span {{ row.dev_type_str }}
+
+      template(v-slot:status="{row}")
+        span {{ row.status ? 'Ok' : 'Не ok' }}
+
+      template(v-slot:is_noticeable="{row}")
+        span {{ row.is_noticeable ? 'Да' : 'Не' }}
+
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
 
     el-dialog(
       title="Железка"
