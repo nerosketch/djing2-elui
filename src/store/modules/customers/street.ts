@@ -23,6 +23,11 @@ class CustomerStreet extends VuexModule implements ICustomerStreet {
     this.group = street.group
   }
 
+  @Mutation
+  public SET_PK(pk: number) {
+    this.pk = pk
+  }
+
   @Action
   public async GetStreet(id: number) {
     const r = await getStreet(id)
