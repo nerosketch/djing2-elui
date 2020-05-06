@@ -58,8 +58,17 @@
         )
           template(v-slot:footer)
             el-button-group
-              el-button(type='success' icon='el-icon-plus' size='mini') Доб.
+              el-button(type='success' icon='el-icon-plus' size='mini' @click="addStreetDialog=true") Доб.
               el-button(type='primary' icon='el-icon-edit' size='mini') Изм.
+
+    el-dialog(
+      :visible.sync="addStreetDialog"
+      title="Добавить улицу"
+    )
+      new-street-form(
+        v-on:done="addStreetDone"
+        :groupId="groupId"
+      )
 
 </template>
 
@@ -71,16 +80,18 @@ import { getCustomers, getStreets } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import NewCustomerForm from './new-customer-form.vue'
 import List from '@/components/List/index.vue'
+import NewStreetForm from './street/new-street-form.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
 @Component({
   name: 'CustomersList',
-  components: { 'datatable': DataTableComp, NewCustomerForm, List }
+  components: { 'datatable': DataTableComp, NewCustomerForm, List, NewStreetForm }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private groupId!: number
   private addCustomerDialog = false
+  private addStreetDialog = false
   public readonly $refs!: {
     tbl: DataTableComp
   }
@@ -175,6 +186,12 @@ export default class extends Vue {
     this.$refs.tbl.GetTableData(undefined, {
       street: this.lastStreetId
     })
+  }
+
+  private addStreetDone(newStreet: ICustomerStreet) {
+    this.$message.success(`Улица ${newStreet.name} добавлена.`)
+    this.addStreetDialog = false
+    this.loadStreets()
   }
 
   created() {
