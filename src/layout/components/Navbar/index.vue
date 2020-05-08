@@ -80,6 +80,9 @@ export default class extends Vue {
   }
 
   get avatar() {
+    if (!CurrentUserProfileModule.avatar) {
+      CurrentUserProfileModule.GetSelf()
+    }
     return CurrentUserProfileModule.avatar
   }
 
