@@ -50,10 +50,6 @@ export default class extends Vue {
     this.clickStates = new Array(ln)
     this.clickStates.fill(false, 0, ln)
   }
-
-  created() {
-    
-  }
 }
 </script>
 

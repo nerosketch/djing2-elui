@@ -209,7 +209,11 @@ export default class extends Vue {
   }
 
   private async loadRecipients() {
-    const { data } = await getProfiles()
+    const { data } = await getProfiles({
+      page: 1,
+      page_size: 9000,
+      fields: 'pk,full_name,username'
+    })
     this.intrnalRecipients = data.results
   }
 }

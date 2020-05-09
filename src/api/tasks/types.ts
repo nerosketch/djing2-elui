@@ -89,3 +89,16 @@ export interface IExtraComment {
 export type IExtraCommentList = IDRFListResponse<IExtraComment>
 export type IExtraCommentAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment>
 export type IExtraCommentListAxiosResponsePromise = IDRFAxiosResponsePromise<IExtraCommentList>
+
+
+export interface ITaskDocumentAttachment {
+  id: number
+  title: string
+  doc_file: string
+  create_time: string
+  author: number
+  task: number
+}
+export type ITaskDocumentAttachmentList = IDRFListResponse<ITaskDocumentAttachment>
+export type ITaskDocumentAttachmentAxoisResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachment>
+export type ITaskDocumentAttachmentListAxiosResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachmentList>

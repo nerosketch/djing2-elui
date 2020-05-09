@@ -10,17 +10,22 @@
       label="IP Адрес"
       prop='ip_address'
     )
-      el-input(v-model="frmMod.ip_address")
+      el-input(v-model="frmMod.ip_address" size='mini')
+    el-form-item(
+      label="MAC Адрес"
+      prop='mac_addr'
+    )
+      el-input(v-model="frmMod.mac_addr" size='mini')
     el-form-item(
       label="Описание"
       prop='comment'
     )
-      el-input(v-model="frmMod.comment")
+      el-input(v-model="frmMod.comment" size='mini')
     el-form-item(
       label="Тип устройства"
       prop='dev_type'
     )
-      el-select(v-model="frmMod.dev_type")
+      el-select(v-model="frmMod.dev_type" size='mini')
         el-option(
           v-for="dt in deviceTypeNames"
           :key="dt.v"
@@ -28,15 +33,15 @@
           :value="dt.v"
         )
     el-form-item(
-      label="MAC Адрес"
-      prop='mac_addr'
+      label="SNMP Community"
+      prop="man_passw"
     )
-      el-input(v-model="frmMod.mac_addr")
+      el-input(v-model="frmMod.man_passw" size='mini')
     el-form-item(
       label="Группа"
       prop='group'
     )
-      el-select(v-model="frmMod.group")
+      el-select(v-model="frmMod.group" size='mini')
         el-option(
           v-for="g in groups"
           :key="g.pk"
@@ -44,9 +49,14 @@
           :value="g.pk"
         )
     el-form-item(
+      label="Доп. инфо для snmp"
+      prop="snmp_extra"
+    )
+      el-input(v-model="frmMod.snmp_extra" size='mini')
+    el-form-item(
       prop="is_noticeable"
     )
-      el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
+      el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58; 
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
       el-button(type="primary" @click="onSubmit" :loading="loading") Сохранить
@@ -96,13 +106,19 @@ export default class extends Vue {
     { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }
   ]
 
-  private frmMod = {
-    ip_address: DeviceModule.ip_address,
-    mac_addr: DeviceModule.mac_addr,
-    comment: DeviceModule.comment,
-    dev_type: DeviceModule.dev_type,
-    group: DeviceModule.group,
-    is_noticeable: DeviceModule.is_noticeable
+  private frmMod = this.devFrmData
+
+  get devFrmData() {
+    return {
+      ip_address: DeviceModule.ip_address,
+      mac_addr: DeviceModule.mac_addr,
+      comment: DeviceModule.comment,
+      dev_type: DeviceModule.dev_type,
+      group: DeviceModule.group,
+      is_noticeable: DeviceModule.is_noticeable,
+      man_passw: DeviceModule.man_passw,
+      snmp_extra: DeviceModule.snmp_extra
+    }
   }
 
   get devId() {
@@ -110,7 +126,7 @@ export default class extends Vue {
   }
   @Watch('devId')
   private async onDevCh() {
-    this.frmMod = await DeviceModule.GetAllState()
+    this.frmMod = this.devFrmData
   }
 
   private onSubmit() {

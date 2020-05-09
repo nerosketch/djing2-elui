@@ -29,15 +29,19 @@
     b Абонент: 
     el-link(type="primary")
       router-link(:to="taskCustomerLink") {{ taskCustomerName }}
+    el-divider
+    task-docs(:taskId="taskId")
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 import { IUserProfile } from '@/api/profiles/types'
+import TaskDocs from './task-docs.vue'
 
 @Component({
-  name: 'TaskInfo'
+  name: 'TaskInfo',
+  components: { TaskDocs }
 })
 export default class extends Vue {
   @Prop({ default: [] })

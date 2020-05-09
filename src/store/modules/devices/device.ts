@@ -126,26 +126,6 @@ class Device extends VuexModule implements IDeviceInterace {
     const { data } = await scanUnitsUnregistered(devId)
     return data
   }
-
-  @Action
-  public async GetAllState() {
-    return {
-      pk: this.pk,
-      ip_address: this.ip_address,
-      mac_addr: this.mac_addr,
-      comment: this.comment,
-      dev_type: this.dev_type,
-      dev_type_str: this.dev_type_str,
-      man_passw: this.man_passw,
-      group: this.group,
-      parent_dev: this.parent_dev,
-      snmp_extra: this.snmp_extra,
-      extra_data: this.extra_data,
-      vlans: this.vlans,
-      status: this.status,
-      is_noticeable: this.is_noticeable
-    }
-  }
 }
 
 export const DeviceModule = getModule(Device)

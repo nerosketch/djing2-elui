@@ -21,7 +21,8 @@
       label="Включён"
       prop='is_active'
     )
-      el-switch(v-model="frmMod.is_active") {{ frmMod.is_active ? 'Да' : 'Нет' }}
+      el-switch(v-model="frmMod.is_active")
+      small {{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}
     el-form-item(
       label="Номер телефона"
       prop='telephone'
@@ -32,6 +33,12 @@
       prop='email'
     )
       el-input(v-model="frmMod.email")
+    el-form-item(
+      label="Пароль"
+      prop='password'
+      v-if="isNew"
+    )
+      el-input(v-model="frmMod.password" type="password" autocomplete="new-password")
     el-form-item
       el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit") {{ isNew ? 'Добавить' : 'Сохранить' }}
 </template>
@@ -50,9 +57,10 @@ export default class extends Vue {
   private frmMod = {
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,
-    is_active: UserProfileModule.is_active,
+    is_active: this.isNew ? true : UserProfileModule.is_active,
     telephone: UserProfileModule.telephone,
-    email: UserProfileModule.email
+    email: UserProfileModule.email,
+    password: undefined
   }
 
   private get isNew() {
@@ -73,6 +81,11 @@ export default class extends Vue {
     ],
     email: [
       { validator: emailValidator, trigger: 'change', message: 'Не похоже на адрес почты' }
+    ],
+    password: [
+      { required: true, message: 'Пароль не может быть пустым', trigger: 'blur' },
+      { validator: latinValidator, required: true, trigger: 'blur' },
+      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
     ]
   }
 

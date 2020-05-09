@@ -40,7 +40,11 @@ export default class extends Vue {
   }
 
   private async loadRecipients() {
-    const r = await getProfiles()
+    const r = await getProfiles({
+      page: 1,
+      page_size: 9000,
+      fields: 'pk,full_name,username'
+    })
     this.recipients = r.data.results
   }
 
