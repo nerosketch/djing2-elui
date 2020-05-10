@@ -73,7 +73,9 @@ import { getStreets, getCustomerGroups } from '@/api/customers/req'
 export default class extends Vue {
   private loading = false
   private groups: ICustomerGroup[] = []
-  private customerStreets: ICustomerStreet[] = []
+
+  @Prop({ default: () => ([]) })
+  private customerStreets!: ICustomerStreet[]
 
   @Prop({ default: 0 })
   private selectedGroup!: number
@@ -83,7 +85,7 @@ export default class extends Vue {
     telephone: '',
     fio: '',
     group: this.selectedGroup,
-    street: 0,
+    street: undefined,
     house: '',
     is_active: false,
     is_dynamic_ip: false,
@@ -123,21 +125,6 @@ export default class extends Vue {
 
   async created() {
     await this.loadGroups()
-    await this.loadStreets()
-  }
-
-  private async loadStreets() {
-    this.loading = true
-    const { data } = await getStreets({
-      page: 1,
-      page_size: 1000,
-      group: this.selectedGroup
-    })
-    this.customerStreets = data.results
-    if(data.results.length > 0) {
-      this.frmMod.street = data.results[0].pk
-    }
-    this.loading = false
   }
 
   private async loadGroups() {

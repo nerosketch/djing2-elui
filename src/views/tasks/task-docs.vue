@@ -8,6 +8,7 @@
     :file-list="fileList"
   )
     el-button(size="small" type="primary") Добавить документ
+      | TaskId: {{ taskId }}
 </template>
 
 <script lang="ts">
@@ -38,7 +39,7 @@ export default class extends Vue {
     window.open(file.url, '_blank')
   }
   private beforeRemove(file: IFileItem) {
-    return this.$confirm(`Удалить "${ file.name }"?`);
+    return this.$confirm(`Удалить "${ file.name }"?`)
   }
 
   private uploadReq(req: HttpRequestOptions) {

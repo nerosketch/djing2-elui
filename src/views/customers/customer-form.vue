@@ -123,7 +123,7 @@ export default class extends Vue {
     telephone: '',
     fio: '',
     group: 0,
-    street: 0,
+    street: undefined,
     house: '',
     is_active: false,
     is_dynamic_ip: false,

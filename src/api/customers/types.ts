@@ -12,7 +12,7 @@ export interface ICustomer {
   group_title?: string
   balance: number
   description: string
-  street: number
+  street?: number
   street_name?: string
   house: string
   is_active: boolean

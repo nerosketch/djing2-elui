@@ -7,7 +7,7 @@
             span Редактировать задачу
         task-form(v-if='taskReady' :recipients="recipients")
     el-col(:lg='12' :sm='24')
-      task-info(v-if='taskReady' :recipients="recipients")
+      task-info(v-if='taskReady' :recipients="recipients" :taskId="taskId")
     el-col(:lg='12' :sm='24')
       comments(v-if='taskReady')
 </template>

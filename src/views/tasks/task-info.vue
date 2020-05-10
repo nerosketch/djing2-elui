@@ -46,6 +46,8 @@ import TaskDocs from './task-docs.vue'
 export default class extends Vue {
   @Prop({ default: [] })
   private recipients!: IUserProfile[]
+  @Prop({ default: 0 })
+  private taskId!: number
 
   get taskCustomerLink() {
     return {

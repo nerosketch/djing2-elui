@@ -47,7 +47,11 @@
           title='Добавить абонента'
           :visible.sync='addCustomerDialog'
         )
-          new-customer-form(:selectedGroup='groupId' v-on:done="addFrmDone")
+          new-customer-form(
+            :selectedGroup='groupId'
+            :customerStreets='streets'
+            v-on:done="addFrmDone"
+          )
       el-col(:lg='4' :md='6')
         list(
           title="Улицы"
@@ -78,7 +82,6 @@
         :extStreets="streets"
         v-on:done="editStreetDone"
       )
-
 </template>
 
 <script lang="ts">
