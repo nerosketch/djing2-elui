@@ -98,7 +98,7 @@ export default class extends Vue {
       { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
     ],
     fio: [
-      { required: true, message: 'ФИО абонента надо бы указать', trigger: 'blur' },
+      { required: true, message: 'ФИО абонента надо бы указать', trigger: 'blur' }
     ],
     telephone: [
       { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }

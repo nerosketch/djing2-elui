@@ -1,39 +1,43 @@
 <template lang="pug">
   .app-container
-    el-row
-      el-col(:span="24")
-        el-card.box-card
-          template(v-slot:header)
-            .clearfix
-              span Свич XXX. Время работы X дней
-          el-row
-            el-col(:span='2').text.item(
-              v-for="(port, i) in ports"
-              :key="i"
-            )
-              el-card.box-card.port
-                .center {{ port.num }}
-                el-button-group
-                  el-button(type="primary" size="mini" icon="el-icon-check")
-                  el-button(type="primary" size="mini" icon="el-icon-poweroff")
-      el-col(:span='12')
-        el-card.box-card
-          template(v-slot:header)
-            .clearfix
-              span Управление портами
-          el-table(:data="ports" :size='mini' fit)
-            el-table-column(
-              prop='num'
-              label='Номер'
-            )
-            el-table-column(
-              prop='descr'
-              label='Описание'
-            )
-            el-table-column(
-              prop='user_count'
-              label='Сколько абонов'
-            )
+    pon-bdcom-olt(
+      :devId="devId"
+      :devTitle="devTitle"
+    )
+    //- el-row
+    //-   el-col(:span="24")
+    //-     el-card.box-card
+    //-       template(v-slot:header)
+    //-         .clearfix
+    //-           span Свич XXX. Время работы X дней
+    //-       el-row
+    //-         el-col(:span='2').text.item(
+    //-           v-for="(port, i) in ports"
+    //-           :key="i"
+    //-         )
+    //-           el-card.box-card.port
+    //-             .center { { port.num } }
+    //-             el-button-group
+    //-               el-button(type="primary" size="mini" icon="el-icon-check")
+    //-               el-button(type="primary" size="mini" icon="el-icon-poweroff")
+    //-   el-col(:span='12')
+    //-     el-card.box-card
+    //-       template(v-slot:header)
+    //-         .clearfix
+    //-           span Управление портами
+    //-       el-table(:data="ports" size='mini' fit)
+    //-         el-table-column(
+    //-           prop='num'
+    //-           label='Номер'
+    //-         )
+    //-         el-table-column(
+    //-           prop='descr'
+    //-           label='Описание'
+    //-         )
+    //-         el-table-column(
+    //-           prop='user_count'
+    //-           label='Сколько абонов'
+    //-         )
 
 </template>
 
@@ -43,21 +47,26 @@ import { IDRFRequestListParameters } from '@/api/types'
 import { IPort, IScannedPort } from '@/api/devices/types'
 import { getPorts } from '@/api/devices/req'
 import { DeviceModule } from '@/store/modules/devices/device'
+import PonBdcomOlt from './pon-bdcom-olt.vue'
 
 @Component({
-  name: 'switch-view'
+  name: 'SwitchView',
+  components: {
+    PonBdcomOlt
+  }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private devId!: number
   @Prop({ default: 0 }) private devType!: number
+  @Prop({ default: null }) private devTitle!: string
 
   private ports: IPort[] = []
   private scannedPorts: IScannedPort[] = []
 
-  created() {
-    this.getScannedPorts()
-    this.getPorts(this.devId)
-  }
+  // created() {
+  //   this.getScannedPorts()
+  //   this.getPorts(this.devId)
+  // }
 
   private async getScannedPorts() {
     this.scannedPorts = await DeviceModule.ScanPorts(this.devId)

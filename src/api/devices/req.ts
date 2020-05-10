@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { AxiosPromise } from 'axios'
 import { IDRFRequestListParameters } from '@/api/types'
 import {
   IDevice, IDeviceList, IDeviceAxoisResponsePromise,
@@ -59,8 +60,8 @@ export const scanDetails = (devId: number): object =>
 export const scanPorts = (devId: number): IScannedPortListAxiosPromise =>
   request.get<IScannedPort[]>(`${baseDevUrl}${devId}/scan_ports/`)
 
-export const scanOnuList = (devId: number): object =>
-  request.get(`${baseDevUrl}${devId}/scan_onu_list/`)
+export const scanOnuList = (devId: number, onProgress: (c: ProgressEvent) => void): AxiosPromise<string> =>
+  request.get(`${baseDevUrl}${devId}/scan_onu_list/`, { onDownloadProgress: onProgress })
 
 export const scanUnitsUnregistered = (devId: number): IUnitUnregisteredListAxiosPromise =>
   request.get<IUnitUnregistered[]>(`${baseDevUrl}${devId}/scan_units_unregistered/`)

@@ -8,7 +8,7 @@
     )
       template(v-slot:pk="{row}")
         el-link(type="primary")
-          router-link(:to="{name: 'device-view', params:{ devId: row.pk, devType: row.dev_type }}") {{ row.pk }}
+          router-link(:to="{name: 'device-view', params:{ devId: row.pk, devType: row.dev_type, devTitle: row.comment }}") {{ row.pk }}
 
       template(v-slot:ip_address="{row}")
         span {{ row.ip_address || '-' }}
@@ -67,7 +67,6 @@ export default class extends Vue {
     table: DataTableComp
   }
   @Prop({ default: 0 }) private groupId!: number
-  private devs: IDevice[] = []
   private dialogVisible = false
   private tableColumns: IDataTableColumn[] = [
     {
@@ -120,7 +119,6 @@ export default class extends Vue {
       ordering: params.ordering,
       fields: 'pk,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group'
     })
-    this.devs = r.data.results
     return r
   }
 

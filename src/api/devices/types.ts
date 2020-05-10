@@ -99,6 +99,17 @@ export interface IScannedPort {
 }
 export type IScannedPortListAxiosPromise = AxiosPromise<IScannedPort[]>
 
+//IScannedONU
+export interface IScannedONU {
+  number: number
+  title: string
+  status: boolean
+  mac_addr: string
+  signal: number
+  uptime: string
+}
+export type IScannedONUListAxiosPromise = AxiosPromise<IScannedONU[]>
+
 // IUnitUnregistered
 export interface IUnitUnregistered {
   mac: string
