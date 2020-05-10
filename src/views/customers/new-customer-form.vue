@@ -63,7 +63,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { ICustomer, ICustomerGroup, ICustomerStreet } from '@/api/customers/types'
+import { ICustomer, ICustomerGroup, ICustomerStreet, ICustomerFrm } from '@/api/customers/types'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
 
@@ -80,12 +80,12 @@ export default class extends Vue {
   @Prop({ default: 0 })
   private selectedGroup!: number
 
-  private frmMod = {
+  private frmMod: ICustomerFrm = {
     username: '',
     telephone: '',
     fio: '',
     group: this.selectedGroup,
-    street: undefined,
+    street: null,
     house: '',
     is_active: false,
     is_dynamic_ip: false,

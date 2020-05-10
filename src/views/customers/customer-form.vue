@@ -90,7 +90,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
-import { ICustomerStreet, ICustomerGroup } from '@/api/customers/types'
+import { ICustomerStreet, ICustomerGroup, ICustomerFrm } from '@/api/customers/types'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
 import { CustomerStreetModule } from '@/store/modules/customers/street'
 import { CustomerModule } from '@/store/modules/customers/customer'
@@ -118,12 +118,12 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod = {
+  private frmMod: ICustomerFrm = {
     username: '',
     telephone: '',
     fio: '',
     group: 0,
-    street: undefined,
+    street: null,
     house: '',
     is_active: false,
     is_dynamic_ip: false,
@@ -146,7 +146,7 @@ export default class extends Vue {
       telephone: CustomerModule.telephone,
       fio: CustomerModule.fio,
       group: CustomerModule.group,
-      street: CustomerModule.street,
+      street: CustomerModule.street === 0 ? null : CustomerModule.street,
       house: CustomerModule.house,
       is_active: CustomerModule.is_active,
       is_dynamic_ip: CustomerModule.is_dynamic_ip,

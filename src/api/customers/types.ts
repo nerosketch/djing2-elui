@@ -12,7 +12,7 @@ export interface ICustomer {
   group_title?: string
   balance: number
   description: string
-  street?: number
+  street: number
   street_name?: string
   house: string
   is_active: boolean
@@ -55,6 +55,18 @@ export interface IServiceUser {
 export type IServiceUserList = IDRFListResponse<IServiceUser>
 export type IServiceUserAxoisResponsePromise = IDRFAxiosResponsePromise<IServiceUser>
 export type IServiceUserListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceUserList>
+
+export interface ICustomerFrm {
+  username: string
+  telephone: string
+  fio: string
+  group: number
+  street: number | null
+  house: string
+  is_active: boolean
+  is_dynamic_ip: boolean
+  description: string
+}
 
 // ICustomerRawPassword
 export interface ICustomerRawPassword {
