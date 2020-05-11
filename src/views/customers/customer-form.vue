@@ -190,10 +190,7 @@ export default class extends Vue {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
       const currGroup = CustomerModule.group
       await CustomerModule.DelCustomer()
-      this.$message({
-        type: 'success',
-        message: 'Учётка удалена'
-      })
+      this.$message.success('Учётка удалена')
       this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
     })
   }

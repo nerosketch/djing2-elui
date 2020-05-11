@@ -24,7 +24,7 @@ export const getDevices = (params: IDRFRequestListParametersDevGroup): IDeviceLi
 export const getDevice = (devId: number): IDeviceAxoisResponsePromise =>
   request.get<IDevice>(`${baseDevUrl}${devId}/`)
 
-export const addDevice = (newDev: IDevice): IDeviceAxoisResponsePromise =>
+export const addDevice = (newDev: object): IDeviceAxoisResponsePromise =>
   request.post<IDevice>(baseDevUrl, newDev)
 
 export const changeDevice = (devId: number, newData: object): IDeviceAxoisResponsePromise =>

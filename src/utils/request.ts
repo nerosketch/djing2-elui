@@ -23,7 +23,7 @@ service.interceptors.request.use(
 
 // Response interceptors
 service.interceptors.response.use(
-  (response) => {
+  async (response) => {
     // Some example codes here:
     // code == 20000: success
     // code == 50001: invalid access token
@@ -32,12 +32,14 @@ service.interceptors.response.use(
     // code == 50004: invalid user (user not exist)
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
-    if (![200, 201, 202, 204].includes(response.status)) {
-      Message({
-        message: response.statusText || 'Error',
+    console.log('response', response)
+    const res = response
+    if (![200, 201, 202, 204].includes(res.status)) {
+      /*Message({
+        message: res.statusText || 'Error',
         type: 'error',
         duration: 5 * 1000
-      })
+      })*/
       /* if (res.code === 500 || res.code === 50012 || res.code === 50014) {
         MessageBox.confirm(
           'You have been logged out, try to login again.',
@@ -52,14 +54,15 @@ service.interceptors.response.use(
           location.reload() // To prevent bugs from vue-router
         })
       } */
-      return Promise.reject(new Error(response.statusText || 'Error'))
+      return Promise.reject(new Error('Error'))
     } else {
-      return response
+      return res
     }
   },
   (error) => {
+    let er = Object.entries(error.response.data).join('\n')
     Message({
-      message: error.message,
+      message: er || 'Не известная ошибка',
       type: 'error',
       duration: 5 * 1000
     })

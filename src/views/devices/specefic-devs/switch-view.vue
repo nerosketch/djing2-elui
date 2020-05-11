@@ -1,6 +1,8 @@
 <template lang="pug">
   .app-container
     pon-bdcom-olt(
+      v-if="ready"
+      :device="device"
       :devId="devId"
       :devTitle="devTitle"
     )
@@ -44,7 +46,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
-import { IPort, IScannedPort } from '@/api/devices/types'
+import { IPort, IScannedPort, IDevice } from '@/api/devices/types'
 import { getPorts } from '@/api/devices/req'
 import { DeviceModule } from '@/store/modules/devices/device'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
@@ -57,24 +59,26 @@ import PonBdcomOlt from './pon-bdcom-olt.vue'
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private devId!: number
-  @Prop({ default: 0 }) private devType!: number
   @Prop({ default: null }) private devTitle!: string
 
   private ports: IPort[] = []
   private scannedPorts: IScannedPort[] = []
+  private device: IDevice | null = null
+  private ready = false
 
-  // created() {
-  //   this.getScannedPorts()
-  //   this.getPorts(this.devId)
-  // }
-
-  private async getScannedPorts() {
-    this.scannedPorts = await DeviceModule.ScanPorts(this.devId)
+  get devType() {
+    return DeviceModule.dev_type
   }
 
-  private async getPorts(devId: number) {
-    const { data } = await getPorts(devId)
-    this.ports = data.results
+  private async getDevice() {
+    this.ready = false
+    const { data } = await DeviceModule.GetDevice(this.devId)
+    this.device = data
+    this.ready = true
+  }
+
+  created() {
+    this.getDevice()
   }
 }
 </script>
