@@ -125,7 +125,7 @@ export default class extends Vue {
           }
         } catch (err) {
           this.loading = false
-          this.$emit('done')
+          this.$emit('err', err)
         }
       } else {
         this.$message.error('Исправь ошибки в форме')

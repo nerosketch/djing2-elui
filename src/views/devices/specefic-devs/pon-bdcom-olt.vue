@@ -61,6 +61,10 @@
       new-dev-form(
         v-if="dialogVisible"
         v-on:done="frmDone"
+<<<<<<< HEAD
+=======
+        v-on:err="frmErr"
+>>>>>>> try
         :initialMac="currentOnu.mac_addr"
         :initialDevType="onuType"
         :initialGroup="device.group"
@@ -151,6 +155,9 @@ export default class extends Vue {
     this.$router.push({ name: 'device-view', params: {
       devId: newOnu.pk.toString()
     }})
+  }
+  private frmErr(err: Error) {
+    this.dialogVisible = false
   }
 
   private openSaveOnu(onu: IScannedONU) {
