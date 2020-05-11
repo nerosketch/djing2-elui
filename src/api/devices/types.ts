@@ -107,6 +107,7 @@ export interface IScannedONU {
   mac_addr: string
   signal: number
   uptime: string
+  fiberid: number
 }
 export type IScannedONUListAxiosPromise = AxiosPromise<IScannedONU[]>
 
@@ -143,5 +144,6 @@ export interface IDevFiber {
   fb_id: number
   fb_name: string
   fb_onu_num: number
+  fb_active_onu: number
 }
 export type IDevFiberListAxiosResponsePromise = AxiosPromise<IDevFiber[]>
