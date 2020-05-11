@@ -12,7 +12,7 @@ service.interceptors.request.use(
   (config) => {
     // Add X-Access-Token header to every request, you can add other custom headers here
     if (CurrentUserProfileModule.token) {
-      config.headers.Authorization = `Token ${CurrentUserProfileModule.token}`
+      config.headers['Authorization'] = `Token ${CurrentUserProfileModule.token}`
     }
     return config
   },
@@ -32,11 +32,13 @@ service.interceptors.response.use(
     // code == 50004: invalid user (user not exist)
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
-    if (![200, 201, 202, 204].includes(response.status)) {
+    const res = response
+    if (![200, 201, 202, 204].includes(res['status'])) {
+      let er = Object.entries(response.data).join('\n')
       Message({
-        message: response.statusText || 'Error',
+        message: er || 'Не известная ошибка',
         type: 'error',
-        duration: 5 * 1000
+        duration: 15000
       })
       /* if (res.code === 500 || res.code === 50012 || res.code === 50014) {
         MessageBox.confirm(
@@ -52,16 +54,17 @@ service.interceptors.response.use(
           location.reload() // To prevent bugs from vue-router
         })
       } */
-      return Promise.reject(new Error(response.statusText || 'Error'))
+      return Promise.reject(new Error('Error'))
     } else {
-      return response
+      return res
     }
   },
   (error) => {
+    let er = Object.entries(error.response.data).join('\n')
     Message({
-      message: error.message,
+      message: er || 'Не известная ошибка',
       type: 'error',
-      duration: 5 * 1000
+      duration: 15000
     })
     return Promise.reject(error)
   }

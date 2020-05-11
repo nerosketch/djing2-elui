@@ -17,7 +17,7 @@ import { IDevice, IDeviceInterace, IDeviceTypeEnum } from '@/api/devices/types'
 //   IScannedPort, IScannedPortListAxiosPromise,
 //   IUnitUnregistered, IUnitUnregisteredListAxiosPromise } from '@/api/devices/types'
 
-@Module({ dynamic: true, store, name: 'device' })
+@Module({ dynamic: true, store, name: 'devicemodule' })
 class Device extends VuexModule implements IDeviceInterace {
   pk = 0
   ip_address = ''
@@ -80,8 +80,10 @@ class Device extends VuexModule implements IDeviceInterace {
   }
 
   @Action
-  public async AddDevice(data: IDevice) {
-    return await addDevice(data)
+  public async AddDevice(newDev: object) {
+    const { data } = await addDevice(newDev)
+    this.SET_ALL_DEV(data)
+    return data
   }
 
   @Action
@@ -125,6 +127,24 @@ class Device extends VuexModule implements IDeviceInterace {
   public async ScanUnitsUnregistered(devId: number) {
     const { data } = await scanUnitsUnregistered(devId)
     return data
+  }
+
+  @Action
+  public getDeviceTypeNames() {
+    return [
+      { nm: 'Не выбрано', v: IDeviceTypeEnum.UNKNOWN },
+      { nm: 'Dlink DGS1100_10/ME', v: IDeviceTypeEnum.DlinkDGS1100_10ME },
+      { nm: 'BDCOM P3310C', v: IDeviceTypeEnum.BDCOM_P3310C },
+      { nm: 'EPON BDCOM FORA', v: IDeviceTypeEnum.EPON_BDCOM_FORA },
+      { nm: 'Eltex Switch', v: IDeviceTypeEnum.EltexSwitch },
+      { nm: 'ZTE C320', v: IDeviceTypeEnum.ZTE_C320 },
+      { nm: 'Onu ZTE F660', v: IDeviceTypeEnum.OnuZTE_F660 },
+      { nm: 'Onu ZTE F601', v: IDeviceTypeEnum.OnuZTE_F601 },
+      { nm: 'Huawei S2300', v: IDeviceTypeEnum.HuaweiS2300 },
+      { nm: 'Dlink DGS_3120_24SC', v: IDeviceTypeEnum.DlinkDGS_3120_24SCSwitchInterface },
+      { nm: 'Dlink DGS_1100_06/ME', v: IDeviceTypeEnum.DlinkDGS_1100_06MESwitchInterface },
+      { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }
+    ]
   }
 }
 

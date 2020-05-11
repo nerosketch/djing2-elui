@@ -8,7 +8,7 @@
     )
       template(v-slot:pk="{row}")
         el-link(type="primary")
-          router-link(:to="{name: 'device-view', params:{ devId: row.pk, devType: row.dev_type, devTitle: row.comment }}") {{ row.pk }}
+          router-link(:to="{name: 'device-view', params: { devId: row.pk }}") {{ row.pk }}
 
       template(v-slot:ip_address="{row}")
         span {{ row.ip_address || '-' }}
@@ -117,7 +117,7 @@ export default class extends Vue {
       page_size: params.page_size,
       group: this.groupId,
       ordering: params.ordering,
-      fields: 'pk,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group'
+      fields: 'pk,ip_address,comment,dev_type,dev_type_str,mac_addr,status,is_noticeable,group,man_passw,snmp_extra'
     })
     return r
   }

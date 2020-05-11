@@ -59,22 +59,31 @@
       el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58; 
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="loading") Сохранить
+      el-button(type="success" @click="onSubmit" :loading="loading") Добавить
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
-import { IDevice, IDeviceTypeEnum } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
+import { IDeviceTypeEnum } from '@/api/devices/types'
 
 @Component({
-  name: 'DevForm'
+  name: 'NewDevForm'
 })
 export default class extends Vue {
+  @Prop({ default: '' }) private initialIp!: string
+  @Prop({ default: '' }) private initialMac!: string
+  @Prop({ default: '' }) private initialComment!: string
+  @Prop({ default: 0 }) private initialDevType!: number
+  @Prop({ default: 0 }) private initialGroup!: number
+  @Prop({ default: false }) private initialIsNotic!: boolean
+  @Prop({ default: '' }) private initialManPassw!: string
+  @Prop({ default: '' }) private initialSnmpSxtra!: string
+
   private loading = false
   private groups: IGroup[] = []
 
@@ -93,36 +102,31 @@ export default class extends Vue {
 
   private deviceTypeNames: {nm: string, v: IDeviceTypeEnum}[] = []
 
-  private frmMod = this.devFrmData
-
-  get devFrmData() {
-    return {
-      ip_address: DeviceModule.ip_address,
-      mac_addr: DeviceModule.mac_addr,
-      comment: DeviceModule.comment,
-      dev_type: DeviceModule.dev_type,
-      group: DeviceModule.group,
-      is_noticeable: DeviceModule.is_noticeable,
-      man_passw: DeviceModule.man_passw,
-      snmp_extra: DeviceModule.snmp_extra
-    }
-  }
-
-  get devId() {
-    return DeviceModule.pk
-  }
-  @Watch('devId')
-  private async onDevCh() {
-    this.frmMod = this.devFrmData
+  private frmMod = {
+    ip_address: this.initialIp || null,
+    mac_addr: this.initialMac,
+    comment: this.initialComment,
+    dev_type: this.initialDevType,
+    group: this.initialGroup,
+    is_noticeable: this.initialIsNotic,
+    man_passw: this.initialManPassw,
+    snmp_extra: this.initialSnmpSxtra
   }
 
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        const newDat = await DeviceModule.PatchDevice(this.frmMod)
-        this.loading = false
-        this.$emit('done', newDat.data)
+        try {
+          const newDat = await DeviceModule.AddDevice(this.frmMod)
+          if (newDat !== undefined) {
+            this.loading = false
+            this.$emit('done', newDat)
+          }
+        } catch (err) {
+          this.loading = false
+          this.$emit('err', err)
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
