@@ -28,6 +28,7 @@ export interface IDevice {
   man_passw: string
   group: number
   parent_dev: number
+  parent_dev_name?: string
   snmp_extra: string
   extra_data: object
   vlans: number[]
@@ -109,6 +110,25 @@ export interface IScannedONU {
   fiberid: number
 }
 export type IScannedONUListAxiosPromise = AxiosPromise<IScannedONU[]>
+
+// IOnuDetailsStatus
+export enum IOnuDetailsStatus {
+  UNKNOWN = 'unknown',
+  UP = 'ok',
+  DOWN = 'down'
+}
+// IOnuDetails
+export interface IOnuDetails {
+  status: IOnuDetailsStatus
+  signal: number
+  distance: number
+  vlans: null
+  serial: string
+  int_name: string
+  onu_type: string
+  mac: string
+}
+export type IOnuDetailsAxiosPromise = AxiosPromise<IOnuDetails>
 
 // IUnitUnregistered
 export interface IUnitUnregistered {

@@ -1,9 +1,9 @@
 <template lang="pug">
   .app-container
     template(v-if="ready")
-      //- onu(:device="device" v-if="[3,6,7].includes(device.dev_type)")
+      pon-onu(:device="device" v-if="[3,6,7].includes(device.dev_type)")
       pon-bdcom-olt(
-        v-if="device.dev_type === 2"
+        v-else-if="device.dev_type === 2"
         :device="device"
       )
       //- olt-zte(:device="dev" v-else-if="dev.dev_type === 5")
@@ -17,12 +17,14 @@ import { IDevice } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
 import SwitchView from './switch-view.vue'
+import PonOnu from './pon-onu.vue'
 
 @Component({
   name: 'DeviceView',
   components: {
     PonBdcomOlt,
-    SwitchView
+    SwitchView,
+    PonOnu
   }
 })
 export default class extends Vue {

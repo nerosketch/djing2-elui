@@ -12,7 +12,8 @@ import {
   IDevVlan, IDevVlanListAxiosResponsePromise, IPortVlanConfig,
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
-  IUnitUnregistered, IUnitUnregisteredListAxiosPromise
+  IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
+  IOnuDetails, IOnuDetailsAxiosPromise
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -54,8 +55,8 @@ export const sendReboot = (devId: number) =>
 export const scanOltFibers = (devId: number): IDevFiberListAxiosResponsePromise =>
   request.get<IDevFiber[]>(`${baseDevUrl}${devId}/scan_olt_fibers/`)
 
-export const scanDetails = (devId: number): object =>
-  request.get(`${baseDevUrl}${devId}/scan_details/`)
+export const scanDetails = (devId: number): IOnuDetailsAxiosPromise =>
+  request.get<IOnuDetails>(`${baseDevUrl}${devId}/scan_details/`)
 
 export const scanPorts = (devId: number): IScannedPortListAxiosPromise =>
   request.get<IScannedPort[]>(`${baseDevUrl}${devId}/scan_ports/`)

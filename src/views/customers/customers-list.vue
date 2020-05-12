@@ -59,6 +59,7 @@
           :loading='streetsLoading'
           itemText="name"
           v-on:itemClick="onStreetClick"
+          :isClickable='true'
         )
           template(v-slot:footer)
             el-button-group

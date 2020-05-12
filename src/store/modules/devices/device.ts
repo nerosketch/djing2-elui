@@ -28,6 +28,7 @@ class Device extends VuexModule implements IDeviceInterace {
   man_passw = ''
   group = 0
   parent_dev = 0
+  parent_dev_name = ''
   snmp_extra = ''
   extra_data = {}
   vlans: number[] = []
@@ -64,6 +65,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.man_passw = data.man_passw
     this.group = data.group
     this.parent_dev = data.parent_dev
+    this.parent_dev_name = data.parent_dev_name!
     this.snmp_extra = data.snmp_extra
     this.extra_data = data.extra_data
     this.vlans = data.vlans

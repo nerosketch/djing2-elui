@@ -32,11 +32,13 @@ export default class extends Vue {
   @Prop({ default: null }) private title!: string | null
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: 'text' }) private itemText!: string
+  @Prop({ default: false }) private isClickable!: boolean
 
   private clickStates: boolean[] = []
   private lastClickIndex?: number = undefined
 
   private itemClick(elem: any, i: number) {
+    if (!this.isClickable) return
     this.clickStates.fill(false, 0, this.items.length)
     const isEqual = this.lastClickIndex === i
     this.$set(this.clickStates, i, !isEqual)
