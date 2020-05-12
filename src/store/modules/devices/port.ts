@@ -26,6 +26,11 @@ class Port extends VuexModule implements IPort {
   }
 
   @Mutation
+  public SET_PORT_PK(id: number) {
+    this.pk = id
+  }
+
+  @Mutation
   private SET_ALL_PORT(port: IPort) {
     this.pk = port.pk
     this.device = port.device
@@ -43,7 +48,7 @@ class Port extends VuexModule implements IPort {
 
   @Action
   public async AddPort(info: object) {
-    const { data } =  await addPort(info)
+    const { data } = await addPort(info)
     return data
   }
 
@@ -61,8 +66,8 @@ class Port extends VuexModule implements IPort {
   }
 
   @Action
-  public async TogglePort(id: number, state: IDevPortState) {
-    await togglePort(id, state)
+  public async TogglePort(pstate: IDevPortState) {
+    await togglePort(this.pk, pstate)
   }
 
   @Action

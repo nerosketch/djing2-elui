@@ -4,6 +4,7 @@
       .clearfix
         span {{ device.comment || 'Коммутатор' }} &nbsp;
         small {{ `${device.ip_address || device.mac_addr}` }}
+        el-button(style="float: right; padding: 7px 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
     el-table(
       :data="allPorts"
       :loading="loading"
@@ -17,6 +18,18 @@
       )
         template(v-slot:default="{row}")
           b {{ row.num }}
+      el-table-column(
+        label="Вкл/Выкл"
+        width="80"
+        align="center"
+      )
+        template(v-slot:default="{row}")
+          switch-port-toggle-button(
+            v-if="row.isdb && row.snmp_number > 0"
+            :port="row"
+            :portId="row.pk"
+          )
+          el-button(v-else size='mini' icon='el-icon-close' circle disabled)
       el-table-column(
         label="Описание"
       )
@@ -68,6 +81,13 @@
         v-on:editdone="editPortDone"
         v-on:adddone="addPortDone"
       )
+    el-dialog(
+      :visible.sync="devFormDialog"
+      title="Порт коммутатора"
+    )
+      dev-form(
+        v-on:done="devFrmDone"
+      )
 </template>
 
 <script lang="ts">
@@ -79,6 +99,8 @@ import PonBdcomOlt from './pon-bdcom-olt.vue'
 import { getPorts, scanPorts } from '@/api/devices/req'
 import SwitchPortView from './switch-port-view.vue'
 import SwitchPortForm from './switch-port-form.vue'
+import SwitchPortToggleButton from './switch-port-toggle-button.vue'
+import DevForm from '../dev-form.vue'
 
 interface IFinPort {
   pk?: number
@@ -114,7 +136,9 @@ interface ITableRowClassName {
   components: {
     PonBdcomOlt,
     SwitchPortView,
-    SwitchPortForm
+    SwitchPortForm,
+    SwitchPortToggleButton,
+    DevForm
   }
 })
 export default class extends Vue {
@@ -126,6 +150,7 @@ export default class extends Vue {
   private portFormDialog = false
   private currPortId = 0
   private initialNum = 0
+  private devFormDialog = false
 
   private async loadPorts() {
     if (this.device !== null) {
@@ -249,6 +274,16 @@ export default class extends Vue {
     } else {
       this.$message.success('Порт успешно изменён')
     }
+  }
+
+  private openDevForm() {
+    this.devFormDialog = true
+  }
+
+  private devFrmDone(device: IDevice) {
+    this.devFormDialog = false
+    this.$message.success('Успешно сохранено')
+    this.$router.push({name: 'devicesList', params:{ groupId: device.group.toString() }})
   }
 }
 </script>
