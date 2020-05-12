@@ -75,10 +75,10 @@ export const getPorts = (devId: number, portNum?: number): IPortListAxiosRespons
 export const getPort = (portId: number): IPortAxoisResponsePromise =>
   request.get<IPort>(`${basePortUrl}${portId}/`)
 
-export const addPort = (newDev: IPort): IPortAxoisResponsePromise =>
-  request.post<IPort>(basePortUrl, newDev)
+export const addPort = (newPort: object): IPortAxoisResponsePromise =>
+  request.post<IPort>(basePortUrl, newPort)
 
-export const changePort = (portId: number, newData: IPort): IPortAxoisResponsePromise =>
+export const changePort = (portId: number, newData: object): IPortAxoisResponsePromise =>
   request.patch<IPort>(`${basePortUrl}${portId}/`, newData)
 
 export const delPort = (portId: number) =>

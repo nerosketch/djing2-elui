@@ -15,7 +15,8 @@
         width="60"
         align='center'
       )
-        template(v-slot:default="{row}") {{ row.num }}
+        template(v-slot:default="{row}")
+          b {{ row.num }}
       el-table-column(
         label="Описание"
       )
@@ -30,10 +31,6 @@
         label="Имя"
       )
         template(v-slot:default="{row}") {{ row.name || '-' }}
-      el-table-column(
-        label="MAC"
-      )
-        template(v-slot:default="{row}") {{ row.mac_addr || '-' }}
       el-table-column(
         label="Режим"
       )
@@ -50,8 +47,8 @@
           el-button-group(v-if="row.isdb")
             el-button(size='mini' icon='el-icon-view' @click="openPortView(row)")
             el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)")
-            el-button(size='mini' type='primary' icon='el-icon-edit')
-          el-button(v-else size='mini' icon='el-icon-plus' circle)
+            el-button(size='mini' type='primary' icon='el-icon-edit' @click="openPortEdit(row)")
+          el-button(v-else size='mini' icon='el-icon-plus' circle @click="openPortAdd(row)")
     el-dialog(
       :visible.sync="portViewDialog"
       title="Абоненты на порту"
@@ -60,16 +57,28 @@
         :device="device"
         :portId="currPortId"
       )
+    el-dialog(
+      :visible.sync="portFormDialog"
+      title="Порт коммутатора"
+    )
+      switch-port-form(
+        :deviceId="device.pk"
+        :portId="currPortId"
+        :initialNum="initialNum"
+        v-on:editdone="editPortDone"
+        v-on:adddone="addPortDone"
+      )
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { IDevice, IPort } from '@/api/devices/types'
+import { IDevice, IPort, IScannedPort } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { PortModule } from '@/store/modules/devices/port'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
 import { getPorts, scanPorts } from '@/api/devices/req'
 import SwitchPortView from './switch-port-view.vue'
+import SwitchPortForm from './switch-port-form.vue'
 
 interface IFinPort {
   pk?: number
@@ -79,7 +88,6 @@ interface IFinPort {
   snmp_number?: number
   name?: string
   status?: boolean
-  mac_addr?: string
   speed?: number
   uptime?: string
   isdb: boolean
@@ -105,7 +113,8 @@ interface ITableRowClassName {
   name: 'SwitchView',
   components: {
     PonBdcomOlt,
-    SwitchPortView
+    SwitchPortView,
+    SwitchPortForm
   }
 })
 export default class extends Vue {
@@ -114,7 +123,9 @@ export default class extends Vue {
   private allPorts: IFinPort[] = []
   private loading = false
   private portViewDialog = false
+  private portFormDialog = false
   private currPortId = 0
+  private initialNum = 0
 
   private async loadPorts() {
     if (this.device !== null) {
@@ -141,7 +152,6 @@ export default class extends Vue {
           this.allPorts[pInd].snmp_number = p.snmp_number
           this.allPorts[pInd].name = p.name
           this.allPorts[pInd].status = p.status
-          this.allPorts[pInd].mac_addr = p.mac_addr
           this.allPorts[pInd].speed = p.speed
           this.allPorts[pInd].uptime = p.uptime
         } else {
@@ -150,7 +160,6 @@ export default class extends Vue {
             snmp_number: p.snmp_number,
             name: p.name,
             status: p.status,
-            mac_addr: p.mac_addr,
             speed: p.speed,
             uptime: p.uptime,
             isdb: false
@@ -206,8 +215,40 @@ export default class extends Vue {
         delete this.allPorts[ind].user_count
         this.allPorts[ind].isdb = false
       }
-      this.$message.success(`Порт "${port.descr}" успешно удалён`)
+      this.$message.success('Порт успешно удалён')
     })
+  }
+
+  private openPortEdit(port: IPort) {
+    this.currPortId = port.pk
+    this.portFormDialog = true
+  }
+
+  private openPortAdd(port: IScannedPort) {
+    this.currPortId = 0
+    this.initialNum = port.num
+    this.portFormDialog = true
+  }
+
+  private editPortDone(port: IPort) {
+    this.addEditPortDone(port, false)
+  }
+  private addPortDone(port: IPort) {
+    this.addEditPortDone(port, true)
+  }
+  private addEditPortDone(port: IPort, isAdd: boolean) {
+    this.portFormDialog = false
+    const ind = this.allPorts.findIndex(el => el.num === port.num)
+    if (ind > -1) {
+      this.allPorts[ind].pk = port.pk
+      this.allPorts[ind].descr = port.descr
+      this.allPorts[ind].isdb = true
+    }
+    if (isAdd) {
+      this.$message.success('Порт успешно сохранён')
+    } else {
+      this.$message.success('Порт успешно изменён')
+    }
   }
 }
 </script>

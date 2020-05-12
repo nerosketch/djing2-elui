@@ -42,21 +42,16 @@ class Port extends VuexModule implements IPort {
   }
 
   @Action
-  public async AddDevice(data: IPort) {
-    return await addPort(data)
+  public async AddPort(info: object) {
+    const { data } =  await addPort(info)
+    return data
   }
 
   @Action
-  public async SavePort() {
-    const r = await changePort(this.pk, <IPort>{
-      pk: this.pk,
-      device: this.device,
-      num: this.num,
-      descr: this.descr,
-      user_count: this.user_count
-    })
-    this.SET_ALL_PORT(r.data)
-    return r
+  public async PatchPort(info: object) {
+    const { data } = await changePort(this.pk, info)
+    this.SET_ALL_PORT(data)
+    return data
   }
 
   @Action
