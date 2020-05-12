@@ -95,7 +95,6 @@ export interface IScannedPort {
   mac_addr: string
   speed: number
   uptime: string
-  user_count?: number
 }
 export type IScannedPortListAxiosPromise = AxiosPromise<IScannedPort[]>
 

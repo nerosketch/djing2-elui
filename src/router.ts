@@ -183,7 +183,7 @@ export default new Router({
         },
         {
           path: 'device:devId',
-          component: () => import(/* webpackChunkName: "dev-view" */ '@/views/devices/specefic-devs/switch-view.vue'),
+          component: () => import(/* webpackChunkName: "dev-view" */ '@/views/devices/specefic-devs/device-view.vue'),
           name: 'device-view',
           props: true,
           meta: {

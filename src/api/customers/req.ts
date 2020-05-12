@@ -27,7 +27,9 @@ import {
   IPassportInfoListAxiosResponsePromise,
   IPassportInfoList,
   ICustomerServiceAxoisResponsePromise,
-  ICustomerService
+  ICustomerService,
+  ICustomerOnPort,
+  ICustomersOnPortAxoisPromise
 } from './types'
 
 // ICustomer
@@ -75,6 +77,15 @@ export const setGroupAccessory = (id: number, groupId: number, services: number[
   request.post(`${custApiUrl}${id}/set_group_accessory/`, {
     group_id: groupId,
     services
+  })
+
+export const filterDevicePort = (deviceId: number, portId: number): ICustomersOnPortAxoisPromise =>
+  request.get<ICustomerOnPort[]>(`${custApiUrl}filter_device_port/`, {
+    params: {
+      device_id: deviceId,
+      port_id: portId,
+      fields: 'pk,telephone,group,dev_port,full_name'
+    }
   })
 
 // ICustomerGroup

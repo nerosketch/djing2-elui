@@ -1,6 +1,7 @@
 import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '@/api/types'
 import { IGroup } from '@/api/groups/types'
 import { IService } from '@/api/services/types'
+import { AxiosPromise } from 'axios'
 
 // ICustomer
 export interface ICustomer {
@@ -33,6 +34,16 @@ export interface ICustomer {
 export type ICustomerList = IDRFListResponse<ICustomer>
 export type ICustomerAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomer>
 export type ICustomerListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerList>
+
+export interface ICustomerOnPort {
+  pk: number
+  telephone: string
+  group: number
+  dev_port: number
+  full_name: string
+}
+export type ICustomerOnPortAxoisPromise = AxiosPromise<ICustomerOnPort>
+export type ICustomersOnPortAxoisPromise = AxiosPromise<ICustomerOnPort[]>
 
 export interface IDRFRequestListParametersCustomer extends IDRFRequestListParameters {
   group: number

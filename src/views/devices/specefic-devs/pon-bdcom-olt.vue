@@ -7,6 +7,7 @@
       el-col(
         :span='24'
         v-for="(fiber, i) in fibers"
+        :key="i"
       )
         el-card(shadow="never")
           template(v-slot:header)
@@ -61,10 +62,7 @@
       new-dev-form(
         v-if="dialogVisible"
         v-on:done="frmDone"
-<<<<<<< HEAD
-=======
         v-on:err="frmErr"
->>>>>>> try
         :initialMac="currentOnu.mac_addr"
         :initialDevType="onuType"
         :initialGroup="device.group"
