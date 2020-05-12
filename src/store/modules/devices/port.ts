@@ -87,3 +87,4 @@ class Port extends VuexModule implements IPort {
     await vlanConfigApply(portId, conf)
   }
 }
+export const PortModule = getModule(Port)

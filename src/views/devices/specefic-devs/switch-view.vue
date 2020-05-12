@@ -49,7 +49,7 @@
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
             el-button(size='mini' icon='el-icon-view' @click="openPortView(row)")
-            el-button(size='mini' type='danger' icon='el-icon-delete')
+            el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)")
             el-button(size='mini' type='primary' icon='el-icon-edit')
           el-button(v-else size='mini' icon='el-icon-plus' circle)
     el-dialog(
@@ -66,6 +66,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IPort } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
+import { PortModule } from '@/store/modules/devices/port'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
 import { getPorts, scanPorts } from '@/api/devices/req'
 import SwitchPortView from './switch-port-view.vue'
@@ -193,6 +194,20 @@ export default class extends Vue {
   private openPortView(port: IPort) {
     this.currPortId = port.pk
     this.portViewDialog = true
+  }
+
+  private delPort(port: IPort) {
+    this.$confirm(`Удалить порт "${port.descr}"?`).then(async() => {
+      await PortModule.DelPort(port.pk)
+      const ind = this.allPorts.findIndex(el => el.pk === port.pk)
+      if (ind > -1) {
+        delete this.allPorts[ind].pk
+        delete this.allPorts[ind].descr
+        delete this.allPorts[ind].user_count
+        this.allPorts[ind].isdb = false
+      }
+      this.$message.success(`Порт "${port.descr}" успешно удалён`)
+    })
   }
 }
 </script>
