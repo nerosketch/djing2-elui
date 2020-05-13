@@ -6,7 +6,7 @@
         v-else-if="device.dev_type === 2"
         :device="device"
       )
-      //- olt-zte(:device="dev" v-else-if="dev.dev_type === 5")
+      olt-zte(:device="device" v-else-if="device.dev_type === 5")
       switch-view(:device="device" v-else)
 
 </template>
@@ -18,13 +18,15 @@ import { DeviceModule } from '@/store/modules/devices/device'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
 import SwitchView from './switch-view.vue'
 import PonOnu from './pon-onu.vue'
+import OltZte from './olt-zte.vue'
 
 @Component({
   name: 'DeviceView',
   components: {
     PonBdcomOlt,
     SwitchView,
-    PonOnu
+    PonOnu,
+    OltZte
   }
 })
 export default class extends Vue {
