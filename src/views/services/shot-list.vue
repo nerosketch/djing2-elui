@@ -7,14 +7,11 @@ div
     :heightDiff='329'
     ref='table'
   )
-    template(v-slot:pk="{row}")
-      span {{ row.pk }}
+    template(v-slot:pk="{row}") {{ row.pk }}
 
-    template(v-slot:name="{row}")
-      span {{ row.name }}
+    template(v-slot:name="{row}") {{ row.name }}
 
-    template(v-slot:cost="{row}")
-      span {{ row.cost }}
+    template(v-slot:cost="{row}") {{ row.cost }}
 
     template(v-slot:oper="{row}")
       el-button-group

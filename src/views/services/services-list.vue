@@ -7,32 +7,24 @@ div
     :heightDiff='329'
     ref='table'
   )
-    template(v-slot:id="{row}")
-      span {{ row.pk }}
+    template(v-slot:id="{row}") {{ row.pk }}
 
-    template(v-slot:title="{row}")
-      span {{ row.title }}
+    template(v-slot:title="{row}") {{ row.title }}
 
-    template(v-slot:descr="{row}")
-      span {{ row.descr }}
+    template(v-slot:descr="{row}") {{ row.descr }}
 
-    template(v-slot:speed_in="{row}")
-      span {{ row.speed_in }}
+    template(v-slot:speed_in="{row}") {{ row.speed_in }}
 
-    template(v-slot:speed_out="{row}")
-      span {{ row.speed_out }}
+    template(v-slot:speed_out="{row}") {{ row.speed_out }}
 
-    template(v-slot:speed_burst="{row}")
-      span {{ row.speed_burst }}
+    template(v-slot:speed_burst="{row}") {{ row.speed_burst }}
 
-    template(v-slot:cost="{row}")
-      span {{ row.cost }}
+    template(v-slot:cost="{row}") {{ row.cost }}
 
     template(v-slot:isadm="{row}")
       el-checkbox(v-model="row.is_admin" disabled) {{ row.is_admin ? 'Да' : 'Нет'}}
 
-    template(v-slot:usercount="{row}")
-      span {{ row.usercount }}
+    template(v-slot:usercount="{row}") {{ row.usercount }}
 
     template(v-slot:oper="{row}")
       el-button-group

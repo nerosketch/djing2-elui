@@ -16,8 +16,7 @@
         :loading='devInfoLoading'
       )
         template(v-slot:header)
-          .clearfix
-            span {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
+          .clearfix {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
             small {{ `${device.ip_address || device.mac_addr}` }}
             el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
         template(v-slot:footer)
@@ -31,8 +30,7 @@
       )
         template(v-slot:header)
           slot(name="header")
-            .clearfix
-              span Состояние ONU
+            .clearfix Состояние ONU
         el-row(type='flex')
           el-col(style='width: 128px;')
             i.icon-big(:class="iconStatusClass")

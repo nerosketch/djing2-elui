@@ -3,8 +3,7 @@
     el-col(:span='12')
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix
-            span Изменение абонента
+          .clearfix Изменение абонента
         customer-form
     el-col(:span='12')
       device

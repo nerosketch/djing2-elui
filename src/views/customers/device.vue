@@ -5,8 +5,7 @@ el-form(
 )
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix
-        span Устройство
+      .clearfix Устройство
     el-row
       el-col(:span='8')
         b Устройство

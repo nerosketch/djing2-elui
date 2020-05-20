@@ -3,18 +3,16 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevGroups"
-      :heightDiff='187'
+      :heightDiff='147'
       ref='table'
     )
-      template(v-slot:pk="{row}")
-        span {{ row.pk }}
+      template(v-slot:pk="{row}") {{ row.pk }}
 
       template(v-slot:title="{row}")
         el-link
           router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
 
-      template(v-slot:device_count="{row}")
-        span {{ row.device_count }}
+      template(v-slot:device_count="{row}") {{ row.device_count }}
 
 </template>
 

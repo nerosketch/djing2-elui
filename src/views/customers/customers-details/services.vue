@@ -97,8 +97,7 @@
     el-col(:span='12')
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix
-            span Периодический платёж
+          .clearfix Периодический платёж
         el-button(type='primary' size='mini' disabled) Добавить периодический платёж
 
     el-dialog(

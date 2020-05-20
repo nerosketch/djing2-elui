@@ -1,8 +1,7 @@
 <template lang="pug">
   el-card.box-card
     template(v-slot:header)
-      .clearfix
-        span {{ device.comment || 'BDCOM' }}
+      .clearfix {{ device.comment || 'BDCOM' }}
     el-row(v-if="ready")
       el-col(
         :span='24'
@@ -11,8 +10,7 @@
       )
         el-card(shadow="never")
           template(v-slot:header)
-            .clearfix
-              span {{ fiber.fb_name }} ({{ fiber.fb_active_onu }}/{{ fiber.fb_onu_num }})
+            .clearfix {{ fiber.fb_name }} ({{ fiber.fb_active_onu }}/{{ fiber.fb_onu_num }})
           el-table(
             :data="fiber.onuList"
             border fit size='small'

@@ -8,8 +8,7 @@
       slot(name="header")
         .clearfix(
           v-if='title'
-        )
-          span {{ title }}
+        ) {{ title }}
     slot(name="items")
       .text.item.list-item(
         v-for="(it, i) in items"

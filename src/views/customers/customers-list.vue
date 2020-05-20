@@ -8,33 +8,26 @@
           :loading="customersLoading"
           ref='tbl'
         )
-          template(v-slot:pk="{row}")
-            span {{ row.pk }}
+          template(v-slot:pk="{row}") {{ row.pk }}
 
           template(v-slot:username="{row}")
             el-link(type="primary")
               router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}") {{ row.username }}
 
-          template(v-slot:fio="{row}")
-            span {{ row.fio }}
+          template(v-slot:fio="{row}") {{ row.fio }}
 
-          template(v-slot:street_name="{row}")
-            span {{ row.street_name }}
+          template(v-slot:street_name="{row}") {{ row.street_name }}
 
-          template(v-slot:house="{row}")
-            span {{ row.house }}
+          template(v-slot:house="{row}") {{ row.house }}
 
           template(v-slot:telephone="{row}")
             el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
 
-          template(v-slot:service_title="{row}")
-            span {{ row.service_title }}
+          template(v-slot:service_title="{row}") {{ row.service_title }}
 
-          template(v-slot:balance="{row}")
-            span {{ row.balance }}
+          template(v-slot:balance="{row}") {{ row.balance }}
 
-          template(v-slot:gateway_title="{row}")
-            span {{ row.gateway_title }}
+          template(v-slot:gateway_title="{row}") {{ row.gateway_title }}
 
         el-button(
           type='primary'

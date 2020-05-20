@@ -5,14 +5,11 @@
       :getData="loadGroups"
       ref='table'
     )
-      template(v-slot:pk="{row}")
-        span {{ row.pk }}
+      template(v-slot:pk="{row}") {{ row.pk }}
 
-      template(v-slot:title="{row}")
-        span {{ row.title }}
+      template(v-slot:title="{row}") {{ row.title }}
 
-      template(v-slot:code="{row}")
-        span {{ row.code }}
+      template(v-slot:code="{row}") {{ row.code }}
 
       template(v-slot:oper="{row}")
         el-button-group
