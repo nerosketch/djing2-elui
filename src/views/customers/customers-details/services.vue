@@ -1,6 +1,6 @@
 <template lang="pug">
   el-row(:gutter='5')
-    el-col(:span='12')
+    el-col(:sm='24' :md='12')
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix
@@ -45,7 +45,7 @@
           )
             template(v-slot:default="{row}") {{ row.speed_out }}
         el-button(@click="srvAccDialog=true" icon="el-icon-s-tools" type="primary" size='mini') Привязать услуги к этой группе
-    el-col(:span='12')
+    el-col(:sm='24' :md='12')
       el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
         template(v-slot:header)
           .clearfix
@@ -94,7 +94,7 @@
 
         b(v-else) Услуга не подключена
 
-    el-col(:span='12')
+    el-col(:sm='24' :md='12')
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix Периодический платёж

@@ -8,7 +8,7 @@
       el-option(
         v-for="dp in devPorts"
         :key="dp.pk"
-        :label="dp.descr"
+        :label="`${dp.num}: ${dp.descr}`"
         :value="dp.pk"
       )
     el-option(
@@ -48,11 +48,7 @@ export default class extends Vue {
 
   @Watch('deviceId')
   protected onChDev(devId: number) {
-    if (devId > 0) {
-      this.loadDevPorts(devId)
-    } else {
-      this.devPorts = []
-    }
+    this.loadDevPorts(devId)
   }
 
   created() {
@@ -61,13 +57,18 @@ export default class extends Vue {
   }
 
   private async loadDevPorts(devId: number) {
-    const { data } = await getPorts(devId)
-    this.devPorts = data.results
+    if (typeof devId === 'number' && devId > 0) {
+      const { data } = await getPorts(devId)
+      this.devPorts = data.results
 
-    const fnd = this.devPorts.find(dp => dp.pk === this.selectedPort)
-    if (fnd){
-      this.selectedPort = fnd.pk
+      const fnd = this.devPorts.find(dp => dp.pk === this.selectedPort)
+      if (fnd){
+        this.selectedPort = fnd.pk
+      } else {
+        this.selectedPort = 0
+      }
     } else {
+      this.devPorts = []
       this.selectedPort = 0
     }
   }

@@ -4,7 +4,7 @@
       :columns="tableColumns"
       :getData="getAllLog"
       :loading="loading"
-      :heightDiff='329'
+      :heightDiff='290'
       ref='tbl'
     )
       template(v-slot:action_date="{row}") {{ row.action_date }}

@@ -10,7 +10,11 @@ el-form(
       el-col(:span='8')
         b Устройство
       el-col(:span='16')
-        device-select(v-model="frmMod.device" :groupId="groupId")
+        device-select(
+          v-model="frmMod.device"
+          :groupId="groupId"
+          :initialDevice="devComm"
+        )
     el-row
       el-col(:span='8')
         b Порт устройства
@@ -21,6 +25,7 @@ el-form(
         el-button-group
           el-button(type="primary" @click="onSubmit" :loading="isLoading" size="mini") Сохранить
           el-button(type="danger" icon="el-icon-delete" size="mini" @click="onClearDevice") Очистить
+          el-button(icon="el-icon-view" size="mini" @click="onGo2Dev" :disabled="!frmMod.device")
 </template>
 
 <script lang="ts">
@@ -41,6 +46,13 @@ export default class extends Vue {
   private frmMod = {
     device: CustomerModule.device,
     dev_port: CustomerModule.dev_port
+  }
+
+  private get devComm() {
+    return {
+      pk: CustomerModule.device,
+      comment: CustomerModule.device_comment
+    }
   }
 
   get onChId() {
@@ -72,6 +84,14 @@ export default class extends Vue {
     this.frmMod.dev_port = data.dev_port
     this.$emit('done', data)
     this.isLoading = false
+  }
+
+  private onGo2Dev() {
+    this.$router.push({
+      name: 'device-view', params: {
+        devId: this.frmMod.device.toString()
+      }
+    })
   }
 }
 </script>

@@ -1,13 +1,13 @@
 <template lang="pug">
   el-row(:gutter="5")
-    el-col(:span='12')
+    el-col(:sm='24' :md='12')
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix Изменение абонента
         customer-form
-    el-col(:span='12')
+    el-col(:sm='24' :md='12')
       device
-    el-col(:span='12')
+    el-col(:sm='24' :md='12')
       network
 
 </template>

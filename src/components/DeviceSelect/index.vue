@@ -1,9 +1,9 @@
 <template lang="pug">
-  el-select.input-with-select(v-model='selectedDevice' size="mini")
+  el-select.input-with-select(v-model='selectedDeviceId' size="mini")
     el-option(
       v-for="dv in devices"
       :key="dv.pk"
-      :label="dv.comment"
+      :label="`${dv.comment} (${dv.ip_address})`"
       :value="dv.pk"
     )
 </template>
@@ -19,22 +19,36 @@ import { getDevices } from '@/api/devices/req'
 export default class extends Vue {
   @Prop({ default: 0 }) private value!: number
   @Prop({ default: 0 }) private groupId!: number
+  @Prop({ default: () => ({ pk: null, comment: 'Не выбрано' }) }) private initialDevice!: IDevice
   private devices: IDevice[] = []
-  private selectedDevice = 0
+  private selectedDeviceId = 0
 
-  @Watch('selectedDevice')
+  @Watch('selectedDeviceId')
   private onChDev(devId: number) {
     this.$emit('input', devId)
   }
 
   @Watch('value')
   protected onChVal(devId: number) {
-    this.selectedDevice = devId
+    this.selectedDeviceId = devId
+  }
+
+  private addDevice(dev: IDevice) {
+    const dv = this.devices.find(fd => fd.pk === dev.pk)
+    if (dv === undefined) {
+      this.devices.push(dev)
+    }
+  }
+
+  @Watch('initialDevice')
+  private onSPCh(dev: IDevice) {
+    this.addDevice(dev)
   }
 
   created() {
     this.loadDevices()
-    this.selectedDevice = this.value
+    this.selectedDeviceId = this.value
+    this.devices.push(this.initialDevice)
   }
 
   private async loadDevices() {

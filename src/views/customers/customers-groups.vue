@@ -4,7 +4,7 @@
       :columns="tableColumns"
       :getData="getGroups"
       :loading="groupsLoading"
-      :heightDiff='189'
+      :heightDiff='155'
     )
       template(v-slot:pk="{row}") {{ row.pk }}
 

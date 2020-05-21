@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevGroups"
-      :heightDiff='147'
+      :heightDiff='155'
       ref='table'
     )
       template(v-slot:pk="{row}") {{ row.pk }}

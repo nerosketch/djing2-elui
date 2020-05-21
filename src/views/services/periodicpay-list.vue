@@ -4,7 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadPeriodics"
     :loading="loading"
-    :heightDiff='329'
+    :heightDiff='294'
     ref='table'
   )
     template(v-slot:pk="{row}") {{ row.pk }}

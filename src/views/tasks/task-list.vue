@@ -5,7 +5,7 @@ div
     :getData="loadTasks"
     :loading="loading"
     :tableRowClassName="tableRowClassName"
-    :heightDiff='360'
+    :heightDiff='326'
     ref='tbl'
   )
     template(v-slot:id="{row}")
