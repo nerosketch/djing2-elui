@@ -3,30 +3,24 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevs"
-      :heightDiff='187'
+      :heightDiff='147'
       ref='table'
     )
       template(v-slot:pk="{row}")
         el-link(type="primary")
           router-link(:to="{name: 'device-view', params: { devId: row.pk }}") {{ row.pk }}
 
-      template(v-slot:ip_address="{row}")
-        span {{ row.ip_address || '-' }}
+      template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
 
-      template(v-slot:comment="{row}")
-        span {{ row.comment }}
+      template(v-slot:comment="{row}") {{ row.comment }}
 
-      template(v-slot:mac_addr="{row}")
-        span {{ row.mac_addr }}
+      template(v-slot:mac_addr="{row}") {{ row.mac_addr }}
 
-      template(v-slot:dev_type="{row}")
-        span {{ row.dev_type_str }}
+      template(v-slot:dev_type="{row}") {{ row.dev_type_str }}
 
-      template(v-slot:status="{row}")
-        span {{ row.status ? 'Ok' : 'Не ok' }}
+      template(v-slot:status="{row}") {{ row.status ? 'Ok' : 'Не ok' }}
 
-      template(v-slot:is_noticeable="{row}")
-        span {{ row.is_noticeable ? 'Да' : 'Не' }}
+      template(v-slot:is_noticeable="{row}") {{ row.is_noticeable ? 'Да' : 'Не' }}
 
       template(v-slot:oper="{row}")
         el-button-group

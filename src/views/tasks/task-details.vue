@@ -3,8 +3,7 @@
     el-col(:lg="12" :sm='24')
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix
-            span Редактировать задачу
+          .clearfix Редактировать задачу
         task-form(v-if='taskReady' :recipients="recipients")
     el-col(:lg='12' :sm='24')
       task-info(v-if='taskReady' :recipients="recipients" :taskId="taskId")

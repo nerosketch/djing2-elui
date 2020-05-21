@@ -56,6 +56,9 @@ div:focus {
 }
 
 .el-table {
+  th, td {
+    padding: 7px 0;
+  }
   .warning-row {
     background-color: oldlace;
   }

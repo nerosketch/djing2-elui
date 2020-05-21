@@ -1,8 +1,7 @@
 <template lang="pug">
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix
-        span Сетевое
+      .clearfix Сетевое
     el-table(
       v-loading='loading'
       :data="leases"

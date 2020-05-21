@@ -1,8 +1,7 @@
 <template lang="pug">
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix
-        span Детали задачи
+      .clearfix Детали задачи
     p Описание: {{ taskDescr }}
     p Автор задачи: {{ authorName }}
     div Исполнители:

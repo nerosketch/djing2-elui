@@ -6,15 +6,13 @@
       :loading="groupsLoading"
       :heightDiff='189'
     )
-      template(v-slot:pk="{row}")
-        span {{ row.pk }}
+      template(v-slot:pk="{row}") {{ row.pk }}
 
       template(v-slot:title="{row}")
         el-link(type="primary")
           router-link(:to="{name: 'customersList', params:{ groupId: row.pk }}") {{ row.title }}
 
-      template(v-slot:usercount="{row}")
-        span {{ row.usercount }}
+      template(v-slot:usercount="{row}") {{ row.usercount }}
 </template>
 
 <script lang="ts">

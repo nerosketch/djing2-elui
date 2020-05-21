@@ -7,17 +7,13 @@ div
     :heightDiff='329'
     ref='table'
   )
-    template(v-slot:id="{row}")
-      span {{ row.id }}
+    template(v-slot:id="{row}") {{ row.id }}
 
-    template(v-slot:ip_address="{row}")
-      span {{ row.ip_address }}
+    template(v-slot:ip_address="{row}") {{ row.ip_address }}
 
-    template(v-slot:lease_time="{row}")
-      span {{ row.lease_time }}
+    template(v-slot:lease_time="{row}") {{ row.lease_time }}
 
-    template(v-slot:mac_address="{row}")
-      span {{ row.mac_address }}
+    template(v-slot:mac_address="{row}") {{ row.mac_address }}
 
     template(v-slot:is_dynamic="{row}")
       el-checkbox(v-model="row.is_dynamic" disabled) {{ row.is_dynamic ? 'Да' : 'Нет' }}

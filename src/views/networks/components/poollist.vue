@@ -7,23 +7,17 @@ div
     :heightDiff='361'
     ref='table'
   )
-    template(v-slot:id="{row}")
-      span {{ row.id }}
+    template(v-slot:id="{row}") {{ row.id }}
 
-    template(v-slot:network="{row}")
-      span {{ row.network }}
+    template(v-slot:network="{row}") {{ row.network }}
 
-    template(v-slot:description="{row}")
-      span {{ row.description }}
+    template(v-slot:description="{row}") {{ row.description }}
 
-    template(v-slot:ip_start="{row}")
-      span {{ row.ip_start }}
+    template(v-slot:ip_start="{row}") {{ row.ip_start }}
 
-    template(v-slot:ip_end="{row}")
-      span {{ row.ip_end }}
+    template(v-slot:ip_end="{row}") {{ row.ip_end }}
 
-    template(v-slot:gateway="{row}")
-      span {{ row.gateway }}
+    template(v-slot:gateway="{row}") {{ row.gateway }}
 
     template(v-slot:is_dynamic="{row}")
       el-checkbox(v-model="row.is_dynamic" disabled)

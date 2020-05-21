@@ -85,7 +85,7 @@ export default class <T> extends Vue {
   @Prop({ default: null }) private fields!: string | null
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
-  @Prop({ default: 218 }) private heightDiff!: number
+  @Prop({ default: 185 }) private heightDiff!: number
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {
