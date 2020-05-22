@@ -9,7 +9,7 @@
       class="breadcrumb-container"
     />
 
-    <div class='center-header'>
+    <form class='center-header' v-on:submit.prevent="doSearch">
       <el-input
         placeholder="Поиск"
         prefix-icon="el-icon-search"
@@ -20,7 +20,7 @@
           <el-button icon='el-icon-search' @click="doSearch"/>
         </template>
       </el-input>
-    </div>
+    </form>
 
     <div class="right-menu">
       <el-dropdown
