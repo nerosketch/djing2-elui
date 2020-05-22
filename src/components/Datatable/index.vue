@@ -39,7 +39,9 @@
         :page.sync="page"
         :limit.sync="pageSize"
         @pagination="GetTableData"
-      />
+      >
+        <slot name="default"></slot>
+      </pagination>
     </slot>
   </div>
 </template>
@@ -85,7 +87,7 @@ export default class <T> extends Vue {
   @Prop({ default: null }) private fields!: string | null
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
-  @Prop({ default: 185 }) private heightDiff!: number
+  @Prop({ default: 154 }) private heightDiff!: number
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {

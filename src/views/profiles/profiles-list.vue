@@ -25,12 +25,11 @@
           type="danger" size="mini"
           icon='el-icon-close' circle
         )
-    el-button(
-      type='success'
-      icon='el-icon-plus'
-      size='small'
-      @click="addNewProfile"
-    ) Добавить
+      el-button(
+        icon='el-icon-plus'
+        size='mini'
+        @click="addNewProfile"
+      ) Добавить
     el-dialog(
       title="Добавить учётку"
       :visible.sync="profileFormDialog"

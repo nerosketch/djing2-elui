@@ -5,7 +5,7 @@ div
     :getData="loadTasks"
     :loading="loading"
     :tableRowClassName="tableRowClassName"
-    :heightDiff='326'
+    :heightDiff='210'
     ref='tbl'
   )
     template(v-slot:id="{row}")
@@ -31,12 +31,11 @@ div
 
     template(v-slot:time_of_create="{row}") {{ row.time_of_create }}
 
-  el-button(
-    type="success"
-    icon="el-icon-plus"
-    size='small'
-    @click="openNew"
-  ) Добавить задачу
+    el-button(
+      icon="el-icon-plus"
+      size='mini'
+      @click="openNew"
+    ) Добавить задачу
 
   el-dialog(
     title='Создание задачи'

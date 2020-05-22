@@ -4,7 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadLog"
     :loading="loading"
-    :heightDiff='345'
+    :heightDiff='269'
     ref='fintbl'
   )
     template(v-slot:cost="{row}") {{ row.cost }}
@@ -15,7 +15,8 @@ div
 
     template(v-slot:comment="{row}") {{ row.comment }}
 
-  el-button(type="primary" @click="addCashDialog=true" size='small') Пополнить счёт
+    el-button(@click="addCashDialog=true") Пополнить счёт
+
   el-dialog(
     title="Пополнить счёт"
     :visible.sync="addCashDialog"

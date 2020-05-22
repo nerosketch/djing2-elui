@@ -1,12 +1,5 @@
 <template lang="pug">
   .tab-container
-    el-tag {{ activeName }}
-    el-alert(
-      :closable="false"
-      style="width:200px; display:inline-block; vertical-align:middle; margin-left:30px;"
-      title="Tab with keep-alive"
-      type="info"
-    )
     el-tabs(
       v-model="activeName"
       style="margin-top:15px"

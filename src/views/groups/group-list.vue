@@ -16,12 +16,11 @@
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
           el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
 
-    el-button(
-      type='success'
-      size='small'
-      icon='el-icon-plus'
-      @click='openNew'
-    ) Добавить группу
+      el-button(
+        size='mini'
+        icon='el-icon-plus'
+        @click='openNew'
+      ) Добавить группу
 
     el-dialog(
       :title="dialogTitle"

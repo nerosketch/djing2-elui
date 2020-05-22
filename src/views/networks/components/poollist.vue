@@ -4,7 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadPools"
     :loading="poolsLoading"
-    :heightDiff='326'
+    :heightDiff='211'
     ref='table'
   )
     template(v-slot:id="{row}") {{ row.id }}
@@ -27,7 +27,7 @@ div
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPool(row)")
 
-  el-button(type='success' icon='el-icon-plus' size='small' @click='openNew') Добавить
+    el-button(icon='el-icon-plus' size='mini' @click='openNew') Добавить
 
   el-dialog(
     :title="dialogTitle"

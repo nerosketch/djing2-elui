@@ -29,12 +29,11 @@
 
           template(v-slot:gateway_title="{row}") {{ row.gateway_title }}
 
-        el-button(
-          type='primary'
-          size='small'
-          icom='el-icon-plus'
-          @click="addCustomerDialog=true"
-        ) Добавить абонента
+          el-button(
+            size='mini'
+            icom='el-icon-plus'
+            @click="addCustomerDialog=true"
+          ) Добавить абонента
 
         el-dialog(
           title='Добавить абонента'

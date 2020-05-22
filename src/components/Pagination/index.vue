@@ -13,7 +13,9 @@
       v-bind="$attrs"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-    />
+    >
+      <slot name="default"></slot>
+    </el-pagination>
   </div>
 </template>
 
@@ -30,9 +32,9 @@ export default class extends Vue {
   @Prop({ default: 1 }) private page!: number
   @Prop({ default: 20 }) private limit!: number
   @Prop({ default: () => [20, 40, 60, 80] }) private pageSizes!: number[]
-  @Prop({ default: 'total, sizes, prev, pager, next, jumper' }) private layout!: string
+  @Prop({ default: 'sizes, prev, pager, next, slot' }) private layout!: string
   @Prop({ default: true }) private background!: boolean
-  @Prop({ default: true }) private autoScroll!: boolean
+  @Prop({ default: false }) private autoScroll!: boolean
   @Prop({ default: false }) private hidden!: boolean
 
   get currentPage() {
