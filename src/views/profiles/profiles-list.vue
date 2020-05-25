@@ -44,7 +44,7 @@ import { IUserProfile } from '@/api/profiles/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getProfiles } from '@/api/profiles/req'
 import ProfileForm from './profile-form.vue'
-import { UserProfileModule } from '../../store/modules/profiles/user-profile'
+import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 
 class DataTableComp extends DataTable<IUserProfile> {}
 

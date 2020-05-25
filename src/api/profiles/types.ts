@@ -7,7 +7,7 @@ export interface IUserProfile {
   is_active: boolean
   is_admin: boolean
   telephone: string
-  avatar?: string
+  avatar: string
   email: string
   full_name?: string
   last_login?: string

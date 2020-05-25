@@ -61,6 +61,7 @@ import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { SearchModule } from '@/store/modules/search'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
+import { TaskModule } from '@/store/modules/tasks/tasks'
 
 @Component({
   name: 'Navbar',
@@ -80,7 +81,7 @@ export default class extends Vue {
   }
 
   get avatar() {
-    if (!CurrentUserProfileModule.avatar) {
+    if (!CurrentUserProfileModule.isAvatar) {
       CurrentUserProfileModule.GetSelf()
     }
     return CurrentUserProfileModule.avatar
@@ -91,6 +92,7 @@ export default class extends Vue {
   }
 
   private async logout() {
+    await TaskModule.StopWatchActiveTaskCount()
     await CurrentUserProfileModule.LogOut()
     this.$router.push(`/login?redirect=${this.$route.fullPath}`)
   }

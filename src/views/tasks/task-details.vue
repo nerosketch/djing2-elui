@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { TaskModule } from '../../store/modules/tasks/tasks'
+import { TaskModule } from '@/store/modules/tasks/tasks'
 import { getProfiles } from '@/api/profiles/req'
 import { IUserProfile } from '@/api/profiles/types'
 import TaskForm from './task-form.vue'

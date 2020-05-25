@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { IDRFRequestListParameters } from '@/api/types'
+import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
 import { ITaskList, ITaskListAxiosResponsePromise, ITask,
   ITaskAxoisResponsePromise, IChangeLogList, IChangeLogListAxiosResponsePromise,
   IChangeLog, IChangeLogAxoisResponsePromise, IExtraCommentList,
@@ -27,8 +27,8 @@ export const changeTask = (id: number, data: ITask): ITaskAxoisResponsePromise =
 export const delTask = (id: number) =>
   request.delete(`${baseTaskUrl}${id}/`)
 
-export const getActiveTaskCount = () =>
-  request.get(`${baseTaskUrl}active_task_count/`)
+export const getActiveTaskCount = (): IDRFAxiosResponsePromise<number> =>
+  request.get<number>(`${baseTaskUrl}active_task_count/`)
 
 export const finishTask = (id: number) =>
   request.get(`${baseTaskUrl}${id}/finish/`)

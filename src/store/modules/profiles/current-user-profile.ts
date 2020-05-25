@@ -10,7 +10,7 @@ export interface ICurrentUserProfile {
   fio: string
   is_active: boolean
   telephone: string
-  avatar?: string
+  avatar: string
   email: string
   full_name?: string
   last_login?: string
@@ -24,7 +24,7 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
   public fio = ''
   public is_active = false
   public telephone = ''
-  public avatar = ''
+  protected _avatar = ''
   public email = ''
   public full_name = ''
   public last_login = ''
@@ -41,7 +41,7 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
     this.fio = data.fio
     this.is_active = data.is_active
     this.telephone = data.telephone
-    this.avatar = data.avatar!
+    this._avatar = data.avatar
     this.email = data.email
     this.full_name = data.full_name!
     this.last_login = data.last_login!
@@ -55,7 +55,7 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
     this.fio = ''
     this.is_active = false
     this.telephone = ''
-    this.avatar = ''
+    this._avatar = ''
     this.email = ''
     this.full_name = ''
     this.last_login = ''
@@ -68,11 +68,23 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
     this.fio = orig.fio
     this.is_active = orig.is_active
     this.telephone = orig.telephone
-    this.avatar = orig.avatar!
+    this._avatar = orig.avatar
     this.email = orig.email
     this.full_name = orig.full_name!
     this.last_login = orig.last_login!
     this.is_superuser = orig.is_superuser!
+  }
+
+  public get avatar(): string {
+    if (this._avatar) {
+      return this._avatar
+    } else {
+      return '/img/user_ava_min.gif'
+    }
+  }
+
+  public get isAvatar() {
+    return Boolean(this._avatar)
   }
 
   @Action
@@ -105,7 +117,7 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
 
   @Action
   public async LogOut() {
-    if (this.token === '') {
+    if (!this.token) {
       throw Error('LogOut: token is undefined!')
     }
     // await logout()

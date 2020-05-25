@@ -22,6 +22,7 @@ class Task extends VuexModule implements ITask {
   author = 0
   customer = 0
   activeTaskCount = 0
+  private taskWatchTimer: NodeJS.Timeout | null = null
 
   @Mutation
   public SET_ALL_TASK(data: ITask) {
@@ -62,6 +63,11 @@ class Task extends VuexModule implements ITask {
     this.mode = ITaskType.NOT_CHOSEN
     this.author = 0
     this.customer = 0
+  }
+
+  @Mutation
+  private SET_TIMEOUT(tt: NodeJS.Timeout) {
+    this.taskWatchTimer = tt
   }
 
   @Mutation
@@ -120,10 +126,19 @@ class Task extends VuexModule implements ITask {
 
   @Action
   public StartWatchActiveTaskCount() {
-    setInterval(async() => {
+    let tt = setInterval(async() => {
       const { data } = await getActiveTaskCount()
       this.SET_TASK_COUNT(data)
-    }, 5000)
+    }, 9000)
+    this.SET_TIMEOUT(tt)
+  }
+
+  @Action
+  public StopWatchActiveTaskCount() {
+    if (this.taskWatchTimer) {
+      clearInterval(this.taskWatchTimer)
+    }
+    this.SET_TASK_COUNT(0)
   }
 }
 export const TaskModule = getModule(Task)
