@@ -37,7 +37,8 @@
             )
               div
                 i.el-icon-cpu 
-                span {{ d.ip_address }} {{ d.mac_addr}} {{ d.dev_type_str }}
+                el-link(type="primary")
+                  router-link(:to="{name: 'device-view', params: { devId: d.id.toString()}}") {{ d.ip_address }} {{ d.mac_addr}} {{ d.dev_type_str }}
               p {{ d.comment }}
           el-card(
             v-else
