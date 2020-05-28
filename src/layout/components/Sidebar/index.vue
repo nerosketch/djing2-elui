@@ -51,7 +51,7 @@ export default class extends Vue {
   }
 
   created() {
-    // TaskModule.StartWatchActiveTaskCount()
+    TaskModule.StartWatchActiveTaskCount()
   }
 }
 </script>
