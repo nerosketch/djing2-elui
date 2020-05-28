@@ -1,15 +1,15 @@
 <template lang="pug">
   el-row(:gutter='5')
     el-col(:span='24')
-      el-alert(
-        v-if="macsNotEqual"
-        title="Внимание!"
-        description='Мак адрес в билинге не совпадает на мак адресом, полученным с OLT. Нужно обновить "Доп. инфо для snmp"'
-        type="warning"
-        effect="dark"
-        show-icon
-        center
-      )
+      //- el-alert(
+      //-   v-if="macsNotEqual"
+      //-   title="Внимание!"
+      //-   description='Мак адрес в билинге не совпадает на мак адресом, полученным с OLT. Нужно обновить "Доп. инфо для snmp"'
+      //-   type="warning"
+      //-   effect="dark"
+      //-   show-icon
+      //-   center
+      //- )
     el-col(:lg="12" :sm='24')
       list(
         :items="devInfo"
@@ -22,7 +22,7 @@
         template(v-slot:footer)
           el-button-group
             register-device-btn(:device="device")
-            el-button(size='mini' icon='el-icon-refresh' disabled) Перезагрузить
+            delete-from-olt-btn(:device="device")
     el-col(:lg="12" :sm='24')
       el-card.box-card(
         shadow="never"
@@ -31,25 +31,14 @@
         template(v-slot:header)
           slot(name="header")
             .clearfix Состояние ONU
+              el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-refresh' type='primary' @click="refreshDev")
         el-row(type='flex')
           el-col(style='width: 128px;')
             i.icon-big(:class="iconStatusClass")
           el-col(v-if="onuDetails !== null")
-            .text.item.list-item
-              b Ур. сигнала: 
-              | {{ onuDetails.signal }}
-            .text.item.list-item
-              b Серийник: 
-              | {{ onuDetails.serial }}
-            .text.item.list-item
-              b Тип onu: 
-              | {{ onuDetails.onu_type }}
-            .text.item.list-item
-              b Интерфейс: 
-              | {{ onuDetails.int_name }}
-            .text.item.list-item
-              b MAC адрес на OLT: 
-              | {{ onuDetails.mac }}
+            .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
+              b {{ inf[0] }}: 
+              | {{ inf[1] }}
     el-dialog(
       :visible.sync="devFormDialog"
       title="Изменить ONU"
@@ -64,15 +53,17 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import List from '@/components/List/index.vue'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanDetails } from '@/api/devices/req'
-import DevForm from '../dev-form.vue'
+import DevForm from '../../dev-form.vue'
 import RegisterDeviceBtn from './register-device-btn.vue'
+import DeleteFromOltBtn from './delete-from-olt-btn.vue'
 
 @Component({
   name: 'PonOnu',
   components: {
     List,
     DevForm,
-    RegisterDeviceBtn
+    RegisterDeviceBtn,
+    DeleteFromOltBtn
   }
 })
 export default class extends Vue {
@@ -107,11 +98,11 @@ export default class extends Vue {
     return !this.onuDetails || this.onuDetails.status === IOnuDetailsStatus.UNKNOWN
   }
 
-  get macsNotEqual() {
-    if (this.onuDetails === null) return false
-    if (this.device === null) return false
-    return this.onuDetails.mac !== this.device.mac_addr
-  }
+  // get macsNotEqual() {
+  //   if (this.onuDetails === null) return false
+  //   if (this.device === null) return false
+  //   return this.onuDetails.mac !== this.device.mac_addr
+  // }
 
   private async getDetails() {
     if (this.device !== null) {
@@ -132,6 +123,10 @@ export default class extends Vue {
 
   created() {
     this.getDetails()
+  }
+
+  private refreshDev() {
+    this.$emit('reqrefresh')
   }
 }
 </script>

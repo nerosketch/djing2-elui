@@ -9,29 +9,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { registerDevice } from '@/api/devices/req'
 import { IDevice } from '@/api/devices/types'
-import { DeviceModule } from '../../../store/modules/devices/device'
+import { DeviceModule } from '@/store/modules/devices/device'
+import BtnShareMixin from './btn-share-mixin'
 
 @Component({
   name: 'RegisterDeviceBtn'
 })
-export default class extends Vue {
+export default class extends mixins(BtnShareMixin) {
   @Prop({ default: null }) private device!: IDevice | null
 
-  private btnText = 'Зарегистрировать устройство'
-  private btnType = ''
-  private loading = false
-
-  private setResState(text: string, bState: string, timeout = 3000) {
-    let initTxt = this.btnText
-    this.btnText = text
-    this.btnType = bState
-    let tm = setTimeout(() => {
-      this.btnText = initTxt
-      this.btnType = ''
-    }, timeout)
+  created() {
+    this.btnText = 'Зарегистрировать устройство'
   }
 
   private async regOnu() {

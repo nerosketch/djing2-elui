@@ -5,9 +5,9 @@
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
-    <breadcrumb
+    <!-- <breadcrumb
       class="breadcrumb-container"
-    />
+    /> -->
 
     <form class='center-header' v-on:submit.prevent="doSearch">
       <el-input
@@ -57,7 +57,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
-import Breadcrumb from '@/components/Breadcrumb/index.vue'
+// import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { SearchModule } from '@/store/modules/search'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
@@ -66,7 +66,6 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
 @Component({
   name: 'Navbar',
   components: {
-    Breadcrumb,
     Hamburger
   }
 })
@@ -187,7 +186,7 @@ export default class extends Vue {
 
 .center-header {
   display: inline-block;
-  width: 20%;
+  width: 60%;
   line-height: 50px;
   margin-left: 3%;
 }

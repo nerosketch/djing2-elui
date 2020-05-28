@@ -121,12 +121,7 @@ export enum IOnuDetailsStatus {
 export interface IOnuDetails {
   status: IOnuDetailsStatus
   signal: number
-  distance: number
-  vlans: null
-  serial: string
-  int_name: string
-  onu_type: string
-  mac: string
+  info: Array<Array<string>>
 }
 export type IOnuDetailsAxiosPromise = AxiosPromise<IOnuDetails>
 
@@ -167,9 +162,9 @@ export interface IDevFiber {
 }
 export type IDevFiberListAxiosResponsePromise = AxiosPromise<IDevFiber[]>
 
-// Register device result
-export interface IDevRegisterResult {
+// Action device result
+export interface IDevActionResult {
   text: string
   status: number
 }
-export type IDevRegisterResultAxiosResponsePromise = IDRFAxiosResponsePromise<IDevRegisterResult>
+export type IDevActionResultAxiosResponsePromise = IDRFAxiosResponsePromise<IDevActionResult>

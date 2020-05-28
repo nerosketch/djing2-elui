@@ -13,7 +13,7 @@ import {
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
-  IOnuDetails, IOnuDetailsAxiosPromise, IDevRegisterResultAxiosResponsePromise
+  IOnuDetails, IOnuDetailsAxiosPromise, IDevActionResultAxiosResponsePromise
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -40,13 +40,13 @@ export const scanAllDevVlans = (devId: number): IDevVlanListAxiosResponsePromise
 export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${baseDevUrl}${devId}/scan_mac_address_vlan/`, { params: { vid } })
 
-export const removeFromOlt = (devId: number) =>
+export const removeFromOlt = (devId: number): IDevActionResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}${devId}/remove_from_olt/`)
 
-export const registerDevice = (devId: number): IDevRegisterResultAxiosResponsePromise =>
+export const registerDevice = (devId: number): IDevActionResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}${devId}/register_device/`)
 
-export const fixOnu = (devId: number) =>
+export const fixOnu = (devId: number): IDevActionResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}${devId}/fix_onu/`)
 
 export const sendReboot = (devId: number) =>
