@@ -13,7 +13,7 @@ import {
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
-  IOnuDetails, IOnuDetailsAxiosPromise
+  IOnuDetails, IOnuDetailsAxiosPromise, IDevRegisterResultAxiosResponsePromise
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -43,7 +43,7 @@ export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosR
 export const removeFromOlt = (devId: number) =>
   request.get(`${baseDevUrl}${devId}/remove_from_olt/`)
 
-export const registerDevice = (devId: number) =>
+export const registerDevice = (devId: number): IDevRegisterResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}${devId}/register_device/`)
 
 export const fixOnu = (devId: number) =>

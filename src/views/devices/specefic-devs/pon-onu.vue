@@ -21,7 +21,7 @@
             el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
         template(v-slot:footer)
           el-button-group
-            el-button(size='mini' icon='el-icon-s-tools' disabled) Зарегистрировать устройство
+            register-device-btn(:device="device")
             el-button(size='mini' icon='el-icon-refresh' disabled) Перезагрузить
     el-col(:lg="12" :sm='24')
       el-card.box-card(
@@ -65,12 +65,14 @@ import List from '@/components/List/index.vue'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanDetails } from '@/api/devices/req'
 import DevForm from '../dev-form.vue'
+import RegisterDeviceBtn from './register-device-btn.vue'
 
 @Component({
   name: 'PonOnu',
   components: {
     List,
-    DevForm
+    DevForm,
+    RegisterDeviceBtn
   }
 })
 export default class extends Vue {

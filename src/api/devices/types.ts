@@ -166,3 +166,10 @@ export interface IDevFiber {
   fb_active_onu: number
 }
 export type IDevFiberListAxiosResponsePromise = AxiosPromise<IDevFiber[]>
+
+// Register device result
+export interface IDevRegisterResult {
+  text: string
+  status: number
+}
+export type IDevRegisterResultAxiosResponsePromise = IDRFAxiosResponsePromise<IDevRegisterResult>
