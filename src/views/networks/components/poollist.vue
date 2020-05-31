@@ -22,6 +22,8 @@ div
     template(v-slot:is_dynamic="{row}")
       el-checkbox(v-model="row.is_dynamic" disabled)
 
+    template(v-slot:usage_count="{row}") {{ row.usage_count }}
+
     template(v-slot:oper="{row}")
       el-button-group
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
@@ -97,6 +99,12 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
+      prop: 'usage_count',
+      label: 'Выделено',
+      width: 100,
+      align: DataTableColumnAlign.CENTER
+    },
+    {
       prop: 'oper',
       label: 'Oper',
       width: 130,
@@ -134,7 +142,7 @@ export default class extends Vue {
   private async loadPools(params?: IDRFRequestListParameters) {
     this.poolsLoading = true
     if (params) {
-      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups'
+      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count'
     }
     const r = await getNetworkIpPools(params)
     this.poolsLoading = false
@@ -145,7 +153,6 @@ export default class extends Vue {
     this.dialogVisible = false
     this.$message.success('Подсеть сохранена')
     this.$refs.table.GetTableData()
-    // this.loadPools()
   }
 }
 </script>
