@@ -24,13 +24,14 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { CustomerModule } from '@/store/modules/customers/customer'
+import { IBalanceAmountRequest } from '@/api/customers/types'
 
 @Component({
   name: 'add-cash'
 })
 export default class extends Vue {
   private loading = false
-  private frmMod = {
+  private frmMod: IBalanceAmountRequest = {
     cost: 0,
     comment: ''
   }
@@ -63,7 +64,7 @@ export default class extends Vue {
     (this.$refs['frm'] as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        await CustomerModule.AddBalance(this.frmMod.cost, this.frmMod.comment)
+        await CustomerModule.AddBalance(this.frmMod)
         await CustomerModule.UpdateCustomer()
         this.loading = false
         this.$emit('done', this.frmMod.cost)

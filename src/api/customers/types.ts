@@ -24,6 +24,7 @@ export interface ICustomer {
   device_comment?: string
   dev_port: number
   last_connected_service: number | null
+  last_connected_service_title: string
   current_service: number | null
   service_title?: string | null
   service_id: number | null
@@ -159,3 +160,9 @@ export interface IPassportInfo {
 export type IPassportInfoList = IDRFListResponse<IPassportInfo>
 export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
 export type IPassportInfoListAxiosResponsePromise = IDRFAxiosResponsePromise<IPassportInfoList>
+
+// IBalanceAmountRequest
+export interface IBalanceAmountRequest {
+  cost: number
+  comment: string
+}

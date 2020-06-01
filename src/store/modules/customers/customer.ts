@@ -1,5 +1,5 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { ICustomer } from '@/api/customers/types'
+import { ICustomer, IBalanceAmountRequest } from '@/api/customers/types'
 import {
   getCustomer, addCustomer,
   getCustomerFormInitial,
@@ -32,6 +32,7 @@ class Customer extends VuexModule implements ICustomer {
   device_comment = ''
   dev_port = 0
   last_connected_service = 0
+  last_connected_service_title = ''
   current_service = 0
   service_title = ''
   service_id = 0
@@ -60,6 +61,7 @@ class Customer extends VuexModule implements ICustomer {
     this.device_comment = data.device_comment!
     this.dev_port = data.dev_port!
     this.last_connected_service = data.last_connected_service!
+    this.last_connected_service_title = data.last_connected_service_title
     this.current_service = data.current_service!
     this.service_title = data.service_title!
     this.service_id = data.service_id!
@@ -90,6 +92,7 @@ class Customer extends VuexModule implements ICustomer {
     this.device_comment = ''
     this.dev_port = 0
     this.last_connected_service = 0!
+    this.last_connected_service_title = ''
     this.current_service = 0!
     this.service_title = ''!
     this.service_id = 0
@@ -158,8 +161,8 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async AddBalance(cost: number, comment?: string) {
-    await addBalance(this.pk, cost, comment)
+  public async AddBalance(qry: IBalanceAmountRequest) {
+    await addBalance(this.pk, qry)
   }
 
   @Action

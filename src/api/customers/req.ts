@@ -29,7 +29,8 @@ import {
   ICustomerServiceAxoisResponsePromise,
   ICustomerService,
   ICustomerOnPort,
-  ICustomersOnPortAxoisPromise
+  ICustomersOnPortAxoisPromise,
+  IBalanceAmountRequest
 } from './types'
 
 // ICustomer
@@ -67,8 +68,8 @@ export const getServiceUsers = (serviceId: number): IServiceUserListAxiosRespons
 export const stopService = (id: number) =>
   request.get(`${custApiUrl}${id}/stop_service/`)
 
-export const addBalance = (id: number, cost: number, comment?: string) =>
-  request.post(`${custApiUrl}${id}/add_balance/`, { cost, comment })
+export const addBalance = (id: number, dat: IBalanceAmountRequest) =>
+  request.post(`${custApiUrl}${id}/add_balance/`, dat)
 
 export const getCurrentService = (id: number): ICustomerServiceAxoisResponsePromise =>
   request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)

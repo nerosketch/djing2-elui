@@ -72,8 +72,9 @@
           label="IP Pool"
           prop='pool'
         )
-          el-select(v-model="frmMod.pool")
+          el-select(v-model="frmMod.pool" v-loading="poolsLoading")
             el-option(
+              v-if="pools.length > 0"
               v-for="p in pools"
               :key="p.id"
               :label="`${p.network} - ${p.description}`"
@@ -105,6 +106,7 @@ export default class extends Vue {
   private leases: ICustomerIpLease[] = []
   private pools: INetworkIpPool[] = []
   private loading = false
+  private poolsLoading = false
   private editDialog = false
   private frmLoading = false
   private getFreeIpLoad = false
@@ -136,15 +138,14 @@ export default class extends Vue {
   }
 
   private async loadPools() {
-    this.loading = true
+    this.poolsLoading = true
     const { data } = await getNetworkIpPools()
     this.pools = data.results
-    this.loading = false
+    this.poolsLoading = false
   }
 
   async created() {
     await this.loadLeases()
-    await this.loadPools()
   }
 
   private editLease(lease: ICustomerIpLease) {
@@ -189,6 +190,7 @@ export default class extends Vue {
       mac_address: '',
       is_dynamic: false
     }
+    this.loadPools()
     this.isAddNewLease = true
     this.editDialog = true
   }

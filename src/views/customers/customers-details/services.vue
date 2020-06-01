@@ -48,51 +48,40 @@
     el-col(:sm='24' :md='12')
       el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
         template(v-slot:header)
-          .clearfix
-            span Текущая услуга абонента
-        div(v-if="isServiceAvailable")
-          h3 {{ currentService.service.title }}
-          i {{ currentService.service.descr }}
+          .clearfix Текущая услуга абонента
+        template(v-if="!serviceBlockLoad")
+          div(v-if="isServiceAvailable")
+            h3 {{ currentService.service.title }}
+            i {{ currentService.service.descr }}
 
-          dl
-            dt
-              b Сумма
-            dd {{ currentService.service.cost }} руб.
-            dt
-              b Входящая скорость
-            dd {{ currentService.service.speed_in }}
-            dt
-              b Исходящая скорость
-            dd {{ currentService.service.speed_out }}
-            dt
-              b Ускорение(burst (не доделан))
-            dd {{ currentService.service.speed_burst }}
-            dt
-              b Дата начала
-            dd {{ currentService.start_time }}
-            dt
-              b Действует до
-            dd {{ currentService.deadline }}
+            dl
+              dt
+                b Сумма
+              dd {{ currentService.service.cost }} руб.
+              dt
+                b Входящая скорость
+              dd {{ currentService.service.speed_in }}
+              dt
+                b Исходящая скорость
+              dd {{ currentService.service.speed_out }}
+              dt
+                b Ускорение(burst (не доделан))
+              dd {{ currentService.service.speed_burst }}
+              dt
+                b Дата начала
+              dd {{ currentService.start_time }}
+              dt
+                b Действует до
+              dd {{ currentService.deadline }}
 
-          el-row(v-if="lastConnectedExists")
-            el-col(:span='12')
-              span Последняя подключённая
-            el-col(:span='12')
-              b {{ currentService.last_connected_service_title }}
-          el-row
-            el-col(:span='12')
-              span Автопродление услуги
-            el-col(:span='12')
-              el-checkbox(
-                v-model="autoRenewalService"
-              ) {{ autoRenewalService ? 'Да' : 'Нет' }}
-          el-button(
-            type='danger' size='mini'
-            icon='el-icon-delete'
-            @click="onStopService"
-          ) Завершить услугу
+            el-button(
+              type='danger' size='mini'
+              icon='el-icon-delete'
+              @click="onStopService"
+            ) Завершить услугу
 
-        b(v-else) Услуга не подключена
+          last-connected-service(v-else)
+        h3(v-else) Загрузка ...
 
     el-col(:sm='24' :md='12')
       el-card(shadow="never")
@@ -125,15 +114,19 @@ import { ICustomer, ICustomerService } from '@/api/customers/types'
 import { ServiceModule } from '@/store/modules/services/service'
 import BuyService from './buyService.vue'
 import ServiceAccessory from './service-accessory.vue'
+import LastConnectedService from './last-connected-service.vue'
 
 @Component({
   name: 'Services',
-  components: { BuyService, ServiceAccessory }
+  components: {
+    BuyService,
+    ServiceAccessory,
+    LastConnectedService
+  }
 })
 export default class extends Vue {
   private services: IService[] = []
   private servicesLoading = false
-  private autoRenewalService = CustomerModule.auto_renewal_service
   private serviceBlockLoad = false
   private currentService: ICustomerService | null = null
   private buyDialog = false
@@ -151,30 +144,16 @@ export default class extends Vue {
     this.servicesLoading = false
   }
 
-  @Watch('autoRenewalService')
-  private async onChangeAutoConnect(v: boolean) {
-    this.serviceBlockLoad = true
-    await CustomerModule.PatchCustomer({
-      auto_renewal_service: v
-    })
-    this.serviceBlockLoad = false
-    this.$message.success('Автопродление сохранено')
-  }
-
   async created() {
-    await this.loadServices()
-    await this.loadCurrentService()
-  }
-
-  get lastConnectedExists() {
-    return CustomerModule.last_connected_service > 0
+    this.loadServices()
+    this.loadCurrentService()
   }
 
   get isServiceAvailable() {
     return this.currentService !== null
   }
 
-  async loadCurrentService() {
+  private async loadCurrentService() {
     this.serviceBlockLoad = true
     const currsrv = await CustomerModule.GetCurrentServiceDetails()
     if (currsrv) {
