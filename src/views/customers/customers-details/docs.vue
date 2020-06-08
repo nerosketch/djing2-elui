@@ -11,11 +11,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { TaskAttachmentModule } from '@/store/modules/tasks/attachments'
+import { Component, Vue } from 'vue-property-decorator'
 import { HttpRequestOptions } from 'element-ui/types/upload'
-import { getAttachments } from '@/api/tasks/req'
-import { ITaskDocumentAttachment } from '@/api/tasks/types'
+import { CustomerAttachementModule } from '@/store/modules/customers/customer-attachments'
+import { getAttachments } from '@/api/customers/req'
+import { ICustomerAttachement } from '@/api/customers/types'
+import { CustomerModule } from '@/store/modules/customers/customer'
 
 interface IFileItem {
   id: number
@@ -24,15 +25,14 @@ interface IFileItem {
 }
 
 @Component({
-  name: 'TaskDocs'
+  name: 'CustomerDocs'
 })
 export default class extends Vue {
-  @Prop({ default: 0 }) private taskId!: number
-
+  // @Prop({ default: null }) private customerId!: number | null
   private fileList: IFileItem[] = []
 
   private handleRemove(file: IFileItem) {
-    TaskAttachmentModule.DelAttachment(file.id)
+    CustomerAttachementModule.DelCustomerAttachment(file.id)
   }
   private handlePreview(file: IFileItem) {
     window.open(file.url, '_blank')
@@ -41,17 +41,21 @@ export default class extends Vue {
     return this.$confirm(`Удалить "${file.name}"?`)
   }
 
+  get customerId() {
+    return CustomerModule.pk
+  }
+
   private uploadReq(req: HttpRequestOptions) {
-    TaskAttachmentModule.AddAttachment({
+    CustomerAttachementModule.AddCustomerAttachment({
       title: req.file.name,
       doc_file: req.file,
-      task: this.taskId
+      customer: this.customerId
     }).then(newAtt => {
       this.addFileListItem(newAtt)
     })
   }
 
-  private addFileListItem(it: ITaskDocumentAttachment) {
+  private addFileListItem(it: ICustomerAttachement) {
     this.fileList.push({
       id: it.id,
       name: `${it.title} (${it.create_time})`,
@@ -60,9 +64,13 @@ export default class extends Vue {
   }
 
   private async loadFileList() {
-    const { data } = await getAttachments(this.taskId)
-    for (const el of data.results) {
-      this.addFileListItem(el)
+    if(this.customerId && this.customerId > 0) {
+      const { data } = await getAttachments(this.customerId)
+      for (const el of data.results) {
+        this.addFileListItem(el)
+      }
+    } else {
+      this.$message.error('Не передан id абонента. Это к разработчику')
     }
   }
 

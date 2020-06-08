@@ -30,7 +30,11 @@ import {
   ICustomerService,
   ICustomerOnPort,
   ICustomersOnPortAxoisPromise,
-  IBalanceAmountRequest
+  IBalanceAmountRequest,
+  ICustomerAttachementListAxiosResponsePromise,
+  ICustomerAttachementList,
+  ICustomerAttachementAxoisResponsePromise,
+  ICustomerAttachement
 } from './types'
 
 // ICustomer
@@ -155,3 +159,23 @@ const pspBaseUrl = '/customers/passport/'
 
 export const findPassportInfo = (customerId: number): IPassportInfoListAxiosResponsePromise =>
   request.get<IPassportInfoList>(pspBaseUrl, { params: { customer: customerId } })
+
+
+// CustomerAttachement
+const CustomerAttachmUrl = '/customers/attachments/'
+export const getAttachments = (customer: number): ICustomerAttachementListAxiosResponsePromise =>
+  request.get<ICustomerAttachementList>(CustomerAttachmUrl, { params: { customer } })
+
+export const getAttachment = (id: number): ICustomerAttachementAxoisResponsePromise =>
+  request.get<ICustomerAttachement>(`${CustomerAttachmUrl}${id}/`)
+
+export const addAttachment = (newAtt: any): ICustomerAttachementAxoisResponsePromise => {
+  let formData = new FormData()
+  formData.append("doc_file", newAtt.doc_file)
+  formData.append("title", newAtt.title)
+  formData.append("customer", newAtt.customer)
+  return request.post<ICustomerAttachement>(CustomerAttachmUrl, formData)
+}
+
+export const delAttachment = (id: number) =>
+  request.delete(`${CustomerAttachmUrl}${id}/`)

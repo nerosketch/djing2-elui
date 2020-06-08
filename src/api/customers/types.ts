@@ -166,3 +166,18 @@ export interface IBalanceAmountRequest {
   cost: number
   comment: string
 }
+
+// CustomerAttachement
+export interface ICustomerAttachement {
+  id: number
+  title: string
+  doc_file: string
+  customer: number
+  customer_name: string
+  create_time?: string
+  author?: number
+  author_name?: string
+}
+export type ICustomerAttachementList = IDRFListResponse<ICustomerAttachement>
+export type ICustomerAttachementAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerAttachement>
+export type ICustomerAttachementListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerAttachementList>
