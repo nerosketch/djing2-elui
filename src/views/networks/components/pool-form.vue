@@ -1,6 +1,8 @@
 <template lang="pug">
   el-form(
     ref='poolfrm'
+    label-width="120px"
+    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -11,11 +13,6 @@
       prop='network'
     )
       el-input(v-model="frmMod.network")
-    el-form-item(
-      label="Описание"
-      prop='description'
-    )
-      el-input(v-model="frmMod.description" type="textarea")
     el-form-item(
       label="Нач. ip"
       prop='ip_start'
@@ -47,6 +44,11 @@
       prop='is_dynamic'
     )
       el-checkbox(v-model="frmMod.is_dynamic") {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
+    el-form-item(
+      label="Описание"
+      prop='description'
+    )
+      el-input(v-model="frmMod.description" type="textarea" rows="5")
     el-form-item
       el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
 </template>

@@ -4,9 +4,9 @@
     label-width="100px"
     size="mini"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='loading'
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading"
   )
     el-form-item(
       label="Логин"

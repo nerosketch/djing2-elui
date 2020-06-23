@@ -2,6 +2,8 @@
 el-form(
   :model='frmMod'
   v-loading='isLoading'
+  label-width="100px"
+  size="mini"
 )
   el-card(shadow="never")
     template(v-slot:header)

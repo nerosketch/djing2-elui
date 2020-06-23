@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-autocomplete.inline-input(
+  el-autocomplete.inline-input.wideautocomplete(
     v-model="inpName"
     :fetch-suggestions="querySearch"
     :loading="loading"
@@ -7,6 +7,7 @@
     trigger-on-focus
     @select="handleSelect"
     value-key="full_name"
+    width="300px"
   )
 
 </template>
@@ -44,3 +45,9 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style>
+.wideautocomplete {
+  width: 100%;
+}
+</style>

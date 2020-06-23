@@ -1,9 +1,12 @@
 <template lang="pug">
   el-form(
     ref='form'
-    :model="frmMod"
-    :loading="loading"
+    label-width="200px"
+    size="mini"
+    status-icon
     :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading"
   )
     el-form-item(
       label="Описание"
@@ -60,14 +63,15 @@
     )
       customer-field(v-model="frmMod.customer" :defaultName="customerName")
     el-form-item(
-      label="Актуальность (дата, до которой нужно завершить задачу)"
+      label="Актуальность"
       prop='out_date'
     )
-      el-date-picker(
-        v-model="frmMod.out_date"
-        type="date"
-        value-format="yyyy-MM-dd"
-      )
+      el-tooltip(content="дата, до которой нужно завершить задачу" placement="right")
+        el-date-picker(
+          v-model="frmMod.out_date"
+          type="date"
+          value-format="yyyy-MM-dd"
+        )
     el-form-item
       el-button-group
         el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small') Сохранить

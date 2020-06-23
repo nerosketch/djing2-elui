@@ -53,6 +53,8 @@
       el-form(
         ref='frm'
         v-loading='frmLoading'
+        label-width="100px"
+        size="mini"
         status-icon
         :rules='frmRules'
         :model='frmMod'
@@ -139,7 +141,9 @@ export default class extends Vue {
 
   private async loadPools() {
     this.poolsLoading = true
-    const { data } = await getNetworkIpPools()
+    const { data } = await getNetworkIpPools({
+      groups: CustomerModule.group
+    })
     this.pools = data.results
     this.poolsLoading = false
   }

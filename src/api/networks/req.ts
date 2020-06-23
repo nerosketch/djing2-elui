@@ -32,7 +32,7 @@ export const delVlanIf = (vlanId: number) =>
 const baseNetUrl = '/networks/pool/'
 
 // NetworkIpPool
-export const getNetworkIpPools = (params?: IDRFRequestListParameters): INetworkIpPoolListAxiosResponsePromise =>
+export const getNetworkIpPools = (params?: object): INetworkIpPoolListAxiosResponsePromise =>
   request.get<INetworkIpPoolList>(baseNetUrl, { params })
 
 export const getNetworkIpPool = (poolId: number): INetworkIpPoolAxoisResponsePromise =>
