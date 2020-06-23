@@ -41,7 +41,7 @@ div
     title='Создание задачи'
     :visible.sync='formDialog'
   )
-    task-form()
+    task-form
 </template>
 
 <script lang="ts">

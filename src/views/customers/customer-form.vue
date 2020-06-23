@@ -67,11 +67,13 @@
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40")
     el-form-item
       el-button-group
-        el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
-        el-button(@click="openPasportDlg = true") Паспорт
+        el-button(type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading") Сохранить
+        el-button(type="success" icon='el-icon-plus' @click="openTaskFormDialog" :loading="taskFormDialogLoading") Добавить задачу
+        el-button(@click="openPasportDlg = true" icon='el-icon-paperclip') Паспорт
         el-button(
           type='danger'
           title="Полное удаление учётной записи абонента из билинга"
+          icon='el-icon-close'
           @click="delCustomer"
         ) Удалить уч.
     el-dialog(
@@ -84,6 +86,11 @@
       :visible.sync="openTelsDlg"
     )
       additional-tels
+    el-dialog(
+      title='Создание задачи'
+      :visible.sync='taskFormDialog'
+    )
+      task-form
 </template>
 
 <script lang="ts">
@@ -93,13 +100,15 @@ import { latinValidator, telephoneValidator } from '@/utils/validate'
 import { ICustomerStreet, ICustomerGroup, ICustomerFrm } from '@/api/customers/types'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
 import { CustomerStreetModule } from '@/store/modules/customers/street'
+import { TaskModule } from '@/store/modules/tasks/tasks'
+import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
 import AdditionalTels from './customers-details/additional-tels.vue'
 
 @Component({
   name: 'customer-form',
-  components: { Passport, AdditionalTels }
+  components: { Passport, AdditionalTels, TaskForm }
 })
 export default class extends Vue {
   private isLoading = false
@@ -107,6 +116,8 @@ export default class extends Vue {
   private groups: ICustomerGroup[] = []
   private openPasportDlg = false
   private openTelsDlg = false
+  private taskFormDialog = false
+  private taskFormDialogLoading = false
 
   private frmRules = {
     username: [
@@ -193,6 +204,15 @@ export default class extends Vue {
       this.$message.success('Учётка удалена')
       this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
     })
+  }
+
+  private async openTaskFormDialog() {
+    this.taskFormDialogLoading = true
+    await TaskModule.GetInitial4NewTask(CustomerModule.group)
+    TaskModule.SET_CUSTOMER(CustomerModule.pk)
+    TaskModule.SET_CUSTOMER_FULLNAME(CustomerModule.full_name)
+    this.taskFormDialogLoading = false
+    this.taskFormDialog = true
   }
 }
 </script>

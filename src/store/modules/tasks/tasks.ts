@@ -1,7 +1,7 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { ITask, ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
-import { getTask, addTask, changeTask, delTask, finishTask, failTask, remindTask, getActiveTaskCount } from '@/api/tasks/req'
+import { getTask, addTask, changeTask, delTask, finishTask, failTask, remindTask, getActiveTaskCount, initialRecipients4newTask } from '@/api/tasks/req'
 
 @Module({ dynamic: true, store, name: 'task' })
 class Task extends VuexModule implements ITask {
@@ -75,6 +75,19 @@ class Task extends VuexModule implements ITask {
     this.activeTaskCount = tc
   }
 
+  @Mutation
+  private SET_RECIPIENTS(recs: number[]) {
+    this.recipients = recs
+  }
+  @Mutation
+  public SET_CUSTOMER(uid: number) {
+    this.customer = uid
+  }
+  @Mutation
+  public SET_CUSTOMER_FULLNAME(fname: string) {
+    this.customer_full_name = fname
+  }
+
   @Action
   public async GetTask(id: number) {
     const r = await getTask(id)
@@ -139,6 +152,14 @@ class Task extends VuexModule implements ITask {
       clearInterval(this.taskWatchTimer)
     }
     this.SET_TASK_COUNT(0)
+  }
+
+  @Action
+  public async GetInitial4NewTask(groupId: number) {
+    this.RESET_ALL_TASK()
+    const { data } = await initialRecipients4newTask(groupId)
+    this.SET_RECIPIENTS(data)
+    return data
   }
 }
 export const TaskModule = getModule(Task)

@@ -70,7 +70,7 @@
       )
     el-form-item
       el-button-group
-        el-button(type="primary" @click="onSubmit" icon="el-icon-upload" size='small') Сохранить
+        el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small') Сохранить
         el-button(v-if="!isNewTask" type="danger" @click="onDel" icon="el-icon-delete" size='small') Удалить
         el-button(v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check" size='small') Завершить
 </template>

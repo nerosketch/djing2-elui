@@ -8,6 +8,7 @@ import { ITaskList, ITaskListAxiosResponsePromise, ITask,
   ITaskDocumentAttachmentList, ITaskDocumentAttachmentAxoisResponsePromise,
   ITaskDocumentAttachment
 } from './types'
+import { IUserProfileListAxiosResponsePromise } from '@/api/profiles/types'
 
 // ITask
 const baseTaskUrl = '/tasks/'
@@ -38,6 +39,11 @@ export const failTask = (id: number) =>
 
 export const remindTask = (id: number) =>
   request.get(`${baseTaskUrl}${id}/remind/`)
+
+export const initialRecipients4newTask = (groupId: number): IDRFAxiosResponsePromise<number[]> =>
+  request.get(`${baseTaskUrl}get_initial_recipients/`, { params: {
+    group_id: groupId
+  }})
 
 // IChangeLog
 const baseTaskLogUrl = '/tasks/log/'

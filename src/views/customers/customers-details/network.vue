@@ -163,6 +163,7 @@ export default class extends Vue {
         } else {
           await CustomerIpLeaseModule.PatchLease(this.frmMod)
         }
+        this.loadLeases()
         this.frmLoading = false
         this.editDialog = false
       } else {
