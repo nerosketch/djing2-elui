@@ -102,7 +102,8 @@ export default class extends Vue {
     },
     {
       prop: 'mode_str',
-      label: 'Характер поломки'
+      label: 'Характер поломки',
+      width: 150
     },
     {
       prop: 'descr',
@@ -110,11 +111,13 @@ export default class extends Vue {
     },
     {
       prop: 'state_str',
-      label: 'Состояние'
+      label: 'Состояние',
+      width: 100
     },
     {
       prop: 'time_of_create',
-      label: 'Дата создания'
+      label: 'Дата создания',
+      width: 170
     }
   ]
   private loading = false

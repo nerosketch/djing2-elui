@@ -78,19 +78,19 @@ export default class extends Vue {
     {
       prop: 'speed_in',
       label: 'Вход.ск.',
-      width: 90,
+      width: 110,
       sortable: true
     },
     {
       prop: 'speed_out',
       label: 'Исход.ск.',
-      width: 90,
+      width: 110,
       sortable: true
     },
     {
       prop: 'speed_burst',
       label: 'Бурст',
-      width: 90
+      width: 100
     },
     {
       prop: 'cost',
@@ -107,8 +107,9 @@ export default class extends Vue {
     {
       prop: 'usercount',
       label: 'Кол.польз.',
-      width: 100,
-      sortable: true
+      width: 130,
+      sortable: true,
+      align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',

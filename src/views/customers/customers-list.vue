@@ -112,7 +112,8 @@ export default class extends Vue {
     {
       prop: 'username',
       label: 'Логин',
-      sortable: true
+      sortable: true,
+      width: 100
     },
     {
       prop: 'fio',
@@ -121,16 +122,19 @@ export default class extends Vue {
     },
     {
       prop: 'street_name',
-      label: 'Улица'
+      label: 'Улица',
+      width: 110
     },
     {
       prop: 'house',
       label: 'Квартира',
-      sortable: true
+      sortable: true,
+      width: 110
     },
     {
       prop: 'telephone',
-      label: 'Телефон'
+      label: 'Телефон',
+      width: 140
     },
     {
       prop: 'current_service__service__title',
@@ -140,11 +144,13 @@ export default class extends Vue {
     {
       prop: 'balance',
       label: 'Баланс',
-      sortable: true
+      sortable: true,
+      width: 100
     },
     {
       prop: 'gateway_title',
-      label: 'Шлюз'
+      label: 'Шлюз',
+      width: 170
     }
   ]
 
