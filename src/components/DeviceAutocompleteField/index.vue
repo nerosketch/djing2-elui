@@ -3,21 +3,20 @@
     v-model="inpName"
     :fetch-suggestions="querySearch"
     :loading="loading"
-    placeholder="Начни вводить имя абонента"
+    placeholder="Начни вводить название или ip устройства"
     trigger-on-focus
     @select="handleSelect"
-    value-key="full_name"
+    value-key="comment"
   )
-
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { findCustomers } from '@/api/customers/req';
-import { ICustomer } from '@/api/customers/types';
+import { IDevice } from '@/api/devices/types'
+import { findDevices } from '@/api/devices/req'
 
 @Component({
-  name: 'CustomerField'
+  name: 'DeviceAutocompleteField'
 })
 export default class extends Vue {
   private loading = false
@@ -29,14 +28,14 @@ export default class extends Vue {
   private querySearch(queryString: string, cb: any) {
     if(this.loading) return
     this.loading = true
-    findCustomers(queryString).then(({ data }) => {
+    findDevices(queryString).then(({ data }) => {
       cb(data.results)
       this.loading = false
     })
   }
 
-  private handleSelect(c: ICustomer) {
-    this.$emit('input', c.pk)
+  private handleSelect(d: IDevice) {
+    this.$emit('input', d.pk)
   }
 
   created() {

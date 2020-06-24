@@ -14,7 +14,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     >
-      <slot name="default"></slot>
+      <slot name="default"/>
     </el-pagination>
   </div>
 </template>
@@ -72,7 +72,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 .pagination-container {
-  padding: 15px 0;
+  padding: 5px 0;
 }
 
 .pagination-container.hidden {

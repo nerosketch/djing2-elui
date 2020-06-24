@@ -176,7 +176,7 @@ export default new Router({
           path: 'group:groupId',
           component: () => import(/* webpackChunkName: "devices" */ '@/views/devices/dev-list.vue'),
           name: 'devicesList',
-          props: true,
+          props: ({ params }) => ({ groupId: Number(params.groupId || 0) }),
           meta: {
             hidden: true
           }
@@ -185,7 +185,7 @@ export default new Router({
           path: 'device:devId',
           component: () => import(/* webpackChunkName: "dev-view" */ '@/views/devices/specefic-devs/device-view.vue'),
           name: 'device-view',
-          props: true,
+          props: ({ params }) => ({ devId: Number(params.devId || 0) }),
           meta: {
             hidden: true
           }

@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevs"
-      :heightDiff='160'
+      :heightDiff='133'
       ref='table'
     )
       template(v-slot:pk="{row}")
@@ -27,6 +27,12 @@
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
           el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
 
+      el-button(
+        size='mini'
+        icon='el-icon-plus'
+        @click="openNew"
+      ) Добавить устройство
+
     el-dialog(
       title="Железка"
       :visible.sync="dialogVisible"
@@ -34,6 +40,16 @@
       dev-form(
         v-if="dialogVisible"
         v-on:done="frmDone"
+      )
+    el-dialog(
+      title="Добавить устройство"
+      :visible.sync="dialogNewDev"
+    )
+      new-dev-form(
+        v-if="dialogNewDev"
+        v-on:done="frmNewDevDone"
+        v-on:err="dialogNewDev=false"
+        :initialGroup="groupId"
       )
 
 </template>
@@ -45,6 +61,7 @@ import { IDRFRequestListParameters } from '@/api/types'
 import { IDRFRequestListParametersDevGroup, IDevice } from '@/api/devices/types'
 import { getDevices } from '@/api/devices/req'
 import DevForm from './dev-form.vue'
+import NewDevForm from './new-dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 
 class DataTableComp extends DataTable<IDevice> {}
@@ -53,6 +70,7 @@ class DataTableComp extends DataTable<IDevice> {}
   name: 'DevList',
   components: {
     DevForm,
+    NewDevForm,
     'datatable': DataTableComp
   }
 })
@@ -62,6 +80,7 @@ export default class extends Vue {
   }
   @Prop({ default: 0 }) private groupId!: number
   private dialogVisible = false
+  private dialogNewDev = false
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -105,6 +124,11 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
+  private async openNew() {
+    await DeviceModule.RESET_ALL_DEV()
+    this.dialogNewDev = true
+  }
+
   private async loadDevs(params: IDRFRequestListParametersDevGroup) {
     const r = await getDevices({
       page: params.page,
@@ -126,6 +150,14 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
+  }
+
+  private frmNewDevDone(newDev: IDevice) {
+    this.dialogNewDev = false
+    this.$message.success('Новое устройство сохранено')
+    this.$router.push({ name: 'device-view', params: {
+      devId: newDev.pk.toString()
+    }})
   }
 }
 </script>

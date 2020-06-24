@@ -51,6 +51,11 @@
           :value="g.pk"
         )
     el-form-item(
+      label="Родит. устройство"
+      prop="parent_dev"
+    )
+      device-autocomplete-field(v-model="frmMod.parent_dev" :defaultName="devParentName")
+    el-form-item(
       label="Доп. инфо для snmp"
       prop="snmp_extra"
     )
@@ -72,9 +77,13 @@ import { IDevice, IDeviceTypeEnum } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
+import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 
 @Component({
-  name: 'DevForm'
+  name: 'DevForm',
+  components: {
+    DeviceAutocompleteField
+  }
 })
 export default class extends Vue {
   private loading = false
@@ -106,8 +115,13 @@ export default class extends Vue {
       group: DeviceModule.group,
       is_noticeable: DeviceModule.is_noticeable,
       man_passw: DeviceModule.man_passw,
+      parent_dev: DeviceModule.parent_dev,
       snmp_extra: DeviceModule.snmp_extra
     }
+  }
+
+  get devParentName() {
+    return DeviceModule.parent_dev_name
   }
 
   get devId() {

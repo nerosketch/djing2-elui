@@ -40,7 +40,7 @@
         :limit.sync="pageSize"
         @pagination="GetTableData"
       >
-        <slot name="default"></slot>
+        <slot name="default"/>
       </pagination>
     </slot>
   </div>

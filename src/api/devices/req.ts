@@ -25,6 +25,9 @@ export const getDevices = (params: IDRFRequestListParametersDevGroup): IDeviceLi
 export const getDevice = (devId: number): IDeviceAxoisResponsePromise =>
   request.get<IDevice>(`${baseDevUrl}${devId}/`)
 
+export const findDevices = (devtext: string): IDeviceListAxiosResponsePromise =>
+  request.get<IDeviceList>(baseDevUrl, { params: { search: devtext } })
+
 export const addDevice = (newDev: object): IDeviceAxoisResponsePromise =>
   request.post<IDevice>(baseDevUrl, newDev)
 

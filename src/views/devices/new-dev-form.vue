@@ -1,10 +1,12 @@
 <template lang="pug">
   el-form(
     ref='form'
+    label-width="150px"
+    size="mini"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='loading'
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading"
   )
     el-form-item(
       label="IP Адрес"
@@ -49,6 +51,11 @@
           :value="g.pk"
         )
     el-form-item(
+      label="Родит. устройство"
+      prop="parent_dev"
+    )
+      device-autocomplete-field(v-model="frmMod.parent_dev")
+    el-form-item(
       label="Доп. инфо для snmp"
       prop="snmp_extra"
     )
@@ -59,7 +66,7 @@
       el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58; 
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="success" @click="onSubmit" :loading="loading") Добавить
+      el-button(type="success" @click="onSubmit" :loading="loading" icon="el-icon-plus") Добавить
 </template>
 
 <script lang="ts">
@@ -70,9 +77,13 @@ import { DeviceModule } from '@/store/modules/devices/device'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
 import { IDeviceTypeEnum } from '@/api/devices/types'
+import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 
 @Component({
-  name: 'NewDevForm'
+  name: 'NewDevForm',
+  components: {
+    DeviceAutocompleteField
+  }
 })
 export default class extends Vue {
   @Prop({ default: '' }) private initialIp!: string
@@ -81,8 +92,9 @@ export default class extends Vue {
   @Prop({ default: 0 }) private initialDevType!: number
   @Prop({ default: 0 }) private initialGroup!: number
   @Prop({ default: false }) private initialIsNotic!: boolean
-  @Prop({ default: '' }) private initialManPassw!: string
+  @Prop({ default: 'ertNjuWr' }) private initialManPassw!: string
   @Prop({ default: '' }) private initialSnmpSxtra!: string
+  @Prop({ default: 0 }) private initialParentDev!: number
 
   private loading = false
   private groups: IGroup[] = []
@@ -110,6 +122,7 @@ export default class extends Vue {
     group: this.initialGroup,
     is_noticeable: this.initialIsNotic,
     man_passw: this.initialManPassw,
+    parent_dev: this.initialParentDev,
     snmp_extra: this.initialSnmpSxtra
   }
 

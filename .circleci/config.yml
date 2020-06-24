@@ -9,7 +9,7 @@ jobs:
     docker:
       - image: circleci/node:11
 
-    working_directory: ~/vue-typescript-admin-template
+    working_directory: ~/djing2-elui
 
     steps:
       - checkout
