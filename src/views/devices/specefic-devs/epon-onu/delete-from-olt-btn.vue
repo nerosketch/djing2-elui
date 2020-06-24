@@ -3,8 +3,8 @@
     size='mini'
     icon='el-icon-close'
     :type="btnType"
-    disabled
     :loading="loading"
+    @click="delFromOltOnu"
   ) {{ btnText }}
 </template>
 
@@ -27,7 +27,7 @@ export default class extends mixins(BtnShareMixin) {
 
   private async delFromOltOnu() {
     if (this.device !== null) {
-      this.loading = true
+      this.loading = true 
       const { data } = await removeFromOlt(this.device.pk)
       if (data.status === 1) {
         this.setResState(data.text, 'success', 5000)

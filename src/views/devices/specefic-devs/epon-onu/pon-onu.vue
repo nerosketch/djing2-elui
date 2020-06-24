@@ -21,8 +21,8 @@
             el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
         template(v-slot:footer)
           el-button-group
-            register-device-btn(:device="device")
-            delete-from-olt-btn(:device="device")
+            register-device-btn(:device="device" v-on:done="getDetails")
+            delete-from-olt-btn(:device="device" v-on:done="getDetails")
     el-col(:lg="12" :sm='24')
       el-card.box-card(
         shadow="never"
