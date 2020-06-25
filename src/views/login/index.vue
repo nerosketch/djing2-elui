@@ -9,9 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">
-          Войти
-        </h3>
+        <h3 class="title">Войти</h3>
       </div>
 
       <el-form-item prop="username">
@@ -55,9 +53,7 @@
         type="primary"
         style="width:100%; margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      >
-        Войти
-      </el-button>
+      >Войти</el-button>
     </el-form>
   </div>
 </template>

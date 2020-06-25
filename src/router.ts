@@ -206,6 +206,20 @@ export default new Router({
         }
       ]
     },
+    {
+      path: '/gateways',
+      component: Layout,
+      children: [
+        {
+          path: '',
+          component: () => import(/* webpackChunkName: "gatewaysList" */ '@/views/gateways/gw-list.vue'),
+          meta: {
+            title: 'Шлюзы',
+            icon: 'dashboard'
+          }
+        }
+      ]
+    },
     /* {
       path: '/example',
       component: Layout,

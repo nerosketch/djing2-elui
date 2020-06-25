@@ -60,7 +60,10 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    let er = Object.entries(error.response.data).join('\n')
+    let er = error.response.data
+    if(typeof er === 'object') {
+      er = Object.entries(er).join('\n')
+    }
     Message({
       message: er || 'Не известная ошибка',
       type: 'error',
