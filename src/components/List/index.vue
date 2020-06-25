@@ -53,32 +53,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style>
-.list-item {
-  padding: 11px 13px;
-  border: 1px solid #dfe6ec;
-  border-bottom: none;
-  font-size: smaller;
-}
-.list-item:last-child {
-  border-bottom: 1px solid #dfe6ec;
-}
-
-.list-item:hover {
-    background-color: #F5F7FA;
-    transition: background-color 0.25s ease;
-}
-
-.list-item {
-  cursor: pointer;
-}
-
-.list-item.active {
-    background-color: #3376c8;
-    color: white;
-}
-.list-item.active:hover {
-  background-color: #5f9bf4;
-}
-</style>

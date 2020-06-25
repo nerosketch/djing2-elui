@@ -10,19 +10,35 @@
       //-   show-icon
       //-   center
       //- )
-    el-col(:lg="12" :sm='24')
-      list(
-        :items="devInfo"
-        :loading='devInfoLoading'
+    el-col(:lg="12" :sm='24' v-if="device")
+      el-card.box-card(
+        shadow="never"
+        body-style="padding: 10px;"
       )
         template(v-slot:header)
-          .clearfix {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
-            small {{ `${device.ip_address || device.mac_addr}` }}
-            el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
-        template(v-slot:footer)
-          el-button-group
-            register-device-btn(:device="device" v-on:done="getDetails")
-            delete-from-olt-btn(:device="device" v-on:done="getDetails")
+          slot(name="header")
+            .clearfix {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
+              small {{ `${device.ip_address || device.mac_addr}` }}
+              el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
+        .text.item.list-item IP адрес: {{ device.ip_address || '-' }}
+        .text.item.list-item
+          b Мак: 
+          | {{ device.mac_addr }}
+        .text.item.list-item
+          b Описание: 
+          | {{ device.comment }}
+        .text.item.list-item
+          b Родительское устройство: 
+          el-link(type="primary")
+            router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}") {{ device.parent_dev_name }}
+        .text.item.list-item
+          b Прикреплённые абоненты: 
+          el-link(type="primary" v-for="(ab, i) in device.attached_users" :key="i")
+            router-link(:to="{name: 'customerDetails', params:{ uid: ab.pk }}") {{ ab.full_name }}
+        el-button-group
+          register-device-btn(:device="device" v-on:done="getDetails")
+          delete-from-olt-btn(:device="device" v-on:done="getDetails")
+
     el-col(:lg="12" :sm='24')
       el-card.box-card(
         shadow="never"
@@ -36,6 +52,9 @@
           el-col(style='width: 128px;')
             i.icon-big(:class="iconStatusClass")
           el-col(v-if="onuDetails !== null")
+            .text.item.list-item
+              b Уровень сигнала: 
+              | {{ onuDetails.signal }}
             .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
               b {{ inf[0] }}: 
               | {{ inf[1] }}
@@ -50,7 +69,6 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import List from '@/components/List/index.vue'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanDetails } from '@/api/devices/req'
 import DevForm from '../../dev-form.vue'
@@ -60,7 +78,6 @@ import DeleteFromOltBtn from './delete-from-olt-btn.vue'
 @Component({
   name: 'PonOnu',
   components: {
-    List,
     DevForm,
     RegisterDeviceBtn,
     DeleteFromOltBtn
@@ -68,16 +85,8 @@ import DeleteFromOltBtn from './delete-from-olt-btn.vue'
 })
 export default class extends Vue {
   @Prop({ default: null }) private device!: IDevice | null
-  private devInfoLoading = false
   private devFormDialog = false
   private onuDetails: IOnuDetails | null = null
-
-  private devInfo = this.device === null ? [] : [
-    { text: `IP адрес: ${this.device.ip_address || '-'}` },
-    { text: `Мак: ${this.device.mac_addr}` },
-    { text: `Описание: ${this.device.comment}` },
-    { text: `Родительское устройство: ${this.device.parent_dev_name}` }
-  ]
 
   get iconStatusClass() {
     return {
@@ -118,7 +127,8 @@ export default class extends Vue {
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
     this.$message.success('Успешно сохранено')
-    this.$router.push({ name: 'devicesList', params: { groupId: device.group.toString() } })
+    this.refreshDev()
+    this.getDetails()
   }
 
   created() {
