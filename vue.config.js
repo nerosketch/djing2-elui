@@ -1,5 +1,5 @@
 const path = require('path')
-const name = 'Vue Typescript Admin'
+const name = 'Djing2 ui'
 
 module.exports = {
   publicPath: '/',

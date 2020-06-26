@@ -47,11 +47,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { IGateway } from '@/api/gateways/types'
-import { getGateways } from '@/api/gateways/req'
 import GwForm from './gw-form.vue'
 import { GatewayModule } from '@/store/modules/gateways'
+import GwsMethods from './gws-methods'
 
 @Component({
   name: 'GwList',
@@ -59,20 +60,8 @@ import { GatewayModule } from '@/store/modules/gateways'
     GwForm
   }
 })
-export default class extends Vue {
-  private gwlist: IGateway[] = []
-  private loading = false
+export default class extends mixins(GwsMethods) {
   private gwFormDialog = false
-
-  private async loadGateways() {
-    this.loading = true
-    const { data } = await getGateways({
-      page: 1,
-      page_size: 100500
-    })
-    this.gwlist = data.results
-    this.loading = false
-  }
 
   created() {
     this.loadGateways()

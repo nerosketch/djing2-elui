@@ -35,6 +35,11 @@
           :value="grp.pk"
         )
     el-form-item(
+      label="Шлюз доступа"
+      prop='gateway'
+    )
+      gws-selectfield(v-model="frmMod.gateway")
+    el-form-item(
       label="Комментарий"
       prop='description'
     )
@@ -66,9 +71,13 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomer, ICustomerGroup, ICustomerStreet, ICustomerFrm } from '@/api/customers/types'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
+import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 
 @Component({
-  name: 'NewCustomerForm'
+  name: 'NewCustomerForm',
+  components: {
+    GwsSelectfield
+  }
 })
 export default class extends Vue {
   private loading = false
@@ -89,6 +98,7 @@ export default class extends Vue {
     house: '',
     is_active: false,
     is_dynamic_ip: false,
+    gateway: 0,
     description: ''
   }
 
@@ -119,6 +129,7 @@ export default class extends Vue {
       house: CustomerModule.house,
       is_active: CustomerModule.is_active,
       is_dynamic_ip: CustomerModule.is_dynamic_ip,
+      gateway: CustomerModule.gateway,
       description: CustomerModule.description
     }
   }

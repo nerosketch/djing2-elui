@@ -77,6 +77,7 @@ export interface ICustomerFrm {
   house: string
   is_active: boolean
   is_dynamic_ip: boolean
+  gateway: number
   description: string
 }
 

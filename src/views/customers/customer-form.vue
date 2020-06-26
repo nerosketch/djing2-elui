@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='customerfrm'
-    label-width="100px"
+    label-width="110px"
     size="mini"
     status-icon
     :rules='frmRules'
@@ -61,6 +61,11 @@
           :value="grp.pk"
         )
     el-form-item(
+      label="Шлюз доступа"
+      prop='gateway'
+    )
+      gws-selectfield(v-model="frmMod.gateway")
+    el-form-item(
       label="Комментарий"
       prop='description'
     )
@@ -105,10 +110,16 @@ import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
 import AdditionalTels from './customers-details/additional-tels.vue'
+import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 
 @Component({
   name: 'customer-form',
-  components: { Passport, AdditionalTels, TaskForm }
+  components: {
+    Passport,
+    AdditionalTels,
+    TaskForm,
+    GwsSelectfield
+  }
 })
 export default class extends Vue {
   private isLoading = false
@@ -138,6 +149,7 @@ export default class extends Vue {
     house: '',
     is_active: false,
     is_dynamic_ip: false,
+    gateway: 0,
     description: ''
   }
 
@@ -161,6 +173,7 @@ export default class extends Vue {
       house: CustomerModule.house,
       is_active: CustomerModule.is_active,
       is_dynamic_ip: CustomerModule.is_dynamic_ip,
+      gateway: CustomerModule.gateway,
       description: CustomerModule.description
     }
   }
