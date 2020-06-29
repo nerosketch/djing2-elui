@@ -2,7 +2,7 @@ import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-dec
 import store from '@/store'
 import {
   getCustomerIpLease, delCustomerIpLease,
-  addCustomerIpLease, changeCustomerIpLease
+  addCustomerIpLease, changeCustomerIpLease, pingIcmpIpLease
 } from '@/api/networks/req'
 import { ICustomerIpLease } from '@/api/networks/types'
 
@@ -89,6 +89,16 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   public async DelLease(leaseId: number) {
     await delCustomerIpLease(leaseId)
     this.RESET_ALL_LEASE()
+  }
+
+  @Action
+  public async PingIcmp(leaseId?: number) {
+    let lid = this.id
+    if (typeof leaseId === 'number' && leaseId > 0) {
+      lid = leaseId
+    }
+    const { data } = await pingIcmpIpLease(lid)
+    return data
   }
 }
 

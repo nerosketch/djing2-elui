@@ -8,7 +8,8 @@ import {
   INetworkIpPoolListAxiosResponsePromise,
   ICustomerIpLease, ICustomerIpLeaseList,
   ICustomerIpLeaseAxoisResponsePromise,
-  ICustomerIpLeaseListAxiosResponsePromise
+  ICustomerIpLeaseListAxiosResponsePromise,
+  ICustomerIpLeasePingAxoisResponsePromise
 } from './types'
 
 const baseVlanUrl = '/networks/vlan/'
@@ -74,3 +75,6 @@ export const changeCustomerIpLease = (leaseId: number, newData: ICustomerIpLease
 
 export const delCustomerIpLease = (leaseId: number) =>
   request.delete(`${baseLeaseUrl}${leaseId}/`)
+
+export const pingIcmpIpLease = (leaseId: number): ICustomerIpLeasePingAxoisResponsePromise =>
+  request.get(`${baseLeaseUrl}${leaseId}/ping_ip/`)

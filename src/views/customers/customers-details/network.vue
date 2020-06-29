@@ -27,6 +27,12 @@
         template(v-slot:default="{row}")
           el-checkbox(v-model="row.is_dynamic" disabled)
       el-table-column(
+        label="Ping"
+        align="center"
+      )
+        template(v-slot:default="{row}")
+          lease-ping(:lease="row")
+      el-table-column(
         label="#"
         align="center"
         width="120"
@@ -100,9 +106,13 @@ import { ICustomerIpLease, INetworkIpPool } from '@/api/networks/types'
 import { getCustomerIpLeases, getNetworkIpPools } from '@/api/networks/req'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
+import LeasePing from '@/components/MyButtons/leaseping.vue'
 
 @Component({
-  name: 'Network'
+  name: 'Network',
+  components: {
+    LeasePing
+  }
 })
 export default class extends Vue {
   private leases: ICustomerIpLease[] = []
