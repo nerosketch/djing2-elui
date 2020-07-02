@@ -38,6 +38,7 @@
     )
       el-select(v-model="frmMod.gw_type" size='mini')
         el-option(label="Микротик" :value="0")
+        el-option(label="Linux" :value="1")
     el-form-item(
       label="По умолчанию"
       prop='is_default'

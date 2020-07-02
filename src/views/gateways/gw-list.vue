@@ -29,6 +29,9 @@
             b Включен
           dd
             i {{ gw.enabled ? 'Да' : 'Нет' }}
+          dt
+            b ID
+          dd {{ gw.id }}
         el-button-group
           el-button(size='mini' icon='el-icon-edit' @click="openGwForm(gw)") Изменить
           el-button(size='mini' type="danger" icon='el-icon-delete' @click="onDel(gw)") Удалить
