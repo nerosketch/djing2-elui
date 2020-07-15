@@ -72,7 +72,7 @@
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40")
     el-form-item
       el-button-group
-        el-button(type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading") Сохранить
+        el-button(type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
         el-button(type="success" icon='el-icon-plus' @click="openTaskFormDialog" :loading="taskFormDialogLoading") Добавить задачу
         el-button(@click="openPasportDlg = true" icon='el-icon-paperclip') Паспорт
         el-button(
@@ -99,8 +99,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
+import { mixins } from 'vue-class-component'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import { ICustomerStreet, ICustomerGroup, ICustomerFrm } from '@/api/customers/types'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
@@ -111,6 +112,7 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
 import AdditionalTels from './customers-details/additional-tels.vue'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
+import FormMixin from '@/utils/forms'
 
 @Component({
   name: 'customer-form',
@@ -121,7 +123,7 @@ import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
     GwsSelectfield
   }
 })
-export default class extends Vue {
+export default class extends mixins(FormMixin) {
   private isLoading = false
   private customerStreets: ICustomerStreet[] = []
   private groups: ICustomerGroup[] = []
@@ -176,6 +178,7 @@ export default class extends Vue {
       gateway: CustomerModule.gateway,
       description: CustomerModule.description
     }
+    this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm
   }
 
   private async loadStreets() {

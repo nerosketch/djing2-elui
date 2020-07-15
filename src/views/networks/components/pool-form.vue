@@ -50,22 +50,24 @@
     )
       el-input(v-model="frmMod.description" type="textarea" rows="5")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
+import { mixins } from 'vue-class-component'
 import { ipAddrValidator, ipAddrMaskValidator } from '@/utils/validate'
 import { INetworkIpPool } from '@/api/networks/types'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
+import FormMixin from '@/utils/forms'
 
 @Component({
   name: 'pool-form'
 })
-export default class extends Vue {
+export default class extends mixins(FormMixin) {
   private isLoading = false
   private groups: IGroup[] = []
 
@@ -107,6 +109,7 @@ export default class extends Vue {
   @Watch('netId')
   private async onNetwCh() {
     this.frmMod = await NetworkIpPoolModule.GetAllPoolState()
+    this.frmInitial = Object.assign({}, this.frmMod)
   }
 
   get isNewPool() {
@@ -115,6 +118,7 @@ export default class extends Vue {
 
   created() {
     this.loadGroups()
+    this.frmInitial = Object.assign({}, this.frmMod)
   }
 
   private onSubmit() {

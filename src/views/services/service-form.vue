@@ -22,22 +22,22 @@
       label="Вход. скорость"
       prop='speed_in'
     )
-      el-input(v-model="frmMod.speed_in")
+      el-input(v-model="frmMod.speed_in" type="number")
     el-form-item(
       label="Исход. скорость"
       prop='speed_out'
     )
-      el-input(v-model="frmMod.speed_out")
+      el-input(v-model="frmMod.speed_out" type="number")
     el-form-item(
       label="Ускорение"
       prop='speed_burst'
     )
-      el-input(v-model="frmMod.speed_burst")
+      el-input(v-model="frmMod.speed_burst" type="number")
     el-form-item(
       label="Стоимость"
       prop='cost'
     )
-      el-input(v-model="frmMod.cost")
+      el-input(v-model="frmMod.cost" type="number")
     el-form-item(
       label="Административная"
       prop='is_admin'
@@ -57,20 +57,23 @@
         )
 
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
+      p {{ frmInitial }}, {{ frmMod }}
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
+import { mixins } from 'vue-class-component'
 import { positiveValidator } from '@/utils/validate'
 import { IService, IServiceTypeEnum } from '@/api/services/types'
 import { ServiceModule } from '@/store/modules/services/service'
+import FormMixin from '@/utils/forms'
 
 @Component({
   name: 'service-form'
 })
-export default class extends Vue {
+export default class extends mixins(FormMixin) {
   private isLoading = false
 
   private frmRules = {
@@ -122,6 +125,7 @@ export default class extends Vue {
       is_admin: ServiceModule.is_admin,
       calc_type: ServiceModule.calc_type
     }
+    this.frmInitial = Object.assign({}, this.frmMod)
   }
 
   private onSubmit() {
@@ -135,6 +139,10 @@ export default class extends Vue {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  created() {
+    this.frmInitial = Object.assign({}, this.frmMod)
   }
 }
 </script>

@@ -50,20 +50,23 @@
     )
       el-checkbox(v-model="frmMod.enabled")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
+      p {{ frmInitial }}, {{ frmMod }}
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { IGateway } from '@/api/gateways/types'
 import { ipAddrValidator, latinValidator } from '@/utils/validate'
+import FormMixin from '@/utils/forms'
 import { Form } from 'element-ui'
 import { GatewayModule } from '@/store/modules/gateways'
 
 @Component({
   name: 'GwForm'
 })
-export default class extends Vue {
+export default class extends mixins(FormMixin) {
   private isLoading = false
 
   private frmRules = {
@@ -91,7 +94,7 @@ export default class extends Vue {
     this.frmMod.gw_type = GatewayModule.gw_type
     this.frmMod.is_default = GatewayModule.is_default
     this.frmMod.enabled = GatewayModule.enabled
-    
+    this.frmInitial = Object.assign({}, this.frmMod)
   }
 
   private frmMod = {
@@ -108,9 +111,9 @@ export default class extends Vue {
     return GatewayModule.id === 0
   }
 
-//   created() {
-//     this.onChangeGroup()
-//   }
+  created() {
+    this.frmInitial = Object.assign({}, this.frmMod)
+  }
 
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {

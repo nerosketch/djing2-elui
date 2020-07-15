@@ -66,18 +66,20 @@
       el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58; 
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="loading") Сохранить
+      el-button(type="primary" @click="onSubmit" :loading="loading" :disabled="isFormUntouched") Сохранить
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
+import { mixins } from 'vue-class-component'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { IDevice, IDeviceTypeEnum } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
+import FormMixin from '@/utils/forms'
 
 @Component({
   name: 'DevForm',
@@ -85,7 +87,7 @@ import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.
     DeviceAutocompleteField
   }
 })
-export default class extends Vue {
+export default class extends mixins(FormMixin) {
   private loading = false
   private groups: IGroup[] = []
 
@@ -108,7 +110,7 @@ export default class extends Vue {
 
   get devFrmData() {
     return {
-      ip_address: DeviceModule.ip_address,
+      ip_address: DeviceModule.ip_address || "",
       mac_addr: DeviceModule.mac_addr,
       comment: DeviceModule.comment,
       dev_type: DeviceModule.dev_type,
@@ -130,6 +132,7 @@ export default class extends Vue {
   @Watch('devId')
   private async onDevCh() {
     this.frmMod = this.devFrmData
+    this.frmInitial = Object.assign({}, this.devFrmData)
   }
 
   private onSubmit() {
@@ -149,6 +152,7 @@ export default class extends Vue {
     this.loadGroups().then(async () => {
       this.deviceTypeNames = await DeviceModule.getDeviceTypeNames()
     })
+    this.frmInitial = Object.assign({}, this.frmMod)
   }
 
   private async loadGroups() {

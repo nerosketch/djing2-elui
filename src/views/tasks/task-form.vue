@@ -74,13 +74,14 @@
         )
     el-form-item
       el-button-group
-        el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small') Сохранить
+        el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isFormUntouched") Сохранить
         el-button(v-if="!isNewTask" type="danger" @click="onDel" icon="el-icon-delete" size='small') Удалить
         el-button(v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check" size='small') Завершить
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { ITaskPriority, ITaskState, ITaskType, ITask } from '@/api/tasks/types'
 import CustomerField from '@/components/CustomerField/index.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
@@ -88,12 +89,13 @@ import { getProfiles } from '@/api/profiles/req'
 import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { IUserProfile } from '@/api/profiles/types'
+import FormMixin from '@/utils/forms'
 
 @Component({
   name: 'TaskForm',
   components: { CustomerField }
 })
-export default class extends Vue {
+export default class extends mixins(FormMixin) {
   @Prop({ default: () => [] })
   private recipients!: IUserProfile[]
 
@@ -166,6 +168,7 @@ export default class extends Vue {
     } else {
       this.intrnalRecipients = this.recipients
     }
+    this.frmInitial = Object.assign({}, this.frmMod)
   }
 
   get isNewTask() {
