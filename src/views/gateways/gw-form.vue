@@ -51,7 +51,6 @@
       el-checkbox(v-model="frmMod.enabled")
     el-form-item
       el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
-      p {{ frmInitial }}, {{ frmMod }}
 </template>
 
 <script lang="ts">
