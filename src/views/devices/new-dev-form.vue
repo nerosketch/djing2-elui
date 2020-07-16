@@ -63,7 +63,7 @@
     el-form-item(
       prop="is_noticeable"
     )
-      el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58; 
+      el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
       el-button(type="success" @click="onSubmit" :loading="loading" icon="el-icon-plus") Добавить
@@ -147,7 +147,7 @@ export default class extends Vue {
   }
 
   created() {
-    this.loadGroups().then(async () => {
+    this.loadGroups().then(async() => {
       this.deviceTypeNames = await DeviceModule.getDeviceTypeNames()
     })
   }

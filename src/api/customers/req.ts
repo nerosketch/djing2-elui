@@ -160,7 +160,6 @@ const pspBaseUrl = '/customers/passport/'
 export const findPassportInfo = (customerId: number): IPassportInfoListAxiosResponsePromise =>
   request.get<IPassportInfoList>(pspBaseUrl, { params: { customer: customerId } })
 
-
 // CustomerAttachement
 const CustomerAttachmUrl = '/customers/attachments/'
 export const getAttachments = (customer: number): ICustomerAttachementListAxiosResponsePromise =>
@@ -171,9 +170,9 @@ export const getAttachment = (id: number): ICustomerAttachementAxoisResponseProm
 
 export const addAttachment = (newAtt: any): ICustomerAttachementAxoisResponsePromise => {
   let formData = new FormData()
-  formData.append("doc_file", newAtt.doc_file)
-  formData.append("title", newAtt.title)
-  formData.append("customer", newAtt.customer)
+  formData.append('doc_file', newAtt.doc_file)
+  formData.append('title', newAtt.title)
+  formData.append('customer', newAtt.customer)
   return request.post<ICustomerAttachement>(CustomerAttachmUrl, formData)
 }
 

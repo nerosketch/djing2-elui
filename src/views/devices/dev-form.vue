@@ -63,7 +63,7 @@
     el-form-item(
       prop="is_noticeable"
     )
-      el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58; 
+      el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
       el-button(type="primary" @click="onSubmit" :loading="loading" :disabled="isFormUntouched") Сохранить
@@ -110,7 +110,7 @@ export default class extends mixins(FormMixin) {
 
   get devFrmData() {
     return {
-      ip_address: DeviceModule.ip_address || "",
+      ip_address: DeviceModule.ip_address || '',
       mac_addr: DeviceModule.mac_addr,
       comment: DeviceModule.comment,
       dev_type: DeviceModule.dev_type,
@@ -149,7 +149,7 @@ export default class extends mixins(FormMixin) {
   }
 
   created() {
-    this.loadGroups().then(async () => {
+    this.loadGroups().then(async() => {
       this.deviceTypeNames = await DeviceModule.getDeviceTypeNames()
     })
     this.frmInitial = Object.assign({}, this.frmMod)

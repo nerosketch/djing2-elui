@@ -23,7 +23,7 @@ service.interceptors.request.use(
 
 // Response interceptors
 service.interceptors.response.use(
-  async (response) => {
+  async(response) => {
     // Some example codes here:
     // code == 20000: success
     // code == 50001: invalid access token
@@ -61,7 +61,7 @@ service.interceptors.response.use(
   },
   (error) => {
     let er = error.response.data
-    if(typeof er === 'object') {
+    if (typeof er === 'object') {
       er = Object.entries(er).join('\n')
     }
     Message({

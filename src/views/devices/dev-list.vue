@@ -155,9 +155,10 @@ export default class extends Vue {
   private frmNewDevDone(newDev: IDevice) {
     this.dialogNewDev = false
     this.$message.success('Новое устройство сохранено')
-    this.$router.push({ name: 'device-view', params: {
-      devId: newDev.pk.toString()
-    }})
+    this.$router.push({ name: 'device-view',
+      params: {
+        devId: newDev.pk.toString()
+      } })
   }
 }
 </script>

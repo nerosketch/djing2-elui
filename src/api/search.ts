@@ -9,6 +9,5 @@ export interface SearchResult {
 }
 export type SearchResultAxoisResponsePromise = AxiosPromise<SearchResult>
 
-
 export const doSearch = (s: string): SearchResultAxoisResponsePromise =>
   request.get<SearchResult>('/search/', { params: { s } })

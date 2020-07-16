@@ -2,7 +2,6 @@ import request from '@/utils/request'
 import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
 import { IUserProfileLogListAxiosResponsePromise, IUserProfileLogList, IUserProfileLog, IUserProfileLogAxoisResponsePromise, IUserProfileList, IUserProfileListAxiosResponsePromise, IUserProfile, IUserProfileAxoisResponsePromise } from './types'
 
-
 // IUserProfileLog
 const baseLogUrl = '/profiles/log/'
 export const getProfileLogs = (params?: IDRFRequestListParameters, account?: number): IUserProfileLogListAxiosResponsePromise =>
@@ -19,7 +18,6 @@ export const changeProfileLog = (id: number, newData: object): IUserProfileLogAx
 
 export const delProfileLog = (id: number) =>
   request.delete(`${baseLogUrl}${id}/`)
-
 
 // IUserProfile
 const baseAccUrl = '/profiles/'

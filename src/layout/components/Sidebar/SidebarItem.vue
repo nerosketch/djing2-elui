@@ -21,7 +21,10 @@
             slot="title"
           >
             {{ theOnlyOneChild.meta.title }}
-            <small v-if="childCalc" class="calc-place">{{ childCalc }}</small>
+            <small
+              v-if="childCalc"
+              class="calc-place"
+            >{{ childCalc }}</small>
           </span>
         </el-menu-item>
       </sidebar-item-link>

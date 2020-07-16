@@ -13,7 +13,7 @@
               :key="i"
             )
               div
-                i.el-icon-s-custom 
+                i.el-icon-s-custom
                 el-link(type="primary")
                   router-link(:to="{ name: 'customerDetails', params: {uid: c.id } }") {{ c.username }}
               span {{ c.fio }}, {{ c.group_title }}.
@@ -36,7 +36,7 @@
               :key="i"
             )
               div
-                i.el-icon-cpu 
+                i.el-icon-cpu
                 el-link(type="primary")
                   router-link(:to="{name: 'device-view', params: { devId: d.id.toString()}}") {{ d.ip_address }} {{ d.mac_addr}} {{ d.dev_type_str }}
               p {{ d.comment }}

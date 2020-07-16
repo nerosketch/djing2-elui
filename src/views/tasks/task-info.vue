@@ -7,25 +7,25 @@
     div Исполнители:
       ul
         li(v-for="rec in taskRecipients" :key='rec.pk') {{ rec.full_name }}
-    b Приоритет: 
+    b Приоритет:
     span {{ taskPrior }}
     br
-    b Задача действительна до 
+    b Задача действительна до
     span {{ taskOutDate }}
     br
-    b Дата создания: 
+    b Дата создания:
     span {{ taskCreateTime }}
     br
-    b Времени осталось: 
+    b Времени осталось:
     span {{ taskTimeDiff }}
     br
-    b Характер поломки: 
+    b Характер поломки:
     span {{ taskMode }}
     br
-    b Состояние: 
+    b Состояние:
     span {{ taskState }}
     br
-    b Абонент: 
+    b Абонент:
     el-link(type="primary")
       router-link(:to="taskCustomerLink") {{ taskCustomerName }}
     el-divider
@@ -96,8 +96,8 @@ export default class extends Vue {
   get taskRecipients() {
     let res = []
     const recipIds = TaskModule.recipients
-    for(const r of this.recipients) {
-      if(recipIds.includes(r.pk)) {
+    for (const r of this.recipients) {
+      if (recipIds.includes(r.pk)) {
         res.push(r)
       }
     }

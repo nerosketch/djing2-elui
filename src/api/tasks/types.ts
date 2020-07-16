@@ -90,7 +90,6 @@ export type IExtraCommentList = IDRFListResponse<IExtraComment>
 export type IExtraCommentAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment>
 export type IExtraCommentListAxiosResponsePromise = IDRFAxiosResponsePromise<IExtraCommentList>
 
-
 export interface ITaskDocumentAttachment {
   id: number
   title: string

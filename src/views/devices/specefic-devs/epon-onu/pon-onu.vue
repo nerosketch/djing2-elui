@@ -22,17 +22,17 @@
               el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
         .text.item.list-item IP адрес: {{ device.ip_address || '-' }}
         .text.item.list-item
-          b Мак: 
+          b Мак:
           | {{ device.mac_addr }}
         .text.item.list-item
-          b Описание: 
+          b Описание:
           | {{ device.comment }}
         .text.item.list-item
-          b Родительское устройство: 
+          b Родительское устройство:
           el-link(type="primary")
             router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}") {{ device.parent_dev_name }}
         .text.item.list-item
-          b Прикреплённые абоненты: 
+          b Прикреплённые абоненты:
           el-link(type="primary" v-for="(ab, i) in device.attached_users" :key="i")
             router-link(:to="{name: 'customerDetails', params:{ uid: ab.pk }}") {{ ab.full_name }}
         el-button-group
@@ -53,10 +53,10 @@
             i.icon-big(:class="iconStatusClass")
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
-              b Уровень сигнала: 
+              b Уровень сигнала:
               | {{ onuDetails.signal }}
             .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
-              b {{ inf[0] }}: 
+              b {{ inf[0] }}:
               | {{ inf[1] }}
     el-dialog(
       :visible.sync="devFormDialog"

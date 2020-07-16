@@ -100,7 +100,7 @@ export interface IScannedPort {
 }
 export type IScannedPortListAxiosPromise = AxiosPromise<IScannedPort[]>
 
-//IScannedONU
+// IScannedONU
 export interface IScannedONU {
   number: number
   title: string

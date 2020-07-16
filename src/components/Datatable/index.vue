@@ -6,7 +6,8 @@
       :row-class-name="tableRowClassName"
       v-bind="$attrs"
       :height="tblHeight"
-      border fit
+      border
+      fit
       v-on="listeners"
     >
       <slot name="columns">
@@ -40,7 +41,7 @@
         :limit.sync="pageSize"
         @pagination="GetTableData"
       >
-        <slot name="default"/>
+        <slot name="default" />
       </pagination>
     </slot>
   </div>

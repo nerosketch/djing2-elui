@@ -18,7 +18,6 @@
 
 </template>
 
-
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'

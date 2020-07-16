@@ -1,7 +1,7 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { ITaskDocumentAttachment } from "@/api/tasks/types";
-import { getAttachment, delAttachment, addAttachment } from '@/api/tasks/req';
+import { ITaskDocumentAttachment } from '@/api/tasks/types'
+import { getAttachment, delAttachment, addAttachment } from '@/api/tasks/req'
 
 @Module({ dynamic: true, store, name: 'comment' })
 class TaskAttachment extends VuexModule implements ITaskDocumentAttachment {

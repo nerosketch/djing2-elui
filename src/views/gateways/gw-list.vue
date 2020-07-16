@@ -77,15 +77,15 @@ export default class extends mixins(GwsMethods) {
 
   private gwFrmDone(gw: IGateway) {
     this.gwFormDialog = false
-    this.$message.success("Шлюз доступа сохранён")
+    this.$message.success('Шлюз доступа сохранён')
     this.loadGateways()
   }
 
   private onDel(gw: IGateway) {
-    this.$confirm("Удалить шлюз доступа абонентов?").then(async() => {
+    this.$confirm('Удалить шлюз доступа абонентов?').then(async() => {
       this.loading = true
       await GatewayModule.DelGateway(gw.id)
-      this.$message.success("Шлюз доступа успешно удалён")
+      this.$message.success('Шлюз доступа успешно удалён')
       this.loadGateways()
     }).catch(() => {
       this.loading = false

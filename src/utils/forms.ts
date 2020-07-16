@@ -8,9 +8,11 @@ export default class extends Vue {
 
   protected get isFormUntouched() {
     if (!this.frmInitial) return false
-    for (const [k, v] of Object.entries(this.frmInitial as Object)) {
-      if (this.frmMod[k] == v) continue
-      else return false
+    if (this.$data.hasOwnProperty('frmMod')) {
+      for (const [k, v] of Object.entries(this.frmInitial as Object)) {
+        if (this.$data['frmMod'][k] == v) continue
+        else return false
+      }
     }
     return true
   }

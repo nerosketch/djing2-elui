@@ -2,7 +2,7 @@
   el-card.box-card
     template(v-slot:header)
       .clearfix
-        span zte 
+        span zte
         small sdg
         el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
     el-row

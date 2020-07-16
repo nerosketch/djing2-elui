@@ -17,7 +17,6 @@ export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>
 export type IUserProfileListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfileList>
 
-
 export enum IUSER_PROFILE_LOG_ACTION_TYPES {
   UNDEFINED = 0,
   CREATE_USER = 1,

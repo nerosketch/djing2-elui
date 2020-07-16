@@ -34,7 +34,7 @@ export default class extends Vue {
 
   @Watch('selectedPort')
   private onChPort(portId: number) {
-    if(portId > 0) {
+    if (portId > 0) {
       this.$emit('input', portId)
     } else {
       this.$emit('input', null)
@@ -62,7 +62,7 @@ export default class extends Vue {
       this.devPorts = data.results
 
       const fnd = this.devPorts.find(dp => dp.pk === this.selectedPort)
-      if (fnd){
+      if (fnd) {
         this.selectedPort = fnd.pk
       } else {
         this.selectedPort = 0

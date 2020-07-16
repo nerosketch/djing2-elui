@@ -47,7 +47,7 @@
       )
         keep-alive
           task-list(tabUrl="get_all")
-    
+
 </template>
 
 <script lang="ts">

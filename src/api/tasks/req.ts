@@ -43,7 +43,7 @@ export const remindTask = (id: number) =>
 export const initialRecipients4newTask = (groupId: number): IDRFAxiosResponsePromise<number[]> =>
   request.get(`${baseTaskUrl}get_initial_recipients/`, { params: {
     group_id: groupId
-  }})
+  } })
 
 // IChangeLog
 const baseTaskLogUrl = '/tasks/log/'
@@ -81,7 +81,6 @@ export const changeComment = (id: number, data: IExtraComment): IExtraCommentAxo
 export const delComment = (id: number) =>
   request.delete(`${baseCommentUrl}${id}/`)
 
-
 // ITaskDocumentAttachment
 const TaskAttachmUrl = '/tasks/attachment/'
 export const getAttachments = (task: number): ITaskDocumentAttachmentListAxiosResponsePromise =>
@@ -92,9 +91,9 @@ export const getAttachment = (id: number): ITaskDocumentAttachmentAxoisResponseP
 
 export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponsePromise => {
   let formData = new FormData()
-  formData.append("doc_file", newAtt.doc_file)
-  formData.append("title", newAtt.title)
-  formData.append("task", newAtt.task)
+  formData.append('doc_file', newAtt.doc_file)
+  formData.append('title', newAtt.title)
+  formData.append('task', newAtt.task)
   return request.post<ITaskDocumentAttachment>(TaskAttachmUrl, formData)
 }
 

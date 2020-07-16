@@ -90,7 +90,8 @@ export default class extends Vue {
 
   private onGo2Dev() {
     this.$router.push({
-      name: 'device-view', params: {
+      name: 'device-view',
+      params: {
         devId: this.frmMod.device.toString()
       }
     })

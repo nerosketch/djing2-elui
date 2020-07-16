@@ -26,7 +26,7 @@ export default class extends Vue {
   private defaultName!: string
 
   private querySearch(queryString: string, cb: any) {
-    if(this.loading) return
+    if (this.loading) return
     this.loading = true
     findDevices(queryString).then(({ data }) => {
       cb(data.results)

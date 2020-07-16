@@ -9,15 +9,21 @@
       class="breadcrumb-container"
     /> -->
 
-    <form class='center-header' v-on:submit.prevent="doSearch">
+    <form
+      class="center-header"
+      @submit.prevent="doSearch"
+    >
       <el-input
+        v-model="searchStr"
         placeholder="Поиск"
         prefix-icon="el-icon-search"
-        size='small'
-        v-model='searchStr'
+        size="small"
       >
         <template v-slot:append>
-          <el-button icon='el-icon-search' @click="doSearch"/>
+          <el-button
+            icon="el-icon-search"
+            @click="doSearch"
+          />
         </template>
       </el-input>
     </form>

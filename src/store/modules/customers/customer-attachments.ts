@@ -1,7 +1,7 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { ICustomerAttachement } from "@/api/customers/types";
-import { getAttachment, delAttachment, addAttachment } from '@/api/customers/req';
+import { ICustomerAttachement } from '@/api/customers/types'
+import { getAttachment, delAttachment, addAttachment } from '@/api/customers/req'
 
 @Module({ dynamic: true, store, name: 'customerattachment' })
 class CustomerAttachement extends VuexModule implements ICustomerAttachement {

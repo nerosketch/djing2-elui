@@ -12,7 +12,7 @@
       )
         template(v-slot:header)
           .clearfix
-            span {{ c.author_name }} 
+            span {{ c.author_name }}
             small {{ c.date_create }}
             el-button(style="float: right; padding: 3px 0" type="text" icon='el-icon-close' v-if="c.can_remove" @click="delComment(c)")
         el-avatar(shape="square" size='medium' :src='c.author_avatar')
@@ -66,8 +66,8 @@ export default class extends Vue {
   private delComment(c: IExtraComment) {
     this.$confirm('Удалить комментарий?', {
       confirmButtonText: 'да',
-      cancelButtonText: 'нет',
-    }).then(async () => {
+      cancelButtonText: 'нет'
+    }).then(async() => {
       await delComment(c.id)
       await this.loadComments()
       this.$message.success('Комментарий удалён')

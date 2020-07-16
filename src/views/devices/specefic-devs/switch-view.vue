@@ -2,7 +2,7 @@
   el-card.box-card
     template(v-slot:header)
       .clearfix
-        span {{ device.comment || 'Коммутатор' }} 
+        span {{ device.comment || 'Коммутатор' }}
         small {{ `${device.ip_address || device.mac_addr}` }}
         el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
     el-table(
@@ -283,7 +283,7 @@ export default class extends Vue {
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
     this.$message.success('Успешно сохранено')
-    this.$router.push({name: 'devicesList', params: { groupId: device.group.toString() }})
+    this.$router.push({ name: 'devicesList', params: { groupId: device.group.toString() } })
   }
 }
 </script>

@@ -3,7 +3,6 @@ import store from '@/store'
 import { IExtraComment } from '@/api/tasks/types'
 import { getComment, changeComment, delComment } from '@/api/tasks/req'
 
-
 @Module({ dynamic: true, store, name: 'comment' })
 class Comment extends VuexModule implements IExtraComment {
   id = 0

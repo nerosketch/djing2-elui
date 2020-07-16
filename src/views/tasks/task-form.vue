@@ -159,7 +159,7 @@ export default class extends mixins(FormMixin) {
       newDate.setDate(newDate.getDate() + 3)
       res = newDate
     }
-    return `${res.getFullYear()}-${res.getMonth()+1}-${res.getDate()}`
+    return `${res.getFullYear()}-${res.getMonth() + 1}-${res.getDate()}`
   }
 
   created() {

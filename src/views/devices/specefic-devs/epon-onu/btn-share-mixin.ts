@@ -13,9 +13,9 @@ export default class extends Vue {
     this.btnText = text
     this.btnType = bState
     let tm = setTimeout(() => {
-        this.btnText = initTxt
-        this.btnType = ''
-        clearTimeout(tm)
+      this.btnText = initTxt
+      this.btnType = ''
+      clearTimeout(tm)
     }, timeout)
   }
 }

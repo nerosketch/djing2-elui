@@ -14,7 +14,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     >
-      <slot name="default"/>
+      <slot name="default" />
     </el-pagination>
   </div>
 </template>

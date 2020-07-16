@@ -121,7 +121,7 @@ export default class extends Vue {
     if (this.device) {
       return scanOltFibers(this.device.pk).then(({ data }) => {
         for (const fib of data) {
-          this.fibers.push(Object.assign({onuList: []}, fib) as IDevFiberLocal)
+          this.fibers.push(Object.assign({ onuList: [] }, fib) as IDevFiberLocal)
         }
       })
     }
@@ -148,9 +148,10 @@ export default class extends Vue {
   private frmDone(newOnu: IDevice) {
     this.dialogVisible = false
     this.$message.success('Новая onu сохранена')
-    this.$router.push({ name: 'device-view', params: {
-      devId: newOnu.pk.toString()
-    }})
+    this.$router.push({ name: 'device-view',
+      params: {
+        devId: newOnu.pk.toString()
+      } })
   }
   private frmErr(err: Error) {
     this.dialogVisible = false
