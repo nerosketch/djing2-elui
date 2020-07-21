@@ -177,6 +177,7 @@ export default class extends Vue {
     if (params) {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
+        street: this.lastStreetId,
         fields
       })
       r = await getCustomers(newParams)
@@ -193,7 +194,7 @@ export default class extends Vue {
     this.$refs.tbl.GetTableData()
   }
 
-  private lastStreetId?: number = 0
+  private lastStreetId?: number | undefined = undefined
 
   private onStreetClick(item: ICustomerStreet, num: number) {
     if (item.pk === this.lastStreetId) {

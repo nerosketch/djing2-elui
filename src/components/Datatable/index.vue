@@ -119,7 +119,7 @@ export default class <T> extends Vue {
     return this.responseData.count
   }
 
-  public async GetTableData(params: getTableDataParam = { page: 1, limit: 20 }, otherParams: object = {}) {
+  public async GetTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     this.intLoading = true
     const { page, limit } = params
     const reqPage = page || this.page

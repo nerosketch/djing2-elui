@@ -43,7 +43,6 @@ div
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
-import { IDRFRequestListParameters } from '@/api/types'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
 import { getServices } from '@/api/services/req'
 import { ServiceModule } from '@/store/modules/services/service'
