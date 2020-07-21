@@ -181,12 +181,20 @@ export default class extends mixins(FormMixin) {
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm
   }
 
+  get onChGrp() {
+    return CustomerModule.group
+  }
+  @Watch('onChGrp')
+  private onChangedGroup() {
+    this.loadStreets()
+  }
+
   private async loadStreets() {
     this.isLoading = true
     const { data } = await getStreets({
       page: 1,
       page_size: 100,
-      group: CustomerModule.group
+      group: this.onChGrp
     })
     this.customerStreets = data.results
     this.isLoading = false
@@ -206,6 +214,18 @@ export default class extends mixins(FormMixin) {
         const newDat = await CustomerModule.PatchCustomer(this.frmMod)
         this.isLoading = false
         this.$emit('done', newDat)
+        this.frmInitial = Object.assign({}, {
+          username: newDat.username,
+          telephone: newDat.telephone,
+          fio: newDat.fio,
+          group: newDat.group,
+          street: newDat.street,
+          house: newDat.house,
+          is_active: newDat.is_active,
+          is_dynamic_ip: newDat.is_dynamic_ip,
+          gateway: newDat.gateway,
+          description: newDat.description
+        })
         this.$message.success('Абонент сохранён')
       } else {
         this.$message.error('Исправь ошибки в форме')
@@ -215,7 +235,7 @@ export default class extends mixins(FormMixin) {
 
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
-      const currGroup = CustomerModule.group
+      const currGroup = this.onChGrp
       await CustomerModule.DelCustomer()
       this.$message.success('Учётка удалена')
       this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
@@ -224,7 +244,7 @@ export default class extends mixins(FormMixin) {
 
   private async openTaskFormDialog() {
     this.taskFormDialogLoading = true
-    await TaskModule.GetInitial4NewTask(CustomerModule.group)
+    await TaskModule.GetInitial4NewTask(this.onChGrp)
     TaskModule.SET_CUSTOMER(CustomerModule.pk)
     TaskModule.SET_CUSTOMER_FULLNAME(CustomerModule.full_name)
     this.taskFormDialogLoading = false

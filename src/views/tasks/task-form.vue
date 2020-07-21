@@ -72,6 +72,8 @@
           type="date"
           value-format="yyyy-MM-dd"
         )
+    p {{ frmMod }}
+    p {{ frmInitial }}
     el-form-item
       el-button-group
         el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isFormUntouched") Сохранить
@@ -129,14 +131,18 @@ export default class extends mixins(FormMixin) {
     { nm: 'Выполнена', v: ITaskState.COMPLETED }
   ]
 
-  private frmMod = {
-    recipients: TaskModule.recipients,
-    descr: TaskModule.descr,
-    priority: TaskModule.priority,
-    task_state: TaskModule.task_state,
-    mode: TaskModule.mode,
-    customer: TaskModule.customer,
-    out_date: this.initialDate
+  private frmMod = this.fromTaskModule
+
+  private get fromTaskModule() {
+    return {
+      recipients: TaskModule.recipients,
+      descr: TaskModule.descr,
+      priority: TaskModule.priority,
+      task_state: TaskModule.task_state,
+      mode: TaskModule.mode,
+      customer: TaskModule.customer,
+      out_date: this.initialDate
+    }
   }
 
   private frmRules = {
@@ -188,6 +194,7 @@ export default class extends mixins(FormMixin) {
           })
         } else {
           await TaskModule.PatchTask(this.frmMod)
+          this.frmInitial = this.fromTaskModule
           this.$message.success('Задача сохранена')
         }
         this.loading = false

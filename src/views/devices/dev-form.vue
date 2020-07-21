@@ -142,6 +142,7 @@ export default class extends mixins(FormMixin) {
         const newDat = await DeviceModule.PatchDevice(this.frmMod)
         this.loading = false
         this.$emit('done', newDat.data)
+        this.frmInitial = Object.assign({}, this.devFrmData)
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
