@@ -114,17 +114,18 @@ export default class extends Vue {
 
   private delDevice() {
     if (!this.device) return
-    this.$confirm(`Ты действительно хочешь удалить onu "${this.device.comment}"?`).then(async () => {
+    this.$confirm(`Ты действительно хочешь удалить onu "${this.device.comment}"?`).then(async() => {
       if (!this.device) {
         this.$message.error('Не удалили, похоже уже кто-то удалил')
         return
       }
       await DeviceModule.DelDevice(this.device.pk)
       this.$message.success('Удалена')
-      if (this.device.group)
+      if (this.device.group) {
         this.$router.push({ name: 'devicesList', params: { groupId: this.device.group.toString() } })
-      else
+      } else {
         this.$router.push('/devices')
+      }
     })
   }
 

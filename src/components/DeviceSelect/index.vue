@@ -3,7 +3,7 @@
     el-option(
       v-for="dv in devices"
       :key="dv.pk"
-      :label="`${dv.comment} (${dv.ip_address})`"
+      :label="`${dv.comment} ` + (dv.ip_address ? `(${dv.ip_address})` : '')"
       :value="dv.pk"
     )
 </template>
@@ -55,7 +55,8 @@ export default class extends Vue {
     const { data } = await getDevices({
       page: 1,
       page_size: 100,
-      group: this.groupId
+      group: this.groupId,
+      fields: 'pk,comment,ip_address'
     })
     this.devices = data.results
   }
