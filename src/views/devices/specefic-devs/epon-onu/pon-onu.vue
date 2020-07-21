@@ -38,6 +38,7 @@
         el-button-group
           register-device-btn(:device="device" v-on:done="getDetails")
           delete-from-olt-btn(:device="device" v-on:done="getDetails")
+          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice")
 
     el-col(:lg="12" :sm='24')
       el-card.box-card(
@@ -71,6 +72,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanDetails } from '@/api/devices/req'
+import { DeviceModule } from '@/store/modules/devices/device'
 import DevForm from '../../dev-form.vue'
 import RegisterDeviceBtn from './register-device-btn.vue'
 import DeleteFromOltBtn from './delete-from-olt-btn.vue'
@@ -107,11 +109,21 @@ export default class extends Vue {
     return !this.onuDetails || this.onuDetails.status === IOnuDetailsStatus.UNKNOWN
   }
 
-  // get macsNotEqual() {
-  //   if (this.onuDetails === null) return false
-  //   if (this.device === null) return false
-  //   return this.onuDetails.mac !== this.device.mac_addr
-  // }
+  private delDevice() {
+    if (!this.device) return
+    this.$confirm(`Ты действительно хочешь удалить onu "${this.device.comment}"?`).then(async () => {
+      if (!this.device) {
+        this.$message.error('Не удалили, похоже уже кто-то удалил')
+        return
+      }
+      await DeviceModule.DelDevice(this.device.pk)
+      this.$message.success('Удалена')
+      if (this.device.group)
+        this.$router.push({ name: 'devicesList', params: { groupId: this.device.group.toString() } })
+      else
+        this.$router.push('/devices')
+    })
+  }
 
   private async getDetails() {
     if (this.device !== null) {

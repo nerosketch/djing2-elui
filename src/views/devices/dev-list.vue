@@ -25,7 +25,7 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
+          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice(row)")
 
       el-button(
         size='mini'
@@ -141,10 +141,11 @@ export default class extends Vue {
   }
 
   private async delDevice(dev: IDevice) {
-    if (confirm(`Ты действительно хочешь удалить устройство "${dev.comment}"?`)) {
+    this.$confirm(`Ты действительно хочешь удалить устройство "${dev.comment}"?`).then(async () => {
       await DeviceModule.DelDevice(dev.pk)
+      this.$message.success('Удалено')
       this.$refs.table.GetTableData()
-    }
+    })
   }
 
   private frmDone() {
