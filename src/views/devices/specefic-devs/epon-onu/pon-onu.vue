@@ -31,6 +31,9 @@
           b Родительское устройство:
           el-link(type="primary")
             router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}") {{ device.parent_dev_name }}
+        .text.item.list-item(v-if="device.iface_name")
+          b Интерфейс:
+          | {{ device.iface_name }}
         .text.item.list-item
           b Прикреплённые абоненты:
           el-link(type="primary" v-for="(ab, i) in device.attached_users" :key="i")

@@ -72,8 +72,6 @@
           type="date"
           value-format="yyyy-MM-dd"
         )
-    p {{ frmMod }}
-    p {{ frmInitial }}
     el-form-item
       el-button-group
         el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isFormUntouched") Сохранить

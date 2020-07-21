@@ -24,6 +24,7 @@ export interface IDevice {
   ip_address: string
   mac_addr: string
   comment: string
+  iface_name?: string
   dev_type: IDeviceTypeEnum
   dev_type_str?: string
   man_passw: string
