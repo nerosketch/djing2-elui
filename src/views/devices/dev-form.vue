@@ -110,7 +110,7 @@ export default class extends mixins(FormMixin) {
 
   get devFrmData() {
     return {
-      ip_address: DeviceModule.ip_address || '',
+      ip_address: DeviceModule.ip_address,
       mac_addr: DeviceModule.mac_addr,
       comment: DeviceModule.comment,
       dev_type: DeviceModule.dev_type,
