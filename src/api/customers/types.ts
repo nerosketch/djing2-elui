@@ -9,6 +9,8 @@ export interface ICustomer {
   username: string
   telephone: string
   fio: string
+  birth_day: string
+  create_date: string
   group: number
   group_title?: string
   balance: number
@@ -72,6 +74,7 @@ export interface ICustomerFrm {
   username: string
   telephone: string
   fio: string
+  birth_day: string
   group: number
   street: number | null
   house: string
