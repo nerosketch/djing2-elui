@@ -57,7 +57,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { DeviceModule } from '@/store/modules/devices/device'
-import { IDRFRequestListParameters } from '@/api/types'
 import { IDRFRequestListParametersDevGroup, IDevice } from '@/api/devices/types'
 import { getDevices } from '@/api/devices/req'
 import DevForm from './dev-form.vue'
@@ -141,7 +140,7 @@ export default class extends Vue {
   }
 
   private async delDevice(dev: IDevice) {
-    this.$confirm(`Ты действительно хочешь удалить устройство "${dev.comment}"?`).then(async () => {
+    this.$confirm(`Ты действительно хочешь удалить устройство "${dev.comment}"?`).then(async() => {
       await DeviceModule.DelDevice(dev.pk)
       this.$message.success('Удалено')
       this.$refs.table.GetTableData()

@@ -17,9 +17,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { Form } from 'element-ui'
 import { ICustomerStreet } from '@/api/customers/types'
-import { getStreets } from '@/api/customers/req'
 import { CustomerStreetModule } from '@/store/modules/customers/street'
 
 @Component({

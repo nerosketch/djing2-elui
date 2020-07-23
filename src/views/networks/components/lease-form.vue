@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { ICustomerIpLease } from '@/api/networks/types'

@@ -1,6 +1,9 @@
 <template lang="pug">
   .app-container
-    h4 Баланс: {{ balance }}
+    span Баланс: 
+    small {{ balance }}. 
+    span Создан: 
+    small {{ createDate }}
     el-tabs.border-card
       el-tab-pane(label="Инфо" lazy)
         keep-alive
@@ -37,6 +40,10 @@ export default class extends Vue {
     this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
     this.loaded = true
+  }
+
+  get createDate() {
+    return CustomerModule.create_date
   }
 
   get balance() {

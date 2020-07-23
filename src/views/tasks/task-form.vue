@@ -82,7 +82,7 @@
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { ITaskPriority, ITaskState, ITaskType, ITask } from '@/api/tasks/types'
+import { ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
 import CustomerField from '@/components/CustomerField/index.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 import { getProfiles } from '@/api/profiles/req'

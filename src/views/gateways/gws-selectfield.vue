@@ -11,7 +11,6 @@
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { IGateway } from '@/api/gateways/types'
 import GwsMethods from '@/views/gateways/gws-methods'
 
 @Component({

@@ -21,7 +21,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getDevGroups } from '@/api/devices/req'
 import { IDevGroup } from '@/api/devices/types'
-import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 
 class DataTableComp extends DataTable<IDevGroup> {}
 

@@ -25,7 +25,6 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
-import { IGroup } from '@/api/groups/types'
 import { latinValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
 

@@ -21,10 +21,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { positiveValidator } from '@/utils/validate'
-import { IOneShotPay } from '@/api/services/types'
 import { OneShotPayModule } from '@/store/modules/services/one-shot-pay'
 
 @Component({

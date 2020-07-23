@@ -72,7 +72,6 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { scanOnuList, scanOltFibers } from '@/api/devices/req'
 import { IScannedONU, IDevFiber, IDevice, IDeviceTypeEnum } from '@/api/devices/types'
-import { IDataTableColumn } from '@/components/Datatable/index.vue'
 import NewDevForm from '../new-dev-form.vue'
 
 interface IDevFiberLocal extends IDevFiber {

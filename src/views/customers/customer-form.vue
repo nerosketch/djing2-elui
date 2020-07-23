@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='customerfrm'
-    label-width="110px"
+    label-width="115px"
     size="mini"
     status-icon
     :rules='frmRules'
@@ -44,6 +44,15 @@
       prop='house'
     )
       el-input(v-model="frmMod.house" :maxlength='12')
+    el-form-item(
+      label="День рождения"
+      prop='birth_day'
+    )
+      el-date-picker(
+        v-model="frmMod.birth_day"
+        type="date"
+        value-format="yyyy-MM-dd"
+      )
     el-form-item(
       label="Опции"
     )
@@ -105,7 +114,6 @@ import { mixins } from 'vue-class-component'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import { ICustomerStreet, ICustomerGroup, ICustomerFrm } from '@/api/customers/types'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
-import { CustomerStreetModule } from '@/store/modules/customers/street'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
@@ -146,6 +154,7 @@ export default class extends mixins(FormMixin) {
     username: '',
     telephone: '',
     fio: '',
+    birth_day: '',
     group: 0,
     street: null,
     house: '',
@@ -170,6 +179,7 @@ export default class extends mixins(FormMixin) {
       username: CustomerModule.username,
       telephone: CustomerModule.telephone,
       fio: CustomerModule.fio,
+      birth_day: CustomerModule.birth_day,
       group: CustomerModule.group,
       street: CustomerModule.street === 0 ? null : CustomerModule.street,
       house: CustomerModule.house,

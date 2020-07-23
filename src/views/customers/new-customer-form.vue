@@ -60,6 +60,15 @@
       prop='house'
     )
       el-input(v-model="frmMod.house" :maxlength='12')
+    el-form-item(
+      label="День рождения"
+      prop='birth_day'
+    )
+      el-date-picker(
+        v-model="frmMod.birth_day"
+        type="date"
+        value-format="yyyy-MM-dd"
+      )
     el-form-item
       el-button(type="primary" @click="onSubmit") Сохранить
 </template>
@@ -68,9 +77,9 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { ICustomer, ICustomerGroup, ICustomerStreet, ICustomerFrm } from '@/api/customers/types'
+import { ICustomerGroup, ICustomerStreet, ICustomerFrm } from '@/api/customers/types'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
-import { getStreets, getCustomerGroups } from '@/api/customers/req'
+import { getCustomerGroups } from '@/api/customers/req'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 
 @Component({
@@ -93,6 +102,7 @@ export default class extends Vue {
     username: '',
     telephone: '',
     fio: '',
+    birth_day: '',
     group: this.selectedGroup,
     street: null,
     house: '',
@@ -124,6 +134,7 @@ export default class extends Vue {
       username: CustomerModule.username,
       telephone: CustomerModule.telephone,
       fio: CustomerModule.fio,
+      birth_day: CustomerModule.birth_day,
       group: CustomerModule.group,
       street: CustomerModule.street,
       house: CustomerModule.house,

@@ -17,6 +17,8 @@ class Customer extends VuexModule implements ICustomer {
   username = ''
   telephone = ''
   fio = ''
+  birth_day = ''
+  create_date = ''
   group = 0
   group_title = ''
   balance = 0.0
@@ -46,6 +48,8 @@ class Customer extends VuexModule implements ICustomer {
     this.username = data.username
     this.telephone = data.telephone
     this.fio = data.fio
+    this.birth_day = data.birth_day
+    this.create_date = data.create_date
     this.group = data.group
     this.group_title = data.group_title!
     this.balance = data.balance
@@ -77,6 +81,8 @@ class Customer extends VuexModule implements ICustomer {
     this.username = ''
     this.telephone = ''
     this.fio = ''
+    this.birth_day = ''
+    this.create_date = ''
     this.group = 0
     this.group_title = ''
     this.balance = 0.0

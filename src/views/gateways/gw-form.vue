@@ -56,7 +56,6 @@
 <script lang="ts">
 import { Component, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { IGateway } from '@/api/gateways/types'
 import { ipAddrValidator, latinValidator } from '@/utils/validate'
 import FormMixin from '@/utils/forms'
 import { Form } from 'element-ui'

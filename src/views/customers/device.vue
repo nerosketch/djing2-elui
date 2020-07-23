@@ -32,9 +32,7 @@ el-form(
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { IPort, IDevice } from '@/api/devices/types'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { getPorts, getDevices } from '@/api/devices/req'
 import DeviceSelect from '@/components/DeviceSelect/index.vue'
 import SelectedDevPort from '@/components/DeviceSelect/selectDevPort.vue'
 

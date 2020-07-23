@@ -26,7 +26,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IUserProfile } from '@/api/profiles/types'
-import { getProfile } from '@/api/profiles/req'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
 import UserCard from './UserCard.vue'

@@ -93,7 +93,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IPort, IScannedPort } from '@/api/devices/types'
-import { DeviceModule } from '@/store/modules/devices/device'
 import { PortModule } from '@/store/modules/devices/port'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
 import { getPorts, scanPorts } from '@/api/devices/req'

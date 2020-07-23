@@ -106,12 +106,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { IService } from '@/api/services/types'
 import { getServices } from '@/api/services/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { ICustomer, ICustomerService } from '@/api/customers/types'
-import { ServiceModule } from '@/store/modules/services/service'
+import { ICustomerService } from '@/api/customers/types'
 import BuyService from './buyService.vue'
 import ServiceAccessory from './service-accessory.vue'
 import LastConnectedService from './last-connected-service.vue'

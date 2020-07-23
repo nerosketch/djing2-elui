@@ -33,10 +33,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { IPassportInfo } from '@/api/customers/types'
-import { CustomerModule } from '@/store/modules/customers/customer'
+// import { CustomerModule } from '@/store/modules/customers/customer'
 
 @Component({
   name: 'Passport'
