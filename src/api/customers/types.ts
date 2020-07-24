@@ -74,7 +74,7 @@ export interface ICustomerFrm {
   username: string
   telephone: string
   fio: string
-  birth_day: string
+  birth_day: string | null
   group: number
   street: number | null
   house: string

@@ -191,7 +191,7 @@ export default class extends Vue {
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
     this.$message.success('Абонент добавлен')
-    this.$refs.tbl.GetTableData()
+    this.$router.push({name: 'customerDetails', params:{ uid: newCustomer.pk.toString() }})
   }
 
   private lastStreetId?: number | undefined = undefined

@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='frm'
-    label-width="100px"
+    label-width="115px"
     size="mini"
     status-icon
     :rules="frmRules"
@@ -102,7 +102,7 @@ export default class extends Vue {
     username: '',
     telephone: '',
     fio: '',
-    birth_day: '',
+    birth_day: null,
     group: this.selectedGroup,
     street: null,
     house: '',

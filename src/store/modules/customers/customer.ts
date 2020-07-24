@@ -132,6 +132,7 @@ class Customer extends VuexModule implements ICustomer {
   public async AddCustomer(newData: object) {
     const { data } = await addCustomer(newData)
     this.SET_ALL_CUSTOMER(data)
+    return data
   }
 
   @Action
