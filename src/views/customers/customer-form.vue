@@ -150,19 +150,7 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
-  private frmMod: ICustomerFrm = {
-    username: '',
-    telephone: '',
-    fio: '',
-    birth_day: '',
-    group: 0,
-    street: null,
-    house: '',
-    is_active: false,
-    is_dynamic_ip: false,
-    gateway: 0,
-    description: ''
-  }
+  private frmMod: ICustomerFrm = {} as ICustomerFrm
 
   created() {
     this.loadGroups()

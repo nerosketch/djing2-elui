@@ -23,7 +23,7 @@ export default class extends mixins(GwsMethods) {
   created() {
     this.selectedGw = this.value
     this.loadGateways('id,title').then(() => {
-      if (this.gwlist.length > 0) {
+      if (this.value === 0 && this.gwlist.length > 0) {
         this.selectedGw = this.gwlist[0].id
       }
     })
