@@ -39,7 +39,8 @@
         width="70"
         align='center'
       )
-        template(v-slot:default="{row}") {{ row.user_count }}
+        template(v-slot:default="{row}")
+          el-link(type="primary" @click="openPortView(row)") {{ row.user_count }}
       el-table-column(
         label="Имя"
       )
@@ -58,7 +59,7 @@
       )
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
-            el-button(size='mini' icon='el-icon-view' @click="openPortView(row)")
+            el-button(size='mini' icon='el-icon-view' @click="openVidsDialog(row)")
             el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)")
             el-button(size='mini' type='primary' icon='el-icon-edit' @click="openPortEdit(row)")
           el-button(v-else size='mini' icon='el-icon-plus' circle @click="openPortAdd(row)")
@@ -88,6 +89,13 @@
       dev-form(
         v-on:done="devFrmDone"
       )
+    el-dialog(
+      :visible.sync="vidsDialog"
+      title="Vlan'ы"
+    )
+      vids-view(
+        :portId="currPortId"
+      )
 </template>
 
 <script lang="ts">
@@ -96,10 +104,11 @@ import { IDevice, IPort, IScannedPort } from '@/api/devices/types'
 import { PortModule } from '@/store/modules/devices/port'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
 import { getPorts, scanPorts } from '@/api/devices/req'
-import SwitchPortView from './switch-port-view.vue'
-import SwitchPortForm from './switch-port-form.vue'
-import SwitchPortToggleButton from './switch-port-toggle-button.vue'
+import SwitchPortView from './switch/switch-port-view.vue'
+import SwitchPortForm from './switch/switch-port-form.vue'
+import SwitchPortToggleButton from './switch/switch-port-toggle-button.vue'
 import DevForm from '../dev-form.vue'
+import VidsView from './switch/vlan/vids-view.vue'
 
 interface IFinPort {
   pk?: number
@@ -137,7 +146,8 @@ interface ITableRowClassName {
     SwitchPortView,
     SwitchPortForm,
     SwitchPortToggleButton,
-    DevForm
+    DevForm,
+    VidsView
   }
 })
 export default class extends Vue {
@@ -150,6 +160,7 @@ export default class extends Vue {
   private currPortId = 0
   private initialNum = 0
   private devFormDialog = false
+  private vidsDialog = false
 
   private async loadPorts() {
     if (this.device !== null) {
@@ -283,6 +294,11 @@ export default class extends Vue {
     this.devFormDialog = false
     this.$message.success('Успешно сохранено')
     this.$router.push({ name: 'devicesList', params: { groupId: device.group.toString() } })
+  }
+
+  private openVidsDialog(port: IPort) {
+    this.currPortId = port.pk
+    this.vidsDialog = true
   }
 }
 </script>

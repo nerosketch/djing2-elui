@@ -71,7 +71,7 @@ class Port extends VuexModule implements IPort {
   }
 
   @Action
-  public async TcanMacAddressPort(id: number) {
+  public async ScanMacAddressPort(id: number) {
     const { data } = await scanMacAddressPort(id)
     return data
   }
