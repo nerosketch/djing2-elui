@@ -116,3 +116,23 @@ List
 .list-item.active:hover {
   background-color: #5f9bf4;
 }
+
+
+/* Dialog sizing */
+@media screen and (max-width:640px) {
+  .el-dialog {
+    width: 90%;
+  }
+}
+
+@media screen and (min-width:641px) and (max-width:768px) {
+  .el-dialog {
+    width: 70%;
+  }
+}
+
+@media screen and (min-width:769px) {
+  .el-dialog {
+    width: 50%;
+  }
+}

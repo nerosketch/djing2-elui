@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     v-loading='loading'
-    label-width="130px"
     size="mini"
   )
     el-form-item(

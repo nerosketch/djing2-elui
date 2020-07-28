@@ -2,7 +2,6 @@
   el-form(
     ref='frm'
     v-loading='loading'
-    label-width="140px"
     size="mini"
     status-icon
     :rules='frmRules'

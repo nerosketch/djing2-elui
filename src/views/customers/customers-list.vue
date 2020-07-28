@@ -35,15 +35,6 @@
             @click="addCustomerDialog=true"
           ) Добавить абонента
 
-        el-dialog(
-          title='Добавить абонента'
-          :visible.sync='addCustomerDialog'
-        )
-          new-customer-form(
-            :selectedGroup='groupId'
-            :customerStreets='streets'
-            v-on:done="addFrmDone"
-          )
       el-col(:lg='4' :md='6')
         list(
           title="Улицы"
@@ -58,6 +49,15 @@
               el-button(type='success' icon='el-icon-plus' size='mini' @click="addStreetDialog=true") Доб.
               el-button(type='primary' icon='el-icon-edit' size='mini' @click="editStreetsDialog=true") Изм.
 
+    el-dialog(
+      title='Добавить абонента'
+      :visible.sync='addCustomerDialog'
+    )
+      new-customer-form(
+        :selectedGroup='groupId'
+        :customerStreets='streets'
+        v-on:done="addFrmDone"
+      )
     el-dialog(
       :visible.sync="addStreetDialog"
       title="Добавить улицу"
