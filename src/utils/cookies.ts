@@ -4,7 +4,6 @@ import Cookies from 'js-cookie'
 const sidebarStatusKey = 'sidebar_status'
 export const getSidebarStatus = () => Cookies.get(sidebarStatusKey)
 export const setSidebarStatus = (sidebarStatus: string) => Cookies.set(sidebarStatusKey, sidebarStatus)
-export const getDefaultPageSize = () => Number(localStorage.getItem('itemsPerPage') || 20)
 export const setDefaultPageSize = (psize: number) => localStorage.setItem('itemsPerPage', psize.toString())
 
 // User

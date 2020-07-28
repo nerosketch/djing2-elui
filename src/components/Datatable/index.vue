@@ -2,6 +2,7 @@
   <div>
     <el-table
       v-loading="intLoading"
+      v-el-table-infinite-scroll="infGetData"
       :data="tableData"
       :row-class-name="tableRowClassName"
       v-bind="$attrs"
@@ -30,28 +31,14 @@
         </el-table-column>
       </slot>
     </el-table>
-    <slot
-      name="pagination"
-      :page="page"
-      :total="total"
-    >
-      <pagination
-        :total="total"
-        :page.sync="page"
-        :limit.sync="pageSize"
-        @pagination="GetTableData"
-      >
-        <slot name="default" />
-      </pagination>
-    </slot>
+    <slot name="default" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import Pagination from '@/components/Pagination/index.vue'
-import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters, IDRFAxiosResponseListPromise } from '@/api/types'
-import { getDefaultPageSize } from '@/utils/cookies'
+import elTableInfiniteScroll from 'el-table-infinite-scroll'
+import { IDRFListResponse, IDRFRequestListParameters, IDRFAxiosResponseListPromise } from '@/api/types'
 
 export enum DataTableColumnAlign {
   CENTER = 'center',
@@ -80,7 +67,9 @@ interface getTableDataParam {
 }
 
 @Component({
-  components: { Pagination }
+  directives: {
+    'el-table-infinite-scroll': elTableInfiniteScroll
+  }
 })
 export default class <T> extends Vue {
   @Prop({ default: () => [] }) private columns!: IDataTableColumn[]
@@ -96,16 +85,15 @@ export default class <T> extends Vue {
   }
 
   private responseData: IDRFListResponse<T> = {
-    count: getDefaultPageSize(),
+    count: 0,
     next: null,
     previous: null,
     results: []
   }
   private tableData: T[] = []
   private page = 1
-  private pageSize = getDefaultPageSize()
   private orderField: string | null = null
-  private intLoading = true
+  private intLoading = false
   private tblHeight = 0
 
   get listeners() {
@@ -115,30 +103,41 @@ export default class <T> extends Vue {
     }
   }
 
-  get total() {
-    return this.responseData.count
+  get lDisabled() {
+    return this.responseData.next === null
   }
 
   public async GetTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
+    this.page = 1
+    this.loadRemoteData(params, otherParams)
+  }
+
+  private async loadRemoteData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
+    if (this.intLoading) return
     this.intLoading = true
     const { page, limit } = params
     const reqPage = page || this.page
     const allParams = Object.assign(otherParams, {
       page: reqPage,
-      page_size: this.pageSize,
+      page_size: 30,
       ordering: this.orderField,
       fields: this.fields
     })
     try {
       let response = await this.getData(allParams)
       this.responseData = response.data
-      this.tableData = this.responseData.results
+      if (this.page > 1) {
+        this.tableData = this.tableData.concat(this.responseData.results)
+      } else {
+        this.tableData = this.responseData.results
+      }
     } finally {
       this.intLoading = false
     }
   }
 
   private onSortChange(data: any) {
+    this.page = 1
     const { prop, order } = data
     if (prop !== null) {
       const dir = order === 'ascending' ? '' : '-'
@@ -160,6 +159,12 @@ export default class <T> extends Vue {
 
   private onWinResize() {
     this.tblHeight = window.innerHeight - this.heightDiff
+  }
+
+  private infGetData() {
+    if (this.intLoading || this.lDisabled) return
+    this.page++
+    this.loadRemoteData()
   }
 }
 </script>

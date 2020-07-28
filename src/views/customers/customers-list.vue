@@ -52,6 +52,7 @@
     el-dialog(
       title='Добавить абонента'
       :visible.sync='addCustomerDialog'
+      top="5vh"
     )
       new-customer-form(
         :selectedGroup='groupId'
@@ -191,7 +192,7 @@ export default class extends Vue {
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
     this.$message.success('Абонент добавлен')
-    this.$router.push({name: 'customerDetails', params:{ uid: newCustomer.pk.toString() }})
+    this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.pk.toString() } })
   }
 
   private lastStreetId?: number | undefined = undefined
