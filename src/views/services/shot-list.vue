@@ -4,7 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadShots"
     :loading="loading"
-    :heightDiff='211'
+    :heightDiff='143'
     ref='table'
   )
     template(v-slot:pk="{row}") {{ row.pk }}

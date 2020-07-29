@@ -2,7 +2,6 @@
   .tab-container
     el-tabs(
       v-model="activeName"
-      style="margin-top:15px"
       type="border-card"
     )
       el-tab-pane(

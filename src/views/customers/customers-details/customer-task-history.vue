@@ -3,7 +3,7 @@
     :columns="tableColumns"
     :getData="loadTLog"
     :loading="loading"
-    :heightDiff='269'
+    :heightDiff='149'
     ref='tlogtbl'
   )
     template(v-slot:author_uname="{row}") {{ row.author_uname }}

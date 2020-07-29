@@ -5,11 +5,11 @@ div
     :getData="loadTasks"
     :loading="loading"
     :tableRowClassName="tableRowClassName"
-    :heightDiff='210'
+    :heightDiff='168'
     ref='tbl'
   )
     template(v-slot:id="{row}")
-      router-link(:to="{name: 'taskDetails', params:{ taskId: row.id }}")
+      router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
         el-button(
           :type="row.comment_count > 0 ? 'success' : 'primary'"
           size='mini'
@@ -19,7 +19,7 @@ div
 
     template(v-slot:customer_full_name="{row}")
       el-link(type="primary")
-        router-link(:to="{name: 'customerDetails', params:{uid: row.customer }}") {{ row.customer_full_name }}
+        router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }") {{ row.customer_full_name }}
 
     template(v-slot:customer_address="{row}") {{ row.customer_address }}
 

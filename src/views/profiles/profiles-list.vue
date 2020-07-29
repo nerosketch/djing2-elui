@@ -4,6 +4,7 @@
       :columns="tableColumns"
       :getData="getAllProfiles"
       :loading="loading"
+      :heightDiff='95'
       ref='tbl'
     )
       template(v-slot:ava="{row}")

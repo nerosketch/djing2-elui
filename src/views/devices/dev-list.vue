@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevs"
-      :heightDiff='133'
+      :heightDiff='100'
       ref='table'
     )
       template(v-slot:pk="{row}")

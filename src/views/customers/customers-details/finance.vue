@@ -4,7 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadLog"
     :loading="loading"
-    :heightDiff='269'
+    :heightDiff='180'
     ref='fintbl'
   )
     template(v-slot:cost="{row}") {{ row.cost }}

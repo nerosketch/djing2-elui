@@ -42,17 +42,13 @@ div:focus {
   @include clearfix;
 }
 
-.app-container {
-  padding: 20px;
+.app-container, .tab-container {
+  padding: 10px 10px 6px 10px;
 }
 
 .el-card__header {
   background-color: aliceblue;
   padding: 9px 15px
-}
-
-.tab-container {
-  margin: 20px 20px 5px 20px;
 }
 
 .el-table {
