@@ -4,7 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadVlans"
     :loading="vlansLoading"
-    :heightDiff='152'
+    :heightDiff='142'
     ref='table'
   )
     template(v-slot:id="{row}") {{ row.id }}

@@ -6,6 +6,7 @@
           :columns="tableColumns"
           :getData="getAllCustomers"
           :loading="customersLoading"
+          :heightDiff="100"
           ref='tbl'
         )
           template(v-slot:pk="{row}") {{ row.pk }}
