@@ -14,6 +14,7 @@ class Gateway extends VuexModule implements IGateway {
   public gw_type = 0
   public is_default = false
   public enabled = false
+  public customers_count = 0
 
   @Mutation
   private SET_ID(gid: number): void {
@@ -31,6 +32,7 @@ class Gateway extends VuexModule implements IGateway {
     this.gw_type = data.gw_type
     this.is_default = data.is_default
     this.enabled = data.enabled
+    this.customers_count = data.customers_count!
     return this
   }
 
@@ -45,6 +47,7 @@ class Gateway extends VuexModule implements IGateway {
     this.gw_type = 0
     this.is_default = false
     this.enabled = false
+    this.customers_count = 0
     return this
   }
 

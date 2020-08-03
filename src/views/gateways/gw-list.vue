@@ -30,6 +30,10 @@
           dd
             i {{ gw.enabled ? 'Да' : 'Нет' }}
           dt
+            b Количество абонентов
+          dd
+            i {{ gw.customers_count }}
+          dt
             b ID
           dd {{ gw.id }}
         el-button-group

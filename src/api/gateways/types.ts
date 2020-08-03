@@ -10,6 +10,7 @@ export interface IGateway {
   gw_type: number
   is_default: boolean
   enabled: boolean
+  customers_count?: number
 }
 
 export type IGatewayList = IDRFListResponse<IGateway>
