@@ -145,7 +145,10 @@ export default class extends Vue {
   }
 
   async created() {
-    await this.loadGroups()
+    this.loadGroups()
+    CustomerModule.InitDefaults().then(initialForm => {
+      this.frmMod.username = initialForm.username
+    })
   }
 
   private async loadGroups() {

@@ -108,10 +108,11 @@ class Customer extends VuexModule implements ICustomer {
     return this
   }
 
-  @Mutation
-  public async INIT_DEFAULTS() {
+  @Action
+  public async InitDefaults() {
     const { data } = await getCustomerFormInitial()
     this.SET_ALL_CUSTOMER(data)
+    return data
   }
 
   @Action
