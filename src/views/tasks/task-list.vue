@@ -94,11 +94,13 @@ export default class extends Vue {
     },
     {
       prop: 'customer_full_name',
-      label: 'Имя'
+      label: 'Имя',
+      width: 250
     },
     {
       prop: 'customer_address',
-      label: 'Адрес'
+      label: 'Адрес',
+      width: 300
     },
     {
       prop: 'mode_str',
@@ -107,7 +109,8 @@ export default class extends Vue {
     },
     {
       prop: 'descr',
-      label: 'Описание'
+      label: 'Описание',
+      width: 300
     },
     {
       prop: 'state_str',

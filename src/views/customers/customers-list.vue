@@ -120,6 +120,7 @@ export default class extends Vue {
     {
       prop: 'fio',
       label: 'ФИО',
+      width: 300,
       sortable: true
     },
     {
@@ -141,6 +142,7 @@ export default class extends Vue {
     {
       prop: 'current_service__service__title',
       label: 'Услуга',
+      width: 240,
       sortable: true
     },
     {

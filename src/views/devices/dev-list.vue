@@ -88,19 +88,23 @@ export default class extends Vue {
     },
     {
       prop: 'ip_address',
-      label: 'IP Адрес'
+      label: 'IP Адрес',
+      width: 120
     },
     {
       prop: 'comment',
-      label: 'Коммент'
+      label: 'Коммент',
+      width: 300
     },
     {
       prop: 'dev_type',
-      label: 'Тип'
+      label: 'Тип',
+      width: 150
     },
     {
       prop: 'mac_addr',
-      label: 'MAC Адрес'
+      label: 'MAC Адрес',
+      width: 150
     },
     {
       prop: 'status',

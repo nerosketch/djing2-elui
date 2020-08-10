@@ -8,7 +8,6 @@
       v-bind="$attrs"
       :height="tblHeight"
       border
-      fit
       v-on="listeners"
     >
       <slot name="columns">
@@ -17,7 +16,7 @@
           :key="column.prop"
           :sortable="column.sortable ? 'custom' : false"
           :align="column.align"
-          :width="column.width"
+          :min-width="column.width"
           v-bind="column"
         >
           <template v-slot:default="{row}">
@@ -52,6 +51,7 @@ export interface IDataTableColumn {
   label: string
   align?: DataTableColumnAlign
   width?: number
+  'min-width'?: number
 }
 
 export class DataTableColumn implements IDataTableColumn {

@@ -64,7 +64,8 @@ export default class extends Vue {
     },
     {
       prop: 'comment',
-      label: 'Комментарий'
+      label: 'Комментарий',
+      width: 300
     }
   ]
 

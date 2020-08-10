@@ -76,15 +76,18 @@ export default class extends Vue {
     },
     {
       prop: 'fio',
-      label: 'ФИО'
+      label: 'ФИО',
+      width: 250
     },
     {
       prop: 'telephone',
-      label: 'Телефон'
+      label: 'Телефон',
+      width: 120
     },
     {
       prop: 'email',
-      label: 'Адрес электронной почты'
+      label: 'Адрес электронной почты',
+      width: 250
     },
     {
       prop: 'btn',

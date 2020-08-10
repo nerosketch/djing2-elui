@@ -60,17 +60,19 @@ export default class extends Vue {
     {
       prop: 'pk',
       label: 'ID',
-      width: 70
+      'min-width': 70
     },
     {
       prop: 'title',
       label: 'Название',
-      sortable: true
+      sortable: true,
+      'min-width': 250
     },
     {
       prop: 'code',
       label: 'Тех.код',
-      sortable: true
+      sortable: true,
+      width: 100
     },
     {
       prop: 'oper',

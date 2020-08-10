@@ -39,7 +39,8 @@ export default class extends Vue {
     },
     {
       prop: 'title',
-      label: 'Название'
+      label: 'Название',
+      width: 250
     },
     {
       prop: 'usercount',

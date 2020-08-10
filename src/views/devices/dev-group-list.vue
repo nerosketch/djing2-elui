@@ -45,7 +45,8 @@ export default class extends Vue {
     {
       prop: 'title',
       label: 'Название',
-      sortable: true
+      sortable: true,
+      width: 250
     },
     {
       prop: 'device_count',
