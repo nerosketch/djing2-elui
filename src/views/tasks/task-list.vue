@@ -89,38 +89,38 @@ export default class extends Vue {
     {
       prop: 'id',
       label: 'ID',
-      width: 80,
+      'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'customer_full_name',
       label: 'Имя',
-      width: 250
+      'min-width': 250
     },
     {
       prop: 'customer_address',
       label: 'Адрес',
-      width: 300
+      'min-width': 300
     },
     {
       prop: 'mode_str',
       label: 'Характер поломки',
-      width: 150
+      'min-width': 150
     },
     {
       prop: 'descr',
       label: 'Описание',
-      width: 300
+      'min-width': 400
     },
     {
       prop: 'state_str',
       label: 'Состояние',
-      width: 100
+      'min-width': 100
     },
     {
       prop: 'time_of_create',
       label: 'Дата создания',
-      width: 170
+      'min-width': 170
     }
   ]
   private loading = false

@@ -62,58 +62,60 @@ export default class extends Vue {
     {
       prop: 'id',
       label: 'ID',
-      width: 50,
+      'min-width': 50,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'title',
       label: 'Название',
-      sortable: true
+      sortable: true,
+      'min-width': 200
     },
     {
       prop: 'descr',
-      label: 'Описание'
+      label: 'Описание',
+      'min-width': 300
     },
     {
       prop: 'speed_in',
       label: 'Вход.ск.',
-      width: 110,
+      'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_out',
       label: 'Исход.ск.',
-      width: 110,
+      'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_burst',
       label: 'Бурст',
-      width: 100
+      'min-width': 100
     },
     {
       prop: 'cost',
       label: 'Цена',
-      width: 90,
+      'min-width': 90,
       sortable: true
     },
     {
       prop: 'isadm',
       label: 'Админ.',
-      width: 80,
+      'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'usercount',
       label: 'Кол.польз.',
-      width: 130,
+      'min-width': 130,
       sortable: true,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
       label: 'Oper',
-      width: 130,
+      'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]

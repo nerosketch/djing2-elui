@@ -40,27 +40,27 @@ export default class extends Vue {
     {
       prop: 'author_uname',
       label: 'Автор',
-      width: 100
+      'min-width': 100
     },
     {
       prop: 'descr',
       label: 'Комментарий',
-      width: 250
+      'min-width': 250
     },
     {
       prop: 'state_str',
       label: 'Состояние',
-      width: 200
+      'min-width': 200
     },
     {
       prop: 'mode_str',
       label: 'Тип',
-      width: 150
+      'min-width': 150
     },
     {
       prop: 'time_of_create',
       label: 'Дата создания',
-      width: 200
+      'min-width': 200
     }
   ]
 

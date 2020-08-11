@@ -55,22 +55,25 @@ export default class extends Vue {
     {
       prop: 'id',
       label: 'ID',
-      width: 70
+      'min-width': 70
     },
     {
       prop: 'ip_address',
       label: 'IP Адрес',
-      sortable: true
+      sortable: true,
+      'min-width': 130
     },
     {
       prop: 'lease_time',
       label: 'Время создания аренды',
-      sortable: true
+      sortable: true,
+      'min-width': 200
     },
     {
       prop: 'mac_address',
       label: 'MAC Адрес',
-      sortable: true
+      sortable: true,
+      'min-width': 150
     },
     {
       prop: 'is_dynamic',
@@ -79,7 +82,7 @@ export default class extends Vue {
     {
       prop: 'oper',
       label: 'Oper',
-      width: 130,
+      'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]

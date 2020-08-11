@@ -50,22 +50,22 @@ export default class extends Vue {
     {
       prop: 'cost',
       label: 'Сумма',
-      width: 80
+      'min-width': 80
     },
     {
       prop: 'date',
       label: 'Дата оплаты',
-      width: 160
+      'min-width': 160
     },
     {
       prop: 'author_name',
       label: 'Назначил',
-      width: 180
+      'min-width': 180
     },
     {
       prop: 'comment',
       label: 'Комментарий',
-      width: 300
+      'min-width': 300
     }
   ]
 

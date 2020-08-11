@@ -109,52 +109,52 @@ export default class extends Vue {
     {
       prop: 'pk',
       label: 'ID',
-      width: 60
+      'min-width': 60
     },
     {
       prop: 'username',
       label: 'Логин',
       sortable: true,
-      width: 100
+      'min-width': 100
     },
     {
       prop: 'fio',
       label: 'ФИО',
-      width: 300,
+      'min-width': 300,
       sortable: true
     },
     {
       prop: 'street_name',
       label: 'Улица',
-      width: 110
+      'min-width': 110
     },
     {
       prop: 'house',
       label: 'Квартира',
       sortable: true,
-      width: 110
+      'min-width': 110
     },
     {
       prop: 'telephone',
       label: 'Телефон',
-      width: 140
+      'min-width': 140
     },
     {
       prop: 'current_service__service__title',
       label: 'Услуга',
-      width: 240,
+      'min-width': 240,
       sortable: true
     },
     {
       prop: 'balance',
       label: 'Баланс',
       sortable: true,
-      width: 100
+      'min-width': 100
     },
     {
       prop: 'gateway_title',
       label: 'Шлюз',
-      width: 170
+      'min-width': 170
     }
   ]
 

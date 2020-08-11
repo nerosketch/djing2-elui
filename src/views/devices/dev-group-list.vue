@@ -40,13 +40,13 @@ export default class extends Vue {
     {
       prop: 'pk',
       label: 'ID',
-      width: 70
+      'min-width': 70
     },
     {
       prop: 'title',
       label: 'Название',
       sortable: true,
-      width: 250
+      'min-width': 250
     },
     {
       prop: 'device_count',

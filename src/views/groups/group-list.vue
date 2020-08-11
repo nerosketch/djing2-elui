@@ -72,12 +72,12 @@ export default class extends Vue {
       prop: 'code',
       label: 'Тех.код',
       sortable: true,
-      width: 100
+      'min-width': 100
     },
     {
       prop: 'oper',
       label: 'Oper',
-      width: 130,
+      'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]

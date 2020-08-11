@@ -50,22 +50,23 @@ export default class extends Vue {
     {
       prop: 'pk',
       label: 'ID',
-      width: 70
+      'min-width': 70
     },
     {
       prop: 'name',
-      label: 'Название платежа'
+      label: 'Название платежа',
+      'min-width': 200
     },
     {
       prop: 'cost',
       label: 'Стоимость',
-      width: 150,
+      'min-width': 150,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
       label: 'Oper',
-      width: 130,
+      'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]

@@ -35,17 +35,17 @@ export default class extends Vue {
     {
       prop: 'pk',
       label: 'ID',
-      width: 60
+      'min-width': 60
     },
     {
       prop: 'title',
       label: 'Название',
-      width: 250
+      'min-width': 250
     },
     {
       prop: 'usercount',
       label: 'Абонентов',
-      width: 140
+      'min-width': 140
     }
   ]
 

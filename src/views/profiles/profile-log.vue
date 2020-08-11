@@ -41,16 +41,17 @@ export default class extends Vue {
     {
       prop: 'action_date',
       label: 'Дата',
-      width: 150
+      'min-width': 150
     },
     {
       prop: 'additional_text',
-      label: 'Дополнительное'
+      label: 'Дополнительное',
+      'min-width': 400
     },
     {
       prop: 'do_type_text',
       label: 'Описание',
-      width: 130,
+      'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]

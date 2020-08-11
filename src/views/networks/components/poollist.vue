@@ -63,51 +63,56 @@ export default class extends Vue {
     {
       prop: 'id',
       label: 'ID',
-      width: 70
+      'min-width': 70
     },
     {
       prop: 'network',
       label: 'Подсеть',
-      sortable: true
+      sortable: true,
+      'min-width': 150
     },
     {
       prop: 'description',
-      label: 'Описание'
+      label: 'Описание',
+      'min-width': 300
     },
     {
       prop: 'ip_start',
       label: 'нач. ip',
       sortable: true,
-      align: DataTableColumnAlign.CENTER
+      align: DataTableColumnAlign.CENTER,
+      'min-width': 150
     },
     {
       prop: 'ip_end',
       label: 'кон. ip',
       sortable: true,
-      align: DataTableColumnAlign.CENTER
+      align: DataTableColumnAlign.CENTER,
+      'min-width': 150
     },
     {
       prop: 'gateway',
       label: 'шлюз',
       sortable: true,
-      align: DataTableColumnAlign.CENTER
+      align: DataTableColumnAlign.CENTER,
+      'min-width': 150
     },
     {
       prop: 'is_dynamic',
       label: 'Д',
-      width: 40,
+      'min-width': 40,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'usage_count',
       label: 'Выделено',
-      width: 100,
+      'min-width': 100,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
       label: 'Oper',
-      width: 130,
+      'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]

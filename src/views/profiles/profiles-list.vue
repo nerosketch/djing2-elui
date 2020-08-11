@@ -67,7 +67,7 @@ export default class extends Vue {
     {
       prop: 'ava',
       label: 'Фото',
-      width: 60,
+      'min-width': 60,
       align: DataTableColumnAlign.CENTER
     },
     {
@@ -77,22 +77,22 @@ export default class extends Vue {
     {
       prop: 'fio',
       label: 'ФИО',
-      width: 250
+      'min-width': 250
     },
     {
       prop: 'telephone',
       label: 'Телефон',
-      width: 120
+      'min-width': 120
     },
     {
       prop: 'email',
       label: 'Адрес электронной почты',
-      width: 250
+      'min-width': 250
     },
     {
       prop: 'btn',
       label: '—',
-      width: 90,
+      'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
   ]

@@ -53,29 +53,30 @@ export default class extends Vue {
     {
       prop: 'id',
       label: 'ID',
-      width: 70
+      'min-width': 70
     },
     {
       prop: 'title',
       label: 'Название',
-      sortable: true
+      sortable: true,
+      'min-width': 150
     },
     {
       prop: 'vid',
       label: 'VID',
       sortable: true,
-      width: 70
+      'min-width': 70
     },
     {
       prop: 'ismng',
       label: 'Управл.',
-      width: 80,
+      'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
       label: 'Oper',
-      width: 130,
+      'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]

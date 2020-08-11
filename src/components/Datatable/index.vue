@@ -16,7 +16,6 @@
           :key="column.prop"
           :sortable="column.sortable ? 'custom' : false"
           :align="column.align"
-          :min-width="column.width"
           v-bind="column"
         >
           <template v-slot:default="{row}">
@@ -50,7 +49,6 @@ export interface IDataTableColumn {
   prop: string
   label: string
   align?: DataTableColumnAlign
-  width?: number
   'min-width'?: number
 }
 

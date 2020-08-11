@@ -84,27 +84,27 @@ export default class extends Vue {
     {
       prop: 'pk',
       label: 'ID',
-      width: 70
+      'min-width': 70
     },
     {
       prop: 'ip_address',
       label: 'IP Адрес',
-      width: 120
+      'min-width': 120
     },
     {
       prop: 'comment',
       label: 'Коммент',
-      width: 300
+      'min-width': 300
     },
     {
       prop: 'dev_type',
       label: 'Тип',
-      width: 150
+      'min-width': 150
     },
     {
       prop: 'mac_addr',
       label: 'MAC Адрес',
-      width: 150
+      'min-width': 150
     },
     {
       prop: 'status',
@@ -117,7 +117,7 @@ export default class extends Vue {
     {
       prop: 'oper',
       label: 'Oper',
-      width: 130,
+      'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
