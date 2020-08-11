@@ -35,7 +35,10 @@
       title="Добавить учётку"
       :visible.sync="profileFormDialog"
     )
-      profile-form(v-on:done="addProfileDone")
+      profile-form(
+        v-on:done="addProfileDone"
+        v-on:fail="addProfileFail"
+      )
 </template>
 
 <script lang="ts">
@@ -115,6 +118,10 @@ export default class extends Vue {
   private async addProfileDone(newProfile: IUserProfile) {
     this.profileFormDialog = false
     this.$router.push({ name: 'profileDetail', params: { profileUname: newProfile.username } })
+  }
+
+  private async addProfileFail() {
+    this.profileFormDialog = false
   }
 }
 </script>

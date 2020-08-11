@@ -8,6 +8,7 @@ class UserProfile extends VuexModule implements IUserProfile {
   pk = 0
   username = ''
   fio = ''
+  birth_day = ''
   is_active = false
   is_admin = false
   telephone = ''
@@ -22,6 +23,7 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.pk = data.pk
     this.username = data.username
     this.fio = data.fio
+    this.birth_day = data.birth_day
     this.is_active = data.is_active
     this.is_admin = data.is_admin
     this.telephone = data.telephone
@@ -37,6 +39,7 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.pk = 0
     this.username = ''
     this.fio = ''
+    this.birth_day = ''
     this.is_active = false
     this.is_admin = false
     this.telephone = ''

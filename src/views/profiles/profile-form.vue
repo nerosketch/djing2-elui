@@ -18,6 +18,15 @@
     )
       el-input(v-model="frmMod.fio")
     el-form-item(
+      label="День рождения"
+      prop='birth_day'
+    )
+      el-date-picker(
+        v-model="frmMod.birth_day"
+        type="date"
+        value-format="yyyy-MM-dd"
+      )
+    el-form-item(
       label="Включён"
       prop='is_active'
     )
@@ -40,7 +49,20 @@
     )
       el-input(v-model="frmMod.password" type="password" autocomplete="new-password")
     el-form-item
-      el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit") {{ isNew ? 'Добавить' : 'Сохранить' }}
+      el-button-group
+        el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-download" size='small') {{ isNew ? 'Добавить' : 'Сохранить' }}
+        el-button(@click="openPasswordForm" icon="el-icon-lock" size='small') Пароль
+
+    el-dialog(
+      title="Поменять пароль"
+      :visible.sync="passwordFormDialog"
+    )
+      password-form(
+        :profileId="profileId"
+        v-on:done="passwordDone"
+        v-on:cancel="passwordCancel"
+      )
+
 </template>
 
 <script lang="ts">
@@ -48,15 +70,20 @@ import { Component, Vue } from 'vue-property-decorator'
 import { latinValidator, telephoneValidator, emailValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
+import PasswordForm from './password-form.vue'
+import { IUserProfile } from '@/api/profiles/types'
 
 @Component({
-  name: 'ProfileForm'
+  name: 'ProfileForm',
+  components: { PasswordForm }
 })
 export default class extends Vue {
   private loading = false
+  private passwordFormDialog = false
   private frmMod = {
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,
+    birth_day: UserProfileModule.birth_day,
     is_active: this.isNew ? true : UserProfileModule.is_active,
     telephone: UserProfileModule.telephone,
     email: UserProfileModule.email,
@@ -89,24 +116,47 @@ export default class extends Vue {
     ]
   }
 
+  private get profileId() {
+    return UserProfileModule.pk
+  }
+
   private onSubmit() {
     (this.$refs['frm'] as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         let newDat
-        if (this.isNew) {
-          newDat = await UserProfileModule.AddProfile(this.frmMod)
-          this.$message.success('Учётка добавлена')
-        } else {
-          newDat = await UserProfileModule.PatchProfile(this.frmMod)
-          this.$message.success('Учётка сохранена')
+        try {
+          if (this.isNew) {
+            newDat = await UserProfileModule.AddProfile(this.frmMod)
+            this.$message.success('Учётка добавлена')
+          } else {
+            newDat = await UserProfileModule.PatchProfile(this.frmMod)
+            this.$message.success('Учётка сохранена')
+          }
+          this.loading = false
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+          this.loading = false
+          this.$emit('fail')
+          return null
         }
-        this.loading = false
-        this.$emit('done', newDat)
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  private openPasswordForm() {
+    this.passwordFormDialog = true
+  }
+
+  private passwordDone(profile: IUserProfile) {
+    this.$message.success('Пароль успешно изменён')
+    this.passwordFormDialog = false
+  }
+  private passwordCancel() {
+    this.passwordFormDialog = false
   }
 }
 </script>

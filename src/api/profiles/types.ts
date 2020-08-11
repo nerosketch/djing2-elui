@@ -4,6 +4,7 @@ export interface IUserProfile {
   pk: number
   username: string
   fio: string
+  birth_day: string
   is_active: boolean
   is_admin: boolean
   telephone: string

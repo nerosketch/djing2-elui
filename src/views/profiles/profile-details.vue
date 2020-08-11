@@ -43,6 +43,7 @@ export default class extends Vue {
     pk: UserProfileModule.pk,
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,
+    birth_day: UserProfileModule.birth_day,
     is_active: UserProfileModule.is_active,
     is_admin: UserProfileModule.is_admin,
     telephone: UserProfileModule.telephone,
