@@ -6,6 +6,7 @@
           :columns="tableColumns"
           :getData="getAllCustomers"
           :loading="customersLoading"
+          :tableRowClassName="rowColor"
           :heightDiff="100"
           ref='tbl'
         )
@@ -92,6 +93,11 @@ import EditStreets from './street/edit-streets.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
+interface ITableRowClassName {
+  row: ICustomer
+  rowIndex: number
+}
+
 @Component({
   name: 'CustomersList',
   components: { 'datatable': DataTableComp, NewCustomerForm, List, NewStreetForm, EditStreets }
@@ -176,13 +182,12 @@ export default class extends Vue {
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     this.customersLoading = true
-    const fields = 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title'
     let r
     if (params) {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
         street: this.lastStreetId,
-        fields
+        fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active'
       })
       r = await getCustomers(newParams)
     } else {
@@ -224,6 +229,10 @@ export default class extends Vue {
 
   created() {
     this.loadStreets()
+  }
+
+  private rowColor(r: ITableRowClassName) {
+    return r.row.is_active ? '' : 'error-row'
   }
 }
 </script>
