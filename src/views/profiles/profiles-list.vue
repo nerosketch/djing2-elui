@@ -3,6 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="getAllProfiles"
+      :tableRowClassName="rowColor"
       :loading="loading"
       :heightDiff='95'
       ref='tbl'
@@ -44,13 +45,18 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
-import { IUserProfile } from '@/api/profiles/types'
 import { IDRFRequestListParameters } from '@/api/types'
+import { IUserProfile } from '@/api/profiles/types'
 import { getProfiles } from '@/api/profiles/req'
 import ProfileForm from './profile-form.vue'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 
 class DataTableComp extends DataTable<IUserProfile> {}
+
+interface ITableRowClassName {
+  row: IUserProfile
+  rowIndex: number
+}
 
 @Component({
   name: 'ProfilesList',
@@ -103,7 +109,7 @@ export default class extends Vue {
   private async getAllProfiles(params?: IDRFRequestListParameters) {
     this.loading = true
     if (params) {
-      params['fields'] = 'avatar,username,fio,telephone,email'
+      params['fields'] = 'avatar,username,fio,telephone,email,is_active'
     }
     const r = await getProfiles(params)
     this.loading = false
@@ -122,6 +128,10 @@ export default class extends Vue {
 
   private async addProfileFail() {
     this.profileFormDialog = false
+  }
+
+  private rowColor(r: ITableRowClassName) {
+    return r.row.is_active ? '' : 'error-row'
   }
 }
 </script>
