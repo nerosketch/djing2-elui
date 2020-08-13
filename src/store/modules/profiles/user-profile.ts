@@ -1,7 +1,7 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { IUserProfile } from '@/api/profiles/types'
-import { getProfile, delProfile, changeProfile, addProfile } from '@/api/profiles/req'
+import { IUserProfile, IPasswordUpdateForm } from '@/api/profiles/types'
+import { getProfile, delProfile, changeProfile, addProfile, setProfilePassword } from '@/api/profiles/req'
 
 @Module({ dynamic: true, store, name: 'userprofile' })
 class UserProfile extends VuexModule implements IUserProfile {
@@ -81,6 +81,13 @@ class UserProfile extends VuexModule implements IUserProfile {
   @Action
   public async PatchProfile(info: object) {
     const { data } = await changeProfile(this.username, info)
+    this.SET_ALL_PROFILE(data)
+    return data
+  }
+
+  @Action
+  public async PatchPassword(newPassw: IPasswordUpdateForm) {
+    const { data } = await setProfilePassword(this.username, newPassw)
     this.SET_ALL_PROFILE(data)
     return data
   }

@@ -38,3 +38,8 @@ export interface IUserProfileLog {
 export type IUserProfileLogList = IDRFListResponse<IUserProfileLog>
 export type IUserProfileLogAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfileLog>
 export type IUserProfileLogListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfileLogList>
+
+export interface IPasswordUpdateForm {
+  old_passw: string
+  new_passw: string
+}

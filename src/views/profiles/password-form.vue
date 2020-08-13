@@ -8,6 +8,11 @@
     v-loading="loading"
   )
     el-form-item(
+      label="Старый пароль"
+      prop='old_passw'
+    )
+      el-input(v-model="frmMod.old_passw" maxlength="128" type="password")
+    el-form-item(
       label="Новый пароль"
       prop='new_passw'
     )
@@ -20,7 +25,7 @@
     el-form-item
       el-button-group
         el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isEmpty") Сохранить
-        el-button(@click="$emit('cancel')" icon="el-icon-delete" size='small') Отмена
+        el-button(@click="$emit('cancel')" icon="el-icon-close" size='small') Отмена
 </template>
 
 <script lang="ts">
@@ -37,6 +42,11 @@ export default class extends Vue {
   private loading = false
 
   private frmRules = {
+    old_passw: [
+      { required: true, message: 'Надо указать старый пароль', trigger: 'blur' },
+      { validator: latinValidator, required: true, trigger: 'blur' },
+      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
+    ],
     new_passw: [
       { required: true, message: 'Надо указать новый пароль', trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
@@ -58,6 +68,7 @@ export default class extends Vue {
   }
 
   private frmMod = {
+    old_passw: '',
     new_passw: '',
     retype_passw: ''
   }
@@ -73,11 +84,17 @@ export default class extends Vue {
     (this.$refs['form'] as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        const changedUser = UserProfileModule.PatchProfile({
-          password: this.frmMod.retype_passw
-        })
-        this.loading = false
-        this.$emit('done', changedUser)
+        try {
+          const changedUser = await UserProfileModule.PatchPassword({
+            old_passw: this.frmMod.old_passw,
+            new_passw: this.frmMod.retype_passw
+          })
+          this.loading = false
+          this.$emit('done', changedUser)
+        } catch (err) {
+          this.$message.error(err)
+          this.loading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

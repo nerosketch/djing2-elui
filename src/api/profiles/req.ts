@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
-import { IUserProfileLogListAxiosResponsePromise, IUserProfileLogList, IUserProfileLog, IUserProfileLogAxoisResponsePromise, IUserProfileList, IUserProfileListAxiosResponsePromise, IUserProfile, IUserProfileAxoisResponsePromise } from './types'
+import { IUserProfileLogListAxiosResponsePromise, IUserProfileLogList, IUserProfileLog, IUserProfileLogAxoisResponsePromise, IUserProfileList, IUserProfileListAxiosResponsePromise, IUserProfile, IUserProfileAxoisResponsePromise, IPasswordUpdateForm } from './types'
 
 // IUserProfileLog
 const baseLogUrl = '/profiles/log/'
@@ -47,6 +47,9 @@ export const getResponsibilityGroups = (uname: string): IDRFAxiosResponsePromise
 
 export const setResponsibilityGroups = (uname: string, groups: number[]) =>
   request.put(`${baseAccUrl}${uname}/set_responsibility_groups/`, { groups })
+
+export const setProfilePassword = (uname: string, newPassw: IPasswordUpdateForm) =>
+  request.put(`${baseAccUrl}${uname}/change_password/`, newPassw)
 
 export const login = (data: any) =>
   request({
