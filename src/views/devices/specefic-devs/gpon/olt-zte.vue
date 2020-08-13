@@ -2,8 +2,8 @@
   el-card.box-card
     template(v-slot:header)
       .clearfix
-        span zte
-        small sdg
+        span zte - 
+        small {{ details }}
         el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
     el-row
       el-col(:xl="2" :md="3" :sm="6" :xs="12" v-for="(p, i) in allPorts" :key="i")
@@ -56,7 +56,7 @@
         :initialMac="newOnuInitialMac"
         :initialDevType="gdevType"
         :initialGroup="device.group"
-        :initialParentDev="device.pk"
+        :initialParentDev="devPk"
         :initialParentDevName="device.comment"
         v-if="saveOnuFormDialog"
         v-on:done="frmNewOnuDone"
@@ -66,8 +66,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { scanOltFibers, scanUnitsUnregistered } from '@/api/devices/req'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { scanOltFibers, scanUnitsUnregistered, scanDetails } from '@/api/devices/req'
 import { IDevice, IDevFiber, IUnitUnregistered, IDeviceTypeEnum } from '@/api/devices/types'
 import OltZtePort from './olt-zte-port.vue'
 import NewDevForm from '@/views/devices/new-dev-form.vue'
@@ -88,6 +88,7 @@ export default class extends Vue {
   private unregistered: IUnitUnregistered[] = []
   private saveOnuFormDialog = false
   private newOnuInitialMac = ''
+  private details = ''
 
   private openDevForm() {
     this.devFormDialog = true
@@ -100,7 +101,7 @@ export default class extends Vue {
   private async loadFibers() {
     if (this.device !== null) {
       this.loading = true
-      const { data } = await scanOltFibers(this.device.pk)
+      const { data } = await scanOltFibers(this.devPk)
       this.allPorts = data
       this.loading = false
     }
@@ -109,7 +110,7 @@ export default class extends Vue {
   private async loadUnregistered() {
     if (this.device !== null) {
       this.unrloading = true
-      const { data } = await scanUnitsUnregistered(this.device.pk)
+      const { data } = await scanUnitsUnregistered(this.devPk)
       this.unregistered = data
       this.unrloading = false
     }
@@ -118,6 +119,18 @@ export default class extends Vue {
   created() {
     this.loadFibers()
     this.loadUnregistered()
+    this.scanZteDetails()
+  }
+
+  get devPk() {
+    if (this.device) {
+      return this.device.pk
+    }
+    return 0
+  }
+  @Watch('devPk')
+  private onChDev() {
+    this.scanZteDetails()
   }
 
   private onSaveOnu(onu: IUnitUnregistered) {
@@ -129,6 +142,13 @@ export default class extends Vue {
     this.saveOnuFormDialog = false
     this.$message.success('Новая onu сохранена')
     this.$router.push({ name: 'device-view', params: { devId: newDev.pk.toString() } })
+  }
+
+  private async scanZteDetails() {
+    if (this.device) {
+      let { data } = await scanDetails(this.devPk)
+      this.details = `Имя ${ data.name }. В сети ${ data.uptime }. Версия прошивки ${ data.fver }.`
+    }
   }
 }
 </script>
