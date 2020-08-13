@@ -30,9 +30,17 @@
           dd
             i {{ gw.enabled ? 'Да' : 'Нет' }}
           dt
-            b Количество абонентов
+            b Всего абон.
           dd
-            i {{ gw.customers_count }}
+            i {{ gw.customer_count }}
+          dt
+            b Активных абон.
+          dd
+            i {{ gw.customer_count_active }}
+          dt
+            b Абоны с услугой
+          dd
+            i {{ gw.customer_count_w_service }}
           dt
             b ID
           dd {{ gw.id }}
