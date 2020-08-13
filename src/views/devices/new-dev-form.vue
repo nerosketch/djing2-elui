@@ -53,7 +53,10 @@
       label="Родит. устройство"
       prop="parent_dev"
     )
-      device-autocomplete-field(v-model="frmMod.parent_dev")
+      device-autocomplete-field(
+        v-model="frmMod.parent_dev"
+        :defaultName="initialParentDevName"
+      )
     el-form-item(
       label="Доп. инфо для snmp"
       prop="snmp_extra"
@@ -94,6 +97,7 @@ export default class extends Vue {
   @Prop({ default: 'ertNjuWr' }) private initialManPassw!: string
   @Prop({ default: '' }) private initialSnmpSxtra!: string
   @Prop({ default: 0 }) private initialParentDev!: number
+  @Prop({ default: '' }) private initialParentDevName!: string
 
   private loading = false
   private groups: IGroup[] = []

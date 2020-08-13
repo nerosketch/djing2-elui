@@ -16,13 +16,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { IDevice } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
 import SwitchView from './switch-view.vue'
 import PonOnu from './epon-onu/pon-onu.vue'
-import OltZte from './olt-zte.vue'
+import OltZte from './gpon/olt-zte.vue'
 
 @Component({
   name: 'DeviceView',
@@ -60,6 +60,11 @@ export default class extends Vue {
 
   beforeDestroy() {
     document.removeEventListener('keydown', this.onKeyPress)
+  }
+
+  @Watch('devId')
+  private onDevIdChanged(id: number) {
+    this.getDevice()
   }
 }
 </script>
