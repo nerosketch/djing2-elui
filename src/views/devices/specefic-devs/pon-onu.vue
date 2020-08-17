@@ -40,7 +40,7 @@
             router-link(:to="{name: 'customerDetails', params:{ uid: ab.pk }}") {{ ab.full_name }}
         el-button-group
           register-device-btn(:device="device" v-on:done="getDetails")
-          delete-from-olt-btn(:device="device" v-on:done="getDetails")
+          delete-from-olt-btn(:devId="device.pk" v-on:done="getDetails")
           el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice")
 
     el-col(:lg="12" :sm='24')
@@ -76,9 +76,9 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanDetails } from '@/api/devices/req'
 import { DeviceModule } from '@/store/modules/devices/device'
-import DevForm from '../../dev-form.vue'
-import RegisterDeviceBtn from './register-device-btn.vue'
-import DeleteFromOltBtn from './delete-from-olt-btn.vue'
+import DevForm from '../dev-form.vue'
+import RegisterDeviceBtn from '@/views/devices/specefic-devs/epon-onu/register-device-btn.vue'
+import DeleteFromOltBtn from '@/views/devices/specefic-devs/epon-onu/delete-from-olt-btn.vue'
 
 @Component({
   name: 'PonOnu',
@@ -114,7 +114,7 @@ export default class extends Vue {
 
   private delDevice() {
     if (!this.device) return
-    this.$confirm(`Ты действительно хочешь удалить onu "${this.device.comment}"?`).then(async() => {
+    this.$confirm(`Действительно удалить onu "${this.device.comment}"?`).then(async() => {
       if (!this.device) {
         this.$message.error('Не удалили, похоже уже кто-то удалил')
         return

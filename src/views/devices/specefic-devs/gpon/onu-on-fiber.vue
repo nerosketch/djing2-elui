@@ -27,11 +27,6 @@ span
       min-width="90"
     )
       template(v-slot:default="{row}") {{ row.onu_sn }}
-    el-table-column(
-      label="snmpmagic"
-      min-width="90"
-    )
-      template(v-slot:default="{row}") {{ row.snmp_extra }}
 </template>
 
 <script lang="ts">
@@ -64,7 +59,7 @@ export default class extends Vue {
       return
     }
     if (this.devId < 1 || !this.devId) {
-    this.$message.error('devId required.')
+      this.$message.error('devId required.')
       return
     }
     this.lloading = true
@@ -78,10 +73,9 @@ export default class extends Vue {
   }
 
   private onuRowColor(r: ITableRowClassName) {
-    switch(r.row.onu_state) {
+    switch (r.row.onu_state) {
       case 'ok':
         return ''
-        break
       case 'down':
         return 'error-row'
     }
