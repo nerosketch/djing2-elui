@@ -7,7 +7,7 @@ export const setSidebarStatus = (sidebarStatus: string) => Cookies.set(sidebarSt
 export const setDefaultPageSize = (psize: number) => localStorage.setItem('itemsPerPage', psize.toString())
 
 // User
-const tokenKey = 'vue_typescript_admin_access_token'
+const tokenKey = 'djing2_admin_access_token'
 export const getToken = () => Cookies.get(tokenKey)
 export const setToken = (token: string) => Cookies.set(tokenKey, token)
 export const removeToken = () => Cookies.remove(tokenKey)
