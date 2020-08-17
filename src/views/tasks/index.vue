@@ -19,13 +19,6 @@
         keep-alive
           task-list(tabUrl="get_finished")
       el-tab-pane(
-        label='Назначенные мной задачи'
-        name='town'
-        lazy
-      )
-        keep-alive
-          task-list(tabUrl="get_own")
-      el-tab-pane(
         label='Проваленные задачи'
         name='tf'
         lazy
@@ -33,19 +26,19 @@
         keep-alive
           task-list(tabUrl="get_failed")
       el-tab-pane(
-        label='Все мои задачи'
-        name='tmy'
-        lazy
-      )
-        keep-alive
-          task-list(tabUrl="get_my")
-      el-tab-pane(
         label='Все задачи'
         name='tall'
         lazy
       )
         keep-alive
           task-list(tabUrl="get_all")
+      el-tab-pane(
+        label='Все незавершённые'
+        name='tallnew'
+        lazy
+      )
+        keep-alive
+          task-list(tabUrl="get_all_new")
 
 </template>
 

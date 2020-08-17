@@ -8,15 +8,6 @@ div
     :heightDiff='168'
     ref='tbl'
   )
-    template(v-slot:id="{row}")
-      router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
-        el-button(
-          :type="row.comment_count > 0 ? 'success' : 'primary'"
-          size='mini'
-        )
-          span(v-if="row.comment_count > 0") {{ row.comment_count }}
-          i.el-icon-view(v-else)
-
     template(v-slot:customer_full_name="{row}")
       el-link(type="primary")
         router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }") {{ row.customer_full_name }}
@@ -30,6 +21,15 @@ div
     template(v-slot:state_str="{row}") {{ row.state_str }}
 
     template(v-slot:time_of_create="{row}") {{ row.time_of_create }}
+
+    template(v-slot:id="{row}")
+      router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
+        el-button(
+          :type="row.comment_count > 0 ? 'success' : 'primary'"
+          size='mini'
+        )
+          span(v-if="row.comment_count > 0") {{ row.comment_count }}
+          i.el-icon-view(v-else)
 
     el-button(
       icon="el-icon-plus"
@@ -75,7 +75,9 @@ export default class extends Vue {
 
   private tableRowClassName(r: any) {
     if (r.row.is_expired === undefined) return ''
-    if (!r.row.is_expired) {
+    if (r.row.is_expired) {
+      return 'expired-row'
+    } else {
       if (r.row.priority === ITaskPriority.AWARAGE) {
         return 'warning-row'
       } else if (r.row.priority === ITaskPriority.HIGHER) {
@@ -86,12 +88,6 @@ export default class extends Vue {
   }
 
   private tableColumns: IDataTableColumn[] = [
-    {
-      prop: 'id',
-      label: 'ID',
-      'min-width': 80,
-      align: DataTableColumnAlign.CENTER
-    },
     {
       prop: 'customer_full_name',
       label: 'Имя',
@@ -121,7 +117,13 @@ export default class extends Vue {
       prop: 'time_of_create',
       label: 'Дата создания',
       'min-width': 170
-    }
+    },
+    {
+      prop: 'id',
+      label: 'Смотреть',
+      'min-width': 80,
+      align: DataTableColumnAlign.CENTER
+    },
   ]
   private loading = false
 
