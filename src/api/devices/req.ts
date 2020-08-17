@@ -13,7 +13,7 @@ import {
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
-  IOnuDetails, IOnuDetailsAxiosPromise, IDevActionResultAxiosResponsePromise
+  IDevActionResultAxiosResponsePromise, IScannedZTEONUListAxiosPromise, IScannedZTEONU
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -57,6 +57,9 @@ export const sendReboot = (devId: number) =>
 
 export const scanOltFibers = (devId: number): IDevFiberListAxiosResponsePromise =>
   request.get<IDevFiber[]>(`${baseDevUrl}${devId}/scan_olt_fibers/`)
+
+export const scanFiberOnuList = (devId: number, fiberNum: number): IScannedZTEONUListAxiosPromise =>
+  request.get<IScannedZTEONU[]>(`${baseDevUrl}${devId}/scan_onu_on_fiber/${fiberNum}/`)
 
 export const scanDetails = (devId: number) =>
   request.get(`${baseDevUrl}${devId}/scan_details/`)

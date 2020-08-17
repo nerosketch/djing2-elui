@@ -21,7 +21,7 @@ import { IDevice } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
 import PonBdcomOlt from './pon-bdcom-olt.vue'
 import SwitchView from './switch-view.vue'
-import PonOnu from './epon-onu/pon-onu.vue'
+import PonOnu from './pon-onu.vue'
 import OltZte from './gpon/olt-zte.vue'
 
 @Component({

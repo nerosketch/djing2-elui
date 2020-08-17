@@ -7,7 +7,10 @@
         el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
     el-row
       el-col(:xl="2" :md="3" :sm="6" :xs="12" v-for="(p, i) in allPorts" :key="i")
-        olt-zte-port(:port="p")
+        olt-zte-port(
+          :devId="devPk"
+          :port="p"
+        )
     el-divider
     h4 Незарегистрированные юниты
     el-table(
@@ -147,7 +150,7 @@ export default class extends Vue {
   private async scanZteDetails() {
     if (this.device) {
       let { data } = await scanDetails(this.devPk)
-      this.details = `Имя ${ data.name }. В сети ${ data.uptime }. Версия прошивки ${ data.fver }.`
+      this.details = `Имя ${data.name}. В сети ${data.uptime}. Версия прошивки ${data.fver}.`
     }
   }
 }

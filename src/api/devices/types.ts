@@ -113,6 +113,24 @@ export interface IScannedONU {
 }
 export type IScannedONUListAxiosPromise = AxiosPromise<IScannedONU[]>
 
+
+export enum IScannedZTEONUState {
+  OK = 'ok',
+  DOWN = 'down',
+  UNKNOWN = 'unknown'
+}
+
+// IScannedONU
+export interface IScannedZTEONU {
+  onu_type: string
+  onu_port: string
+  onu_signal: number
+  onu_sn: string
+  snmp_extra: string
+  onu_state: IScannedZTEONUState
+}
+export type IScannedZTEONUListAxiosPromise = AxiosPromise<IScannedZTEONU[]>
+
 // IOnuDetailsStatus
 export enum IOnuDetailsStatus {
   UNKNOWN = 'unknown',
