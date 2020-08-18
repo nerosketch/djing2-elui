@@ -19,7 +19,7 @@ export interface IAppState {
 class App extends VuexModule implements IAppState {
   public sidebar = {
     opened: getSidebarStatus() !== 'closed',
-    withoutAnimation: false
+    withoutAnimation: true
   }
   public device = DeviceType.Desktop
 

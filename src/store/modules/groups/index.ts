@@ -42,9 +42,9 @@ class Group extends VuexModule implements IGroup {
 
   @Action
   public async GetGroup(groupId: number) {
-    const r = await getGroup(groupId)
-    this.SET_ALL_MGROUP(r.data)
-    return r
+    const { data } = await getGroup(groupId)
+    this.SET_ALL_MGROUP(data)
+    return data
   }
 
   @Action
