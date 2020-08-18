@@ -23,6 +23,9 @@ import PonBdcomOlt from './pon-bdcom-olt.vue'
 import SwitchView from './switch-view.vue'
 import PonOnu from './pon-onu.vue'
 import OltZte from './gpon/olt-zte.vue'
+import { GroupModule } from '@/store/modules/groups'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
 
 @Component({
   name: 'DeviceView',
@@ -54,7 +57,9 @@ export default class extends Vue {
   }
 
   created() {
-    this.getDevice()
+    this.getDevice().then(() => {
+      this.onGrpCh(DeviceModule.group)
+    })
     document.addEventListener('keydown', this.onKeyPress)
   }
 
@@ -66,5 +71,43 @@ export default class extends Vue {
   private onDevIdChanged(id: number) {
     this.getDevice()
   }
+
+  // Breadcrumbs
+  get devGrp() {
+    return DeviceModule.group
+  }
+  @Watch('devGrp')
+  private async onGrpCh(grpId: number) {
+    if (grpId > 0) {
+      await GroupModule.GetGroup(grpId)
+      await BreadcrumbsModule.SetCrumbs([
+        {
+          path: '/devices',
+          meta: {
+            hidden: true,
+            title: 'Группы'
+          }
+        },
+        {
+          path: { name: 'devicesList', params: { groupId: grpId } },
+          meta: {
+            hidden: true,
+            title: this.grpName
+          }
+        },
+        {
+          path: '',
+          meta: {
+            hidden: true,
+            title: DeviceModule.comment
+          }
+        }
+      ] as RouteRecord[])
+    }
+  }
+  get grpName() {
+    return GroupModule.title
+  }
+  // End Breadcrumbs
 }
 </script>

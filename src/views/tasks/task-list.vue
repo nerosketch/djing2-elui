@@ -52,6 +52,8 @@ import { ITask, ITaskPriority } from '@/api/tasks/types'
 import { getTasks } from '@/api/tasks/req'
 import TaskForm from './task-form.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
 
 class DataTableComp extends DataTable<ITask> {}
 
@@ -123,7 +125,7 @@ export default class extends Vue {
       label: 'Смотреть',
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
-    },
+    }
   ]
   private loading = false
 
@@ -141,5 +143,19 @@ export default class extends Vue {
     this.loading = false
     return r
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Задачи'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
 }
 </script>

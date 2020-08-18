@@ -40,6 +40,8 @@ import { getGroups } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
 import GroupForm from './group-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
 
 class DataTableComp extends DataTable<IGroup> {}
 
@@ -121,5 +123,19 @@ export default class extends Vue {
     this.$message.success('Группа сохранена')
     this.$refs.table.GetTableData()
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Группы'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
 }
 </script>

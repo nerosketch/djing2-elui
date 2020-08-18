@@ -55,13 +55,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { IDRFRequestListParametersDevGroup, IDevice } from '@/api/devices/types'
 import { getDevices } from '@/api/devices/req'
 import DevForm from './dev-form.vue'
 import NewDevForm from './new-dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
+import { GroupModule } from '@/store/modules/groups'
 
 class DataTableComp extends DataTable<IDevice> {}
 
@@ -164,5 +167,34 @@ export default class extends Vue {
         devId: newDev.pk.toString()
       } })
   }
+
+  // Breadcrumbs
+  created() {
+    this.onGrpCh(this.groupId)
+  }
+  @Watch('groupId')
+  private async onGrpCh(grpId: number) {
+    await GroupModule.GetGroup(grpId)
+    await BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/devices',
+        meta: {
+          hidden: true,
+          title: 'Группы'
+        }
+      },
+      {
+        path: '',
+        meta: {
+          hidden: true,
+          title: this.grpName
+        }
+      }
+    ] as RouteRecord[])
+  }
+  get grpName() {
+    return GroupModule.title
+  }
+  // End Breadcrumbs
 }
 </script>

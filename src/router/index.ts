@@ -40,19 +40,7 @@ export const constantRoutes: RouteConfig [] = [
   },
   profileRoutes,
   customerRoutes,
-  {
-    path: '/search',
-    component: Layout,
-    meta: { hidden: true },
-    children: [
-      {
-        path: '',
-        name: 'searchPlace',
-        component: () => import(/* webpackChunkName: "search" */ '@/views/search-place.vue'),
-        meta: { hidden: true }
-      }
-    ]
-  },
+  taskRoutes,
   {
     path: '/groups',
     component: Layout,
@@ -62,6 +50,20 @@ export const constantRoutes: RouteConfig [] = [
         component: () => import(/* webpackChunkName: "groups" */ '@/views/groups/group-list.vue'),
         meta: {
           title: 'Группы',
+          icon: 'dashboard'
+        }
+      }
+    ]
+  },
+  {
+    path: '/services',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "servicesindex" */ '@/views/services/index.vue'),
+        meta: {
+          title: 'Тарифы',
           icon: 'dashboard'
         }
       }
@@ -81,22 +83,7 @@ export const constantRoutes: RouteConfig [] = [
       }
     ]
   },
-  taskRoutes,
   deviceRoutes,
-  {
-    path: '/services',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import(/* webpackChunkName: "servicesindex" */ '@/views/services/index.vue'),
-        meta: {
-          title: 'Тарифы',
-          icon: 'dashboard'
-        }
-      }
-    ]
-  },
   {
     path: '/gateways',
     component: Layout,
@@ -108,6 +95,19 @@ export const constantRoutes: RouteConfig [] = [
           title: 'Шлюзы',
           icon: 'dashboard'
         }
+      }
+    ]
+  },
+  {
+    path: '/search',
+    component: Layout,
+    meta: { hidden: true },
+    children: [
+      {
+        path: '',
+        name: 'searchPlace',
+        component: () => import(/* webpackChunkName: "search" */ '@/views/search-place.vue'),
+        meta: { hidden: true }
       }
     ]
   },

@@ -89,6 +89,8 @@ import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { IUserProfile } from '@/api/profiles/types'
 import FormMixin from '@/utils/forms'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
 
 @Component({
   name: 'TaskForm',
@@ -172,6 +174,25 @@ export default class extends mixins(FormMixin) {
       this.intrnalRecipients = this.recipients
     }
     this.frmInitial = Object.assign({}, this.frmMod)
+
+    // Breadcrumbs
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/tasks',
+        meta: {
+          hidden: true,
+          title: 'Задачи'
+        }
+      },
+      {
+        path: '',
+        meta: {
+          hidden: true,
+          title: 'Редактировать'
+        }
+      }
+    ] as RouteRecord[])
+    // End Breadcrumbs
   }
 
   get isNewTask() {

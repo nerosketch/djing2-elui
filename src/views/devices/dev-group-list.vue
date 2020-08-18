@@ -22,6 +22,8 @@ import { IDRFRequestListParameters } from '@/api/types'
 import { getDevGroups } from '@/api/devices/req'
 import { IDevGroup } from '@/api/devices/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
 
 class DataTableComp extends DataTable<IDevGroup> {}
 
@@ -62,5 +64,19 @@ export default class extends Vue {
     this.groupDevs = r.data.results
     return r
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Группы'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
 }
 </script>

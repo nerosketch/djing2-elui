@@ -3,21 +3,19 @@
     class="app-breadcrumb"
     separator="/"
   >
-    <transition-group name="breadcrumb">
-      <el-breadcrumb-item
-        v-for="(item, index) in breadcrumbs"
-        :key="index"
-      >
-        <span
-          v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
-          class="no-redirect"
-        >{{ item.meta.title }}</span>
-        <a
-          v-else
-          @click.prevent="handleLink(item)"
-        >{{ item.meta.title }}</a>
-      </el-breadcrumb-item>
-    </transition-group>
+    <el-breadcrumb-item
+      v-for="(item, index) in breadcrumbs"
+      :key="index"
+    >
+      <span
+        v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
+        class="no-redirect"
+      >{{ item.meta.title }}</span>
+      <a
+        v-else
+        @click.prevent="handleLink(item)"
+      >{{ item.meta.title }}</a>
+    </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
@@ -52,7 +50,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title:"Home"
+          title: '/'
         }
       }
     ] as RouteRecord[]

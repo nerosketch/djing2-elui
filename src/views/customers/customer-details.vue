@@ -64,11 +64,11 @@ export default class extends Vue {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: "Группы абонентов"
+          title: 'Группы абонентов'
         }
       },
       {
-        path: {name: 'customersList', params:{ groupId: grpId }},
+        path: { name: 'customersList', params: { groupId: grpId } },
         meta: {
           hidden: true,
           title: this.grpName
