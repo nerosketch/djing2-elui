@@ -90,6 +90,9 @@ import NewCustomerForm from './new-customer-form.vue'
 import List from '@/components/List/index.vue'
 import NewStreetForm from './street/new-street-form.vue'
 import EditStreets from './street/edit-streets.vue'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
+import { GroupModule } from '@/store/modules/groups'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -229,7 +232,34 @@ export default class extends Vue {
 
   created() {
     this.loadStreets()
+    this.onGrpCh(this.groupId)
   }
+
+  // Breadcrumbs
+  // @Watch('groupId')
+  private async onGrpCh(grpId: number) {
+    await GroupModule.GetGroup(grpId)
+    await BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/customers/',
+        meta: {
+          hidden: true,
+          title: 'Группы абонентов'
+        }
+      },
+      {
+        path: '',
+        meta: {
+          hidden: true,
+          title: this.grpName
+        }
+      }
+    ] as RouteRecord[])
+  }
+  get grpName() {
+    return GroupModule.title
+  }
+  // End Breadcrumbs
 
   private rowColor(r: ITableRowClassName) {
     return r.row.is_active ? '' : 'error-row'

@@ -20,12 +20,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
 import Finance from './customers-details/finance.vue'
 import CustomerTaskHistory from './customers-details/customer-task-history.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
 
 @Component({
   name: 'CustomerDetails',
@@ -49,5 +51,41 @@ export default class extends Vue {
   get balance() {
     return CustomerModule.balance
   }
+
+  // Breadcrumbs
+  get custGrp() {
+    return CustomerModule.group
+  }
+  @Watch('custGrp')
+  private async onGrpCh(grpId: number) {
+    if (grpId === 0) return
+    await BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/customers/',
+        meta: {
+          hidden: true,
+          title: "Группы абонентов"
+        }
+      },
+      {
+        path: {name: 'customersList', params:{ groupId: grpId }},
+        meta: {
+          hidden: true,
+          title: this.grpName
+        }
+      },
+      {
+        path: '',
+        meta: {
+          hidden: true,
+          title: CustomerModule.full_name || '-'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  get grpName() {
+    return CustomerModule.group_title
+  }
+  // End Breadcrumbs
 }
 </script>

@@ -6,7 +6,7 @@
     <transition-group name="breadcrumb">
       <el-breadcrumb-item
         v-for="(item, index) in breadcrumbs"
-        :key="item.path"
+        :key="index"
       >
         <span
           v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
@@ -25,6 +25,7 @@
 import pathToRegexp from 'path-to-regexp'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { RouteRecord, Route } from 'vue-router'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 @Component({
   name: 'Breadcrumb'
@@ -46,27 +47,30 @@ export default class extends Vue {
   }
 
   private getBreadcrumb() {
-    let matched = this.$route.matched.filter(
-      item => item.meta && item.meta.title
-    )
-    const first = matched[0]
-    if (!this.isDashboard(first)) {
-      matched = [
-        { path: '/dashboard', meta: { title: 'Dashboard' } } as RouteRecord
-      ].concat(matched)
-    }
-    this.breadcrumbs = matched.filter(item => {
-      return item.meta && item.meta.title && item.meta.breadcrumb !== false
-    })
+    this.breadcrumbs = [
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title:"Home"
+        }
+      }
+    ] as RouteRecord[]
   }
 
-  private isDashboard(route: RouteRecord) {
-    const name = route && route.meta && route.meta.title
-    return name === 'Dashboard'
+  get onCumbsCh() {
+    return BreadcrumbsModule.breadcrumbs
+  }
+  @Watch('onCumbsCh')
+  private onChangeCrumbs(crumbs: RouteRecord[]) {
+    this.breadcrumbs = crumbs
   }
 
-  private pathCompile(path: string) {
+  private pathCompile(path: string | object) {
     // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
+    if (path instanceof Object) {
+      return path
+    }
     const { params } = this.$route
     const toPath = pathToRegexp.compile(path)
     return toPath(params)
