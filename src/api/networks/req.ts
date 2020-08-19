@@ -21,10 +21,10 @@ export const getVlans = (params?: IDRFRequestListParameters): IVlanIfListAxiosRe
 export const getVlanIf = (vlanId: number): IVlanIfAxoisResponsePromise =>
   request.get<IVlanIf>(`${baseVlanUrl}${vlanId}/`)
 
-export const addVlanIf = (newVlan: IVlanIf): IVlanIfAxoisResponsePromise =>
+export const addVlanIf = (newVlan: object): IVlanIfAxoisResponsePromise =>
   request.post<IVlanIf>(baseVlanUrl, newVlan)
 
-export const changeVlanIf = (vlanId: number, newData: IVlanIf): IVlanIfAxoisResponsePromise =>
+export const changeVlanIf = (vlanId: number, newData: object): IVlanIfAxoisResponsePromise =>
   request.patch<IVlanIf>(`${baseVlanUrl}${vlanId}/`, newData)
 
 export const delVlanIf = (vlanId: number) =>
@@ -67,7 +67,7 @@ export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer
 export const getCustomerIpLease = (leaseId: number): ICustomerIpLeaseAxoisResponsePromise =>
   request.get<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`)
 
-export const addCustomerIpLease = (newLease: ICustomerIpLease): ICustomerIpLeaseAxoisResponsePromise =>
+export const addCustomerIpLease = (newLease: object): ICustomerIpLeaseAxoisResponsePromise =>
   request.post<ICustomerIpLease>(baseLeaseUrl, newLease)
 
 export const changeCustomerIpLease = (leaseId: number, newData: ICustomerIpLease): ICustomerIpLeaseAxoisResponsePromise =>

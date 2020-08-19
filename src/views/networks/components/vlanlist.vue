@@ -4,7 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadVlans"
     :loading="vlansLoading"
-    :heightDiff='142'
+    :heightDiff='170'
     ref='table'
   )
     template(v-slot:id="{row}") {{ row.id }}
@@ -21,8 +21,10 @@ div
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(type="danger" icon="el-icon-delete" size="mini" @click="delVlan(row)")
 
+    el-button(icon='el-icon-plus' size='mini' @click='openNew') Добавить
+
   el-dialog(
-    title="Изменение vlan"
+    :title="dialogTitle"
     :visible.sync="dialogVisible"
   )
     vlan-form(
@@ -84,8 +86,19 @@ export default class extends Vue {
   private dialogVisible = false
   private vlansLoading = false
 
+  get dialogTitle() {
+    let w = 'Изменение'
+    if (VlanIfModule.id === 0) {
+      w = 'Добавление'
+    }
+    return `${w} vlan`
+  }
   private async openEdit(vlan: IVlanIf) {
     await VlanIfModule.SET_ALL_VLAN(vlan)
+    this.dialogVisible = true
+  }
+  private async openNew() {
+    await VlanIfModule.RESET_ALL_VLAN()
     this.dialogVisible = true
   }
 

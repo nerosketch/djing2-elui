@@ -48,8 +48,10 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   }
 
   @Action
-  public async AddLease(data: ICustomerIpLease) {
-    await addCustomerIpLease(data)
+  public async AddLease(newLease: object) {
+    const { data } = await addCustomerIpLease(newLease)
+    this.SET_ALL_LEASE(data)
+    return data
   }
 
   @Action

@@ -41,6 +41,16 @@ export default class extends Vue {
   private frmRules = {
     title: [
       { required: true, message: 'Название vlan надо указать', trigger: 'blur' }
+    ],
+    vid: [
+      { required: true, message: 'Стартовый ip надо указать', trigger: 'blur' },
+      { validator: (rule: any, value: number, callback: Function) => {
+        if (value && value > 1 && value < 4095) {
+          callback()
+        } else {
+          callback(new Error(rule.message))
+        }
+      }, trigger: 'change', message: 'Vlan может быть в пределах 2-4094' }
     ]
   }
 
@@ -63,10 +73,18 @@ export default class extends Vue {
     (this.$refs['form'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await VlanIfModule.SET_ALL_VLAN(this.frmMod)
-        const newDat = await VlanIfModule.SaveVlan()
+        try {
+          let newVlan
+          if (VlanIfModule.id === 0) {
+            newVlan = await VlanIfModule.AddVlan(this.frmMod)
+          } else {
+            newVlan = await VlanIfModule.PatchVlan(this.frmMod)
+          }
+          this.$emit('done', newVlan)
+        } catch (err) {
+          this.$message.error(err)
+        }
         this.isLoading = false
-        this.$emit('done', newDat)
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

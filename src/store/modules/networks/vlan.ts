@@ -59,20 +59,17 @@ class VlanIf extends VuexModule implements IVlanIf {
   }
 
   @Action
-  public async AddVlan(data: IVlanIf) {
-    return await addVlanIf(data)
+  public async AddVlan(newVlan: object) {
+    let { data } = await addVlanIf(newVlan)
+    this.SET_ALL_VLAN(data)
+    return data
   }
 
   @Action
-  public async SaveVlan() {
-    const r = await changeVlanIf(this.id, <IVlanIf>{
-      id: this.id,
-      title: this.title,
-      vid: this.vid,
-      is_management: this.is_management
-    })
-    this.SET_ALL_VLAN(r.data)
-    return r
+  public async PatchVlan(info: object) {
+    const { data } = await changeVlanIf(this.id, info)
+    this.SET_ALL_VLAN(data)
+    return data
   }
 
   @Action
