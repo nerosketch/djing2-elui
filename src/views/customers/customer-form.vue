@@ -31,6 +31,7 @@
     el-form-item(
       label="Улица"
       prop='street'
+      v-loading="isStreetLoading"
     )
       el-select(v-model="frmMod.street")
         el-option(
@@ -61,6 +62,7 @@
     el-form-item(
       label="Группа"
       prop='group'
+      v-loading="isGroupLoading"
     )
       el-select(v-model="frmMod.group")
         el-option(
@@ -133,6 +135,8 @@ import FormMixin from '@/utils/forms'
 })
 export default class extends mixins(FormMixin) {
   private isLoading = false
+  private isStreetLoading = false
+  private isGroupLoading = false
   private customerStreets: ICustomerStreet[] = []
   private groups: ICustomerGroup[] = []
   private openPasportDlg = false
@@ -188,21 +192,21 @@ export default class extends mixins(FormMixin) {
   }
 
   private async loadStreets() {
-    this.isLoading = true
+    this.isStreetLoading = true
     const { data } = await getStreets({
       page: 1,
       page_size: 100,
       group: this.onChGrp
     })
     this.customerStreets = data.results
-    this.isLoading = false
+    this.isStreetLoading = false
   }
 
   private async loadGroups() {
-    this.isLoading = true
+    this.isGroupLoading = true
     const { data } = await getCustomerGroups()
     this.groups = data.results
-    this.isLoading = false
+    this.isGroupLoading = false
   }
 
   private onSubmit() {

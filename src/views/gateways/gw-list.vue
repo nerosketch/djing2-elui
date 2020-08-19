@@ -1,6 +1,6 @@
 <template lang="pug">
 .app-container
-  el-row(v-loading="loading" :gutter="10")
+  el-row(v-loading="loadingGws" :gutter="10")
     el-col(:xs="24" :md="12" :xl="6" v-for="(gw, i) in gwlist" :key="i" style="margin-bottom: 10px;")
       el-card.box-card(shadow="hover")
         template(v-slot:header)
@@ -95,12 +95,12 @@ export default class extends mixins(GwsMethods) {
 
   private onDel(gw: IGateway) {
     this.$confirm('Удалить шлюз доступа абонентов?').then(async() => {
-      this.loading = true
+      this.loadingGws = true
       await GatewayModule.DelGateway(gw.id)
       this.$message.success('Шлюз доступа успешно удалён')
       this.loadGateways()
     }).catch(() => {
-      this.loading = false
+      this.loadingGws = false
     })
   }
 
