@@ -31,9 +31,13 @@
 
           template(v-slot:gateway_title="{row}") {{ row.gateway_title }}
 
+          template(v-slot:ping="{row}")
+            ping-profile(:customer="row")
+
           el-button(
             size='mini'
-            icom='el-icon-plus'
+            icon='el-icon-plus'
+            type='success'
             @click="addCustomerDialog=true"
           ) Добавить абонента
 
@@ -93,6 +97,7 @@ import EditStreets from './street/edit-streets.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
 import { GroupModule } from '@/store/modules/groups'
+import PingProfile from './ping-profile.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -103,7 +108,14 @@ interface ITableRowClassName {
 
 @Component({
   name: 'CustomersList',
-  components: { 'datatable': DataTableComp, NewCustomerForm, List, NewStreetForm, EditStreets }
+  components: {
+    'datatable': DataTableComp,
+    NewCustomerForm,
+    List,
+    NewStreetForm,
+    EditStreets,
+    PingProfile
+  }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private groupId!: number
@@ -164,6 +176,11 @@ export default class extends Vue {
       prop: 'gateway_title',
       label: 'Шлюз',
       'min-width': 170
+    },
+    {
+      prop: 'ping',
+      label: 'Ping',
+      'min-width': 150
     }
   ]
 
@@ -190,7 +207,7 @@ export default class extends Vue {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
         street: this.lastStreetId,
-        fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active'
+        fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
       })
       r = await getCustomers(newParams)
     } else {

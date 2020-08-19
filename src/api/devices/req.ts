@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import { AxiosPromise } from 'axios'
-import { IDRFRequestListParameters } from '@/api/types'
+import { IDRFRequestListParameters, ISimpleResponseResultAxiosResponsePromise } from '@/api/types'
 import {
   IDevice, IDeviceList, IDeviceAxoisResponsePromise,
   IDeviceListAxiosResponsePromise,
@@ -13,7 +13,7 @@ import {
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
-  IDevActionResultAxiosResponsePromise, IScannedZTEONUListAxiosPromise, IScannedZTEONU
+  IScannedZTEONUListAxiosPromise, IScannedZTEONU
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -43,13 +43,13 @@ export const scanAllDevVlans = (devId: number): IDevVlanListAxiosResponsePromise
 export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${baseDevUrl}${devId}/scan_mac_address_vlan/`, { params: { vid } })
 
-export const removeFromOlt = (devId: number): IDevActionResultAxiosResponsePromise =>
+export const removeFromOlt = (devId: number): ISimpleResponseResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}${devId}/remove_from_olt/`)
 
-export const registerDevice = (devId: number): IDevActionResultAxiosResponsePromise =>
+export const registerDevice = (devId: number): ISimpleResponseResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}${devId}/register_device/`)
 
-export const fixOnu = (devId: number): IDevActionResultAxiosResponsePromise =>
+export const fixOnu = (devId: number): ISimpleResponseResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}${devId}/fix_onu/`)
 
 export const sendReboot = (devId: number) =>

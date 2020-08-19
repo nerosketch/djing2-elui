@@ -113,7 +113,6 @@ export interface IScannedONU {
 }
 export type IScannedONUListAxiosPromise = AxiosPromise<IScannedONU[]>
 
-
 export enum IScannedZTEONUState {
   OK = 'ok',
   DOWN = 'down',
@@ -181,10 +180,3 @@ export interface IDevFiber {
   fb_active_onu: number
 }
 export type IDevFiberListAxiosResponsePromise = AxiosPromise<IDevFiber[]>
-
-// Action device result
-export interface IDevActionResult {
-  text: string
-  status: number
-}
-export type IDevActionResultAxiosResponsePromise = IDRFAxiosResponsePromise<IDevActionResult>

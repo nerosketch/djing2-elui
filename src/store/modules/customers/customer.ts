@@ -41,6 +41,7 @@ class Customer extends VuexModule implements ICustomer {
   is_dynamic_ip = false
   full_name = ''
   raw_password = ''
+  lease_count = 0
 
   @Mutation
   public SET_ALL_CUSTOMER(data: ICustomer) {
@@ -72,6 +73,7 @@ class Customer extends VuexModule implements ICustomer {
     this.is_dynamic_ip = data.is_dynamic_ip
     this.full_name = data.full_name!
     this.raw_password = data.raw_password!
+    this.lease_count = data.lease_count
     return this
   }
 
@@ -105,6 +107,7 @@ class Customer extends VuexModule implements ICustomer {
     this.is_dynamic_ip = false
     this.full_name = ''
     this.raw_password = ''
+    this.lease_count = 0
     return this
   }
 
