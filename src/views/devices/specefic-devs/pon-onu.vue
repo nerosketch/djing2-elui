@@ -1,6 +1,6 @@
 <template lang="pug">
   el-row(:gutter='5')
-    el-col(:span='24')
+    //- el-col(:span='24')
       //- el-alert(
       //-   v-if="macsNotEqual"
       //-   title="Внимание!"
@@ -16,10 +16,9 @@
         body-style="padding: 10px;"
       )
         template(v-slot:header)
-          slot(name="header")
-            .clearfix {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
-              small {{ `${device.ip_address || device.mac_addr}` }}
-              el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
+          .clearfix {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
+            small {{ `${device.ip_address || device.mac_addr}` }}
+            el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
         .text.item.list-item IP адрес: {{ device.ip_address || '-' }}
         .text.item.list-item
           b Мак:
@@ -49,7 +48,6 @@
         body-style="padding: 10px;"
       )
         template(v-slot:header)
-          slot(name="header")
             .clearfix Состояние ONU
               el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-refresh' type='primary' @click="refreshDev")
         el-row(type='flex')
@@ -62,6 +60,15 @@
             .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
               b {{ inf[0] }}:
               | {{ inf[1] }}
+
+    el-col(:lg="12" :sm='24')
+      el-card.box-card(
+        shadow='never'
+      )
+        template(v-slot:header)
+          .clearfix Редактировать VLAN на ONU
+        onu-vlan-form
+
     el-dialog(
       :visible.sync="devFormDialog"
       title="Изменить ONU"
@@ -79,13 +86,15 @@ import { DeviceModule } from '@/store/modules/devices/device'
 import DevForm from '../dev-form.vue'
 import RegisterDeviceBtn from '@/views/devices/specefic-devs/epon-onu/register-device-btn.vue'
 import DeleteFromOltBtn from '@/views/devices/specefic-devs/epon-onu/delete-from-olt-btn.vue'
+import OnuVlanForm from './onu-vlan-form.vue'
 
 @Component({
   name: 'PonOnu',
   components: {
     DevForm,
     RegisterDeviceBtn,
-    DeleteFromOltBtn
+    DeleteFromOltBtn,
+    OnuVlanForm
   }
 })
 export default class extends Vue {

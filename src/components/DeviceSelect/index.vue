@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select.input-with-select(v-model='selectedDeviceId' size="mini")
+  el-select(v-model='selectedDeviceId' size="mini")
     el-option(
       v-for="dv in devices"
       :key="dv.pk"

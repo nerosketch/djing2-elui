@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadVlans"
-    :loading="vlansLoading"
+    :loading="loading"
     :heightDiff='170'
     ref='table'
   )
@@ -33,13 +33,13 @@ div
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
-import { IDRFRequestListParameters } from '@/api/types'
 import { IVlanIf } from '@/api/networks/types'
-import { getVlans } from '@/api/networks/req'
 import { VlanIfModule } from '@/store/modules/networks/vlan'
 import VlanForm from './vlan-form.vue'
+import VlanMixin from './vlan-mixin'
 
 class DataTableComp extends DataTable<IVlanIf> {}
 
@@ -47,7 +47,7 @@ class DataTableComp extends DataTable<IVlanIf> {}
   name: 'VlanList',
   components: { 'datatable': DataTableComp, VlanForm }
 })
-export default class extends Vue {
+export default class extends mixins(VlanMixin) {
   public readonly $refs!: {
     table: DataTableComp
   }
@@ -82,9 +82,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
-  private vlans: IVlanIf[] = []
   private dialogVisible = false
-  private vlansLoading = false
 
   get dialogTitle() {
     let w = 'Изменение'
@@ -108,16 +106,6 @@ export default class extends Vue {
       this.$message.success('Vlan удалён')
       this.$refs.table.GetTableData()
     })
-  }
-
-  private async loadVlans(params?: IDRFRequestListParameters) {
-    this.vlansLoading = true
-    if (params) {
-      params['fields'] = 'id,title,vid,is_management'
-    }
-    const r = await getVlans(params)
-    this.vlansLoading = false
-    return r
   }
 
   private frmDone() {
