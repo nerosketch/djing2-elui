@@ -44,13 +44,17 @@ export default class extends Vue {
     ],
     vid: [
       { required: true, message: 'Стартовый ip надо указать', trigger: 'blur' },
-      { validator: (rule: any, value: number, callback: Function) => {
-        if (value && value > 1 && value < 4095) {
-          callback()
-        } else {
-          callback(new Error(rule.message))
-        }
-      }, trigger: 'change', message: 'Vlan может быть в пределах 2-4094' }
+      {
+        validator: (rule: any, value: number, callback: Function) => {
+          if (value && value > 1 && value < 4095) {
+            callback()
+          } else {
+            callback(new Error(rule.message))
+          }
+        },
+        trigger: 'change',
+        message: 'Vlan может быть в пределах 2-4094'
+      }
     ]
   }
 

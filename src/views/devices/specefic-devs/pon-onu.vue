@@ -15,10 +15,9 @@
         shadow="never"
         body-style="padding: 10px;"
       )
-        template(v-slot:header)
-          .clearfix {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
-            small {{ `${device.ip_address || device.mac_addr}` }}
-            el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
+        template(v-slot:header) {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
+          small {{ `${device.ip_address || device.mac_addr}` }}
+          el-link(style="float: right" icon='el-icon-edit' @click="openDevForm")
         .text.item.list-item IP адрес: {{ device.ip_address || '-' }}
         .text.item.list-item
           b Мак:
@@ -47,9 +46,8 @@
         shadow="never"
         body-style="padding: 10px;"
       )
-        template(v-slot:header)
-            .clearfix Состояние ONU
-              el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-refresh' type='primary' @click="refreshDev")
+        template(v-slot:header) Состояние ONU
+          el-link(style="float: right" icon='el-icon-refresh' @click="refreshDev")
         el-row(type='flex')
           el-col(style='width: 128px;')
             i.icon-big(:class="iconStatusClass")
@@ -62,12 +60,7 @@
               | {{ inf[1] }}
 
     el-col(:lg="12" :sm='24')
-      el-card.box-card(
-        shadow='never'
-      )
-        template(v-slot:header)
-          .clearfix Редактировать VLAN на ONU
-        onu-vlan-form
+      onu-vlan-form(:style="{'margin-top': '5px'}")
 
     el-dialog(
       :visible.sync="devFormDialog"
