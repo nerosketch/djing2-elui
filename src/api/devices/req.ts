@@ -44,22 +44,22 @@ export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosR
   request.get<IDevMacPort[]>(`${baseDevUrl}${devId}/scan_mac_address_vlan/`, { params: { vid } })
 
 export const removeFromOlt = (devId: number): IDevActionResultAxiosResponsePromise =>
-  request.get(`${baseDevUrl}${devId}/remove_from_olt/`)
+  request.get(`${baseDevUrl}pon/${devId}/remove_from_olt/`)
 
 export const registerDevice = (devId: number): IDevActionResultAxiosResponsePromise =>
-  request.get(`${baseDevUrl}${devId}/register_device/`)
+  request.get(`${baseDevUrl}pon/${devId}/register_device/`)
 
 export const fixOnu = (devId: number): IDevActionResultAxiosResponsePromise =>
-  request.get(`${baseDevUrl}${devId}/fix_onu/`)
+  request.get(`${baseDevUrl}pon/${devId}/fix_onu/`)
 
 export const sendReboot = (devId: number) =>
   request.put(`${baseDevUrl}${devId}/send_reboot/`)
 
 export const scanOltFibers = (devId: number): IDevFiberListAxiosResponsePromise =>
-  request.get<IDevFiber[]>(`${baseDevUrl}${devId}/scan_olt_fibers/`)
+  request.get<IDevFiber[]>(`${baseDevUrl}pon/${devId}/scan_olt_fibers/`)
 
 export const scanFiberOnuList = (devId: number, fiberNum: number): IScannedZTEONUListAxiosPromise =>
-  request.get<IScannedZTEONU[]>(`${baseDevUrl}${devId}/scan_onu_on_fiber/${fiberNum}/`)
+  request.get<IScannedZTEONU[]>(`${baseDevUrl}pon/${devId}/scan_onu_on_fiber/${fiberNum}/`)
 
 export const scanDetails = (devId: number) =>
   request.get(`${baseDevUrl}${devId}/scan_details/`)
@@ -68,10 +68,10 @@ export const scanPorts = (devId: number): IScannedPortListAxiosPromise =>
   request.get<IScannedPort[]>(`${baseDevUrl}${devId}/scan_ports/`)
 
 export const scanOnuList = (devId: number, onProgress: (c: ProgressEvent) => void): AxiosPromise<string> =>
-  request.get(`${baseDevUrl}${devId}/scan_onu_list/`, { onDownloadProgress: onProgress })
+  request.get(`${baseDevUrl}pon/${devId}/scan_onu_list/`, { onDownloadProgress: onProgress })
 
 export const scanUnitsUnregistered = (devId: number): IUnitUnregisteredListAxiosPromise =>
-  request.get<IUnitUnregistered[]>(`${baseDevUrl}${devId}/scan_units_unregistered/`)
+  request.get<IUnitUnregistered[]>(`${baseDevUrl}pon/${devId}/scan_units_unregistered/`)
 
 // IPort
 const basePortUrl = '/devices/ports/'
