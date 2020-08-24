@@ -13,7 +13,9 @@ import {
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
-  IDevActionResultAxiosResponsePromise, IScannedZTEONUListAxiosPromise, IScannedZTEONU
+  IDevActionResultAxiosResponsePromise,
+  IScannedZTEONUListAxiosPromise, IScannedZTEONU,
+  IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -46,8 +48,8 @@ export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosR
 export const removeFromOlt = (devId: number): IDevActionResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}pon/${devId}/remove_from_olt/`)
 
-export const registerDevice = (devId: number): IDevActionResultAxiosResponsePromise =>
-  request.get(`${baseDevUrl}pon/${devId}/register_device/`)
+export const getDeviceConfigChoices = (devId: number): IOnuConfigOptionsAxiosResponsePromise =>
+  request.get<IOnuConfigOptions>(`${baseDevUrl}${devId}/get_onu_config_options/`)
 
 export const fixOnu = (devId: number): IDevActionResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}pon/${devId}/fix_onu/`)
@@ -61,8 +63,8 @@ export const scanOltFibers = (devId: number): IDevFiberListAxiosResponsePromise 
 export const scanFiberOnuList = (devId: number, fiberNum: number): IScannedZTEONUListAxiosPromise =>
   request.get<IScannedZTEONU[]>(`${baseDevUrl}pon/${devId}/scan_onu_on_fiber/${fiberNum}/`)
 
-export const scanDetails = (devId: number) =>
-  request.get(`${baseDevUrl}${devId}/scan_details/`)
+export const scanPonDetails = (devId: number) =>
+  request.get(`${baseDevUrl}pon/${devId}/scan_pon_details/`)
 
 export const scanPorts = (devId: number): IScannedPortListAxiosPromise =>
   request.get<IScannedPort[]>(`${baseDevUrl}${devId}/scan_ports/`)

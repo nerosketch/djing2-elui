@@ -2,7 +2,7 @@ import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-dec
 import store from '@/store'
 import {
   getDevice, delDevice,
-  addDevice, changeDevice, scanAllDevVlans, scanAllDevMac, scanOltFibers, scanPorts, scanUnitsUnregistered
+  addDevice, changeDevice, scanAllDevVlans, scanAllDevMac, scanOltFibers, scanPorts, scanUnitsUnregistered, getDeviceConfigChoices
 } from '@/api/devices/req'
 import { IDevice, IDeviceInterace, IDeviceTypeEnum } from '@/api/devices/types'
 // import { IDevice, IDeviceInterace, IDeviceTypeEnum, IDeviceList, IDeviceAxoisResponsePromise,
@@ -34,6 +34,7 @@ class Device extends VuexModule implements IDeviceInterace {
   vlans: number[] = []
   status = 0
   is_noticeable = false
+  code = ''
 
   @Mutation
   public RESET_ALL_DEV() {
@@ -51,6 +52,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.vlans = []
     this.status = 0
     this.is_noticeable = false
+    this.code = ''
     return this
   }
 
@@ -71,6 +73,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.vlans = data.vlans
     this.status = data.status
     this.is_noticeable = data.is_noticeable
+    this.code = data.code
     return this
   }
 
@@ -132,6 +135,15 @@ class Device extends VuexModule implements IDeviceInterace {
   }
 
   @Action
+  public async GetConfigChoices(devId?: number) {
+    if (!devId || devId === 0) {
+      devId = this.pk
+    }
+    const { data } = await getDeviceConfigChoices(devId)
+    return data
+  }
+
+  @Action
   public getDeviceTypeNames() {
     return [
       { nm: 'Не выбрано', v: IDeviceTypeEnum.UNKNOWN },
@@ -141,7 +153,6 @@ class Device extends VuexModule implements IDeviceInterace {
       { nm: 'Eltex Switch', v: IDeviceTypeEnum.EltexSwitch },
       { nm: 'ZTE C320', v: IDeviceTypeEnum.ZTE_C320 },
       { nm: 'Onu ZTE F660 Router', v: IDeviceTypeEnum.OnuZTE_F660 },
-      { nm: 'Onu ZTE F660 Bridge', v: IDeviceTypeEnum.OnuZTE_F660_Bridge },
       { nm: 'Onu ZTE F601', v: IDeviceTypeEnum.OnuZTE_F601 },
       { nm: 'Huawei S2300', v: IDeviceTypeEnum.HuaweiS2300 },
       { nm: 'Dlink DGS_3120_24SC', v: IDeviceTypeEnum.DlinkDGS_3120_24SCSwitchInterface },

@@ -14,8 +14,7 @@ export enum IDeviceTypeEnum {
   HuaweiS2300 = 8,
   DlinkDGS_3120_24SCSwitchInterface = 9,
   DlinkDGS_1100_06MESwitchInterface = 10,
-  DlinkDGS_3627GSwitchInterface = 11,
-  OnuZTE_F660_Bridge = 12
+  DlinkDGS_3627GSwitchInterface = 11
 }
 
 // IDevice
@@ -36,6 +35,7 @@ export interface IDevice {
   vlans: number[]
   status: number
   is_noticeable: boolean
+  code: string
 }
 export interface IDeviceInterace extends IDevice {
   ScanAllDevVlans(devId: number): Promise<IDevVlan[]>
@@ -188,3 +188,14 @@ export interface IDevActionResult {
   status: number
 }
 export type IDevActionResultAxiosResponsePromise = IDRFAxiosResponsePromise<IDevActionResult>
+
+export interface IDevConfigChoice {
+  title: string
+  code: string
+}
+
+export interface IOnuConfigOptions {
+  port_num: number
+  config_choices: IDevConfigChoice[]
+}
+export type IOnuConfigOptionsAxiosResponsePromise = IDRFAxiosResponsePromise<IOnuConfigOptions>

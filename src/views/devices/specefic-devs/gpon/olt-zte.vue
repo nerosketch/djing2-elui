@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { scanOltFibers, scanUnitsUnregistered, scanDetails } from '@/api/devices/req'
+import { scanOltFibers, scanUnitsUnregistered, scanPonDetails } from '@/api/devices/req'
 import { IDevice, IDevFiber, IUnitUnregistered, IDeviceTypeEnum } from '@/api/devices/types'
 import OltZtePort from './olt-zte-port.vue'
 import NewDevForm from '@/views/devices/new-dev-form.vue'
@@ -149,7 +149,7 @@ export default class extends Vue {
 
   private async scanZteDetails() {
     if (this.device) {
-      let { data } = await scanDetails(this.devPk)
+      let { data } = await scanPonDetails(this.devPk)
       this.details = `Имя ${data.name}. В сети ${data.uptime}. Версия прошивки ${data.fver}.`
     }
   }

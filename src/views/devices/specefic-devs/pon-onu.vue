@@ -74,7 +74,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
-import { scanDetails } from '@/api/devices/req'
+import { scanPonDetails } from '@/api/devices/req'
 import { DeviceModule } from '@/store/modules/devices/device'
 import DevForm from '../dev-form.vue'
 import RegisterDeviceBtn from '@/views/devices/specefic-devs/epon-onu/register-device-btn.vue'
@@ -133,7 +133,7 @@ export default class extends Vue {
 
   private async getDetails() {
     if (this.device !== null) {
-      const { data } = await scanDetails(this.device.pk)
+      const { data } = await scanPonDetails(this.device.pk)
       this.onuDetails = data
     }
   }

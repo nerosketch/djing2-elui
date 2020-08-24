@@ -1,8 +1,25 @@
 <template lang="pug">
   el-card(shadow='never')
     template(v-slot:header)
-      span Редактировать VLAN на ONU
-    el-card.box-card.onuvlan_miniheader(shadow='never')
+      span Варианты конфигурации на ONU
+
+    span Шаблон конфига для ONU
+    el-select(v-model="configTypeCode" size='mini' placeholder="Шаблон конфига")
+      el-option(
+        :value='v.code'
+        :label='v.title'
+        v-for="(v, i) in configTypeCodes"
+        :key="i"
+      )
+    p configTypeCode {{ configTypeCode }}
+    p configTypeCodes {{ configTypeCodes }}
+    el-divider
+
+    el-card.box-card.onuvlan_miniheader(
+      shadow='never'
+      v-for="pnum in Array.from(Array(portNum).keys())"
+      :key="pnum"
+    )
       template(v-slot:header)
         el-link(
           style="float: right"
@@ -11,7 +28,7 @@
           type='danger'
           @click="delVlanPort"
         )
-        | Port №1
+        | Vlan на порт №{{ pnum + 1 }}
       el-row
         el-col(:span="4" v-for="(v, i) in vlans" :key="i")
           el-tooltip.item(
@@ -75,10 +92,12 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
+import { DeviceModule } from '@/store/modules/devices/device'
+import { IDevConfigChoice } from '@/api/devices/types'
 import { IVlanIf } from '@/api/networks/types'
 import AddVlanPort from './add-vlan-port.vue'
 import AddVlan from './add-vlan.vue'
@@ -90,6 +109,9 @@ import AddVlan from './add-vlan.vue'
 export default class extends mixins(VlanMixin) {
   private addVlanPortVisible = false
   private addVlanVisible = false
+  private configTypeCode = this.devCodeGetter
+  private configTypeCodes: IDevConfigChoice[] = []
+  private portNum = 0
   // private portTypes: object[] = [
   //   { title: 'Access', val: 1 },
   //   { title: 'Trunk', val: 2 }
@@ -97,6 +119,7 @@ export default class extends mixins(VlanMixin) {
 
   created() {
     this.loadVlans()
+    this.getDevConfigTypes()
   }
 
   private onSubmit() {
@@ -139,6 +162,23 @@ export default class extends mixins(VlanMixin) {
     this.$confirm('Удалить настройки с порта?').then(() => {
       this.$message.success('Типо удалён')
     })
+  }
+
+  get devCodeGetter() {
+    return DeviceModule.code
+  }
+  get devIdGetter() {
+    return DeviceModule.pk || 0
+  }
+  @Watch('devIdGetter')
+  private onDevIdChanged(devId: number) {
+    this.getDevConfigTypes(devId)
+  }
+
+  private async getDevConfigTypes(devId?: number) {
+    const conf = await DeviceModule.GetConfigChoices(devId)
+    this.portNum = conf.port_num
+    this.configTypeCodes = conf.config_choices
   }
 }
 </script>
