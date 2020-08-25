@@ -41,7 +41,7 @@
               el-button.onuvlan_miniwidth(
                 :type='v.native ? "info" : "primary"'
                 size='mini'
-                @click="changeVlanMode(v)"
+                @click="changeVlanMode(portVlanConf.port, v)"
               ) {{ v.native ? 'A' : 'T' }}
               el-button(size='mini') {{ v.vid }}
               el-button.onuvlan_miniwidth(
@@ -118,7 +118,7 @@ export default class extends mixins(VlanMixin) {
 
   private vlanRemove(portNum: number, remVlan: IDevOnuVlan) {
     this.$confirm('Удалить vlan с порта?').then(() => {
-      const confObj = this.currentVlanConfig.find(v => v.port === portNum)
+      const confObj = this.findPortConf(portNum)
       if (confObj) {
         const confIndex = confObj.vids.findIndex(v => v.vid === remVlan.vid)
         if (confIndex > -1) {
@@ -127,28 +127,33 @@ export default class extends mixins(VlanMixin) {
         } else {
           this.$message.error('Не найден vid='+remVlan.vid)
         }
-      } else {
-        this.$message.error('Не найден конфиг для порта №' + portNum)
       }
     })
   }
 
-  private changeVlanMode(v: IDevOnuVlan) {
+  private changeVlanMode(portNum: number, v: IDevOnuVlan) {
+    if (!v.native && this.hasVlanPortNativeVlan(portNum)) {
+      return
+    }
     v.native = !v.native
     this.$message.success('Изменён режим Trunk/Success')
   }
 
   private addVlanDone(vlanConf: IDevOnuVlan) {
     this.addVlanVisible = false
-    const confObj = this.currentVlanConfig.find(v => v.port === this.currentAddVlanPort)
+    const portNum = this.currentAddVlanPort
+
+    if (this.hasVlanPortNativeVlan(portNum)) {
+      return
+    }
+
+    const confObj = this.findPortConf(portNum)
     if (confObj) {
       confObj.vids.push(vlanConf)
       this.$message({
         type: 'success',
         message: `vlan Id: ${vlanConf.vid}, ${vlanConf.native ? 'access' : 'trunk'}`
       })
-    } else {
-      this.$message.error('Не найден конфиг для порта №' + this.currentAddVlanPort)
     }
   }
 
@@ -158,8 +163,6 @@ export default class extends mixins(VlanMixin) {
       if (confInd > -1) {
         this.currentVlanConfig.splice(confInd, 1)
         this.$message.success(`Настройки с порта №${portNum} удалены`)
-      } else {
-        this.$message.error('Не найден конфиг для порта №' + portNum)
       }
     })
   }
@@ -200,6 +203,31 @@ export default class extends mixins(VlanMixin) {
   private openAddVlanDialog(portNum: number) {
     this.currentAddVlanPort = portNum
     this.addVlanVisible = true
+  }
+
+  private hasVlanPortNativeVlan(portNum: number): boolean {
+    const confObj = this.findPortConf(portNum)
+    let nativeCount = 0
+    if (confObj) {
+      confObj.vids.forEach(portVid => {
+        if (portVid.native) {
+          nativeCount ++
+        }
+      })
+    }
+    if (nativeCount > 0) {
+      this.$message.error('На порт не может быть больше одного access vlan')
+    }
+    return nativeCount > 0
+  }
+
+  private findPortConf(portNum: number): IDevOnuVlanInfo | undefined {
+    const confObj = this.currentVlanConfig.find(v => v.port === portNum)
+    if (confObj) {
+      return confObj
+    }
+    this.$message.error('Не найден конфиг для порта №' + portNum)
+    return undefined
   }
 }
 </script>

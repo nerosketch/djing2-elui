@@ -50,7 +50,7 @@ export default class extends Vue {
 
   private onSubmit() {
     if (this.frmMod.vid > 0) {
-      this.$emit('done', this.frmMod)
+      this.$emit('done', Object.assign({}, this.frmMod))
     }
   }
 }
