@@ -107,13 +107,7 @@ export default class extends mixins(VlanMixin) {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
-      if (valid) {
-        this.$message.success('Типо сохранил')
-      } else {
-        this.$message.error('Исправь ошибки в форме')
-      }
-    })
+    this.$message.success('Типо сохранил')
   }
 
   private vlanRemove(portNum: number, remVlan: IDevOnuVlan) {
@@ -233,9 +227,6 @@ export default class extends mixins(VlanMixin) {
 </script>
 
 <style>
-/*.onuvlan_miniheader>.el-card__header {
-  padding: 0 8px !important;
-}*/
 .onuvlan_miniwidth{
   padding: 7px 3px;
 }
