@@ -17,7 +17,6 @@ export enum IDeviceTypeEnum {
   DlinkDGS_3627GSwitchInterface = 11
 }
 
-// IDevice
 export interface IDevice {
   pk: number
   ip_address: string
@@ -53,7 +52,6 @@ export type IDeviceList = IDRFListResponse<IDevice>
 export type IDeviceAxoisResponsePromise = IDRFAxiosResponsePromise<IDevice>
 export type IDeviceListAxiosResponsePromise = IDRFAxiosResponsePromise<IDeviceList>
 
-// IPort
 export enum IDevPortState {
   UP = 'up',
   DOWN = 'down'
@@ -69,7 +67,6 @@ export type IPortList = IDRFListResponse<IPort>
 export type IPortAxoisResponsePromise = IDRFAxiosResponsePromise<IPort>
 export type IPortListAxiosResponsePromise = IDRFAxiosResponsePromise<IPortList>
 
-// IDevPorts
 export interface IDevGroup {
   pk: number
   title: string
@@ -89,7 +86,6 @@ export interface IPortVlanConfig {
   vlans: IPortVlanConfigMember[]
 }
 
-// IScannedPort
 export interface IScannedPort {
   num: number
   snmp_number: number
@@ -101,7 +97,6 @@ export interface IScannedPort {
 }
 export type IScannedPortListAxiosPromise = AxiosPromise<IScannedPort[]>
 
-// IScannedONU
 export interface IScannedONU {
   number: number
   title: string
@@ -120,7 +115,6 @@ export enum IScannedZTEONUState {
   UNKNOWN = 'unknown'
 }
 
-// IScannedONU
 export interface IScannedZTEONU {
   onu_type: string
   onu_port: string
@@ -131,13 +125,11 @@ export interface IScannedZTEONU {
 }
 export type IScannedZTEONUListAxiosPromise = AxiosPromise<IScannedZTEONU[]>
 
-// IOnuDetailsStatus
 export enum IOnuDetailsStatus {
   UNKNOWN = 'unknown',
   UP = 'ok',
   DOWN = 'down'
 }
-// IOnuDetails
 export interface IOnuDetails {
   status: IOnuDetailsStatus
   signal: number
@@ -145,7 +137,6 @@ export interface IOnuDetails {
 }
 export type IOnuDetailsAxiosPromise = AxiosPromise<IOnuDetails>
 
-// IUnitUnregistered
 export interface IUnitUnregistered {
   mac: string
   firmware_ver?: string
@@ -155,7 +146,6 @@ export interface IUnitUnregistered {
 }
 export type IUnitUnregisteredListAxiosPromise = AxiosPromise<IUnitUnregistered[]>
 
-// IDevVlan
 export interface IDevVlan {
   vid: number
   title: string
@@ -164,7 +154,20 @@ export interface IDevVlan {
 }
 export type IDevVlanListAxiosResponsePromise = AxiosPromise<IDevVlan[]>
 
-// IDevMacPort
+
+export interface IDevOnuVlan {
+  vid: number
+  native: boolean
+}
+// Vlan onu info for one port.
+// Port number it is an array index
+export interface IDevOnuVlanInfo {
+  port: number
+  vids: IDevOnuVlan[]
+}
+export type IDevOnuVlanInfoAxiosResponsePromise = AxiosPromise<IDevOnuVlanInfo[]>
+
+
 export interface IDevMacPort {
   vid: number
   name: string
@@ -173,7 +176,6 @@ export interface IDevMacPort {
 }
 export type IDevMacPortListAxiosResponsePromise = AxiosPromise<IDevMacPort[]>
 
-// IDevFiber
 export interface IDevFiber {
   fb_id: number
   fb_name: string

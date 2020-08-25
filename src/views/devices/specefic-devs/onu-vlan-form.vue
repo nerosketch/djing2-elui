@@ -11,14 +11,16 @@
         v-for="(v, i) in configTypeCodes"
         :key="i"
       )
-    p configTypeCode {{ configTypeCode }}
-    p configTypeCodes {{ configTypeCodes }}
-    el-divider
+    //- p configTypeCode { { configTypeCode }}
+    //- p configTypeCodes { { configTypeCodes }}
+    //- p portNum { { portNum }}
+    //- p vlans { { vlans }}
+    //- p currentVlanConfig { { currentVlanConfig }}
 
     el-card.box-card.onuvlan_miniheader(
       shadow='never'
-      v-for="pnum in Array.from(Array(portNum).keys())"
-      :key="pnum"
+      v-for="portVlanConf in currentVlanConfig"
+      :key="portVlanConf.port"
     )
       template(v-slot:header)
         el-link(
@@ -26,27 +28,27 @@
           size='mini'
           icon='el-icon-close'
           type='danger'
-          @click="delVlanPort"
+          @click="delVlanPort(portVlanConf.port)"
         )
-        | Vlan на порт №{{ pnum + 1 }}
+        | Vlan на порт №{{ portVlanConf.port }}
       el-row
-        el-col(:span="4" v-for="(v, i) in vlans" :key="i")
+        el-col(:span="4" v-for="(v, i) in portVlanConf.vids" :key="i")
           el-tooltip.item(
-            :content="v.title"
+            :content="calcVlanTitleByVid(v.vid)"
             placement="top"
           )
             el-button-group
               el-button.onuvlan_miniwidth(
-                type='primary'
+                :type='v.native ? "info" : "primary"'
                 size='mini'
                 @click="changeVlanMode(v)"
-              ) T
+              ) {{ v.native ? 'A' : 'T' }}
               el-button(size='mini') {{ v.vid }}
               el-button.onuvlan_miniwidth(
                 type='danger'
                 size='mini'
                 icon='el-icon-close'
-                @click="vlanRemove(v)"
+                @click="vlanRemove(portVlanConf.port, v)"
               )
 
       el-button(
@@ -54,10 +56,9 @@
         icon="el-icon-plus"
         size='mini'
         circle
-        @click="addVlanVisible=true"
+        @click="openAddVlanDialog(portVlanConf.port)"
       )
 
-    p {{ vlans }}
     el-button-group
       el-button(
         type="primary"
@@ -66,21 +67,7 @@
         :loading="loading"
         size='mini'
       ) Применить
-      el-button(
-        type="success"
-        icon="el-icon-plus"
-        size='mini'
-        @click="addVlanPortVisible=true"
-      ) Добавить
 
-    el-dialog(
-      :visible.sync="addVlanPortVisible"
-      title="Добавить порт"
-    )
-      keep-alive
-        add-vlan-port(
-          v-on:done="addVlanPortDone"
-        )
     el-dialog(
       :visible.sync="addVlanVisible"
       title="Добавить vlan на порт"
@@ -97,29 +84,26 @@ import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 import { DeviceModule } from '@/store/modules/devices/device'
-import { IDevConfigChoice } from '@/api/devices/types'
-import { IVlanIf } from '@/api/networks/types'
-import AddVlanPort from './add-vlan-port.vue'
+import { IDevConfigChoice, IDevOnuVlanInfo, IDevOnuVlan } from '@/api/devices/types'
+import { readOnuVlanInfo } from '@/api/devices/req'
 import AddVlan from './add-vlan.vue'
 
 @Component({
   name: 'OnuVlanForm',
-  components: { AddVlanPort, AddVlan }
+  components: { AddVlan }
 })
 export default class extends mixins(VlanMixin) {
-  private addVlanPortVisible = false
   private addVlanVisible = false
   private configTypeCode = this.devCodeGetter
   private configTypeCodes: IDevConfigChoice[] = []
   private portNum = 0
-  // private portTypes: object[] = [
-  //   { title: 'Access', val: 1 },
-  //   { title: 'Trunk', val: 2 }
-  // ]
+  private currentVlanConfig: IDevOnuVlanInfo[] = []
+  private currentAddVlanPort = 0
 
   created() {
     this.loadVlans()
     this.getDevConfigTypes()
+    this.scanDevOnuVlan()
   }
 
   private onSubmit() {
@@ -132,35 +116,51 @@ export default class extends mixins(VlanMixin) {
     })
   }
 
-  private addVlanPortDone(portId: number) {
-    this.$message({
-      type: 'info',
-      message: 'port Id: ' + portId
-    })
-    this.addVlanPortVisible = false
-  }
-
-  private vlanRemove(v: IVlanIf) {
+  private vlanRemove(portNum: number, remVlan: IDevOnuVlan) {
     this.$confirm('Удалить vlan с порта?').then(() => {
-      this.$message.success('Типо удалён')
+      const confObj = this.currentVlanConfig.find(v => v.port === portNum)
+      if (confObj) {
+        const confIndex = confObj.vids.findIndex(v => v.vid === remVlan.vid)
+        if (confIndex > -1) {
+          confObj.vids.splice(confIndex, 1)
+          this.$message.success(`Влан ${remVlan.vid} удалён с порта №${portNum}`)
+        } else {
+          this.$message.error('Не найден vid='+remVlan.vid)
+        }
+      } else {
+        this.$message.error('Не найден конфиг для порта №' + portNum)
+      }
     })
   }
 
-  private changeVlanMode(v: IVlanIf) {
-    this.$message.success('Типо поменяли режим Trunk/Success')
+  private changeVlanMode(v: IDevOnuVlan) {
+    v.native = !v.native
+    this.$message.success('Изменён режим Trunk/Success')
   }
 
-  private addVlanDone(vlanId: number) {
-    this.$message({
-      type: 'info',
-      message: 'vlan Id: ' + vlanId
-    })
+  private addVlanDone(vlanConf: IDevOnuVlan) {
     this.addVlanVisible = false
+    const confObj = this.currentVlanConfig.find(v => v.port === this.currentAddVlanPort)
+    if (confObj) {
+      confObj.vids.push(vlanConf)
+      this.$message({
+        type: 'success',
+        message: `vlan Id: ${vlanConf.vid}, ${vlanConf.native ? 'access' : 'trunk'}`
+      })
+    } else {
+      this.$message.error('Не найден конфиг для порта №' + this.currentAddVlanPort)
+    }
   }
 
-  private delVlanPort() {
+  private delVlanPort(portNum: number) {
     this.$confirm('Удалить настройки с порта?').then(() => {
-      this.$message.success('Типо удалён')
+      const confInd = this.currentVlanConfig.findIndex(v => v.port === portNum)
+      if (confInd > -1) {
+        this.currentVlanConfig.splice(confInd, 1)
+        this.$message.success(`Настройки с порта №${portNum} удалены`)
+      } else {
+        this.$message.error('Не найден конфиг для порта №' + portNum)
+      }
     })
   }
 
@@ -179,6 +179,27 @@ export default class extends mixins(VlanMixin) {
     const conf = await DeviceModule.GetConfigChoices(devId)
     this.portNum = conf.port_num
     this.configTypeCodes = conf.config_choices
+  }
+
+  private async scanDevOnuVlan(devId?: number) {
+    if (!devId || devId === 0) {
+      devId = this.devIdGetter
+    }
+    const { data } = await readOnuVlanInfo(devId)
+    this.currentVlanConfig = data
+  }
+
+  private calcVlanTitleByVid(vid: number) {
+    const vlan = this.vlans.find(v => v.vid === vid)
+    if (vlan) {
+      return vlan.title
+    }
+    return undefined
+  }
+
+  private openAddVlanDialog(portNum: number) {
+    this.currentAddVlanPort = portNum
+    this.addVlanVisible = true
   }
 }
 </script>

@@ -105,7 +105,10 @@ class Device extends VuexModule implements IDeviceInterace {
   }
 
   @Action
-  public async ScanAllDevVlans(devId: number) {
+  public async ScanAllDevVlans(devId?: number) {
+    if (!devId || devId === 0) {
+      devId = this.pk
+    }
     const { data } = await scanAllDevVlans(devId)
     return data
   }

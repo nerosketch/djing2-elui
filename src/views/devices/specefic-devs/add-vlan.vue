@@ -8,7 +8,7 @@
       label="Vlan"
       prop='vlan'
     )
-      el-select(v-model="frmMod.vlanId")
+      el-select(v-model="frmMod.vid")
         el-option(
           label="OIoi"
           :value="1"
@@ -17,6 +17,15 @@
           label="sdjfosdf"
           :value="2"
         )
+    el-form-item(
+      label="Режим Trunk/Access"
+      prop='native'
+    )
+      el-switch(
+        v-model="frmMod.native"
+        active-text="Access"
+        inactive-text="Trunk"
+      )
     el-form-item
       el-button(
         type="success"
@@ -27,19 +36,21 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { IDevOnuVlan } from '@/api/devices/types'
 
 @Component({
   name: 'AddVlan'
 })
 export default class extends Vue {
   private isLoading = false
-  private frmMod = {
-    vlanId: 0
+  private frmMod: IDevOnuVlan = {
+    vid: 0,
+    native: false
   }
 
   private onSubmit() {
-    if (this.frmMod.vlanId > 0) {
-      this.$emit('done', this.frmMod.vlanId)
+    if (this.frmMod.vid > 0) {
+      this.$emit('done', this.frmMod)
     }
   }
 }
