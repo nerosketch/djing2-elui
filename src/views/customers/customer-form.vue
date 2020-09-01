@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='customerfrm'
-    label-width="115px"
+    :label-width="isMobileView ? undefined : '115px'"
     size="mini"
     status-icon
     :rules='frmRules'
@@ -114,6 +114,7 @@ import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
+import { AppModule } from '@/store/modules/app'
 import { ICustomerStreet, ICustomerGroup, ICustomerFrm } from '@/api/customers/types'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
 import { TaskModule } from '@/store/modules/tasks/tasks'
@@ -154,6 +155,9 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
+  private get isMobileView() {
+    return AppModule.IsMobileDevice
+  }
   private frmMod: ICustomerFrm = {} as ICustomerFrm
 
   created() {
