@@ -4,7 +4,7 @@
       .clearfix {{ device.comment || 'BDCOM' }}
     el-row(v-if="ready")
       el-col(
-        :span='24'
+        :span="24"
         v-for="(fiber, i) in fibers"
         :key="i"
       )
@@ -24,22 +24,27 @@
                 i.el-icon-error.el-alert--error.is-light(v-else)
             el-table-column(
               label="SNMP Ном."
+              min-width="97"
             )
               template(v-slot:default="{row}") {{ row.number }}
             el-table-column(
               label="Имя"
+              min-width="93"
             )
               template(v-slot:default="{row}") {{ row.title }}
             el-table-column(
               label="Мак"
+              min-width="123"
             )
               template(v-slot:default="{row}") {{ row.mac_addr }}
             el-table-column(
               label="Ур. сигнала"
+              min-width="92"
             )
               template(v-slot:default="{row}") {{ row.signal }}
             el-table-column(
               label="В сети"
+              min-width="151"
             )
               template(v-slot:default="{row}") {{ row.uptime }}
             el-table-column(
