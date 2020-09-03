@@ -1,6 +1,6 @@
 {
-  "name": "Djing2 ui",
-  "short_name": "Djing2 user interface",
+  "name": "Djing2 билинг",
+  "short_name": "Djing2 билинг",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -13,7 +13,11 @@
       "type": "image/png"
     }
   ],
-  "start_url": "./index.html",
+  "related_applications": [{
+    "platform": "web"
+  }],
+  "dir": "ltr",
+  "start_url": "/customers/",
   "display": "standalone",
   "background_color": "#fff",
   "theme_color": "#4DBA87"
