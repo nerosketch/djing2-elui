@@ -32,6 +32,7 @@
           el-button(v-else size='mini' icon='el-icon-close' circle disabled)
       el-table-column(
         label="Описание"
+        min-width='267'
       )
         template(v-slot:default="{row}") {{ row.descr }}
       el-table-column(
@@ -43,19 +44,23 @@
           el-link(type="primary" @click="openPortView(row)") {{ row.user_count }}
       el-table-column(
         label="Имя"
+        min-width='235'
       )
         template(v-slot:default="{row}") {{ row.name || '-' }}
       el-table-column(
         label="Режим"
+        min-width='78'
       )
         template(v-slot:default="{row}") {{ row.speed ? portModesHuman(row.speed) : '-' }}
       el-table-column(
         label="UpTime"
+        min-width='176'
       )
         template(v-slot:default="{row}") {{ row.uptime || '-' }}
       el-table-column(
         label="Кнопки"
         align='center'
+        min-width='194'
       )
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")

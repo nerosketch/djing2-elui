@@ -7,14 +7,17 @@
   )
     el-table-column(
       label="Название"
+      min-width='200'
     )
       template(v-slot:default="{row}") {{ row.name }}
     el-table-column(
       label="VID"
+      min-width='64'
     )
       template(v-slot:default="{row}") {{ row.vid }}
     el-table-column(
       label="MAC"
+      min-width='121'
     )
       template(v-slot:default="{row}") {{ row.mac }}
 
