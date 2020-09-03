@@ -10,12 +10,10 @@
     )
       el-select(v-model="frmMod.vid")
         el-option(
-          label="OIoi"
-          :value="1"
-        )
-        el-option(
-          label="sdjfosdf"
-          :value="2"
+          v-for="v in vlans"
+          :key="v.id"
+          :label="`${v.title} [${v.vid}]`"
+          :value="v.vid"
         )
     el-form-item(
       label="Режим Trunk/Access"
@@ -35,13 +33,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { IDevOnuVlan } from '@/api/devices/types'
+import { IVlanIf } from '@/api/networks/types'
 
 @Component({
   name: 'AddVlan'
 })
 export default class extends Vue {
+  @Prop({ default: [] }) private vlans!: IVlanIf[]
   private isLoading = false
   private frmMod: IDevOnuVlan = {
     vid: 0,

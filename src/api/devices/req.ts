@@ -9,14 +9,14 @@ import {
   IDevGroupList, IDevGroupListAxiosResponsePromise,
   IDRFRequestListParametersDevGroup,
   IDevPortState, IDevMacPort, IDevMacPortListAxiosResponsePromise,
-  IDevVlan, IDevVlanListAxiosResponsePromise, IPortVlanConfig,
+  IDevVlan, IDevVlanListAxiosResponsePromise,
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
   IDevActionResultAxiosResponsePromise,
   IScannedZTEONUListAxiosPromise, IScannedZTEONU,
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
-  IDevOnuVlanInfoAxiosResponsePromise, IDevOnuVlanInfo
+  IDevOnuVlanInfoAxiosResponsePromise, IDevOnuVlanInfo, IDeviceOnuConfigTemplate
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -44,7 +44,7 @@ export const scanAllDevVlans = (devId: number): IDevVlanListAxiosResponsePromise
   request.get<IDevVlan[]>(`${baseDevUrl}${devId}/scan_all_vlan_list/`)
 
 export const readOnuVlanInfo = (devId: number): IDevOnuVlanInfoAxiosResponsePromise =>
-  request.get<IDevOnuVlanInfo[]>(`${baseDevUrl}${devId}/read_onu_vlan_info/`)
+  request.get<IDevOnuVlanInfo[]>(`${baseDevUrl}pon/${devId}/read_onu_vlan_info/`)
 
 export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${baseDevUrl}${devId}/scan_mac_address_vlan/`, { params: { vid } })
@@ -53,7 +53,10 @@ export const removeFromOlt = (devId: number): IDevActionResultAxiosResponsePromi
   request.get(`${baseDevUrl}pon/${devId}/remove_from_olt/`)
 
 export const getDeviceConfigChoices = (devId: number): IOnuConfigOptionsAxiosResponsePromise =>
-  request.get<IOnuConfigOptions>(`${baseDevUrl}${devId}/get_onu_config_options/`)
+  request.get<IOnuConfigOptions>(`${baseDevUrl}pon/${devId}/get_onu_config_options/`)
+
+export const applyDeviceOnuConfig = (devId: number, devConfig: IDeviceOnuConfigTemplate) =>
+  request.post(`${baseDevUrl}pon/${devId}/apply_device_onu_config_template/`, devConfig)
 
 export const fixOnu = (devId: number): IDevActionResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}pon/${devId}/fix_onu/`)
@@ -106,8 +109,8 @@ export const scanMacAddressPort = (portId: number): IDevMacPortListAxiosResponse
 export const scanPortVlans = (portId: number): IDevVlanListAxiosResponsePromise =>
   request.get<IDevVlan[]>(`${basePortUrl}${portId}/scan_vlan/`)
 
-export const vlanConfigApply = (portId: number, conf: IPortVlanConfig) =>
-  request.post(`${basePortUrl}${portId}/`, conf)
+// export const vlanConfigApply = (portId: number, conf: IPortVlanConfig) =>
+//   request.post(`${basePortUrl}${portId}/`, conf)
 
 // IDevGroup
 export const getDevGroups = (params?: IDRFRequestListParameters): IDevGroupListAxiosResponsePromise =>

@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { removeFromOlt } from '@/api/devices/req'
+import { DeviceModule } from '@/store/modules/devices/device'
 import BtnShareMixin from './btn-share-mixin'
 
 @Component({
@@ -27,12 +27,17 @@ export default class extends mixins(BtnShareMixin) {
   private async delFromOltOnu() {
     if (this.devId && this.devId > 0) {
       this.loading = true
-      const { data } = await removeFromOlt(this.devId)
-      if (data.status === 1) {
-        this.setResState(data.text, 'success', 5000)
-        this.$emit('done')
-      } else {
-        this.setResState(data.text, 'danger')
+      try {
+        const data = await DeviceModule.RemoveFromOlt(this.devId)
+        if (data.status === 1) {
+          this.setResState(data.text, 'success', 5000)
+          this.$emit('done')
+        } else {
+          this.setResState(data.text, 'danger')
+        }
+      } catch (err) {
+        this.loading = false
+        this.$message.error(err)
       }
     } else {
       this.setResState('В кнопку не передано устройство', 'danger')

@@ -133,6 +133,13 @@ export default class extends mixins(FormMixin) {
     this.frmMod = this.devFrmData
     this.frmInitial = Object.assign({}, this.devFrmData)
   }
+  get devSnmp() {
+    return DeviceModule.snmp_extra
+  }
+  @Watch('devSnmp')
+  private async onChSnmp() {
+    this.onDevCh()
+  }
 
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {

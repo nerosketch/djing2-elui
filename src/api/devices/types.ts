@@ -75,17 +75,6 @@ export interface IDevGroup {
 export type IDevGroupList = IDRFListResponse<IDevGroup>
 export type IDevGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevGroupList>
 
-export interface IPortVlanConfigMember {
-  vid: number
-  title: string
-  is_management?: boolean
-  native: boolean
-}
-export interface IPortVlanConfig {
-  port_num: number
-  vlans: IPortVlanConfigMember[]
-}
-
 export interface IScannedPort {
   num: number
   snmp_number: number
@@ -166,6 +155,10 @@ export interface IDevOnuVlanInfo {
   vids: IDevOnuVlan[]
 }
 export type IDevOnuVlanInfoAxiosResponsePromise = AxiosPromise<IDevOnuVlanInfo[]>
+export interface IDeviceOnuConfigTemplate {
+  configTypeCode: string
+  vlanConfig: IDevOnuVlanInfo[]
+}
 
 
 export interface IDevMacPort {
@@ -194,6 +187,7 @@ export type IDevActionResultAxiosResponsePromise = IDRFAxiosResponsePromise<IDev
 export interface IDevConfigChoice {
   title: string
   code: string
+  accept_vlan: boolean
 }
 
 export interface IOnuConfigOptions {

@@ -4,9 +4,9 @@ import {
   getPort, delPort,
   addPort, changePort,
   togglePort, scanMacAddressPort,
-  scanPortVlans, vlanConfigApply
+  scanPortVlans
 } from '@/api/devices/req'
-import { IPort, IDevPortState, IPortVlanConfig } from '@/api/devices/types'
+import { IPort, IDevPortState } from '@/api/devices/types'
 
 @Module({ dynamic: true, store, name: 'port' })
 class Port extends VuexModule implements IPort {
@@ -82,9 +82,9 @@ class Port extends VuexModule implements IPort {
     return data
   }
 
-  @Action
-  public async VlanConfigApply(portId: number, conf: IPortVlanConfig) {
-    await vlanConfigApply(portId, conf)
-  }
+  // @Action
+  // public async VlanConfigApply(portId: number, conf: IPortVlanConfig) {
+  //   await vlanConfigApply(portId, conf)
+  // }
 }
 export const PortModule = getModule(Port)

@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadVlans"
-    :loading="loading"
+    :loading="vlanLoading"
     :heightDiff='170'
     ref='table'
   )

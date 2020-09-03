@@ -8,10 +8,10 @@ import { getVlans } from '@/api/networks/req'
 })
 export default class extends Vue {
   protected vlans: IVlanIf[] = []
-  protected loading = false
+  protected vlanLoading = false
 
   protected async loadVlans(params?: IDRFRequestListParameters) {
-    this.loading = true
+    this.vlanLoading = true
     const defaultFIelds = 'id,title,vid,is_management'
     if (params) {
       params['fields'] = defaultFIelds
@@ -23,7 +23,7 @@ export default class extends Vue {
       }
     }
     const r = await getVlans(params)
-    this.loading = false
+    this.vlanLoading = false
     this.vlans = r.data.results
     return r
   }

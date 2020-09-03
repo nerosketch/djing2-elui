@@ -37,9 +37,8 @@
           el-link(type="primary" v-for="(ab, i) in device.attached_users" :key="i")
             router-link(:to="{name: 'customerDetails', params:{ uid: ab.pk }}") {{ ab.full_name }}
         el-button-group
-          register-device-btn(:device="device" v-on:done="getDetails")
           delete-from-olt-btn(:devId="device.pk" v-on:done="getDetails")
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice")
+          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice") Удалить
 
     el-col(:lg="12" :sm='24')
       el-card.box-card(
@@ -48,7 +47,7 @@
       )
         template(v-slot:header) Состояние ONU
           el-link(style="float: right" icon='el-icon-refresh' @click="refreshDev")
-        el-row(type='flex')
+        el-row(type='flex' v-if="isOnuRegistered")
           el-col(style='width: 128px;')
             i.icon-big(:class="iconStatusClass")
           el-col(v-if="onuDetails !== null")
@@ -58,6 +57,9 @@
             .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
               b {{ inf[0] }}:
               | {{ inf[1] }}
+        el-row(v-else)
+          el-col
+            b ONU не зарегистрирована
 
     el-col(:lg="12" :sm='24')
       onu-vlan-form(:style="{'margin-top': '5px'}")
@@ -77,7 +79,6 @@ import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanPonDetails } from '@/api/devices/req'
 import { DeviceModule } from '@/store/modules/devices/device'
 import DevForm from '../dev-form.vue'
-import RegisterDeviceBtn from '@/views/devices/specefic-devs/epon-onu/register-device-btn.vue'
 import DeleteFromOltBtn from '@/views/devices/specefic-devs/epon-onu/delete-from-olt-btn.vue'
 import OnuVlanForm from './onu-vlan-form.vue'
 
@@ -85,7 +86,6 @@ import OnuVlanForm from './onu-vlan-form.vue'
   name: 'PonOnu',
   components: {
     DevForm,
-    RegisterDeviceBtn,
     DeleteFromOltBtn,
     OnuVlanForm
   }
@@ -112,6 +112,10 @@ export default class extends Vue {
   }
   get isStatusUnknown() {
     return !this.onuDetails || this.onuDetails.status === IOnuDetailsStatus.UNKNOWN
+  }
+
+  get isOnuRegistered() {
+    return DeviceModule.isOnuRegistered
   }
 
   private delDevice() {
