@@ -59,6 +59,7 @@
       )
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
+            el-button(size='mini' icon='el-icon-notebook-2' @click="openMacsDialog(row)")
             el-button(size='mini' icon='el-icon-view' @click="openVidsDialog(row)")
             el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)")
             el-button(size='mini' type='primary' icon='el-icon-edit' @click="openPortEdit(row)")
@@ -96,6 +97,13 @@
       vids-view(
         :portId="currPortId"
       )
+    el-dialog(
+      :visible.sync="macsDialog"
+      title="ARP таблица для порта"
+    )
+      port-mac-list(
+        :portId="currPortId"
+      )
 </template>
 
 <script lang="ts">
@@ -109,6 +117,7 @@ import SwitchPortForm from './switch/switch-port-form.vue'
 import SwitchPortToggleButton from './switch/switch-port-toggle-button.vue'
 import DevForm from '../dev-form.vue'
 import VidsView from './switch/vlan/vids-view.vue'
+import PortMacList from './switch/port-mac-list.vue'
 
 interface IFinPort {
   pk?: number
@@ -147,7 +156,8 @@ interface ITableRowClassName {
     SwitchPortForm,
     SwitchPortToggleButton,
     DevForm,
-    VidsView
+    VidsView,
+    PortMacList
   }
 })
 export default class extends Vue {
@@ -161,6 +171,7 @@ export default class extends Vue {
   private initialNum = 0
   private devFormDialog = false
   private vidsDialog = false
+  private macsDialog = false
 
   private async loadPorts() {
     if (this.device !== null) {
@@ -299,6 +310,11 @@ export default class extends Vue {
   private openVidsDialog(port: IPort) {
     this.currPortId = port.pk
     this.vidsDialog = true
+  }
+
+  private openMacsDialog(port: IPort) {
+    this.currPortId = port.pk
+    this.macsDialog = true
   }
 }
 </script>
