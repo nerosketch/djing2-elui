@@ -59,7 +59,7 @@
       el-form(
         ref='frm'
         v-loading='frmLoading'
-        label-width="100px"
+        :label-width="isMobileView ? undefined : '100px'"
         size="mini"
         status-icon
         :rules='frmRules'
@@ -101,6 +101,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
+import { AppModule } from '@/store/modules/app'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerIpLease, INetworkIpPool } from '@/api/networks/types'
 import { getCustomerIpLeases, getNetworkIpPools } from '@/api/networks/req'
@@ -140,6 +141,10 @@ export default class extends Vue {
     customer: 0,
     mac_address: '',
     is_dynamic: false
+  }
+
+  private get isMobileView() {
+    return AppModule.IsMobileDevice
   }
 
   private async loadLeases() {

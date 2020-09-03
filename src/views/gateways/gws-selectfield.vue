@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="selectedGw")
+  el-select(v-model="selectedGw" v-loading="loadingGws")
     el-option(
       v-for="gw in gwlist"
       :key="gw.id"

@@ -60,6 +60,10 @@ class App extends VuexModule implements IAppState {
   public ToggleDevice(device: DeviceType) {
     this.TOGGLE_DEVICE(device)
   }
+
+  public get IsMobileDevice(): boolean {
+    return this.device === DeviceType.Mobile
+  }
 }
 
 export const AppModule = getModule(App)

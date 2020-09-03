@@ -54,7 +54,7 @@ export default class extends Vue {
   private async loadDevices() {
     const { data } = await getDevices({
       page: 1,
-      page_size: 100,
+      page_size: 100500,
       group: this.groupId,
       fields: 'pk,comment,ip_address'
     })

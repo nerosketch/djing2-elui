@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='customerfrm'
-    label-width="115px"
+    :label-width="isMobileView ? undefined : '115px'"
     size="mini"
     status-icon
     :rules='frmRules'
@@ -31,6 +31,7 @@
     el-form-item(
       label="Улица"
       prop='street'
+      v-loading="isStreetLoading"
     )
       el-select(v-model="frmMod.street")
         el-option(
@@ -61,6 +62,7 @@
     el-form-item(
       label="Группа"
       prop='group'
+      v-loading="isGroupLoading"
     )
       el-select(v-model="frmMod.group")
         el-option(
@@ -112,6 +114,7 @@ import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
+import { AppModule } from '@/store/modules/app'
 import { ICustomerStreet, ICustomerGroup, ICustomerFrm } from '@/api/customers/types'
 import { getStreets, getCustomerGroups } from '@/api/customers/req'
 import { TaskModule } from '@/store/modules/tasks/tasks'
@@ -133,6 +136,8 @@ import FormMixin from '@/utils/forms'
 })
 export default class extends mixins(FormMixin) {
   private isLoading = false
+  private isStreetLoading = false
+  private isGroupLoading = false
   private customerStreets: ICustomerStreet[] = []
   private groups: ICustomerGroup[] = []
   private openPasportDlg = false
@@ -150,6 +155,9 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
+  private get isMobileView() {
+    return AppModule.IsMobileDevice
+  }
   private frmMod: ICustomerFrm = {} as ICustomerFrm
 
   created() {
@@ -188,21 +196,21 @@ export default class extends mixins(FormMixin) {
   }
 
   private async loadStreets() {
-    this.isLoading = true
+    this.isStreetLoading = true
     const { data } = await getStreets({
       page: 1,
       page_size: 100,
       group: this.onChGrp
     })
     this.customerStreets = data.results
-    this.isLoading = false
+    this.isStreetLoading = false
   }
 
   private async loadGroups() {
-    this.isLoading = true
+    this.isGroupLoading = true
     const { data } = await getCustomerGroups()
     this.groups = data.results
-    this.isLoading = false
+    this.isGroupLoading = false
   }
 
   private onSubmit() {

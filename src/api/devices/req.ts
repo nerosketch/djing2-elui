@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import { AxiosPromise } from 'axios'
-import { IDRFRequestListParameters } from '@/api/types'
+import { IDRFRequestListParameters, ISimpleResponseResultAxiosResponsePromise } from '@/api/types'
 import {
   IDevice, IDeviceList, IDeviceAxoisResponsePromise,
   IDeviceListAxiosResponsePromise,
@@ -13,7 +13,6 @@ import {
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
-  IDevActionResultAxiosResponsePromise,
   IScannedZTEONUListAxiosPromise, IScannedZTEONU,
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
   IDevOnuVlanInfoAxiosResponsePromise, IDevOnuVlanInfo, IDeviceOnuConfigTemplate
@@ -49,7 +48,7 @@ export const readOnuVlanInfo = (devId: number): IDevOnuVlanInfoAxiosResponseProm
 export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${baseDevUrl}${devId}/scan_mac_address_vlan/`, { params: { vid } })
 
-export const removeFromOlt = (devId: number): IDevActionResultAxiosResponsePromise =>
+export const removeFromOlt = (devId: number): ISimpleResponseResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}pon/${devId}/remove_from_olt/`)
 
 export const getDeviceConfigChoices = (devId: number): IOnuConfigOptionsAxiosResponsePromise =>
@@ -58,7 +57,7 @@ export const getDeviceConfigChoices = (devId: number): IOnuConfigOptionsAxiosRes
 export const applyDeviceOnuConfig = (devId: number, devConfig: IDeviceOnuConfigTemplate) =>
   request.post(`${baseDevUrl}pon/${devId}/apply_device_onu_config_template/`, devConfig)
 
-export const fixOnu = (devId: number): IDevActionResultAxiosResponsePromise =>
+export const fixOnu = (devId: number): ISimpleResponseResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}pon/${devId}/fix_onu/`)
 
 export const sendReboot = (devId: number) =>

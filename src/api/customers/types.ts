@@ -33,6 +33,7 @@ export interface ICustomer {
   is_dynamic_ip: boolean
   full_name?: string
   raw_password?: string
+  lease_count: number
 }
 export type ICustomerList = IDRFListResponse<ICustomer>
 export type ICustomerAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomer>

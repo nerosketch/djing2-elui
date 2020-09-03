@@ -1,5 +1,9 @@
 import request from '@/utils/request'
-import { IDRFRequestListParameters } from '@/api/types'
+import {
+  IDRFRequestListParameters,
+  ISimpleResponseResultAxiosResponsePromise,
+  ISimpleResponseResult
+} from '@/api/types'
 import {
   ICustomerGroupList,
   ICustomerGroupListAxiosResponsePromise,
@@ -92,6 +96,9 @@ export const filterDevicePort = (deviceId: number, portId: number): ICustomersOn
       fields: 'pk,telephone,group,dev_port,full_name'
     }
   })
+
+export const pingAllIps = (id: number): ISimpleResponseResultAxiosResponsePromise =>
+  request.get<ISimpleResponseResult>(`${custApiUrl}${id}/ping_all_ips/`)
 
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>

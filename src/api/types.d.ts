@@ -17,3 +17,10 @@ export interface IDRFRequestListParameters {
 export interface IDRFAxiosResponse<T> extends AxiosResponse<T> {}
 export interface IDRFAxiosResponsePromise<T> extends AxiosPromise<T> {}
 export interface IDRFAxiosResponseListPromise<T> extends IDRFAxiosResponsePromise<IDRFListResponse<T>> {}
+
+// Simple response
+export interface ISimpleResponseResult {
+  text: string
+  status: number
+}
+export type ISimpleResponseResultAxiosResponsePromise = IDRFAxiosResponsePromise<ISimpleResponseResult>
