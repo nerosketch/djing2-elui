@@ -86,6 +86,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { scrollTo } from '@/utils/scroll-to'
 import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomer, IDRFRequestListParametersCustomer, ICustomerStreet } from '@/api/customers/types'
 import { getCustomers, getStreets } from '@/api/customers/req'
@@ -234,6 +235,7 @@ export default class extends Vue {
     this.$refs.tbl.GetTableData(undefined, {
       street: this.lastStreetId
     })
+    scrollTo(0, 400)
   }
 
   private addStreetDone(newStreet: ICustomerStreet) {

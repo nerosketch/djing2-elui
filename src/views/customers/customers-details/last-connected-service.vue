@@ -1,9 +1,9 @@
 <template lang="pug">
   div(v-loading)
     b Услуга не подключена
-    p(v-if="lastConnectedExists") Последняя подключённая услуга -
+    p(v-if="lastConnectedExists") Последняя подключённая услуга - 
       b {{ lastConnectedTitle }}
-    b Автопродление услуги -
+    b Автопродление услуги - 
     el-checkbox(
       v-loading="serviceBlockLoad"
       v-on:change="onChangeAutoConnect"
