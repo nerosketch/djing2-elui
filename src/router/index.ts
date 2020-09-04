@@ -6,6 +6,7 @@ import customerRoutes from './modules/customers'
 import deviceRoutes from './modules/devices'
 import taskRoutes from './modules/tasks'
 import profileRoutes from './modules/profiles'
+import finRoutes from './modules/fin'
 
 Vue.use(Router)
 
@@ -111,6 +112,7 @@ export const constantRoutes: RouteConfig [] = [
       }
     ]
   },
+  finRoutes,
   {
     path: '*',
     redirect: '/404',

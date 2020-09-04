@@ -62,8 +62,7 @@ export default class extends Vue {
   }
 
   created() {
-    this.frmMod.title = GroupModule.title
-    this.frmMod.code = GroupModule.code
+    this.onChangeGroup()
   }
 
   private onSubmit() {
