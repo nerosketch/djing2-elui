@@ -10,8 +10,8 @@ export interface IDRFListResponse<T> {
 export interface IDRFRequestListParameters {
   page: number
   page_size: number
-  ordering?: string | null
-  fields?: string | null
+  ordering?: string
+  fields?: string
 }
 
 export interface IDRFAxiosResponse<T> extends AxiosResponse<T> {}

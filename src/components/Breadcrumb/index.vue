@@ -29,23 +29,10 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
   name: 'Breadcrumb'
 })
 export default class extends Vue {
-  private breadcrumbs: RouteRecord[] = [];
+  private breadcrumbs: RouteRecord[] = this.crumbsGetter
 
-  @Watch('$route')
-  private onRouteChange(route: Route) {
-    // if you go to the redirect page, do not update the breadcrumbs
-    if (route.path.startsWith('/redirect/')) {
-      return
-    }
-    this.getBreadcrumb()
-  }
-
-  created() {
-    this.getBreadcrumb()
-  }
-
-  private getBreadcrumb() {
-    this.breadcrumbs = [
+  get crumbsGetter(): RouteRecord[] {
+    return BreadcrumbsModule.breadcrumbs || [
       {
         path: '/',
         meta: {
@@ -55,11 +42,7 @@ export default class extends Vue {
       }
     ] as RouteRecord[]
   }
-
-  get onCumbsCh() {
-    return BreadcrumbsModule.breadcrumbs
-  }
-  @Watch('onCumbsCh')
+  @Watch('crumbsGetter')
   private onChangeCrumbs(crumbs: RouteRecord[]) {
     this.breadcrumbs = crumbs
   }

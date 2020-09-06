@@ -9,7 +9,7 @@ export default class extends Vue {
   protected gwlist: IGateway[] = []
   protected loadingGws = false
 
-  protected async loadGateways(fields: string | null = null) {
+  protected async loadGateways(fields?: string) {
     this.loadingGws = true
     const { data } = await getGateways({
       page: 1,

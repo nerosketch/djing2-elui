@@ -72,7 +72,7 @@ interface getTableDataParam {
 export default class <T> extends Vue {
   @Prop({ default: () => [] }) private columns!: IDataTableColumn[]
   @Prop({ default: () => Promise.resolve([]) }) private getData!: (params: IDRFRequestListParameters) => IDRFAxiosResponseListPromise<T>
-  @Prop({ default: null }) private fields!: string | null
+  @Prop({ default: null }) private fields?: string
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
   @Prop({ default: 100 }) private heightDiff!: number
@@ -90,7 +90,6 @@ export default class <T> extends Vue {
   }
   private tableData: T[] = []
   private page = 1
-  private orderField: string | null = null
   private intLoading = false
   private tblHeight = 0
 
@@ -113,12 +112,11 @@ export default class <T> extends Vue {
   private async loadRemoteData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     if (this.intLoading) return
     this.intLoading = true
-    const { page, limit } = params
-    const reqPage = page || this.page
+    const { page } = params
     const allParams = Object.assign(otherParams, {
-      page: reqPage,
+      page: page || this.page,
       page_size: 30,
-      ordering: this.orderField,
+      ordering: this.$route.query.ordering as string || undefined,
       fields: this.fields
     })
     try {
@@ -139,11 +137,22 @@ export default class <T> extends Vue {
     const { prop, order } = data
     if (prop !== null) {
       const dir = order === 'ascending' ? '' : '-'
-      this.orderField = `${dir}${prop}`
+      this.onChangeOrderingField(`${dir}${prop}`)
     } else {
-      this.orderField = null
+      this.onChangeOrderingField(undefined)
     }
     this.GetTableData()
+  }
+
+  private onChangeOrderingField(orderField?: string) {
+    let qr = this.$route.query as Record<string, any>
+    let newQuery = Object.assign({}, qr)
+    if (orderField) {
+      newQuery.ordering = orderField
+    }
+    if (newQuery.ordering !== qr.ordering) {
+      this.$router.push({ path: this.$route.path, query: newQuery })
+    }
   }
 
   created() {
