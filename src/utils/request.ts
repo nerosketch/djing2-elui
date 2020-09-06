@@ -65,7 +65,7 @@ service.interceptors.response.use(
       er = Object.entries(er).join('\n')
     }
     Message({
-      message: er || 'Не известная ошибка',
+      message: er || 'Неизвестная ошибка',
       type: 'error',
       duration: 15000
     })
