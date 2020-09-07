@@ -49,6 +49,7 @@
           itemText="name"
           v-on:itemClick="onStreetClick"
           :isClickable='true'
+          :initialSelectedNum="routerQueryStreetIndexGetter"
         )
           template(v-slot:footer)
             el-button-group
@@ -245,6 +246,11 @@ export default class extends Vue {
   @Watch('routerQueryStreetGetter')
   private onChRt() {
     this.$refs.tbl.GetTableData()
+  }
+
+  get routerQueryStreetIndexGetter(): number | undefined {
+    let strId = this.routerQueryStreetGetter as any
+    return this.streets.findIndex(str => str.pk == strId)
   }
 
   private addStreetDone(newStreet: ICustomerStreet) {

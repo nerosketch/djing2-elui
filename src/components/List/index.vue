@@ -32,6 +32,7 @@ export default class extends Vue {
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: 'text' }) private itemText!: string
   @Prop({ default: false }) private isClickable!: boolean
+  @Prop({ default: 0 }) private initialSelectedNum!: number
 
   private clickStates: boolean[] = []
   private lastClickIndex?: number = undefined
@@ -50,6 +51,11 @@ export default class extends Vue {
     const ln = items.length
     this.clickStates = new Array(ln)
     this.clickStates.fill(false, 0, ln)
+
+    // Set initial selected element
+    if (this.initialSelectedNum > 0) {
+      this.clickStates[this.initialSelectedNum] = true
+    }
   }
 }
 </script>
