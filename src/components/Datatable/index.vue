@@ -9,6 +9,7 @@
       :height="tblHeight"
       border
       v-on="listeners"
+      :default-sort="defaultSorting"
     >
       <slot name="columns">
         <el-table-column
@@ -147,12 +148,28 @@ export default class <T> extends Vue {
   private onChangeOrderingField(orderField?: string) {
     let qr = this.$route.query as Record<string, any>
     let newQuery = Object.assign({}, qr)
-    if (orderField) {
+    if (orderField == qr.ordering) {
+      delete newQuery.ordering
+    } else {
       newQuery.ordering = orderField
     }
-    if (newQuery.ordering !== qr.ordering) {
-      this.$router.push({ path: this.$route.path, query: newQuery })
+    this.$router.push({ path: this.$route.path, query: newQuery })
+  }
+
+  get defaultSorting() {
+    let field = this.$route.query.ordering as string | undefined
+    if (field) {
+      let orderDir = 'ascending'
+      if (field.startsWith('-')) {
+        field = field.replace('-', '')
+        orderDir = 'descending'
+      }
+      return {
+        prop: field,
+        order: orderDir
+      }
     }
+    return {}
   }
 
   created() {
