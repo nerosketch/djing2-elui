@@ -53,7 +53,6 @@
           div(v-if="isServiceAvailable")
             h3 {{ currentService.service.title }}
             i {{ currentService.service.descr }}
-
             dl
               dt
                 b Сумма
@@ -79,8 +78,8 @@
               icon='el-icon-delete'
               @click="onStopService"
             ) Завершить услугу
-
-          last-connected-service(v-else)
+          b(v-else) Услуга не подключена
+          last-connected-service
         h3(v-else) Загрузка ...
 
     el-col(:sm='24' :md='12')
