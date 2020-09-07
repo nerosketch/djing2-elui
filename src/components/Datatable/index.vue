@@ -116,7 +116,7 @@ export default class <T> extends Vue {
     const allParams = Object.assign(otherParams, {
       page: page || this.page,
       page_size: 30,
-      ordering: this.$route.query.ordering as string || undefined,
+      ordering: this.$route.query.ordering as string | undefined,
       fields: this.fields
     })
     try {

@@ -85,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { scrollTo } from '@/utils/scroll-to'
 import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomer, IDRFRequestListParametersCustomer, ICustomerStreet } from '@/api/customers/types'
@@ -203,13 +203,16 @@ export default class extends Vue {
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     this.customersLoading = true
+    let street = this.routerQueryStreetGetter
     let r
     if (params) {
-      const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
+      let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        street: this.lastStreetId,
         fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
       })
+      if (street) {
+        newParams.street = Number(street)
+      }
       r = await getCustomers(newParams)
     } else {
       r = await getCustomers()
@@ -224,18 +227,24 @@ export default class extends Vue {
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.pk.toString() } })
   }
 
-  private lastStreetId?: number | undefined = undefined
-
   private onStreetClick(item: ICustomerStreet, num: number) {
-    if (item.pk === this.lastStreetId) {
-      this.lastStreetId = undefined
-    } else {
-      this.lastStreetId = item.pk
+    let qr = Object.assign({}, this.$route.query) as Record<string, any>
+    const qstreet = qr.street
+    delete qr.street
+
+    if (item.pk != qstreet) {
+      qr.street = item.pk
     }
-    this.$refs.tbl.GetTableData(undefined, {
-      street: this.lastStreetId
-    })
-    scrollTo(0, 400)
+    this.$router.push({ path: this.$route.path, query: qr})
+    scrollTo(0, 600)
+  }
+
+  get routerQueryStreetGetter(): string | undefined {
+    return this.$route.query.street as string | undefined
+  }
+  @Watch('routerQueryStreetGetter')
+  private onChRt() {
+    this.$refs.tbl.GetTableData()
   }
 
   private addStreetDone(newStreet: ICustomerStreet) {
