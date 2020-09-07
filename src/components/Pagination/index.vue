@@ -22,7 +22,6 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { scrollTo } from '@/utils/scroll-to'
-import { setDefaultPageSize } from '@/utils/cookies'
 
 @Component({
   name: 'Pagination'
@@ -58,7 +57,6 @@ export default class extends Vue {
     if (this.autoScroll) {
       scrollTo(0, 800)
     }
-    setDefaultPageSize(value)
   }
 
   handleCurrentChange(value: number) {

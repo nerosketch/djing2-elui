@@ -5,6 +5,7 @@ div
     :getData="loadLog"
     :loading="loading"
     :heightDiff='180'
+    widthStorageNamePrefix='customerFin'
     ref='fintbl'
   )
     template(v-slot:cost="{row}") {{ row.cost }}

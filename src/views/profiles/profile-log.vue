@@ -5,6 +5,7 @@
       :getData="getAllLog"
       :loading="loading"
       :heightDiff='185'
+      widthStorageNamePrefix='profile_log'
       ref='tbl'
     )
       template(v-slot:action_date="{row}") {{ row.action_date }}

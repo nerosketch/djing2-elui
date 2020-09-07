@@ -5,6 +5,7 @@ div
     :getData="loadServices"
     :loading="loading"
     :heightDiff='143'
+    widthStorageNamePrefix='services'
     ref='table'
   )
     template(v-slot:id="{row}") {{ row.pk }}

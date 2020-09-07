@@ -5,6 +5,7 @@ div
     :getData="loadPeriodics"
     :loading="loading"
     :heightDiff='143'
+    widthStorageNamePrefix='perpay'
     ref='table'
   )
     template(v-slot:pk="{row}") {{ row.pk }}

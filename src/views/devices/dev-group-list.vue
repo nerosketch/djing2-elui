@@ -4,6 +4,7 @@
       :columns="tableColumns"
       :getData="loadDevGroups"
       :heightDiff='80'
+      widthStorageNamePrefix='devGroups'
       ref='table'
     )
       template(v-slot:pk="{row}") {{ row.pk }}

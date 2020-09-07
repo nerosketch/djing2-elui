@@ -6,6 +6,7 @@
       :tableRowClassName="rowColor"
       :loading="loading"
       :heightDiff='95'
+      widthStorageNamePrefix='profiles'
       ref='tbl'
     )
       template(v-slot:ava="{row}")

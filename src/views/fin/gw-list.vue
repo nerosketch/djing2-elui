@@ -3,6 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadPayGws"
+      widthStorageNamePrefix='gws'
       ref='table'
     )
       template(v-slot:id="{row}") {{ row.id }}

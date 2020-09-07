@@ -5,6 +5,7 @@
       :getData="getGroups"
       :loading="groupsLoading"
       :heightDiff='75'
+      widthStorageNamePrefix='customerGroups'
     )
       template(v-slot:pk="{row}") {{ row.pk }}
 

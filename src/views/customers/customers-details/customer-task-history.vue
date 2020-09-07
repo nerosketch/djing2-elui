@@ -4,6 +4,7 @@
     :getData="loadTLog"
     :loading="loading"
     :heightDiff='149'
+    widthStorageNamePrefix='customerTaskHistory'
     ref='tlogtbl'
   )
     template(v-slot:author_uname="{row}") {{ row.author_uname }}

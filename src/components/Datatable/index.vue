@@ -17,6 +17,7 @@
           :key="column.prop"
           :sortable="column.sortable ? 'custom' : false"
           :align="column.align"
+          :width="getColumnWidth(column)"
           v-bind="column"
         >
           <template v-slot:default="{row}">
@@ -38,6 +39,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
 import { IDRFListResponse, IDRFRequestListParameters, IDRFAxiosResponseListPromise } from '@/api/types'
+import { TableColumn } from 'element-ui'
 
 export enum DataTableColumnAlign {
   CENTER = 'center',
@@ -77,6 +79,7 @@ export default class <T> extends Vue {
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
   @Prop({ default: 100 }) private heightDiff!: number
+  @Prop({ default: 'width' }) private widthStorageNamePrefix!: string
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {
@@ -97,7 +100,8 @@ export default class <T> extends Vue {
   get listeners() {
     return {
       ...this.$listeners,
-      'sort-change': this.onSortChange
+      'sort-change': this.onSortChange,
+      'header-dragend': this.onFieldWidthChange
     }
   }
 
@@ -189,6 +193,14 @@ export default class <T> extends Vue {
     if (this.intLoading || this.lDisabled) return
     this.page++
     this.loadRemoteData()
+  }
+
+  private onFieldWidthChange(newWidth: number, oldWidth: number, column: any, event: MouseEvent) {
+    localStorage.setItem(`${this.widthStorageNamePrefix}_${column.property}`, String(newWidth))
+  }
+
+  private getColumnWidth(column: TableColumn): string | null {
+    return localStorage.getItem(`${this.widthStorageNamePrefix}_${column.prop}`)
   }
 }
 </script>

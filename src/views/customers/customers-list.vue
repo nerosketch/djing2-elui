@@ -8,6 +8,7 @@
           :loading="customersLoading"
           :tableRowClassName="rowColor"
           :heightDiff="100"
+          widthStorageNamePrefix='customers'
           ref='tbl'
         )
           template(v-slot:pk="{row}") {{ row.pk }}

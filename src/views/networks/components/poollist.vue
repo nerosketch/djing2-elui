@@ -5,6 +5,7 @@ div
     :getData="loadPools"
     :loading="poolsLoading"
     :heightDiff='170'
+    widthStorageNamePrefix='pools'
     ref='table'
   )
     template(v-slot:id="{row}") {{ row.id }}

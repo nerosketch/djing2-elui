@@ -5,6 +5,7 @@ div
     :getData="loadShots"
     :loading="loading"
     :heightDiff='143'
+    widthStorageNamePrefix='shots'
     ref='table'
   )
     template(v-slot:pk="{row}") {{ row.pk }}

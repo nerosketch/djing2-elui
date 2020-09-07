@@ -3,6 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadGroups"
+      widthStorageNamePrefix='groups'
       ref='table'
     )
       template(v-slot:pk="{row}") {{ row.pk }}

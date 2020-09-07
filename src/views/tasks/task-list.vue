@@ -6,6 +6,7 @@ div
     :loading="loading"
     :tableRowClassName="tableRowClassName"
     :heightDiff='168'
+    widthStorageNamePrefix='tasks'
     ref='tbl'
   )
     template(v-slot:customer_full_name="{row}")

@@ -5,6 +5,7 @@ div
     :getData="loadLeases"
     :loading="leaseLoading"
     :heightDiff='142'
+    widthStorageNamePrefix='leases'
     ref='table'
   )
     template(v-slot:id="{row}") {{ row.id }}

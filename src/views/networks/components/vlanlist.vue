@@ -5,6 +5,7 @@ div
     :getData="loadVlans"
     :loading="vlanLoading"
     :heightDiff='170'
+    widthStorageNamePrefix='vlans'
     ref='table'
   )
     template(v-slot:id="{row}") {{ row.id }}
