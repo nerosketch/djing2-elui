@@ -70,7 +70,7 @@ export const getCustomerIpLease = (leaseId: number): ICustomerIpLeaseAxoisRespon
 export const addCustomerIpLease = (newLease: object): ICustomerIpLeaseAxoisResponsePromise =>
   request.post<ICustomerIpLease>(baseLeaseUrl, newLease)
 
-export const changeCustomerIpLease = (leaseId: number, newData: ICustomerIpLease): ICustomerIpLeaseAxoisResponsePromise =>
+export const changeCustomerIpLease = (leaseId: number, newData: object): ICustomerIpLeaseAxoisResponsePromise =>
   request.patch<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`, newData)
 
 export const delCustomerIpLease = (leaseId: number) =>

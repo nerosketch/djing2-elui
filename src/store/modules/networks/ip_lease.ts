@@ -82,9 +82,10 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   }
 
   @Action
-  public async PatchLease(info: any) {
+  public async PatchLease(info: object) {
     const { data } = await changeCustomerIpLease(this.id, info)
     this.SET_ALL_LEASE(data)
+    return data
   }
 
   @Action

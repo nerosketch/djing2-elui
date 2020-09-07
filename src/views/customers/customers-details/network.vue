@@ -168,6 +168,7 @@ export default class extends Vue {
   }
 
   private editLease(lease: ICustomerIpLease) {
+    CustomerIpLeaseModule.SET_ALL_LEASE(lease)
     this.frmMod = lease
     this.isAddNewLease = false
     this.editDialog = true
@@ -177,12 +178,16 @@ export default class extends Vue {
     (this.$refs['frm'] as Form).validate(async valid => {
       if (valid) {
         this.frmLoading = true
-        if(this.isAddNewLease) {
-          await CustomerIpLeaseModule.AddLease(<ICustomerIpLease>this.frmMod)
-        } else {
-          await CustomerIpLeaseModule.PatchLease(this.frmMod)
+        try {
+          if(this.isAddNewLease) {
+            await CustomerIpLeaseModule.AddLease(this.frmMod)
+          } else {
+            await CustomerIpLeaseModule.PatchLease(this.frmMod)
+          }
+          this.loadLeases()
+        } catch (err) {
+          this.$message.error(err)
         }
-        this.loadLeases()
         this.frmLoading = false
         this.editDialog = false
       } else {
