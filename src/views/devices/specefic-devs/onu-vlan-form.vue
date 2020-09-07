@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-card(shadow='never')
+  el-card(shadow='never' v-if="currentConfig.vlanConfig.length > 0")
     template(v-slot:header)
       span Варианты конфигурации на ONU
 

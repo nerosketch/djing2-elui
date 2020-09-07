@@ -15,7 +15,8 @@ import {
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
   IScannedZTEONUListAxiosPromise, IScannedZTEONU,
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
-  IDevOnuVlanInfoAxiosResponsePromise, IDevOnuVlanInfo, IDeviceOnuConfigTemplate
+  IDevOnuVlanInfoAxiosResponsePromise, IDevOnuVlanInfo,
+  IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -57,7 +58,7 @@ export const getDeviceConfigChoices = (devId: number): IOnuConfigOptionsAxiosRes
 export const applyDeviceOnuConfig = (devId: number, devConfig: IDeviceOnuConfigTemplate) =>
   request.post(`${baseDevUrl}pon/${devId}/apply_device_onu_config_template/`, devConfig)
 
-export const fixOnu = (devId: number): ISimpleResponseResultAxiosResponsePromise =>
+export const fixOnu = (devId: number): IFixOnuSimpleResponseResultAxiosResponsePromise =>
   request.get(`${baseDevUrl}pon/${devId}/fix_onu/`)
 
 export const sendReboot = (devId: number) =>

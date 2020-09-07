@@ -7,7 +7,8 @@ import {
   scanOltFibers, scanPorts,
   scanUnitsUnregistered,
   getDeviceConfigChoices,
-  removeFromOlt
+  removeFromOlt,
+  fixOnu
 } from '@/api/devices/req'
 import { IDevice, IDeviceInterace, IDeviceTypeEnum } from '@/api/devices/types'
 
@@ -177,6 +178,16 @@ class Device extends VuexModule implements IDeviceInterace {
 
   public get isOnuRegistered(): boolean {
     return Boolean(this.snmp_extra)
+  }
+
+  @Action
+  public async FixOnu(devId?: number) {
+    if (!devId || devId === 0) {
+      devId = this.pk
+    }
+    let { data } = await fixOnu(devId)
+    this.SET_ALL_DEV(data.device)
+    return data
   }
 }
 

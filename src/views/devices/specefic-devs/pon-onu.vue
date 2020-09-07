@@ -1,15 +1,15 @@
 <template lang="pug">
   el-row(:gutter='5')
-    //- el-col(:span='24')
-      //- el-alert(
-      //-   v-if="macsNotEqual"
-      //-   title="Внимание!"
-      //-   description='Мак адрес в билинге не совпадает на мак адресом, полученным с OLT. Нужно обновить "Доп. инфо для snmp"'
-      //-   type="warning"
-      //-   effect="dark"
-      //-   show-icon
-      //-   center
-      //- )
+    el-col(:span='24')
+      el-alert(
+        v-if="macsNotEqual"
+        title="Внимание!"
+        description='Мак адрес в билинге не совпадает на мак адресом, полученным с OLT. Нужно обновить "Доп. инфо для snmp". Или нажмите кнопку "Исправить ниже"'
+        type="warning"
+        effect="dark"
+        show-icon
+        center
+      )
     el-col(:lg="12" :sm='24' v-if="device")
       el-card.box-card(
         shadow="never"
@@ -54,12 +54,16 @@
             .text.item.list-item
               b Уровень сигнала: 
               | {{ onuDetails.signal }}
+            .text.item.list-item
+              b Мак адрес с OLT: 
+              | {{ macFromOlt }}
             .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
               b {{ inf[0] }}: 
               | {{ inf[1] }}
         el-row(v-else)
           el-col
             b ONU не зарегистрирована
+        fix-onu-btn(v-if="macsNotEqual")
 
     el-col(:lg="12" :sm='24')
       onu-vlan-form(:style="{'margin-top': '5px'}")
@@ -74,20 +78,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanPonDetails } from '@/api/devices/req'
 import { DeviceModule } from '@/store/modules/devices/device'
 import DevForm from '../dev-form.vue'
 import DeleteFromOltBtn from '@/views/devices/specefic-devs/epon-onu/delete-from-olt-btn.vue'
 import OnuVlanForm from './onu-vlan-form.vue'
+import FixOnuBtn from './fix-onu-btn.vue'
 
 @Component({
   name: 'PonOnu',
   components: {
     DevForm,
     DeleteFromOltBtn,
-    OnuVlanForm
+    OnuVlanForm,
+    FixOnuBtn
   }
 })
 export default class extends Vue {
@@ -116,6 +122,10 @@ export default class extends Vue {
 
   get isOnuRegistered() {
     return DeviceModule.isOnuRegistered
+  }
+
+  get macFromOlt(): string {
+    return this.onuDetails ? this.onuDetails.mac : ''
   }
 
   private delDevice() {
@@ -159,6 +169,18 @@ export default class extends Vue {
 
   private refreshDev() {
     this.$emit('reqrefresh')
+  }
+
+  get macsNotEqual(): boolean {
+    return this.device && this.onuDetails ? this.device.mac_addr !== this.macFromOlt : false
+  }
+
+  get snmpGetter() {
+    return DeviceModule.snmp_extra
+  }
+  @Watch('snmpGetter')
+  private onDevChanged() {
+    this.getDetails()
   }
 }
 </script>

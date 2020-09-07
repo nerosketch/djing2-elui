@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios'
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
-import { IDRFRequestListParameters } from '@/api/types'
+import { IDRFRequestListParameters, ISimpleResponseResult } from '@/api/types'
 
 export enum IDeviceTypeEnum {
   UNKNOWN = 0,
@@ -121,6 +121,7 @@ export enum IOnuDetailsStatus {
 export interface IOnuDetails {
   status: IOnuDetailsStatus
   signal: number
+  mac: string
   info: Array<Array<string>>
 }
 export type IOnuDetailsAxiosPromise = AxiosPromise<IOnuDetails>
@@ -187,3 +188,8 @@ export interface IOnuConfigOptions {
   config_choices: IDevConfigChoice[]
 }
 export type IOnuConfigOptionsAxiosResponsePromise = IDRFAxiosResponsePromise<IOnuConfigOptions>
+
+export interface IFixOnuSimpleResponseResult extends ISimpleResponseResult {
+  device: IDevice
+}
+export type IFixOnuSimpleResponseResultAxiosResponsePromise = IDRFAxiosResponsePromise<IFixOnuSimpleResponseResult>
