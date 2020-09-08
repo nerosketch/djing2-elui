@@ -6,7 +6,9 @@ import { ITaskList, ITaskListAxiosResponsePromise, ITask,
   IExtraCommentListAxiosResponsePromise, IExtraCommentAxoisResponsePromise,
   IExtraComment, ITaskDocumentAttachmentListAxiosResponsePromise,
   ITaskDocumentAttachmentList, ITaskDocumentAttachmentAxoisResponsePromise,
-  ITaskDocumentAttachment
+  ITaskDocumentAttachment,
+  INewTaskInitialSimpleResponseResultAxoisResponsePromise,
+  INewTaskInitialSimpleResponseResult
 } from './types'
 import { IUserProfileListAxiosResponsePromise } from '@/api/profiles/types'
 
@@ -40,10 +42,8 @@ export const failTask = (id: number) =>
 export const remindTask = (id: number) =>
   request.get(`${baseTaskUrl}${id}/remind/`)
 
-export const initialRecipients4newTask = (groupId: number): IDRFAxiosResponsePromise<number[]> =>
-  request.get(`${baseTaskUrl}get_initial_recipients/`, { params: {
-    group_id: groupId
-  } })
+export const getNewTaskInitial = (groupId: number, customerId: number): INewTaskInitialSimpleResponseResultAxoisResponsePromise =>
+  request.get<INewTaskInitialSimpleResponseResult>(`${baseTaskUrl}new_task_initial/${groupId}/${customerId}/`)
 
 // IChangeLog
 const baseTaskLogUrl = '/tasks/log/'

@@ -250,11 +250,33 @@ export default class extends mixins(FormMixin) {
 
   private async openTaskFormDialog() {
     this.taskFormDialogLoading = true
-    await TaskModule.GetInitial4NewTask(this.onChGrp)
-    TaskModule.SET_CUSTOMER(CustomerModule.pk)
-    TaskModule.SET_CUSTOMER_FULLNAME(CustomerModule.full_name)
-    this.taskFormDialogLoading = false
-    this.taskFormDialog = true
+    try {
+      const { data } = await TaskModule.GetNewTaskInitial({
+        groupId: this.onChGrp,
+        customerId: CustomerModule.pk
+      })
+      if (data.status > 0) {
+        // Task with this customer does not exists, ok
+        TaskModule.SET_CUSTOMER(CustomerModule.pk)
+        TaskModule.SET_CUSTOMER_FULLNAME(CustomerModule.full_name)
+        this.taskFormDialog = true
+      } else {
+        // Task with this customer already exists, redirect to existing
+        this.$message.warning({
+          message: data.text,
+          duration: 10000
+        })
+        if (data.task_id && data.task_id > 0) {
+          this.$router.push({ name: 'taskDetails', params: { taskId: data.task_id.toString() }})
+        } else {
+          this.$message.error('Task id expected from backend')
+        }
+      }
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.taskFormDialogLoading = false
+    }
   }
 }
 </script>

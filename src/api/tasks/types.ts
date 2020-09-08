@@ -1,4 +1,4 @@
-import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '../types'
+import { IDRFAxiosResponsePromise, IDRFListResponse, ISimpleResponseResult } from '@/api/types'
 
 export enum ITaskPriority {
   LOW = 0,
@@ -101,3 +101,9 @@ export interface ITaskDocumentAttachment {
 export type ITaskDocumentAttachmentList = IDRFListResponse<ITaskDocumentAttachment>
 export type ITaskDocumentAttachmentAxoisResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachment>
 export type ITaskDocumentAttachmentListAxiosResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachmentList>
+
+export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResult {
+  recipients?: number[]
+  task_id?: number
+}
+export type INewTaskInitialSimpleResponseResultAxoisResponsePromise = IDRFAxiosResponsePromise<INewTaskInitialSimpleResponseResult>

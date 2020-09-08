@@ -1,7 +1,22 @@
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
+import {
+  VuexModule, Module, Action,
+  Mutation, getModule
+} from 'vuex-module-decorators'
 import store from '@/store'
-import { ITask, ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
-import { getTask, addTask, changeTask, delTask, finishTask, failTask, remindTask, getActiveTaskCount, initialRecipients4newTask } from '@/api/tasks/req'
+import {
+  ITask, ITaskPriority,
+  ITaskState, ITaskType
+} from '@/api/tasks/types'
+import {
+  getTask, addTask, changeTask, delTask,
+  finishTask, failTask, remindTask,
+  getActiveTaskCount, getNewTaskInitial
+} from '@/api/tasks/req'
+
+interface GetNewTaskInitialInputParams {
+  groupId: number
+  customerId: number
+}
 
 @Module({ dynamic: true, store, name: 'task' })
 class Task extends VuexModule implements ITask {
@@ -155,11 +170,15 @@ class Task extends VuexModule implements ITask {
   }
 
   @Action
-  public async GetInitial4NewTask(groupId: number) {
+  public async GetNewTaskInitial(params: GetNewTaskInitialInputParams) {
+    const { groupId, customerId } = params
     this.RESET_ALL_TASK()
-    const { data } = await initialRecipients4newTask(groupId)
-    this.SET_RECIPIENTS(data)
-    return data
+    const r = await getNewTaskInitial(groupId, customerId)
+    if (r.data.status && r.data.recipients) {
+      this.SET_RECIPIENTS(r.data.recipients)
+      return r
+    }
+    return r
   }
 }
 export const TaskModule = getModule(Task)
