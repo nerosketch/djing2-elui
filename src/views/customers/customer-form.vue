@@ -199,7 +199,7 @@ export default class extends mixins(FormMixin) {
     this.isStreetLoading = true
     const { data } = await getStreets({
       page: 1,
-      page_size: 100,
+      page_size: 0,
       group: this.onChGrp
     })
     this.customerStreets = data.results

@@ -158,10 +158,10 @@ export default class extends Vue {
   private async loadGroups() {
     const { data } = await getGroups({
       page: 1,
-      page_size: 1000,
+      page_size: 0,
       fields: 'pk,title'
-    })
-    this.groups = data.results
+    }) as any
+    this.groups = data
   }
 }
 </script>

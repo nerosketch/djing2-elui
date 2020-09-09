@@ -142,10 +142,10 @@ export default class extends mixins(FormMixin) {
     this.isLoading = true
     const { data } = await getGroups({
       page: 1,
-      page_size: 500,
+      page_size: 0,
       fields: 'pk,title'
-    })
-    this.groups = data.results
+    }) as any
+    this.groups = data
     this.isLoading = false
   }
 }

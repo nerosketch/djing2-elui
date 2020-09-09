@@ -196,10 +196,10 @@ export default class extends Vue {
     this.streetsLoading = true
     const { data } = await getStreets({
       page: 1,
-      page_size: 9000,
+      page_size: 0,
       group: this.groupId
-    })
-    this.streets = data.results
+    }) as any
+    this.streets = data
     this.streetsLoading = false
   }
 

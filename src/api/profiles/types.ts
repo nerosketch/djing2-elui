@@ -73,12 +73,11 @@ export type IPermContentTypeList = IDRFListResponse<IPermContentType>
 export type IPermContentTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IPermContentTypeList>
 
 export interface IPermission {
+  id: number
   name: string
   content_type: IPermContentType | number
   codename: string
 }
-export type IPermissionList = IDRFListResponse<IPermission>
-export type IPermissionListAxiosResponsePromise = IDRFAxiosResponsePromise<IPermissionList>
 
 export interface IPermissionGroup {
   name: string

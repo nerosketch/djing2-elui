@@ -20,23 +20,35 @@
             el-tab-pane(label='Изменить' name='account' lazy v-if="userProfile")
               keep-alive
                 profile-form(:user='userProfile')
+            el-tab-pane(label="Права на классы действий" v-if="isProfileSuperUser")
+              keep-alive
+                user-class-perms
 
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { IUserProfile } from '@/api/profiles/types'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
 import UserCard from './UserCard.vue'
 import GroupResponsibility from './group-responsibility.vue'
 import ProfileLog from './profile-log.vue'
+import UserClassPerms from './user-class-perms.vue'
+import ProfilesMixin from './profiles-mixin'
 
 @Component({
   name: 'ProfileDetails',
-  components: { ProfileForm, UserCard, GroupResponsibility, ProfileLog }
+  components: {
+    ProfileForm,
+    UserCard,
+    GroupResponsibility,
+    ProfileLog,
+    UserClassPerms
+  }
 })
-export default class extends Vue {
+export default class extends mixins(ProfilesMixin) {
   @Prop({ default: '' }) private profileUname!: string
 
   private userProfile = {

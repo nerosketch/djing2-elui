@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { AxiosPromise } from 'axios'
 import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
 import {
   IUserProfileLogListAxiosResponsePromise,
@@ -7,10 +8,9 @@ import {
   IUserProfileList, IUserProfileListAxiosResponsePromise,
   IUserProfile, IUserProfileAxoisResponsePromise,
   IPasswordUpdateForm,
-  IPermissionListAxiosResponsePromise,
-  IPermissionList,
   IPermContentTypeListAxiosResponsePromise,
-  IPermContentTypeList
+  IPermContentTypeList,
+  IPermission
 } from '@/api/profiles/types'
 
 // IUserProfileLog
@@ -34,6 +34,9 @@ export const delProfileLog = (id: number) =>
 const baseAccUrl = '/profiles/'
 export const getProfiles = (params?: IDRFRequestListParameters): IUserProfileListAxiosResponsePromise =>
   request.get<IUserProfileList>(baseAccUrl, { params })
+
+export const getActiveProfiles = (params?: IDRFRequestListParameters): IUserProfileListAxiosResponsePromise =>
+  request.get<IUserProfileList>(`${baseAccUrl}get_active_profiles/`, { params })
 
 export const getProfile = (uname: string): IUserProfileAxoisResponsePromise =>
   request.get<IUserProfile>(`${baseAccUrl}${uname}/`)
@@ -75,8 +78,13 @@ export const logout = () =>
     method: 'post'
   })
 
-export const getAllPermissions = (): IPermissionListAxiosResponsePromise =>
-  request.get<IPermissionList>('/profiles/perms/')
+export const getAllPermissions = (): AxiosPromise<IPermission[]> =>
+  request.get('/profiles/perms/', {
+    params: {
+      page: 1,
+      page_size: 0
+    }
+  })
 
 export const getAllContentTypes = (): IPermContentTypeListAxiosResponsePromise =>
   request.get<IPermContentTypeList>('/perms/content-types/')

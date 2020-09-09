@@ -133,12 +133,12 @@ export default class extends Vue {
 
   private async loadServices() {
     this.servicesLoading = true
-    const r = await getServices({
+    const { data } = await getServices({
       page: 1,
-      page_size: 100,
+      page_size: 0,
       groups: CustomerModule.group
-    })
-    this.services = r.data.results
+    }) as any
+    this.services = data
     this.servicesLoading = false
   }
 

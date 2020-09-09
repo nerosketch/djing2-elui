@@ -18,7 +18,7 @@
     )
       el-select(v-model="frmMod.recipients" multiple)
         el-option(
-          v-for="rec in intrnalRecipients"
+          v-for="rec in potentialRecipients"
           :key="rec.pk"
           :label="rec.full_name || rec.username"
           :value="rec.pk"
@@ -84,23 +84,21 @@ import { mixins } from 'vue-class-component'
 import { ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
 import CustomerField from '@/components/CustomerField/index.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
-import { getProfiles } from '@/api/profiles/req'
 import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { IUserProfile } from '@/api/profiles/types'
 import FormMixin from '@/utils/forms'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
+import TaskMixin from './task-mixin'
 
 @Component({
   name: 'TaskForm',
   components: { CustomerField }
 })
-export default class extends mixins(FormMixin) {
+export default class extends mixins(FormMixin, TaskMixin) {
   @Prop({ default: () => [] })
   private recipients!: IUserProfile[]
-
-  private intrnalRecipients: IUserProfile[] = []
 
   private loading = false
 
@@ -169,9 +167,9 @@ export default class extends mixins(FormMixin) {
 
   created() {
     if (this.recipients.length < 1) {
-      this.loadRecipients()
+      this.loadPotentialRecipients()
     } else {
-      this.intrnalRecipients = this.recipients
+      this.potentialRecipients = this.recipients
     }
     this.frmInitial = Object.assign({}, this.frmMod)
 
@@ -238,15 +236,6 @@ export default class extends mixins(FormMixin) {
     this.$router.push({
       name: 'taskList'
     })
-  }
-
-  private async loadRecipients() {
-    const { data } = await getProfiles({
-      page: 1,
-      page_size: 9000,
-      fields: 'pk,full_name,username'
-    })
-    this.intrnalRecipients = data.results
   }
 }
 </script>

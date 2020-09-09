@@ -41,16 +41,16 @@ export default class extends Vue {
     this.loading = true
     const { data } = await getGroups({
       page: 1,
-      page_size: 1000,
+      page_size: 0,
       fields: 'pk,title'
-    })
-    if (data.results.length < 1) {
+    }) as any
+    if (data.length < 1) {
       this.loading = false
       this.$message.error('Не удалось получить группы')
       return
     }
     const checkedGroups = await this.loadChackedRespGroups()
-    for (const grp of data.results) {
+    for (const grp of data) {
       let state = checkedGroups.includes(grp.pk)
       this.groups.push(Object.assign({ state }, grp))
     }

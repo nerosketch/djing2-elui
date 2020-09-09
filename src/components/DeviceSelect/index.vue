@@ -54,11 +54,11 @@ export default class extends Vue {
   private async loadDevices() {
     const { data } = await getDevices({
       page: 1,
-      page_size: 100500,
+      page_size: 0,
       group: this.groupId,
       fields: 'pk,comment,ip_address'
-    })
-    this.devices = data.results
+    }) as any
+    this.devices = data
   }
 }
 </script>
