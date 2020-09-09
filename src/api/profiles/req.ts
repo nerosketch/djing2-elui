@@ -1,6 +1,17 @@
 import request from '@/utils/request'
 import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
-import { IUserProfileLogListAxiosResponsePromise, IUserProfileLogList, IUserProfileLog, IUserProfileLogAxoisResponsePromise, IUserProfileList, IUserProfileListAxiosResponsePromise, IUserProfile, IUserProfileAxoisResponsePromise, IPasswordUpdateForm } from './types'
+import {
+  IUserProfileLogListAxiosResponsePromise,
+  IUserProfileLogList, IUserProfileLog,
+  IUserProfileLogAxoisResponsePromise,
+  IUserProfileList, IUserProfileListAxiosResponsePromise,
+  IUserProfile, IUserProfileAxoisResponsePromise,
+  IPasswordUpdateForm,
+  IPermissionListAxiosResponsePromise,
+  IPermissionList,
+  IPermContentTypeListAxiosResponsePromise,
+  IPermContentTypeList
+} from '@/api/profiles/types'
 
 // IUserProfileLog
 const baseLogUrl = '/profiles/log/'
@@ -63,3 +74,9 @@ export const logout = () =>
     url: '/profiles/logout/',
     method: 'post'
   })
+
+export const getAllPermissions = (): IPermissionListAxiosResponsePromise =>
+  request.get<IPermissionList>('/profiles/perms/')
+
+export const getAllContentTypes = (): IPermContentTypeListAxiosResponsePromise =>
+  request.get<IPermContentTypeList>('/perms/content-types/')

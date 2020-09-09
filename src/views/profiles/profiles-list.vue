@@ -9,7 +9,7 @@
       widthStorageNamePrefix='profiles'
       ref='tbl'
     )
-      template(v-slot:ava="{row}")
+      template(v-slot:avatar="{row}")
         el-avatar(:src="row.avatar" size='medium' shape="square")
 
       template(v-slot:username="{row}")
@@ -75,7 +75,7 @@ export default class extends Vue {
 
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'ava',
+      prop: 'avatar',
       label: 'Фото',
       'min-width': 60,
       align: DataTableColumnAlign.CENTER

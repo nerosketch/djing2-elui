@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { IUserProfile } from '@/api/profiles/types'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
@@ -39,7 +39,7 @@ import ProfileLog from './profile-log.vue'
 export default class extends Vue {
   @Prop({ default: '' }) private profileUname!: string
 
-  private userProfile: IUserProfile = {
+  private userProfile = {
     pk: UserProfileModule.pk,
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,
@@ -57,9 +57,29 @@ export default class extends Vue {
     this.loadProfile()
   }
 
+  get profileGetter() {
+    return UserProfileModule.state
+  }
+  @Watch('profileGetter', { deep: true })
+  private onUserProfileChanged() {
+    this.userProfile = {
+      pk: UserProfileModule.pk,
+      username: UserProfileModule.username,
+      fio: UserProfileModule.fio,
+      birth_day: UserProfileModule.birth_day,
+      is_active: UserProfileModule.is_active,
+      is_admin: UserProfileModule.is_admin,
+      telephone: UserProfileModule.telephone,
+      avatar: UserProfileModule.avatar,
+      email: UserProfileModule.email,
+      full_name: UserProfileModule.full_name
+    }
+  }
+
   private async loadProfile() {
     if (this.profileUname) {
-      this.userProfile = await UserProfileModule.GetProfile(this.profileUname)
+      await UserProfileModule.GetProfile(this.profileUname)
+      this.onUserProfileChanged()
     }
   }
 }

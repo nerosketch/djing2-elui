@@ -13,6 +13,9 @@ export interface IUserProfile {
   full_name?: string
   last_login?: string
   is_superuser?: boolean
+  token: string
+  user_permissions: IPermission[]
+  groups: number[]
 }
 export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>
@@ -42,4 +45,42 @@ export type IUserProfileLogListAxiosResponsePromise = IDRFAxiosResponsePromise<I
 export interface IPasswordUpdateForm {
   old_passw: string
   new_passw: string
+}
+
+// Permissions
+export interface IUserObjectPermission {
+  user: number
+  content_type: IPermContentType | number
+  object_pk: string
+  content_object: number
+  permission: number
+}
+
+export interface IGroupObjectPermission {
+  group: number
+  user: number
+  content_type: IPermContentType | number
+  object_pk: string
+  content_object: number
+}
+
+export interface IPermContentType {
+  id: number
+  app_label: string
+  model: string
+}
+export type IPermContentTypeList = IDRFListResponse<IPermContentType>
+export type IPermContentTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IPermContentTypeList>
+
+export interface IPermission {
+  name: string
+  content_type: IPermContentType | number
+  codename: string
+}
+export type IPermissionList = IDRFListResponse<IPermission>
+export type IPermissionListAxiosResponsePromise = IDRFAxiosResponsePromise<IPermissionList>
+
+export interface IPermissionGroup {
+  name: string
+  permissions: (IPermission | number)[]
 }

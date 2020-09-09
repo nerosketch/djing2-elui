@@ -90,7 +90,7 @@ export default class extends Vue {
     if (!CurrentUserProfileModule.isAvatar) {
       CurrentUserProfileModule.GetSelf()
     }
-    return CurrentUserProfileModule.avatar
+    return CurrentUserProfileModule.getCurrentAvatar
   }
 
   private toggleSideBar() {
