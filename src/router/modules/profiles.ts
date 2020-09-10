@@ -7,7 +7,7 @@ const profileRoutes: RouteConfig = {
   children: [
     {
       path: '',
-      component: () => import(/* webpackChunkName: "profileslist" */ '@/views/profiles/profiles-list.vue'),
+      component: () => import(/* webpackChunkName: "profiles" */ '@/views/profiles/index.vue'),
       meta: {
         title: 'Сотрудники',
         icon: 'dashboard'

@@ -6,7 +6,6 @@
       :loading="loading"
       :heightDiff='185'
       widthStorageNamePrefix='profile_log'
-      ref='tbl'
     )
       template(v-slot:action_date="{row}") {{ row.action_date }}
 
@@ -33,9 +32,6 @@ class DataTableComp extends DataTable<IUserProfileLog> {}
   }
 })
 export default class extends Vue {
-  public readonly $refs!: {
-    tbl: DataTableComp
-  }
   private loading = false
 
   private tableColumns: IDataTableColumn[] = [

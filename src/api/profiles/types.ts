@@ -83,3 +83,12 @@ export interface IPermissionGroup {
   name: string
   permissions: (IPermission | number)[]
 }
+
+export interface IUserGroup {
+  id: number
+  name: string
+  permissions: number[]
+}
+export type IUserGroupList = IDRFListResponse<IUserGroup>
+export type IUserGroupAxoisResponsePromise = IDRFAxiosResponsePromise<IUserGroup>
+export type IUserGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserGroupList>

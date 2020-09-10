@@ -10,7 +10,11 @@ import {
   IPasswordUpdateForm,
   IPermContentTypeListAxiosResponsePromise,
   IPermContentTypeList,
-  IPermission
+  IPermission,
+  IUserGroupListAxiosResponsePromise,
+  IUserGroupList,
+  IUserGroupAxoisResponsePromise,
+  IUserGroup
 } from '@/api/profiles/types'
 
 // IUserProfileLog
@@ -87,4 +91,19 @@ export const getAllPermissions = (): AxiosPromise<IPermission[]> =>
   })
 
 export const getAllContentTypes = (): IPermContentTypeListAxiosResponsePromise =>
-  request.get<IPermContentTypeList>('/perms/content-types/')
+  request.get<IPermContentTypeList>('/profiles/perms/content-types/')
+
+export const getUserGroups = (params?: IDRFRequestListParameters): IUserGroupListAxiosResponsePromise =>
+  request.get<IUserGroupList>('/profiles/perms/groups', { params })
+
+export const getUserGroup = (id: number): IUserGroupAxoisResponsePromise =>
+  request.get<IUserGroup>(`/profiles/perms/groups/${id}/`)
+
+export const patchUserGroup = (id: number, info: object): IUserGroupAxoisResponsePromise =>
+  request.patch<IUserGroup>(`/profiles/perms/groups/${id}/`, info)
+
+export const addUserGroup = (info: object): IUserGroupAxoisResponsePromise =>
+  request.post<IUserGroup>(`/profiles/perms/groups/`, info)
+
+export const delUserGroup = (id: number) =>
+  request.delete<IUserGroup>(`/profiles/perms/groups/${id}/`)

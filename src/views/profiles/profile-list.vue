@@ -1,11 +1,11 @@
 <template lang="pug">
-  .app-container
+  div
     datatable(
       :columns="tableColumns"
       :getData="getAllProfiles"
       :tableRowClassName="rowColor"
       :loading="loading"
-      :heightDiff='95'
+      :heightDiff='171'
       widthStorageNamePrefix='profiles'
       ref='tbl'
     )
@@ -30,6 +30,7 @@
         el-button(
           type="danger" size="mini"
           icon='el-icon-close' circle
+          @click="delUserProfile"
         )
       el-button(
         icon='el-icon-plus'
@@ -51,7 +52,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { IUserProfile } from '@/api/profiles/types'
-import { getProfiles } from '@/api/profiles/req'
+import { getProfiles, delProfile } from '@/api/profiles/req'
 import ProfileForm from './profile-form.vue'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 
@@ -63,7 +64,7 @@ interface ITableRowClassName {
 }
 
 @Component({
-  name: 'ProfilesList',
+  name: 'ProfileList',
   components: {
     'datatable': DataTableComp,
     ProfileForm
@@ -136,6 +137,13 @@ export default class extends Vue {
 
   private rowColor(r: ITableRowClassName) {
     return r.row.is_active ? '' : 'error-row'
+  }
+
+  private delUserProfile(usr: IUserProfile) {
+    this.$confirm('Удалить учётную запись?').then(async() => {
+      await delProfile(usr.username)
+      this.$message.success('Учётную запись уалена')
+    })
   }
 }
 </script>
