@@ -4,8 +4,7 @@ import { IDRFRequestListParameters, ISimpleResponseResultAxiosResponsePromise } 
 import {
   IDevice, IDeviceList, IDeviceAxoisResponsePromise,
   IDeviceListAxiosResponsePromise,
-  IPort, IPortList, IPortAxoisResponsePromise,
-  IPortListAxiosResponsePromise,
+  IPort, IPortAxoisResponsePromise,
   IDevGroupList, IDevGroupListAxiosResponsePromise,
   IDRFRequestListParametersDevGroup,
   IDevPortState, IDevMacPort, IDevMacPortListAxiosResponsePromise,
@@ -85,8 +84,8 @@ export const scanUnitsUnregistered = (devId: number): IUnitUnregisteredListAxios
 // IPort
 const basePortUrl = '/devices/ports/'
 
-export const getPorts = (devId: number, portNum?: number): IPortListAxiosResponsePromise =>
-  request.get<IPortList>(basePortUrl, { params: { device: devId, num: portNum } })
+export const getPorts = (devId: number, portNum?: number): AxiosPromise<IPort[]> =>
+  request.get<IPort[]>(basePortUrl, { params: { device: devId, num: portNum } })
 
 export const getPort = (portId: number): IPortAxoisResponsePromise =>
   request.get<IPort>(`${basePortUrl}${portId}/`)

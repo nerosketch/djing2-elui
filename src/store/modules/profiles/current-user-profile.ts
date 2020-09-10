@@ -128,6 +128,5 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
   //   }
   //   return false
   // }
-
 }
 export const CurrentUserProfileModule = getModule(CurrentUserProfile)

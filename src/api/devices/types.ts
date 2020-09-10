@@ -63,9 +63,7 @@ export interface IPort {
   descr: string
   user_count: number
 }
-export type IPortList = IDRFListResponse<IPort>
 export type IPortAxoisResponsePromise = IDRFAxiosResponsePromise<IPort>
-export type IPortListAxiosResponsePromise = IDRFAxiosResponsePromise<IPortList>
 
 export interface IDevGroup {
   pk: number

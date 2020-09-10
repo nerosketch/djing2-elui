@@ -4,7 +4,7 @@
       label='Не выбрано'
       :value='0'
     )
-    template(v-if='devPorts.length > 0')
+    template(v-if='devPorts && devPorts.length > 0')
       el-option(
         v-for="dp in devPorts"
         :key="dp.pk"
@@ -59,7 +59,7 @@ export default class extends Vue {
   private async loadDevPorts(devId: number) {
     if (typeof devId === 'number' && devId > 0) {
       const { data } = await getPorts(devId)
-      this.devPorts = data.results
+      this.devPorts = data
 
       const fnd = this.devPorts.find(dp => dp.pk === this.selectedPort)
       if (fnd) {

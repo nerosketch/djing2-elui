@@ -181,7 +181,7 @@ export default class extends Vue {
   private async loadPorts() {
     if (this.device !== null) {
       const { data } = await getPorts(this.device.pk)
-      for (const p of data.results) {
+      for (const p of data) {
         this.allPorts.push({
           pk: p.pk,
           num: p.num,

@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { AxiosPromise } from 'axios'
 import {
   IDRFRequestListParameters,
   ISimpleResponseResultAxiosResponsePromise,
@@ -35,8 +36,6 @@ import {
   ICustomerOnPort,
   ICustomersOnPortAxoisPromise,
   IBalanceAmountRequest,
-  ICustomerAttachementListAxiosResponsePromise,
-  ICustomerAttachementList,
   ICustomerAttachementAxoisResponsePromise,
   ICustomerAttachement
 } from './types'
@@ -169,8 +168,8 @@ export const findPassportInfo = (customerId: number): IPassportInfoListAxiosResp
 
 // CustomerAttachement
 const CustomerAttachmUrl = '/customers/attachments/'
-export const getAttachments = (customer: number): ICustomerAttachementListAxiosResponsePromise =>
-  request.get<ICustomerAttachementList>(CustomerAttachmUrl, { params: { customer } })
+export const getAttachments = (customer: number): AxiosPromise<ICustomerAttachement[]> =>
+  request.get<ICustomerAttachement[]>(CustomerAttachmUrl, { params: { customer } })
 
 export const getAttachment = (id: number): ICustomerAttachementAxoisResponsePromise =>
   request.get<ICustomerAttachement>(`${CustomerAttachmUrl}${id}/`)

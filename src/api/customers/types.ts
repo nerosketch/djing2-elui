@@ -183,6 +183,4 @@ export interface ICustomerAttachement {
   author?: number
   author_name?: string
 }
-export type ICustomerAttachementList = IDRFListResponse<ICustomerAttachement>
 export type ICustomerAttachementAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerAttachement>
-export type ICustomerAttachementListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerAttachementList>
