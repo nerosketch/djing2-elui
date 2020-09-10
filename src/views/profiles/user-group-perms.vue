@@ -1,15 +1,5 @@
 <template lang="pug">
 div
-  el-alert(
-    v-if="isSuperAdmin"
-    title="Внимание!"
-    description='Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно'
-    type="warning"
-    effect="dark"
-    :closable="false"
-    show-icon
-    center
-  )
   el-transfer(
     v-model="assignedPerms"
     :props="prop"
@@ -35,39 +25,37 @@ div
 <script lang="ts">
 import { Component, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { UserProfileModule } from '@/store/modules/profiles/user-profile'
+import { IPermission } from '@/api/profiles/types'
+import { UserGroupModule } from '@/store/modules/profiles/user-group'
 import PermMngMixin from './perm-mng-mixin'
 
 @Component({
-  name: 'UserClassPerms'
+  name: 'UserGroupPerms'
 })
 export default class extends mixins(PermMngMixin) {
-  private assignedPerms: number[] = this.assignedUserPerms
+  private assignedPerms: number[] = this.assignedGroupPerms
 
   private async savePerms() {
     this.saveLoading = true
-    let updatedUser = await UserProfileModule.PatchProfile({
-      user_permissions: this.assignedPerms
+    let updatedGroup = await UserGroupModule.PatchUserGroup({
+      permissions: this.assignedPerms
     })
     this.saveLoading = false
-    this.$message.success('Права для пользователся сохранены')
+    this.$message.success('Права для группы сохранены')
+    this.$emit('done', updatedGroup)
   }
 
-  get assignedUserPerms(): number[] {
-    return UserProfileModule.user_permissions
+  get assignedGroupPerms(): number[] {
+    return UserGroupModule.permissions
   }
 
-  get isSuperAdmin() {
-    return UserProfileModule.is_superuser
-  }
-
-  @Watch('assignedUserPerms')
-  private onChangedUserAssignedPerms(perms: number[]) {
+  @Watch('assignedGroupPerms')
+  private onChangedGroupAssignedPerms(perms: number[]) {
     this.assignedPerms = perms
   }
 
   get isUnTouched() {
-    return this.assignedPerms === this.assignedUserPerms
+    return this.assignedPerms === this.assignedGroupPerms
   }
 }
 </script>
@@ -81,6 +69,6 @@ export default class extends mixins(PermMngMixin) {
   }
 }
 .el-transfer-panel {
-  width: 40%;
+  width: calc(51% - 106px);
 }
 </style>
