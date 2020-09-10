@@ -34,9 +34,6 @@ el-card(style='margin-bottom:20px;')
           dd
             el-checkbox(v-model="user.is_active" disabled)
           dt
-            b Последний вход
-          dd {{ user.last_login }}
-          dt
             b Суперпользователь
           dd
             el-checkbox(v-model="user.is_superuser" disabled)

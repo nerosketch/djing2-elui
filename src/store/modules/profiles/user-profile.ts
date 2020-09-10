@@ -1,7 +1,13 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { IUserProfile, IPasswordUpdateForm } from '@/api/profiles/types'
-import { getProfile, delProfile, changeProfile, addProfile, setProfilePassword } from '@/api/profiles/req'
+import {
+  getProfile,
+  delProfile,
+  changeProfile,
+  addProfile,
+  setProfilePassword
+} from '@/api/profiles/req'
 
 @Module({ dynamic: true, store, name: 'userprofile' })
 class UserProfile extends VuexModule implements IUserProfile {
@@ -18,8 +24,8 @@ class UserProfile extends VuexModule implements IUserProfile {
   full_name = ''
   last_login = ''
   is_superuser = false
-  user_permissions = []
-  groups = []
+  user_permissions: number[] = []
+  groups: number[] = []
 
   @Mutation
   public SET_ALL_PROFILE(data: IUserProfile) {
@@ -35,6 +41,8 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.full_name = data.full_name!
     this.last_login = data.last_login!
     this.is_superuser = data.is_superuser!
+    this.user_permissions = data.user_permissions
+    this.groups = data.groups
   }
 
   @Mutation
@@ -51,6 +59,8 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.full_name = ''
     this.last_login = ''
     this.is_superuser = false
+    this.user_permissions = []
+    this.groups = []
   }
 
   @Action

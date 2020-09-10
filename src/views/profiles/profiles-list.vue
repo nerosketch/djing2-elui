@@ -13,7 +13,10 @@
         el-avatar(:src="row.avatar" size='medium' shape="square")
 
       template(v-slot:username="{row}")
-        el-link(type="primary")
+        el-link(
+          type="primary"
+          :icon="row.is_superuser ? 'el-icon-warning' : ''"
+        )
           router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}") {{ row.username }}
 
       template(v-slot:fio="{row}") {{ row.fio }}
@@ -110,7 +113,7 @@ export default class extends Vue {
   private async getAllProfiles(params?: IDRFRequestListParameters) {
     this.loading = true
     if (params) {
-      params['fields'] = 'avatar,username,fio,telephone,email,is_active'
+      params['fields'] = 'avatar,username,fio,telephone,email,is_active,is_superuser'
     }
     const r = await getProfiles(params)
     this.loading = false

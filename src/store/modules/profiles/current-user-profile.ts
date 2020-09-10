@@ -2,7 +2,7 @@ import { Module, Mutation, Action, getModule, VuexModule } from 'vuex-module-dec
 import store from '@/store'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import { getSelfProfile, login, changeProfile } from '@/api/profiles/req'
-import { IPermission, IUserProfile } from '@/api/profiles/types'
+import { IUserProfile } from '@/api/profiles/types'
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
 class CurrentUserProfile extends VuexModule implements IUserProfile {
@@ -19,7 +19,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
   public full_name = ''
   public last_login = ''
   public is_superuser = false
-  public user_permissions: IPermission[] = []
+  public user_permissions: number[] = []
   public groups: number[] = []
 
   @Mutation
@@ -120,14 +120,14 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
     return data
   }
 
-  public HasPermission(permCodeName: string): boolean {
-    if (this.is_superuser) return true
-    if (this.user_permissions) {
-      let up = this.user_permissions.find(up => up.codename === permCodeName)
-      return Boolean(up)
-    }
-    return false
-  }
+  // public HasPermission(permCodeName: string): boolean {
+  //   if (this.is_superuser) return true
+  //   if (this.user_permissions) {
+  //     let up = this.user_permissions.find(up => up.codename === permCodeName)
+  //     return Boolean(up)
+  //   }
+  //   return false
+  // }
 
 }
 export const CurrentUserProfileModule = getModule(CurrentUserProfile)

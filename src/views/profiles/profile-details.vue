@@ -51,30 +51,20 @@ import ProfilesMixin from './profiles-mixin'
 export default class extends mixins(ProfilesMixin) {
   @Prop({ default: '' }) private profileUname!: string
 
-  private userProfile = {
-    pk: UserProfileModule.pk,
-    username: UserProfileModule.username,
-    fio: UserProfileModule.fio,
-    birth_day: UserProfileModule.birth_day,
-    is_active: UserProfileModule.is_active,
-    is_admin: UserProfileModule.is_admin,
-    telephone: UserProfileModule.telephone,
-    avatar: UserProfileModule.avatar,
-    email: UserProfileModule.email,
-    full_name: UserProfileModule.full_name
-  }
+  private userProfile = this.profileStateGetter
   private activeTab = 'activity'
 
   created() {
     this.loadProfile()
   }
 
-  get profileGetter() {
-    return UserProfileModule.state
-  }
-  @Watch('profileGetter', { deep: true })
+  @Watch('profileStateGetter', { deep: true })
   private onUserProfileChanged() {
-    this.userProfile = {
+    this.userProfile = Object.assign({}, this.profileStateGetter)
+  }
+
+  get profileStateGetter() {
+    return {
       pk: UserProfileModule.pk,
       username: UserProfileModule.username,
       fio: UserProfileModule.fio,
@@ -84,14 +74,14 @@ export default class extends mixins(ProfilesMixin) {
       telephone: UserProfileModule.telephone,
       avatar: UserProfileModule.avatar,
       email: UserProfileModule.email,
-      full_name: UserProfileModule.full_name
+      full_name: UserProfileModule.full_name,
+      is_superuser: UserProfileModule.is_superuser
     }
   }
 
   private async loadProfile() {
     if (this.profileUname) {
       await UserProfileModule.GetProfile(this.profileUname)
-      this.onUserProfileChanged()
     }
   }
 }

@@ -33,6 +33,12 @@
       el-switch(v-model="frmMod.is_active")
       small {{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}
     el-form-item(
+      label="Суперпользователь"
+      prop='is_superuser'
+    )
+      el-switch(v-model="frmMod.is_superuser")
+      small {{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}
+    el-form-item(
       label="Номер телефона"
       prop='telephone'
     )
@@ -85,6 +91,7 @@ export default class extends Vue {
     fio: UserProfileModule.fio,
     birth_day: UserProfileModule.birth_day,
     is_active: this.isNew ? true : UserProfileModule.is_active,
+    is_superuser: this.isNew ? false : UserProfileModule.is_superuser,
     telephone: UserProfileModule.telephone,
     email: UserProfileModule.email,
     password: undefined

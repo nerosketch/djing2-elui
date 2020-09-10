@@ -14,7 +14,7 @@ export interface IUserProfile {
   last_login?: string
   is_superuser?: boolean
   token: string
-  user_permissions: IPermission[]
+  user_permissions: number[]
   groups: number[]
 }
 export type IUserProfileList = IDRFListResponse<IUserProfile>
