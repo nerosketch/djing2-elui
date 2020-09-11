@@ -26,6 +26,7 @@ class UserProfile extends VuexModule implements IUserProfile {
   is_superuser = false
   user_permissions: number[] = []
   groups: number[] = []
+  access_level = 0
 
   @Mutation
   public SET_ALL_PROFILE(data: IUserProfile) {
@@ -43,6 +44,7 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.is_superuser = data.is_superuser!
     this.user_permissions = data.user_permissions
     this.groups = data.groups
+    this.access_level = data.access_level
   }
 
   @Mutation
@@ -61,6 +63,7 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.is_superuser = false
     this.user_permissions = []
     this.groups = []
+    this.access_level = 0
   }
 
   @Action

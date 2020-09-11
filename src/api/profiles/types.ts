@@ -16,6 +16,7 @@ export interface IUserProfile {
   token: string
   user_permissions: number[]
   groups: number[]
+  access_level: number
 }
 export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>

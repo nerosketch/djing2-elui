@@ -75,7 +75,8 @@ export default class extends mixins(ProfilesMixin) {
       avatar: UserProfileModule.avatar,
       email: UserProfileModule.email,
       full_name: UserProfileModule.full_name,
-      is_superuser: UserProfileModule.is_superuser
+      is_superuser: UserProfileModule.is_superuser,
+      access_level: UserProfileModule.access_level
     }
   }
 

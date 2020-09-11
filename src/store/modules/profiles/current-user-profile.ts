@@ -21,6 +21,9 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
   public is_superuser = false
   public user_permissions: number[] = []
   public groups: number[] = []
+  access_level = 0
+
+  public current_auth_permissions: string[] = []
 
   @Mutation
   public SET_TOKEN(token: string) {

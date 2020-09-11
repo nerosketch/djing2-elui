@@ -38,13 +38,13 @@ el-card(style='margin-bottom:20px;')
           dd
             el-checkbox(v-model="user.is_superuser" disabled)
     .user-skills.user-bio-section
-      .user-bio-section-header
-        svg-icon(name='skill')
-          span Skills
       .user-bio-section-body
         .progress-item
-          span Какой-то прогресс
-          el-progress(:percentage='51')
+          span Уровень доступа
+          el-progress(
+            :percentage='user.access_level'
+            :status='user.access_level === 100 ? "success" : ""'
+          )
         .progress-item
           span Какой-то другой прогресс
           el-progress(:percentage='45')
