@@ -5,6 +5,7 @@ import ElementUI from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ru-RU'
 import locale from 'element-ui/lib/locale'
 import SvgIcon from 'vue-svgicon'
+import { mapState } from 'vuex'
 
 import '@/styles/element-variables.scss'
 import '@/styles/index.scss'
@@ -26,6 +27,13 @@ Vue.use(SvgIcon, {
 })
 
 Vue.config.productionTip = false
+
+const permsMixin = {
+  computed: mapState([
+    'perms'
+  ])
+}
+Vue.mixin(permsMixin)
 
 new Vue({
   router,

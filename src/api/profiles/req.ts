@@ -107,3 +107,6 @@ export const addUserGroup = (info: object): IUserGroupAxoisResponsePromise =>
 
 export const delUserGroup = (id: number) =>
   request.delete<IUserGroup>(`/profiles/perms/groups/${id}/`)
+
+export const getCurrentAuthPermissions = (): AxiosPromise<string[]> =>
+  request.get<string[]>('/profiles/get_current_auth_permissions/')

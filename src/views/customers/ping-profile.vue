@@ -1,7 +1,7 @@
 <template lang="pug">
   el-button(
     :type="btnType"
-    :disabled="isCustomerNotHere || customer.lease_count === 0 || !customer.is_active"
+    :disabled="pingDisabled || !perms.customers.can_ping"
     @click="pingProfile"
     :loading="pingLoading"
     size='mini'
@@ -38,6 +38,10 @@ export default class extends Vue {
     }
     this.btnText = data.text
     this.pingLoading = false
+  }
+
+  get pingDisabled() {
+    return this.isCustomerNotHere || !this.customer || this.customer.lease_count === 0 || !this.customer.is_active
   }
 
   get isCustomerNotHere(): boolean {

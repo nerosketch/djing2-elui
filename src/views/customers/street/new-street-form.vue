@@ -23,7 +23,11 @@
           :value="grp.pk"
         )
     el-form-item
-      el-button(type="success" @click="onSubmit" :loading="loading") Добавить
+      el-button(
+        type="success" @click="onSubmit"
+        :loading="loading"
+        :disabled="!perms.customers.add_customerstreet"
+      ) Добавить
 </template>
 
 <script lang="ts">

@@ -3,6 +3,7 @@ import store from '@/store'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import { getSelfProfile, login, changeProfile } from '@/api/profiles/req'
 import { IUserProfile } from '@/api/profiles/types'
+import { CurrentPermissionsModule } from '@/store/current-user-permissions'
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
 class CurrentUserProfile extends VuexModule implements IUserProfile {
@@ -22,8 +23,6 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
   public user_permissions: number[] = []
   public groups: number[] = []
   access_level = 0
-
-  public current_auth_permissions: string[] = []
 
   @Mutation
   public SET_TOKEN(token: string) {
@@ -77,7 +76,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
     return Boolean(this.avatar)
   }
 
-  @Action
+  @Action({ commit: 'SET_ALL_CURRENT_PROFILE' })
   public async GetSelf() {
     if (this.token === '') {
       throw Error('GetUserInfo: token is undefined!')
@@ -86,17 +85,17 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
-    this.SET_ALL_CURRENT_PROFILE(data)
+    CurrentPermissionsModule.GetCurrentAuthPermissions()
     return data
   }
 
-  @Action
+  @Action({ commit: 'SET_TOKEN'})
   public async Login(userInfo: { username: string, password: string }) {
     userInfo.username = userInfo.username.trim()
     const { data } = await login(userInfo)
     setToken(data.token)
-    this.SET_TOKEN(data.token)
     await this.GetSelf()
+    return data.token
   }
 
   @Action
@@ -122,14 +121,5 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
     this.SET_ALL_CURRENT_PROFILE(data as IUserProfile)
     return data
   }
-
-  // public HasPermission(permCodeName: string): boolean {
-  //   if (this.is_superuser) return true
-  //   if (this.user_permissions) {
-  //     let up = this.user_permissions.find(up => up.codename === permCodeName)
-  //     return Boolean(up)
-  //   }
-  //   return false
-  // }
 }
 export const CurrentUserProfileModule = getModule(CurrentUserProfile)
