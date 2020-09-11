@@ -11,7 +11,7 @@
       label="Количество денег"
       prop='cost'
     )
-      el-input(v-model="frmMod.cost" type='number' max="5000")
+      el-input(v-model="frmMod.cost" type='number' max="15000")
     el-form-item(
       label="Комментарий"
       prop='comment'
@@ -41,23 +41,23 @@ export default class extends Vue {
     cost: [
       { required: true, message: 'Укажи сколько денег надо положить на счёт', trigger: 'blur' },
       { validator: (rule: any, value: number, callback: Function) => {
-        if (value >= 5000) {
+        if (value >= 15000) {
           callback(new Error(rule.message))
         } else {
           callback()
         }
       },
       trigger: 'change',
-      message: 'Нельзя пополнять больше чем на 5000' },
+      message: 'Нельзя пополнять больше чем на 15000' },
       { validator: (rule: any, value: number, callback: Function) => {
-        if (value <= (-5000)) {
+        if (value <= (-15000)) {
           callback(new Error(rule.message))
         } else {
           callback()
         }
       },
       trigger: 'change',
-      message: 'Нельзя снимать больше чем 5000' }
+      message: 'Нельзя снимать больше чем 15000' }
     ]
   }
 
