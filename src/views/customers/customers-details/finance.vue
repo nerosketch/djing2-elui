@@ -10,7 +10,10 @@ div
   )
     template(v-slot:author_name="{row}") {{ row.author_name || 'Система' }}
 
-    el-button(@click="addCashDialog=true") Пополнить счёт
+    el-button(
+      @click="addCashDialog=true"
+      :disabled="!$perms.customers.can_add_balance"
+    ) Пополнить счёт
 
   el-dialog(
     title="Пополнить счёт"

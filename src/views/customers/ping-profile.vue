@@ -1,7 +1,7 @@
 <template lang="pug">
   el-button(
     :type="btnType"
-    :disabled="pingDisabled || !perms.customers.can_ping"
+    :disabled="pingDisabled || !$perms.customers.can_ping"
     @click="pingProfile"
     :loading="pingLoading"
     size='mini'

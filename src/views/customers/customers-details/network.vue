@@ -50,7 +50,11 @@
               icon='el-icon-delete'
               @click="delLease(row)"
             )
-    el-button(size='small' type='success' icon='el-icon-plus', @click="addLease") Добавить
+    el-button(
+      size='small' type='success' icon='el-icon-plus',
+      @click="addLease"
+      :disabled="!$perms.networks.add_customeripleasemodel"
+    ) Добавить
 
     el-dialog(
       :title="(isAddNewLease ? 'Добавить' : 'Изменить') + ' аренду ip'"

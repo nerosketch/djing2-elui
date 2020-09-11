@@ -26,8 +26,11 @@
         template(v-slot:append)
           el-button
             a(:href="`tel:${frmMod.telephone}`") call
-          el-button(@click="openTelsDlg=true") tels
-          el-button Add
+          el-button(
+            @click="openTelsDlg=true"
+            :disabled="$perms.customers.view_additionaltelephone"
+          ) tels
+          el-button Доб.
     el-form-item(
       label="Улица"
       prop='street'
@@ -83,14 +86,24 @@
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40")
     el-form-item
       el-button-group
-        el-button(type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
-        el-button(type="success" icon='el-icon-plus' @click="openTaskFormDialog" :loading="taskFormDialogLoading") Добавить задачу
-        el-button(@click="openPasportDlg = true" icon='el-icon-paperclip') Паспорт
+        el-button(
+          type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched"
+          :disabled="!$perms.customers.change_customer"
+        ) Сохранить
+        el-button(
+          type="success" icon='el-icon-plus' @click="openTaskFormDialog" :loading="taskFormDialogLoading"
+          :disabled="!$perms.tasks.add_task"
+        ) Добавить задачу
+        el-button(
+          @click="openPasportDlg = true" icon='el-icon-paperclip'
+          :disabled="!$perms.customers.view_passportinfo"
+        ) Паспорт
         el-button(
           type='danger'
           title="Полное удаление учётной записи абонента из билинга"
           icon='el-icon-close'
           @click="delCustomer"
+          :disabled="!$perms.customers.delete_customer"
         ) Удалить уч.
     el-dialog(
       title="Паспортные данные"

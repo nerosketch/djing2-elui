@@ -25,9 +25,20 @@ el-form(
     el-row
       el-col(:span='8')
         el-button-group
-          el-button(type="primary" @click="onSubmit" :loading="isLoading" size="mini") Сохранить
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="onClearDevice") Очистить
-          el-button(icon="el-icon-view" size="mini" @click="onGo2Dev" :disabled="!frmMod.device")
+          el-button(
+            type="primary" size="mini" @click="onSubmit"
+            :loading="isLoading"
+            :disabled="!$perms.customers.change_customer"
+          ) Сохранить
+          el-button(
+            type="danger" icon="el-icon-delete"
+            size="mini" @click="onClearDevice"
+            :disabled="!$perms.customers.change_customer"
+          ) Очистить
+          el-button(
+            icon="el-icon-view" size="mini" @click="onGo2Dev"
+            :disabled="!frmMod.device || !$perms.devices.view_device"
+          )
 </template>
 
 <script lang="ts">

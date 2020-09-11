@@ -18,7 +18,11 @@
     )
       el-input(v-model="frmMod.comment" :maxlength='128')
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="loading") Сохранить
+      el-button(
+        type="primary" @click="onSubmit"
+        :loading="loading"
+        :disabled="!$perms.customers.can_add_balance"
+      ) Сохранить
 </template>
 
 <script lang="ts">

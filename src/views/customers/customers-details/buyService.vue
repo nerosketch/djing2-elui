@@ -24,7 +24,11 @@
         value-format="yyyy-MM-ddTHH:mm"
       )
     el-form-item
-      el-button(type="success" @click="onSubmit" :loading="loading") Купить
+      el-button(
+        type="success" @click="onSubmit"
+        :loading="loading"
+        :disabled="$perms.customers.can_buy_service"
+      ) Купить
 </template>
 
 <script lang="ts">

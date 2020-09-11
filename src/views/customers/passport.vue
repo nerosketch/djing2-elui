@@ -28,7 +28,10 @@
     )
       el-date-picker(v-model="frmMod.date_of_acceptance" type="date")
     el-form-item
-    el-button(type="primary" @click="onSubmit" :loading="loading") Сохранить
+    el-button(
+      type="primary" @click="onSubmit" :loading="loading"
+      :disabled="!$perms.customers.add_passportinfo || !$perms.customers.change_passportinfo"
+    ) Сохранить
 </template>
 
 <script lang="ts">

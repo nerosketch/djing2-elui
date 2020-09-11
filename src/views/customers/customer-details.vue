@@ -8,13 +8,13 @@
       el-tab-pane(label="Инфо" lazy)
         keep-alive
           info(v-if='loaded')
-      el-tab-pane(label="Тарифы" lazy)
+      el-tab-pane(label="Тарифы" lazy :disabled="!$perms.customers.view_customerservice")
         keep-alive
           services(v-if='loaded')
-      el-tab-pane(label="Финансы" lazy)
+      el-tab-pane(label="Финансы" lazy :disabled="!$perms.customers.view_customerlog")
         keep-alive
           finance
-      el-tab-pane(label="История задач" lazy)
+      el-tab-pane(label="История задач" lazy :disabled="!$perms.tasks.view_task")
         keep-alive
           customer-task-history
 </template>

@@ -23,13 +23,12 @@
           template(v-slot:ping="{row}")
             ping-profile(:customer="row")
 
-          p HasAddCustomerPerm {{ perms.customers.add_customer }}
           el-button(
             size='mini'
             icon='el-icon-plus'
             type='success'
             @click="addCustomerDialog=true"
-            :disabled="!perms.customers.add_customer"
+            :disabled="!$perms.customers.add_customer"
           ) Добавить абонента
 
       el-col(:lg='4' :md='6')
@@ -43,18 +42,16 @@
           :initialSelectedNum="routerQueryStreetIndexGetter"
         )
           template(v-slot:footer)
-            p hasAddStreetPerm {{ perms.customers.add_customerstreet }}
-            p hasEditStreetPerm {{ perms.customers.change_customerstreet }}
             el-button-group
               el-button(
                 type='success' icon='el-icon-plus' size='mini'
                 @click="addStreetDialog=true"
-                :disabled="!perms.customers.add_customerstreet"
+                :disabled="!$perms.customers.add_customerstreet"
               ) Доб.
               el-button(
                 type='primary' icon='el-icon-edit' size='mini'
                 @click="editStreetsDialog=true"
-                :disabled="!perms.customers.change_customerstreet"
+                :disabled="!$perms.customers.change_customerstreet"
               ) Изм.
 
     el-dialog(

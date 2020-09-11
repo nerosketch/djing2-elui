@@ -69,7 +69,11 @@
         value-format="yyyy-MM-dd"
       )
     el-form-item
-      el-button(type="primary" @click="onSubmit") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :disabled="!$perms.customers.add_customer"
+      ) Сохранить
 </template>
 
 <script lang="ts">

@@ -26,7 +26,7 @@
       el-button(
         type="success" @click="onSubmit"
         :loading="loading"
-        :disabled="!perms.customers.add_customerstreet"
+        :disabled="!$perms.customers.add_customerstreet"
       ) Добавить
 </template>
 

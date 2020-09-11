@@ -19,7 +19,7 @@
             template(v-slot:default="{row}")
               el-button(
                 type='primary' size='small'
-                @click="buyOpen(row)" :disabled="isServiceAvailable"
+                @click="buyOpen(row)" :disabled="isServiceAvailable || !$perms.customers.can_buy_service"
                 icon='el-icon-shopping-cart-2' circle
               )
           el-table-column(
@@ -77,6 +77,7 @@
               type='danger' size='mini'
               icon='el-icon-delete'
               @click="onStopService"
+              :disabled="!$perms.customers.can_stop_service"
             ) Завершить услугу
           b(v-else) Услуга не подключена
           last-connected-service

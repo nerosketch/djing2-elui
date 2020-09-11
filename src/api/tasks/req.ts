@@ -10,7 +10,6 @@ import { ITaskList, ITaskListAxiosResponsePromise, ITask,
   INewTaskInitialSimpleResponseResultAxoisResponsePromise,
   INewTaskInitialSimpleResponseResult
 } from './types'
-import { IUserProfileListAxiosResponsePromise } from '@/api/profiles/types'
 
 // ITask
 const baseTaskUrl = '/tasks/'

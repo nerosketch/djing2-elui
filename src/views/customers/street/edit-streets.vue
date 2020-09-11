@@ -13,12 +13,12 @@
           el-button(
             type='danger' icon='el-icon-close'
             @click="delStreet(str)"
-            :disabled="!perms.customers.delete_customerstreet"
+            :disabled="!$perms.customers.delete_customerstreet"
           )
     el-form-item
       el-button(
         type="primary" @click="onSubmit"
-        :disabled="!perms.customers.change_customerstreet"
+        :disabled="!$perms.customers.change_customerstreet"
       ) Сохранить
 </template>
 
