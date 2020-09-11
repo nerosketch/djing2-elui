@@ -8,8 +8,6 @@ div
     widthStorageNamePrefix='upg'
     ref='tbl'
   )
-    template(v-slot:name="{row}") {{ row.name }}
-
     template(v-slot:btn="{row}")
       el-button-group
         el-button(
@@ -91,6 +89,10 @@ export default class extends Vue {
       label: 'Кол. прав'
     },
     {
+      prop: 'usercount',
+      label: 'Кол. учёток'
+    },
+    {
       prop: 'btn',
       label: '—',
       'min-width': 90,
@@ -101,7 +103,7 @@ export default class extends Vue {
   private async loadUserGroups(params?: IDRFRequestListParameters) {
     this.ugloading = true
     if (params) {
-      params['fields'] = 'id,name,permcount,permissions'
+      params['fields'] = 'id,name,permcount,usercount,permissions'
     }
     const r = await getUserGroups(params)
     this.ugloading = false

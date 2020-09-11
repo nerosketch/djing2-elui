@@ -6,12 +6,6 @@
       widthStorageNamePrefix='groups'
       ref='table'
     )
-      template(v-slot:pk="{row}") {{ row.pk }}
-
-      template(v-slot:title="{row}") {{ row.title }}
-
-      template(v-slot:code="{row}") {{ row.code }}
-
       template(v-slot:oper="{row}")
         el-button-group
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")

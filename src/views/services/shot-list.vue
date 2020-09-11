@@ -8,12 +8,6 @@ div
     widthStorageNamePrefix='shots'
     ref='table'
   )
-    template(v-slot:pk="{row}") {{ row.pk }}
-
-    template(v-slot:name="{row}") {{ row.name }}
-
-    template(v-slot:cost="{row}") {{ row.cost }}
-
     template(v-slot:oper="{row}")
       el-button-group
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")

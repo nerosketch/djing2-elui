@@ -8,13 +8,7 @@ div
     widthStorageNamePrefix='customerFin'
     ref='fintbl'
   )
-    template(v-slot:cost="{row}") {{ row.cost }}
-
-    template(v-slot:date="{row}") {{ row.date }}
-
     template(v-slot:author_name="{row}") {{ row.author_name || 'Система' }}
-
-    template(v-slot:comment="{row}") {{ row.comment }}
 
     el-button(@click="addCashDialog=true") Пополнить счёт
 

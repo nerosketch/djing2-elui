@@ -6,18 +6,6 @@
       widthStorageNamePrefix='gws'
       ref='table'
     )
-      template(v-slot:id="{row}") {{ row.id }}
-
-      template(v-slot:title="{row}") {{ row.title }}
-
-      template(v-slot:service_id="{row}") {{ row.service_id }}
-
-      template(v-slot:slug="{row}") {{ row.slug }}
-
-      template(v-slot:secret="{row}") {{ row.secret }}
-
-      template(v-slot:secret="{row}") {{ row.pay_count }}
-
       template(v-slot:oper="{row}")
         el-button-group
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")

@@ -7,12 +7,6 @@
       :heightDiff='185'
       widthStorageNamePrefix='profile_log'
     )
-      template(v-slot:action_date="{row}") {{ row.action_date }}
-
-      template(v-slot:additional_text="{row}") {{ row.additional_text }}
-
-      template(v-slot:do_type_text="{row}") {{ row.do_type_text }}
-
 </template>
 
 <script lang="ts">

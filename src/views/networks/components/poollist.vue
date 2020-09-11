@@ -8,22 +8,8 @@ div
     widthStorageNamePrefix='pools'
     ref='table'
   )
-    template(v-slot:id="{row}") {{ row.id }}
-
-    template(v-slot:network="{row}") {{ row.network }}
-
-    template(v-slot:description="{row}") {{ row.description }}
-
-    template(v-slot:ip_start="{row}") {{ row.ip_start }}
-
-    template(v-slot:ip_end="{row}") {{ row.ip_end }}
-
-    template(v-slot:gateway="{row}") {{ row.gateway }}
-
     template(v-slot:is_dynamic="{row}")
       el-checkbox(v-model="row.is_dynamic" disabled)
-
-    template(v-slot:usage_count="{row}") {{ row.usage_count }}
 
     template(v-slot:oper="{row}")
       el-button-group

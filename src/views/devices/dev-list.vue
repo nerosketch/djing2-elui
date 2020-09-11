@@ -13,12 +13,6 @@
 
       template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
 
-      template(v-slot:comment="{row}") {{ row.comment }}
-
-      template(v-slot:mac_addr="{row}") {{ row.mac_addr }}
-
-      template(v-slot:dev_type="{row}") {{ row.dev_type_str }}
-
       template(v-slot:status="{row}") {{ row.status ? 'Ok' : 'Не ok' }}
 
       template(v-slot:is_noticeable="{row}") {{ row.is_noticeable ? 'Да' : 'Не' }}

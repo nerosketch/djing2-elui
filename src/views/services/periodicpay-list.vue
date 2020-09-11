@@ -8,14 +8,6 @@ div
     widthStorageNamePrefix='perpay'
     ref='table'
   )
-    template(v-slot:pk="{row}") {{ row.pk }}
-
-    template(v-slot:name="{row}") {{ row.name }}
-
-    template(v-slot:when_add="{row}") {{ row.when_add }}
-
-    template(v-slot:amount="{row}") {{ row.amount }}
-
     template(v-slot:oper="{row}")
       el-button-group
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")

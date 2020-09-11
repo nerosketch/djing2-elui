@@ -8,20 +8,6 @@ div
     widthStorageNamePrefix='services'
     ref='table'
   )
-    template(v-slot:id="{row}") {{ row.pk }}
-
-    template(v-slot:title="{row}") {{ row.title }}
-
-    template(v-slot:descr="{row}") {{ row.descr }}
-
-    template(v-slot:speed_in="{row}") {{ row.speed_in }}
-
-    template(v-slot:speed_out="{row}") {{ row.speed_out }}
-
-    template(v-slot:speed_burst="{row}") {{ row.speed_burst }}
-
-    template(v-slot:cost="{row}") {{ row.cost }}
-
     template(v-slot:isadm="{row}")
       el-checkbox(v-model="row.is_admin" disabled) {{ row.is_admin ? 'Да' : 'Нет'}}
 
@@ -61,7 +47,7 @@ export default class extends Vue {
   }
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'id',
+      prop: 'pk',
       label: 'ID',
       'min-width': 50,
       align: DataTableColumnAlign.CENTER

@@ -8,12 +8,6 @@ div
     widthStorageNamePrefix='vlans'
     ref='table'
   )
-    template(v-slot:id="{row}") {{ row.id }}
-
-    template(v-slot:title="{row}") {{ row.title }}
-
-    template(v-slot:vid="{row}") {{ row.vid }}
-
     template(v-slot:ismng="{row}")
       el-checkbox(v-model="row.is_management" disabled) {{ row.is_management ? 'Да' : 'Нет'}}
 

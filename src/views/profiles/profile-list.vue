@@ -19,12 +19,8 @@
         )
           router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}") {{ row.username }}
 
-      template(v-slot:fio="{row}") {{ row.fio }}
-
       template(v-slot:telephone="{row}")
         el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
-
-      template(v-slot:email="{row}") {{ row.email }}
 
       template(v-slot:btn="{row}")
         el-button(

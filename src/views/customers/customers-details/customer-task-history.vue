@@ -7,16 +7,6 @@
     widthStorageNamePrefix='customerTaskHistory'
     ref='tlogtbl'
   )
-    template(v-slot:author_uname="{row}") {{ row.author_uname }}
-
-    template(v-slot:descr="{row}") {{ row.descr }}
-
-    template(v-slot:state_str="{row}") {{ row.state_str }}
-
-    template(v-slot:mode_str="{row}") {{ row.mode_str }}
-
-    template(v-slot:time_of_create="{row}") {{ row.time_of_create }}
-
 </template>
 
 <script lang="ts">

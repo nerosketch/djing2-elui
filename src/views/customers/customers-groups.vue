@@ -7,8 +7,6 @@
       :heightDiff='75'
       widthStorageNamePrefix='customerGroups'
     )
-      template(v-slot:pk="{row}") {{ row.pk }}
-
       template(v-slot:title="{row}")
         el-link(type="primary")
           router-link(:to="{name: 'customersList', params:{ groupId: row.pk }}") {{ row.title }}
