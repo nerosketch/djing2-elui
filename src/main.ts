@@ -6,6 +6,7 @@ import lang from 'element-ui/lib/locale/lang/ru-RU'
 import locale from 'element-ui/lib/locale'
 import SvgIcon from 'vue-svgicon'
 import { CurrentPermissionsModule } from '@/store/current-user-permissions'
+import ObjectPerms from '@/components/object-perms.vue'
 
 import '@/styles/element-variables.scss'
 import '@/styles/index.scss'
@@ -25,6 +26,8 @@ Vue.use(SvgIcon, {
   defaultWidth: '1em',
   defaultHeight: '1em'
 })
+
+Vue.component('object-perms', ObjectPerms)
 
 Vue.config.productionTip = false
 

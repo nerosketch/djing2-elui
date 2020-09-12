@@ -9,6 +9,11 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
+            icon='el-icon-lock' size='mini'
+            @click="permsDialog=true"
+            v-if="!$perms.is_superadmin"
+          )
+          el-button(
             icon="el-icon-edit" size="mini"
             @click="openEdit(row)"
             :disabled="!$perms.groupapp.change_group"
@@ -32,6 +37,14 @@
     )
       group-form(
         v-on:done="frmDone"
+      )
+
+    el-dialog(
+      title="Кто имеет права на эти группы"
+      :visible.sync="permsDialog"
+    )
+      object-perms(
+        v-on:save="changeGroupObjectPerms"
       )
 
 </template>
@@ -62,6 +75,7 @@ export default class extends Vue {
   }
   private groups: IGroup[] = []
   private dialogVisible = false
+  private permsDialog = false
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -146,5 +160,10 @@ export default class extends Vue {
     ] as RouteRecord[])
   }
   // End Breadcrumbs
+
+  private changeGroupObjectPerms(profiles: number[]) {
+    console.log('changeGroupObjectPerms', profiles)
+    this.permsDialog = false
+  }
 }
 </script>
