@@ -69,11 +69,14 @@ import { Dictionary } from 'vue-router/types/router'
 import { Form as ElForm, Input } from 'element-ui'
 import { latinValidator } from '@/utils/validate'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
+import { IUserProfile } from '@/api/profiles/types'
+import { CurrentPermissions } from '@/store/current-user-permissions'
 
 @Component({
   name: 'Login'
 })
 export default class extends Vue {
+  private $perms!: CurrentPermissions
   private loginForm = {
     username: '',
     password: ''
@@ -131,7 +134,10 @@ export default class extends Vue {
         this.loading = true
         try {
           await CurrentUserProfileModule.Login(this.loginForm)
-          CurrentUserProfileModule.GetSelf()
+          CurrentUserProfileModule.GetSelf().then((profile: IUserProfile) => {
+            this.$perms.SET_IS_SUPERUSER(profile.is_superuser || false)
+          })
+          this.$perms.GetCurrentAuthPermissions()
           this.$router.push({
             path: this.redirect || '/',
             query: this.otherQuery

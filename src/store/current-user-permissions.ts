@@ -1,11 +1,23 @@
-import { Module, getModule, VuexModule, MutationAction } from 'vuex-module-decorators'
+import { Module, getModule, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import store from '@/store'
 import { getCurrentAuthPermissions } from '@/api/profiles/req'
+
+interface ValueObserverItemPerm {
+  [id: string]: boolean | undefined;
+}
+
+interface ValueObserverItem {
+  [id: string]: ValueObserverItemPerm | undefined;
+}
+
+interface ValueObserver {
+  value: ValueObserverItem
+}
 
 @Module({ dynamic: true, store, name: 'perms' })
 export class CurrentPermissions extends VuexModule {
   public is_superuser = false
-  public current_auth_permissions: string[] = []
+  public __ob__?: ValueObserver
 
   public customers = {
     add_customer: false,
@@ -151,23 +163,34 @@ export class CurrentPermissions extends VuexModule {
     delete_periodicpay: false
   }
 
-  @MutationAction({ mutate:  ['current_auth_permissions']})
+  @Mutation
+  public SET_IS_SUPERUSER(isu: boolean) {
+    this.is_superuser = isu
+  }
+
+  @Mutation
+  public SET_CURRENT_PERM(perms: string[]) {
+    if (!this.__ob__) return
+    for (let s of perms) {
+      let chunks = s.split('.')
+      if (chunks.length === 2) {
+        let k = chunks[0]
+        let sect = this.__ob__.value[k]
+        if (sect) {
+          let v = chunks[1] as string | undefined
+          if (v) {
+            sect[v] = true
+          }
+        }
+      }
+    }
+  }
+
+  @Action
   public async GetCurrentAuthPermissions() {
     const { data } = await getCurrentAuthPermissions()
-    return {
-      current_auth_permissions: data
-    }
+    this.SET_CURRENT_PERM(data)
   }
 }
 
 export const CurrentPermissionsModule = getModule(CurrentPermissions)
-
-// export const HasPermission = (permCodeName: string): boolean => {
-//   if (CurrentPermissionsModule.is_superuser) return true
-//   let cap = CurrentPermissionsModule.current_auth_permissions
-//   if (cap && cap.length > 0) {
-//     let up = cap.find(up => up === permCodeName)
-//     return Boolean(up)
-//   }
-//   return false
-// }

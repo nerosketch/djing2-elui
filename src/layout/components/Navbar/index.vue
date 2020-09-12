@@ -68,6 +68,8 @@ import Hamburger from '@/components/Hamburger/index.vue'
 import { SearchModule } from '@/store/modules/search'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 import { TaskModule } from '@/store/modules/tasks/tasks'
+import { IUserProfile } from '@/api/profiles/types'
+import { CurrentPermissions } from '@/store/current-user-permissions'
 
 @Component({
   name: 'Navbar',
@@ -77,6 +79,7 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
   }
 })
 export default class extends Vue {
+  private $perms!: CurrentPermissions
   private searchStr = ''
   get sidebar() {
     return AppModule.sidebar
@@ -88,7 +91,10 @@ export default class extends Vue {
 
   get avatar() {
     if (!CurrentUserProfileModule.isAvatar) {
-      CurrentUserProfileModule.GetSelf()
+      CurrentUserProfileModule.GetSelf().then((profile: IUserProfile) => {
+        this.$perms.SET_IS_SUPERUSER(profile.is_superuser || false)
+      })
+      this.$perms.GetCurrentAuthPermissions()
     }
     return CurrentUserProfileModule.getCurrentAvatar
   }
