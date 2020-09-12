@@ -118,6 +118,20 @@ export class CurrentPermissions extends VuexModule {
     delete_payalltimegateway: false
   }
 
+  public gateways = {
+    add_gateway: false,
+    view_gateway: false,
+    change_gateway: false,
+    delete_gateway: false
+  }
+
+  public groupapp = {
+    add_group: false,
+    view_group: false,
+    change_group: false,
+    delete_group: false
+  }
+
   @MutationAction({ mutate:  ['current_auth_permissions']})
   public async GetCurrentAuthPermissions() {
     const res = await getCurrentAuthPermissions()

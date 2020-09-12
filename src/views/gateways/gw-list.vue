@@ -45,10 +45,20 @@
             b ID
           dd {{ gw.id }}
         el-button-group
-          el-button(size='mini' icon='el-icon-edit' @click="openGwForm(gw)") Изменить
-          el-button(size='mini' type="danger" icon='el-icon-delete' @click="onDel(gw)") Удалить
+          el-button(
+            size='mini' icon='el-icon-edit' @click="openGwForm(gw)"
+            :disabled="!$perms.gateways.change_gateway"
+          ) Изменить
+          el-button(
+            size='mini' type="danger" icon='el-icon-delete' @click="onDel(gw)"
+            :disabled="!$perms.gateways.delete_gateway"
+          ) Удалить
 
-  el-button(size='mini' type="success" icon='el-icon-plus' @click="onAdd") Добавить
+  el-button(
+    size='mini' type="success" icon='el-icon-plus'
+    @click="onAdd"
+    :disabled="!$perms.gateways.add_gateway"
+  ) Добавить
 
   el-dialog(
     :visible.sync="gwFormDialog"

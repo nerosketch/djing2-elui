@@ -8,13 +8,22 @@
     )
       template(v-slot:oper="{row}")
         el-button-group
-          el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delGroup(row)")
+          el-button(
+            icon="el-icon-edit" size="mini"
+            @click="openEdit(row)"
+            :disabled="!$perms.groupapp.change_group"
+          )
+          el-button(
+            type="danger" icon="el-icon-delete" size="mini"
+            @click="delGroup(row)"
+            :disabled="!$perms.groupapp.delete_group"
+          )
 
       el-button(
         size='mini'
         icon='el-icon-plus'
         @click='openNew'
+        :disabled="!$perms.groupapp.add_group"
       ) Добавить группу
 
     el-dialog(
