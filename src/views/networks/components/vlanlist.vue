@@ -13,10 +13,22 @@ div
 
     template(v-slot:oper="{row}")
       el-button-group
-        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delVlan(row)")
+        el-button(
+          icon="el-icon-edit" size="mini"
+          @click="openEdit(row)"
+          :disabled="!$perms.networks.change_vlanif"
+        )
+        el-button(
+          type="danger" icon="el-icon-delete" size="mini"
+          @click="delVlan(row)"
+          :disabled="!$perms.networks.delete_vlanif"
+        )
 
-    el-button(icon='el-icon-plus' size='mini' @click='openNew') Добавить
+    el-button(
+      icon='el-icon-plus' size='mini'
+      @click='openNew'
+      :disabled="!$perms.networks.add_vlanif"
+    ) Добавить
 
   el-dialog(
     :title="dialogTitle"

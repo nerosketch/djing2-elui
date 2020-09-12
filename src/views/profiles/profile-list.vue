@@ -16,8 +16,10 @@
         el-link(
           type="primary"
           :icon="row.is_superuser ? 'el-icon-warning' : ''"
+          v-if="$perms.is_superuser"
         )
           router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}") {{ row.username }}
+        span(v-else) {{ row.username }}
 
       template(v-slot:telephone="{row}")
         el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
@@ -27,11 +29,13 @@
           type="danger" size="mini"
           icon='el-icon-close' circle
           @click="delUserProfile"
+          :disabled="!$perms.is_superuser"
         )
       el-button(
         icon='el-icon-plus'
         size='mini'
         @click="addNewProfile"
+        :disabled="!$perms.is_superuser"
       ) Добавить
     el-dialog(
       title="Добавить учётку"

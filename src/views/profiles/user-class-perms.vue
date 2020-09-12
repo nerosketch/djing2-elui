@@ -27,7 +27,7 @@ div
     icon="el-icon-save"
     type="primary"
     :loading="saveLoading"
-    :disabled="isUnTouched"
+    :disabled="isUnTouched || !$perms.is_superuser"
     @click="savePerms"
   ) Сохранить
 </template>

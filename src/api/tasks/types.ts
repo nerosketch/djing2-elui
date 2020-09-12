@@ -86,9 +86,8 @@ export interface IExtraComment {
   task: number
   can_remove?: boolean
 }
-export type IExtraCommentList = IDRFListResponse<IExtraComment>
+export type IExtraCommentListAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment[]>
 export type IExtraCommentAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment>
-export type IExtraCommentListAxiosResponsePromise = IDRFAxiosResponsePromise<IExtraCommentList>
 
 export interface ITaskDocumentAttachment {
   id: number
@@ -98,9 +97,8 @@ export interface ITaskDocumentAttachment {
   author: number
   task: number
 }
-export type ITaskDocumentAttachmentList = IDRFListResponse<ITaskDocumentAttachment>
+export type ITaskDocumentAttachmentList = IDRFAxiosResponsePromise<ITaskDocumentAttachment[]>
 export type ITaskDocumentAttachmentAxoisResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachment>
-export type ITaskDocumentAttachmentListAxiosResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachmentList>
 
 export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResult {
   recipients?: number[]

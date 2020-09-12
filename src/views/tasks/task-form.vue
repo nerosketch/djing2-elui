@@ -74,7 +74,11 @@
     el-form-item
       el-button-group
         el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isFormUntouched") Сохранить
-        el-button(v-if="!isNewTask" type="danger" @click="onDel" icon="el-icon-delete" size='small') Удалить
+        el-button(
+          v-if="!isNewTask" type="danger" icon="el-icon-delete" size='small'
+          @click="onDel"
+          :disabled="!$perms.tasks.delete_task"
+        ) Удалить
         el-button(v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check" size='small') Завершить
 </template>
 

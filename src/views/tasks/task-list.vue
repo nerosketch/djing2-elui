@@ -26,6 +26,7 @@ div
       icon="el-icon-plus"
       size='mini'
       @click="openNew"
+      :disabled="!$perms.tasks.add_task"
     ) Добавить задачу
 
   el-dialog(

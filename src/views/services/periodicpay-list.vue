@@ -11,7 +11,11 @@ div
     template(v-slot:oper="{row}")
       el-button-group
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPerPay(row)")
+        el-button(
+          type="danger" icon="el-icon-delete" size="mini"
+          @click="delPerPay(row)"
+          :disabled="!$perms.services.delete_periodicpay"
+        )
 
   el-dialog(
     title="Изменение квитанции"

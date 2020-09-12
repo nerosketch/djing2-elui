@@ -15,6 +15,7 @@
         label='Группы сотрудников'
         name='profilegroups'
         lazy
+        v-if="$perms.is_superuser"
       )
         keep-alive
           group-list

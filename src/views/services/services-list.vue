@@ -16,7 +16,11 @@ div
     template(v-slot:oper="{row}")
       el-button-group
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delSrv(row)")
+        el-button(
+          type="danger" icon="el-icon-delete" size="mini"
+          @click="delSrv(row)"
+          :disabled="!$perms.services.delete_service"
+        )
 
   el-dialog(
     title="Изменение Услуги"

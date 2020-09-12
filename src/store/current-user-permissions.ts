@@ -42,12 +42,11 @@ export class CurrentPermissions extends VuexModule {
     view_passportinfo: false,
     change_passportinfo: false,
     delete_passportinfo: false,
-    
+
     add_customerattachment: false,
     view_customerattachment: false,
     change_customerattachment: false,
-    delete_customerattachment: false,
-    
+    delete_customerattachment: false
   }
 
   public networks = {
@@ -59,7 +58,12 @@ export class CurrentPermissions extends VuexModule {
     view_vlanif: false,
     add_vlanif: false,
     change_vlanif: false,
-    delete_vlanif: false
+    delete_vlanif: false,
+
+    view_networkippool: false,
+    add_networkippool: false,
+    change_networkippool: false,
+    delete_networkippool: false
   }
 
   public tasks = {
@@ -84,8 +88,7 @@ export class CurrentPermissions extends VuexModule {
     add_taskdocumentattachment: false,
     view_taskdocumentattachment: false,
     change_taskdocumentattachment: false,
-    delete_taskdocumentattachment: false,
-
+    delete_taskdocumentattachment: false
   }
 
   public devices = {
@@ -93,7 +96,7 @@ export class CurrentPermissions extends VuexModule {
     change_device: false,
     add_device: false,
     delete_device: false,
-    
+
     can_remove_from_olt: false,
     can_fix_onu: false,
     can_apply_onu_config: false,
@@ -103,12 +106,11 @@ export class CurrentPermissions extends VuexModule {
     view_port: false,
     change_port: false,
     delete_port: false,
-    
+
     add_portvlanmembermodel: false,
     view_portvlanmembermodel: false,
     change_portvlanmembermodel: false,
-    delete_portvlanmembermodel: false,
-    
+    delete_portvlanmembermodel: false
   }
 
   public fin_app = {
@@ -132,11 +134,28 @@ export class CurrentPermissions extends VuexModule {
     delete_group: false
   }
 
+  public services = {
+    add_service: false,
+    view_service: false,
+    change_service: false,
+    delete_service: false,
+
+    add_oneshotpay: false,
+    view_oneshotpay: false,
+    change_oneshotpay: false,
+    delete_oneshotpay: false,
+
+    add_periodicpay: false,
+    view_periodicpay: false,
+    change_periodicpay: false,
+    delete_periodicpay: false
+  }
+
   @MutationAction({ mutate:  ['current_auth_permissions']})
   public async GetCurrentAuthPermissions() {
-    const res = await getCurrentAuthPermissions()
+    const { data } = await getCurrentAuthPermissions()
     return {
-    current_auth_permissions: res.data
+      current_auth_permissions: data
     }
   }
 }
@@ -152,4 +171,3 @@ export const CurrentPermissionsModule = getModule(CurrentPermissions)
 //   }
 //   return false
 // }
-

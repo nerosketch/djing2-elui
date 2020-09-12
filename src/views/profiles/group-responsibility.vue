@@ -11,6 +11,7 @@
       type='primary' size='mini'
       @click="saveResp"
       :loading="loading"
+      :disabled="!$perms.is_superuser"
     ) Сохранить
 </template>
 

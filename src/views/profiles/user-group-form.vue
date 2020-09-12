@@ -14,7 +14,7 @@
         el-button(
           type="primary" @click="onSubmit"
           icon="el-icon-download" size='small'
-          :disabled="isEmpty"
+          :disabled="isEmpty || !$perms.is_superuser"
         ) Сохранить
         el-button(
           @click="$emit('cancel')"

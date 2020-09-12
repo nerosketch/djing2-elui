@@ -14,7 +14,12 @@
           .clearfix
             span {{ c.author_name }} 
             small {{ c.date_create }}
-            el-button(style="float: right; padding: 3px 0" type="text" icon='el-icon-close' v-if="c.can_remove" @click="delComment(c)")
+            el-button(
+              style="float: right; padding: 3px 0" type="text" icon='el-icon-close'
+              v-if="c.can_remove"
+              @click="delComment(c)"
+              :disabled="!$perms.tasks.delete_extracomment"
+            )
         el-avatar(shape="square" size='medium' :src='c.author_avatar')
         span &nbsp; {{ c.text }}
     el-form
@@ -24,7 +29,11 @@
       )
         el-input(v-model="currentComment" type="textarea" cols="40" rows="10")
       el-form-item
-        el-button(type="primary" @click="onSendComment" icon="el-icon-s-promotion" size='small') Отправить
+        el-button(
+          type="primary" icon="el-icon-s-promotion" size='small'
+          @click="onSendComment"
+          :disabled="!$perms.tasks.add_extracomment"
+        ) Отправить
 </template>
 
 <script lang="ts">
@@ -47,7 +56,7 @@ export default class extends Vue {
   private async loadComments() {
     this.loading = true
     const { data } = await getComments(TaskModule.id)
-    this.comments = data.results
+    this.comments = data
     this.loading = false
   }
 
@@ -69,7 +78,7 @@ export default class extends Vue {
       cancelButtonText: 'нет'
     }).then(async() => {
       await delComment(c.id)
-      await this.loadComments()
+      this.loadComments()
       this.$message.success('Комментарий удалён')
     })
   }

@@ -14,7 +14,11 @@ div
     template(v-slot:oper="{row}")
       el-button-group
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delLease(row)")
+        el-button(
+          type="danger" icon="el-icon-delete" size="mini"
+          @click="delLease(row)"
+          :disabled="!$perms.networks.delete_customeripleasemodel"
+        )
 
   el-dialog(
     title="Изменение Сессии"
