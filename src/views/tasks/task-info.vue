@@ -94,14 +94,9 @@ export default class extends Vue {
   }
 
   get taskRecipients() {
-    let res = []
     const recipIds = TaskModule.recipients
-    for (const r of this.recipients) {
-      if (recipIds.includes(r.pk)) {
-        res.push(r)
-      }
-    }
-    return res
+    let filtered = this.recipients.filter(r => recipIds.includes(r.pk))
+    return filtered.map(r => r.pk)
   }
 }
 </script>

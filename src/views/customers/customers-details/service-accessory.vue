@@ -6,6 +6,7 @@
       :label="srv.title"
       v-model="srv.state"
     )
+    el-divider
     el-button(
       type='primary' size='mini'
       @click="saveAccessory"
@@ -36,8 +37,8 @@ export default class extends Vue {
   private async loadServices() {
     this.servicesLoading = true
     try {
-      const { data } = await getServices()
-      this.services = data.results
+      const { data } = await getServices() as any
+      this.services = data
     } catch (err) {
       this.$message.error(err)
     } finally {
@@ -45,24 +46,19 @@ export default class extends Vue {
     }
   }
 
-  async created() {
-    await this.loadServices()
-    for (const v of this.services) {
-      this.selected.push({
-        pk: v.pk,
+  created() {
+    this.loadServices().then(() => {
+      this.selected = this.services.map(srv => ({
+        pk: srv.pk,
         state: false,
-        title: v.title
-      })
-    }
+        title: srv.title
+      }))
+    })
   }
 
   async saveAccessory() {
-    let res = []
-    for (const v of this.selected) {
-      if (v.state) {
-        res.push(v.pk)
-      }
-    }
+    let selectedState = this.selected.filter(s => s.state)
+    let res = selectedState.map(s => s.pk)
     await CustomerModule.SetGroupAccessory(res)
     this.$message.success('Группы привязаны')
     this.$emit('done')

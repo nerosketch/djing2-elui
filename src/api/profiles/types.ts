@@ -21,6 +21,7 @@ export interface IUserProfile {
 export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>
 export type IUserProfileListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfileList>
+export type IUserProfilePlainListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfile[]>
 
 export enum IUSER_PROFILE_LOG_ACTION_TYPES {
   UNDEFINED = 0,

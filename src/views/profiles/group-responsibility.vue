@@ -47,10 +47,9 @@ export default class extends Vue {
     }
     try {
       const checkedGroups = await getResponsibilityGroups(this.profileUname)
-      for (const grp of data) {
-        let state = checkedGroups.data.includes(grp.pk)
-        this.groups.push(Object.assign({ state }, grp))
-      }
+      this.groups = data.map((grp: IGroup) => Object.assign({
+        state: checkedGroups.data.includes(grp.pk)
+      }, grp))
     } catch (err) {
       this.$message.error(err)
     } finally {
@@ -64,12 +63,8 @@ export default class extends Vue {
 
   async saveResp() {
     this.loading = true
-    let res: number[] = []
-    for (const v of this.groups) {
-      if (v.state) {
-        res.push(v.pk)
-      }
-    }
+    let filtered = this.groups.filter(v => v.state)
+    let res = filtered.map( v => v.pk)
     await setResponsibilityGroups(this.profileUname, res)
     this.$message.success('Ответственность за группы сохранена')
     this.loading = false

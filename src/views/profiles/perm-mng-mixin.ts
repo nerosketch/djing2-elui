@@ -23,11 +23,7 @@ export default class extends Vue {
   protected selectReadonly() {
     let roPerms = this.allPerms.filter(el => el.codename.startsWith('view_'))
     if (roPerms.length > 0) {
-      let res = []
-      for (let p of roPerms) {
-        res.push(p.id)
-      }
-      this.leftChecked = res
+      this.leftChecked = roPerms.map(p => p.id)
     } else {
       this.$message.info('Не нашёл права на чтение')
     }

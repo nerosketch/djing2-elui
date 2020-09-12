@@ -14,7 +14,7 @@ export default class extends Vue {
         page: 1,
         page_size: 0,
         fields: 'pk,full_name,username'
-      }) as any
+      })
       this.potentialRecipients = data
     } catch (err) {
       this.$message.error(err)

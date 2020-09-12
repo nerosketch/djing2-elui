@@ -43,7 +43,7 @@ el-card(style='margin-bottom:20px;')
           span Уровень доступа
           el-progress(
             :percentage='user.access_level'
-            :status='user.access_level === 100 ? "success" : ""'
+            :status='user.access_level === 100 ? "success" : undefined'
           )
         .progress-item
           span Какой-то другой прогресс

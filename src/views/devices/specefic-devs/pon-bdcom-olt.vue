@@ -128,9 +128,7 @@ export default class extends Vue {
   private fetchFibers() {
     if (this.device) {
       return scanOltFibers(this.device.pk).then(({ data }) => {
-        for (const fib of data) {
-          this.fibers.push(Object.assign({ onuList: [] }, fib) as IDevFiberLocal)
-        }
+        this.fibers = data.map(fib => Object.assign({ onuList: [] }, fib))
       })
     }
     return new Promise((r) => (r()))

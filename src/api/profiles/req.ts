@@ -14,7 +14,8 @@ import {
   IUserGroupListAxiosResponsePromise,
   IUserGroupList,
   IUserGroupAxoisResponsePromise,
-  IUserGroup
+  IUserGroup,
+  IUserProfilePlainListAxiosResponsePromise
 } from '@/api/profiles/types'
 
 // IUserProfileLog
@@ -39,8 +40,8 @@ const baseAccUrl = '/profiles/'
 export const getProfiles = (params?: IDRFRequestListParameters): IUserProfileListAxiosResponsePromise =>
   request.get<IUserProfileList>(baseAccUrl, { params })
 
-export const getActiveProfiles = (params?: IDRFRequestListParameters): IUserProfileListAxiosResponsePromise =>
-  request.get<IUserProfileList>(`${baseAccUrl}get_active_profiles/`, { params })
+export const getActiveProfiles = (params?: IDRFRequestListParameters): IUserProfilePlainListAxiosResponsePromise =>
+  request.get<IUserProfile[]>(`${baseAccUrl}get_active_profiles/`, { params })
 
 export const getProfile = (uname: string): IUserProfileAxoisResponsePromise =>
   request.get<IUserProfile>(`${baseAccUrl}${uname}/`)
