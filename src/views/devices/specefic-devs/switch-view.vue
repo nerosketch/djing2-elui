@@ -188,15 +188,19 @@ export default class extends Vue {
 
   private async loadPorts() {
     if (this.device !== null) {
-      const { data } = await getPorts(this.device.pk)
-      for (const p of data) {
-        this.allPorts.push({
-          pk: p.pk,
-          num: p.num,
-          descr: p.descr,
-          user_count: p.user_count,
-          isdb: true
-        } as IFinPort)
+      try {
+        const { data } = await getPorts(this.device.pk)
+        for (const p of data) {
+          this.allPorts.push({
+            pk: p.pk,
+            num: p.num,
+            descr: p.descr,
+            user_count: p.user_count,
+            isdb: true
+          } as IFinPort)
+        }
+      } catch (err) {
+        this.$message.error(err)
       }
     }
   }

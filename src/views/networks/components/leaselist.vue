@@ -104,9 +104,15 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'id,ip_address,lease_time,mac_address,is_dynamic'
     }
-    const r = await getCustomerIpLeases(params)
-    this.leaseLoading = false
-    return r
+    try {
+      const r = await getCustomerIpLeases(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.leaseLoading = false
+    }
+    return null
   }
 
   private frmDone() {

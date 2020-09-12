@@ -140,13 +140,18 @@ export default class extends mixins(FormMixin) {
 
   private async loadGroups() {
     this.isLoading = true
-    const { data } = await getGroups({
-      page: 1,
-      page_size: 0,
-      fields: 'pk,title'
-    }) as any
-    this.groups = data
-    this.isLoading = false
+    try {
+      const { data } = await getGroups({
+        page: 1,
+        page_size: 0,
+        fields: 'pk,title'
+      }) as any
+      this.groups = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.isLoading = false
+    }
   }
 }
 </script>

@@ -153,18 +153,28 @@ export default class extends Vue {
 
   private async loadLeases() {
     this.loading = true
-    const { data } = await getCustomerIpLeases(undefined, CustomerModule.pk)
-    this.leases = data.results
-    this.loading = false
+    try {
+      const { data } = await getCustomerIpLeases(undefined, CustomerModule.pk)
+      this.leases = data.results
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 
   private async loadPools() {
     this.poolsLoading = true
-    const { data } = await getNetworkIpPools({
-      groups: CustomerModule.group
-    })
-    this.pools = data.results
-    this.poolsLoading = false
+    try {
+      const { data } = await getNetworkIpPools({
+        groups: CustomerModule.group
+      })
+      this.pools = data.results
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.poolsLoading = false
+    }
   }
 
   async created() {
@@ -191,9 +201,10 @@ export default class extends Vue {
           this.loadLeases()
         } catch (err) {
           this.$message.error(err)
+        } finally {
+          this.frmLoading = false
+          this.editDialog = false
         }
-        this.frmLoading = false
-        this.editDialog = false
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
@@ -205,9 +216,13 @@ export default class extends Vue {
       confirmButtonText: 'OK',
       cancelButtonText: 'Нет'
     }).then(async() => {
-      await CustomerIpLeaseModule.DelLease(lease.id)
-      this.$message.success('Аренда удалена')
-      this.loadLeases()
+      try {
+        await CustomerIpLeaseModule.DelLease(lease.id)
+        this.$message.success('Аренда удалена')
+        this.loadLeases()
+      } catch (err) {
+        this.$message.error(err)
+      }
     })
   }
 
@@ -227,13 +242,18 @@ export default class extends Vue {
   private async getFreeIp() {
     this.getFreeIpLoad = true
     await NetworkIpPoolModule.SET_ID(this.frmMod.pool)
-    const ip = await NetworkIpPoolModule.GetFreeIP()
-    if(ip) {
-      this.frmMod.ip_address = ip
-    } else {
-      this.$message.error('Не получилось подобрать ip :(')
+    try {
+      const ip = await NetworkIpPoolModule.GetFreeIP()
+      if(ip) {
+        this.frmMod.ip_address = ip
+      } else {
+        this.$message.error('Не получилось подобрать ip :(')
+      }
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.getFreeIpLoad = false
     }
-    this.getFreeIpLoad = false
   }
 }
 </script>

@@ -66,7 +66,7 @@
       prop='group'
       v-loading="isGroupLoading"
     )
-      el-select(v-model="frmMod.group")
+      el-select(v-model="frmMod.group" :disabled="groups.length == 0")
         el-option(
           v-for="grp in groups"
           :key="grp.pk"
@@ -209,42 +209,57 @@ export default class extends mixins(FormMixin) {
 
   private async loadStreets() {
     this.isStreetLoading = true
-    const { data } = await getStreets({
-      page: 1,
-      page_size: 0,
-      group: this.onChGrp
-    })
-    this.customerStreets = data.results
-    this.isStreetLoading = false
+    try {
+      const { data } = await getStreets({
+        page: 1,
+        page_size: 0,
+        group: this.onChGrp
+      })
+      this.customerStreets = data.results
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.isStreetLoading = false
+    }
   }
 
   private async loadGroups() {
     this.isGroupLoading = true
-    const { data } = await getCustomerGroups()
-    this.groups = data.results
-    this.isGroupLoading = false
+    try {
+      const { data } = await getCustomerGroups() as any
+      this.groups = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.isGroupLoading = false
+    }
   }
 
   private onSubmit() {
     (this.$refs['customerfrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        const newDat = await CustomerModule.PatchCustomer(this.frmMod)
-        this.isLoading = false
-        this.$emit('done', newDat)
-        this.frmInitial = Object.assign({}, {
-          username: newDat.username,
-          telephone: newDat.telephone,
-          fio: newDat.fio,
-          group: newDat.group,
-          street: newDat.street,
-          house: newDat.house,
-          is_active: newDat.is_active,
-          is_dynamic_ip: newDat.is_dynamic_ip,
-          gateway: newDat.gateway,
-          description: newDat.description
-        })
-        this.$message.success('Абонент сохранён')
+        try {
+          const newDat = await CustomerModule.PatchCustomer(this.frmMod)
+          this.$emit('done', newDat)
+          this.frmInitial = Object.assign({}, {
+            username: newDat.username,
+            telephone: newDat.telephone,
+            fio: newDat.fio,
+            group: newDat.group,
+            street: newDat.street,
+            house: newDat.house,
+            is_active: newDat.is_active,
+            is_dynamic_ip: newDat.is_dynamic_ip,
+            gateway: newDat.gateway,
+            description: newDat.description
+          })
+          this.$message.success('Абонент сохранён')
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
@@ -253,10 +268,14 @@ export default class extends mixins(FormMixin) {
 
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
-      const currGroup = this.onChGrp
-      await CustomerModule.DelCustomer()
-      this.$message.success('Учётка удалена')
-      this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
+      try {
+        const currGroup = this.onChGrp
+        await CustomerModule.DelCustomer()
+        this.$message.success('Учётка удалена')
+        this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
+      } catch (err) {
+        this.$message.error(err)
+      }
     })
   }
 

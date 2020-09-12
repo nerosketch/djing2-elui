@@ -90,9 +90,15 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'pk,name,cost'
     }
-    const r = await getOneShotPays(params)
-    this.loading = false
-    return r
+    try {
+      const r = await getOneShotPays(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
+    return null
   }
 
   private frmDone() {

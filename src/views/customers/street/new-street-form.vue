@@ -71,9 +71,14 @@ export default class extends Vue {
 
   private async loadGroups() {
     this.loading = true
-    const { data } = await getGroups()
-    this.groups = data.results
-    this.loading = false
+    try {
+      const { data } = await getGroups()
+      this.groups = data.results
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 
   created() {

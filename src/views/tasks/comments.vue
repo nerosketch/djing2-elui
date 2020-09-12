@@ -55,9 +55,14 @@ export default class extends Vue {
 
   private async loadComments() {
     this.loading = true
-    const { data } = await getComments(TaskModule.id)
-    this.comments = data
-    this.loading = false
+    try {
+      const { data } = await getComments(TaskModule.id)
+      this.comments = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 
   created() {

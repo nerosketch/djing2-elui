@@ -97,8 +97,13 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'id,title,service_id,slug,secret,pay_count'
     }
-    const r = await getPayGateways(params)
-    return r
+    try {
+      const r = await getPayGateways(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    }
+    return null
   }
 
   private openEdit(gw: IPayAllTimeGateway) {

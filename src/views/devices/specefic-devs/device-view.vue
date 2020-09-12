@@ -44,9 +44,13 @@ export default class extends Vue {
 
   private async getDevice() {
     this.ready = false
-    const { data } = await DeviceModule.GetDevice(this.devId)
-    this.device = data
-    this.ready = true
+    try {
+      const { data } = await DeviceModule.GetDevice(this.devId)
+      this.device = data
+      this.ready = true
+    } catch (err) {
+      this.$message.error(err)
+    }
   }
 
   private onKeyPress(ev: KeyboardEvent) {

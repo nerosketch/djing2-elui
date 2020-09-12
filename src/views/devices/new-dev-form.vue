@@ -160,12 +160,16 @@ export default class extends Vue {
   }
 
   private async loadGroups() {
-    const { data } = await getGroups({
-      page: 1,
-      page_size: 0,
-      fields: 'pk,title'
-    }) as any
-    this.groups = data
+    try {
+      const { data } = await getGroups({
+        page: 1,
+        page_size: 0,
+        fields: 'pk,title'
+      }) as any
+      this.groups = data
+    } catch (err) {
+      this.$message.error(err)
+    }
   }
 }
 </script>

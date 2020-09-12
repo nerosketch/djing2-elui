@@ -63,9 +63,14 @@ export default class extends Vue {
       return
     }
     this.lloading = true
-    let { data } = await scanFiberOnuList(this.devId, this.fiberAddr)
-    this.onuList = data
-    this.lloading = false
+    try {
+      let { data } = await scanFiberOnuList(this.devId, this.fiberAddr)
+      this.onuList = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.lloading = false
+    }
   }
 
   created() {

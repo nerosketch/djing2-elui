@@ -55,9 +55,15 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'pk,title,usercount'
     }
-    const r = await getCustomerGroups(params)
-    this.groupsLoading = false
-    return r
+    try {
+      const r = await getCustomerGroups(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.groupsLoading = false
+    }
+    return null
   }
 
   // Breadcrumbs

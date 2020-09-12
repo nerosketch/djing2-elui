@@ -80,9 +80,9 @@ export default class extends mixins(ProfilesMixin) {
     }
   }
 
-  private async loadProfile() {
+  private loadProfile() {
     if (this.profileUname) {
-      await UserProfileModule.GetProfile(this.profileUname)
+      UserProfileModule.GetProfile(this.profileUname)
     }
   }
 }

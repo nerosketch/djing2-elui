@@ -35,9 +35,14 @@ export default class extends Vue {
 
   private async loadServices() {
     this.servicesLoading = true
-    const r = await getServices()
-    this.services = r.data.results
-    this.servicesLoading = false
+    try {
+      const { data } = await getServices()
+      this.services = data.results
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.servicesLoading = false
+    }
   }
 
   async created() {

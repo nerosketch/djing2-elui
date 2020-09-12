@@ -69,9 +69,13 @@ export default class extends Vue {
 
   private async loadFileList() {
     if (this.customerId && this.customerId > 0) {
-      const { data } = await getAttachments(this.customerId)
-      for (const el of data) {
-        this.addFileListItem(el)
+      try {
+        const { data } = await getAttachments(this.customerId)
+        for (const el of data) {
+          this.addFileListItem(el)
+        }
+      } catch (err) {
+        this.$message.error(err)
       }
     } else {
       this.$message.error('Не передан id абонента. Это к разработчику')

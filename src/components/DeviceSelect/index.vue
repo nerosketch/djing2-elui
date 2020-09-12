@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model='selectedDeviceId' size="mini")
+  el-select(v-model='selectedDeviceId' size="mini" :disabled="devices.length == 0")
     el-option(
       v-for="dv in devices"
       :key="dv.pk"
@@ -52,13 +52,17 @@ export default class extends Vue {
   }
 
   private async loadDevices() {
-    const { data } = await getDevices({
-      page: 1,
-      page_size: 0,
-      group: this.groupId,
-      fields: 'pk,comment,ip_address'
-    }) as any
-    this.devices = data
+    try {
+      const { data } = await getDevices({
+        page: 1,
+        page_size: 0,
+        group: this.groupId,
+        fields: 'pk,comment,ip_address'
+      }) as any
+      this.devices = data
+    } catch (err) {
+      this.$message.error(err)
+    }
   }
 }
 </script>

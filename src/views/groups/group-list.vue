@@ -109,9 +109,14 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'pk,title,code'
     }
-    const r = await getGroups(params)
-    this.groups = r.data.results
-    return r
+    try {
+      const r = await getGroups(params)
+      this.groups = r.data.results
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    }
+    return null
   }
 
   private delGroup(group: IGroup) {

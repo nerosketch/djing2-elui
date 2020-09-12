@@ -30,11 +30,16 @@ export default class extends Vue {
   }
 
   private async loadCustomers() {
-    this.loading = true
     if (this.device !== null && this.portId > 0) {
-      const { data } = await filterDevicePort(this.device.pk, this.portId)
-      this.customers = data
-      this.loading = false
+      this.loading = true
+      try {
+        const { data } = await filterDevicePort(this.device.pk, this.portId)
+        this.customers = data
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.loading = false
+      }
     } else {
       this.$message.error('Parameters required')
     }

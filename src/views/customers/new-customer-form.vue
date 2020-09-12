@@ -157,18 +157,28 @@ export default class extends Vue {
 
   private async loadGroups() {
     this.loading = true
-    const { data } = await getCustomerGroups()
-    this.groups = data.results
-    this.loading = false
+    try {
+      const { data } = await getCustomerGroups()
+      this.groups = data.results
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 
   private onSubmit() {
     (this.$refs['frm'] as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        const newDat = await CustomerModule.AddCustomer(this.frmMod)
-        this.loading = false
-        this.$emit('done', newDat)
+        try {
+          const newDat = await CustomerModule.AddCustomer(this.frmMod)
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.loading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

@@ -58,14 +58,18 @@ export default class extends Vue {
 
   private async loadDevPorts(devId: number) {
     if (typeof devId === 'number' && devId > 0) {
-      const { data } = await getPorts(devId)
-      this.devPorts = data
+      try {
+        const { data } = await getPorts(devId)
+        this.devPorts = data
 
-      const fnd = this.devPorts.find(dp => dp.pk === this.selectedPort)
-      if (fnd) {
-        this.selectedPort = fnd.pk
-      } else {
-        this.selectedPort = 0
+        const fnd = this.devPorts.find(dp => dp.pk === this.selectedPort)
+        if (fnd) {
+          this.selectedPort = fnd.pk
+        } else {
+          this.selectedPort = 0
+        }
+      } catch (err) {
+        this.$message.error(err)
       }
     } else {
       this.devPorts = []

@@ -55,8 +55,13 @@ export default class extends Vue {
   private async loadVids() {
     if (this.portId > 0) {
       this.loading = true
-      this.vlans = await PortModule.ScanPortVlans(this.portId)
-      this.loading = false
+      try {
+        this.vlans = await PortModule.ScanPortVlans(this.portId)
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.loading = false
+      }
     } else {
       this.$message.error('portId parameter is required')
     }

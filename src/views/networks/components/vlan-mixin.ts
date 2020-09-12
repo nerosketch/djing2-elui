@@ -23,9 +23,15 @@ export default class extends Vue {
         fields: defaultFIelds
       }
     }
-    const r = await getVlans(params) as any
-    this.vlanLoading = false
-    this.vlans = r.data
-    return r
+    try {
+      const r = await getVlans(params) as any
+      this.vlans = r.data
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.vlanLoading = false
+    }
+    return null
   }
 }

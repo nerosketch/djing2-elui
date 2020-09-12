@@ -191,32 +191,42 @@ export default class extends Vue {
 
   private async loadStreets() {
     this.streetsLoading = true
-    const { data } = await getStreets({
-      page: 1,
-      page_size: 0,
-      group: this.groupId
-    }) as any
-    this.streets = data
-    this.streetsLoading = false
+    try {
+      const { data } = await getStreets({
+        page: 1,
+        page_size: 0,
+        group: this.groupId
+      }) as any
+      this.streets = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.streetsLoading = false
+    }
   }
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     this.customersLoading = true
     let street = this.routerQueryStreetGetter
     let r
-    if (params) {
-      let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
-        group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
-      })
-      if (street) {
-        newParams.street = Number(street)
+    try {
+      if (params) {
+        let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
+          group: this.groupId,
+          fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
+        })
+        if (street) {
+          newParams.street = Number(street)
+        }
+        r = await getCustomers(newParams)
+      } else {
+        r = await getCustomers()
       }
-      r = await getCustomers(newParams)
-    } else {
-      r = await getCustomers()
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.customersLoading = false
     }
-    this.customersLoading = false
     return r
   }
 

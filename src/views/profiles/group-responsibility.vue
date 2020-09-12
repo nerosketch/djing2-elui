@@ -33,11 +33,6 @@ export default class extends Vue {
   private groups: IGroupWState[] = []
   private loading = false
 
-  async loadChackedRespGroups() {
-    const { data } = await getResponsibilityGroups(this.profileUname)
-    return data
-  }
-
   async loadGroups() {
     this.loading = true
     const { data } = await getGroups({
@@ -50,12 +45,17 @@ export default class extends Vue {
       this.$message.error('Не удалось получить группы')
       return
     }
-    const checkedGroups = await this.loadChackedRespGroups()
-    for (const grp of data) {
-      let state = checkedGroups.includes(grp.pk)
-      this.groups.push(Object.assign({ state }, grp))
+    try {
+      const checkedGroups = await getResponsibilityGroups(this.profileUname)
+      for (const grp of data) {
+        let state = checkedGroups.data.includes(grp.pk)
+        this.groups.push(Object.assign({ state }, grp))
+      }
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
     }
-    this.loading = false
   }
 
   created() {

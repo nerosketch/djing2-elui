@@ -95,9 +95,15 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'pk,name,when_add,amount'
     }
-    const r = await getPeriodicPays(params)
-    this.loading = false
-    return r
+    try {
+      const r = await getPeriodicPays(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
+    return null
   }
 
   private frmDone() {

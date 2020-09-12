@@ -116,9 +116,15 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'avatar,username,fio,telephone,email,is_active,is_superuser'
     }
-    const r = await getProfiles(params)
-    this.loading = false
-    return r
+    try {
+      const r = await getProfiles(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
+    return null
   }
 
   private async addNewProfile() {

@@ -131,9 +131,15 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type'
     }
-    const r = await getServices(params)
-    this.loading = false
-    return r
+    try {
+      const r = await getServices(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
+    return null
   }
 
   private frmDone() {

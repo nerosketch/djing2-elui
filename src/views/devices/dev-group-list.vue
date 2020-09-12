@@ -57,9 +57,14 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'pk,title,device_count'
     }
-    const r = await getDevGroups(params)
-    this.groupDevs = r.data.results
-    return r
+    try {
+      const r = await getDevGroups(params)
+      this.groupDevs = r.data.results
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    }
+    return null
   }
 
   // Breadcrumbs

@@ -105,9 +105,15 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'id,name,permcount,usercount,permissions'
     }
-    const r = await getUserGroups(params)
-    this.ugloading = false
-    return r
+    try {
+      const r = await getUserGroups(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.ugloading = false
+    }
+    return null
   }
 
   private async editNewUserGroup(grp: IUserGroup) {

@@ -7,6 +7,7 @@
         v-loading="serviceBlockLoad"
         v-on:change="onChangeAutoConnect"
         v-model="autoRenewalService"
+        :disabled="!$perms.customers.change_customerservice"
       ) {{ autoRenewalService ? 'Да' : 'Нет' }}
 </template>
 

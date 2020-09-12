@@ -108,18 +108,28 @@ export default class extends Vue {
   private async loadFibers() {
     if (this.device !== null) {
       this.loading = true
-      const { data } = await scanOltFibers(this.devPk)
-      this.allPorts = data
-      this.loading = false
+      try {
+        const { data } = await scanOltFibers(this.devPk)
+        this.allPorts = data
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.loading = false
+      }
     }
   }
 
   private async loadUnregistered() {
     if (this.device !== null) {
       this.unrloading = true
-      const { data } = await scanUnitsUnregistered(this.devPk)
-      this.unregistered = data
-      this.unrloading = false
+      try {
+        const { data } = await scanUnitsUnregistered(this.devPk)
+        this.unregistered = data
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.unrloading = false
+      }
     }
   }
 

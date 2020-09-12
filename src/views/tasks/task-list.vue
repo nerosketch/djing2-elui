@@ -131,9 +131,15 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
     }
-    const r = await getTasks(params, this.tabUrl)
-    this.loading = false
-    return r
+    try {
+      const r = await getTasks(params, this.tabUrl)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
+    return null
   }
 
   // Breadcrumbs

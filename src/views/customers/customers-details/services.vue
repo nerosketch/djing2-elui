@@ -134,13 +134,18 @@ export default class extends Vue {
 
   private async loadServices() {
     this.servicesLoading = true
-    const { data } = await getServices({
-      page: 1,
-      page_size: 0,
-      groups: CustomerModule.group
-    }) as any
-    this.services = data
-    this.servicesLoading = false
+    try {
+      const { data } = await getServices({
+        page: 1,
+        page_size: 0,
+        groups: CustomerModule.group
+      }) as any
+      this.services = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.servicesLoading = false
+    }
   }
 
   async created() {
@@ -154,13 +159,18 @@ export default class extends Vue {
 
   private async loadCurrentService() {
     this.serviceBlockLoad = true
-    const currsrv = await CustomerModule.GetCurrentServiceDetails()
-    if (currsrv) {
-      this.currentService = currsrv
-    } else {
-      this.currentService = null
+    try {
+      const currsrv = await CustomerModule.GetCurrentServiceDetails()
+      if (currsrv) {
+        this.currentService = currsrv
+      } else {
+        this.currentService = null
+      }
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.serviceBlockLoad = false
     }
-    this.serviceBlockLoad = false
   }
 
   buyDone() {

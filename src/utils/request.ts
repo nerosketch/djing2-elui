@@ -60,6 +60,10 @@ service.interceptors.response.use(
     }
   },
   (error) => {
+    if (error.response.status === 403) {
+      console.log('Permission Denied', error.response)
+      return
+    }
     let er = error.response.data
     if (typeof er === 'object') {
       er = Object.entries(er).join('\n')
@@ -67,7 +71,7 @@ service.interceptors.response.use(
     Message({
       message: er || 'Неизвестная ошибка',
       type: 'error',
-      duration: 15000
+      duration: 7000
     })
     return Promise.reject(error)
   }

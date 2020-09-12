@@ -53,10 +53,15 @@ export default class extends Vue {
   private async loadPort() {
     if (this.portId > 0) {
       this.loading = true
-      const { data } = await PortModule.GetPort(this.portId)
-      this.frmMod.num = data.num
-      this.frmMod.descr = data.descr
-      this.loading = false
+      try {
+        const { data } = await PortModule.GetPort(this.portId)
+        this.frmMod.num = data.num
+        this.frmMod.descr = data.descr
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.loading = false
+      }
     } else {
       this.frmMod.num = this.initialNum
       this.frmMod.descr = ''
