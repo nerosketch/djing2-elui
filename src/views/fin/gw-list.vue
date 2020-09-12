@@ -9,7 +9,10 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPayGw(row)")
+          el-button(
+            type="danger" icon="el-icon-delete" size="mini" @click="delPayGw(row)"
+            :disabled="!$perms.fin_app.delete_payalltimegateway"
+          )
 
       el-button(
         size='mini'

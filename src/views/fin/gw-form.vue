@@ -29,7 +29,10 @@
     )
       el-input(v-model="frmMod.secret")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(
+        type="primary" @click="onSubmit" :loading="isLoading"
+        :disabled="!$perms.fin_app.change_payalltimegateway"
+      ) Сохранить
 </template>
 
 <script lang="ts">

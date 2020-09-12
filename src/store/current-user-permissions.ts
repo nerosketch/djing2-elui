@@ -111,6 +111,13 @@ export class CurrentPermissions extends VuexModule {
     
   }
 
+  public fin_app = {
+    add_payalltimegateway: false,
+    view_payalltimegateway: false,
+    change_payalltimegateway: false,
+    delete_payalltimegateway: false
+  }
+
   @MutationAction({ mutate:  ['current_auth_permissions']})
   public async GetCurrentAuthPermissions() {
     const res = await getCurrentAuthPermissions()
