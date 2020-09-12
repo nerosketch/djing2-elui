@@ -6,8 +6,12 @@
     :before-remove="beforeRemove"
     :http-request="uploadReq"
     :file-list="fileList"
+    :disabled="!$perms.customers.view_customerattachment"
   )
-    el-button(size="small" type="primary") Добавить документ
+    el-button(
+      size="small" type="primary"
+      :disabled="!$perms.customers.add_customerattachment"
+    ) Добавить документ
 </template>
 
 <script lang="ts">

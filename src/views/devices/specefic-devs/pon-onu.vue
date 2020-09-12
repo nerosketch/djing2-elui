@@ -38,7 +38,11 @@
             router-link(:to="{name: 'customerDetails', params:{ uid: ab.pk }}") {{ ab.full_name }}
         el-button-group
           delete-from-olt-btn(:devId="device.pk" v-on:done="getDetails")
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice") Удалить
+          el-button(
+            type="danger" icon="el-icon-delete" size="mini"
+            @click="delDevice"
+            :disabled="!$perms.devices.delete_device"
+          ) Удалить
 
     el-col(:lg="12" :sm='24')
       el-card.box-card(

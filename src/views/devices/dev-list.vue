@@ -8,8 +8,9 @@
       ref='table'
     )
       template(v-slot:pk="{row}")
-        el-link(type="primary")
+        el-link(type="primary" v-if="$perms.devices.view_device")
           router-link(:to="{name: 'device-view', params: { devId: row.pk }}") {{ row.pk }}
+        span(v-else) {{ row.pk }}
 
       template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
 
@@ -19,13 +20,22 @@
 
       template(v-slot:oper="{row}")
         el-button-group
-          el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice(row)")
+          el-button(
+            icon="el-icon-edit" size="mini"
+            @click="openEdit(row)"
+            :disabled="!$perms.devices.change_device"
+          )
+          el-button(
+            type="danger" icon="el-icon-delete" size="mini"
+            @click="delDevice(row)"
+            :disabled="!$perms.devices.delete_device"
+          )
 
       el-button(
         size='mini'
         icon='el-icon-plus'
         @click="openNew"
+        :disabled="!$perms.devices.add_device"
       ) Добавить устройство
 
     el-dialog(

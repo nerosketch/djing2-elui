@@ -52,6 +52,7 @@
           icon="el-icon-plus"
           size='mini'
           circle
+          :disabled="!$perms.networks.view_vlanif"
           @click="openAddVlanDialog(portVlanConf.port)"
         )
 
@@ -67,6 +68,7 @@
         icon="el-icon-download"
         @click="onSubmit"
         :loading="vlanLoading"
+        :disabled="!$perms.devices.can_apply_onu_config"
         size='mini'
       ) Применить
 

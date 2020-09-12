@@ -53,7 +53,11 @@
               align='center'
             )
               template(v-slot:default="{row}")
-                el-button(size='mini' icon='el-icon-plus' circle @click="openSaveOnu(row)")
+                el-button(
+                  size='mini' icon='el-icon-plus' circle
+                  @click="openSaveOnu(row)"
+                  :disabled="!$perms.devices.add_device"
+                )
     el-progress.disable_animations(
       v-else
       :percentage="loadPercent"

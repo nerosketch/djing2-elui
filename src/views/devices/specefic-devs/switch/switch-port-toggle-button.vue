@@ -4,7 +4,7 @@
     :type="pstate ? 'danger' : 'success'"
     :icon="pstate ? 'el-icon-remove' : 'el-icon-circle-plus'"
     :loading="loading"
-    :disabled="isdis"
+    :disabled="isdis || !$perms.devices.can_toggle_ports"
     @click="togglePort"
     circle
   )

@@ -2,9 +2,13 @@
   el-card.box-card
     template(v-slot:header)
       .clearfix
-        span {{ device.comment || 'Коммутатор' }}
+        span {{ device.comment || 'Коммутатор' }} 
         small {{ `${device.ip_address || device.mac_addr}` }}
-        el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
+        el-button(
+          style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
+          @click="openDevForm"
+          :disabled="!$perms.devices.change_device"
+        )
     el-table(
       :data="allPorts"
       :loading="loading"
@@ -65,10 +69,14 @@
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
             el-button(size='mini' icon='el-icon-notebook-2' @click="openMacsDialog(row)")
-            el-button(size='mini' icon='el-icon-view' @click="openVidsDialog(row)")
-            el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)")
-            el-button(size='mini' type='primary' icon='el-icon-edit' @click="openPortEdit(row)")
-          el-button(v-else size='mini' icon='el-icon-plus' circle @click="openPortAdd(row)")
+            el-button(size='mini' icon='el-icon-view' @click="openVidsDialog(row)" :disabled="!$perms.devices.view_portvlanmembermodel")
+            el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)" :disabled="!$perms.devices.delete_port")
+            el-button(size='mini' type='primary' icon='el-icon-edit' @click="openPortEdit(row)" :disabled="!$perms.devices.change_port")
+          el-button(
+            v-else size='mini' icon='el-icon-plus' circle
+            @click="openPortAdd(row)"
+            :disabled="!$perms.devices.add_port"
+          )
     el-dialog(
       :visible.sync="portViewDialog"
       title="Абоненты на порту"

@@ -5,6 +5,7 @@
     icon='el-icon-magic-stick'
     @click="tryToFixOnu"
     :loading="fixLoading"
+    :disabled="!$perms.devices.can_fix_onu"
   ) {{ buttonText }}
 </template>
 

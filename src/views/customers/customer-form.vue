@@ -28,9 +28,8 @@
             a(:href="`tel:${frmMod.telephone}`") call
           el-button(
             @click="openTelsDlg=true"
-            :disabled="$perms.customers.view_additionaltelephone"
+            :disabled="!$perms.customers.view_additionaltelephone"
           ) tels
-          el-button Доб.
     el-form-item(
       label="Улица"
       prop='street'

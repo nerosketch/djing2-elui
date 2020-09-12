@@ -13,7 +13,7 @@ export class CurrentPermissions extends VuexModule {
     delete_customer: false,
     view_customer: false,
 
-    add_customerstreet: true,
+    add_customerstreet: false,
     change_customerstreet: false,
     delete_customerstreet: false,
     view_customerstreet: false,
@@ -42,6 +42,11 @@ export class CurrentPermissions extends VuexModule {
     view_passportinfo: false,
     change_passportinfo: false,
     delete_passportinfo: false,
+    
+    add_customerattachment: false,
+    view_customerattachment: false,
+    change_customerattachment: false,
+    delete_customerattachment: false,
     
   }
 
@@ -88,6 +93,21 @@ export class CurrentPermissions extends VuexModule {
     change_device: false,
     add_device: false,
     delete_device: false,
+    
+    can_remove_from_olt: false,
+    can_fix_onu: false,
+    can_apply_onu_config: false,
+    can_toggle_ports: false,
+
+    add_port: false,
+    view_port: false,
+    change_port: false,
+    delete_port: false,
+    
+    add_portvlanmembermodel: false,
+    view_portvlanmembermodel: false,
+    change_portvlanmembermodel: false,
+    delete_portvlanmembermodel: false,
     
   }
 

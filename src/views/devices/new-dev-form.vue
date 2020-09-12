@@ -68,7 +68,11 @@
       el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="success" @click="onSubmit" :loading="loading" icon="el-icon-plus") Добавить
+      el-button(
+        type="success" @click="onSubmit" icon="el-icon-plus"
+        :loading="loading"
+        :disabled="!$perms.devices.add_device"
+      ) Добавить
 </template>
 
 <script lang="ts">

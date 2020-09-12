@@ -4,7 +4,11 @@
       .clearfix
         span zte - 
         small {{ details }}
-        el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
+        el-button(
+          style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
+          @click="openDevForm"
+          :disabled="!$perms.devices.change_device"
+        )
     el-row
       el-col(:xl="2" :md="3" :sm="6" :xs="12" v-for="(p, i) in allPorts" :key="i")
         olt-zte-port(
