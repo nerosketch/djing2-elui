@@ -131,6 +131,7 @@ export default class extends Vue {
         this.loading = true
         try {
           await CurrentUserProfileModule.Login(this.loginForm)
+          CurrentUserProfileModule.GetSelf()
           this.$router.push({
             path: this.redirect || '/',
             query: this.otherQuery

@@ -2,6 +2,7 @@ import { Module, getModule, VuexModule, MutationAction } from 'vuex-module-decor
 import store from '@/store'
 import { getCurrentAuthPermissions } from '@/api/profiles/req'
 
+@Module({ dynamic: true, store, name: 'perms' })
 export class CurrentPermissions extends VuexModule {
   public is_superuser = false
   public current_auth_permissions: string[] = []
@@ -99,10 +100,7 @@ export class CurrentPermissions extends VuexModule {
   }
 }
 
-@Module({ dynamic: true, store, name: 'perms' })
-class CurrentPermissionsMod extends CurrentPermissions {}
-
-export const CurrentPermissionsModule = getModule(CurrentPermissionsMod)
+export const CurrentPermissionsModule = getModule(CurrentPermissions)
 
 // export const HasPermission = (permCodeName: string): boolean => {
 //   if (CurrentPermissionsModule.is_superuser) return true

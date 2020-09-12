@@ -87,8 +87,8 @@
     el-form-item
       el-button-group
         el-button(
-          type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched"
-          :disabled="!$perms.customers.change_customer"
+          type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading"
+          :disabled="isFormUntouched || !$perms.customers.change_customer"
         ) Сохранить
         el-button(
           type="success" icon='el-icon-plus' @click="openTaskFormDialog" :loading="taskFormDialogLoading"

@@ -3,7 +3,6 @@ import store from '@/store'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import { getSelfProfile, login, changeProfile } from '@/api/profiles/req'
 import { IUserProfile } from '@/api/profiles/types'
-import { CurrentPermissionsModule } from '@/store/current-user-permissions'
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
 class CurrentUserProfile extends VuexModule implements IUserProfile {
@@ -85,7 +84,6 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
-    CurrentPermissionsModule.GetCurrentAuthPermissions()
     return data
   }
 
@@ -94,7 +92,6 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
     userInfo.username = userInfo.username.trim()
     const { data } = await login(userInfo)
     setToken(data.token)
-    await this.GetSelf()
     return data.token
   }
 
@@ -110,8 +107,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
       throw Error('LogOut: token is undefined!')
     }
     // await logout()
-    removeToken()
-    this.SET_TOKEN('')
+    this.ResetToken()
     this.RESET_ALL_CURRENT_PROFILE()
   }
 
