@@ -40,7 +40,7 @@
       )
 
     el-dialog(
-      title="Кто имеет права на эти группы"
+      title="Кто имеет права на эту группу"
       :visible.sync="permsDialog"
     )
       object-perms(
