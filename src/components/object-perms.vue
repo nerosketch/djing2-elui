@@ -1,12 +1,10 @@
 <template lang="pug">
-  div(
-    v-loading='oPermsLoading'
-  )
+  div(v-loading='oGroupsLoading')
     el-checkbox(
-      v-for="p in profiles"
-      :key="p.pk"
-      v-model="p.hasPerm"
-      :label="p.full_name"
+      v-for="g in groups"
+      :key="g.id"
+      v-model="g.checked"
+      :label="g.name"
     )
     el-divider
     el-button(
@@ -17,49 +15,46 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { IUserProfile } from '@/api/profiles/types'
-import { getActiveProfiles } from '@/api/profiles/req'
-import { IDRFAxiosResponsePromise } from '../api/types'
+import { Component, Vue } from 'vue-property-decorator'
+import { IUserGroup } from '@/api/profiles/types'
+import { getUserGroups } from '@/api/profiles/req'
 
-interface IExtendedUserProfile extends IUserProfile {
-  hasPerm?: boolean
+interface IExUserGroup extends IUserGroup {
+  checked: boolean
 }
 
 @Component({
   name: 'ObjectPerms'
 })
 export default class extends Vue {
-  private oPermsLoading = false
-  private profiles: IExtendedUserProfile[] = []
+  private oGroupsLoading = false
+  private groups: IExUserGroup[] = []
 
-  private async loadProfiles() {
-    this.oPermsLoading = true
+  private async loadUGroups() {
+    this.oGroupsLoading = true
     try {
-      const { data } = await getActiveProfiles({
+      const { data } = await getUserGroups({
         page: 1,
         page_size: 0,
-        fields: 'pk,full_name,username,full_name'
-      })
-      this.profiles = data.map(p => Object.assign({ hasPerm: false }, p))
+        fields: 'id,name'
+      }) as any
+      //- Fixme: specify an existing falue for 'checked'
+      this.groups = data.map((p: IUserGroup) => Object.assign({ checked: false }, p))
     } catch (err) {
       this.$message.error(err)
     } finally {
-      this.oPermsLoading = false
+      this.oGroupsLoading = false
     }
   }
 
-  private getProfilePrivaryKeys(): number[] {
-    let allowProfiles = this.profiles.filter(p => p.hasPerm)
-    return allowProfiles.map(p => p.pk)
-  }
-
   private onSubmit() {
-    this.$emit('save', this.getProfilePrivaryKeys())
+    let checkedGroups = this.groups.filter(g => g.checked)
+    let grpIds = checkedGroups.map(g => g.id)
+    this.$emit('save', grpIds)
   }
 
   created() {
-    this.loadProfiles()
+    this.loadUGroups()
   }
 }
 </script>

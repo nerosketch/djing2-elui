@@ -41,7 +41,7 @@ export default class extends Vue{
     let p = {
       page: 1,
       page_size: 0,
-      fields: 'id,name,permissions'
+      fields: 'id,name'
     }
     try {
       const { data } = await getUserGroups(p) as any

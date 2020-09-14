@@ -11,7 +11,7 @@
           el-button(
             icon='el-icon-lock' size='mini'
             @click="permsDialog=true"
-            v-if="!$perms.is_superadmin"
+            v-if="$perms.is_superuser"
           )
           el-button(
             icon="el-icon-edit" size="mini"
