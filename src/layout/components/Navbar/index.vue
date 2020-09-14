@@ -62,12 +62,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { AppModule } from '@/store/modules/app'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { SearchModule } from '@/store/modules/search'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 import { TaskModule } from '@/store/modules/tasks/tasks'
+import Ws from '@/layout/mixin/ws'
 
 @Component({
   name: 'Navbar',
@@ -76,7 +78,7 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
     Hamburger
   }
 })
-export default class extends Vue {
+export default class extends mixins(Ws) {
   private searchStr = ''
   get sidebar() {
     return AppModule.sidebar
