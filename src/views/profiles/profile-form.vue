@@ -58,6 +58,7 @@
       el-button-group
         el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-download" size='small') {{ isNew ? 'Добавить' : 'Сохранить' }}
         el-button(@click="openPasswordForm" icon="el-icon-lock" size='small') Пароль
+        el-button(@click="openGroupsForm" icon="el-icon-lock" size='small' v-if="$perms.is_superuser") Группы пользователей
 
     el-dialog(
       title="Поменять пароль"
@@ -69,6 +70,14 @@
         v-on:cancel="passwordCancel"
       )
 
+    el-dialog(
+      title="Назначить принадлежность группам пользователей"
+      :visible.sync="userGroupAccessDialog"
+    )
+      profile-groups(
+        v-on:done="userGroupAccessDone"
+      )
+
 </template>
 
 <script lang="ts">
@@ -78,14 +87,16 @@ import { Form } from 'element-ui'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import PasswordForm from './password-form.vue'
 import { IUserProfile } from '@/api/profiles/types'
+import ProfileGroups from './profile-groups.vue'
 
 @Component({
   name: 'ProfileForm',
-  components: { PasswordForm }
+  components: { PasswordForm, ProfileGroups }
 })
 export default class extends Vue {
   private loading = false
   private passwordFormDialog = false
+  private userGroupAccessDialog = false
   private frmMod = {
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,
@@ -164,6 +175,14 @@ export default class extends Vue {
   }
   private passwordCancel() {
     this.passwordFormDialog = false
+  }
+
+  private openGroupsForm() {
+    this.userGroupAccessDialog = true
+  }
+
+  private userGroupAccessDone(profile: IUserProfile) {
+    this.userGroupAccessDialog = false
   }
 }
 </script>
