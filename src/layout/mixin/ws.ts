@@ -5,6 +5,7 @@ import { Component, Vue } from 'vue-property-decorator'
 })
 export default class extends Vue {
   private wsInstance?: WebSocket
+  private audioInstance?: HTMLAudioElement
 
   protected wsConnect() {
     // this.wsInstance = new WebSocket('wss://' + location.host)
@@ -19,6 +20,7 @@ export default class extends Vue {
       let newData = JSON.parse(msg.data)
       console.log('Сообщение:', msg)
       if (msg.type === 'message') {
+        this.playNotify()
         this.onMsg(newData)
       }
     }
@@ -36,5 +38,13 @@ export default class extends Vue {
 
   protected onMsg(msg: any) {
     console.log('data:', msg)
+    this.$message.info(msg.text)
+  }
+
+  private playNotify() {
+    if (!this.audioInstance) {
+      this.audioInstance = new Audio(require('@/assets/mario.mp3'))
+    }
+    this.audioInstance.play()
   }
 }
