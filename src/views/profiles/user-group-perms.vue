@@ -25,7 +25,6 @@ div
 <script lang="ts">
 import { Component, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { IPermission } from '@/api/profiles/types'
 import { UserGroupModule } from '@/store/modules/profiles/user-group'
 import PermMngMixin from './perm-mng-mixin'
 

@@ -8,12 +8,16 @@
       :label="g.name"
     )
     el-divider
+    p objId {{ objId }}
     h4 Какие права будут иметь выбранные группы сотрудников
-    el-checkbox(
-      v-for="p in allPerms"
-      :label="p.name"
-      v-model="p.checked"
-    )
+    template(v-if="initialGroupPerms")
+      el-checkbox(
+        v-for="p in initialGroupPerms.availablePerms"
+        :key="p.id"
+        :label="p.name"
+        v-model="p.checked"
+      )
+    span(v-else) Загрузка доступных прав...
     el-divider
     el-button(
       type="primary" @click="onSubmit"
@@ -23,12 +27,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
-import { IObjectGroupPermsResultStruct, IObjectGroupPermsResultStructAxiosResponsePromise } from '@/api/types'
-import { IUserGroup, IPermission } from '@/api/profiles/types'
-import { getUserGroups } from '@/api/profiles/req'
-import PermMngMixin from '@/views/profiles/perm-mng-mixin'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { IObjectGroupPermsResultStruct, IPermission, IObjectGroupPermsInitialAxiosResponsePromise, IObjectGroupPermsInitial } from '@/api/types'
+import { IUserGroup } from '@/api/profiles/types'
+import { getUserGroups, getAllPermissions } from '@/api/profiles/req'
 
 interface IExUserGroup extends IUserGroup {
   checked: boolean
@@ -41,11 +43,12 @@ interface IExPerm extends IPermission {
 @Component({
   name: 'ObjectPerms'
 })
-export default class extends mixins(PermMngMixin) {
-  @Prop({ default: null }) private getGroupObjectPermsFunc!: () => IObjectGroupPermsResultStructAxiosResponsePromise
+export default class extends Vue {
+  @Prop({ default: null }) private getGroupObjectPermsFunc!: () => IObjectGroupPermsInitialAxiosResponsePromise
+  @Prop({ default: 0 }) private objId!: number
   private oGroupsLoading = false
   private groups: IExUserGroup[] = []
-  private initialGroupPerms?: IObjectGroupPermsResultStruct
+  private initialGroupPerms: IObjectGroupPermsInitial | null = null
 
   private async loadUGroups() {
     this.oGroupsLoading = true
@@ -55,16 +58,9 @@ export default class extends mixins(PermMngMixin) {
         page_size: 0,
         fields: 'id,name'
       }) as any
-      //- Fixme: specify an existing falue for 'checked'
-      if (this.initialGroupPerms) {
-        this.groups = data.map((p: IUserGroup) => Object.assign({
-          checked: this.initialGroupPerms.groupIds.includes(p.id)
-        }, p))
-      } else {
-        this.groups = data.map((p: IUserGroup) => Object.assign({
-          checked: false
-        }, p))
-      }
+      this.groups = data.map((p: IUserGroup) => Object.assign({
+        checked: this.initialGroupPerms ? this.initialGroupPerms.groupIds.includes(p.id) : false
+      }, p))
     } catch (err) {
       this.$message.error(err)
     } finally {
@@ -72,26 +68,39 @@ export default class extends mixins(PermMngMixin) {
     }
   }
 
-  private onSubmit() {
+  private async onSubmit() {
     let checkedGroups = this.groups.filter(g => g.checked)
-    let selectedPerms = this.allPerms.filter((p: IExPerm) => p.checked)
+    let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter((p: IExPerm) => p.checked) : []
     let res: IObjectGroupPermsResultStruct = {
       groupIds: checkedGroups.map(g => g.id),
       selectedPerms: selectedPerms.map(p => p.id)
     }
     console.log('object perms Submit', res)
-    this.$emit('save', res)
+    this.oGroupsLoading = true
+    await this.$emit('save', res)
+    this.oGroupsLoading = false
   }
 
   private async getInitialObjPerms() {
     const { data } = await this.getGroupObjectPermsFunc()
-    this.initialGroupPerms = data
+    console.log('Data', data)
+    this.initialGroupPerms = {
+      groupIds: data.groupIds,
+      availablePerms: data.availablePerms.map(p => Object.assign({
+        checked: false // set checked
+      }, p))
+    }
   }
 
   async created() {
     await this.getInitialObjPerms()
     this.loadUGroups()
-    this.loadPerms()
+  }
+
+  @Watch('objId')
+  private async onChangeObj() {
+    await this.getInitialObjPerms()
+    this.loadUGroups()
   }
 }
 </script>

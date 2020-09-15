@@ -1,6 +1,12 @@
 import request from '@/utils/request'
 import { AxiosPromise } from 'axios'
-import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
+import {
+  IDRFRequestListParameters,
+  IDRFAxiosResponsePromise,
+  IPermission,
+  IPermContentTypeListAxiosResponsePromise,
+  IPermContentTypeList
+} from '@/api/types'
 import {
   IUserProfileLogListAxiosResponsePromise,
   IUserProfileLogList, IUserProfileLog,
@@ -8,9 +14,6 @@ import {
   IUserProfileList, IUserProfileListAxiosResponsePromise,
   IUserProfile, IUserProfileAxoisResponsePromise,
   IPasswordUpdateForm,
-  IPermContentTypeListAxiosResponsePromise,
-  IPermContentTypeList,
-  IPermission,
   IUserGroupListAxiosResponsePromise,
   IUserGroupList,
   IUserGroupAxoisResponsePromise,

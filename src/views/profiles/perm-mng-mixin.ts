@@ -1,6 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getAllPermissions } from '@/api/profiles/req'
-import { IPermission } from '@/api/profiles/types'
+import { IPermission } from '@/api/types'
 
 @Component({
   name: 'PermMngMixin'

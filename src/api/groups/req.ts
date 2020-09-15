@@ -6,7 +6,8 @@ import {
 } from './types'
 import {
   IDRFRequestListParameters,
-  IObjectGroupPermsResultStructAxiosResponsePromise,
+  IObjectGroupPermsInitial,
+  IObjectGroupPermsInitialAxiosResponsePromise,
   IObjectGroupPermsResultStruct
 } from '@/api/types'
 
@@ -25,8 +26,8 @@ export const changeGroup = (groupId: number, newData: object): IGroupAxoisRespon
 export const delGroup = (groupId: number) =>
   request.delete(`/groups/${groupId}/`)
 
-export const getObjectsPerms = (groupId: number): IObjectGroupPermsResultStructAxiosResponsePromise =>
-  request.get<IObjectGroupPermsResultStruct>(`/groups/${groupId}/get_object_perms/`)
+export const getObjectsPerms = (groupId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
+  request.get<IObjectGroupPermsInitial>(`/groups/${groupId}/get_object_perms/`)
 
 export const setObjectsPerms = (groupId: number, dat: IObjectGroupPermsResultStruct) =>
   request.put(`/groups/${groupId}/set_object_perms/`, dat)

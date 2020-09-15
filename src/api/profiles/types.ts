@@ -49,43 +49,6 @@ export interface IPasswordUpdateForm {
   new_passw: string
 }
 
-// Permissions
-export interface IUserObjectPermission {
-  user: number
-  content_type: IPermContentType | number
-  object_pk: string
-  content_object: number
-  permission: number
-}
-
-export interface IGroupObjectPermission {
-  group: number
-  user: number
-  content_type: IPermContentType | number
-  object_pk: string
-  content_object: number
-}
-
-export interface IPermContentType {
-  id: number
-  app_label: string
-  model: string
-}
-export type IPermContentTypeList = IDRFListResponse<IPermContentType>
-export type IPermContentTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IPermContentTypeList>
-
-export interface IPermission {
-  id: number
-  name: string
-  content_type: IPermContentType | number
-  codename: string
-}
-
-export interface IPermissionGroup {
-  name: string
-  permissions: (IPermission | number)[]
-}
-
 export interface IUserGroup {
   id: number
   name: string

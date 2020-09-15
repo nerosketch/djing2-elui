@@ -29,4 +29,47 @@ export interface IObjectGroupPermsResultStruct {
   groupIds: number[]
   selectedPerms: number[]
 }
-export type IObjectGroupPermsResultStructAxiosResponsePromise = IDRFAxiosResponsePromise<IObjectGroupPermsResultStruct>
+// export type IObjectGroupPermsResultStructAxiosResponsePromise = IDRFAxiosResponsePromise<IObjectGroupPermsResultStruct>
+
+// Permissions
+export interface IPermission {
+  id: number
+  name: string
+  content_type: IPermContentType | number
+  codename: string
+}
+
+export interface IPermContentType {
+  id: number
+  app_label: string
+  model: string
+}
+export type IPermContentTypeList = IDRFListResponse<IPermContentType>
+export type IPermContentTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IPermContentTypeList>
+
+export interface IGroupObjectPermission {
+  group: number
+  user: number
+  content_type: IPermContentType | number
+  object_pk: string
+  content_object: number
+}
+
+export interface IPermissionGroup {
+  name: string
+  permissions: (IPermission | number)[]
+}
+
+export interface IUserObjectPermission {
+  user: number
+  content_type: IPermContentType | number
+  object_pk: string
+  content_object: number
+  permission: number
+}
+
+export interface IObjectGroupPermsInitial {
+  groupIds: number[]
+  availablePerms: IPermission[]
+}
+export type IObjectGroupPermsInitialAxiosResponsePromise = IDRFAxiosResponsePromise<IObjectGroupPermsInitial>

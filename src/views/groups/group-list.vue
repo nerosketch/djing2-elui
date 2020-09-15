@@ -47,6 +47,7 @@
       object-perms(
         v-on:save="changeGroupObjectPerms"
         :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        :objId="groupIdGetter"
       )
 
 </template>
@@ -54,7 +55,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
-import { IDRFRequestListParameters, IObjectGroupPermsResultStruct, IObjectGroupPermsResultStructAxiosResponsePromise } from '@/api/types'
+import { IDRFRequestListParameters, IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 import { getGroups, setObjectsPerms, getObjectsPerms } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
 import GroupForm from './group-form.vue'
@@ -120,10 +121,14 @@ export default class extends Vue {
 
   get dialogTitle() {
     let t = 'Изменить'
-    if (GroupModule.pk === 0) {
+    if (this.groupIdGetter === 0) {
       t = 'Создать'
     }
     return `${t} группу`
+  }
+
+  get groupIdGetter() {
+    return GroupModule.pk
   }
 
   private async loadGroups(params?: IDRFRequestListParameters) {
@@ -168,13 +173,13 @@ export default class extends Vue {
   }
   // End Breadcrumbs
 
-  private changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
+  private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
     console.log('changeGroupObjectPerms', info)
-    setObjectsPerms(GroupModule.pk, info)
+    await setObjectsPerms(this.groupIdGetter, info)
     this.permsDialog = false
   }
-  private getGroupObjectPermsFunc4Grp(): IObjectGroupPermsResultStructAxiosResponsePromise {
-    return getObjectsPerms(GroupModule.pk)
+  private getGroupObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+    return getObjectsPerms(this.groupIdGetter)
   }
 
   private openPermsDialog(grp: IGroup) {
