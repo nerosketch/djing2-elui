@@ -10,7 +10,7 @@
         el-button-group
           el-button(
             icon='el-icon-lock' size='mini'
-            @click="permsDialog=true"
+            @click="openPermsDialog(row)"
             v-if="$perms.is_superuser"
           )
           el-button(
@@ -40,11 +40,13 @@
       )
 
     el-dialog(
-      title="Кто имеет права на эту группу"
+      :title="`Кто имеет права на группу абонентов \"${GroupTitleGetter}\"`"
       :visible.sync="permsDialog"
+      top="5vh"
     )
       object-perms(
         v-on:save="changeGroupObjectPerms"
+        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
       )
 
 </template>
@@ -52,8 +54,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
-import { IDRFRequestListParameters } from '@/api/types'
-import { getGroups } from '@/api/groups/req'
+import { IDRFRequestListParameters, IObjectGroupPermsResultStruct, IObjectGroupPermsResultStructAxiosResponsePromise } from '@/api/types'
+import { getGroups, setObjectsPerms, getObjectsPerms } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
 import GroupForm from './group-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
@@ -76,6 +78,7 @@ export default class extends Vue {
   private groups: IGroup[] = []
   private dialogVisible = false
   private permsDialog = false
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -101,6 +104,10 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
+
+  get GroupTitleGetter() {
+    return GroupModule.title
+  }
 
   private async openEdit(group: IGroup) {
     await GroupModule.SET_ALL_MGROUP(group)
@@ -161,9 +168,18 @@ export default class extends Vue {
   }
   // End Breadcrumbs
 
-  private changeGroupObjectPerms(profiles: number[]) {
-    console.log('changeGroupObjectPerms', profiles)
+  private changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
+    console.log('changeGroupObjectPerms', info)
+    setObjectsPerms(GroupModule.pk, info)
     this.permsDialog = false
+  }
+  private getGroupObjectPermsFunc4Grp(): IObjectGroupPermsResultStructAxiosResponsePromise {
+    return getObjectsPerms(GroupModule.pk)
+  }
+
+  private openPermsDialog(grp: IGroup) {
+    GroupModule.SET_ALL_MGROUP(grp)
+    this.permsDialog = true
   }
 }
 </script>

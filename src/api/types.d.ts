@@ -24,3 +24,9 @@ export interface ISimpleResponseResult {
   status: number
 }
 export type ISimpleResponseResultAxiosResponsePromise = IDRFAxiosResponsePromise<ISimpleResponseResult>
+
+export interface IObjectGroupPermsResultStruct {
+  groupIds: number[]
+  selectedPerms: number[]
+}
+export type IObjectGroupPermsResultStructAxiosResponsePromise = IDRFAxiosResponsePromise<IObjectGroupPermsResultStruct>
