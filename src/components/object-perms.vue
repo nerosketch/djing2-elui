@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(v-loading='oGroupsLoading')
+  div
     h4 Какие группы сотрудников будут иметь доступ
     el-checkbox(
       v-for="g in groups"
@@ -23,6 +23,7 @@
       type="primary" @click="onSubmit"
       :disabled="!$perms.is_superuser"
       size='small'
+      :loading="oGroupsLoading"
     ) Сохранить
 </template>
 
@@ -34,10 +35,6 @@ import { getUserGroups, getAllPermissions } from '@/api/profiles/req'
 
 interface IExUserGroup extends IUserGroup {
   checked: boolean
-}
-
-interface IExPerm extends IPermission {
-  checked?: boolean
 }
 
 @Component({
@@ -70,12 +67,11 @@ export default class extends Vue {
 
   private async onSubmit() {
     let checkedGroups = this.groups.filter(g => g.checked)
-    let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter((p: IExPerm) => p.checked) : []
+    let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
     let res: IObjectGroupPermsResultStruct = {
       groupIds: checkedGroups.map(g => g.id),
       selectedPerms: selectedPerms.map(p => p.id)
     }
-    console.log('object perms Submit', res)
     this.oGroupsLoading = true
     await this.$emit('save', res)
     this.oGroupsLoading = false
@@ -83,13 +79,7 @@ export default class extends Vue {
 
   private async getInitialObjPerms() {
     const { data } = await this.getGroupObjectPermsFunc()
-    console.log('Data', data)
-    this.initialGroupPerms = {
-      groupIds: data.groupIds,
-      availablePerms: data.availablePerms.map(p => Object.assign({
-        checked: false // set checked
-      }, p))
-    }
+    this.initialGroupPerms = data
   }
 
   async created() {
