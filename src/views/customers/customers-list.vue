@@ -11,6 +11,10 @@
           widthStorageNamePrefix='customers'
           ref='tbl'
         )
+          template(v-slot:pk="{row}")
+            el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
+            span(v-else) {{ row.pk }}
+
           template(v-slot:username="{row}")
             el-link(type="primary")
               router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}") {{ row.username }}
@@ -81,14 +85,24 @@
         :extStreets="streets"
         v-on:done="editStreetDone"
       )
+    el-dialog(
+      title="Кто имеет права на абонента"
+      :visible.sync="permsDialog"
+      top="5vh"
+    )
+      object-perms(
+        v-on:save="changeGroupObjectPerms"
+        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        :objId="customerIdGetter"
+      )
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { scrollTo } from '@/utils/scroll-to'
-import { IDRFRequestListParameters } from '@/api/types'
+import { IDRFRequestListParameters, IObjectGroupPermsInitialAxiosResponsePromise, IObjectGroupPermsResultStruct } from '@/api/types'
 import { ICustomer, IDRFRequestListParametersCustomer, ICustomerStreet } from '@/api/customers/types'
-import { getCustomers, getStreets } from '@/api/customers/req'
+import { getCustomers, getStreets, setCustomerObjectsPerms, getCustomerObjectsPerms } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import NewCustomerForm from './new-customer-form.vue'
 import List from '@/components/List/index.vue'
@@ -98,6 +112,7 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
 import { GroupModule } from '@/store/modules/groups'
 import PingProfile from './ping-profile.vue'
+import { CustomerModule } from '@/store/modules/customers/customer'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -122,6 +137,7 @@ export default class extends Vue {
   private addCustomerDialog = false
   private addStreetDialog = false
   private editStreetsDialog = false
+  private permsDialog = false
   public readonly $refs!: {
     tbl: DataTableComp
   }
@@ -130,7 +146,7 @@ export default class extends Vue {
     {
       prop: 'pk',
       label: 'ID',
-      'min-width': 60
+      'min-width': 67
     },
     {
       prop: 'username',
@@ -305,6 +321,22 @@ export default class extends Vue {
 
   private rowColor(r: ITableRowClassName) {
     return r.row.is_active ? '' : 'error-row'
+  }
+
+  get customerIdGetter() {
+    return CustomerModule.pk
+  }
+
+  private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
+    await setCustomerObjectsPerms(this.customerIdGetter, info)
+    this.permsDialog = false
+  }
+  private getGroupObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+    return getCustomerObjectsPerms(this.customerIdGetter)
+  }
+  private openPermsDialog(c: ICustomer) {
+    CustomerModule.SET_ALL_CUSTOMER(c)
+    this.permsDialog = true
   }
 }
 </script>

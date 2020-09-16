@@ -54,7 +54,7 @@ export default class extends Vue {
       try {
         this.macs = await PortModule.ScanMacAddressPort(pid)
         this.macsLoading = false
-      } catch(err) {
+      } catch (err) {
         this.macsLoading = false
         this.$message.error(err)
       }

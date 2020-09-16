@@ -21,6 +21,11 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
+            size='mini' icon='el-icon-lock'
+            @click="openPermsDialog(row)"
+            v-if="$perms.is_superuser"
+          )
+          el-button(
             icon="el-icon-edit" size="mini"
             @click="openEdit(row)"
             :disabled="!$perms.devices.change_device"
@@ -56,6 +61,16 @@
         v-on:err="dialogNewDev=false"
         :initialGroup="groupId"
       )
+    el-dialog(
+      title="Кто имеет права на устройство"
+      :visible.sync="permsDialog"
+      top="5vh"
+    )
+      object-perms(
+        v-on:save="changeDeviceObjectPerms"
+        :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
+        :objId="deviceIdGetter"
+      )
 
 </template>
 
@@ -63,13 +78,14 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { IDRFRequestListParametersDevGroup, IDevice } from '@/api/devices/types'
-import { getDevices } from '@/api/devices/req'
+import { getDevices, setDevObjectsPerms, getDevObjectsPerms } from '@/api/devices/req'
 import DevForm from './dev-form.vue'
 import NewDevForm from './new-dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
 import { GroupModule } from '@/store/modules/groups'
+import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 
 class DataTableComp extends DataTable<IDevice> {}
 
@@ -88,6 +104,7 @@ export default class extends Vue {
   @Prop({ default: 0 }) private groupId!: number
   private dialogVisible = false
   private dialogNewDev = false
+  private permsDialog = false
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -205,5 +222,21 @@ export default class extends Vue {
     return GroupModule.title
   }
   // End Breadcrumbs
+
+  get deviceIdGetter() {
+    return DeviceModule.pk
+  }
+
+  private async changeDeviceObjectPerms(info: IObjectGroupPermsResultStruct) {
+    await setDevObjectsPerms(this.deviceIdGetter, info)
+    this.permsDialog = false
+  }
+  private getDeviceObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+    return getDevObjectsPerms(this.deviceIdGetter)
+  }
+  private openPermsDialog(d: IDevice) {
+    DeviceModule.SET_ALL_DEV(d)
+    this.permsDialog = true
+  }
 }
 </script>

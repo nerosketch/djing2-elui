@@ -174,7 +174,6 @@ export default class extends Vue {
   // End Breadcrumbs
 
   private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
-    console.log('changeGroupObjectPerms', info)
     await setObjectsPerms(this.groupIdGetter, info)
     this.permsDialog = false
   }

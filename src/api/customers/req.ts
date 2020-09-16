@@ -3,7 +3,10 @@ import { AxiosPromise } from 'axios'
 import {
   IDRFRequestListParameters,
   ISimpleResponseResultAxiosResponsePromise,
-  ISimpleResponseResult
+  ISimpleResponseResult,
+  IObjectGroupPermsInitial,
+  IObjectGroupPermsInitialAxiosResponsePromise,
+  IObjectGroupPermsResultStruct
 } from '@/api/types'
 import {
   ICustomerGroupList,
@@ -184,3 +187,9 @@ export const addAttachment = (newAtt: any): ICustomerAttachementAxoisResponsePro
 
 export const delAttachment = (id: number) =>
   request.delete(`${CustomerAttachmUrl}${id}/`)
+
+export const getCustomerObjectsPerms = (customerId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
+  request.get<IObjectGroupPermsInitial>(`/customers/${customerId}/get_object_perms/`)
+
+export const setCustomerObjectsPerms = (customerId: number, dat: IObjectGroupPermsResultStruct) =>
+  request.put(`/customers/${customerId}/set_object_perms/`, dat)

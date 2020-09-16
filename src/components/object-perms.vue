@@ -8,7 +8,6 @@
       :label="g.name"
     )
     el-divider
-    p objId {{ objId }}
     h4 Какие права будут иметь выбранные группы сотрудников
     template(v-if="initialGroupPerms")
       el-checkbox(

@@ -33,7 +33,7 @@ interface IExUserGroup extends IUserGroup {
 @Component({
   name: 'ProfileGroups'
 })
-export default class extends Vue{
+export default class extends Vue {
   private groups: IExUserGroup[] = []
   private loading = false
 
@@ -61,18 +61,16 @@ export default class extends Vue{
   private async saveGroups() {
     let grps = this.groups.filter(g => g.checked)
     let grpids = grps.map(g => g.id)
-    if (grpids.length > 0) {
-      this.loading = true
-      try {
-        const r = await UserProfileModule.PatchProfile({
-            groups: grpids
-        })
-        this.$emit('done', r)
-      } catch(err) {
-        this.$message.error(err)
-      } finally {
-        this.loading = false
-      }
+    this.loading = true
+    try {
+      const r = await UserProfileModule.PatchProfile({
+        groups: grpids
+      })
+      this.$emit('done', r)
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
     }
   }
 }
