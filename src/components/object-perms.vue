@@ -85,6 +85,7 @@ export default class extends Vue {
   }
 
   private async onSubmit() {
+    this.$message.info('Не готово ещё')
     // let checkedGroups = this.groups.filter(g => g.checked)
     // let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
     // let res: IObjectGroupPermsResultStruct = {
@@ -123,13 +124,17 @@ export default class extends Vue {
   private async onChangedSelectedProfileGroup(selectedGroupId: number) {
     // load perms for selected group
     if (this.initialGroupPerms) {
-      this.availablePermsLoading = true
-      const { data } = await this.getSelectedObjectPerms(this.objId, selectedGroupId)
-      // data := selected perms
-      this.availablePermsLoading = false
-
-      for (let ap of this.initialGroupPerms.availablePerms) {
-        this.$set(ap, 'checked', data.includes(ap.id))
+      try {
+        this.availablePermsLoading = true
+        const { data } = await this.getSelectedObjectPerms(this.objId, selectedGroupId)
+        // data := selected perms
+        for (let ap of this.initialGroupPerms.availablePerms) {
+          this.$set(ap, 'checked', data.includes(ap.id))
+        }
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.availablePermsLoading = false
       }
     }
   }

@@ -122,7 +122,10 @@ export const getDevGroups = (params?: IDRFRequestListParameters): IDevGroupListA
   request.get<IDevGroupList>('/devices/groups/', { params })
 
 export const getDevObjectsPerms = (devId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
-  request.get<IObjectGroupPermsInitial>(`/customers/${devId}/get_object_perms/`)
+  request.get<IObjectGroupPermsInitial>(`/devices/${devId}/get_object_perms/`)
 
 export const setDevObjectsPerms = (devId: number, dat: IObjectGroupPermsResultStruct) =>
-  request.put(`/customers/${devId}/set_object_perms/`, dat)
+  request.put(`/devices/${devId}/set_object_perms/`, dat)
+
+export const getDeviceSelectedObjectPerms = (devId: number, profileGroupId: number): AxiosPromise<number[]> =>
+  request.get(`/devices/${devId}/get_selected_object_perms/${profileGroupId}/`)

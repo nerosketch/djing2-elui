@@ -193,3 +193,6 @@ export const getCustomerObjectsPerms = (customerId: number): IObjectGroupPermsIn
 
 export const setCustomerObjectsPerms = (customerId: number, dat: IObjectGroupPermsResultStruct) =>
   request.put(`/customers/${customerId}/set_object_perms/`, dat)
+
+export const getCustomerSelectedObjectPerms = (customerId: number, profileGroupId: number): AxiosPromise<number[]> =>
+  request.get(`/customers/${customerId}/get_selected_object_perms/${profileGroupId}/`)

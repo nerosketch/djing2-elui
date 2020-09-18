@@ -93,6 +93,7 @@
       object-perms(
         v-on:save="changeGroupObjectPerms"
         :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="customerGetSelectedObjectPerms"
         :objId="customerIdGetter"
       )
 </template>
@@ -100,9 +101,23 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { scrollTo } from '@/utils/scroll-to'
-import { IDRFRequestListParameters, IObjectGroupPermsInitialAxiosResponsePromise, IObjectGroupPermsResultStruct } from '@/api/types'
-import { ICustomer, IDRFRequestListParametersCustomer, ICustomerStreet } from '@/api/customers/types'
-import { getCustomers, getStreets, setCustomerObjectsPerms, getCustomerObjectsPerms } from '@/api/customers/req'
+import {
+  IDRFRequestListParameters,
+  IObjectGroupPermsInitialAxiosResponsePromise,
+  IObjectGroupPermsResultStruct
+} from '@/api/types'
+import {
+  ICustomer,
+  IDRFRequestListParametersCustomer,
+  ICustomerStreet
+} from '@/api/customers/types'
+import {
+  getCustomers,
+  getStreets,
+  setCustomerObjectsPerms,
+  getCustomerObjectsPerms,
+  getCustomerSelectedObjectPerms
+} from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import NewCustomerForm from './new-customer-form.vue'
 import List from '@/components/List/index.vue'
@@ -141,6 +156,8 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+
+
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -337,6 +354,10 @@ export default class extends Vue {
   private openPermsDialog(c: ICustomer) {
     CustomerModule.SET_ALL_CUSTOMER(c)
     this.permsDialog = true
+  }
+
+  private customerGetSelectedObjectPerms(customerId: number, profileGroupId: number) {
+    return getCustomerSelectedObjectPerms(customerId, profileGroupId)
   }
 }
 </script>

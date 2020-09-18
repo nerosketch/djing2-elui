@@ -69,6 +69,7 @@
       object-perms(
         v-on:save="changeDeviceObjectPerms"
         :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="deviceGetSelectedObjectPerms"
         :objId="deviceIdGetter"
       )
 
@@ -78,7 +79,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { IDRFRequestListParametersDevGroup, IDevice } from '@/api/devices/types'
-import { getDevices, setDevObjectsPerms, getDevObjectsPerms } from '@/api/devices/req'
+import { getDevices, setDevObjectsPerms, getDevObjectsPerms, getDeviceSelectedObjectPerms } from '@/api/devices/req'
 import DevForm from './dev-form.vue'
 import NewDevForm from './new-dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
@@ -237,6 +238,10 @@ export default class extends Vue {
   private openPermsDialog(d: IDevice) {
     DeviceModule.SET_ALL_DEV(d)
     this.permsDialog = true
+  }
+
+  private deviceGetSelectedObjectPerms(devId: number, profileGroupId: number) {
+    return getDeviceSelectedObjectPerms(devId, profileGroupId)
   }
 }
 </script>
