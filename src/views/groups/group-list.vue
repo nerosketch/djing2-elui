@@ -47,6 +47,7 @@
       object-perms(
         v-on:save="changeGroupObjectPerms"
         :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="groupsSelectedObjectPerms"
         :objId="groupIdGetter"
       )
 
@@ -62,6 +63,7 @@ import GroupForm from './group-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
+import { getGroupsSelectedObjectPerms } from '@/api/groups/req'
 
 class DataTableComp extends DataTable<IGroup> {}
 
@@ -184,6 +186,10 @@ export default class extends Vue {
   private openPermsDialog(grp: IGroup) {
     GroupModule.SET_ALL_MGROUP(grp)
     this.permsDialog = true
+  }
+
+  private groupsSelectedObjectPerms(objectId: number, profileGroupId: number) {
+    return getGroupsSelectedObjectPerms(objectId, profileGroupId)
   }
 }
 </script>

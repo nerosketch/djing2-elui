@@ -1,13 +1,16 @@
 <template lang="pug">
-  div
+  div(v-loading="availablePermsLoading")
     h4 Какие группы сотрудников будут иметь доступ
-    el-checkbox(
-      v-for="g in groups"
-      :key="g.id"
-      v-model="g.checked"
-      :label="g.name"
+    el-select(
+      v-model="selectedProfileGroup"
+      size="mini"
     )
-    el-divider
+      el-option(
+        v-for="grp in groups"
+        :key="grp.id"
+        :label="grp.name"
+        :value="grp.id"
+      )
     h4 Какие права будут иметь выбранные группы сотрудников
     template(v-if="initialGroupPerms")
       el-checkbox(
@@ -16,7 +19,9 @@
         :label="p.name"
         v-model="p.checked"
       )
-    span(v-else) Загрузка доступных прав...
+    span(v-else)
+      i.el-icon-loading
+      |  Загрузка доступных прав...
     el-divider
     el-button(
       type="primary" @click="onSubmit"
@@ -28,12 +33,23 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { IObjectGroupPermsResultStruct, IPermission, IObjectGroupPermsInitialAxiosResponsePromise, IObjectGroupPermsInitial } from '@/api/types'
+import { AxiosPromise } from 'axios'
+import {
+  IObjectGroupPermsResultStruct,
+  IPermission,
+  IObjectGroupPermsInitialAxiosResponsePromise,
+  IObjectGroupPermsInitial
+} from '@/api/types'
 import { IUserGroup } from '@/api/profiles/types'
 import { getUserGroups, getAllPermissions } from '@/api/profiles/req'
 
-interface IExUserGroup extends IUserGroup {
-  checked: boolean
+interface IExPermission extends IPermission {
+  checked?: boolean
+}
+
+interface IExObjectGroupPermsInitial extends IObjectGroupPermsInitial {
+  groupIds: number[]
+  availablePerms: IExPermission[]
 }
 
 @Component({
@@ -41,10 +57,13 @@ interface IExUserGroup extends IUserGroup {
 })
 export default class extends Vue {
   @Prop({ default: null }) private getGroupObjectPermsFunc!: () => IObjectGroupPermsInitialAxiosResponsePromise
+  @Prop({ default: null }) private getSelectedObjectPerms!: (objectId: number, profileGroupId: number) => AxiosPromise<number[]>
   @Prop({ default: 0 }) private objId!: number
   private oGroupsLoading = false
-  private groups: IExUserGroup[] = []
-  private initialGroupPerms: IObjectGroupPermsInitial | null = null
+  private groups: IUserGroup[] = []
+  private selectedProfileGroup = 0
+  private availablePermsLoading = false
+  private initialGroupPerms: IExObjectGroupPermsInitial | null = null
 
   private async loadUGroups() {
     this.oGroupsLoading = true
@@ -54,9 +73,10 @@ export default class extends Vue {
         page_size: 0,
         fields: 'id,name'
       }) as any
-      this.groups = data.map((p: IUserGroup) => Object.assign({
-        checked: this.initialGroupPerms ? this.initialGroupPerms.groupIds.includes(p.id) : false
-      }, p))
+      // this.groups = data.map((p: IUserGroup) => Object.assign({
+      //   checked: this.initialGroupPerms ? this.initialGroupPerms.groupIds.includes(p.id) : false
+      // }, p))
+      this.groups = data
     } catch (err) {
       this.$message.error(err)
     } finally {
@@ -65,15 +85,13 @@ export default class extends Vue {
   }
 
   private async onSubmit() {
-    let checkedGroups = this.groups.filter(g => g.checked)
-    let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
-    let res: IObjectGroupPermsResultStruct = {
-      groupIds: checkedGroups.map(g => g.id),
-      selectedPerms: selectedPerms.map(p => p.id)
-    }
-    this.oGroupsLoading = true
-    await this.$emit('save', res)
-    this.oGroupsLoading = false
+    // let checkedGroups = this.groups.filter(g => g.checked)
+    // let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
+    // let res: IObjectGroupPermsResultStruct = {
+      // groupIds: checkedGroups.map(g => g.id),
+      // selectedPerms: selectedPerms.map(p => p.id)
+    // }
+    // await this.$emit('save', res)
   }
 
   private async getInitialObjPerms() {
@@ -90,6 +108,30 @@ export default class extends Vue {
   private async onChangeObj() {
     await this.getInitialObjPerms()
     this.loadUGroups()
+  }
+
+  @Watch('groups')
+  private onChangeGroups(grps: IUserGroup[]) {
+    if (grps.length > 0) {
+      this.selectedProfileGroup = grps[0].id
+    } else {
+      this.selectedProfileGroup = 0
+    }
+  }
+
+  @Watch('selectedProfileGroup')
+  private async onChangedSelectedProfileGroup(selectedGroupId: number) {
+    // load perms for selected group
+    if (this.initialGroupPerms) {
+      this.availablePermsLoading = true
+      const { data } = await this.getSelectedObjectPerms(this.objId, selectedGroupId)
+      // data := selected perms
+      this.availablePermsLoading = false
+
+      for (let ap of this.initialGroupPerms.availablePerms) {
+        this.$set(ap, 'checked', data.includes(ap.id))
+      }
+    }
   }
 }
 </script>

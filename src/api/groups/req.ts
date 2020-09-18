@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { AxiosPromise } from 'axios'
 import {
   IGroupListAxiosResponsePromise,
   IGroupAxoisResponsePromise,
@@ -31,3 +32,6 @@ export const getObjectsPerms = (groupId: number): IObjectGroupPermsInitialAxiosR
 
 export const setObjectsPerms = (groupId: number, dat: IObjectGroupPermsResultStruct) =>
   request.put(`/groups/${groupId}/set_object_perms/`, dat)
+
+export const getGroupsSelectedObjectPerms = (groupId: number, profileGroupId: number): AxiosPromise<number[]> =>
+  request.get(`/groups/${groupId}/get_selected_object_perms/${profileGroupId}/`)

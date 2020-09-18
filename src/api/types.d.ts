@@ -68,12 +68,8 @@ export interface IUserObjectPermission {
   permission: number
 }
 
-interface IExPermission extends IPermission {
-  checked?: boolean
-}
-
 export interface IObjectGroupPermsInitial {
   groupIds: number[]
-  availablePerms: IExPermission[]
+  availablePerms: IPermission[]
 }
 export type IObjectGroupPermsInitialAxiosResponsePromise = IDRFAxiosResponsePromise<IObjectGroupPermsInitial>
