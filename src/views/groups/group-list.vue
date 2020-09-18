@@ -44,11 +44,9 @@
       :visible.sync="permsDialog"
       top="5vh"
     )
-      object-perms(
-        v-on:save="changeGroupObjectPerms"
-        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
-        :getSelectedObjectPerms="groupsSelectedObjectPerms"
-        :objId="groupIdGetter"
+      recursive-group-object-perms(
+        :userGroupId="groupIdGetter"
+        v-on:done="permsDialog=false"
       )
 
 </template>
@@ -56,14 +54,14 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
-import { IDRFRequestListParameters, IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
-import { getGroups, setObjectsPerms, getObjectsPerms } from '@/api/groups/req'
+import { IDRFRequestListParameters } from '@/api/types'
+import { getGroups } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
 import GroupForm from './group-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
-import { getGroupsSelectedObjectPerms } from '@/api/groups/req'
+import RecursiveGroupObjectPerms from './recursive-group-object-perms.vue'
 
 class DataTableComp extends DataTable<IGroup> {}
 
@@ -71,6 +69,7 @@ class DataTableComp extends DataTable<IGroup> {}
   name: 'GroupList',
   components: {
     GroupForm,
+    RecursiveGroupObjectPerms,
     'datatable': DataTableComp
   }
 })
@@ -175,21 +174,9 @@ export default class extends Vue {
   }
   // End Breadcrumbs
 
-  private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
-    await setObjectsPerms(this.groupIdGetter, info)
-    this.permsDialog = false
-  }
-  private getGroupObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getObjectsPerms(this.groupIdGetter)
-  }
-
   private openPermsDialog(grp: IGroup) {
     GroupModule.SET_ALL_MGROUP(grp)
     this.permsDialog = true
-  }
-
-  private groupsSelectedObjectPerms(objectId: number, profileGroupId: number) {
-    return getGroupsSelectedObjectPerms(objectId, profileGroupId)
   }
 }
 </script>

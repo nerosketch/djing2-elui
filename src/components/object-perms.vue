@@ -11,7 +11,7 @@
         :label="grp.name"
         :value="grp.id"
       )
-    h4 Какие права будут иметь выбранные группы сотрудников
+    h4 Какие права будет иметь выбранная группа сотрудников
     template(v-if="initialGroupPerms")
       el-checkbox(
         v-for="p in initialGroupPerms.availablePerms"

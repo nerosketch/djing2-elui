@@ -3,13 +3,12 @@ import { AxiosPromise } from 'axios'
 import {
   IGroupListAxiosResponsePromise,
   IGroupAxoisResponsePromise,
-  IGroup, IGroupList
+  IGroup, IGroupList,
+  SetPermissionsRecursiveRequest
 } from './types'
 import {
   IDRFRequestListParameters,
-  IObjectGroupPermsInitial,
-  IObjectGroupPermsInitialAxiosResponsePromise,
-  IObjectGroupPermsResultStruct
+  IPermission
 } from '@/api/types'
 
 export const getGroups = (params?: IDRFRequestListParameters): IGroupListAxiosResponsePromise =>
@@ -27,11 +26,8 @@ export const changeGroup = (groupId: number, newData: object): IGroupAxoisRespon
 export const delGroup = (groupId: number) =>
   request.delete(`/groups/${groupId}/`)
 
-export const getObjectsPerms = (groupId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
-  request.get<IObjectGroupPermsInitial>(`/groups/${groupId}/get_object_perms/`)
+export const setGroupsPermissionsRecursive = (groupId: number, req: SetPermissionsRecursiveRequest) =>
+  request.put(`/groups/${groupId}/set_related_perms_recursive/`, req)
 
-export const setObjectsPerms = (groupId: number, dat: IObjectGroupPermsResultStruct) =>
-  request.put(`/groups/${groupId}/set_object_perms/`, dat)
-
-export const getGroupsSelectedObjectPerms = (groupId: number, profileGroupId: number): AxiosPromise<number[]> =>
-  request.get(`/groups/${groupId}/get_selected_object_perms/${profileGroupId}/`)
+export const getGroupAllRelatedPerms = (): AxiosPromise<IPermission[]> =>
+  request.get('/groups/get_all_related_perms/')
