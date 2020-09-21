@@ -1,4 +1,4 @@
-import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
+import { IDRFAxiosResponsePromise, IDRFListResponse } from '@/api/types'
 
 export interface IVlanIf {
   id: number
@@ -47,6 +47,7 @@ export interface ICustomerIpLease {
 }
 export type ICustomerIpLeaseList = IDRFListResponse<ICustomerIpLease>
 export type ICustomerIpLeaseAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLease>
+export type ICustomerIpLeasePlainListResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLease[]>
 export type ICustomerIpLeaseListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLeaseList>
 
 export interface ICustomerIpLeasePingResponse {

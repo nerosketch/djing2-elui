@@ -15,17 +15,17 @@ export default class extends Vue {
     const defaultFIelds = 'id,title,vid,is_management'
     if (params) {
       params.fields = defaultFIelds
-      params.page_size = 0
+      params.page_size = 100000
     } else {
       params = {
         page: 1,
-        page_size: 0,
+        page_size: 100000,
         fields: defaultFIelds
       }
     }
     try {
-      const r = await getVlans(params) as any
-      this.vlans = r.data
+      const r = await getVlans(params)
+      this.vlans = r.data.results
       return r
     } catch (err) {
       this.$message.error(err)

@@ -9,7 +9,8 @@ import {
   ICustomerIpLease, ICustomerIpLeaseList,
   ICustomerIpLeaseAxoisResponsePromise,
   ICustomerIpLeaseListAxiosResponsePromise,
-  ICustomerIpLeasePingAxoisResponsePromise
+  ICustomerIpLeasePingAxoisResponsePromise,
+  ICustomerIpLeasePlainListResponsePromise
 } from './types'
 
 const baseVlanUrl = '/networks/vlan/'
@@ -57,7 +58,7 @@ export const getFreeIP = (id: number) =>
 const baseLeaseUrl = '/networks/lease/'
 
 // CustomerIpLease
-export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseListAxiosResponsePromise => {
+export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseListAxiosResponsePromise | ICustomerIpLeasePlainListResponsePromise => {
   if (customer) {
     params = Object.assign({ customer }, params)
   }

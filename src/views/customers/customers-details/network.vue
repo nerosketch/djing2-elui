@@ -107,7 +107,10 @@ import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { AppModule } from '@/store/modules/app'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { ICustomerIpLease, INetworkIpPool } from '@/api/networks/types'
+import {
+  ICustomerIpLease,
+  INetworkIpPool
+} from '@/api/networks/types'
 import { getCustomerIpLeases, getNetworkIpPools } from '@/api/networks/req'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
@@ -155,7 +158,7 @@ export default class extends Vue {
     this.loading = true
     try {
       const { data } = await getCustomerIpLeases(undefined, CustomerModule.pk)
-      this.leases = data.results
+      this.leases = data as ICustomerIpLease[]
     } catch (err) {
       this.$message.error(err)
     } finally {
