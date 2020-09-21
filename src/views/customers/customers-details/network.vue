@@ -9,14 +9,17 @@
     )
       el-table-column(
         label="IP Адрес"
+        min-width='110'
       )
         template(v-slot:default="{row}") {{ row.ip_address }}
       el-table-column(
         label="MAC Адрес"
+        min-width='110'
       )
         template(v-slot:default="{row}") {{ row.mac_address }}
       el-table-column(
         label="Время аренды"
+        min-width='110'
       )
         template(v-slot:default="{row}") {{ row.lease_time }}
       el-table-column(
@@ -29,6 +32,7 @@
       el-table-column(
         label="Ping"
         align="center"
+        min-width='100'
       )
         template(v-slot:default="{row}")
           lease-ping(:lease="row")
