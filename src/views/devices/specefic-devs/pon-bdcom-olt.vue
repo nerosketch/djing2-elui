@@ -2,6 +2,7 @@
   el-card.box-card
     template(v-slot:header)
       .clearfix {{ device.comment || 'BDCOM' }}
+        small {{ ` ${device.ip_address || device.mac_addr}` }}
     el-row(v-if="ready")
       el-col(
         :span="24"
