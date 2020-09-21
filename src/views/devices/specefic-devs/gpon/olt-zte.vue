@@ -2,7 +2,8 @@
   el-card.box-card
     template(v-slot:header)
       .clearfix
-        span zte - 
+        span zte -
+        small {{ ` ${device.ip_address || device.mac_addr} ` }}
         small {{ details }}
         el-button(
           style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'

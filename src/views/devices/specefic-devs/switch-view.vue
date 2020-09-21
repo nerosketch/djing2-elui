@@ -3,7 +3,7 @@
     template(v-slot:header)
       .clearfix
         span {{ device.comment || 'Коммутатор' }} 
-        small {{ `${device.ip_address || device.mac_addr}` }}
+        small {{ ` ${device.ip_address || device.mac_addr}` }}
         el-button(
           style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
           @click="openDevForm"
