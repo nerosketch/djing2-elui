@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(v-loading="availablePermsLoading")
+  div
     h4 Какие группы сотрудников будут иметь доступ
     el-select(
       v-model="selectedProfileGroup"
@@ -48,7 +48,6 @@ interface IExPermission extends IPermission {
 }
 
 interface IExObjectGroupPermsInitial extends IObjectGroupPermsInitial {
-  groupIds: number[]
   availablePerms: IExPermission[]
 }
 
@@ -62,7 +61,6 @@ export default class extends Vue {
   private oGroupsLoading = false
   private groups: IUserGroup[] = []
   private selectedProfileGroup = 0
-  private availablePermsLoading = false
   private initialGroupPerms: IExObjectGroupPermsInitial | null = null
 
   private async loadUGroups() {
@@ -73,9 +71,6 @@ export default class extends Vue {
         page_size: 0,
         fields: 'id,name'
       }) as any
-      // this.groups = data.map((p: IUserGroup) => Object.assign({
-      //   checked: this.initialGroupPerms ? this.initialGroupPerms.groupIds.includes(p.id) : false
-      // }, p))
       this.groups = data
     } catch (err) {
       this.$message.error(err)
@@ -85,14 +80,12 @@ export default class extends Vue {
   }
 
   private async onSubmit() {
-    this.$message.info('Не готово ещё')
-    // let checkedGroups = this.groups.filter(g => g.checked)
-    // let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
-    // let res: IObjectGroupPermsResultStruct = {
-      // groupIds: checkedGroups.map(g => g.id),
-      // selectedPerms: selectedPerms.map(p => p.id)
-    // }
-    // await this.$emit('save', res)
+    let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
+    let res: IObjectGroupPermsResultStruct = {
+      groupId: this.selectedProfileGroup,
+      selectedPerms: selectedPerms.map(p => p.id)
+    }
+    await this.$emit('save', res)
   }
 
   private async getInitialObjPerms() {
@@ -125,7 +118,7 @@ export default class extends Vue {
     // load perms for selected group
     if (this.initialGroupPerms) {
       try {
-        this.availablePermsLoading = true
+        this.oGroupsLoading = true
         const { data } = await this.getSelectedObjectPerms(this.objId, selectedGroupId)
         // data := selected perms
         for (let ap of this.initialGroupPerms.availablePerms) {
@@ -134,7 +127,7 @@ export default class extends Vue {
       } catch (err) {
         this.$message.error(err)
       } finally {
-        this.availablePermsLoading = false
+        this.oGroupsLoading = false
       }
     }
   }

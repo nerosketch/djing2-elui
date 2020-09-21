@@ -26,7 +26,7 @@ export interface ISimpleResponseResult {
 export type ISimpleResponseResultAxiosResponsePromise = IDRFAxiosResponsePromise<ISimpleResponseResult>
 
 export interface IObjectGroupPermsResultStruct {
-  groupIds: number[]
+  groupId: number
   selectedPerms: number[]
 }
 // export type IObjectGroupPermsResultStructAxiosResponsePromise = IDRFAxiosResponsePromise<IObjectGroupPermsResultStruct>
@@ -69,7 +69,6 @@ export interface IUserObjectPermission {
 }
 
 export interface IObjectGroupPermsInitial {
-  groupIds: number[]
   availablePerms: IPermission[]
 }
 export type IObjectGroupPermsInitialAxiosResponsePromise = IDRFAxiosResponsePromise<IObjectGroupPermsInitial>
