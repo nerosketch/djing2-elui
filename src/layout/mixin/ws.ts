@@ -1,5 +1,16 @@
 import { Component, Vue } from 'vue-property-decorator'
 
+export enum IWsMessageEventTypeEnum {
+  UPDATETASK = 'updatetask',
+  UPDATEPERMS = 'updateperms'
+}
+
+export interface IWsMessage {
+  eventType: IWsMessageEventTypeEnum,
+  text?: string,
+  data: any
+}
+
 @Component({
   name: 'Ws'
 })
@@ -20,7 +31,7 @@ export default class extends Vue {
       let newData = JSON.parse(msg.data)
       console.log('Сообщение:', msg)
       if (msg.type === 'message') {
-        this.playNotify()
+        // this.playNotify()
         this.onMsg(newData)
       }
     }
@@ -36,9 +47,11 @@ export default class extends Vue {
     }
   }
 
-  protected onMsg(msg: any) {
-    console.log('data:', msg)
-    this.$message.info(msg.text)
+  protected onMsg(msg: IWsMessage) {
+    if (msg.text) {
+      this.$message.info(msg.text)
+    }
+    this.$eventHub.$emit(msg.eventType, msg)
   }
 
   private playNotify() {

@@ -21,10 +21,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/_variables.scss'
+import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 
 @Component({
@@ -51,7 +52,16 @@ export default class extends Vue {
   }
 
   created() {
-    TaskModule.StartWatchActiveTaskCount()
+    this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
+    TaskModule.FetchTaskCount()
+  }
+
+  beforeDestroy() {
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATETASK)
+  }
+
+  private onUpdateTask(msg: IWsMessage) {
+    TaskModule.FetchTaskCount()
   }
 }
 </script>
