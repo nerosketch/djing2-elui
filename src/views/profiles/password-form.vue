@@ -10,6 +10,7 @@
     el-form-item(
       label="Старый пароль"
       prop='old_passw'
+      v-if="!this.$perms.is_superuser"
     )
       el-input(v-model="frmMod.old_passw" maxlength="128" type="password")
     el-form-item(
@@ -33,17 +34,19 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import { Form } from 'element-ui'
 import { latinValidator } from '@/utils/validate'
+import { CurrentPermissions } from '@/store/current-user-permissions'
 
 @Component({
   name: 'PasswordForm'
 })
 export default class extends Vue {
+  private $perms!: CurrentPermissions
   @Prop({ default: 0 }) private profileId!: number
   private loading = false
 
   private frmRules = {
     old_passw: [
-      { required: true, message: 'Надо указать старый пароль', trigger: 'blur' },
+      { required: !this.$perms.is_superuser, message: 'Надо указать старый пароль', trigger: 'blur' } ,
       { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
     ],
@@ -68,7 +71,7 @@ export default class extends Vue {
   }
 
   private frmMod = {
-    old_passw: '',
+    old_passw: this.$perms.is_superuser ? '0' : '',
     new_passw: '',
     retype_passw: ''
   }
