@@ -8,7 +8,7 @@ export enum IWsMessageEventTypeEnum {
 export interface IWsMessage {
   eventType: IWsMessageEventTypeEnum,
   text?: string,
-  data: any
+  data?: any
 }
 
 @Component({
@@ -19,8 +19,8 @@ export default class extends Vue {
   private audioInstance?: HTMLAudioElement
 
   protected wsConnect() {
-    // this.wsInstance = new WebSocket('wss://' + location.host)
-    this.wsInstance = new WebSocket('ws://127.0.0.1:8081/ws')
+    this.wsInstance = new WebSocket(`wss://${location.host}/ws`)
+    // this.wsInstance = new WebSocket('ws://127.0.0.1:8081/ws')
     this.wsInstance.onopen = () => {
       console.log('WS подключенно')
     }
@@ -31,7 +31,6 @@ export default class extends Vue {
       let newData = JSON.parse(msg.data)
       console.log('Сообщение:', msg)
       if (msg.type === 'message') {
-        // this.playNotify()
         this.onMsg(newData)
       }
     }
@@ -49,6 +48,7 @@ export default class extends Vue {
 
   protected onMsg(msg: IWsMessage) {
     if (msg.text) {
+      this.playNotify()
       this.$message.info(msg.text)
     }
     this.$eventHub.$emit(msg.eventType, msg)
