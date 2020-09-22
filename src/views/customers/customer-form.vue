@@ -85,18 +85,18 @@
       el-button-group
         el-button(type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
         el-button(type="success" icon='el-icon-plus' @click="openTaskFormDialog" :loading="taskFormDialogLoading") Добавить задачу
-        el-button(@click="openPasportDlg = true" icon='el-icon-paperclip') Паспорт
+        //- el-button(@click="openPasportDlg = true" icon='el-icon-paperclip') Паспорт
         el-button(
           type='danger'
           title="Полное удаление учётной записи абонента из билинга"
           icon='el-icon-close'
           @click="delCustomer"
         ) Удалить уч.
-    el-dialog(
-      title="Паспортные данные"
-      :visible.sync="openPasportDlg"
-    )
-      passport
+    //- el-dialog(
+    //-   title="Паспортные данные"
+    //-   :visible.sync="openPasportDlg"
+    //- )
+    //-   passport
     el-dialog(
       title="Дополнительные телефоны"
       :visible.sync="openTelsDlg"
@@ -120,7 +120,7 @@ import { getStreets, getCustomerGroups } from '@/api/customers/req'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import Passport from './passport.vue'
+// import Passport from './passport.vue'
 import AdditionalTels from './customers-details/additional-tels.vue'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
@@ -128,7 +128,6 @@ import FormMixin from '@/utils/forms'
 @Component({
   name: 'customer-form',
   components: {
-    Passport,
     AdditionalTels,
     TaskForm,
     GwsSelectfield
@@ -140,7 +139,7 @@ export default class extends mixins(FormMixin) {
   private isGroupLoading = false
   private customerStreets: ICustomerStreet[] = []
   private groups: ICustomerGroup[] = []
-  private openPasportDlg = false
+  // private openPasportDlg = false
   private openTelsDlg = false
   private taskFormDialog = false
   private taskFormDialogLoading = false
