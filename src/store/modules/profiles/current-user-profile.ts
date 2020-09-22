@@ -19,6 +19,7 @@ export interface ICurrentUserProfile {
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
 class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
+  public pk = 0
   public token = getToken() || ''
   public username = ''
   public fio = ''
@@ -37,6 +38,7 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
 
   @Mutation
   public SET_ALL_CURRENT_PROFILE(data: IUserProfile) {
+    this.pk = data.pk
     this.username = data.username
     this.fio = data.fio
     this.is_active = data.is_active
@@ -50,6 +52,7 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
 
   @Mutation
   public RESET_ALL_CURRENT_PROFILE() {
+    this.pk = 0
     this.token = ''
     this.username = ''
     this.fio = ''
@@ -60,19 +63,6 @@ class CurrentUserProfile extends VuexModule implements ICurrentUserProfile {
     this.full_name = ''
     this.last_login = ''
     this.is_superuser = false
-  }
-
-  @Mutation
-  public COPY_FROM_ORIG(orig: IUserProfile) {
-    this.username = orig.username
-    this.fio = orig.fio
-    this.is_active = orig.is_active
-    this.telephone = orig.telephone
-    this._avatar = orig.avatar
-    this.email = orig.email
-    this.full_name = orig.full_name!
-    this.last_login = orig.last_login!
-    this.is_superuser = orig.is_superuser!
   }
 
   public get avatar(): string {
