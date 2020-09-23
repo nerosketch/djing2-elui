@@ -6,7 +6,7 @@
     p Автор задачи: {{ authorName }}
     div Исполнители:
       ul
-        li(v-for="rec in taskRecipients" :key='rec.pk') {{ rec.full_name }}
+        li(v-for="rec in taskRecipients" :key='rec.pk') {{ rec.full_name || rec.username }}
     b Приоритет: 
     span {{ taskPrior }}
     br
@@ -95,8 +95,7 @@ export default class extends Vue {
 
   get taskRecipients() {
     const recipIds = TaskModule.recipients
-    let filtered = this.recipients.filter(r => recipIds.includes(r.pk))
-    return filtered.map(r => r.pk)
+    return this.recipients.filter(r => recipIds.includes(r.pk))
   }
 }
 </script>

@@ -73,12 +73,11 @@ export default class extends Vue {
   private async loadTLog(params?: IDRFRequestListParameters) {
     let r
     this.loading = true
-<<<<<<< HEAD
     try {
       if (params) {
         const newParams = Object.assign({
           customer: CustomerModule.pk,
-          fields: 'id,author,author_uname,descr,state_str,mode_str,time_of_create'
+          fields: 'id,author,author_uname,descr,state_str,mode_str,time_of_create,comment_count'
         }, params)
         r = await getTasks(newParams)
       } else {
@@ -88,16 +87,6 @@ export default class extends Vue {
       this.$message.error(err)
     } finally {
       this.loading = false
-=======
-    if (params) {
-      const newParams = Object.assign({
-        customer: CustomerModule.pk,
-        fields: 'id,author,author_uname,descr,state_str,mode_str,time_of_create,comment_count'
-      }, params)
-      r = await getTasks(newParams)
-    } else {
-      r = await getTasks()
->>>>>>> master
     }
     return r
   }
