@@ -40,20 +40,24 @@ export default class extends Vue {
     this.wsConnect()
   }
 
+  created() {
+    this.$eventHub.$on('dilim', this.playNotify)
+  }
+
   beforeDestroy() {
     if (this.wsInstance) {
       this.wsInstance.close()
     }
+    this.$eventHub.$off('dilim')
   }
 
   protected onMsg(msg: IWsMessage) {
-    if (msg.text) {
-      this.playNotify()
-    }
     this.$eventHub.$emit(msg.eventType, msg)
   }
 
-  private playNotify() {
+
+
+  public playNotify() {
     if (!this.audioInstance) {
       this.audioInstance = new Audio(require('@/assets/mario.mp3'))
     }
