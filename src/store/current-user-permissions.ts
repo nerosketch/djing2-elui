@@ -33,7 +33,7 @@ export class CurrentPermissions extends VuexModule {
     can_buy_service: false,
     can_add_balance: false,
     can_ping: false,
-    can_stop_service: false,
+    can_complete_service: false,
 
     add_additionaltelephone: false,
     delete_additionaltelephone: false,

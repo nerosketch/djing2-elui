@@ -77,7 +77,7 @@
               type='danger' size='mini'
               icon='el-icon-delete'
               @click="onStopService"
-              :disabled="!$perms.customers.can_stop_service"
+              :disabled="!$perms.customers.can_complete_service"
             ) Завершить услугу
           b(v-else) Услуга не подключена
           last-connected-service
