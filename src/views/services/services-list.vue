@@ -15,6 +15,7 @@ div
 
     template(v-slot:oper="{row}")
       el-button-group
+        el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(
           type="danger" icon="el-icon-delete" size="mini"
@@ -29,13 +30,25 @@ div
     service-form(
       v-on:done="frmDone"
     )
+  el-dialog(
+    title="Кто имеет права на услугу"
+    :visible.sync="permsDialog"
+    top="5vh"
+  )
+    object-perms(
+      v-on:save="changeSrvObjectPerms"
+      :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp"
+      :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
+      :objId="srvIdGetter"
+    )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
-import { getServices } from '@/api/services/req'
+import { getServices, setServiceObjectsPerms, getServiceObjectsPerms, getServiceOSelectedObjectPerms } from '@/api/services/req'
 import { ServiceModule } from '@/store/modules/services/service'
 import ServiceForm from './service-form.vue'
 
@@ -113,6 +126,7 @@ export default class extends Vue {
   private services: IService[] = []
   private dialogVisible = false
   private loading = false
+  private permsDialog = false
 
   private async openEdit(srv: IService) {
     await ServiceModule.SET_ALL_SERVICE(srv)
@@ -145,6 +159,24 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
+  }
+
+  get srvIdGetter() {
+    return ServiceModule.pk
+  }
+  private openPermsDialog(s: IService) {
+    ServiceModule.SET_ALL_SERVICE(s)
+    this.permsDialog = true
+  }
+  private async changeSrvObjectPerms(info: IObjectGroupPermsResultStruct) {
+    await setServiceObjectsPerms(this.srvIdGetter, info)
+    this.permsDialog = false
+  }
+  private getSrvObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+    return getServiceObjectsPerms(this.srvIdGetter)
+  }
+  private serviceGetSelectedObjectPerms(srvId: number, profileGroupId: number) {
+    return getServiceOSelectedObjectPerms(srvId, profileGroupId)
   }
 }
 </script>

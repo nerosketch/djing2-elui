@@ -35,16 +35,18 @@
       >
         <div class="avatar-wrapper">
           <img
+            v-if="isAva"
             :src="avatar"
             class="user-avatar"
           >
+          <span v-else>{{ profileUname }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <template v-slot:dropdown>
           <el-dropdown-menu>
-            <router-link to="/">
+            <router-link to="/customers">
               <el-dropdown-item>
-                Home
+                Начало
               </el-dropdown-item>
             </router-link>
             <el-dropdown-item divided>
@@ -100,6 +102,14 @@ export default class extends mixins(Ws) {
     return CurrentUserProfileModule.getCurrentAvatar
   }
 
+  get isAva() {
+    return CurrentUserProfileModule.isAvatar
+  }
+
+  get profileUname() {
+    return CurrentUserProfileModule.username || CurrentUserProfileModule.full_name
+  }
+
   private toggleSideBar() {
     AppModule.ToggleSideBar(false)
   }
@@ -114,6 +124,13 @@ export default class extends mixins(Ws) {
     if (this.$route.path !== '/search/') {
       this.$router.push({ name: 'searchPlace' })
     }
+  }
+
+  created() {
+    CurrentUserProfileModule.GetSelf().then((profile: IUserProfile) => {
+      this.$perms.SET_IS_SUPERUSER(profile.is_superuser || false)
+    })
+    this.$perms.GetCurrentAuthPermissions()
   }
 }
 </script>

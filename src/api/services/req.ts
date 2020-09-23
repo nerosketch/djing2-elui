@@ -1,5 +1,11 @@
 import request from '@/utils/request'
-import { IDRFRequestListParameters } from '@/api/types'
+import { AxiosPromise } from 'axios'
+import {
+  IDRFRequestListParameters,
+  IObjectGroupPermsResultStruct,
+  IObjectGroupPermsInitialAxiosResponsePromise,
+  IObjectGroupPermsInitial
+} from '@/api/types'
 import {
   IService, IServiceList,
   IServiceAxoisResponsePromise,
@@ -30,6 +36,15 @@ export const changeService = (id: number, newData: object): IServiceAxoisRespons
 
 export const delService = (id: number) =>
   request.delete(`${baseSrvUrl}${id}/`)
+
+export const setServiceObjectsPerms = (id: number, dat: IObjectGroupPermsResultStruct) =>
+  request.put(`${baseSrvUrl}${id}/set_object_perms/`, dat)
+
+export const getServiceObjectsPerms = (id: number): IObjectGroupPermsInitialAxiosResponsePromise =>
+  request.get<IObjectGroupPermsInitial>(`${baseSrvUrl}${id}/get_object_perms/`)
+
+export const getServiceOSelectedObjectPerms = (id: number, profileGroupId: number): AxiosPromise<number[]> =>
+  request.get(`${baseSrvUrl}${id}/get_selected_object_perms/${profileGroupId}/`)
 
 // IPeriodicPay
 const basePPUrl = '/services/periodic/'
