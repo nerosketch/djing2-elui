@@ -13,16 +13,6 @@ div
       el-link(type="primary")
         router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }") {{ row.customer_full_name }}
 
-    template(v-slot:customer_address="{row}") {{ row.customer_address }}
-
-    template(v-slot:mode_str="{row}") {{ row.mode_str }}
-
-    template(v-slot:descr="{row}") {{ row.descr }}
-
-    template(v-slot:state_str="{row}") {{ row.state_str }}
-
-    template(v-slot:time_of_create="{row}") {{ row.time_of_create }}
-
     template(v-slot:id="{row}")
       router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
         el-button(
