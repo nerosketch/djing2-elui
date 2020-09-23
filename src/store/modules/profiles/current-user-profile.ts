@@ -30,6 +30,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
 
   @Mutation
   public SET_ALL_CURRENT_PROFILE(data: IUserProfile) {
+    this.pk = data.pk
     this.username = data.username
     this.fio = data.fio
     this.birth_day = data.birth_day
@@ -47,6 +48,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
 
   @Mutation
   public RESET_ALL_CURRENT_PROFILE() {
+    this.pk = 0
     this.token = ''
     this.username = ''
     this.fio = ''

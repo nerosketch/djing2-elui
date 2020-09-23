@@ -7,7 +7,7 @@
       :row-class-name="tableRowClassName"
       v-bind="$attrs"
       :height="tblHeight"
-      border stripe
+      border
       v-on="listeners"
       :default-sort="defaultSorting"
     >

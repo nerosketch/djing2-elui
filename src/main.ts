@@ -33,6 +33,14 @@ Vue.config.productionTip = false
 
 Vue.prototype.$perms = CurrentPermissionsModule
 
+declare module 'vue/types/vue' {
+  interface Vue {
+    $eventHub: Vue
+  }
+}
+
+Vue.prototype.$eventHub = new Vue() // Global event bus
+
 new Vue({
   router,
   store,

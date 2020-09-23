@@ -21,11 +21,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/_variables.scss'
+import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 import { TaskModule } from '@/store/modules/tasks/tasks'
+
+interface IHightPriorityTaskEventData {
+  recipients: number[]
+}
 
 @Component({
   name: 'SideBar',
@@ -51,7 +56,26 @@ export default class extends Vue {
   }
 
   created() {
-    TaskModule.StartWatchActiveTaskCount()
+    this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
+    TaskModule.FetchTaskCount()
+  }
+
+  beforeDestroy() {
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATETASK)
+  }
+
+  private onUpdateTask(msg: IWsMessage) {
+    if (msg.data) {
+      let hightPriorityTaskEventData = msg.data as IHightPriorityTaskEventData
+      if (hightPriorityTaskEventData.recipients.includes(this.$store.state['currentuserprofile'].pk)) {
+        this.$message.info({
+          message: msg.text || 'Изменения в высокоприоритетной задаче в которой вы учавствуете',
+          duration: 15000,
+          showClose: true
+        })
+      }
+    }
+    TaskModule.FetchTaskCount()
   }
 }
 </script>

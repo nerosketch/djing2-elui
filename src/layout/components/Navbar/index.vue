@@ -51,7 +51,7 @@
               <span
                 style="display:block;"
                 @click="logout"
-              >LogOut</span>
+              >Выйти</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -61,15 +61,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { AppModule } from '@/store/modules/app'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { SearchModule } from '@/store/modules/search'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
-import { TaskModule } from '@/store/modules/tasks/tasks'
 import { IUserProfile } from '@/api/profiles/types'
 import { CurrentPermissions } from '@/store/current-user-permissions'
+import Ws from '@/layout/mixin/ws'
 
 @Component({
   name: 'Navbar',
@@ -78,7 +79,7 @@ import { CurrentPermissions } from '@/store/current-user-permissions'
     Hamburger
   }
 })
-export default class extends Vue {
+export default class extends mixins(Ws) {
   private $perms!: CurrentPermissions
   private searchStr = ''
   get sidebar() {
@@ -104,7 +105,6 @@ export default class extends Vue {
   }
 
   private async logout() {
-    await TaskModule.StopWatchActiveTaskCount()
     await CurrentUserProfileModule.LogOut()
     this.$router.push(`/login?redirect=${this.$route.fullPath}`)
   }

@@ -53,7 +53,7 @@ div:focus {
 
 .el-table {
   th, td {
-    padding: 7px 0;
+    padding: 1px 0;
   }
   .warning-row {
     background-color: oldlace;
@@ -137,4 +137,13 @@ List
   .el-dialog {
     width: 50%;
   }
+}
+
+.el-menu-item {
+  height: 36px;
+  line-height: 36px;
+}
+
+.el-avatar--medium {
+  vertical-align: middle;
 }

@@ -7,11 +7,20 @@
     widthStorageNamePrefix='customerTaskHistory'
     ref='tlogtbl'
   )
+    template(v-slot:viewbtn="{row}")
+      router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
+        el-button(
+          :type="row.comment_count > 0 ? 'success' : 'primary'"
+          size='mini'
+        )
+          template(v-if="row.comment_count > 0") {{ row.comment_count }}
+          i.el-icon-view(v-else)
+
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
+import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { getTasks } from '@/api/tasks/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { IDRFRequestListParameters } from '@/api/types'
@@ -28,6 +37,12 @@ class DataTableComp extends DataTable<ITask> {}
 export default class extends Vue {
   private loading = false
   private tableColumns: IDataTableColumn[] = [
+    {
+      prop: 'viewbtn',
+      label: '#',
+      'min-width': 80,
+      align: DataTableColumnAlign.CENTER
+    },
     {
       prop: 'author_uname',
       label: 'Автор',
@@ -58,6 +73,7 @@ export default class extends Vue {
   private async loadTLog(params?: IDRFRequestListParameters) {
     let r
     this.loading = true
+<<<<<<< HEAD
     try {
       if (params) {
         const newParams = Object.assign({
@@ -72,6 +88,16 @@ export default class extends Vue {
       this.$message.error(err)
     } finally {
       this.loading = false
+=======
+    if (params) {
+      const newParams = Object.assign({
+        customer: CustomerModule.pk,
+        fields: 'id,author,author_uname,descr,state_str,mode_str,time_of_create,comment_count'
+      }, params)
+      r = await getTasks(newParams)
+    } else {
+      r = await getTasks()
+>>>>>>> master
     }
     return r
   }
