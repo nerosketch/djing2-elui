@@ -55,9 +55,8 @@
               @click="delLease(row)"
             )
     el-button(
-      size='small' type='success' icon='el-icon-plus',
+      size='mini' type='success' icon='el-icon-plus',
       @click="addLease"
-      :disabled="!$perms.networks.add_customeripleasemodel"
     ) Добавить
 
     el-dialog(
@@ -175,8 +174,8 @@ export default class extends Vue {
     try {
       const { data } = await getNetworkIpPools({
         groups: CustomerModule.group
-      })
-      this.pools = data.results
+      }) as any
+      this.pools = data
     } catch (err) {
       this.$message.error(err)
     } finally {

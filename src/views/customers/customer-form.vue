@@ -87,11 +87,10 @@
       el-button-group
         el-button(
           type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading"
-          :disabled="isFormUntouched || !$perms.customers.change_customer"
+          :disabled="isFormUntouched"
         ) Сохранить
         el-button(
           type="success" icon='el-icon-plus' @click="openTaskFormDialog" :loading="taskFormDialogLoading"
-          :disabled="!$perms.tasks.add_task"
         ) Добавить задачу
         //- el-button(
         //-   @click="openPasportDlg = true" icon='el-icon-paperclip'
@@ -102,7 +101,6 @@
           title="Полное удаление учётной записи абонента из билинга"
           icon='el-icon-close'
           @click="delCustomer"
-          :disabled="!$perms.customers.delete_customer"
         ) Удалить уч.
     //- el-dialog(
     //-   title="Паспортные данные"
@@ -213,8 +211,8 @@ export default class extends mixins(FormMixin) {
         page: 1,
         page_size: 0,
         group: this.onChGrp
-      })
-      this.customerStreets = data.results
+      }) as any
+      this.customerStreets = data
     } catch (err) {
       this.$message.error(err)
     } finally {

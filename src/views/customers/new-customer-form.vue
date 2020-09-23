@@ -138,7 +138,7 @@ export default class extends Vue {
       telephone: CustomerModule.telephone,
       fio: CustomerModule.fio,
       birth_day: CustomerModule.birth_day,
-      group: CustomerModule.group,
+      group: CustomerModule.group || this.selectedGroup,
       street: CustomerModule.street,
       house: CustomerModule.house,
       is_active: CustomerModule.is_active,
@@ -158,8 +158,8 @@ export default class extends Vue {
   private async loadGroups() {
     this.loading = true
     try {
-      const { data } = await getCustomerGroups()
-      this.groups = data.results
+      const { data } = await getCustomerGroups() as any
+      this.groups = data
     } catch (err) {
       this.$message.error(err)
     } finally {
