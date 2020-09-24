@@ -30,6 +30,7 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
 
 interface IHightPriorityTaskEventData {
   recipients: number[]
+  author?: number
 }
 
 @Component({
@@ -67,7 +68,12 @@ export default class extends Vue {
   private onUpdateTask(msg: IWsMessage) {
     if (msg.data) {
       let hightPriorityTaskEventData = msg.data as IHightPriorityTaskEventData
-      if (hightPriorityTaskEventData.recipients.includes(this.$store.state['currentuserprofile'].pk)) {
+      let profiles = hightPriorityTaskEventData.recipients
+      if (hightPriorityTaskEventData.author) {
+        profiles.push(hightPriorityTaskEventData.author)
+      }
+      if (profiles.includes(this.$store.state['currentuserprofile'].pk)) {
+        this.$eventHub.$emit('dilim')
         this.$message.info({
           message: msg.text || 'Изменения в высокоприоритетной задаче в которой вы учавствуете',
           duration: 15000,
