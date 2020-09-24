@@ -164,7 +164,6 @@ export interface IPassportInfo {
 }
 export type IPassportInfoList = IDRFListResponse<IPassportInfo>
 export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
-export type IPassportInfoListAxiosResponsePromise = IDRFAxiosResponsePromise<IPassportInfoList>
 
 // IBalanceAmountRequest
 export interface IBalanceAmountRequest {

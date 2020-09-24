@@ -28,8 +28,6 @@ import {
   IInvoice4PaymentListAxiosResponsePromise,
   ICustomerLogList,
   ICustomerLogListAxiosResponsePromise,
-  IPassportInfoListAxiosResponsePromise,
-  IPassportInfoList,
   ICustomerServiceAxoisResponsePromise,
   ICustomerService,
   ICustomerOnPort,
@@ -38,7 +36,9 @@ import {
   ICustomerAttachementListAxiosResponsePromise,
   ICustomerAttachementList,
   ICustomerAttachementAxoisResponsePromise,
-  ICustomerAttachement
+  ICustomerAttachement,
+  IPassportInfoAxoisResponsePromise,
+  IPassportInfo
 } from './types'
 
 // ICustomer
@@ -161,11 +161,11 @@ export const delInvoice = (id: number) =>
 export const getCustomerPayLog = (params?: IDRFRequestListParametersInvoice): ICustomerLogListAxiosResponsePromise =>
   request.get<ICustomerLogList>('/customers/customer-log/', { params })
 
-// IPassportInfo
-const pspBaseUrl = '/customers/passport/'
+export const getPassportInfo = (customerId: number): IPassportInfoAxoisResponsePromise =>
+  request.get<IPassportInfo>(`${custApiUrl}${customerId}/passport/`)
 
-export const findPassportInfo = (customerId: number): IPassportInfoListAxiosResponsePromise =>
-  request.get<IPassportInfoList>(pspBaseUrl, { params: { customer: customerId } })
+export const setPassportInfo = (customerId: number, info: IPassportInfo): IPassportInfoAxoisResponsePromise =>
+  request.put<IPassportInfo>(`${custApiUrl}${customerId}/passport/`, info)
 
 // CustomerAttachement
 const CustomerAttachmUrl = '/customers/attachments/'
