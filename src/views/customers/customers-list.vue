@@ -35,6 +35,10 @@
           template(v-slot:ping="{row}")
             ping-profile(:customer="row")
 
+          template(v-slot:marker="{row}")
+            span.m-icon.m-icon_donkey
+            span.m-icon.m-icon_ok
+
           el-button(
             size='mini'
             icon='el-icon-plus'
@@ -184,6 +188,10 @@ export default class extends Vue {
       prop: 'ping',
       label: 'Ping',
       'min-width': 150
+    },
+    {
+      prop: 'marker',
+      label: 'Маркер'
     }
   ]
 
