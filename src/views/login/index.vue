@@ -9,6 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
+        <glsl-smog-effect id="smogblock" :width="518" :height="73"/>
         <h3 class="title">
           Войти
         </h3>
@@ -69,9 +70,11 @@ import { Dictionary } from 'vue-router/types/router'
 import { Form as ElForm, Input } from 'element-ui'
 import { latinValidator } from '@/utils/validate'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
+import GlslSmogEffect from "@/components/shaders/glsl-smog-effect.vue"
 
 @Component({
-  name: 'Login'
+  name: 'Login',
+  components: { GlslSmogEffect }
 })
 export default class extends Vue {
   private loginForm = {
@@ -209,21 +212,12 @@ export default class extends Vue {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 35px 35px 0;
     margin: 0 auto;
     overflow: hidden;
-  }
-
-  .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
-    }
+    border: 1px #444e5a solid;
+    top: 15%;
+    background-color: #354150;
   }
 
   .svg-container {
@@ -240,7 +234,7 @@ export default class extends Vue {
     .title {
       font-size: 26px;
       color: $lightGray;
-      margin: 0px auto 40px auto;
+      margin: -52px auto 23px auto;
       text-align: center;
       font-weight: bold;
     }
@@ -255,5 +249,10 @@ export default class extends Vue {
     cursor: pointer;
     user-select: none;
   }
+}
+
+#smogblock {
+  position: relative;
+  margin: -35px 0 0 -35px;
 }
 </style>
