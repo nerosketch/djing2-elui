@@ -6,32 +6,36 @@
   )
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import smogShader from './smog.frag'
-
-@Component({
-  name: 'GlslSmogEffect',
+<script>
+import smogShader from "./smog.frag";
+export default {
+  name: "smog",
   components: {
     smg: smogShader
-  }
-})
-export default class extends Vue {
-  @Prop({ default: 320.0 }) private width!: number
-  @Prop({ default: 240.0 }) private height!: number
-  private timerTime: NodeJS.Timeout | null = null
-  private uTime = 0.0
-
+  },
+  props: {
+    width: {
+      type: Number,
+      default: 320.0
+    },
+    height: {
+      type: Number,
+      default: 240.0
+    }
+  },
   mounted() {
     this.timerTime = setInterval(() => {
       this.uTime += 0.06;
     }, 16);
-  }
-
+  },
+  data() {
+    return {
+      uTime: 0.0,
+      timerTime: 0
+    };
+  },
   beforeDestroy() {
-    if (this.timerTime) {
-      clearInterval(this.timerTime)
-    }
+    clearInterval(this.timerTime);
   }
-}
+};
 </script>
