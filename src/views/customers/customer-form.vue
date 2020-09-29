@@ -55,6 +55,7 @@
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
+        format="d MMM yyyy"
       )
     el-form-item(
       label="Опции"
