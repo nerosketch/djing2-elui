@@ -70,6 +70,7 @@
           v-model="frmMod.out_date"
           type="date"
           value-format="yyyy-MM-dd"
+          format="d MMM yyyy"
         )
     el-form-item
       el-button-group
@@ -140,7 +141,7 @@ export default class extends mixins(FormMixin) {
       task_state: TaskModule.task_state,
       mode: TaskModule.mode,
       customer: TaskModule.customer,
-      out_date: this.initialDate
+      out_date: TaskModule.out_date || this.initialDate
     }
   }
 
@@ -158,13 +159,9 @@ export default class extends mixins(FormMixin) {
   }
 
   get initialDate() {
-    let res = new Date()
-    if (!TaskModule.out_date || TaskModule.out_date === '') {
-      let newDate = new Date()
-      newDate.setDate(newDate.getDate() + 3)
-      res = newDate
-    }
-    return `${res.getFullYear()}-${res.getMonth() + 1}-${res.getDate()}`
+    let nowDate = new Date()
+    let newDate = new Date(nowDate.setDate(nowDate.getDate() + 3))
+    return `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`
   }
 
   created() {
