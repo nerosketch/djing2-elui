@@ -13,11 +13,6 @@ import { mixins } from 'vue-class-component'
 import ResizeMixin from '@/components/Charts/mixins/resize'
 import { TaskModeReport } from '@/api/tasks/types'
 
-interface ChartData {
-  value: number
-  name: string
-}
-
 @Component({
   name: 'PieChart'
 })

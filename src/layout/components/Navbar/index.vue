@@ -44,12 +44,12 @@
           <el-dropdown-menu>
             <router-link to="/">
               <el-dropdown-item>
-                Home
+                Домашняя
               </el-dropdown-item>
             </router-link>
             <router-link to="/reports">
               <el-dropdown-item>
-                Reports
+                Отчёты
               </el-dropdown-item>
             </router-link>
             <el-dropdown-item divided>
