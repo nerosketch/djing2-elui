@@ -28,8 +28,8 @@ export default class extends Vue {
       let zeroName = 'С бесплатными услугами'
       let chartData = [{
         value: data.admin_count,
-        name: admName,
-      },{
+        name: admName
+      }, {
         value: data.zero_cost_count,
         name: zeroName
       }].concat(data.calc_type_counts.map(i => ({

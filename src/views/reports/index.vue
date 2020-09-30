@@ -19,6 +19,15 @@
         template(v-slot:header)
           .clearfix Распределение использования услуг абонентами
         customer-service-type-report
+    el-col(
+      :xs="24"
+      :sm="24"
+      :lg="8"
+    )
+      el-card
+        template(v-slot:header)
+          .clearfix Активность абонентов
+        customer-activity-report
     //- el-col(
     //-   :xs="24"
     //-   :sm="24"
@@ -38,12 +47,14 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import TaskModeReportPieChart from './task-mode-report-pie-chart.vue'
 import CustomerServiceTypeReport from './customer-service-type-report.vue'
 // import RadarChart from './radar-chart.vue'
+import CustomerActivityReport from './customer-activity-report.vue'
 
 @Component({
   name: 'ReportsIndex',
   components: {
     TaskModeReportPieChart,
-    CustomerServiceTypeReport
+    CustomerServiceTypeReport,
+    CustomerActivityReport
   }
 })
 export default class extends Vue {

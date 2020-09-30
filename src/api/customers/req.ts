@@ -40,7 +40,9 @@ import {
   IPassportInfoAxoisResponsePromise,
   IPassportInfo,
   CustomerServiceTypeReportResult,
-  CustomerServiceTypeReportResultAxoisResponsePromise
+  CustomerServiceTypeReportResultAxoisResponsePromise,
+  CustomerActivityReportResultAxoisResponsePromise,
+  CustomerActivityReportResult
 } from './types'
 
 // ICustomer
@@ -190,3 +192,6 @@ export const delAttachment = (id: number) =>
 
 export const customerServiceTypeReportRequest = (): CustomerServiceTypeReportResultAxoisResponsePromise =>
   request.get<CustomerServiceTypeReportResult>('/customers/service_type_report/')
+
+export const customersActivityReportRequest = (): CustomerActivityReportResultAxoisResponsePromise =>
+  request.get<CustomerActivityReportResult>('/customers/activity_report/')
