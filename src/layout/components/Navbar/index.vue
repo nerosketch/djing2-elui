@@ -47,6 +47,11 @@
                 Home
               </el-dropdown-item>
             </router-link>
+            <router-link to="/reports">
+              <el-dropdown-item>
+                Reports
+              </el-dropdown-item>
+            </router-link>
             <el-dropdown-item divided>
               <span
                 style="display:block;"

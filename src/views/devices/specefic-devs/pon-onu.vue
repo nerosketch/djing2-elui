@@ -11,7 +11,7 @@
         center
       )
     el-col(:lg="12" :sm='24' v-if="device")
-      el-card.box-card(
+      el-card(
         shadow="never"
         body-style="padding: 10px;"
       )
@@ -41,7 +41,7 @@
           el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice") Удалить
 
     el-col(:lg="12" :sm='24')
-      el-card.box-card(
+      el-card(
         shadow="never"
         body-style="padding: 10px;"
       )

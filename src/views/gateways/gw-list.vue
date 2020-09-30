@@ -2,7 +2,7 @@
 .app-container
   el-row(v-loading="loadingGws" :gutter="10")
     el-col(:xs="24" :md="12" :xl="6" v-for="(gw, i) in gwlist" :key="i" style="margin-bottom: 10px;")
-      el-card.box-card(shadow="hover")
+      el-card(shadow="hover")
         template(v-slot:header)
           .clearfix {{ gw.title }}
         dl

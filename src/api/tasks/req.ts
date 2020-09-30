@@ -99,3 +99,6 @@ export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponse
 
 export const delAttachment = (id: number) =>
   request.delete(`${TaskAttachmUrl}${id}/`)
+
+export const taskStatePercentReport = (stateNum: number) =>
+  request.get(`/tasks/state_percent_report/${stateNum}/`)

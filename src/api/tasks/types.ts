@@ -107,3 +107,6 @@ export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResu
   task_id?: number
 }
 export type INewTaskInitialSimpleResponseResultAxoisResponsePromise = IDRFAxiosResponsePromise<INewTaskInitialSimpleResponseResult>
+
+
+export interface taskStatePercentReport

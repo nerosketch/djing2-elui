@@ -112,6 +112,19 @@ export const constantRoutes: RouteConfig [] = [
       }
     ]
   },
+  {
+    path: '/reports',
+    component: Layout,
+    meta: { hidden: true },
+    children: [
+      {
+        path: '',
+        name: 'reportsIndex',
+        component: () => import(/* webpackChunkName: "reports" */ '@/views/reports/index.vue'),
+        meta: { hidden: true }
+      }
+    ]
+  },
   finRoutes,
   {
     path: '*',

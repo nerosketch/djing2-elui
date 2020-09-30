@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-card.box-card
+  el-card
     template(v-slot:header)
       .clearfix {{ device.comment || 'BDCOM' }}
         small {{ ` ${device.ip_address || device.mac_addr}` }}
