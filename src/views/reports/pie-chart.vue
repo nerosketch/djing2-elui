@@ -8,10 +8,9 @@
 
 <script lang="ts">
 import echarts, { EChartOption } from 'echarts'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import ResizeMixin from '@/components/Charts/mixins/resize'
-import { taskModeReportRequest } from '@/api/tasks/req'
 import { TaskModeReport } from '@/api/tasks/types'
 
 interface ChartData {
@@ -26,11 +25,10 @@ export default class extends mixins(ResizeMixin) {
   @Prop({ default: 'chart' }) private className!: string
   @Prop({ default: '100%' }) private width!: string
   @Prop({ default: '300px' }) private height!: string
-  private taskModeReport: TaskModeReport | null = null
-  private repLoading = false
+  @Prop({ default: false }) private repLoading!: boolean
+  @Prop({ default: null }) private taskModeReport: TaskModeReport | null = null
 
   mounted() {
-    this.loadTaskModeReport()
     this.$nextTick(() => {
       if (this.taskModeReport) {
         this.initChart(this.taskModeReport)
@@ -46,19 +44,7 @@ export default class extends mixins(ResizeMixin) {
     this.chart = null
   }
 
-  private async loadTaskModeReport() {
-    this.repLoading = true
-    try {
-      const { data } = await taskModeReportRequest()
-      this.taskModeReport = data
-      this.initChart(data)
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.repLoading = false
-    }
-  }
-
+  @Watch('taskModeReport')
   private initChart(reportData: TaskModeReport) {
     let an = reportData.annotation
     let labels = an.map(i => i.mode)
