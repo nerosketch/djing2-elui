@@ -2,6 +2,7 @@
   div(
     :class="className"
     :style="{height: height, width: width}"
+    v-loading="repLoading"
   )
 </template>
 
@@ -10,6 +11,13 @@ import echarts, { EChartOption } from 'echarts'
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import ResizeMixin from '@/components/Charts/mixins/resize'
+import { taskModeReportRequest } from '@/api/tasks/req'
+import { TaskModeReport } from '@/api/tasks/types'
+
+interface ChartData {
+  value: number
+  name: string
+}
 
 @Component({
   name: 'PieChart'
@@ -18,10 +26,15 @@ export default class extends mixins(ResizeMixin) {
   @Prop({ default: 'chart' }) private className!: string
   @Prop({ default: '100%' }) private width!: string
   @Prop({ default: '300px' }) private height!: string
+  private taskModeReport: TaskModeReport | null = null
+  private repLoading = false
 
   mounted() {
+    this.loadTaskModeReport()
     this.$nextTick(() => {
-      this.initChart()
+      if (this.taskModeReport) {
+        this.initChart(this.taskModeReport)
+      }
     })
   }
 
@@ -33,7 +46,24 @@ export default class extends mixins(ResizeMixin) {
     this.chart = null
   }
 
-  private initChart() {
+  private async loadTaskModeReport() {
+    this.repLoading = true
+    try {
+      const { data } = await taskModeReportRequest()
+      this.taskModeReport = data
+      this.initChart(data)
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.repLoading = false
+    }
+  }
+
+  private initChart(reportData: TaskModeReport) {
+    let an = reportData.annotation
+    let labels = an.map(i => i.mode)
+    let chartData = an.map(i => ({ value: i.task_count, name: i.mode }))
+  
     this.chart = echarts.init(this.$el as HTMLDivElement, 'macarons')
     this.chart.setOption({
       tooltip: {
@@ -42,8 +72,8 @@ export default class extends mixins(ResizeMixin) {
       },
       legend: {
         left: 'center',
-        bottom: '10',
-        data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+        bottom: '0',
+        data: labels
       },
       series: [
         {
@@ -52,13 +82,7 @@ export default class extends mixins(ResizeMixin) {
           roseType: 'radius',
           radius: [15, 95],
           center: ['50%', '38%'],
-          data: [
-            { value: 320, name: 'Industries' },
-            { value: 240, name: 'Technology' },
-            { value: 149, name: 'Forex' },
-            { value: 100, name: 'Gold' },
-            { value: 59, name: 'Forecasts' }
-          ],
+          data: chartData,
           animationEasing: 'cubicInOut',
           animationDuration: 2600
         }

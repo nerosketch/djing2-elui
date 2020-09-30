@@ -24,7 +24,7 @@ export enum ITaskType {
   ROUTER_SETUP = 8,
   CONFIGURE_ONU = 9,
   CRIMP_CABLE = 10,
-  INTERNET_CRASH = 11,
+  // INTERNET_CRASH = 11,
   OTHER = 12
 }
 
@@ -108,5 +108,18 @@ export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResu
 }
 export type INewTaskInitialSimpleResponseResultAxoisResponsePromise = IDRFAxiosResponsePromise<INewTaskInitialSimpleResponseResult>
 
+export interface TaskStatePercentReportTypeCount {
+  mode: string
+  task_count: number
+}
+export interface TaskModeReport {
+  // all_task_count: number
+  annotation: TaskStatePercentReportTypeCount[]
+}
+export type TaskModeReportAxoisResponsePromise = IDRFAxiosResponsePromise<TaskModeReport>
 
-export interface taskStatePercentReport
+export interface TaskStatePercentReport {
+  state_count: number
+  state_percent: number
+}
+export type TaskStatePercentReportAxoisResponsePromise = IDRFAxiosResponsePromise<TaskStatePercentReport>

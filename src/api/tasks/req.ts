@@ -8,9 +8,12 @@ import { ITaskList, ITaskListAxiosResponsePromise, ITask,
   ITaskDocumentAttachmentList, ITaskDocumentAttachmentAxoisResponsePromise,
   ITaskDocumentAttachment,
   INewTaskInitialSimpleResponseResultAxoisResponsePromise,
-  INewTaskInitialSimpleResponseResult
+  INewTaskInitialSimpleResponseResult,
+  TaskStatePercentReport,
+  TaskStatePercentReportAxoisResponsePromise,
+  TaskModeReport,
+  TaskModeReportAxoisResponsePromise
 } from './types'
-import { IUserProfileListAxiosResponsePromise } from '@/api/profiles/types'
 
 // ITask
 const baseTaskUrl = '/tasks/'
@@ -100,5 +103,8 @@ export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponse
 export const delAttachment = (id: number) =>
   request.delete(`${TaskAttachmUrl}${id}/`)
 
-export const taskStatePercentReport = (stateNum: number) =>
-  request.get(`/tasks/state_percent_report/${stateNum}/`)
+export const taskStatePercentReport = (stateNum: number): TaskStatePercentReportAxoisResponsePromise =>
+  request.get<TaskStatePercentReport>(`/tasks/state_percent_report/${stateNum}/`)
+
+export const taskModeReportRequest = (): TaskModeReportAxoisResponsePromise =>
+  request.get<TaskModeReport>('/tasks/task_mode_report/')
