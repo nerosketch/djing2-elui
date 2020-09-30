@@ -185,3 +185,15 @@ export interface ICustomerAttachement {
 export type ICustomerAttachementList = IDRFListResponse<ICustomerAttachement>
 export type ICustomerAttachementAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerAttachement>
 export type ICustomerAttachementListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerAttachementList>
+
+interface CustomerServiceTypeReportCalcType {
+  calc_type_count: number
+  service_descr: string
+}
+export interface CustomerServiceTypeReportResult {
+  all_count: number
+  admin_count: number
+  zero_cost_count: number
+  calc_type_counts: CustomerServiceTypeReportCalcType[]
+}
+export type CustomerServiceTypeReportResultAxoisResponsePromise = IDRFAxiosResponsePromise<CustomerServiceTypeReportResult>

@@ -11,7 +11,7 @@ import echarts, { EChartOption } from 'echarts'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import ResizeMixin from '@/components/Charts/mixins/resize'
-import { TaskModeReport } from '@/api/tasks/types'
+import { PieChartReport } from '@/api/types'
 
 @Component({
   name: 'PieChart'
@@ -21,12 +21,13 @@ export default class extends mixins(ResizeMixin) {
   @Prop({ default: '100%' }) private width!: string
   @Prop({ default: '300px' }) private height!: string
   @Prop({ default: false }) private repLoading!: boolean
-  @Prop({ default: null }) private taskModeReport: TaskModeReport | null = null
+  @Prop({ default: null }) private chartInputData!: PieChartReport | null
+  @Prop({ default: null }) private seriesName!: string | null
 
   mounted() {
     this.$nextTick(() => {
-      if (this.taskModeReport) {
-        this.initChart(this.taskModeReport)
+      if (this.chartInputData) {
+        this.initChart(this.chartInputData)
       }
     })
   }
@@ -39,12 +40,8 @@ export default class extends mixins(ResizeMixin) {
     this.chart = null
   }
 
-  @Watch('taskModeReport')
-  private initChart(reportData: TaskModeReport) {
-    let an = reportData.annotation
-    let labels = an.map(i => i.mode)
-    let chartData = an.map(i => ({ value: i.task_count, name: i.mode }))
-  
+  @Watch('chartInputData')
+  private initChart({labels, data}: PieChartReport) {
     this.chart = echarts.init(this.$el as HTMLDivElement, 'macarons')
     this.chart.setOption({
       tooltip: {
@@ -58,12 +55,12 @@ export default class extends mixins(ResizeMixin) {
       },
       series: [
         {
-          name: 'WEEKLY WRITE ARTICLES',
+          name: this.seriesName,
           type: 'pie',
           roseType: 'radius',
           radius: [15, 95],
           center: ['50%', '38%'],
-          data: chartData,
+          data: data,
           animationEasing: 'cubicInOut',
           animationDuration: 2600
         }

@@ -38,7 +38,9 @@ import {
   ICustomerAttachementAxoisResponsePromise,
   ICustomerAttachement,
   IPassportInfoAxoisResponsePromise,
-  IPassportInfo
+  IPassportInfo,
+  CustomerServiceTypeReportResult,
+  CustomerServiceTypeReportResultAxoisResponsePromise
 } from './types'
 
 // ICustomer
@@ -185,3 +187,6 @@ export const addAttachment = (newAtt: any): ICustomerAttachementAxoisResponsePro
 
 export const delAttachment = (id: number) =>
   request.delete(`${CustomerAttachmUrl}${id}/`)
+
+export const customerServiceTypeReportRequest = (): CustomerServiceTypeReportResultAxoisResponsePromise =>
+  request.get<CustomerServiceTypeReportResult>('/customers/service_type_report/')
