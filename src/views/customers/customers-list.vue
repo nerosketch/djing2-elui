@@ -32,12 +32,17 @@
 
           template(v-slot:gateway_title="{row}") {{ row.gateway_title }}
 
+          template(v-slot:markers="{row}")
+            template(v-if="row.markers.length > 0")
+              span.m-icon(
+                v-for="(ic, i) in row.markers"
+                :class="ic"
+                :key="i"
+              )
+            span(v-else)
+
           template(v-slot:ping="{row}")
             ping-profile(:customer="row")
-
-          template(v-slot:marker="{row}")
-            span.m-icon.m-icon_donkey
-            span.m-icon.m-icon_ok
 
           el-button(
             size='mini'
@@ -185,13 +190,13 @@ export default class extends Vue {
       'min-width': 170
     },
     {
+      prop: 'markers',
+      label: 'Маркер'
+    },
+    {
       prop: 'ping',
       label: 'Ping',
       'min-width': 150
-    },
-    {
-      prop: 'marker',
-      label: 'Маркер'
     }
   ]
 
@@ -218,7 +223,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
+        fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count,markers'
       })
       if (street) {
         newParams.street = Number(street)
