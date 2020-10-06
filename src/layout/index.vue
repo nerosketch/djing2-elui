@@ -70,6 +70,7 @@ export default class extends mixins(ResizeMixin) {
   transition: margin-left .14s;
   margin-left: $sideBarWidth;
   position: relative;
+  background-color: #f3f8fd;
 }
 
 .sidebar-container {

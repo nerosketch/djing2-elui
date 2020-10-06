@@ -13,7 +13,7 @@
       )
 
     template(v-if="isAcceptVlanSelectedConfig")
-      el-card.box-card(
+      el-card(
         shadow='never'
         v-for="portVlanConf in currentConfig.vlanConfig"
         :key="portVlanConf.port"
@@ -56,7 +56,7 @@
           @click="openAddVlanDialog(portVlanConf.port)"
         )
 
-    el-card.box-card(
+    el-card(
       shadow='never'
       v-else
     )

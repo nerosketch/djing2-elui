@@ -40,7 +40,11 @@ import {
   ICustomerAttachementAxoisResponsePromise,
   ICustomerAttachement,
   IPassportInfoAxoisResponsePromise,
-  IPassportInfo
+  IPassportInfo,
+  CustomerServiceTypeReportResult,
+  CustomerServiceTypeReportResultAxoisResponsePromise,
+  CustomerActivityReportResultAxoisResponsePromise,
+  CustomerActivityReportResult
 } from './types'
 
 // ICustomer
@@ -196,3 +200,8 @@ export const setCustomerObjectsPerms = (customerId: number, dat: IObjectGroupPer
 
 export const getCustomerSelectedObjectPerms = (customerId: number, profileGroupId: number): AxiosPromise<number[]> =>
   request.get(`/customers/${customerId}/get_selected_object_perms/${profileGroupId}/`)
+export const customerServiceTypeReportRequest = (): CustomerServiceTypeReportResultAxoisResponsePromise =>
+  request.get<CustomerServiceTypeReportResult>('/customers/service_type_report/')
+
+export const customersActivityReportRequest = (): CustomerActivityReportResultAxoisResponsePromise =>
+  request.get<CustomerActivityReportResult>('/customers/activity_report/')

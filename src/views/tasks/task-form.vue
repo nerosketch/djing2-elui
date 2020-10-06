@@ -119,7 +119,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
     { nm: 'настройка роутера', v: ITaskType.ROUTER_SETUP },
     { nm: 'настройка onu', v: ITaskType.CONFIGURE_ONU },
     { nm: 'обжать кабель', v: ITaskType.CRIMP_CABLE },
-    { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
+    // { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
     { nm: 'другое', v: ITaskType.OTHER }
   ]
   private taskPriorities = [

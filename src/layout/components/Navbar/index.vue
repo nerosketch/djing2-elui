@@ -46,7 +46,12 @@
           <el-dropdown-menu>
             <router-link to="/customers">
               <el-dropdown-item>
-                Начало
+                Домашняя
+              </el-dropdown-item>
+            </router-link>
+            <router-link to="/reports">
+              <el-dropdown-item>
+                Отчёты
               </el-dropdown-item>
             </router-link>
             <el-dropdown-item divided>

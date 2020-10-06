@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-card.box-card(
+  el-card(
     v-loading='loading'
     shadow="never"
     body-style="padding: 10px;"

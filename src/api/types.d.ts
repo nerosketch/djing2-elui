@@ -72,3 +72,12 @@ export interface IObjectGroupPermsInitial {
   availablePerms: IPermission[]
 }
 export type IObjectGroupPermsInitialAxiosResponsePromise = IDRFAxiosResponsePromise<IObjectGroupPermsInitial>
+// Report pie chart
+export interface PieChartData {
+  value: number
+  name: string
+}
+export interface PieChartReport {
+  labels: string[]
+  data: PieChartData[]
+}

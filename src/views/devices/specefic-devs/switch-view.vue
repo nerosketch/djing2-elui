@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-card.box-card
+  el-card
     template(v-slot:header)
       .clearfix
         span {{ device.comment || 'Коммутатор' }} 
