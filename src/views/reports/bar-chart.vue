@@ -78,7 +78,7 @@ export default class extends mixins(ResizeMixin) {
         }
       }],
       series: [{
-        name: 'pageA',
+        name: 'Количество',
         type: 'bar',
         stack: 'vistors',
         // barWidth: '60%',

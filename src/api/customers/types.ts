@@ -201,5 +201,6 @@ export interface CustomerActivityReportResult {
   enabled_count: number
   with_services_count: number
   active_count: number
+  commercial_customers: number
 }
 export type CustomerActivityReportResultAxoisResponsePromise = IDRFAxiosResponsePromise<CustomerActivityReportResult>

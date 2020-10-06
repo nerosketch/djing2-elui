@@ -16,8 +16,8 @@ import { customersActivityReportRequest } from '@/api/customers/req'
   components: { BarChart }
 })
 export default class extends Vue {
-  private barLabels = ['Всего', 'Включённые', 'С услугой', 'Активные']
-  private barValues = [0, 0, 0, 0]
+  private barLabels = ['Всего', 'Включённые', 'С услугой', 'Активные', 'Оплатившие']
+  private barValues = [0, 0, 0, 0, 0]
   private cloading = false
 
   private async loadCustomersActivityReport() {
@@ -28,7 +28,8 @@ export default class extends Vue {
         data.all_count,
         data.enabled_count,
         data.with_services_count,
-        data.active_count
+        data.active_count,
+        data.commercial_customers
       ]
     } catch (err) {
       this.$message.error(err)
