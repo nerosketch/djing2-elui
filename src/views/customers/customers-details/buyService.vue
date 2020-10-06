@@ -28,7 +28,7 @@
       el-button(
         type="success" @click="onSubmit"
         :loading="loading"
-        :disabled="$perms.customers.can_buy_service"
+        :disabled="!$perms.customers.can_buy_service"
       ) Купить
 </template>
 
