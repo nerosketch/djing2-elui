@@ -46,7 +46,7 @@ export default class extends Vue {
 
   private frmRules = {
     old_passw: [
-      { required: !this.$perms.is_superuser, message: 'Надо указать старый пароль', trigger: 'blur' } ,
+      { required: !this.$perms.is_superuser, message: 'Надо указать старый пароль', trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
     ],

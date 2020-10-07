@@ -102,6 +102,10 @@
           :disabled="!$perms.customers.view_passportinfo"
         ) Паспорт
         el-button(
+          @click="openPasswordDlg = true"
+          icon='el-icon-lock'
+        ) Пароль
+        el-button(
           type='danger'
           title="Полное удаление учётной записи абонента из билинга"
           icon='el-icon-close'
@@ -124,6 +128,15 @@
       :visible.sync='taskFormDialog'
     )
       task-form
+    el-dialog(
+      title='Пароль абонента'
+      :visible.sync='openPasswordDlg'
+    )
+      customer-password(
+        :customerId="customerIdGetter"
+        :initialPassw="$store.state.customer.raw_password"
+        v-on:done="openPasswordDlg=false"
+      )
 </template>
 
 <script lang="ts">
@@ -138,6 +151,7 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
 import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
+import CustomerPassword from './customer-password.vue'
 import AdditionalTels from './customers-details/additional-tels.vue'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
@@ -148,7 +162,8 @@ import FormMixin from '@/utils/forms'
     AdditionalTels,
     TaskForm,
     GwsSelectfield,
-    Passport
+    Passport,
+    CustomerPassword
   }
 })
 export default class extends mixins(FormMixin) {
@@ -158,6 +173,7 @@ export default class extends mixins(FormMixin) {
   private customerStreets: ICustomerStreet[] = []
   private groups: ICustomerGroup[] = []
   private openPasportDlg = false
+  private openPasswordDlg = false
   private openTelsDlg = false
   private taskFormDialog = false
   private taskFormDialogLoading = false
@@ -183,10 +199,10 @@ export default class extends mixins(FormMixin) {
     this.onChangedId()
   }
 
-  get onChId() {
+  get customerIdGetter() {
     return CustomerModule.pk
   }
-  @Watch('onChId')
+  @Watch('customerIdGetter')
   private onChangedId() {
     this.frmMod = {
       username: CustomerModule.username,
@@ -303,7 +319,10 @@ export default class extends mixins(FormMixin) {
           duration: 10000
         })
         if (data.task_id && data.task_id > 0) {
-          this.$router.push({ name: 'taskDetails', params: { taskId: data.task_id.toString() }})
+          this.$router.push({
+            name: 'taskDetails',
+            params: { taskId: data.task_id.toString() }
+          })
         } else {
           this.$message.error('Task id expected from backend')
         }

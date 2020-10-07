@@ -183,7 +183,9 @@ export default class extends Vue {
   font-weight: bold;
   color: #304156;
 }
+</style>
 
+<style lang="scss" scoped>
 .svg-icon {
   margin-right: 16px;
 }
