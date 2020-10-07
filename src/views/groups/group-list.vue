@@ -77,7 +77,6 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
-  private groups: IGroup[] = []
   private dialogVisible = false
   private permsDialog = false
 
@@ -138,7 +137,6 @@ export default class extends Vue {
     }
     try {
       const r = await getGroups(params)
-      this.groups = r.data.results
       return r
     } catch (err) {
       this.$message.error(err)

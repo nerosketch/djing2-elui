@@ -54,14 +54,6 @@ class Group extends VuexModule implements IGroup {
   }
 
   @Action
-  public async SaveGroup() {
-    await this.PatchGroup({
-      title: this.title,
-      code: this.code
-    })
-  }
-
-  @Action
   public async PatchGroup(newData: object) {
     const { data } = await changeGroup(this.pk, newData)
     this.SET_ALL_MGROUP(data)

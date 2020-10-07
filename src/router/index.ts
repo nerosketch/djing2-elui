@@ -7,6 +7,7 @@ import deviceRoutes from './modules/devices'
 import taskRoutes from './modules/tasks'
 import profileRoutes from './modules/profiles'
 import finRoutes from './modules/fin'
+import messengerRoutes from './modules/messenger'
 
 Vue.use(Router)
 
@@ -126,6 +127,7 @@ export const constantRoutes: RouteConfig [] = [
     ]
   },
   finRoutes,
+  messengerRoutes,
   {
     path: '*',
     redirect: '/404',

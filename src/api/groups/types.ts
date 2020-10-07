@@ -7,7 +7,6 @@ export interface IGroup {
 }
 
 export type IGroupList = IDRFListResponse<IGroup>
-
 export type IGroupAxoisResponsePromise = IDRFAxiosResponsePromise<IGroup>
 export type IGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IGroupList>
 
