@@ -1,0 +1,148 @@
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadMessengers"
+      widthStorageNamePrefix='messengers'
+      ref='table'
+    )
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(
+            type="danger" icon="el-icon-delete" size="mini"
+            @click="delMessenger(row)"
+          )
+          el-button(
+            icon="el-icon-view" size="mini"
+            @click="go2Messenger(row)"
+          )
+
+      el-button(
+        size='mini'
+        icon='el-icon-plus'
+        @click='openNew'
+      ) Добавить Messenger
+
+    el-dialog(
+      title="Создать messenger"
+      :visible.sync="dialogVisible"
+    )
+      messenger-form(
+        v-on:done="frmDone"
+      )
+
+</template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { IDRFRequestListParameters } from '@/api/types'
+import MessengerForm from './messenger-form.vue'
+import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { RouteRecord } from 'vue-router'
+import { IBaseMessenger, IMessengerBotType } from '@/api/messenger/types'
+import { BaseMessengerModule } from '@/store/modules/messenger/base-messenger'
+import { getMessengers } from '@/api/messenger/req'
+
+class DataTableComp extends DataTable<IBaseMessenger> {}
+
+@Component({
+  name: 'MessengerList',
+  components: {
+    MessengerForm,
+    'datatable': DataTableComp
+  }
+})
+export default class extends Vue {
+  public readonly $refs!: {
+    table: DataTableComp
+  }
+  private dialogVisible = false
+
+  private tableColumns: IDataTableColumn[] = [
+    {
+      prop: 'id',
+      label: 'ID',
+      'min-width': 70
+    },
+    {
+      prop: 'title',
+      label: 'Название',
+      sortable: true,
+      'min-width': 250
+    },
+    {
+      prop: 'bot_type_name',
+      label: 'Тип бота',
+      'min-width': 100
+    },
+    {
+      prop: 'oper',
+      label: 'Oper',
+      'min-width': 130,
+      align: DataTableColumnAlign.CENTER
+    }
+  ]
+
+  private async openNew() {
+    await BaseMessengerModule.RESET_ALL_MESSENGER()
+    this.dialogVisible = true
+  }
+
+  private async loadMessengers(params?: IDRFRequestListParameters) {
+    if (params) {
+      params['fields'] = 'id,title,bot_type,bot_type_name'
+    }
+    try {
+      const r = await getMessengers(params)
+      return r
+    } catch (err) {
+      this.$message.error(err)
+    }
+    return null
+  }
+
+  private delMessenger(m: IBaseMessenger) {
+    this.$confirm(`Ты действительно хочешь удалить чат бот "${m.title}"?`).then(async() => {
+      await BaseMessengerModule.DelMessenger(m.id)
+      this.$message.success(`Чат бот "${m.title}" удалён`)
+      this.$refs.table.GetTableData()
+    })
+  }
+
+  private frmDone() {
+    this.dialogVisible = false
+    this.$message.success('Чат бот создан')
+    this.$refs.table.GetTableData()
+  }
+
+  private go2Messenger(m: IBaseMessenger) {
+    console.log('mt', m.bot_type)
+    switch (m.bot_type) {
+      case IMessengerBotType.VIBER:
+        this.$router.push({name: 'viberMessengerDetails', params: { mId: m.id.toString() }})
+        break
+      case IMessengerBotType.TELEGRAM:
+        this.$router.push({name: 'telegramMessengerDetails', params: { mId: m.id.toString() }})
+        break
+      default:
+        this.$message.error('Не известный тип мессенджера')
+        break
+    }
+  }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Мессенджеры'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
+}
+</script>
