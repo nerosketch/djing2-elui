@@ -40,11 +40,11 @@ import MessengerForm from './messenger-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
-import { IBaseMessenger, IMessengerBotType } from '@/api/messenger/types'
-import { BaseMessengerModule } from '@/store/modules/messenger/base-messenger'
+import { IMessenger } from '@/api/messenger/types'
+import { MessengerModule } from '@/store/modules/messenger/base-messenger'
 import { getMessengers } from '@/api/messenger/req'
 
-class DataTableComp extends DataTable<IBaseMessenger> {}
+class DataTableComp extends DataTable<IMessenger> {}
 
 @Component({
   name: 'MessengerList',
@@ -85,13 +85,13 @@ export default class extends Vue {
   ]
 
   private async openNew() {
-    await BaseMessengerModule.RESET_ALL_MESSENGER()
+    await MessengerModule.RESET_ALL_MESSENGER()
     this.dialogVisible = true
   }
 
   private async loadMessengers(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,bot_type,bot_type_name'
+      params['fields'] = 'id,title,bot_type_name'
     }
     try {
       const r = await getMessengers(params)
@@ -102,9 +102,9 @@ export default class extends Vue {
     return null
   }
 
-  private delMessenger(m: IBaseMessenger) {
+  private delMessenger(m: IMessenger) {
     this.$confirm(`Ты действительно хочешь удалить чат бот "${m.title}"?`).then(async() => {
-      await BaseMessengerModule.DelMessenger(m.id)
+      await MessengerModule.DelMessenger(m.id)
       this.$message.success(`Чат бот "${m.title}" удалён`)
       this.$refs.table.GetTableData()
     })
@@ -116,19 +116,8 @@ export default class extends Vue {
     this.$refs.table.GetTableData()
   }
 
-  private go2Messenger(m: IBaseMessenger) {
-    console.log('mt', m.bot_type)
-    switch (m.bot_type) {
-      case IMessengerBotType.VIBER:
-        this.$router.push({name: 'viberMessengerDetails', params: { mId: m.id.toString() }})
-        break
-      case IMessengerBotType.TELEGRAM:
-        this.$router.push({name: 'telegramMessengerDetails', params: { mId: m.id.toString() }})
-        break
-      default:
-        this.$message.error('Не известный тип мессенджера')
-        break
-    }
+  private go2Messenger(m: IMessenger) {
+    this.$router.push({ name: 'messengerDetails', params: { mId: m.id.toString() } })
   }
 
   // Breadcrumbs

@@ -16,17 +16,8 @@ const messengerRoutes: RouteConfig = {
     },
     {
       path: 'm:mId',
-      component: () => import(/* webpackChunkName: "messengerviber" */ '@/views/messenger/viber-messenger-details.vue'),
-      name: 'viberMessengerDetails',
-      props: ({ params }) => ({ mId: Number(params.mId) }),
-      meta: {
-        hidden: true
-      }
-    },
-    {
-      path: 'm:mId',
-      component: () => import(/* webpackChunkName: "messengertelegram" */ '@/views/messenger/telegram-messenger-details.vue'),
-      name: 'telegramMessengerDetails',
+      component: () => import(/* webpackChunkName: "messengerdetails" */ '@/views/messenger/messenger-details.vue'),
+      name: 'messengerDetails',
       props: ({ params }) => ({ mId: Number(params.mId) }),
       meta: {
         hidden: true

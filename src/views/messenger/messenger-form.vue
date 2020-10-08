@@ -15,6 +15,11 @@
     )
       el-input(v-model="frmMod.title")
     el-form-item(
+      label="Описание"
+      prop='description'
+    )
+      el-text(v-model="frmMod.description")
+    el-form-item(
       label="Тех.код"
       prop='bot_type'
     )
@@ -30,6 +35,11 @@
       prop='slug'
     )
       el-input(v-model="frmMod.slug")
+    el-form-item(
+      label="название в url"
+      prop='slug'
+    )
+      span Token: {{ $perms.state.messenger.token }}
     el-form-item
       el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="frmMod.bot_type===0") Сохранить
 </template>
@@ -38,7 +48,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { latinValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
-import { BaseMessengerModule } from '@/store/modules/messenger/base-messenger'
+import { MessengerModule } from '@/store/modules/messenger/base-messenger'
 import { IMessengerBotType } from '@/api/messenger/types'
 
 @Component({
@@ -65,6 +75,7 @@ export default class extends Vue {
 
   private frmMod = {
     title: '',
+    description: '',
     bot_type: IMessengerBotType.UNDEFINED,
     slug: ''
   }
@@ -80,7 +91,7 @@ export default class extends Vue {
       if (valid) {
         this.isLoading = true
         try {
-          const newDat = await BaseMessengerModule.AddMessenger(this.frmMod)
+          const newDat = await MessengerModule.AddMessenger(this.frmMod)
           this.$emit('done', newDat)
         } catch (err) {
           this.$message.error(err)

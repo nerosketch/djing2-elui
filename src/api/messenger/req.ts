@@ -1,105 +1,67 @@
 import request from '@/utils/request'
 import {
-  IBaseMessengerListAxiosResponsePromise,
-  IBaseMessengerList,
-  IBaseMessengerAxoisResponsePromise,
-  IBaseMessenger,
-  IViberMessengerListAxiosResponsePromise,
-  IViberMessengerList,
-  IViberMessengerAxoisResponsePromise,
-  IViberMessenger,
-  ITelegramMessengerListAxiosResponsePromise,
-  ITelegramMessengerList,
-  ITelegramMessengerAxoisResponsePromise,
-  ITelegramMessenger,
-  IViberMessageListAxiosResponsePromise,
-  IViberMessageList,
-  IViberMessage,
-  IViberMessageAxoisResponsePromise,
-  IViberSubscriberListAxiosResponsePromise,
-  IViberSubscriberList,
-  IViberSubscriberAxoisResponsePromise,
-  IViberSubscriber
+  IMessengerListAxiosResponsePromise,
+  IMessengerList,
+  IMessengerAxoisResponsePromise,
+  IMessenger,
+  IMessengerSubscriberListAxiosResponsePromise,
+  IMessengerSubscriberList,
+  IMessengerSubscriberAxoisResponsePromise,
+  IMessengerSubscriber,
+  IMessengerMessageList,
+  IMessengerMessageListAxiosResponsePromise,
+  IMessengerMessage,
+  IMessengerMessageAxoisResponsePromise
 } from '@/api/messenger/types'
 import { IDRFRequestListParameters } from '@/api/types'
 
-export const getMessengers = (params?: IDRFRequestListParameters): IBaseMessengerListAxiosResponsePromise =>
-  request.get<IBaseMessengerList>('/messenger/', { params })
+export const getMessengers = (params?: IDRFRequestListParameters): IMessengerListAxiosResponsePromise =>
+  request.get<IMessengerList>('/messenger/', { params })
 
-export const getMessenger = (mId: number): IBaseMessengerAxoisResponsePromise =>
-  request.get<IBaseMessenger>(`/messenger/${mId}/`)
+export const getMessenger = (mId: number): IMessengerAxoisResponsePromise =>
+  request.get<IMessenger>(`/messenger/${mId}/`)
 
-export const addMessenger = (newDat: object): IBaseMessengerAxoisResponsePromise =>
-  request.post<IBaseMessenger>('/messenger/', newDat)
+export const addMessenger = (newDat: object): IMessengerAxoisResponsePromise =>
+  request.post<IMessenger>('/messenger/', newDat)
 
-export const patchMessenger = (mId: number, newDat: object): IBaseMessengerAxoisResponsePromise =>
-  request.patch<IBaseMessenger>(`/messenger/${mId}/`, newDat)
+export const patchMessenger = (mId: number, newDat: object): IMessengerAxoisResponsePromise =>
+  request.patch<IMessenger>(`/messenger/${mId}/`, newDat)
 
 export const deleteMessenger = (mId: number) =>
   request.delete(`/messenger/${mId}/`)
 
-export const getViberMessengers = (params?: IDRFRequestListParameters): IViberMessengerListAxiosResponsePromise =>
-  request.get<IViberMessengerList>('/messenger/viber/', { params })
+export const messengerSendWebHook = (mId: number) =>
+  request.get(`/messenger/${mId}/send_webhook/`)
 
-export const getViberMessenger = (mId: number): IViberMessengerAxoisResponsePromise =>
-  request.get<IViberMessenger>(`'/messenger/viber/${mId}/`)
+export const messengerStopWebHook = (mId: number) =>
+  request.get(`/messenger/${mId}/stop_webhook/`)
 
-export const addViberMessenger = (newDat: object): IViberMessengerAxoisResponsePromise =>
-  request.post<IViberMessenger>('/messenger/viber/', newDat)
+export const getMessengerMessages = (params?: IDRFRequestListParameters): IMessengerMessageListAxiosResponsePromise =>
+  request.get<IMessengerMessageList>('/messenger/msg/', { params })
 
-export const patchViberMessenger = (mId: number, newDat: object): IViberMessengerAxoisResponsePromise =>
-  request.patch<IViberMessenger>(`'/messenger/viber/${mId}/`, newDat)
+export const getMessengerMessage = (mId: number): IMessengerMessageAxoisResponsePromise =>
+  request.get<IMessengerMessage>(`/messenger/msg/${mId}/`)
 
-export const deleteViberMessenger = (mId: number) =>
-  request.delete(`'/messenger/viber/${mId}/`)
+export const addMessengerMessage = (newDat: object): IMessengerMessageAxoisResponsePromise =>
+  request.post<IMessengerMessage>('/messenger/msg/', newDat)
 
-export const viberSendWebHook = (mId: number) =>
-  request.delete(`'/messenger/viber/${mId}/send_webhook/`)
+export const patchMessengerMessage = (mId: number, newDat: object): IMessengerMessageAxoisResponsePromise =>
+  request.patch<IMessengerMessage>(`/messenger/msg/${mId}/`, newDat)
 
-export const getViberMessages = (params?: IDRFRequestListParameters): IViberMessageListAxiosResponsePromise =>
-  request.get<IViberMessageList>('/messenger/viber/msg/', { params })
+export const deleteMessengerMessage = (mId: number) =>
+  request.delete(`/messenger/msg/${mId}/`)
 
-export const getViberMessage = (mId: number): IViberMessageAxoisResponsePromise =>
-  request.get<IViberMessage>(`'/messenger/viber/msg/${mId}/`)
+export const getMessengerSubscribers = (params?: IDRFRequestListParameters): IMessengerSubscriberListAxiosResponsePromise =>
+  request.get<IMessengerSubscriberList>('/messenger/subscriber/', { params })
 
-export const addViberMessage = (newDat: object): IViberMessageAxoisResponsePromise =>
-  request.post<IViberMessage>('/messenger/viber/msg/', newDat)
+export const getMessengerSubscriber = (mId: number): IMessengerSubscriberAxoisResponsePromise =>
+  request.get<IMessengerSubscriber>(`/messenger/subscriber/${mId}/`)
 
-export const patchViberMessage = (mId: number, newDat: object): IViberMessageAxoisResponsePromise =>
-  request.patch<IViberMessage>(`'/messenger/viber/msg/${mId}/`, newDat)
+export const addMessengerSubscriber = (newDat: object): IMessengerSubscriberAxoisResponsePromise =>
+  request.post<IMessengerSubscriber>('/messenger/subscriber/', newDat)
 
-export const deleteViberMessage = (mId: number) =>
-  request.delete(`'/messenger/viber/msg/${mId}/`)
+export const patchMessengerSubscriber = (mId: number, newDat: object): IMessengerSubscriberAxoisResponsePromise =>
+  request.patch<IMessengerSubscriber>(`/messenger/subscriber/${mId}/`, newDat)
 
-export const getViberSubscribers = (params?: IDRFRequestListParameters): IViberSubscriberListAxiosResponsePromise =>
-  request.get<IViberSubscriberList>('/messenger/viber/subscriber/', { params })
-
-export const getViberSubscriber = (mId: number): IViberSubscriberAxoisResponsePromise =>
-  request.get<IViberSubscriber>(`'/messenger/viber/subscriber/${mId}/`)
-
-export const addViberSubscriber = (newDat: object): IViberSubscriberAxoisResponsePromise =>
-  request.post<IViberSubscriber>('/messenger/viber/subscriber/', newDat)
-
-export const patchViberSubscriber = (mId: number, newDat: object): IViberSubscriberAxoisResponsePromise =>
-  request.patch<IViberSubscriber>(`'/messenger/viber/subscriber/${mId}/`, newDat)
-
-export const deleteViberSubscriber = (mId: number) =>
-  request.delete(`'/messenger/viber/subscriber/${mId}/`)
-
-export const getTelegramMessengers = (params?: IDRFRequestListParameters): ITelegramMessengerListAxiosResponsePromise =>
-  request.get<ITelegramMessengerList>('/messenger/telegram/', { params })
-
-export const getTelegramMessenger = (mId: number): ITelegramMessengerAxoisResponsePromise =>
-  request.get<ITelegramMessenger>(`'/messenger/telegram/${mId}/`)
-
-export const addTelegramMessenger = (newDat: object): ITelegramMessengerAxoisResponsePromise =>
-  request.post<ITelegramMessenger>('/messenger/telegram/', newDat)
-
-export const patchTelegramMessenger = (mId: number, newDat: object): ITelegramMessengerAxoisResponsePromise =>
-  request.patch<ITelegramMessenger>(`'/messenger/telegram/${mId}/`, newDat)
-
-export const deleteTelegramMessenger = (mId: number) =>
-  request.delete(`'/messenger/telegram/${mId}/`)
-
-export const telegramSendWebHook = (mId: number) =>
-  request.delete(`'/messenger/telegram/${mId}/send_webhook/`)
+export const deleteMessengerSubscriber = (mId: number) =>
+  request.delete(`/messenger/subscriber/${mId}/`)

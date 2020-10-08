@@ -4,9 +4,9 @@ import {
   Mutation,
   Action,
   getModule
-} from "vuex-module-decorators"
+} from 'vuex-module-decorators'
 import {
-  IBaseMessenger,
+  IMessenger,
   IMessengerBotType
 } from '@/api/messenger/types'
 import {
@@ -17,16 +17,19 @@ import {
 } from '@/api/messenger/req'
 import store from '@/store'
 
-@Module({ dynamic: true, store, name: 'basemessenger' })
-class BaseMessenger extends VuexModule implements IBaseMessenger {
+@Module({ dynamic: true, store, name: 'messenger' })
+class Messenger extends VuexModule implements IMessenger {
   public id = 0
   public title = ''
+  public description = ''
   public bot_type = IMessengerBotType.UNDEFINED
   public bot_type_name = ''
   public slug = ''
+  public token = ''
+  public avatar = ''
 
   @Mutation
-  public SET_ALL_MESSENGER(m: IBaseMessenger) {
+  public SET_ALL_MESSENGER(m: IMessenger) {
     this.id = m.id
     this.title = m.title
     this.bot_type = m.bot_type
@@ -69,4 +72,4 @@ class BaseMessenger extends VuexModule implements IBaseMessenger {
   }
 }
 
-export const BaseMessengerModule = getModule(BaseMessenger)
+export const MessengerModule = getModule(Messenger)
