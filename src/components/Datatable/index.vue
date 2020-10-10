@@ -98,6 +98,7 @@ export default class <T> extends Vue {
   private intLoading = false
   private tblHeight = 0
   private endPage = false
+  private loadBusy = false
 
   get listeners() {
     return {
@@ -117,6 +118,8 @@ export default class <T> extends Vue {
     try {
       this.intLoading = true
       await this.loadRemoteData(params, otherParams)
+    } catch (err) {
+      this.$message.error(err)
     } finally {
       this.intLoading = false
     }
@@ -194,10 +197,17 @@ export default class <T> extends Vue {
     this.tblHeight = window.innerHeight - this.heightDiff
   }
 
-  private infGetData() {
-    if (this.intLoading || this.lDisabled || this.endPage) return
-    this.page++
-    this.loadRemoteData()
+  private async infGetData() {
+    if (this.loadBusy || this.lDisabled || this.endPage) return
+    try {
+      this.loadBusy = true
+      this.page++
+      await this.loadRemoteData()
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loadBusy = false
+    }
   }
 
   private onFieldWidthChange(newWidth: number, oldWidth: number, column: any, event: MouseEvent) {

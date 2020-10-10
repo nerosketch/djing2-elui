@@ -109,17 +109,11 @@ export default class extends Vue {
     }
   ]
 
-  private async getAllProfiles(params?: IDRFRequestListParameters) {
+  private getAllProfiles(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'avatar,username,fio,telephone,email,is_active,is_superuser'
     }
-    try {
-      const r = await getProfiles(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getProfiles(params)
   }
 
   private async addNewProfile() {

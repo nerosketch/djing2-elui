@@ -34,7 +34,6 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
-  private groupDevs: IDevGroup[] = []
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -53,18 +52,11 @@ export default class extends Vue {
     }
   ]
 
-  private async loadDevGroups(params?: IDRFRequestListParameters) {
+  private loadDevGroups(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'pk,title,device_count'
     }
-    try {
-      const r = await getDevGroups(params)
-      this.groupDevs = r.data.results
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getDevGroups(params)
   }
 
   // Breadcrumbs

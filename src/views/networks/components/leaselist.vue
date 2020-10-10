@@ -97,17 +97,11 @@ export default class extends Vue {
     })
   }
 
-  private async loadLeases(params?: IDRFRequestListParameters) {
+  private loadLeases(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'id,ip_address,lease_time,mac_address,is_dynamic'
     }
-    try {
-      const r = await getCustomerIpLeases(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getCustomerIpLeases(params)
   }
 
   private frmDone() {

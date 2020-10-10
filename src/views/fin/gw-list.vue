@@ -95,17 +95,11 @@ export default class extends Vue {
     }
   ]
 
-  private async loadPayGws(params?: IDRFRequestListParameters) {
+  private loadPayGws(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'id,title,service_id,slug,secret,pay_count'
     }
-    try {
-      const r = await getPayGateways(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getPayGateways(params)
   }
 
   private openEdit(gw: IPayAllTimeGateway) {

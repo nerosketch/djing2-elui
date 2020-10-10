@@ -88,17 +88,11 @@ export default class extends Vue {
     }
   }
 
-  private async loadPeriodics(params?: IDRFRequestListParameters) {
+  private loadPeriodics(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'pk,name,when_add,amount'
     }
-    try {
-      const r = await getPeriodicPays(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getPeriodicPays(params)
   }
 
   private frmDone() {

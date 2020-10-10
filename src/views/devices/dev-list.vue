@@ -158,19 +158,14 @@ export default class extends Vue {
     this.dialogNewDev = true
   }
 
-  private async loadDevs(params: IDRFRequestListParametersDevGroup) {
-    try {
-      const r = await getDevices({
-        page: params.page,
-        page_size: params.page_size,
-        group: this.groupId,
-        ordering: params.ordering,
-        fields: 'pk,ip_address,comment,dev_type,dev_type_str,mac_addr,status,is_noticeable,group,man_passw,snmp_extra'
-      })
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
+  private loadDevs(params: IDRFRequestListParametersDevGroup) {
+    return getDevices({
+      page: params.page,
+      page_size: params.page_size,
+      group: this.groupId,
+      ordering: params.ordering,
+      fields: 'pk,ip_address,comment,dev_type,dev_type_str,mac_addr,status,is_noticeable,group,man_passw,snmp_extra'
+    })
   }
 
   private async delDevice(dev: IDevice) {

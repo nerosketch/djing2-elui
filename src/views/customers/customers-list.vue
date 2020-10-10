@@ -237,21 +237,17 @@ export default class extends Vue {
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     let street = this.routerQueryStreetGetter
     let r
-    try {
-      if (params) {
-        let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
-          group: this.groupId,
-          fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
-        })
-        if (street) {
-          newParams.street = Number(street)
-        }
-        r = await getCustomers(newParams)
-      } else {
-        r = await getCustomers()
+    if (params) {
+      let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
+        group: this.groupId,
+        fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
+      })
+      if (street) {
+        newParams.street = Number(street)
       }
-    } catch (err) {
-      this.$message.error(err)
+      r = await getCustomers(newParams)
+    } else {
+      r = await getCustomers()
     }
     return r
   }

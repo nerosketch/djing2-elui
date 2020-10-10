@@ -140,17 +140,11 @@ export default class extends Vue {
     }
   }
 
-  private async loadServices(params?: IDRFRequestListParametersService) {
+  private loadServices(params?: IDRFRequestListParametersService) {
     if (params) {
       params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type'
     }
-    try {
-      const r = await getServices(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getServices(params)
   }
 
   private frmDone() {

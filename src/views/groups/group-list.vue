@@ -77,7 +77,6 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
-  private groups: IGroup[] = []
   private dialogVisible = false
   private permsDialog = false
 
@@ -132,18 +131,11 @@ export default class extends Vue {
     return GroupModule.pk
   }
 
-  private async loadGroups(params?: IDRFRequestListParameters) {
+  private loadGroups(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'pk,title,code'
     }
-    try {
-      const r = await getGroups(params)
-      this.groups = r.data.results
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getGroups(params)
   }
 
   private delGroup(group: IGroup) {

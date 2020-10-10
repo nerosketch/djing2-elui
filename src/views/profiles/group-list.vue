@@ -100,17 +100,11 @@ export default class extends Vue {
     }
   ]
 
-  private async loadUserGroups(params?: IDRFRequestListParameters) {
+  private loadUserGroups(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'id,name,permcount,usercount,permissions'
     }
-    try {
-      const r = await getUserGroups(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getUserGroups(params)
   }
 
   private async editNewUserGroup(grp: IUserGroup) {

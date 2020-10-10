@@ -124,17 +124,11 @@ export default class extends Vue {
     this.formDialog = true
   }
 
-  private async loadTasks(params?: IDRFRequestListParameters) {
+  private loadTasks(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
     }
-    try {
-      const r = await getTasks(params, this.tabUrl)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getTasks(params, this.tabUrl)
   }
 
   // Breadcrumbs

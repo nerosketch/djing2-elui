@@ -141,13 +141,7 @@ export default class extends Vue {
     if (params) {
       params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count'
     }
-    try {
-      const r = await getNetworkIpPools(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getNetworkIpPools(params)
   }
 
   private frmDone() {

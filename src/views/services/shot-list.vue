@@ -83,17 +83,11 @@ export default class extends Vue {
     }
   }
 
-  private async loadShots(params?: IDRFRequestListParameters) {
+  private loadShots(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'pk,name,cost'
     }
-    try {
-      const r = await getOneShotPays(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getOneShotPays(params)
   }
 
   private frmDone() {
