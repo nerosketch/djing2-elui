@@ -3,7 +3,6 @@
     datatable(
       :columns="tableColumns"
       :getData="getGroups"
-      :loading="groupsLoading"
       :heightDiff='75'
       widthStorageNamePrefix='customerGroups'
     )
@@ -30,8 +29,6 @@ class DataTableComp extends DataTable<ICustomerGroup> {}
   components: { 'datatable': DataTableComp }
 })
 export default class extends Vue {
-  private groupsLoading = true
-
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -51,7 +48,6 @@ export default class extends Vue {
   ]
 
   private async getGroups(params?: IDRFRequestListParameters) {
-    this.groupsLoading = true
     if (params) {
       params['fields'] = 'pk,title,usercount'
     }
@@ -60,8 +56,6 @@ export default class extends Vue {
       return r
     } catch (err) {
       this.$message.error(err)
-    } finally {
-      this.groupsLoading = false
     }
     return null
   }

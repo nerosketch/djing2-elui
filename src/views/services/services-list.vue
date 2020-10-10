@@ -3,7 +3,6 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadServices"
-    :loading="loading"
     :heightDiff='143'
     widthStorageNamePrefix='services'
     ref='table'
@@ -45,11 +44,13 @@ div
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { RouteRecord } from 'vue-router'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
 import { getServices, setServiceObjectsPerms, getServiceObjectsPerms, getServiceOSelectedObjectPerms } from '@/api/services/req'
 import { ServiceModule } from '@/store/modules/services/service'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import ServiceForm from './service-form.vue'
 
 class DataTableComp extends DataTable<IService> {}
@@ -125,7 +126,6 @@ export default class extends Vue {
   ]
   private services: IService[] = []
   private dialogVisible = false
-  private loading = false
   private permsDialog = false
 
   private async openEdit(srv: IService) {
@@ -141,7 +141,6 @@ export default class extends Vue {
   }
 
   private async loadServices(params?: IDRFRequestListParametersService) {
-    this.loading = true
     if (params) {
       params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type'
     }
@@ -150,8 +149,6 @@ export default class extends Vue {
       return r
     } catch (err) {
       this.$message.error(err)
-    } finally {
-      this.loading = false
     }
     return null
   }
@@ -178,5 +175,19 @@ export default class extends Vue {
   private serviceGetSelectedObjectPerms(srvId: number, profileGroupId: number) {
     return getServiceOSelectedObjectPerms(srvId, profileGroupId)
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Тарифы'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
 }
 </script>

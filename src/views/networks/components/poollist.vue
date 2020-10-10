@@ -3,7 +3,6 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadPools"
-    :loading="poolsLoading"
     :heightDiff='170'
     widthStorageNamePrefix='pools'
     ref='table'
@@ -113,7 +112,6 @@ export default class extends Vue {
   ]
   private pools: INetworkIpPool[] = []
   private dialogVisible = false
-  private poolsLoading = false
 
   get dialogTitle() {
     let w = 'Изменить'
@@ -140,7 +138,6 @@ export default class extends Vue {
   }
 
   private async loadPools(params?: IDRFRequestListParameters) {
-    this.poolsLoading = true
     if (params) {
       params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count'
     }
@@ -149,8 +146,6 @@ export default class extends Vue {
       return r
     } catch (err) {
       this.$message.error(err)
-    } finally {
-      this.poolsLoading = false
     }
     return null
   }

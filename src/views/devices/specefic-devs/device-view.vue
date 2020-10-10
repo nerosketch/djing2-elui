@@ -89,7 +89,7 @@ export default class extends Vue {
           path: '/devices',
           meta: {
             hidden: true,
-            title: 'Группы'
+            title: 'Устройства'
           }
         },
         {

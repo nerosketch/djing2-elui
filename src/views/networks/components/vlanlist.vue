@@ -3,7 +3,6 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadVlans"
-    :loading="vlanLoading"
     :heightDiff='170'
     widthStorageNamePrefix='vlans'
     ref='table'
@@ -42,9 +41,11 @@ div
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
+import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IVlanIf } from '@/api/networks/types'
 import { VlanIfModule } from '@/store/modules/networks/vlan'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import VlanForm from './vlan-form.vue'
 import VlanMixin from './vlan-mixin'
 
@@ -119,5 +120,19 @@ export default class extends mixins(VlanMixin) {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Сеть'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
 }
 </script>

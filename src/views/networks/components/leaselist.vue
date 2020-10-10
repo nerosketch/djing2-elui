@@ -3,7 +3,6 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadLeases"
-    :loading="leaseLoading"
     :heightDiff='142'
     widthStorageNamePrefix='leases'
     ref='table'
@@ -84,7 +83,6 @@ export default class extends Vue {
     }
   ]
   private dialogVisible = false
-  private leaseLoading = false
 
   private async openEdit(lease: ICustomerIpLease) {
     await CustomerIpLeaseModule.SET_ALL_LEASE(lease)
@@ -100,7 +98,6 @@ export default class extends Vue {
   }
 
   private async loadLeases(params?: IDRFRequestListParameters) {
-    this.leaseLoading = true
     if (params) {
       params['fields'] = 'id,ip_address,lease_time,mac_address,is_dynamic'
     }
@@ -109,8 +106,6 @@ export default class extends Vue {
       return r
     } catch (err) {
       this.$message.error(err)
-    } finally {
-      this.leaseLoading = false
     }
     return null
   }

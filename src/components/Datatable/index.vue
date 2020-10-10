@@ -5,11 +5,11 @@
       v-el-table-infinite-scroll="infGetData"
       :data="tableData"
       :row-class-name="tableRowClassName"
-      v-bind="$attrs"
       :height="tblHeight"
+      :default-sort="defaultSorting"
+      v-bind="$attrs"
       border
       v-on="listeners"
-      :default-sort="defaultSorting"
     >
       <slot name="columns">
         <el-table-column
@@ -83,6 +83,7 @@ export default class <T> extends Vue {
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {
+    console.log('onChangeLoading', l)
     this.intLoading = l
   }
 
@@ -96,6 +97,7 @@ export default class <T> extends Vue {
   private page = 1
   private intLoading = false
   private tblHeight = 0
+  private endPage = false
 
   get listeners() {
     return {
@@ -111,12 +113,16 @@ export default class <T> extends Vue {
 
   public async GetTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     this.page = 1
-    this.loadRemoteData(params, otherParams)
+    if (this.intLoading) return
+    try {
+      this.intLoading = true
+      await this.loadRemoteData(params, otherParams)
+    } finally {
+      this.intLoading = false
+    }
   }
 
   private async loadRemoteData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
-    if (this.intLoading) return
-    this.intLoading = true
     const { page } = params
     const allParams = Object.assign(otherParams, {
       page: page || this.page,
@@ -124,16 +130,15 @@ export default class <T> extends Vue {
       ordering: this.$route.query.ordering as string | undefined,
       fields: this.fields
     })
-    try {
-      let response = await this.getData(allParams)
-      this.responseData = response.data
-      if (this.page > 1) {
-        this.tableData = this.tableData.concat(this.responseData.results)
-      } else {
-        this.tableData = this.responseData.results
-      }
-    } finally {
-      this.intLoading = false
+    let response = await this.getData(allParams)
+    this.responseData = response.data
+    if (response.data.next === null) {
+      this.endPage = true
+    }
+    if (this.page > 1) {
+      this.tableData = this.tableData.concat(this.responseData.results)
+    } else {
+      this.tableData = this.responseData.results
     }
   }
 
@@ -190,7 +195,7 @@ export default class <T> extends Vue {
   }
 
   private infGetData() {
-    if (this.intLoading || this.lDisabled) return
+    if (this.intLoading || this.lDisabled || this.endPage) return
     this.page++
     this.loadRemoteData()
   }

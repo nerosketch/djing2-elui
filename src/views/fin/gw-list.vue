@@ -32,10 +32,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getPayGateways } from '@/api/fin/req'
 import { IPayAllTimeGateway } from '@/api/fin/types'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { PayAllTimeGatewayModule } from '@/store/modules/fin'
 import PayGwForm from './gw-form.vue'
 
@@ -127,5 +129,19 @@ export default class extends Vue {
     this.$refs.table.GetTableData()
     this.$message.success('Платёжный шлюз добавлен')
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Финансы'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
 }
 </script>

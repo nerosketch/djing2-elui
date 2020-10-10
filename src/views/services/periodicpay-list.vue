@@ -3,7 +3,6 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadPeriodics"
-    :loading="loading"
     :heightDiff='143'
     widthStorageNamePrefix='perpay'
     ref='table'
@@ -76,7 +75,6 @@ export default class extends Vue {
   ]
   private pays: IPeriodicPay[] = []
   private dialogVisible = false
-  private loading = false
 
   private async openEdit(pay: IPeriodicPay) {
     await PeriodicPayModule.SET_ALL_PPAY(pay)
@@ -91,7 +89,6 @@ export default class extends Vue {
   }
 
   private async loadPeriodics(params?: IDRFRequestListParameters) {
-    this.loading = true
     if (params) {
       params['fields'] = 'pk,name,when_add,amount'
     }
@@ -100,8 +97,6 @@ export default class extends Vue {
       return r
     } catch (err) {
       this.$message.error(err)
-    } finally {
-      this.loading = false
     }
     return null
   }

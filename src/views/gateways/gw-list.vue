@@ -74,9 +74,11 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
+import { RouteRecord } from 'vue-router'
 import { IGateway } from '@/api/gateways/types'
 import GwForm from './gw-form.vue'
 import { GatewayModule } from '@/store/modules/gateways'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import GwsMethods from './gws-methods'
 
 @Component({
@@ -90,6 +92,18 @@ export default class extends mixins(GwsMethods) {
 
   created() {
     this.loadGateways()
+
+    // Breadcrumbs
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Шлюзы'
+        }
+      }
+    ] as RouteRecord[])
+    // End Breadcrumbs
   }
 
   private openGwForm(gw: IGateway) {

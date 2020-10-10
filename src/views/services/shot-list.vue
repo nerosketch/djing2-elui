@@ -3,7 +3,6 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadShots"
-    :loading="loading"
     :heightDiff='143'
     widthStorageNamePrefix='shots'
     ref='table'
@@ -71,7 +70,6 @@ export default class extends Vue {
   ]
   private shots: IOneShotPay[] = []
   private dialogVisible = false
-  private loading = false
 
   private async openEdit(shot: IOneShotPay) {
     await OneShotPayModule.SET_ALL_OSPAY(shot)
@@ -86,7 +84,6 @@ export default class extends Vue {
   }
 
   private async loadShots(params?: IDRFRequestListParameters) {
-    this.loading = true
     if (params) {
       params['fields'] = 'pk,name,cost'
     }
@@ -95,8 +92,6 @@ export default class extends Vue {
       return r
     } catch (err) {
       this.$message.error(err)
-    } finally {
-      this.loading = false
     }
     return null
   }

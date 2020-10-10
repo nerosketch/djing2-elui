@@ -4,7 +4,6 @@
       :columns="tableColumns"
       :getData="getAllProfiles"
       :tableRowClassName="rowColor"
-      :loading="loading"
       :heightDiff='171'
       widthStorageNamePrefix='profiles'
       ref='tbl'
@@ -74,7 +73,6 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
-  private loading = false
   private profileFormDialog = false
 
   private tableColumns: IDataTableColumn[] = [
@@ -112,7 +110,6 @@ export default class extends Vue {
   ]
 
   private async getAllProfiles(params?: IDRFRequestListParameters) {
-    this.loading = true
     if (params) {
       params['fields'] = 'avatar,username,fio,telephone,email,is_active,is_superuser'
     }
@@ -121,8 +118,6 @@ export default class extends Vue {
       return r
     } catch (err) {
       this.$message.error(err)
-    } finally {
-      this.loading = false
     }
     return null
   }

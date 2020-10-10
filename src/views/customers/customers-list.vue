@@ -5,7 +5,6 @@
         datatable(
           :columns="tableColumns"
           :getData="getAllCustomers"
-          :loading="customersLoading"
           :tableRowClassName="rowColor"
           :heightDiff="100"
           widthStorageNamePrefix='customers'
@@ -157,8 +156,6 @@ export default class extends Vue {
     tbl: DataTableComp
   }
 
-
-
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -219,7 +216,6 @@ export default class extends Vue {
 
   private streets: ICustomerStreet[] = []
 
-  private customersLoading = true
   private streetsLoading = false
 
   private async loadStreets() {
@@ -239,7 +235,6 @@ export default class extends Vue {
   }
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
-    this.customersLoading = true
     let street = this.routerQueryStreetGetter
     let r
     try {
@@ -257,8 +252,6 @@ export default class extends Vue {
       }
     } catch (err) {
       this.$message.error(err)
-    } finally {
-      this.customersLoading = false
     }
     return r
   }
@@ -277,7 +270,7 @@ export default class extends Vue {
     if (item.pk != qstreet) {
       qr.street = item.pk
     }
-    this.$router.push({ path: this.$route.path, query: qr})
+    this.$router.push({ path: this.$route.path, query: qr })
     scrollTo(0, 600)
   }
 
