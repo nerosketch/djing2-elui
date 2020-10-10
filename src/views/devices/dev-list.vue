@@ -123,7 +123,7 @@ export default class extends Vue {
       'min-width': 300
     },
     {
-      prop: 'dev_type',
+      prop: 'dev_type_str',
       label: 'Тип',
       'min-width': 150
     },
