@@ -80,11 +80,16 @@ export default class extends Vue {
       this.$message.error('Надо выбрать услугу')
       return
     }
-    await CustomerModule.PickService(
-      this.serviceId, this.deadline
-    )
-    this.loading = false
-    this.$emit('done')
+    try {
+      await CustomerModule.PickService(
+        this.serviceId, this.deadline
+      )
+      this.$emit('done')
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 }
 </script>

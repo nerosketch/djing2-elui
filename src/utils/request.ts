@@ -71,7 +71,8 @@ service.interceptors.response.use(
     Message({
       message: er || 'Неизвестная ошибка',
       type: 'error',
-      duration: 7000
+      duration: 7000,
+      showClose: true
     })
     return Promise.reject(error)
   }
