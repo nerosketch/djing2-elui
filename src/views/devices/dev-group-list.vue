@@ -8,8 +8,7 @@
       ref='table'
     )
       template(v-slot:title="{row}")
-        el-link
-          router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
+        router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
 
 </template>
 

@@ -8,8 +8,9 @@
       ref='table'
     )
       template(v-slot:pk="{row}")
-        el-link(type="primary" v-if="$perms.devices.view_device")
-          router-link(:to="{name: 'device-view', params: { devId: row.pk }}") {{ row.pk }}
+        template(v-if="$perms.devices.view_device")
+          router-link(:to="{name: 'device-view', params: { devId: row.pk }}")
+            el-link(type="primary") {{ row.pk }}
         span(v-else) {{ row.pk }}
 
       template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}

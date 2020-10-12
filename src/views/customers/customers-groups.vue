@@ -7,8 +7,8 @@
       widthStorageNamePrefix='customerGroups'
     )
       template(v-slot:title="{row}")
-        el-link(type="primary")
-          router-link(:to="{name: 'customersList', params:{ groupId: row.pk }}") {{ row.title }}
+        router-link(:to="{name: 'customersList', params:{ groupId: row.pk }}")
+          el-link(type="primary") {{ row.title }}
 
       template(v-slot:usercount="{row}") {{ row.usercount }}
 </template>

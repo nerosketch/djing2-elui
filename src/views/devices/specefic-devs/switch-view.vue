@@ -2,8 +2,12 @@
   el-card
     template(v-slot:header)
       .clearfix
-        span {{ device.comment || 'Коммутатор' }} 
-        small {{ ` ${device.ip_address || device.mac_addr}` }}
+        span {{ device.comment || 'Коммутатор' }}
+        small {{ ` ${device.ip_address || device.mac_addr} ` }}
+        template(v-if="device.parent_dev_name")
+          | Родительское устр.:
+          router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+            el-link(type="primary") {{ device.parent_dev_name }}
         el-button(
           style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
           @click="openDevForm"

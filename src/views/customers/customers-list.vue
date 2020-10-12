@@ -15,8 +15,8 @@
             span(v-else) {{ row.pk }}
 
           template(v-slot:username="{row}")
-            el-link(type="primary")
-              router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}") {{ row.username }}
+            router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}")
+              el-link(type="primary") {{ row.username }}
 
           template(v-slot:telephone="{row}")
             el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}

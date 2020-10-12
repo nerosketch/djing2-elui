@@ -12,12 +12,14 @@
         el-avatar(:src="row.avatar" size='medium' shape="square")
 
       template(v-slot:username="{row}")
-        el-link(
-          type="primary"
-          :icon="row.is_superuser ? 'el-icon-warning' : ''"
+        router-link(
           v-if="$perms.is_superuser"
+          :to="{name: 'profileDetail', params:{ profileUname: row.username }}"
         )
-          router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}") {{ row.username }}
+          el-link(
+            type="primary"
+            :icon="row.is_superuser ? 'el-icon-warning' : ''"
+          ) {{ row.username }}
         span(v-else) {{ row.username }}
 
       template(v-slot:telephone="{row}")

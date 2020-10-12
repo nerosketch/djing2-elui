@@ -9,8 +9,8 @@ div
     ref='tbl'
   )
     template(v-slot:customer_full_name="{row}")
-      el-link(type="primary")
-        router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }") {{ row.customer_full_name }}
+      router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }")
+        el-link(type="primary") {{ row.customer_full_name }}
 
     template(v-slot:id="{row}")
       router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
