@@ -48,6 +48,7 @@ export default class extends Vue {
       const { data } = await DeviceModule.GetDevice(this.devId)
       this.device = data
       this.ready = true
+      return data
     } catch (err) {
       this.$message.error(err)
     }
@@ -61,7 +62,10 @@ export default class extends Vue {
   }
 
   created() {
-    this.getDevice().then(() => {
+    this.getDevice().then(dev => {
+      if (dev) {
+        document.title = dev.comment || dev.ip_address
+      }
       this.onGrpCh(DeviceModule.group)
     })
     document.addEventListener('keydown', this.onKeyPress)

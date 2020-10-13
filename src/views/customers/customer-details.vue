@@ -42,6 +42,7 @@ export default class extends Vue {
     this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
     this.loaded = true
+    document.title = CustomerModule.full_name || 'Абонент'
   }
 
   get createDate() {

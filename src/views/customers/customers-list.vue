@@ -267,6 +267,7 @@ export default class extends Vue {
       qr.street = item.pk
     }
     this.$router.push({ path: this.$route.path, query: qr })
+    document.title = `Абоненты ул. ${item.name}`
     scrollTo(0, 600)
   }
 
@@ -295,6 +296,7 @@ export default class extends Vue {
   }
 
   created() {
+    document.title = 'Список абонентов'
     this.loadStreets()
     this.onGrpCh(this.groupId)
   }

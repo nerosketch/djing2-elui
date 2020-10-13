@@ -193,6 +193,7 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
+    document.title = `Устройства - ${this.grpName}`
     this.onGrpCh(this.groupId)
   }
   @Watch('groupId')

@@ -82,7 +82,11 @@ export default class extends mixins(ProfilesMixin) {
 
   private loadProfile() {
     if (this.profileUname) {
-      UserProfileModule.GetProfile(this.profileUname)
+      UserProfileModule.GetProfile(this.profileUname).then(profile => {
+        document.title = profile.full_name || this.profileUname
+      }).catch(() => {
+        document.title = this.profileUname
+      })
     }
   }
 }

@@ -36,6 +36,7 @@ export default class extends mixins(taskMixin) {
       return
     }
     await TaskModule.GetTask(this.taskId)
+    document.title = `Задача по ${TaskModule.customer_full_name}`
   }
 
   async created() {
