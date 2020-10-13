@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadShots"
-    :heightDiff='143'
+    :heightDiff='165'
     widthStorageNamePrefix='shots'
     ref='table'
   )
@@ -16,8 +16,15 @@ div
           :disabled="!$perms.services.delete_oneshotpay"
         )
 
+    el-button(
+      size='mini'
+      icon='el-icon-plus'
+      type='success'
+      @click="openNew"
+    ) Добавить
+
   el-dialog(
-    title="Изменение одноразового платежа"
+    :title="(isNew ? 'Создание' : 'Изменение') + ' одноразового платежа'"
     :visible.sync="dialogVisible"
   )
     shot-form(
@@ -76,8 +83,13 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
+  private openNew() {
+    OneShotPayModule.RESET_ALL_OSPAY()
+    this.dialogVisible = true
+  }
+
   private async delShot(shot: IOneShotPay) {
-    if (confirm(`Ты действительно хочешь удалить платёж "${shot.name}"?`)) {
+    if (confirm(`Действительно удалить платёж "${shot.name}"?`)) {
       await OneShotPayModule.DelOneShotPay(shot.pk)
       this.$refs.table.GetTableData()
     }
@@ -93,6 +105,10 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
+  }
+
+  get isNew(): boolean {
+    return OneShotPayModule.pk === 0
   }
 }
 </script>

@@ -109,7 +109,7 @@ export default class extends mixins(VlanMixin) {
   }
 
   private async delVlan(vlan: IVlanIf) {
-    this.$confirm(`Ты действительно хочешь удалить влан "${vlan.title}"?`).then(async() => {
+    this.$confirm(`Действительно удалить влан "${vlan.title}"?`).then(async() => {
       await VlanIfModule.DelVlan(vlan.id)
       this.$message.success('Vlan удалён')
       this.$refs.table.GetTableData()

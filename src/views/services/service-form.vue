@@ -63,10 +63,12 @@
 import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
-import { positiveValidator } from '@/utils/validate'
+import { positiveValidator, positiveNumberValueAvailable } from '@/utils/validate'
 import { IServiceTypeEnum } from '@/api/services/types'
 import { ServiceModule } from '@/store/modules/services/service'
 import FormMixin from '@/utils/forms'
+
+const speedRule = { validator: positiveNumberValueAvailable, message: 'Скорость должна быть положительной', trigger: 'change' }
 
 @Component({
   name: 'service-form'
@@ -79,9 +81,11 @@ export default class extends mixins(FormMixin) {
       { required: true, message: 'Название надо указать', trigger: 'blur' }
     ],
     speed_in: [
+      speedRule,
       { required: true, message: 'Укажи исходящую скорость', trigger: 'blur' }
     ],
     speed_out: [
+      speedRule,
       { required: true, message: 'Укажи входящую скорость', trigger: 'blur' }
     ],
     cost: [

@@ -35,8 +35,9 @@ class OneShotPay extends VuexModule implements IOneShotPay {
   }
 
   @Action
-  public async AddOneShotPay(data: IOneShotPay) {
-    await addOneShotPay(data)
+  public async AddOneShotPay(newInfo: object) {
+    const { data } = await addOneShotPay(newInfo)
+    return data
   }
 
   @Action

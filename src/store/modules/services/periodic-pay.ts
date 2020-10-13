@@ -38,8 +38,9 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
   }
 
   @Action
-  public async AddPeriodicPay(data: IPeriodicPay) {
-    await addPeriodicPay(data)
+  public async AddPeriodicPay(newInfo: object) {
+    const { data } = await addPeriodicPay(newInfo)
+    return data
   }
 
   @Action

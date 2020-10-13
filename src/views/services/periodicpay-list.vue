@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadPeriodics"
-    :heightDiff='143'
+    :heightDiff='165'
     widthStorageNamePrefix='perpay'
     ref='table'
   )
@@ -16,8 +16,16 @@ div
           :disabled="!$perms.services.delete_periodicpay"
         )
 
+    el-button(
+      icon='el-icon-plus'
+      size='mini'
+      type='success'
+      @click="openNew"
+      :disabled="!$perms.services.add_periodicpay"
+    ) Добавить
+
   el-dialog(
-    title="Изменение квитанции"
+    :title="(isNew ? 'Создание' : 'Изменение') + ' периодического платежа'"
     :visible.sync="dialogVisible"
   )
     periodicpay-form(
@@ -81,11 +89,20 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
+  private openNew() {
+    PeriodicPayModule.RESET_ALL_PPAY()
+    this.dialogVisible = true
+  }
+
   private async delPerPay(pay: IPeriodicPay) {
-    if (confirm(`Ты действительно хочешь удалить квитанцию "${pay.name}"?`)) {
+    if (confirm(`Действительно удалить квитанцию "${pay.name}"?`)) {
       await PeriodicPayModule.DelPeriodicPay(pay.pk)
       this.$refs.table.GetTableData()
     }
+  }
+
+  get isNew() {
+    return PeriodicPayModule.pk === 0
   }
 
   private loadPeriodics(params?: IDRFRequestListParameters) {

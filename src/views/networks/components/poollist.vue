@@ -130,7 +130,7 @@ export default class extends Vue {
   }
 
   private delPool(pool: INetworkIpPool) {
-    this.$confirm(`Ты действительно хочешь удалить пул "${pool.network}"?`).then(async() => {
+    this.$confirm(`Действительно удалить пул "${pool.network}"?`).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
       this.$message.success('Подсеть удалена')
       this.$refs.table.GetTableData()

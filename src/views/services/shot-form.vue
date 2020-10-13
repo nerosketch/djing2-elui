@@ -50,14 +50,28 @@ export default class extends Vue {
   private onSubmit() {
     (this.$refs['shotfrm'] as Form).validate(async valid => {
       if (valid) {
-        this.isLoading = true
-        const newDat = await OneShotPayModule.PatchOneShotPay(this.frmMod)
-        this.isLoading = false
-        this.$emit('done', newDat)
+        try {
+          this.isLoading = true
+          let newDat
+          if (this.isNew) {
+            newDat = await OneShotPayModule.AddOneShotPay(this.frmMod)
+          } else {
+            newDat = await OneShotPayModule.PatchOneShotPay(this.frmMod)
+          }
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  get isNew(): boolean {
+    return OneShotPayModule.pk === 0
   }
 }
 </script>

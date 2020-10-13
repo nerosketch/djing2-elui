@@ -145,8 +145,9 @@ export default class extends Vue {
   }
 
   private async delSrv(srv: IService) {
-    if (confirm(`Ты действительно хочешь удалить услугу "${srv.title}"?`)) {
+    if (confirm(`Действительно удалить услугу "${srv.title}"?`)) {
       await ServiceModule.DelService(srv.pk)
+      this.$message.success('Услуга удалена')
       this.$refs.table.GetTableData()
     }
   }
