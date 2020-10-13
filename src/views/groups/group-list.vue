@@ -93,12 +93,6 @@ export default class extends Vue {
       'min-width': 250
     },
     {
-      prop: 'code',
-      label: 'Тех.код',
-      sortable: true,
-      'min-width': 100
-    },
-    {
       prop: 'oper',
       label: 'Oper',
       'min-width': 130,
@@ -133,7 +127,7 @@ export default class extends Vue {
 
   private loadGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,title,code'
+      params['fields'] = 'pk,title'
     }
     return getGroups(params)
   }
