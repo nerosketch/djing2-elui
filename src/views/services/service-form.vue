@@ -64,7 +64,7 @@ import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { positiveValidator } from '@/utils/validate'
-import { IService, IServiceTypeEnum } from '@/api/services/types'
+import { IServiceTypeEnum } from '@/api/services/types'
 import { ServiceModule } from '@/store/modules/services/service'
 import FormMixin from '@/utils/forms'
 
@@ -129,10 +129,22 @@ export default class extends mixins(FormMixin) {
   private onSubmit() {
     (this.$refs['srvfrm'] as Form).validate(async valid => {
       if (valid) {
-        this.isLoading = true
-        const newDat = await ServiceModule.PatchService(this.frmMod)
-        this.isLoading = false
-        this.$emit('done', newDat)
+        try {
+          this.isLoading = true
+          let newDat
+          if (ServiceModule.pk === 0) {
+            newDat = await ServiceModule.AddService(this.frmMod)
+            this.$message.success('Услуга создана')
+          } else {
+            newDat = await ServiceModule.PatchService(this.frmMod)
+            this.$message.success('Услуга изменена')
+          }
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

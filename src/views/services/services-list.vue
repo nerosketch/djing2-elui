@@ -3,14 +3,12 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadServices"
-    :heightDiff='143'
+    :heightDiff='165'
     widthStorageNamePrefix='services'
     ref='table'
   )
     template(v-slot:isadm="{row}")
       el-checkbox(v-model="row.is_admin" disabled) {{ row.is_admin ? 'Да' : 'Нет'}}
-
-    template(v-slot:usercount="{row}") {{ row.usercount }}
 
     template(v-slot:oper="{row}")
       el-button-group
@@ -22,8 +20,16 @@ div
           :disabled="!$perms.services.delete_service"
         )
 
+    el-button(
+      size='mini'
+      icon='el-icon-plus'
+      type='success'
+      @click="openNew"
+      :disabled="!$perms.services.add_service"
+    ) Добавить
+
   el-dialog(
-    title="Изменение Услуги"
+    :title="(isNew ? 'Создание' : 'Изменение') + ' услуги'"
     :visible.sync="dialogVisible"
   )
     service-form(
@@ -133,6 +139,11 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
+  private openNew() {
+    ServiceModule.RESET_ALL_SERVICE()
+    this.dialogVisible = true
+  }
+
   private async delSrv(srv: IService) {
     if (confirm(`Ты действительно хочешь удалить услугу "${srv.title}"?`)) {
       await ServiceModule.DelService(srv.pk)
@@ -150,6 +161,10 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
+  }
+
+  get isNew(): boolean {
+    return this.srvIdGetter === 0
   }
 
   get srvIdGetter() {
