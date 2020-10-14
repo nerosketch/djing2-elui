@@ -90,8 +90,8 @@
       top="5vh"
     )
       object-perms(
-        v-on:save="changeGroupObjectPerms"
-        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        v-on:save="changeCustomerObjectPerms"
+        :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
         :getSelectedObjectPerms="customerGetSelectedObjectPerms"
         :objId="customerIdGetter"
       )
@@ -335,11 +335,11 @@ export default class extends Vue {
     return CustomerModule.pk
   }
 
-  private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
+  private async changeCustomerObjectPerms(info: IObjectGroupPermsResultStruct) {
     await setCustomerObjectsPerms(this.customerIdGetter, info)
     this.permsDialog = false
   }
-  private getGroupObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+  private getCustomerObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
     return getCustomerObjectsPerms(this.customerIdGetter)
   }
   private openPermsDialog(c: ICustomer) {

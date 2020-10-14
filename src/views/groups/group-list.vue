@@ -44,9 +44,11 @@
       :visible.sync="permsDialog"
       top="5vh"
     )
-      recursive-group-object-perms(
-        :userGroupId="groupIdGetter"
-        v-on:done="permsDialog=false"
+      object-perms(
+        v-on:save="changeGroupObjectPerms"
+        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="groupGetSelectedObjectPerms"
+        :objId="groupIdGetter"
       )
 
 </template>
@@ -54,14 +56,14 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
-import { IDRFRequestListParameters } from '@/api/types'
-import { getGroups } from '@/api/groups/req'
+import { IDRFRequestListParameters, IObjectGroupPermsResultStruct } from '@/api/types'
+import { getGroups, setGroupObjectsPerms, getGroupObjectsPerms, getGroupSelectedObjectPerms } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
 import GroupForm from './group-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
-import RecursiveGroupObjectPerms from './recursive-group-object-perms.vue'
+// import RecursiveGroupObjectPerms from './recursive-group-object-perms.vue'
 
 class DataTableComp extends DataTable<IGroup> {}
 
@@ -69,7 +71,6 @@ class DataTableComp extends DataTable<IGroup> {}
   name: 'GroupList',
   components: {
     GroupForm,
-    RecursiveGroupObjectPerms,
     'datatable': DataTableComp
   }
 })
@@ -163,6 +164,17 @@ export default class extends Vue {
   private openPermsDialog(grp: IGroup) {
     GroupModule.SET_ALL_MGROUP(grp)
     this.permsDialog = true
+  }
+
+  private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
+    await setGroupObjectsPerms(this.groupIdGetter, info)
+    this.permsDialog = false
+  }
+  private getGroupObjectPermsFunc4Grp() {
+    return getGroupObjectsPerms(this.groupIdGetter)
+  }
+  private groupGetSelectedObjectPerms(grpId: number, profileGroupId: number) {
+    return getGroupSelectedObjectPerms(grpId, profileGroupId)
   }
 }
 </script>

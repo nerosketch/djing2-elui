@@ -10,8 +10,7 @@ export type IGroupList = IDRFListResponse<IGroup>
 export type IGroupAxoisResponsePromise = IDRFAxiosResponsePromise<IGroup>
 export type IGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IGroupList>
 
-
-export interface SetPermissionsRecursiveRequest {
-  permission_ids: number[]
-  profile_group: number
-}
+// export interface SetPermissionsRecursiveRequest {
+//   permission_ids: number[]
+//   profile_group: number
+// }

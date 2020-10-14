@@ -26,7 +26,12 @@ import CustomerDocs from './docs.vue'
 
 @Component({
   name: 'Info',
-  components: { CustomerForm, Device, Network, CustomerDocs }
+  components: {
+    CustomerForm,
+    Device,
+    Network,
+    CustomerDocs
+  }
 })
 export default class extends Vue {}
 </script>
