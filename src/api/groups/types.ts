@@ -3,6 +3,7 @@ import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
 export interface IGroup {
   pk: number
   title: string
+  sites?: number[]
 }
 
 export type IGroupList = IDRFListResponse<IGroup>

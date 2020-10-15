@@ -7,6 +7,7 @@ import locale from 'element-ui/lib/locale'
 import SvgIcon from 'vue-svgicon'
 import { CurrentPermissionsModule } from '@/store/current-user-permissions'
 import ObjectPerms from '@/components/object-perms.vue'
+import SitesAttach from '@/components/sites-attach.vue'
 
 import '@/styles/element-variables.scss'
 import '@/styles/index.scss'
@@ -28,6 +29,7 @@ Vue.use(SvgIcon, {
 })
 
 Vue.component('object-perms', ObjectPerms)
+Vue.component('sites-attach', SitesAttach)
 
 Vue.config.productionTip = false
 

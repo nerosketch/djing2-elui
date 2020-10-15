@@ -21,6 +21,7 @@ export interface IService {
   usercount: number
   planned_deadline: string
   calc_type_name: string
+  sites?: number[]
 }
 export type IServiceList = IDRFListResponse<IService>
 export type IServiceAxoisResponsePromise = IDRFAxiosResponsePromise<IService>
@@ -36,6 +37,7 @@ export interface IPeriodicPay {
   name: string
   when_add?: string
   amount: number
+  sites?: number[]
 }
 export type IPeriodicPayList = IDRFListResponse<IPeriodicPay>
 export type IPeriodicPayAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPay>
@@ -46,6 +48,7 @@ export interface IOneShotPay {
   pk: number
   name: string
   cost: number
+  sites?: number[]
 }
 export type IOneShotPayPayList = IDRFListResponse<IOneShotPay>
 export type IOneShotPayPayAxoisResponsePromise = IDRFAxiosResponsePromise<IOneShotPay>

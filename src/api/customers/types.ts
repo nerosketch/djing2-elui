@@ -34,6 +34,7 @@ export interface ICustomer {
   full_name?: string
   raw_password?: string
   lease_count: number
+  sites: number[]
 }
 export type ICustomerList = IDRFListResponse<ICustomer>
 export type ICustomerAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomer>

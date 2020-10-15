@@ -12,6 +12,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
   name = ''
   when_add = ''
   amount = 0
+  sites?: number[] = []
 
   @Mutation
   public SET_ALL_PPAY(data: IPeriodicPay) {
@@ -19,6 +20,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
     this.name = data.name
     this.when_add = data.when_add!
     this.amount = data.amount
+    this.sites = data.sites || []
   }
 
   @Mutation
@@ -27,6 +29,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
     this.name = ''
     this.when_add = ''
     this.amount = 0
+    this.sites = []
     return this
   }
 

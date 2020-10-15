@@ -7,6 +7,7 @@ export interface IPayAllTimeGateway {
   service_id: string
   slug: string
   pay_count: number
+  sites?: number[]
 }
 export type IPayAllTimeGatewayList = IDRFListResponse<IPayAllTimeGateway>
 export type IPayAllTimeGatewayAxoisResponsePromise = IDRFAxiosResponsePromise<IPayAllTimeGateway>

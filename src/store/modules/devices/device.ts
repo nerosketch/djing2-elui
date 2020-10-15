@@ -30,6 +30,7 @@ class Device extends VuexModule implements IDeviceInterace {
   status = 0
   is_noticeable = false
   code = ''
+  sites?: number[] = []
 
   @Mutation
   public RESET_ALL_DEV() {
@@ -48,6 +49,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.status = 0
     this.is_noticeable = false
     this.code = ''
+    this.sites = []
     return this
   }
 
@@ -69,6 +71,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.status = data.status
     this.is_noticeable = data.is_noticeable
     this.code = data.code
+    this.sites = data.sites
     return this
   }
 

@@ -13,6 +13,11 @@ div
     template(v-slot:oper="{row}")
       el-button-group
         el-button(
+          v-if="$perms.is_superuser"
+          @click="openSitesDlg(row)"
+          size="mini"
+        ) C
+        el-button(
           icon="el-icon-edit" size="mini"
           @click="openEdit(row)"
           :disabled="!$perms.networks.change_vlanif"
@@ -35,6 +40,14 @@ div
   )
     vlan-form(
       v-on:done="frmDone"
+    )
+  el-dialog(
+    title="Принадлежность сайтам"
+    :visible.sync="sitesDlg"
+  )
+    sites-attach(
+      :selectedSiteIds="$store.state.vlan.sites"
+      v-on:save="vlanSitesSave"
     )
 </template>
 
@@ -85,12 +98,13 @@ export default class extends mixins(VlanMixin) {
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: 'Кнопки',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
   private dialogVisible = false
+  private sitesDlg = false
 
   get dialogTitle() {
     let w = 'Изменение'
@@ -134,5 +148,19 @@ export default class extends mixins(VlanMixin) {
     ] as RouteRecord[])
   }
   // End Breadcrumbs
+
+  private vlanSitesSave(selectedSiteIds: number[]) {
+    VlanIfModule.PatchVlan({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность vlan сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(vlan: IVlanIf) {
+    VlanIfModule.SET_ALL_VLAN(vlan)
+    this.sitesDlg = true
+  }
 }
 </script>

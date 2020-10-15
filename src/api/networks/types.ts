@@ -5,6 +5,7 @@ export interface IVlanIf {
   title: string
   vid: number
   is_management: boolean
+  sites?: number[]
 }
 
 export type IVlanIfList = IDRFListResponse<IVlanIf>
@@ -31,6 +32,7 @@ export interface INetworkIpPool {
   gateway: string
   is_dynamic: boolean
   pool_tag?: string
+  sites?: number[]
 }
 export type INetworkIpPoolList = IDRFListResponse<INetworkIpPool>
 export type INetworkIpPoolAxoisResponsePromise = IDRFAxiosResponsePromise<INetworkIpPool>

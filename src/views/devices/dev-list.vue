@@ -22,6 +22,11 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
+            v-if="$perms.is_superuser"
+            @click="openSitesDlg(row)"
+            size="mini"
+          ) C
+          el-button(
             size='mini' icon='el-icon-lock'
             @click="openPermsDialog(row)"
             v-if="$perms.is_superuser"
@@ -74,6 +79,15 @@
         :objId="deviceIdGetter"
       )
 
+    el-dialog(
+      title="Принадлежность устройства сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.devicemodule.sites"
+        v-on:save="devSitesSave"
+      )
+
 </template>
 
 <script lang="ts">
@@ -107,6 +121,7 @@ export default class extends Vue {
   private dialogVisible = false
   private dialogNewDev = false
   private permsDialog = false
+  private sitesDlg = false
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -143,8 +158,8 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
   ]
@@ -165,7 +180,7 @@ export default class extends Vue {
       page_size: params.page_size,
       group: this.groupId,
       ordering: params.ordering,
-      fields: 'pk,ip_address,comment,dev_type,dev_type_str,mac_addr,status,is_noticeable,group,man_passw,snmp_extra'
+      fields: 'pk,ip_address,comment,dev_type,dev_type_str,mac_addr,status,is_noticeable,group,man_passw,snmp_extra,sites'
     })
   }
 
@@ -239,6 +254,20 @@ export default class extends Vue {
 
   private deviceGetSelectedObjectPerms(devId: number, profileGroupId: number) {
     return getDeviceSelectedObjectPerms(devId, profileGroupId)
+  }
+
+  private devSitesSave(selectedSiteIds: number[]) {
+    DeviceModule.PatchDevice({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность устройства сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(dev: IDevice) {
+    DeviceModule.SET_ALL_DEV(dev)
+    this.sitesDlg = true
   }
 }
 </script>

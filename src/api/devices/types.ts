@@ -35,6 +35,7 @@ export interface IDevice {
   status: number
   is_noticeable: boolean
   code: string
+  sites?: number[]
 }
 export interface IDeviceInterace extends IDevice {
   ScanAllDevVlans(devId: number): Promise<IDevVlan[]>

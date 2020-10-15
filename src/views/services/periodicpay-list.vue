@@ -9,6 +9,11 @@ div
   )
     template(v-slot:oper="{row}")
       el-button-group
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="openSitesDlg(row)"
+          size="mini"
+        ) C
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(
           type="danger" icon="el-icon-delete" size="mini"
@@ -30,6 +35,14 @@ div
   )
     periodicpay-form(
       v-on:done="frmDone"
+    )
+  el-dialog(
+    title="Принадлежность сайтам"
+    :visible.sync="sitesDlg"
+  )
+    sites-attach(
+      :selectedSiteIds="$store.state.periodicpay.sites"
+      v-on:save="serviceSitesSave"
     )
 </template>
 
@@ -76,13 +89,14 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: 'Кнопки',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
   private pays: IPeriodicPay[] = []
   private dialogVisible = false
+  private sitesDlg = false
 
   private async openEdit(pay: IPeriodicPay) {
     await PeriodicPayModule.SET_ALL_PPAY(pay)
@@ -107,7 +121,7 @@ export default class extends Vue {
 
   private loadPeriodics(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,name,when_add,amount'
+      params['fields'] = 'pk,name,when_add,amount,sites'
     }
     return getPeriodicPays(params)
   }
@@ -115,6 +129,20 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
+  }
+
+  private serviceSitesSave(selectedSiteIds: number[]) {
+    PeriodicPayModule.PatchPeriodicPay({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность услуги сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(srv: IPeriodicPay) {
+    PeriodicPayModule.SET_ALL_PPAY(srv)
+    this.sitesDlg = true
   }
 }
 </script>

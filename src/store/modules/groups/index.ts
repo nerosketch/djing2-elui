@@ -7,21 +7,13 @@ import store from '@/store'
 class Group extends VuexModule implements IGroup {
   public pk = 0
   public title = ''
-
-  @Mutation
-  private SET_PK(pk: number): void {
-    this.pk = pk
-  }
-
-  @Mutation
-  private SET_TITLE(title: string): void {
-    this.title = title
-  }
+  public sites?: number[] = []
 
   @Mutation
   public SET_ALL_MGROUP(data: IGroup) {
     this.pk = data.pk
     this.title = data.title
+    this.sites = data.sites || []
     return this
   }
 
@@ -29,6 +21,7 @@ class Group extends VuexModule implements IGroup {
   public RESET_ALL_MGROUP() {
     this.pk = 0
     this.title = ''
+    this.sites = []
     return this
   }
 

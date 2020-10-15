@@ -17,6 +17,7 @@ export interface IUserProfile {
   user_permissions: number[]
   groups: number[]
   access_level: number
+  sites?: number[]
 }
 export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>

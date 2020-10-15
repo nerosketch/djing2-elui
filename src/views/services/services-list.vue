@@ -12,6 +12,11 @@ div
 
     template(v-slot:oper="{row}")
       el-button-group
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="openSitesDlg(row)"
+          size="mini"
+        ) C
         el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(
@@ -45,6 +50,14 @@ div
       :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp"
       :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
       :objId="srvIdGetter"
+    )
+  el-dialog(
+    title="Принадлежность сайтам"
+    :visible.sync="sitesDlg"
+  )
+    sites-attach(
+      :selectedSiteIds="$store.state.service.sites"
+      v-on:save="serviceSitesSave"
     )
 </template>
 
@@ -125,14 +138,15 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
   ]
   private services: IService[] = []
   private dialogVisible = false
   private permsDialog = false
+  private sitesDlg = false
 
   private async openEdit(srv: IService) {
     await ServiceModule.SET_ALL_SERVICE(srv)
@@ -154,7 +168,7 @@ export default class extends Vue {
 
   private loadServices(params?: IDRFRequestListParametersService) {
     if (params) {
-      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type'
+      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
     }
     return getServices(params)
   }
@@ -199,5 +213,19 @@ export default class extends Vue {
     ] as RouteRecord[])
   }
   // End Breadcrumbs
+
+  private serviceSitesSave(selectedSiteIds: number[]) {
+    ServiceModule.PatchService({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность услуги сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(srv: IService) {
+    ServiceModule.SET_ALL_SERVICE(srv)
+    this.sitesDlg = true
+  }
 }
 </script>

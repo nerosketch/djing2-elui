@@ -9,6 +9,11 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
+            v-if="$perms.is_superuser"
+            @click="openSitesDlg(row)"
+            size="mini"
+          ) C
+          el-button(
             icon='el-icon-lock' size='mini'
             @click="openPermsDialog(row)"
             v-if="$perms.is_superuser"
@@ -51,6 +56,15 @@
         :objId="groupIdGetter"
       )
 
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.group.sites"
+        v-on:save="groupSitesSave"
+      )
+
 </template>
 
 <script lang="ts">
@@ -63,7 +77,6 @@ import GroupForm from './group-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
-// import RecursiveGroupObjectPerms from './recursive-group-object-perms.vue'
 
 class DataTableComp extends DataTable<IGroup> {}
 
@@ -80,6 +93,7 @@ export default class extends Vue {
   }
   private dialogVisible = false
   private permsDialog = false
+  private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -95,8 +109,8 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
   ]
@@ -128,7 +142,7 @@ export default class extends Vue {
 
   private loadGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,title'
+      params['fields'] = 'pk,title,sites'
     }
     return getGroups(params)
   }
@@ -175,6 +189,20 @@ export default class extends Vue {
   }
   private groupGetSelectedObjectPerms(grpId: number, profileGroupId: number) {
     return getGroupSelectedObjectPerms(grpId, profileGroupId)
+  }
+
+  private groupSitesSave(selectedSiteIds: number[]) {
+    GroupModule.PatchGroup({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.grouptable.GetTableData()
+      this.$message.success('Принадлежность группы сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(grp: IGroup) {
+    GroupModule.SET_ALL_MGROUP(grp)
+    this.sitesDlg = true
   }
 }
 </script>

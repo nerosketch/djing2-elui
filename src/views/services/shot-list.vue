@@ -9,6 +9,11 @@ div
   )
     template(v-slot:oper="{row}")
       el-button-group
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="openSitesDlg(row)"
+          size="mini"
+        ) C
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(
           type="danger" icon="el-icon-delete" size="mini"
@@ -29,6 +34,14 @@ div
   )
     shot-form(
       v-on:done="frmDone"
+    )
+  el-dialog(
+    title="Принадлежность сайтам"
+    :visible.sync="sitesDlg"
+  )
+    sites-attach(
+      :selectedSiteIds="$store.state.oneshotpay.sites"
+      v-on:save="serviceSitesSave"
     )
 </template>
 
@@ -70,13 +83,14 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: 'Кнопки',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
   private shots: IOneShotPay[] = []
   private dialogVisible = false
+  private sitesDlg = false
 
   private async openEdit(shot: IOneShotPay) {
     await OneShotPayModule.SET_ALL_OSPAY(shot)
@@ -97,7 +111,7 @@ export default class extends Vue {
 
   private loadShots(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,name,cost'
+      params['fields'] = 'pk,name,cost,sites'
     }
     return getOneShotPays(params)
   }
@@ -109,6 +123,20 @@ export default class extends Vue {
 
   get isNew(): boolean {
     return OneShotPayModule.pk === 0
+  }
+
+  private serviceSitesSave(selectedSiteIds: number[]) {
+    OneShotPayModule.PatchOneShotPay({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность вида платежей сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(srv: IOneShotPay) {
+    OneShotPayModule.SET_ALL_OSPAY(srv)
+    this.sitesDlg = true
   }
 }
 </script>

@@ -22,6 +22,7 @@ class Service extends VuexModule implements IService {
   usercount = 0
   planned_deadline = ''
   calc_type_name = ''
+  sites?: number[] = []
 
   @Mutation
   public SET_ALL_SERVICE(data: IService) {
@@ -37,6 +38,7 @@ class Service extends VuexModule implements IService {
     this.usercount = data.usercount
     this.planned_deadline = data.planned_deadline
     this.calc_type_name = data.calc_type_name
+    this.sites = data.sites || []
   }
 
   @Mutation
@@ -53,6 +55,7 @@ class Service extends VuexModule implements IService {
     this.usercount = 0
     this.planned_deadline = ''
     this.calc_type_name = ''
+    this.sites = []
     return this
   }
 

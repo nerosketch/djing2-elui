@@ -42,6 +42,7 @@ class Customer extends VuexModule implements ICustomer {
   full_name = ''
   raw_password = ''
   lease_count = 0
+  sites: number[] = []
 
   @Mutation
   public SET_ALL_CUSTOMER(data: ICustomer) {
@@ -74,6 +75,7 @@ class Customer extends VuexModule implements ICustomer {
     this.full_name = data.full_name!
     this.raw_password = data.raw_password!
     this.lease_count = data.lease_count
+    this.sites = data.sites
     return this
   }
 
@@ -108,6 +110,7 @@ class Customer extends VuexModule implements ICustomer {
     this.full_name = ''
     this.raw_password = ''
     this.lease_count = 0
+    this.sites = []
     return this
   }
 

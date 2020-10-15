@@ -6,17 +6,19 @@ import {
 } from '@/api/services/req'
 import { IOneShotPay } from '@/api/services/types'
 
-@Module({ dynamic: true, store, name: 'OneShotPay' })
+@Module({ dynamic: true, store, name: 'oneshotpay' })
 class OneShotPay extends VuexModule implements IOneShotPay {
   pk = 0
   name = ''
   cost = 0.0
+  sites?: number[] = []
 
   @Mutation
   public SET_ALL_OSPAY(data: IOneShotPay) {
     this.pk = data.pk
     this.name = data.name
     this.cost = data.cost
+    this.sites = data.sites || []
   }
 
   @Mutation
@@ -24,6 +26,7 @@ class OneShotPay extends VuexModule implements IOneShotPay {
     this.pk = 0
     this.name = ''
     this.cost = 0.0
+    this.sites = []
     return this
   }
 

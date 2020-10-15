@@ -12,6 +12,11 @@ div
 
     template(v-slot:oper="{row}")
       el-button-group
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="openSitesDlg(row)"
+          size="mini"
+        ) C
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(
           type="danger" icon="el-icon-delete" size="mini"
@@ -31,6 +36,14 @@ div
   )
     pool-form(
       v-on:done="frmDone"
+    )
+  el-dialog(
+    title="Принадлежность сайтам"
+    :visible.sync="sitesDlg"
+  )
+    sites-attach(
+      :selectedSiteIds="$store.state.netpool.sites"
+      v-on:save="netpoolSitesSave"
     )
 </template>
 
@@ -105,13 +118,14 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 160,
       align: DataTableColumnAlign.CENTER
     }
   ]
   private pools: INetworkIpPool[] = []
   private dialogVisible = false
+  private sitesDlg = false
 
   get dialogTitle() {
     let w = 'Изменить'
@@ -139,7 +153,7 @@ export default class extends Vue {
 
   private async loadPools(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count'
+      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count,sites'
     }
     return getNetworkIpPools(params)
   }
@@ -148,6 +162,20 @@ export default class extends Vue {
     this.dialogVisible = false
     this.$message.success('Подсеть сохранена')
     this.$refs.table.GetTableData()
+  }
+
+  private netpoolSitesSave(selectedSiteIds: number[]) {
+    NetworkIpPoolModule.PatchPool({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность подсети сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(net: INetworkIpPool) {
+    NetworkIpPoolModule.SET_ALL_POOL(net)
+    this.sitesDlg = true
   }
 }
 </script>

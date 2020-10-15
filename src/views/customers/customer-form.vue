@@ -106,6 +106,11 @@
           icon='el-icon-lock'
         ) Пароль
         el-button(
+          v-if="$perms.is_superuser"
+          @click="sitesDlg = true"
+          icon='el-icon-lock'
+        ) Сайты
+        el-button(
           type='danger'
           title="Полное удаление учётной записи абонента из билинга"
           icon='el-icon-close'
@@ -136,6 +141,14 @@
         :customerId="customerIdGetter"
         :initialPassw="$store.state.customer.raw_password"
         v-on:done="openPasswordDlg=false"
+      )
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.customer.sites"
+        v-on:save="customerSitesSave"
       )
 </template>
 
@@ -177,6 +190,7 @@ export default class extends mixins(FormMixin) {
   private openTelsDlg = false
   private taskFormDialog = false
   private taskFormDialogLoading = false
+  private sitesDlg = false
 
   private frmRules = {
     username: [
@@ -332,6 +346,15 @@ export default class extends mixins(FormMixin) {
     } finally {
       this.taskFormDialogLoading = false
     }
+  }
+
+  private customerSitesSave(selectedSiteIds: number[]) {
+    CustomerModule.PatchCustomer({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$message.success('Принадлежность абонента сайтам сохранена')
+    })
+    this.sitesDlg = false
   }
 }
 </script>
