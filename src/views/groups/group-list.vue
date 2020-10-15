@@ -4,7 +4,7 @@
       :columns="tableColumns"
       :getData="loadGroups"
       widthStorageNamePrefix='groups'
-      ref='table'
+      ref='grouptable'
     )
       template(v-slot:oper="{row}")
         el-button-group
@@ -76,7 +76,7 @@ class DataTableComp extends DataTable<IGroup> {}
 })
 export default class extends Vue {
   public readonly $refs!: {
-    table: DataTableComp
+    grouptable: DataTableComp
   }
   private dialogVisible = false
   private permsDialog = false
@@ -137,14 +137,14 @@ export default class extends Vue {
     this.$confirm(`Действительно удалить группу "${group.title}"?`).then(async() => {
       await GroupModule.DelGroup(group.pk)
       this.$message.success(`Группа "${group.title}" удалена`)
-      this.$refs.table.GetTableData()
+      this.$refs.grouptable.GetTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Группа сохранена')
-    this.$refs.table.GetTableData()
+    this.$refs.grouptable.GetTableData()
   }
 
   // Breadcrumbs

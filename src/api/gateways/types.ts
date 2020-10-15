@@ -14,6 +14,5 @@ export interface IGateway {
 }
 
 export type IGatewayList = IDRFListResponse<IGateway>
-
 export type IGatewayAxoisResponsePromise = IDRFAxiosResponsePromise<IGateway>
 export type IGatewayListAxiosResponsePromise = IDRFAxiosResponsePromise<IGatewayList>

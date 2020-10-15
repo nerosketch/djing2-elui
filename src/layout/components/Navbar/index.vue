@@ -54,6 +54,11 @@
                 Отчёты
               </el-dropdown-item>
             </router-link>
+            <router-link to="/sites">
+              <el-dropdown-item>
+                Домены
+              </el-dropdown-item>
+            </router-link>
             <el-dropdown-item divided>
               <span
                 style="display:block;"
