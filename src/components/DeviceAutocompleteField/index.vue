@@ -25,13 +25,12 @@ export default class extends Vue {
   @Prop({ default: '' })
   private defaultName!: string
 
-  private querySearch(queryString: string, cb: any) {
+  private async querySearch(queryString: string, cb: any) {
     if (this.loading) return
     this.loading = true
-    findDevices(queryString).then(({ data }) => {
-      cb(data)
-      this.loading = false
-    })
+    const { data } = await findDevices(queryString)
+    cb(data.results)
+    this.loading = false
   }
 
   private handleSelect(d: IDevice) {

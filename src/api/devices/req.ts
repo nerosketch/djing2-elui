@@ -34,7 +34,11 @@ export const getDevice = (devId: number): IDeviceAxoisResponsePromise =>
   request.get<IDevice>(`${baseDevUrl}${devId}/`)
 
 export const findDevices = (devtext: string): IDeviceListAxiosResponsePromise =>
-  request.get<IDeviceList>(baseDevUrl, { params: { search: devtext } })
+  request.get<IDeviceList>(baseDevUrl, { params: {
+    search: devtext,
+    page_size: 30,
+    fields: 'pk,comment'
+  } })
 
 export const addDevice = (newDev: object): IDeviceAxoisResponsePromise =>
   request.post<IDevice>(baseDevUrl, newDev)
