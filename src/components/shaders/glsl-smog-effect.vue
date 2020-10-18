@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import smogShader from "./smog.frag";
+import smogShader from './smog.frag';
 export default {
   name: "smog",
   components: {

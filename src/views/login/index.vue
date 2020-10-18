@@ -72,7 +72,7 @@ import { latinValidator } from '@/utils/validate'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 import { IUserProfile } from '@/api/profiles/types'
 import { CurrentPermissions } from '@/store/current-user-permissions'
-import GlslSmogEffect from "@/components/shaders/glsl-smog-effect.vue"
+import GlslSmogEffect from '@/components/shaders/glsl-smog-effect.vue'
 
 @Component({
   name: 'Login',
