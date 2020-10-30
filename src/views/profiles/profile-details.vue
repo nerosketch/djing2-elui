@@ -59,8 +59,8 @@ export default class extends mixins(ProfilesMixin) {
   }
 
   @Watch('profileStateGetter', { deep: true })
-  private onUserProfileChanged() {
-    this.userProfile = Object.assign({}, this.profileStateGetter)
+  private onUserProfileChanged(psg: any) {
+    this.userProfile = Object.assign({}, psg)
   }
 
   get profileStateGetter() {

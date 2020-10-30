@@ -7,7 +7,7 @@ el-card(style='margin-bottom:20px;')
     .box-center
       pan-thumb(:image='user.avatar', :height="'100px'", :width="'100px'", :hoverable='false')
         div Прив!
-        |           {{ user.roles }}
+        | {{ user.roles }}
     .box-center
       .user-name.text-center
         | {{ user.username }}
@@ -15,9 +15,6 @@ el-card(style='margin-bottom:20px;')
         | {{ user.fio }}
   .user-bio
     .user-education.user-bio-section
-      .user-bio-section-header
-        svg-icon(name='education')
-          span Education
       .user-bio-section-body
         dl
           dt
@@ -122,13 +119,6 @@ export default class extends Vue {
   .user-bio-section {
     font-size: 14px;
     // padding: 15px 0;
-
-    .user-bio-section-header {
-      border-bottom: 1px solid #dfe6ec;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
   }
 }
 </style>

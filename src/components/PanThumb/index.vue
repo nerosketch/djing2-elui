@@ -1,18 +1,12 @@
-<template>
-  <div
+<template lang="pug">
+ .pan-item(
     :style="{zIndex: zIndex, height: height, width: width}"
-    class="pan-item"
-  >
-    <div class="pan-info">
-      <div class="pan-info-roles-container">
-        <slot />
-      </div>
-    </div>
-    <div
+  )
+    .pan-info
+      .pan-info-roles-container
+    .pan-thumb(
       :style="{backgroundImage: `url(${image})`}"
-      class="pan-thumb"
-    />
-  </div>
+    )
 </template>
 
 <script lang="ts">
