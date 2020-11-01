@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { IService } from '@/api/services/types'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { getServices } from '@/api/services/req'
@@ -26,9 +26,11 @@ interface SelectedState {
 }
 
 @Component({
-  name: 'service-accessory'
+  name: 'ServiceAccessory'
 })
 export default class extends Vue {
+  @Prop({ required: true }) private groupId!: number
+
   private services: IService[] = []
   private servicesLoading = false
 
@@ -46,13 +48,29 @@ export default class extends Vue {
     }
   }
 
+  @Watch('groupId')
+  private onGroupChanged(grpId: number) {
+    this.loadSelectedService(grpId)
+  }
+
+  private async loadSelectedService(groupId: number) {
+    const { data } = await getServices({
+      groups: groupId,
+      fields: 'pk',
+      page: 1,
+      page_size: 9999999
+    })
+    const selectedIds = data.results.map(s => s.pk)
+    this.selected = this.services.map(s => ({
+      pk: s.pk,
+      state: selectedIds.includes(s.pk),
+      title: s.title
+    }))
+  }
+
   created() {
     this.loadServices().then(() => {
-      this.selected = this.services.map(srv => ({
-        pk: srv.pk,
-        state: false,
-        title: srv.title
-      }))
+      this.loadSelectedService(this.groupId)
     })
   }
 
