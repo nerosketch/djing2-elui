@@ -55,6 +55,7 @@ export default class extends Vue {
     pool: CustomerIpLeaseModule.pool,
     customer: CustomerIpLeaseModule.customer,
     lease_time: CustomerIpLeaseModule.lease_time,
+    last_update: CustomerIpLeaseModule.last_update,
     mac_address: CustomerIpLeaseModule.mac_address,
     is_dynamic: CustomerIpLeaseModule.is_dynamic
   }
