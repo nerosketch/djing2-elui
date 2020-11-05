@@ -75,6 +75,8 @@
         :initialDevType="onuType"
         :initialGroup="device.group"
         :initialSnmpSxtra="currentOnu.number"
+        :initialParentDev="device.pk"
+        :initialParentDevName="`${device.ip_address} ${device.comment}`"
       )
 </template>
 
@@ -104,42 +106,39 @@ export default class extends Vue {
   private currentOnu: IScannedONU | null = null
   private onuType = IDeviceTypeEnum.EPON_BDCOM_FORA
 
-  private fetchItems() {
+  private async fetchItems() {
     if (this.device) {
-      return scanOnuList(this.device.pk, (c: ProgressEvent) => {
+      const { data } = await scanOnuList(this.device.pk, (c: ProgressEvent) => {
         this.loadPercent = Math.floor((100 * c.loaded) / c.total)
-      }).then(({ data }) => {
-        for (const line of data.split('\n')) {
-          try {
-            let onu = JSON.parse(line) as IScannedONU
-            const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === onu.fiberid)
-            if (fibIndex !== undefined) {
-              this.fibers[fibIndex].onuList.push(onu)
-            }
-          } catch (e) {
-            continue
-          }
-        }
-        this.ready = true
       })
+      for (const line of data.split('\n')) {
+        try {
+          let onu = JSON.parse(line) as IScannedONU
+          const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === onu.fiberid)
+          if (fibIndex !== undefined) {
+            this.fibers[fibIndex].onuList.push(onu)
+          }
+        } catch (e) {
+          continue
+        }
+      }
+      this.ready = true
     }
-    return new Promise((r) => (r()))
   }
 
-  private fetchFibers() {
+  private async fetchFibers() {
     if (this.device) {
-      return scanOltFibers(this.device.pk).then(({ data }) => {
+      await scanOltFibers(this.device.pk).then(({ data }) => {
         this.fibers = data.map(fib => Object.assign({ onuList: [] }, fib))
       })
     }
-    return new Promise((r) => (r()))
   }
 
   private loadAll() {
     this.loading = true
     this.ready = false
     if (this.device) {
-      return this.fetchFibers().then(() => {
+      this.fetchFibers().then(() => {
         this.fetchItems()
       }).finally(() => {
         this.loading = false
@@ -160,7 +159,7 @@ export default class extends Vue {
         devId: newOnu.pk.toString()
       } })
   }
-  private frmErr(err: Error) {
+  private frmErr() {
     this.dialogVisible = false
   }
 
