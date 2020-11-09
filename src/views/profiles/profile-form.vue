@@ -57,9 +57,14 @@
       el-input(v-model="frmMod.password" type="password" autocomplete="new-password")
     el-form-item
       el-button-group
-        el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-download" size='small') {{ isNew ? 'Добавить' : 'Сохранить' }}
-        el-button(@click="openPasswordForm" icon="el-icon-lock" size='small') Пароль
-        el-button(@click="openGroupsForm" icon="el-icon-lock" size='small' v-if="$perms.is_superuser") Группы пользователей
+        el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-download") {{ isNew ? 'Добавить' : 'Сохранить' }}
+        el-button(@click="openPasswordForm" icon="el-icon-lock") Пароль
+        el-button(@click="openGroupsForm" icon="el-icon-lock" v-if="$perms.is_superuser") Группы пользователей
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="sitesDlg = true"
+          icon='el-icon-lock'
+        ) Сайты
 
     el-dialog(
       title="Поменять пароль"
@@ -77,6 +82,14 @@
     )
       profile-groups(
         v-on:done="userGroupAccessDone"
+      )
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.userprofile.sites"
+        v-on:save="profileSitesSave"
       )
 
 </template>
@@ -98,6 +111,7 @@ export default class extends Vue {
   private loading = false
   private passwordFormDialog = false
   private userGroupAccessDialog = false
+  private sitesDlg = false
   private frmMod = {
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,
@@ -183,6 +197,15 @@ export default class extends Vue {
 
   private userGroupAccessDone(profile: IUserProfile) {
     this.userGroupAccessDialog = false
+  }
+
+  private profileSitesSave(selectedSiteIds: number[]) {
+    UserProfileModule.PatchProfile({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$message.success('Принадлежность учётных записей сайтам сохранена')
+    })
+    this.sitesDlg = false
   }
 }
 </script>
