@@ -120,6 +120,10 @@ export default class extends Vue {
     }
   }
 
+  created() {
+    document.title = 'Вход'
+  }
+
   private showPwd() {
     if (this.passwordType === 'password') {
       this.passwordType = ''

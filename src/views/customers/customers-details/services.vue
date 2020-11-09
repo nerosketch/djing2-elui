@@ -102,7 +102,10 @@
       title="Принадлежность услуг к группам"
       :visible.sync="srvAccDialog"
     )
-      service-accessory(v-on:done="srvAccDone")
+      service-accessory(
+        v-on:done="srvAccDone"
+        :groupId="customerGroupGetter"
+      )
 </template>
 
 <script lang="ts">
@@ -138,7 +141,7 @@ export default class extends Vue {
       const { data } = await getServices({
         page: 1,
         page_size: 0,
-        groups: CustomerModule.group
+        groups: this.customerGroupGetter
       }) as any
       this.services = data
     } catch (err) {
@@ -146,6 +149,10 @@ export default class extends Vue {
     } finally {
       this.servicesLoading = false
     }
+  }
+
+  get customerGroupGetter() {
+    return CustomerModule.group
   }
 
   async created() {

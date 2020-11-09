@@ -214,7 +214,7 @@ export default class <T> extends Vue {
     localStorage.setItem(`${this.widthStorageNamePrefix}_${column.property}`, String(newWidth))
   }
 
-  private getColumnWidth(column: TableColumn): string | null {
+  private getColumnWidth(column: IDataTableColumn): string | null {
     return localStorage.getItem(`${this.widthStorageNamePrefix}_${column.prop}`)
   }
 }

@@ -1,4 +1,4 @@
-import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
+import { IDRFAxiosResponsePromise, IDRFListResponse } from '@/api/types'
 
 export interface IGroup {
   pk: number

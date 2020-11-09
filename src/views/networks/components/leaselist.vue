@@ -66,6 +66,11 @@ export default class extends Vue {
       'min-width': 200
     },
     {
+      prop: 'last_update',
+      label: 'Время последнего обновления',
+      'min-width': 200
+    },
+    {
       prop: 'mac_address',
       label: 'MAC Адрес',
       sortable: true,
@@ -99,7 +104,7 @@ export default class extends Vue {
 
   private loadLeases(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,ip_address,lease_time,mac_address,is_dynamic'
+      params['fields'] = 'id,ip_address,lease_time,last_update,mac_address,is_dynamic'
     }
     return getCustomerIpLeases(params)
   }

@@ -23,6 +23,11 @@
       )
         template(v-slot:default="{row}") {{ row.lease_time }}
       el-table-column(
+        label="Последнее обновление"
+        min-width='110'
+      )
+        template(v-slot:default="{row}") {{ row.last_update }}
+      el-table-column(
         label="Дин."
         align="center"
         width="50"

@@ -43,7 +43,8 @@ export interface ICustomerIpLease {
   ip_address: string
   pool: number
   customer: number
-  lease_time: number
+  lease_time: string
+  last_update: string
   mac_address: string
   is_dynamic: boolean
 }
