@@ -58,7 +58,7 @@ export default class extends Vue {
     } catch (err) {
       this.$message.error(err)
     } finally {
-      this.loading = true
+      this.loading = false
     }
   }
 
