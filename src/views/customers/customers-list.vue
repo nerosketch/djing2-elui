@@ -9,6 +9,8 @@
           :heightDiff="100"
           widthStorageNamePrefix='customers'
           ref='tbl'
+          selectable
+          @selection-change="handleSelectionChange"
         )
           template(v-slot:pk="{row}")
             el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
@@ -26,13 +28,26 @@
           template(v-slot:ping="{row}")
             ping-profile(:customer="row")
 
-          el-button(
-            size='mini'
-            icon='el-icon-plus'
-            type='success'
-            @click="addCustomerDialog=true"
-            :disabled="!$perms.customers.add_customer"
-          ) Добавить абонента
+          el-button-group
+            el-button(
+              icon='el-icon-plus'
+              type='success'
+              size='mini'
+              @click="addCustomerDialog=true"
+              :disabled="!$perms.customers.add_customer"
+            ) Добавить абонента
+            el-button(
+              icon='el-icon-close'
+              type='danger'
+              size='mini'
+              @click="removeSelected"
+              v-show="selectedCustomers.length > 0"
+            ) Удалить
+          el-progress(
+            v-if="removingPercentage > 0"
+            :percentage="removingPercentage"
+            color="#f56c6c"
+          )
 
       el-col(:lg='4' :md='6')
         list(
@@ -155,6 +170,8 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+  private selectedCustomers: number[] = []
+  private removingPercentage = 0
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -349,6 +366,25 @@ export default class extends Vue {
 
   private customerGetSelectedObjectPerms(customerId: number, profileGroupId: number) {
     return getCustomerSelectedObjectPerms(customerId, profileGroupId)
+  }
+
+  private handleSelectionChange(customers: ICustomer[]) {
+    this.selectedCustomers = customers.map(c => c.pk)
+  }
+  private removeSelected() {
+    const ln = this.selectedCustomers.length
+    if (ln === 0) {
+      return
+    }
+    this.$confirm('Действительно удалить выбранных абонентов?').then(async() => {
+      for (let i = 0; i < ln; i++) {
+        const c = this.selectedCustomers[i]
+        this.removingPercentage = i * 100 / ln
+        await CustomerModule.DelCustomer(c)
+      }
+      await this.$refs.tbl.GetTableData()
+      this.removingPercentage = 0
+    })
   }
 }
 </script>

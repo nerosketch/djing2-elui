@@ -1,6 +1,6 @@
-<template>
-  <div>
-    <el-table
+<template lang="pug">
+  div
+    el-table(
       v-loading="intLoading"
       v-el-table-infinite-scroll="infGetData"
       :data="tableData"
@@ -10,29 +10,29 @@
       v-bind="$attrs"
       border
       v-on="listeners"
-    >
-      <slot name="columns">
-        <el-table-column
+    )
+      slot(name="columns")
+        el-table-column(
+          v-if="isSelectable"
+          type="selection"
+          width="40"
+          align="center"
+        )
+        el-table-column(
           v-for="column in columns"
           :key="column.prop"
           :sortable="column.sortable ? 'custom' : false"
           :align="column.align"
           :width="getColumnWidth(column)"
           v-bind="column"
-        >
-          <template v-slot:default="{row}">
-            <slot
+        )
+          template(v-slot:default="{row}")
+            slot(
               :name="column.prop"
               :row="row"
-            >
-              {{ row[column.prop] }}
-            </slot>
-          </template>
-        </el-table-column>
-      </slot>
-    </el-table>
-    <slot name="default" />
-  </div>
+            ) {{ row[column.prop] }}
+    slot(name="default")
+
 </template>
 
 <script lang="ts">
@@ -80,6 +80,11 @@ export default class <T> extends Vue {
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
   @Prop({ default: 100 }) private heightDiff!: number
   @Prop({ default: 'width' }) private widthStorageNamePrefix!: string
+  @Prop() private selectable?: boolean
+
+  get isSelectable() {
+    return this.selectable !== undefined
+  }
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {
