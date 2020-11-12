@@ -98,7 +98,7 @@ export const getAllContentTypes = (): IPermContentTypeListAxiosResponsePromise =
   request.get<IPermContentTypeList>('/profiles/perms/content-types/')
 
 export const getUserGroups = (params?: IDRFRequestListParameters): IUserGroupListAxiosResponsePromise =>
-  request.get<IUserGroupList>('/profiles/perms/groups', { params })
+  request.get<IUserGroupList>('/profiles/perms/groups/', { params })
 
 export const getUserGroup = (id: number): IUserGroupAxoisResponsePromise =>
   request.get<IUserGroup>(`/profiles/perms/groups/${id}/`)

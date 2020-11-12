@@ -59,7 +59,7 @@
                   @click="openSaveOnu(row)"
                   :disabled="!$perms.devices.add_device"
                 )
-    el-progress.disable_animations(
+    el-progress.progress_disable_animations(
       v-else
       :percentage="loadPercent"
     )
@@ -169,9 +169,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style>
-.disable_animations * {
-  transition: none !important;
-}
-</style>

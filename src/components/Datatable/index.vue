@@ -13,7 +13,7 @@
     )
       slot(name="columns")
         el-table-column(
-          v-if="isSelectable"
+          v-if="selectable"
           type="selection"
           width="40"
           align="center"
@@ -80,11 +80,7 @@ export default class <T> extends Vue {
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
   @Prop({ default: 100 }) private heightDiff!: number
   @Prop({ default: 'width' }) private widthStorageNamePrefix!: string
-  @Prop() private selectable?: boolean
-
-  get isSelectable() {
-    return this.selectable !== undefined
-  }
+  @Prop({ default: false }) private selectable!: boolean
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {

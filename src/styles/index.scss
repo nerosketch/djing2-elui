@@ -147,3 +147,8 @@ List
 .el-avatar--medium {
   vertical-align: middle;
 }
+
+
+.progress_disable_animations * {
+  transition: none !important;
+}

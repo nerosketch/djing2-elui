@@ -45,6 +45,11 @@ class Customer extends VuexModule implements ICustomer {
   sites: number[] = []
 
   @Mutation
+  public SET_ID_CUSTOMER(id: number) {
+    this.pk = id
+  }
+
+  @Mutation
   public SET_ALL_CUSTOMER(data: ICustomer) {
     this.pk = data.pk
     this.username = data.username

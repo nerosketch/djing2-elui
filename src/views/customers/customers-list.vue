@@ -9,7 +9,7 @@
           :heightDiff="100"
           widthStorageNamePrefix='customers'
           ref='tbl'
-          selectable
+          :selectable="$perms.is_superuser"
           @selection-change="handleSelectionChange"
         )
           template(v-slot:pk="{row}")
@@ -37,17 +37,11 @@
               :disabled="!$perms.customers.add_customer"
             ) Добавить абонента
             el-button(
-              icon='el-icon-close'
-              type='danger'
+              icon='el-icon-set-up'
               size='mini'
-              @click="removeSelected"
-              v-show="selectedCustomers.length > 0"
-            ) Удалить
-          el-progress(
-            v-if="removingPercentage > 0"
-            :percentage="removingPercentage"
-            color="#f56c6c"
-          )
+              @click="sitesDlg=true"
+              v-if="isSomeoneSelected"
+            ) Сайты
 
       el-col(:lg='4' :md='6')
         list(
@@ -110,6 +104,25 @@
         :getSelectedObjectPerms="customerGetSelectedObjectPerms"
         :objId="customerIdGetter"
       )
+    el-dialog(
+      v-if="$perms.is_superuser"
+      title="Принадлежность выбранных абонентов сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        v-on:save="selectedCustomerSitesSave"
+      )
+      el-dialog(
+        width="40%"
+        :visible.sync="sitesDlgProgress"
+        append-to-body
+        :show-close="false"
+        :close-on-press-escape="false"
+        :close-on-click-modal="false"
+      )
+        el-progress.progress_disable_animations(
+          :percentage="sitesProgress"
+        )
 </template>
 
 <script lang="ts">
@@ -171,7 +184,9 @@ export default class extends Vue {
     tbl: DataTableComp
   }
   private selectedCustomers: number[] = []
-  private removingPercentage = 0
+  private sitesDlg = false
+  private sitesDlgProgress = false
+  private sitesProgress = 0
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -371,20 +386,25 @@ export default class extends Vue {
   private handleSelectionChange(customers: ICustomer[]) {
     this.selectedCustomers = customers.map(c => c.pk)
   }
-  private removeSelected() {
+  get isSomeoneSelected() {
+    return this.selectedCustomers.length > 0
+  }
+
+  private async selectedCustomerSitesSave(selectedSiteIds: number[]) {
+    this.sitesProgress = 0
+    this.sitesDlgProgress = true
+
     const ln = this.selectedCustomers.length
-    if (ln === 0) {
-      return
+    for (let i = 0; i < ln; i++) {
+      const customerId = this.selectedCustomers[i]
+      await CustomerModule.SET_ID_CUSTOMER(customerId)
+      await CustomerModule.PatchCustomer({
+        sites: selectedSiteIds
+      })
+      this.sitesProgress = Math.ceil(i * 100 / ln)
     }
-    this.$confirm('Действительно удалить выбранных абонентов?').then(async() => {
-      for (let i = 0; i < ln; i++) {
-        const c = this.selectedCustomers[i]
-        this.removingPercentage = i * 100 / ln
-        await CustomerModule.DelCustomer(c)
-      }
-      await this.$refs.tbl.GetTableData()
-      this.removingPercentage = 0
-    })
+    this.$message.success('Готово')
+    this.sitesDlgProgress = false
   }
 }
 </script>
