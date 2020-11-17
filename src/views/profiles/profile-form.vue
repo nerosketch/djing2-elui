@@ -58,20 +58,21 @@
     el-form-item
       el-button-group
         el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-download") {{ isNew ? 'Добавить' : 'Сохранить' }}
-        el-button(@click="openPasswordForm" icon="el-icon-lock") Пароль
-        el-button(@click="openGroupsForm" icon="el-icon-lock" v-if="$perms.is_superuser") Группы пользователей
-        el-button(
-          v-if="$perms.is_superuser"
-          @click="sitesDlg = true"
-          icon='el-icon-lock'
-        ) Сайты
+        template(v-if="!isNew")
+          el-button(@click="openPasswordForm" icon="el-icon-lock") Пароль
+          template(v-if="$perms.is_superuser")
+            el-button(@click="openGroupsForm" icon="el-icon-lock") Группы пользователей
+            el-button(
+              @click="sitesDlg = true"
+              icon='el-icon-lock'
+            ) Сайты
 
     el-dialog(
       title="Поменять пароль"
       :visible.sync="passwordFormDialog"
     )
       password-form(
-        :profileId="profileId"
+        :profileId="$store.state.userprofile.pk"
         v-on:done="passwordDone"
         v-on:cancel="passwordCancel"
       )
@@ -132,6 +133,9 @@ export default class extends Vue {
       { required: true, message: 'Логин не может быть пустым', trigger: 'blur' },
       { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
     ],
+    birth_day: [
+      { required: true, message: 'Логин не может быть пустым', trigger: 'blur' }
+    ],
     telephone: [
       { required: true, message: 'Номер телефона обязательно', trigger: 'blur' },
       { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
@@ -147,10 +151,6 @@ export default class extends Vue {
       { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
     ]
-  }
-
-  private get profileId() {
-    return UserProfileModule.pk
   }
 
   private onSubmit() {
@@ -171,7 +171,6 @@ export default class extends Vue {
         } catch (err) {
           this.$message.error(err)
           this.loading = false
-          this.$emit('fail')
         }
       } else {
         this.$message.error('Исправь ошибки в форме')

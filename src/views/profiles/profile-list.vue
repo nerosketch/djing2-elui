@@ -29,7 +29,7 @@
         el-button(
           type="danger" size="mini"
           icon='el-icon-close' circle
-          @click="delUserProfile"
+          @click="delUserProfile(row)"
           :disabled="!$perms.is_superuser"
         )
       el-button(
@@ -44,7 +44,6 @@
     )
       profile-form(
         v-on:done="addProfileDone"
-        v-on:fail="addProfileFail"
       )
 </template>
 
@@ -128,10 +127,6 @@ export default class extends Vue {
     this.$router.push({ name: 'profileDetail', params: { profileUname: newProfile.username } })
   }
 
-  private async addProfileFail() {
-    this.profileFormDialog = false
-  }
-
   private rowColor(r: ITableRowClassName) {
     return r.row.is_active ? '' : 'error-row'
   }
@@ -139,7 +134,7 @@ export default class extends Vue {
   private delUserProfile(usr: IUserProfile) {
     this.$confirm('Удалить учётную запись?').then(async() => {
       await delProfile(usr.username)
-      this.$message.success('Учётную запись уалена')
+      this.$message.success('Учётная запись удалена')
     })
   }
 }
