@@ -1,0 +1,18 @@
+{
+	"vuejs el template": {
+		"scope": "vue",
+		"prefix": "scts",
+		"body": [
+			"<script lang=\"ts\">",
+			"import { Component, Vue } from 'vue-property-decorator'",
+			"",
+			"@Component({",
+			"  name: '$1'",
+			"})",
+			"export default class extends Vue {}",
+			"</script>",
+			""
+		],
+		"description": "vuejs element typescript component template"
+	}
+}

@@ -359,8 +359,8 @@ export default class extends Vue {
   }
   // End Breadcrumbs
 
-  private rowColor(r: ITableRowClassName) {
-    return r.row.is_active ? '' : 'error-row'
+  private rowColor({ row }: ITableRowClassName) {
+    return row.is_active ? '' : 'error-row'
   }
 
   get customerIdGetter() {

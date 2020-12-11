@@ -59,10 +59,15 @@
               icon='el-icon-delete'
               @click="delLease(row)"
             )
-    el-button(
-      size='mini' type='success' icon='el-icon-plus',
-      @click="addLease"
-    ) Добавить
+    el-button-group
+      el-button(
+        size='mini' type='success' icon='el-icon-plus',
+        @click="addLease"
+      ) Добавить
+      el-button(
+        size='mini' icon='el-icon-s-data'
+        @click="openSessions"
+      ) Сессии
 
     el-dialog(
       :title="(isAddNewLease ? 'Добавить' : 'Изменить') + ' аренду ip'"
@@ -204,7 +209,7 @@ export default class extends Vue {
       if (valid) {
         this.frmLoading = true
         try {
-          if(this.isAddNewLease) {
+          if (this.isAddNewLease) {
             await CustomerIpLeaseModule.AddLease(this.frmMod)
           } else {
             await CustomerIpLeaseModule.PatchLease(this.frmMod)
@@ -255,7 +260,7 @@ export default class extends Vue {
     await NetworkIpPoolModule.SET_ID(this.frmMod.pool)
     try {
       const ip = await NetworkIpPoolModule.GetFreeIP()
-      if(ip) {
+      if (ip) {
         this.frmMod.ip_address = ip
       } else {
         this.$message.error('Не получилось подобрать ip :(')
@@ -265,6 +270,18 @@ export default class extends Vue {
     } finally {
       this.getFreeIpLoad = false
     }
+  }
+
+  private openSessions() {
+    this.$router.push({
+      name: 'customerSessions',
+      params: {
+        uid: CustomerModule.pk.toString(),
+        gid: CustomerModule.group.toString(),
+        grpName: CustomerModule.group_title,
+        customerName: CustomerModule.full_name
+      }
+    })
   }
 }
 </script>

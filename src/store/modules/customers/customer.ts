@@ -133,6 +133,7 @@ class Customer extends VuexModule implements ICustomer {
       throw Error('Verification failed, please Login again.')
     }
     this.SET_ALL_CUSTOMER(data)
+    return data
   }
 
   @Action
