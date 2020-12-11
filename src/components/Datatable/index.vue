@@ -18,21 +18,32 @@
           width="40"
           align="center"
         )
-        el-table-column(
-          v-for="column in columns"
-          :key="column.prop"
-          :sortable="column.sortable ? 'custom' : false"
-          :align="column.align"
-          :width="getColumnWidth(column)"
-          v-bind="column"
-        )
-          template(v-slot:default="{row}")
-            slot(
-              :name="column.prop"
-              :row="row"
-            ) {{ row[column.prop] }}
+        template(v-for="col in localCols")
+          el-table-column(
+            v-if="col.visible"
+            :key="col.prop"
+            :sortable="col.sortable ? 'custom' : false"
+            :align="col.align"
+            :width="getColumnWidth(col)"
+            v-bind="col"
+          )
+            template(v-slot:default="{row}")
+              slot(
+                :name="col.prop"
+                :row="row"
+              ) {{ row[col.prop] }}
     slot(name="default")
 
+    el-dialog(
+      title="Отображаемые поля таблицы"
+      :visible.sync="editFieldsVisibleloc"
+    )
+      template(v-if="editFieldsVisibleloc")
+        datatable-edit-fields(
+          :columns.sync="localCols"
+          :storePrefix="widthStorageNamePrefix"
+          v-on:done="editFieldsVisibleloc=false"
+        )
 </template>
 
 <script lang="ts">
@@ -40,6 +51,7 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
 import { IDRFListResponse, IDRFRequestListParameters, IDRFAxiosResponseListPromise } from '@/api/types'
 import { TableColumn } from 'element-ui'
+import DatatableEditFields from './edit-fields.vue'
 
 export enum DataTableColumnAlign {
   CENTER = 'center',
@@ -55,6 +67,10 @@ export interface IDataTableColumn {
   'min-width'?: number
 }
 
+export interface ILocalDataTableColumn extends IDataTableColumn {
+  visible: boolean
+}
+
 export class DataTableColumn implements IDataTableColumn {
   sortable = false
   prop = 'Prop'
@@ -67,9 +83,20 @@ interface getTableDataParam {
   limit: number
 }
 
+function loadFieldVisibility(pref: string, col: IDataTableColumn): boolean {
+  const store = localStorage.getItem(`${pref}_visible_${col.prop}`)
+  if (store === null || store === '1') {
+    return true
+  }
+  return false
+}
+
 @Component({
   directives: {
     'el-table-infinite-scroll': elTableInfiniteScroll
+  },
+  components: {
+    DatatableEditFields
   }
 })
 export default class <T> extends Vue {
@@ -81,6 +108,7 @@ export default class <T> extends Vue {
   @Prop({ default: 100 }) private heightDiff!: number
   @Prop({ default: 'width' }) private widthStorageNamePrefix!: string
   @Prop({ default: false }) private selectable!: boolean
+  @Prop({ default: false }) private editFieldsVisible!: boolean
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {
@@ -100,6 +128,23 @@ export default class <T> extends Vue {
   private tblHeight = 0
   private endPage = false
   private loadBusy = false
+  private editFieldsVisibleloc = false
+  private localCols: IDataTableColumn[] = []
+
+  @Watch('editFieldsVisible')
+  private onChVis(i: boolean) {
+    this.editFieldsVisibleloc = i
+  }
+
+  @Watch('editFieldsVisibleloc')
+  private onChLoc(i: boolean) {
+    this.$emit('update:editFieldsVisible', i)
+  }
+
+  @Watch('localCols')
+  private onChLocCols(lcols: IDataTableColumn[]) {
+    this.$emit('update:columns', lcols)
+  }
 
   get listeners() {
     return {
@@ -186,6 +231,10 @@ export default class <T> extends Vue {
   }
 
   created() {
+    this.localCols = this.columns.map(col => Object.assign(col, {
+      visible: loadFieldVisibility(this.widthStorageNamePrefix, col)
+    }))
+
     this.GetTableData()
     window.addEventListener('resize', this.onWinResize)
     this.onWinResize()

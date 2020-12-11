@@ -5,6 +5,7 @@ div
     :getData="loadTasks"
     :tableRowClassName="tableRowClassName"
     :heightDiff='168'
+    :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='tasks'
     ref='tbl'
   )
@@ -21,12 +22,18 @@ div
           span(v-if="row.comment_count > 0") {{ row.comment_count }}
           i.el-icon-view(v-else)
 
-    el-button(
-      icon="el-icon-plus"
-      size='mini'
-      @click="openNew"
-      :disabled="!$perms.tasks.add_task"
-    ) Добавить задачу
+    el-button-group
+      el-button(
+        icon="el-icon-plus"
+        size='mini'
+        @click="openNew"
+        :disabled="!$perms.tasks.add_task"
+      ) Добавить задачу
+      el-button(
+        icon='el-icon-s-operation'
+        size='mini'
+        @click="editFieldsVisible=true"
+      ) Поля
 
   el-dialog(
     title='Создание задачи'
@@ -57,6 +64,7 @@ export default class extends Vue {
     tbl: DataTableComp
   }
   private formDialog = false
+  private editFieldsVisible = false
 
   @Prop({ default: '' })
   private tabUrl!: string
