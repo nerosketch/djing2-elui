@@ -87,7 +87,7 @@
     el-form-item
       el-button-group
         el-button(
-          type="primary" icon='el-icon-download'
+          type="primary" icon='el-icon-upload'
           @click="onSubmit"
           :loading="isLoading"
           :disabled="isFormUntouched"

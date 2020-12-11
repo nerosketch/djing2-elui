@@ -24,7 +24,7 @@ div
       ) Выделить права на чтение
   el-button(
     size="small"
-    icon="el-icon-save"
+    icon='el-icon-upload'
     type="primary"
     :loading="saveLoading"
     :disabled="isUnTouched || !$perms.is_superuser"

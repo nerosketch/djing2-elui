@@ -10,7 +10,7 @@ div
     )
   el-divider
   el-button(
-    icon='el-icon-send'
+    icon='el-icon-upload'
     size='mini'
     type='primary'
     @click="saveFieldsVisible"

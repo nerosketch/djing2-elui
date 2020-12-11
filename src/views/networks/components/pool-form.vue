@@ -50,7 +50,12 @@
     )
       el-input(v-model="frmMod.description" type="textarea" rows="5")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+        :disabled="isFormUntouched"
+      ) Сохранить
 </template>
 
 <script lang="ts">

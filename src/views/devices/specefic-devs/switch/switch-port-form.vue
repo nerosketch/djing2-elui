@@ -20,6 +20,7 @@
       el-input(v-model="frmMod.descr" size='mini')
     el-form-item
       el-button(
+        icon='el-icon-upload'
         type="primary" @click="onSubmit" :loading="loading"
         :disabled="!$perms.devices.change_port"
       ) Сохранить

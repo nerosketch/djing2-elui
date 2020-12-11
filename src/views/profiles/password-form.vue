@@ -25,7 +25,13 @@
       el-input(v-model="frmMod.retype_passw" maxlength="128" type="password")
     el-form-item
       el-button-group
-        el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isEmpty") Сохранить
+        el-button(
+          type="primary"
+          @click="onSubmit"
+          icon="el-icon-download"
+          size='small'
+          :disabled="isEmpty"
+        ) Сохранить
         el-button(@click="$emit('cancel')" icon="el-icon-close" size='small') Отмена
 </template>
 

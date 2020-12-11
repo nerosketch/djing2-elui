@@ -29,6 +29,7 @@
       el-date-picker(v-model="frmMod.date_of_acceptance" type="date" value-format="yyyy-MM-dd" format="d MMM yyyy")
     el-form-item
     el-button(
+      icon='el-icon-upload'
       type='primary' size='mini' @click="onSubmit" :loading="loading"
       :disabled="!$perms.customers.add_passportinfo || !$perms.customers.change_passportinfo"
     ) Сохранить

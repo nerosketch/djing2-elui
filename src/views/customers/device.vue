@@ -26,17 +26,18 @@ el-form(
       el-col(:span='8')
         el-button-group
           el-button(
+            icon='el-icon-upload'
             type="primary" size="mini" @click="onSubmit"
             :loading="isLoading"
           ) Сохранить
           el-button(
+            icon="el-icon-view" size="mini" @click="onGo2Dev"
+            :disabled="!frmMod.device"
+          ) Смотреть
+          el-button(
             type="danger" icon="el-icon-delete"
             size="mini" @click="onClearDevice"
           ) Очистить
-          el-button(
-            icon="el-icon-view" size="mini" @click="onGo2Dev"
-            :disabled="!frmMod.device"
-          )
 </template>
 
 <script lang="ts">
@@ -91,13 +92,15 @@ export default class extends Vue {
     this.$emit('done', newDat)
   }
 
-  private async onClearDevice() {
-    this.isLoading = true
-    const { data } = await CustomerModule.ClearDevice()
-    this.frmMod.device = data.device
-    this.frmMod.dev_port = data.dev_port
-    this.$emit('done', data)
-    this.isLoading = false
+  private onClearDevice() {
+    this.$confirm('Действительно очистить устройство абонента?').then(async() => {
+      this.isLoading = true
+      const { data } = await CustomerModule.ClearDevice()
+      this.frmMod.device = data.device
+      this.frmMod.dev_port = data.dev_port
+      this.$emit('done', data)
+      this.isLoading = false
+    })
   }
 
   private onGo2Dev() {

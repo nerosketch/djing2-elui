@@ -57,7 +57,11 @@
       el-input(v-model="frmMod.password" type="password" autocomplete="new-password")
     el-form-item
       el-button-group
-        el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-download") {{ isNew ? 'Добавить' : 'Сохранить' }}
+        el-button(
+          :type="isNew ? 'success' : 'primary'"
+          @click="onSubmit"
+          icon='el-icon-upload'
+        ) {{ isNew ? 'Добавить' : 'Сохранить' }}
         template(v-if="!isNew")
           el-button(@click="openPasswordForm" icon="el-icon-lock") Пароль
           template(v-if="$perms.is_superuser")

@@ -17,6 +17,7 @@
           )
     el-form-item
       el-button(
+        icon='el-icon-upload'
         type="primary" @click="onSubmit"
         :disabled="!$perms.customers.change_customerstreet"
       ) Сохранить

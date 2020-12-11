@@ -19,7 +19,11 @@
     )
       el-input(v-model="frmMod.domain")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+      ) Сохранить
 </template>
 
 <script lang="ts">

@@ -50,7 +50,13 @@
     )
       el-checkbox(v-model="frmMod.enabled")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+        :disabled="isFormUntouched"
+      ) Сохранить
 </template>
 
 <script lang="ts">
