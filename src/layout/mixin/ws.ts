@@ -55,8 +55,6 @@ export default class extends Vue {
     this.$eventHub.$emit(msg.eventType, msg)
   }
 
-
-
   public playNotify() {
     if (!this.audioInstance) {
       this.audioInstance = new Audio(require('@/assets/mario.mp3'))

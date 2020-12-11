@@ -76,7 +76,7 @@ export default class extends Vue {
         this.$eventHub.$emit('dilim')
         this.$message.info({
           message: msg.text || 'Изменения в высокоприоритетной задаче в которой вы учавствуете',
-          duration: 15000,
+          duration: 300000,
           showClose: true
         })
       }
