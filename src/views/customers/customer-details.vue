@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
 import Finance from './customers-details/finance.vue'
@@ -41,6 +41,7 @@ export default class extends Vue {
   async created() {
     this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
+    this.setCrumbs(CustomerModule.group)
     this.loaded = true
     document.title = CustomerModule.full_name || 'Абонент'
   }
@@ -53,12 +54,7 @@ export default class extends Vue {
     return CustomerModule.balance
   }
 
-  // Breadcrumbs
-  get custGrp() {
-    return CustomerModule.group
-  }
-  @Watch('custGrp')
-  private async onGrpCh(grpId: number) {
+  private async setCrumbs(grpId: number) {
     if (grpId === 0) return
     await BreadcrumbsModule.SetCrumbs([
       {
@@ -84,6 +80,7 @@ export default class extends Vue {
       }
     ] as RouteRecord[])
   }
+
   get grpName() {
     return CustomerModule.group_title
   }
