@@ -111,7 +111,12 @@
         )
           el-input(v-model="frmMod.mac_address")
         el-form-item
-          el-button(type="primary" @click="onSubmit" :loading="frmLoading") Сохранить
+          el-button(
+            icon='el-icon-upload'
+            type="primary"
+            @click="onSubmit"
+            :loading="frmLoading"
+          ) Сохранить
 </template>
 
 <script lang="ts">

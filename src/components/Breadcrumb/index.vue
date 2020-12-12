@@ -1,22 +1,19 @@
-<template>
-  <el-breadcrumb
-    class="app-breadcrumb"
-    separator="/"
-  >
-    <el-breadcrumb-item
+<template lang="pug">
+  el-breadcrumb.app-breadcrumb(separator="/")
+    el-breadcrumb-item
+      i.el-icon-s-home
+    el-breadcrumb-item(
       v-for="(item, index) in breadcrumbs"
       :key="index"
-    >
-      <span
+    )
+      span.no-redirect(
         v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
-        class="no-redirect"
-      >{{ item.meta.title }}</span>
-      <a
+      ) {{ item.meta.title }}
+      a(
         v-else
         @click.prevent="handleLink(item)"
-      >{{ item.meta.title }}</a>
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+      ) {{ item.meta.title }}
+
 </template>
 
 <script lang="ts">
@@ -78,7 +75,7 @@ export default class extends Vue {
   display: inline-block;
   font-size: 14px;
   line-height: 50px;
-  margin-left: 8px;
+  margin-left: 12px;
 
   .no-redirect {
     color: #97a8be;

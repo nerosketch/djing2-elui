@@ -23,7 +23,11 @@
       el-checkbox(v-model="frmMod.is_management") Является-ли вланом управления.
         b {{ frmMod.is_management ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+      ) Сохранить
 </template>
 
 <script lang="ts">

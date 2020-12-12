@@ -4,6 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadPools"
     :heightDiff='170'
+    :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='pools'
     ref='table'
   )
@@ -24,11 +25,17 @@ div
           :disabled="!$perms.networks.delete_networkippool"
         )
 
-    el-button(
-      icon='el-icon-plus' size='mini'
-      @click='openNew'
-      :disabled="!$perms.networks.add_networkippool"
-    ) Добавить
+    el-button-group
+      el-button(
+        icon='el-icon-plus' size='mini'
+        @click='openNew'
+        :disabled="!$perms.networks.add_networkippool"
+      ) Добавить
+      el-button(
+        icon='el-icon-s-operation'
+        size='mini'
+        @click="editFieldsVisible=true"
+      ) Поля
 
   el-dialog(
     :title="dialogTitle"
@@ -126,6 +133,7 @@ export default class extends Vue {
   private pools: INetworkIpPool[] = []
   private dialogVisible = false
   private sitesDlg = false
+  private editFieldsVisible = false
 
   get dialogTitle() {
     let w = 'Изменить'

@@ -8,6 +8,7 @@
     )
     el-divider
     el-button(
+      icon='el-icon-upload'
       type='primary' size='mini'
       @click="saveAccessory"
     ) Сохранить

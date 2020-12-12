@@ -74,7 +74,13 @@
         )
     el-form-item
       el-button-group
-        el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isFormUntouched") Сохранить
+        el-button(
+          type="primary"
+          @click="onSubmit"
+          icon='el-icon-upload'
+          size='small'
+          :disabled="isFormUntouched"
+        ) Сохранить
         el-button(
           v-if="!isNewTask" type="danger" icon="el-icon-delete" size='small'
           @click="onDel"

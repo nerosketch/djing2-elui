@@ -8,6 +8,7 @@
     )
     br
     el-button(
+      icon='el-icon-upload'
       type='primary' size='mini'
       @click="saveResp"
       :loading="loading"

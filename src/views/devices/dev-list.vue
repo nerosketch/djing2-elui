@@ -4,6 +4,7 @@
       :columns="tableColumns"
       :getData="loadDevs"
       :heightDiff='100'
+      :editFieldsVisible.sync="editFieldsVisible"
       widthStorageNamePrefix='devs'
       ref='table'
     )
@@ -42,12 +43,18 @@
             :disabled="!$perms.devices.delete_device"
           )
 
-      el-button(
-        size='mini'
-        icon='el-icon-plus'
-        @click="openNew"
-        :disabled="!$perms.devices.add_device"
-      ) Добавить устройство
+      el-button-group
+        el-button(
+          size='mini'
+          icon='el-icon-plus'
+          @click="openNew"
+          :disabled="!$perms.devices.add_device"
+        ) Добавить устройство
+        el-button(
+          icon='el-icon-s-operation'
+          size='mini'
+          @click="editFieldsVisible=true"
+        ) Поля
 
     el-dialog(
       title="Железка"
@@ -122,6 +129,7 @@ export default class extends Vue {
   private dialogNewDev = false
   private permsDialog = false
   private sitesDlg = false
+  private editFieldsVisible = false
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',

@@ -21,7 +21,7 @@
       el-button(
         type="primary"
         @click="onSubmit"
-        icon="el-icon-download"
+        icon='el-icon-upload'
         size='mini'
         :disabled="isEmpty"
         :loading="loading"

@@ -5,9 +5,6 @@
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
-    <breadcrumb
-      class="breadcrumb-container"
-    />
 
     <form
       class="center-header"
@@ -76,7 +73,6 @@
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { AppModule } from '@/store/modules/app'
-import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { SearchModule } from '@/store/modules/search'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
@@ -87,7 +83,6 @@ import Ws from '@/layout/mixin/ws'
 @Component({
   name: 'Navbar',
   components: {
-    Breadcrumb,
     Hamburger
   }
 })
@@ -228,6 +223,6 @@ export default class extends mixins(Ws) {
   display: inline-block;
   width: 60%;
   line-height: 50px;
-  margin-left: 3%;
+  margin-left: 2%;
 }
 </style>

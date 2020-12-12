@@ -66,6 +66,7 @@
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
       el-button(
+        icon='el-icon-upload'
         type="primary" @click="onSubmit" :loading="loading"
         :disabled="isFormUntouched || !$perms.devices.change_device"
       ) Сохранить

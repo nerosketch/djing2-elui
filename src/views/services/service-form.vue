@@ -56,7 +56,12 @@
         )
 
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+        :disabled="isFormUntouched"
+      ) Сохранить
 </template>
 
 <script lang="ts">

@@ -4,6 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadServices"
     :heightDiff='165'
+    :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='services'
     ref='table'
   )
@@ -25,13 +26,19 @@ div
           :disabled="!$perms.services.delete_service"
         )
 
-    el-button(
-      size='mini'
-      icon='el-icon-plus'
-      type='success'
-      @click="openNew"
-      :disabled="!$perms.services.add_service"
-    ) Добавить
+    el-button-group
+      el-button(
+        size='mini'
+        icon='el-icon-plus'
+        type='success'
+        @click="openNew"
+        :disabled="!$perms.services.add_service"
+      ) Добавить
+      el-button(
+        icon='el-icon-s-operation'
+        size='mini'
+        @click="editFieldsVisible=true"
+      ) Поля
 
   el-dialog(
     :title="(isNew ? 'Создание' : 'Изменение') + ' услуги'"
@@ -147,6 +154,7 @@ export default class extends Vue {
   private dialogVisible = false
   private permsDialog = false
   private sitesDlg = false
+  private editFieldsVisible = false
 
   private async openEdit(srv: IService) {
     await ServiceModule.SET_ALL_SERVICE(srv)

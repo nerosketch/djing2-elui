@@ -4,6 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadVlans"
     :heightDiff='170'
+    :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='vlans'
     ref='table'
   )
@@ -28,11 +29,17 @@ div
           :disabled="!$perms.networks.delete_vlanif"
         )
 
-    el-button(
-      icon='el-icon-plus' size='mini'
-      @click='openNew'
-      :disabled="!$perms.networks.add_vlanif"
-    ) Добавить
+    el-button-group
+      el-button(
+        icon='el-icon-plus' size='mini'
+        @click='openNew'
+        :disabled="!$perms.networks.add_vlanif"
+      ) Добавить
+      el-button(
+        icon='el-icon-s-operation'
+        size='mini'
+        @click="editFieldsVisible=true"
+      ) Поля
 
   el-dialog(
     :title="dialogTitle"
@@ -105,6 +112,7 @@ export default class extends mixins(VlanMixin) {
   ]
   private dialogVisible = false
   private sitesDlg = false
+  private editFieldsVisible = false
 
   get dialogTitle() {
     let w = 'Изменение'

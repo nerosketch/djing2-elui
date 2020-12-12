@@ -13,7 +13,7 @@
       el-button-group
         el-button(
           type="primary" @click="onSubmit"
-          icon="el-icon-download" size='small'
+          icon='el-icon-upload' size='small'
           :disabled="isEmpty || !$perms.is_superuser"
         ) Сохранить
         el-button(

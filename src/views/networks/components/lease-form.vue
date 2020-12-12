@@ -22,7 +22,12 @@
     )
       el-checkbox(v-model="frmMod.is_dynamic") {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type='primary' @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type='primary'
+        @click="onSubmit"
+        :loading="isLoading"
+      ) Сохранить
 </template>
 
 <script lang="ts">

@@ -7,6 +7,7 @@
           :getData="getAllCustomers"
           :tableRowClassName="rowColor"
           :heightDiff="100"
+          :editFieldsVisible.sync="editFieldsVisible"
           widthStorageNamePrefix='customers'
           ref='tbl'
           :selectable="$perms.is_superuser"
@@ -42,6 +43,11 @@
               @click="sitesDlg=true"
               v-if="isSomeoneSelected"
             ) Сайты
+            el-button(
+              icon='el-icon-s-operation'
+              size='mini'
+              @click="editFieldsVisible=true"
+            ) Поля
 
       el-col(:lg='4' :md='6')
         list(
@@ -187,6 +193,7 @@ export default class extends Vue {
   private sitesDlg = false
   private sitesDlgProgress = false
   private sitesProgress = 0
+  private editFieldsVisible = false
 
   private tableColumns: IDataTableColumn[] = [
     {
