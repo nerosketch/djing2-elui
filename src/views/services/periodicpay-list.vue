@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadPeriodics"
-    :heightDiff='165'
+    :heightDiff='189'
     widthStorageNamePrefix='perpay'
     ref='table'
   )

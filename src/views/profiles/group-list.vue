@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadUserGroups"
-    :heightDiff='171'
+    :heightDiff='190'
     widthStorageNamePrefix='upg'
     ref='tbl'
   )

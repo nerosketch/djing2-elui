@@ -4,7 +4,7 @@ div
     :columns="tableColumns"
     :getData="loadTasks"
     :tableRowClassName="tableRowClassName"
-    :heightDiff='168'
+    :heightDiff='188'
     :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='tasks'
     ref='tbl'

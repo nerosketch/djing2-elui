@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadServices"
-    :heightDiff='165'
+    :heightDiff='189'
     :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='services'
     ref='table'

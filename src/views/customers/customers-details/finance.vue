@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadLog"
-    :heightDiff='180'
+    :heightDiff='202'
     widthStorageNamePrefix='customerFin'
     ref='fintbl'
   )

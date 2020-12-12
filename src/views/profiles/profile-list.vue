@@ -4,7 +4,7 @@
       :columns="tableColumns"
       :getData="getAllProfiles"
       :tableRowClassName="rowColor"
-      :heightDiff='171'
+      :heightDiff='190'
       widthStorageNamePrefix='profiles'
       ref='tbl'
     )

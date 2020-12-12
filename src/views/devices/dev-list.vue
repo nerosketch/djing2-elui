@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevs"
-      :heightDiff='100'
+      :heightDiff='118'
       :editFieldsVisible.sync="editFieldsVisible"
       widthStorageNamePrefix='devs'
       ref='table'

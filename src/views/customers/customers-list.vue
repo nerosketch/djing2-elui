@@ -6,7 +6,7 @@
           :columns="tableColumns"
           :getData="getAllCustomers"
           :tableRowClassName="rowColor"
-          :heightDiff="100"
+          :heightDiff="118"
           :editFieldsVisible.sync="editFieldsVisible"
           widthStorageNamePrefix='customers'
           ref='tbl'

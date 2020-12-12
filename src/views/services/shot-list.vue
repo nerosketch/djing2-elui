@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadShots"
-    :heightDiff='165'
+    :heightDiff='189'
     widthStorageNamePrefix='shots'
     ref='table'
   )

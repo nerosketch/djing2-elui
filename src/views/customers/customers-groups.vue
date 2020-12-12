@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="getGroups"
-      :heightDiff='75'
+      :heightDiff='89'
       widthStorageNamePrefix='customerGroups'
     )
       template(v-slot:title="{row}")
