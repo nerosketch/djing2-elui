@@ -3,7 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadVlans"
-    :heightDiff='170'
+    :heightDiff='188'
     :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='vlans'
     ref='table'

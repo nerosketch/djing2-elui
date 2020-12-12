@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="getAllLog"
-      :heightDiff='185'
+      :heightDiff='201'
       widthStorageNamePrefix='profile_log'
     )
 </template>

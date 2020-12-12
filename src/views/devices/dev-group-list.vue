@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevGroups"
-      :heightDiff='80'
+      :heightDiff='96'
       widthStorageNamePrefix='devGroups'
       ref='table'
     )
