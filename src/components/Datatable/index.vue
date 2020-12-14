@@ -105,7 +105,7 @@ export default class <T> extends Vue {
   @Prop({ default: null }) private fields?: string
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
-  @Prop({ default: 100 }) private heightDiff!: number
+  @Prop({ default: 118 }) private heightDiff!: number
   @Prop({ default: 'width' }) private widthStorageNamePrefix!: string
   @Prop({ default: false }) private selectable!: boolean
   @Prop({ default: false }) private editFieldsVisible!: boolean
