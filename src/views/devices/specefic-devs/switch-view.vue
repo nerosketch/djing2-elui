@@ -195,12 +195,12 @@ export default class extends Vue {
       try {
         const { data } = await getPorts(this.device.pk)
         this.allPorts = data.map(p => ({
-            pk: p.pk,
-            num: p.num,
-            descr: p.descr,
-            user_count: p.user_count,
-            isdb: true
-          }))
+          pk: p.pk,
+          num: p.num,
+          descr: p.descr,
+          user_count: p.user_count,
+          isdb: true
+        }))
       } catch (err) {
         this.$message.error(err)
       }

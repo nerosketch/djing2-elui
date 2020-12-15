@@ -66,6 +66,11 @@ export interface IPort {
 }
 export type IPortAxoisResponsePromise = IDRFAxiosResponsePromise<IPort>
 
+export interface IDevTogglePortRequest {
+  port_state: IDevPortState
+  port_snmp_num: number
+}
+
 export interface IDevGroup {
   pk: number
   title: string

@@ -21,7 +21,8 @@ import {
   IScannedZTEONUListAxiosPromise, IScannedZTEONU,
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
   IDevOnuVlanInfoAxiosResponsePromise, IDevOnuVlanInfo,
-  IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise
+  IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise,
+  IDevTogglePortRequest
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -109,8 +110,8 @@ export const changePort = (portId: number, newData: object): IPortAxoisResponseP
 export const delPort = (portId: number) =>
   request.delete(`${basePortUrl}${portId}/`)
 
-export const togglePort = (portId: number, pstate: IDevPortState) =>
-  request.get(`${basePortUrl}${portId}/toggle_port/`, { params: { port_state: pstate } })
+export const togglePort = (portId: number, preq: IDevTogglePortRequest) =>
+  request.get(`${basePortUrl}${portId}/toggle_port/`, { params: preq })
 
 export const scanMacAddressPort = (portId: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${basePortUrl}${portId}/scan_mac_address_port/`)
