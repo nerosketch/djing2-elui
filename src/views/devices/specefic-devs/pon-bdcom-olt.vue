@@ -26,28 +26,28 @@
             el-table-column(
               label="SNMP Ном."
               min-width="97"
+              prop="number"
             )
-              template(v-slot:default="{row}") {{ row.number }}
             el-table-column(
               label="Имя"
               min-width="93"
+              prop="title"
             )
-              template(v-slot:default="{row}") {{ row.title }}
             el-table-column(
               label="Мак"
               min-width="123"
+              prop="mac_addr"
             )
-              template(v-slot:default="{row}") {{ row.mac_addr }}
             el-table-column(
               label="Ур. сигнала"
               min-width="92"
+              prop='signal'
             )
-              template(v-slot:default="{row}") {{ row.signal }}
             el-table-column(
               label="В сети"
               min-width="151"
+              prop='uptime'
             )
-              template(v-slot:default="{row}") {{ row.uptime }}
             el-table-column(
               label='#'
               width='60'

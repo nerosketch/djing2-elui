@@ -7,8 +7,8 @@
   )
     el-table-column(
       label="Владелец телефона"
+      prop='owner_name'
     )
-      template(v-slot:default="{row}") {{ row.owner_name }}
 
     el-table-column(
       label="Телефон"

@@ -41,7 +41,7 @@ export interface IPeriodicPay {
 }
 export type IPeriodicPayList = IDRFListResponse<IPeriodicPay>
 export type IPeriodicPayAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPay>
-export type IPeriodicPayListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayList>
+export type IPeriodicPayListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayList> | IDRFAxiosResponsePromise<IPeriodicPay[]>
 
 // IOneShotPay
 export interface IOneShotPay {

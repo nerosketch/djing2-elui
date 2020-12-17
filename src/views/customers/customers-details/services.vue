@@ -26,25 +26,29 @@
             align="center"
             label="ID"
             width="60"
+            prop='pk'
           )
-            template(v-slot:default="{row}") {{ row.pk }}
           el-table-column(
             label="Услуга"
+            prop='title'
           )
-            template(v-slot:default="{row}") {{ row.title }}
           el-table-column(
             label="Сумма"
+            prop='cost'
           )
-            template(v-slot:default="{row}") {{ row.cost }}
           el-table-column(
             label="Входящая скорость"
+            prop='speed_in'
           )
-            template(v-slot:default="{row}") {{ row.speed_in }}
           el-table-column(
             label="Исходящая скорость"
+            prop='speed_out'
           )
-            template(v-slot:default="{row}") {{ row.speed_out }}
-        el-button(@click="srvAccDialog=true" icon="el-icon-s-tools" type="primary" size='mini') Привязать услуги к этой группе
+        el-button(
+          @click="srvAccDialog=true" icon="el-icon-s-tools"
+          type="primary" size='mini'
+        ) Привязать услуги к этой группе
+
     el-col(:sm='24' :md='12')
       el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
         template(v-slot:header)
@@ -87,7 +91,8 @@
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix Периодический платёж
-        el-button(type='primary' size='mini' disabled) Добавить периодический платёж
+
+        srv-list
 
     el-dialog(
       title="Купить услугу"
@@ -117,13 +122,15 @@ import { ICustomerService } from '@/api/customers/types'
 import BuyService from './buyService.vue'
 import ServiceAccessory from './service-accessory.vue'
 import LastConnectedService from './last-connected-service.vue'
+import SrvList from './per-pay/srv-list.vue'
 
 @Component({
   name: 'Services',
   components: {
     BuyService,
     ServiceAccessory,
-    LastConnectedService
+    LastConnectedService,
+    SrvList
   }
 })
 export default class extends Vue {

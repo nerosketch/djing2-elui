@@ -205,3 +205,8 @@ export interface CustomerActivityReportResult {
   commercial_customers: number
 }
 export type CustomerActivityReportResultAxoisResponsePromise = IDRFAxiosResponsePromise<CustomerActivityReportResult>
+
+export interface IPeriodicPayForIdRequest {
+  periodic_pay_id: number
+  next_pay: string
+}

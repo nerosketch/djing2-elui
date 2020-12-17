@@ -8,13 +8,13 @@
     el-table-column(
       label="Название"
       min-width='200'
+      prop='title'
     )
-      template(v-slot:default="{row}") {{ row.title }}
     el-table-column(
       label="VID"
       min-width='64'
+      prop='vid'
     )
-      template(v-slot:default="{row}") {{ row.vid }}
     el-table-column(
       label="native"
     )

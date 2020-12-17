@@ -1,5 +1,8 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { ICustomer, IBalanceAmountRequest } from '@/api/customers/types'
+import {
+  ICustomer, IBalanceAmountRequest,
+  IPeriodicPayForIdRequest
+} from '@/api/customers/types'
 import {
   getCustomer, addCustomer,
   getCustomerFormInitial,
@@ -7,7 +10,8 @@ import {
   pickService, makeShot,
   stopService, addBalance,
   getCurrentService,
-  setGroupAccessory
+  setGroupAccessory,
+  makePeriodicPay4Customer
 } from '@/api/customers/req'
 import store from '@/store'
 
@@ -204,6 +208,11 @@ class Customer extends VuexModule implements ICustomer {
   @Action
   public async SetGroupAccessory(services: number[]) {
     await setGroupAccessory(this.pk, this.group, services)
+  }
+
+  @Action
+  public MakePeriodicPay(req: IPeriodicPayForIdRequest) {
+    return makePeriodicPay4Customer(this.pk, req)
   }
 }
 

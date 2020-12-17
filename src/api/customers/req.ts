@@ -44,7 +44,8 @@ import {
   CustomerServiceTypeReportResult,
   CustomerServiceTypeReportResultAxoisResponsePromise,
   CustomerActivityReportResultAxoisResponsePromise,
-  CustomerActivityReportResult
+  CustomerActivityReportResult,
+  IPeriodicPayForIdRequest
 } from './types'
 
 // ICustomer
@@ -105,6 +106,9 @@ export const filterDevicePort = (deviceId: number, portId: number): ICustomersOn
 
 export const pingAllIps = (id: number): ISimpleResponseResultAxiosResponsePromise =>
   request.get<ISimpleResponseResult>(`${custApiUrl}${id}/ping_all_ips/`)
+
+export const makePeriodicPay4Customer = (id: number, req: IPeriodicPayForIdRequest) =>
+  request.post<string>(`${custApiUrl}${id}/make_periodic_pay/`, req)
 
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>

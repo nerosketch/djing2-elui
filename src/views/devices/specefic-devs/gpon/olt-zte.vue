@@ -27,28 +27,28 @@
       el-table-column(
         label="Мак"
         min-width="150"
+        prop='mac'
       )
-        template(v-slot:default="{row}") {{ row.mac }}
       el-table-column(
         label="Версия прошивки"
         min-width="150"
+        prop='firmware_ver'
       )
-        template(v-slot:default="{row}") {{ row.firmware_ver }}
       el-table-column(
         label="LOID пароль"
         min-width="100"
+        prop='loid_passw'
       )
-        template(v-slot:default="{row}") {{ row.loid_passw }}
       el-table-column(
         label="LOID"
         min-width="150"
+        prop='loid'
       )
-        template(v-slot:default="{row}") {{ row.loid }}
       el-table-column(
         label="sn"
         min-width="150"
+        prop='sn'
       )
-        template(v-slot:default="{row}") {{ row.sn }}
       el-table-column(
         label="Сохранить"
         min-width="70"

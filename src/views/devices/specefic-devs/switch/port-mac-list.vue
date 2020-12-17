@@ -8,18 +8,18 @@
     el-table-column(
       label="Название"
       min-width='200'
+      prop='name'
     )
-      template(v-slot:default="{row}") {{ row.name }}
     el-table-column(
       label="VID"
       min-width='64'
+      prop='vid'
     )
-      template(v-slot:default="{row}") {{ row.vid }}
     el-table-column(
       label="MAC"
       min-width='121'
+      prop='mac'
     )
-      template(v-slot:default="{row}") {{ row.mac }}
 
 </template>
 

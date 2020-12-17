@@ -41,8 +41,8 @@
       el-table-column(
         label="Описание"
         min-width='267'
+        prop='descr'
       )
-        template(v-slot:default="{row}") {{ row.descr }}
       el-table-column(
         label="Абонов"
         width="70"

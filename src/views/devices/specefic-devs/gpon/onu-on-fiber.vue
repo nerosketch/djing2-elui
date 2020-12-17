@@ -10,23 +10,23 @@ span
     el-table-column(
       label="Тип"
       min-width="80"
+      prop='onu_type'
     )
-      template(v-slot:default="{row}") {{ row.onu_type }}
     el-table-column(
       label="Порт"
       min-width="90"
+      prop='onu_port'
     )
-      template(v-slot:default="{row}") {{ row.onu_port }}
     el-table-column(
       label="Сигнал"
       min-width="90"
+      prop='onu_signal'
     )
-      template(v-slot:default="{row}") {{ row.onu_signal }}
     el-table-column(
       label="Серийник"
       min-width="90"
+      prop='onu_sn'
     )
-      template(v-slot:default="{row}") {{ row.onu_sn }}
 </template>
 
 <script lang="ts">

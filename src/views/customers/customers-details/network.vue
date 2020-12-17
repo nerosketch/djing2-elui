@@ -10,23 +10,23 @@
       el-table-column(
         label="IP Адрес"
         min-width='110'
+        prop='ip_address'
       )
-        template(v-slot:default="{row}") {{ row.ip_address }}
       el-table-column(
         label="MAC Адрес"
         min-width='110'
+        prop='mac_address'
       )
-        template(v-slot:default="{row}") {{ row.mac_address }}
       el-table-column(
         label="Время аренды"
         min-width='110'
+        prop='lease_time'
       )
-        template(v-slot:default="{row}") {{ row.lease_time }}
       el-table-column(
         label="Последнее обновление"
         min-width='110'
+        prop='last_update'
       )
-        template(v-slot:default="{row}") {{ row.last_update }}
       el-table-column(
         label="Дин."
         align="center"

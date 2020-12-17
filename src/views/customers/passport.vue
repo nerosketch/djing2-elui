@@ -39,7 +39,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { IPassportInfo } from '@/api/customers/types'
-import { setPassportInfo, getPassportInfo } from '../../api/customers/req'
+import { setPassportInfo, getPassportInfo } from '@/api/customers/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
 
 @Component({
