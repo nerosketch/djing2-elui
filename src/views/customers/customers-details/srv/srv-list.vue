@@ -11,12 +11,12 @@ div
       label="Заказ."
       width="60"
     )
-    template(v-slot:default="{row}")
-      el-button(
-        type='primary' size='small'
-        @click="buyOpen(row)" :disabled="isServiceAvailable || !$perms.customers.can_buy_service"
-        icon='el-icon-shopping-cart-2' circle
-      )
+      template(v-slot:default="{row}")
+        el-button(
+          type='primary' size='small'
+          @click="buyOpen(row)" :disabled="isServiceAvailable || !$perms.customers.can_buy_service"
+          icon='el-icon-shopping-cart-2' circle
+        )
     el-table-column(
       align="center"
       label="ID"

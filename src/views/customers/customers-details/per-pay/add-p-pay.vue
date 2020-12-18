@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { CurrentPermissions } from '@/store/current-user-permissions'
 import { IPeriodicPay } from '@/api/services/types'
 import { getPeriodicPays } from '@/api/services/req'
