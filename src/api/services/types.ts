@@ -25,7 +25,7 @@ export interface IService {
 }
 export type IServiceList = IDRFListResponse<IService>
 export type IServiceAxoisResponsePromise = IDRFAxiosResponsePromise<IService>
-export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList>
+export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList> | IDRFAxiosResponsePromise<IService[]>
 
 export interface IDRFRequestListParametersService extends IDRFRequestListParameters {
   groups: number

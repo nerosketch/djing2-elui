@@ -38,7 +38,7 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { IService } from '@/api/services/types'
 
 @Component({
-  name: 'buy-service'
+  name: 'BuyService'
 })
 export default class extends Vue {
   private loading = false

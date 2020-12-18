@@ -45,7 +45,9 @@ import {
   CustomerServiceTypeReportResultAxoisResponsePromise,
   CustomerActivityReportResultAxoisResponsePromise,
   CustomerActivityReportResult,
-  IPeriodicPayForIdRequest
+  IPeriodicPayForIdRequest,
+  IPeriodicPayForIdListAxiosResponsePromise,
+  IPeriodicPayForIdList
 } from './types'
 
 // ICustomer
@@ -209,3 +211,12 @@ export const customerServiceTypeReportRequest = (): CustomerServiceTypeReportRes
 
 export const customersActivityReportRequest = (): CustomerActivityReportResultAxoisResponsePromise =>
   request.get<CustomerActivityReportResult>('/customers/activity_report/')
+
+// PeriodicPayForId
+const CustomerPPayUrl = '/customers/periodic-pay/'
+
+export const getAssignedPeriodicPays = (account: number): IPeriodicPayForIdListAxiosResponsePromise =>
+  request.get<IPeriodicPayForIdList>(CustomerPPayUrl, { params: { account } })
+
+export const delAssignedPeriodicPay = (pid: number) =>
+  request.delete(`${CustomerPPayUrl}${pid}/`)

@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { IService } from '@/api/services/types'
+import { IService, IServiceList } from '@/api/services/types'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { getServices } from '@/api/services/req'
 
@@ -61,7 +61,7 @@ export default class extends Vue {
       page: 1,
       page_size: 9999999
     })
-    const selectedIds = data.results.map(s => s.pk)
+    const selectedIds = (data as IServiceList).results.map(s => s.pk)
     this.selected = this.services.map(s => ({
       pk: s.pk,
       state: selectedIds.includes(s.pk),

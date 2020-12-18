@@ -210,3 +210,16 @@ export interface IPeriodicPayForIdRequest {
   periodic_pay_id: number
   next_pay: string
 }
+
+export interface IPeriodicPayForId {
+  id: number
+  periodic_pay: number
+  last_pay: string
+  next_pay: string
+  service_name: string
+  service_calc_type: string
+  service_amount: number
+}
+export type IPeriodicPayForIdList = IDRFListResponse<IPeriodicPayForId>
+// export type IPeriodicPayForIdAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForId>
+export type IPeriodicPayForIdListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForIdList> | IDRFAxiosResponsePromise<IPeriodicPayForId[]>

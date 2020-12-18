@@ -3,8 +3,6 @@
     v-loading='loading'
     size="mini"
   )
-    p deadline {{ deadline }}
-    p pserviceId {{ pserviceId }}
     el-form-item(
       label="Периодический платёж"
       prop='service_id'
@@ -38,13 +36,14 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { CurrentPermissions } from '@/store/current-user-permissions'
 import { IPeriodicPay } from '@/api/services/types'
+import { getPeriodicPays } from '@/api/services/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
 
 @Component({
   name: 'AddPPay'
 })
 export default class extends Vue {
-  @Prop({ required: true }) pservices!: IPeriodicPay[]
+  private pservices: IPeriodicPay[] = []
   private $perms!: CurrentPermissions
   private loading = false
   private pserviceId = 0
@@ -68,6 +67,20 @@ export default class extends Vue {
       this.$emit('done')
     } catch (err) {
       this.$message.error(err)
+    }
+  }
+
+  created() {
+    this.loadPService()
+  }
+
+  private async loadPService() {
+    this.loading = true
+    try {
+      const { data } = await getPeriodicPays()
+      this.pservices = data as IPeriodicPay[]
+    } finally {
+      this.loading = false
     }
   }
 }
