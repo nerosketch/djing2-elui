@@ -22,14 +22,7 @@
       label="Телефон"
       prop='telephone'
     )
-      el-input(v-model="frmMod.telephone")
-        template(v-slot:append)
-          el-button
-            a(:href="`tel:${frmMod.telephone}`") call
-          el-button(
-            @click="openTelsDlg=true"
-            :disabled="!$perms.customers.view_additionaltelephone"
-          ) tels
+      tels-input(v-model="frmMod.telephone")
     el-form-item(
       label="Улица"
       prop='street'
@@ -124,11 +117,6 @@
         v-on:done="openPasportDlg=false"
       )
     el-dialog(
-      title="Дополнительные телефоны"
-      :visible.sync="openTelsDlg"
-    )
-      additional-tels
-    el-dialog(
       title='Создание задачи'
       :visible.sync='taskFormDialog'
     )
@@ -165,18 +153,18 @@ import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
 import CustomerPassword from './customer-password.vue'
-import AdditionalTels from './customers-details/additional-tels.vue'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
+import TelsInput from './tels-input.vue'
 
 @Component({
   name: 'customer-form',
   components: {
-    AdditionalTels,
     TaskForm,
     GwsSelectfield,
     Passport,
-    CustomerPassword
+    CustomerPassword,
+    TelsInput
   }
 })
 export default class extends mixins(FormMixin) {
@@ -187,7 +175,6 @@ export default class extends mixins(FormMixin) {
   private groups: ICustomerGroup[] = []
   private openPasportDlg = false
   private openPasswordDlg = false
-  private openTelsDlg = false
   private taskFormDialog = false
   private taskFormDialogLoading = false
   private sitesDlg = false
