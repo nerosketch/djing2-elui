@@ -155,7 +155,7 @@ import Passport from './passport.vue'
 import CustomerPassword from './customer-password.vue'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
-import TelsInput from './tels-input.vue'
+import TelsInput from './tels/tels-input.vue'
 
 @Component({
   name: 'customer-form',

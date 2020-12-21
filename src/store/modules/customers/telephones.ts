@@ -8,25 +8,25 @@ import {
 
 @Module({ dynamic: true, store, name: 'telephone' })
 class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
-  pk = 0
+  id = 0
   telephone = ''
   owner_name = ''
   customer = 0
 
   @Mutation
-  private RESET_ALL_TEL() {
-    this.pk = 0
+  public RESET_ALL_TEL() {
+    this.id = 0
     this.telephone = ''
     this.owner_name = ''
     this.customer = 0
   }
 
   @Mutation
-  private SET_ALL_TEL(Telephone: IAdditionalTelephone) {
-    this.pk = Telephone.pk
-    this.telephone = Telephone.telephone
-    this.owner_name = Telephone.owner_name
-    this.customer = Telephone.customer
+  private SET_ALL_TEL(tel: IAdditionalTelephone) {
+    this.id = tel.id
+    this.telephone = tel.telephone
+    this.owner_name = tel.owner_name
+    this.customer = tel.customer
   }
 
   @Action
@@ -37,19 +37,17 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
   }
 
   @Action
-  public async AddTelephone(data: IAdditionalTelephone) {
-    await addTelephone(data)
+  public async AddTelephone(tel: object) {
+    const { data } = await addTelephone(tel)
     this.SET_ALL_TEL(data)
+    return data
   }
 
   @Action
-  public async SaveTelephone() {
-    const r = await changeTelephone(this.pk, <IAdditionalTelephone>{
-      telephone: this.telephone,
-      customer: this.customer
-    })
-    this.SET_ALL_TEL(r.data)
-    return r
+  public async PatchTelephone(tel: object) {
+    const { data } = await changeTelephone(this.id, tel)
+    this.SET_ALL_TEL(data)
+    return data
   }
 
   @Action

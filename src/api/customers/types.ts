@@ -94,7 +94,7 @@ export interface ICustomerRawPassword {
 
 // IAdditionalTelephone
 export interface IAdditionalTelephone {
-  pk: number
+  id: number
   telephone: string
   owner_name: string
   customer: number
