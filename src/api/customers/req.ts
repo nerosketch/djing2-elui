@@ -124,10 +124,10 @@ export const getTelephones = (customerId: number): IAdditionalTelephoneListAxios
 export const getTelephone = (id: number): IAdditionalTelephoneAxoisResponsePromise =>
   request.get<IAdditionalTelephone>(`${telBaseUrl}${id}/`)
 
-export const addTelephone = (data: IAdditionalTelephone): IAdditionalTelephoneAxoisResponsePromise =>
+export const addTelephone = (data: object): IAdditionalTelephoneAxoisResponsePromise =>
   request.post<IAdditionalTelephone>(telBaseUrl, data)
 
-export const changeTelephone = (id: number, newData: IAdditionalTelephone): IAdditionalTelephoneAxoisResponsePromise =>
+export const changeTelephone = (id: number, newData: object): IAdditionalTelephoneAxoisResponsePromise =>
   request.patch<IAdditionalTelephone>(`${telBaseUrl}${id}/`, newData)
 
 export const delTelephone = (id: number) =>

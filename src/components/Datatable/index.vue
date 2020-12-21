@@ -112,7 +112,6 @@ export default class <T> extends Vue {
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {
-    console.log('onChangeLoading', l)
     this.intLoading = l
   }
 

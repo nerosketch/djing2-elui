@@ -51,7 +51,6 @@ export default class extends Vue {
   }
   @Watch('onChId')
   private onChangeSite() {
-    console.log('Changed site', SiteModule.name, SiteModule.domain)
     this.frmMod.name = SiteModule.name
     this.frmMod.domain = SiteModule.domain
   }
