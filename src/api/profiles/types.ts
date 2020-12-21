@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { IDRFListResponse, IDRFAxiosResponsePromise } from '@/api/types'
 
 export interface IUserProfile {

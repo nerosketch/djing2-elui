@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '@/api/types'
 import { IGroup } from '@/api/groups/types'
 import { IService } from '@/api/services/types'

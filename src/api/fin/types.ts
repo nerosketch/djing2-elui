@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '@/api/types'
 
 export interface IPayAllTimeGateway {

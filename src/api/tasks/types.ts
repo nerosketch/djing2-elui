@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { IDRFAxiosResponsePromise, IDRFListResponse, ISimpleResponseResult } from '@/api/types'
 
 export enum ITaskPriority {

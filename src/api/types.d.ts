@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { AxiosResponse, AxiosPromise } from 'axios'
 
 export interface IDRFListResponse<T> {

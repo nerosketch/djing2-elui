@@ -124,6 +124,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable camelcase */
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IPort, IScannedPort } from '@/api/devices/types'
 import { PortModule } from '@/store/modules/devices/port'

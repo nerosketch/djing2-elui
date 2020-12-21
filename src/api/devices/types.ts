@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { AxiosPromise } from 'axios'
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
 import { IDRFRequestListParameters, ISimpleResponseResult } from '@/api/types'
@@ -147,7 +148,6 @@ export interface IDevVlan {
 }
 export type IDevVlanListAxiosResponsePromise = AxiosPromise<IDevVlan[]>
 
-
 export interface IDevOnuVlan {
   vid: number
   native: boolean
@@ -163,7 +163,6 @@ export interface IDeviceOnuConfigTemplate {
   configTypeCode: string
   vlanConfig: IDevOnuVlanInfo[]
 }
-
 
 export interface IDevMacPort {
   vid: number

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Module, getModule, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import store from '@/store'
 import { getCurrentAuthPermissions } from '@/api/profiles/req'
