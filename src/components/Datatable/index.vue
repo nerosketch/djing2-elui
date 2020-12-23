@@ -102,7 +102,6 @@ function loadFieldVisibility(pref: string, col: IDataTableColumn): boolean {
 export default class <T> extends Vue {
   @Prop({ default: () => [] }) private columns!: IDataTableColumn[]
   @Prop({ default: () => Promise.resolve([]) }) private getData!: (params: IDRFRequestListParameters) => IDRFAxiosResponseListPromise<T>
-  @Prop({ default: null }) private fields?: string
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
   @Prop({ default: 118 }) private heightDiff!: number
@@ -128,7 +127,7 @@ export default class <T> extends Vue {
   private endPage = false
   private loadBusy = false
   private editFieldsVisibleloc = false
-  private localCols: IDataTableColumn[] = []
+  private localCols: ILocalDataTableColumn[] = []
 
   @Watch('editFieldsVisible')
   private onChVis(i: boolean) {
@@ -141,7 +140,7 @@ export default class <T> extends Vue {
   }
 
   @Watch('localCols')
-  private onChLocCols(lcols: IDataTableColumn[]) {
+  private onChLocCols(lcols: ILocalDataTableColumn[]) {
     this.$emit('update:columns', lcols)
   }
 
@@ -174,9 +173,8 @@ export default class <T> extends Vue {
     const { page } = params
     const allParams = Object.assign(otherParams, {
       page: page || this.page,
-      page_size: 30,
-      ordering: this.$route.query.ordering as string | undefined,
-      fields: this.fields
+      page_size: 60,
+      ordering: this.$route.query.ordering as string | undefined
     })
     let response = await this.getData(allParams)
     this.responseData = response.data

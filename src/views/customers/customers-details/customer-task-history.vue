@@ -73,7 +73,7 @@ export default class extends Vue {
     if (params) {
       const newParams = Object.assign({
         customer: CustomerModule.pk,
-        fields: 'id,author,author_uname,descr,state_str,mode_str,time_of_create,comment_count'
+        fields: 'id,author_uname,descr,state_str,mode_str,time_of_create,comment_count'
       }, params)
       r = await getTasks(newParams)
     } else {

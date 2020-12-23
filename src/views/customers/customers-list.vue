@@ -24,8 +24,6 @@
           template(v-slot:telephone="{row}")
             el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
 
-          template(v-slot:current_service__service__title="{row}") {{ row.service_title }}
-
           template(v-slot:ping="{row}")
             ping-profile(:customer="row")
 
@@ -230,7 +228,7 @@ export default class extends Vue {
       'min-width': 140
     },
     {
-      prop: 'current_service__service__title',
+      prop: 'service_title',
       label: 'Услуга',
       'min-width': 240,
       sortable: true
@@ -274,7 +272,7 @@ export default class extends Vue {
   }
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
-    let street = this.routerQueryStreetGetter
+    const street = this.routerQueryStreetGetter
     let r
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {

@@ -21,15 +21,15 @@ export default class extends Vue {
   protected wsConnect() {
     this.wsInstance = new WebSocket(`wss://${location.host}/ws`)
     // this.wsInstance = new WebSocket('ws://127.0.0.1:8081/ws')
-    this.wsInstance.onopen = () => {
+    /* this.wsInstance.onopen = () => {
       console.log('WS подключенно')
     }
     this.wsInstance.onclose = (eventclose: CloseEvent) => {
       console.log('соеденение закрыто причина: ' + eventclose.reason)
-    }
+    } */
     this.wsInstance.onmessage = (msg: MessageEvent) => {
       let newData = JSON.parse(msg.data)
-      console.log('Сообщение:', msg)
+      // console.log('Сообщение:', msg)
       if (msg.type === 'message') {
         this.onMsg(newData)
       }
