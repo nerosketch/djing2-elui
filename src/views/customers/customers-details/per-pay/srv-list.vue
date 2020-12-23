@@ -90,7 +90,6 @@ export default class extends Vue {
   }
 
   private delP4IdPay(pay: IPeriodicPayForId) {
-    console.log(pay)
     this.$confirm('Удалить периодическое снятие средств?').then(async() => {
       await delAssignedPeriodicPay(pay.id)
       this.loadPIdServices()
