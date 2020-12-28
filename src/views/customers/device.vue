@@ -19,7 +19,7 @@ el-form(
         )
     el-row
       el-col(:span='8')
-        b Порт устройства
+        b Порт оборудования
       el-col(:span='16')
         selected-dev-port(v-model='frmMod.dev_port' :deviceId='frmMod.device')
     el-row

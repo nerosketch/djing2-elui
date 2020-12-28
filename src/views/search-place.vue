@@ -45,7 +45,7 @@
             shadow="hover"
             :body-style="defCardStyle"
           )
-            h3 Устройства не найдены
+            h3 Оборудование не найдено
 </template>
 
 <script lang="ts">

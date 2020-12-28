@@ -9,7 +9,7 @@ const deviceRoutes: RouteConfig = {
       path: '',
       component: () => import(/* webpackChunkName: "device-groups" */ '@/views/devices/dev-group-list.vue'),
       meta: {
-        title: 'Устройства',
+        title: 'Оборудование',
         icon: 'dashboard'
       }
     },

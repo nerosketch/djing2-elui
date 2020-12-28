@@ -131,7 +131,7 @@ export default class extends mixins(VlanMixin) {
         this.$message.error(err)
       }
     } else {
-      this.$message.error('Id устройства не передан')
+      this.$message.error('Id оборудования не передан')
     }
   }
 

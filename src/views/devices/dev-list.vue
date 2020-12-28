@@ -87,7 +87,7 @@
       )
 
     el-dialog(
-      title="Принадлежность устройства сайтам"
+      title="Принадлежность оборудования сайтам"
       :visible.sync="sitesDlg"
     )
       sites-attach(
@@ -216,7 +216,7 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = `Устройства - ${this.grpName}`
+    document.title = `Оборудование - ${this.grpName}`
     this.onGrpCh(this.groupId)
   }
   @Watch('groupId')
@@ -227,7 +227,7 @@ export default class extends Vue {
         path: '/devices',
         meta: {
           hidden: true,
-          title: 'Устройства'
+          title: 'Оборудование'
         }
       },
       {
@@ -269,7 +269,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.GetTableData()
-      this.$message.success('Принадлежность устройства сайтам сохранена')
+      this.$message.success('Принадлежность оборудования сайтам сохранена')
     })
     this.sitesDlg = false
   }

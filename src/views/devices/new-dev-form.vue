@@ -23,7 +23,7 @@
     )
       el-input(v-model="frmMod.comment" size='mini')
     el-form-item(
-      label="Тип устройства"
+      label="Тип оборудования"
       prop='dev_type'
     )
       el-select(v-model="frmMod.dev_type" size='mini')

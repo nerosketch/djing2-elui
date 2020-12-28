@@ -3,7 +3,7 @@
     v-model="inpName"
     :fetch-suggestions="querySearch"
     :loading="loading"
-    placeholder="Начни вводить название или ip устройства"
+    placeholder="Начни вводить название или ip оборудования"
     trigger-on-focus
     @select="handleSelect"
     value-key="comment"

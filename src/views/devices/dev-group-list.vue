@@ -65,7 +65,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Устройства'
+          title: 'Оборудование'
         }
       }
     ] as RouteRecord[])
