@@ -40,7 +40,7 @@ class Customer extends VuexModule implements ICustomer {
   last_connected_service = 0
   last_connected_service_title = ''
   current_service = 0
-  service_title = ''
+  current_service__service__title = ''
   service_id = 0
   is_dynamic_ip = false
   full_name = ''
@@ -78,7 +78,7 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = data.last_connected_service!
     this.last_connected_service_title = data.last_connected_service_title
     this.current_service = data.current_service!
-    this.service_title = data.service_title!
+    this.current_service__service__title = data.current_service__service__title!
     this.service_id = data.service_id!
     this.is_dynamic_ip = data.is_dynamic_ip
     this.full_name = data.full_name!
@@ -113,7 +113,7 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = 0!
     this.last_connected_service_title = ''
     this.current_service = 0!
-    this.service_title = ''!
+    this.current_service__service__title = ''!
     this.service_id = 0
     this.is_dynamic_ip = false
     this.full_name = ''

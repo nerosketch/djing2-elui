@@ -29,7 +29,7 @@ export interface ICustomer {
   last_connected_service: number | null
   last_connected_service_title: string
   current_service: number | null
-  service_title?: string | null
+  current_service__service__title?: string | null
   service_id: number | null
   is_dynamic_ip: boolean
   full_name?: string

@@ -228,7 +228,7 @@ export default class extends Vue {
       'min-width': 140
     },
     {
-      prop: 'service_title',
+      prop: 'current_service__service__title',
       label: 'Услуга',
       'min-width': 240,
       sortable: true
@@ -277,7 +277,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
+        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count'
       })
       if (street) {
         newParams.street = Number(street)
