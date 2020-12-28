@@ -10,7 +10,7 @@ const profileRoutes: RouteConfig = {
       component: () => import(/* webpackChunkName: "profiles" */ '@/views/profiles/index.vue'),
       meta: {
         title: 'Сотрудники',
-        icon: 'dashboard'
+        icon: 'el-icon-s-custom'
       }
     },
     {

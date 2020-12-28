@@ -12,7 +12,7 @@ const taskRoutes: RouteConfig = {
       component: () => import(/* webpackChunkName: "tasks" */ '@/views/tasks/index.vue'),
       meta: {
         title: 'Задачи',
-        icon: 'dashboard',
+        icon: 'el-icon-s-order',
         calc: () => TaskModule.activeTaskCount
       }
     },
