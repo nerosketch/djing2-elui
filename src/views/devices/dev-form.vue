@@ -91,7 +91,7 @@ import FormMixin from '@/utils/forms'
   }
 })
 export default class extends mixins(FormMixin) {
-  private loading = false
+  private loading = DeviceModule.loadProgress
   private groups: IGroup[] = []
 
   private frmRules = {
@@ -110,6 +110,11 @@ export default class extends mixins(FormMixin) {
   private deviceTypeNames: {nm: string, v: IDeviceTypeEnum}[] = []
 
   private frmMod = this.devFrmData
+
+  @Watch('$store.state.devicemodule.loadProgress')
+  private onChLoading(l: boolean) {
+    this.loading = l
+  }
 
   get devFrmData() {
     return {

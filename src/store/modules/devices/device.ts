@@ -32,6 +32,13 @@ class Device extends VuexModule implements IDeviceInterace {
   code = ''
   sites?: number[] = []
 
+  loadProgress = false
+
+  @Mutation
+  private SET_LOADING(l: boolean) {
+    this.loadProgress = l
+  }
+
   @Mutation
   public RESET_ALL_DEV() {
     this.pk = 0
@@ -82,23 +89,38 @@ class Device extends VuexModule implements IDeviceInterace {
 
   @Action
   public async GetDevice(id: number) {
-    const r = await getDevice(id)
-    this.SET_ALL_DEV(r.data)
-    return r
+    this.SET_LOADING(true)
+    try {
+      const r = await getDevice(id)
+      this.SET_ALL_DEV(r.data)
+      return r
+    } finally {
+      this.SET_LOADING(false)
+    }
   }
 
   @Action
   public async AddDevice(newDev: object) {
-    const { data } = await addDevice(newDev)
-    this.SET_ALL_DEV(data)
-    return data
+    this.SET_LOADING(true)
+    try {
+      const { data } = await addDevice(newDev)
+      this.SET_ALL_DEV(data)
+      return data
+    } finally {
+      this.SET_LOADING(false)
+    }
   }
 
   @Action
   public async PatchDevice(newData: object) {
-    const r = await changeDevice(this.pk, newData)
-    this.SET_ALL_DEV(r.data)
-    return r
+    this.SET_LOADING(true)
+    try {
+      const r = await changeDevice(this.pk, newData)
+      this.SET_ALL_DEV(r.data)
+      return r
+    } finally {
+      this.SET_LOADING(false)
+    }
   }
 
   @Action

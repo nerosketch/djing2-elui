@@ -172,8 +172,8 @@ export default class extends Vue {
     }
   ]
 
-  private async openEdit(dev: IDevice) {
-    await DeviceModule.SET_ALL_DEV(dev)
+  private openEdit(dev: IDevice) {
+    DeviceModule.GetDevice(dev.pk)
     this.dialogVisible = true
   }
 
@@ -188,7 +188,7 @@ export default class extends Vue {
       page_size: params.page_size,
       group: this.groupId,
       ordering: params.ordering,
-      fields: 'pk,ip_address,comment,dev_type,dev_type_str,mac_addr,status,is_noticeable,group,man_passw,snmp_extra,sites'
+      fields: 'pk,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group'
     })
   }
 
@@ -256,7 +256,7 @@ export default class extends Vue {
     return getDevObjectsPerms(this.deviceIdGetter)
   }
   private openPermsDialog(d: IDevice) {
-    DeviceModule.SET_ALL_DEV(d)
+    DeviceModule.GetDevice(d.pk)
     this.permsDialog = true
   }
 
@@ -274,7 +274,7 @@ export default class extends Vue {
     this.sitesDlg = false
   }
   private openSitesDlg(dev: IDevice) {
-    DeviceModule.SET_ALL_DEV(dev)
+    DeviceModule.GetDevice(dev.pk)
     this.sitesDlg = true
   }
 }
