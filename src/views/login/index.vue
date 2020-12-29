@@ -1,39 +1,34 @@
-<template>
-  <div class="login-container">
-    <el-form
+<template lang="pug">
+  .login-container
+    el-form.login-form(
       ref="loginForm"
       :model="loginForm"
       :rules="loginRules"
-      class="login-form"
       autocomplete="on"
       label-position="left"
-    >
-      <div class="title-container">
-        <glsl-smog-effect id="smogblock" :width="518" :height="73"/>
-        <h3 class="title">
-          Войти
-        </h3>
-      </div>
+    )
+      .title-container
+        glsl-smog-effect(id="smogblock" :width="518" :height="73")
+        h3.title Войти
 
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <i class="el-icon-user-solid" />
-        </span>
-        <el-input
+      el-form-item(prop="username")
+        span.svg-container
+          i.el-icon-user-solid
+
+        el-input(
           ref="username"
           v-model="loginForm.username"
           name="username"
           type="text"
           autocomplete="on"
           placeholder="логин"
-        />
-      </el-form-item>
+        )
 
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <i class="el-icon-lock" />
-        </span>
-        <el-input
+      el-form-item(prop="password")
+        span.svg-container
+          i.el-icon-lock
+
+        el-input(
           :key="passwordType"
           ref="password"
           v-model="loginForm.password"
@@ -42,25 +37,19 @@
           name="password"
           autocomplete="on"
           @keyup.enter.native="handleLogin"
-        />
-        <span
-          class="show-pwd"
+        )
+        span.show-pwd(
           @click="showPwd"
-        >
-          <i :class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'" />
-        </span>
-      </el-form-item>
+        )
+          i(:class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'")
 
-      <el-button
+      el-button(
         :loading="loading"
         type="primary"
         style="width:100%; margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      >
-        Войти
-      </el-button>
-    </el-form>
-  </div>
+      ) Войти
+
 </template>
 
 <script lang="ts">

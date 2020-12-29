@@ -41,7 +41,7 @@ export default class extends mixins(ResizeMixin) {
   }
 
   @Watch('chartInputData')
-  private initChart({labels, data}: PieChartReport) {
+  private initChart({ labels, data }: PieChartReport) {
     this.chart = echarts.init(this.$el as HTMLDivElement, 'macarons')
     this.chart.setOption({
       tooltip: {

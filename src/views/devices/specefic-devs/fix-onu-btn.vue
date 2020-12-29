@@ -24,7 +24,7 @@ export default class extends Vue {
   get statusType() {
     if (this.buttonStatus > 0) {
       return 'success'
-    } else if(this.buttonStatus < 0) {
+    } else if (this.buttonStatus < 0) {
       return 'danger'
     }
     return 'default'
