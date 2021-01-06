@@ -85,7 +85,6 @@
 
 <script lang="ts">
 import { Component, Watch } from 'vue-property-decorator'
-import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 import { DeviceModule } from '@/store/modules/devices/device'
