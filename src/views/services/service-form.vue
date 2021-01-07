@@ -85,6 +85,9 @@ export default class extends mixins(FormMixin) {
     title: [
       { required: true, message: 'Название надо указать', trigger: 'blur' }
     ],
+    descr: [
+      { required: true, message: 'Описание обязательно', trigger: 'blur' }
+    ],
     speed_in: [
       speedRule,
       { required: true, message: 'Укажи исходящую скорость', trigger: 'blur' }
