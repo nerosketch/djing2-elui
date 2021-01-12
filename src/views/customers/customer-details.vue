@@ -17,6 +17,11 @@
       el-tab-pane(label="История задач" lazy :disabled="!$perms.tasks.view_task")
         keep-alive
           customer-task-history
+      el-tab-pane(label="История трафика" lazy)
+        keep-alive
+          el-card
+            template(v-slot:header) История трафика
+            traf-report
 </template>
 
 <script lang="ts">
@@ -25,13 +30,20 @@ import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
 import Finance from './customers-details/finance.vue'
 import CustomerTaskHistory from './customers-details/customer-task-history.vue'
+import TrafReport from './customers-details/traf-report.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
 
 @Component({
   name: 'CustomerDetails',
-  components: { Info, Services, Finance, CustomerTaskHistory }
+  components: {
+    Info,
+    Services,
+    Finance,
+    CustomerTaskHistory,
+    TrafReport
+  }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private uid!: number

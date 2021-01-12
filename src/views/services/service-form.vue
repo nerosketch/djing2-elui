@@ -73,7 +73,11 @@ import { IServiceTypeEnum } from '@/api/services/types'
 import { ServiceModule } from '@/store/modules/services/service'
 import FormMixin from '@/utils/forms'
 
-const speedRule = { validator: positiveNumberValueAvailable, message: 'Скорость должна быть положительной', trigger: 'change' }
+const speedRule = {
+  validator: positiveNumberValueAvailable,
+  message: 'Скорость должна быть положительной',
+  trigger: 'change'
+}
 
 @Component({
   name: 'service-form'
