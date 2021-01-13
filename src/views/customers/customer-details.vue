@@ -21,7 +21,9 @@
         keep-alive
           el-card
             template(v-slot:header) История трафика
-            traf-report
+            traf-report(
+              :customerId="$store.state.customer.pk"
+            )
 </template>
 
 <script lang="ts">
