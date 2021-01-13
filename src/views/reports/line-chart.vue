@@ -78,10 +78,10 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         legend: {
-          data: ['KБайты', 'Пакеты']
+          data: ['КБайты', 'Пакеты']
         },
         series: [{
-          name: 'Байты',
+          name: 'КБайты',
           itemStyle: {
             color: '#FF005A',
             lineStyle: {
