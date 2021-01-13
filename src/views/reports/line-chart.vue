@@ -78,7 +78,7 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         legend: {
-          data: ['Байты', 'Пакеты']
+          data: ['KБайты', 'Пакеты']
         },
         series: [{
           name: 'Байты',

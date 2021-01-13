@@ -245,6 +245,10 @@ export default class extends Vue {
       'min-width': 170
     },
     {
+      prop: 'traf_octs',
+      label: 'Траф'
+    },
+    {
       prop: 'ping',
       label: 'Ping',
       'min-width': 150
@@ -277,7 +281,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count'
+        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs'
       })
       if (street) {
         newParams.street = Number(street)

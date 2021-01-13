@@ -31,7 +31,7 @@ export default class extends Vue {
     this.load = true
     try {
       const { data } = await getTrafArchive(this.customerId, 1610093467.085588, 1610525853.746703)
-      this.chartDat.octets = data.flatMap(ta => ta.octsum)
+      this.chartDat.octets = data.flatMap(ta => ta.octsum / 1000)
       this.chartDat.packets = data.flatMap(ta => ta.pctsum)
       this.chartDat.dates = data.flatMap(ta => new Date(ta.time))
     } finally {
