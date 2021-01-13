@@ -37,7 +37,6 @@ export interface ICustomer {
   lease_count: number
   sites: number[]
   traf_octs: number | null
-  traf_time: string | null
 }
 export type ICustomerList = IDRFListResponse<ICustomer>
 export type ICustomerAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomer>
