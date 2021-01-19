@@ -5,7 +5,7 @@ el-card(style='margin-bottom:20px;')
       span Инфо
   .user-profile
     .box-center
-      pan-thumb(:image='user.avatar', :height="'100px'", :width="'100px'", :hoverable='false')
+      pan-thumb(:image='user.avatar || defAvaConst', :height="'100px'", :width="'100px'", :hoverable='false')
         div Прив!
         | {{ user.roles }}
     .box-center
@@ -56,7 +56,7 @@ el-card(style='margin-bottom:20px;')
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { IUserProfile } from '@/api/profiles/types'
+import { DEFAULT_USER_AVA, IUserProfile } from '@/api/profiles/types'
 import PanThumb from '@/components/PanThumb/index.vue'
 
 @Component({
@@ -67,6 +67,7 @@ import PanThumb from '@/components/PanThumb/index.vue'
 })
 export default class extends Vue {
   @Prop({ required: true }) private user!: IUserProfile
+  private defAvaConst = DEFAULT_USER_AVA
 }
 </script>
 

@@ -9,7 +9,7 @@
       ref='tbl'
     )
       template(v-slot:avatar="{row}")
-        el-avatar(:src="row.avatar" size='medium' shape="square")
+        el-avatar(:src="row.avatar || defAvaConst" size='medium' shape="square")
 
       template(v-slot:username="{row}")
         router-link(
@@ -51,7 +51,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
-import { IUserProfile } from '@/api/profiles/types'
+import { DEFAULT_USER_AVA, IUserProfile } from '@/api/profiles/types'
 import { getProfiles, delProfile } from '@/api/profiles/req'
 import ProfileForm from './profile-form.vue'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
@@ -75,6 +75,8 @@ export default class extends Vue {
     tbl: DataTableComp
   }
   private profileFormDialog = false
+
+  private defAvaConst = DEFAULT_USER_AVA
 
   private tableColumns: IDataTableColumn[] = [
     {
