@@ -1,11 +1,21 @@
 <template lang="pug">
+div(v-loading='loading')
   line-chart(
     :chartData="chartDat"
+  )
+  span Временной срез: 
+  el-date-picker(
+    v-model="timerange"
+    type="datetimerange"
+    range-separator="-"
+    start-placeholder="Начало среза"
+    end-placeholder="Конец среза"
+    size='mini'
   )
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import LineChart, { ILineChartData } from '@/views/reports/line-chart.vue'
 import { getTrafArchive } from '@/api/traf_stat/req'
 
@@ -19,7 +29,12 @@ export default class extends Vue {
   @Prop({ required: true })
   private customerId!: number
 
-  private load = false
+  private loading = false
+
+  private timerange = [
+    new Date(new Date().setHours(0, 0, 0, 0)),
+    new Date(new Date().setHours(23, 59, 59, 999))
+  ]
 
   private chartDat: ILineChartData = {
     octets: [],
@@ -28,15 +43,22 @@ export default class extends Vue {
   }
 
   private async fetchTrafArchive() {
-    this.load = true
+    const todayStartTime = this.timerange[0]
+    const todayEndTime = this.timerange[1]
+    this.loading = true
     try {
-      const { data } = await getTrafArchive(this.customerId, 1610093467.085588, 1610525853.746703)
+      const { data } = await getTrafArchive(this.customerId, todayStartTime, todayEndTime)
       this.chartDat.octets = data.flatMap(ta => ta.octsum / 1000)
       this.chartDat.packets = data.flatMap(ta => ta.pctsum)
       this.chartDat.dates = data.flatMap(ta => new Date(ta.time))
     } finally {
-      this.load = false
+      this.loading = false
     }
+  }
+
+  @Watch('timerange')
+  private onTimeRangeChanged() {
+    this.fetchTrafArchive()
   }
 
   created() {
