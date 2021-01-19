@@ -18,4 +18,3 @@ export interface IUserSession {
 export type IUserSessionList = IDRFListResponse<IUserSession>
 export type IUserSessionAxoisResponsePromise = IDRFAxiosResponsePromise<IUserSession>
 export type IUserSessionListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserSessionList>
-

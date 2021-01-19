@@ -5,7 +5,6 @@ import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-
   name: 'ProfilesMixin'
 })
 export default class extends Vue {
-
   public get isProfileSuperUser(): boolean {
     return CurrentUserProfileModule.is_superuser
   }

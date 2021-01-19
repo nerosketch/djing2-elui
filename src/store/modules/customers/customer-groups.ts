@@ -1,6 +1,6 @@
 import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { ICustomerGroup, ICustomer } from '@/api/customers/types'
+import { ICustomerGroup } from '@/api/customers/types'
 
 @Module({ dynamic: true, store, name: 'customer-group' })
 class CustomerGroup extends VuexModule implements ICustomerGroup {

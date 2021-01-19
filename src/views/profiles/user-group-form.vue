@@ -24,9 +24,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { UserGroupModule } from '@/store/modules/profiles/user-group'
-import { Form } from 'element-ui'
 
 @Component({
   name: 'UserGroupForm'

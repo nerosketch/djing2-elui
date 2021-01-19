@@ -22,7 +22,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { AxiosPromise } from 'axios'
 import { getSites } from '@/api/sites/req'
 import { ISite } from '@/api/sites/types'
 

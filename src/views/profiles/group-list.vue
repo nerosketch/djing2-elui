@@ -127,7 +127,7 @@ export default class extends Vue {
     })
   }
 
-  private frmDone(ugrp?: IUserGroup) {
+  private frmDone() {
     this.ugFormDialog = false
     this.$refs.tbl.GetTableData()
   }
@@ -137,7 +137,7 @@ export default class extends Vue {
     this.ugpDialog = true
   }
 
-  private editPermsDone(grp: IUserGroup) {
+  private editPermsDone() {
     this.ugpDialog = false
     this.$refs.tbl.GetTableData()
   }

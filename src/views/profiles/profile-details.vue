@@ -29,7 +29,6 @@
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { IUserProfile } from '@/api/profiles/types'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
 import UserCard from './UserCard.vue'

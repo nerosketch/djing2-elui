@@ -105,7 +105,6 @@ import { latinValidator, telephoneValidator, emailValidator } from '@/utils/vali
 import { Form } from 'element-ui'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import PasswordForm from './password-form.vue'
-import { IUserProfile } from '@/api/profiles/types'
 import ProfileGroups from './profile-groups.vue'
 
 @Component({
@@ -186,7 +185,7 @@ export default class extends Vue {
     this.passwordFormDialog = true
   }
 
-  private passwordDone(profile: IUserProfile) {
+  private passwordDone() {
     this.$message.success('Пароль успешно изменён')
     this.passwordFormDialog = false
   }
@@ -198,7 +197,7 @@ export default class extends Vue {
     this.userGroupAccessDialog = true
   }
 
-  private userGroupAccessDone(profile: IUserProfile) {
+  private userGroupAccessDone() {
     this.userGroupAccessDialog = false
   }
 

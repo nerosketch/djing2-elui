@@ -13,7 +13,7 @@ import {
   IPort, IPortAxoisResponsePromise,
   IDevGroupList, IDevGroupListAxiosResponsePromise,
   IDRFRequestListParametersDevGroup,
-  IDevPortState, IDevMacPort, IDevMacPortListAxiosResponsePromise,
+  IDevMacPort, IDevMacPortListAxiosResponsePromise,
   IDevVlan, IDevVlanListAxiosResponsePromise,
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,

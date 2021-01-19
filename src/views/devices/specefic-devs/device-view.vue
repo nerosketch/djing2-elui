@@ -76,7 +76,7 @@ export default class extends Vue {
   }
 
   @Watch('devId')
-  private onDevIdChanged(id: number) {
+  private onDevIdChanged() {
     this.getDevice()
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators'
 import { IPassportInfo } from '@/api/customers/types'
 import store from '@/store'

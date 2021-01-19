@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import { getGateway, delGateway, addGateway, changeGateway } from '@/api/gateways/req'
 import { IGateway } from '@/api/gateways/types'

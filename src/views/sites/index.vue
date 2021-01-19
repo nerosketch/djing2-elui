@@ -103,7 +103,7 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private frmDone(site: ISite) {
+  private frmDone() {
     this.dialogVisible = false
     this.$refs.sitestable.GetTableData()
   }

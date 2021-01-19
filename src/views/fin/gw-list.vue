@@ -133,7 +133,7 @@ export default class extends Vue {
     this.dialogTitle = 'Создать платёжный шлюз'
     this.dialogVisible = true
   }
-  private frmDone(gw: IPayAllTimeGateway) {
+  private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
     this.$message.success('Платёжный шлюз добавлен')

@@ -46,7 +46,7 @@ export default class extends mixins(PermMngMixin) {
 
   private async savePerms() {
     this.saveLoading = true
-    let updatedUser = await UserProfileModule.PatchProfile({
+    await UserProfileModule.PatchProfile({
       user_permissions: this.assignedPerms
     })
     this.saveLoading = false

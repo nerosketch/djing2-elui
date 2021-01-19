@@ -160,7 +160,7 @@ export default class extends Vue {
     this.devFormDialog = true
   }
 
-  private devFrmDone(device: IDevice) {
+  private devFrmDone() {
     this.devFormDialog = false
     this.$message.success('Успешно сохранено')
     this.refreshDev()

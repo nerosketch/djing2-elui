@@ -1,5 +1,5 @@
 <template lang="pug">
-svg(version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 14.032 14.032" style="enable-background:new 0 0 14.032 14.032;" xml:space="preserve")
+svg(version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 14.032 14.032" style="enable-background:new 0 0 14.032 14.032;" xml:space="preserve")
   g
     g
       path(:style="frmOutlineColor" d="M12.797,0H1.234C0.553,0,0.001,0.554,0.001,1.234v11.564c0,0.681,0.554,1.234,1.234,1.234h11.563 c0.681,0,1.234-0.554,1.234-1.234V1.234C14.033,0.554,13.478,0,12.797,0z M12.881,12.798c0,0.046-0.038,0.083-0.084,0.083H1.234 c-0.046,0-0.084-0.037-0.084-0.083V1.234c0-0.046,0.038-0.083,0.084-0.083h11.563c0.046,0,0.084,0.037,0.084,0.083V12.798z")

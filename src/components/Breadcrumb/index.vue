@@ -19,7 +19,7 @@
 <script lang="ts">
 import pathToRegexp from 'path-to-regexp'
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { RouteRecord, Route } from 'vue-router'
+import { RouteRecord } from 'vue-router'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 @Component({

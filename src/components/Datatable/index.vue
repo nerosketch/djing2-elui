@@ -50,7 +50,6 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
 import { IDRFListResponse, IDRFRequestListParameters, IDRFAxiosResponseListPromise } from '@/api/types'
-import { TableColumn } from 'element-ui'
 import DatatableEditFields from './edit-fields.vue'
 
 export enum DataTableColumnAlign {
@@ -103,7 +102,7 @@ export default class <T> extends Vue {
   @Prop({ default: () => [] }) private columns!: IDataTableColumn[]
   @Prop({ default: () => Promise.resolve([]) }) private getData!: (params: IDRFRequestListParameters) => IDRFAxiosResponseListPromise<T>
   @Prop({ default: false }) private loading!: boolean
-  @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
+  @Prop({ default: () => ('') }) private tableRowClassName!: (r: object) => string
   @Prop({ default: 118 }) private heightDiff!: number
   @Prop({ default: 'width' }) private widthStorageNamePrefix!: string
   @Prop({ default: false }) private selectable!: boolean
@@ -257,7 +256,7 @@ export default class <T> extends Vue {
     }
   }
 
-  private onFieldWidthChange(newWidth: number, oldWidth: number, column: any, event: MouseEvent) {
+  private onFieldWidthChange(newWidth: number, oldWidth: number, column: any) {
     localStorage.setItem(`${this.widthStorageNamePrefix}_${column.property}`, String(newWidth))
   }
 

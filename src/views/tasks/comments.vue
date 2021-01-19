@@ -71,7 +71,7 @@ export default class extends Vue {
 
   private async onSendComment() {
     this.loading = true
-    const { data } = await addComment(this.currentComment, TaskModule.id)
+    await addComment(this.currentComment, TaskModule.id)
     this.currentComment = ''
     await this.loadComments()
     this.loading = false

@@ -39,7 +39,6 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { PayAllTimeGatewayModule } from '@/store/modules/fin/index'
-import { latinValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
 
 @Component({

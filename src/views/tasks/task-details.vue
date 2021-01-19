@@ -15,7 +15,6 @@
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { TaskModule } from '@/store/modules/tasks/tasks'
-import { IUserProfile } from '@/api/profiles/types'
 import TaskForm from './task-form.vue'
 import TaskInfo from './task-info.vue'
 import Comments from './comments.vue'

@@ -299,7 +299,7 @@ export default class extends Vue {
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.pk.toString() } })
   }
 
-  private onStreetClick(item: ICustomerStreet, num: number) {
+  private onStreetClick(item: ICustomerStreet) {
     let qr = Object.assign({}, this.$route.query) as Record<string, any>
     const qstreet = qr.street
     delete qr.street

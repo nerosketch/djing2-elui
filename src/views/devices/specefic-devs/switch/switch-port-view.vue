@@ -25,7 +25,7 @@ export default class extends Vue {
   private loading = false
 
   @Watch('portId')
-  private onPortChange(portId: number) {
+  private onPortChange() {
     this.loadCustomers()
   }
 

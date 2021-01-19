@@ -31,7 +31,7 @@ span
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { IScannedZTEONU, IDevFiber } from '@/api/devices/types'
+import { IScannedZTEONU } from '@/api/devices/types'
 import { scanFiberOnuList } from '@/api/devices/req'
 
 interface ITableRowClassName {
@@ -49,7 +49,7 @@ export default class extends Vue {
   private lloading = false
 
   @Watch('fiberAddr')
-  private onChFibAddr(addr: number) {
+  private onChFibAddr() {
     this.loadFibers()
   }
 

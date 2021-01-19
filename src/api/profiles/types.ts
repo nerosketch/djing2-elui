@@ -59,3 +59,5 @@ export interface IUserGroup {
 export type IUserGroupList = IDRFListResponse<IUserGroup>
 export type IUserGroupAxoisResponsePromise = IDRFAxiosResponsePromise<IUserGroup>
 export type IUserGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserGroupList>
+
+export const DEFAULT_USER_AVA = '/img/user_ava_min.gif'

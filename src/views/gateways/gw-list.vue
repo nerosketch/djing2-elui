@@ -111,7 +111,7 @@ export default class extends mixins(GwsMethods) {
     this.gwFormDialog = true
   }
 
-  private gwFrmDone(gw: IGateway) {
+  private gwFrmDone() {
     this.gwFormDialog = false
     this.$message.success('Шлюз доступа сохранён')
     this.loadGateways()
