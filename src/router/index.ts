@@ -8,6 +8,7 @@ import taskRoutes from './modules/tasks'
 import profileRoutes from './modules/profiles'
 import finRoutes from './modules/fin'
 import sitesRoutes from './modules/sites'
+import sormRoutes from './modules/sorm'
 
 Vue.use(Router)
 
@@ -128,6 +129,7 @@ export const constantRoutes: RouteConfig [] = [
   },
   finRoutes,
   sitesRoutes,
+  sormRoutes,
   {
     path: '*',
     redirect: '/404',
