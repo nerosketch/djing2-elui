@@ -2,14 +2,14 @@
   .app-container
     el-card(shadow="never" :loading='loading')
       template(v-slot:header)
-        .clearfix Поиск по: {{ $store.state.search.searchStr }}
+        .clearfix Поиск по: {{ searchTextGetter }}
       el-row(:gutter='5')
         el-col(:sm='24' :md='12')
-          template(v-if="$store.state.search.customers.length > 0")
+          template(v-if="customers.length > 0")
             el-card(
               shadow="hover"
               :body-style="defCardStyle"
-              v-for="(c, i) in $store.state.search.customers"
+              v-for="(c, i) in customers"
               :key="i"
             )
               div
@@ -28,11 +28,11 @@
           )
             h3 Абоненты не найдены
         el-col(:sm='24' :md='12')
-          template(v-if="$store.state.search.devices.length > 0")
+          template(v-if="devices.length > 0")
             el-card(
               shadow="hover"
               :body-style="defCardStyle"
-              v-for="(d, i) in $store.state.search.devices"
+              v-for="(d, i) in devices"
               :key="i"
             )
               div
@@ -62,7 +62,20 @@ export default class extends Vue {
     return { padding: '10px 13px' }
   }
 
-  @Watch('$store.state.search.searchStr')
+  get searchTextGetter() {
+    return SearchModule.searchStr
+  }
+
+  get customers() {
+    return SearchModule.accounts
+  }
+
+  get devices() {
+    return SearchModule.devices
+  }
+
+
+  @Watch('searchTextGetter')
   private async doSearch() {
     SearchModule.DoSearch()
   }
