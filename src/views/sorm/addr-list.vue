@@ -66,13 +66,11 @@ export default class extends Vue {
     {
       prop: 'ao_level_name',
       label: 'Уровень адресного объекта',
-      sortable: true,
       'min-width': 250
     },
     {
       prop: 'ao_type_name',
       label: 'Тип адресного объекта',
-      sortable: true,
       'min-width': 250
     },
     {
