@@ -1,7 +1,11 @@
 /* eslint-disable camelcase */
 import { AxiosPromise } from 'axios'
-import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
-import { IDRFRequestListParameters, ISimpleResponseResult } from '@/api/types'
+import {
+  IDRFAxiosResponsePromise,
+  IDRFListResponse,
+  IDRFRequestListParameters,
+  ISimpleResponseResult
+} from '@/api/types'
 
 export enum IDeviceTypeEnum {
   UNKNOWN = 0,

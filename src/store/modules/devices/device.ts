@@ -1,6 +1,9 @@
 /* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import store from '@/store'
+import {
+  IDevice, IDeviceInterace,
+  IDeviceTypeEnum
+} from '@/api/devices/types'
 import {
   getDevice, delDevice,
   addDevice, changeDevice,
@@ -11,7 +14,7 @@ import {
   removeFromOlt,
   fixOnu
 } from '@/api/devices/req'
-import { IDevice, IDeviceInterace, IDeviceTypeEnum } from '@/api/devices/types'
+import store from '@/store'
 
 @Module({ dynamic: true, store, name: 'devicemodule' })
 class Device extends VuexModule implements IDeviceInterace {
