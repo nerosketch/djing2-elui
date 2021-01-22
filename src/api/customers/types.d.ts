@@ -168,6 +168,7 @@ export interface IPassportInfo {
   number: string
   distributor: string
   date_of_acceptance: string
+  division_code: string
 }
 export type IPassportInfoList = IDRFListResponse<IPassportInfo>
 export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
