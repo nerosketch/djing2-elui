@@ -1,25 +1,61 @@
 <template lang="pug">
  .pan-item(
     :style="{zIndex: zIndex, height: height, width: width}"
+    @click="changeAva"
   )
     .pan-info
       .pan-info-roles-container
     .pan-thumb(
+      v-if="isIam"
       :style="{backgroundImage: `url(${image})`}"
     )
+    template(v-else)
+      img.pan-thumb(
+        :src="image"
+        ref="avaimg"
+      )
+      input(type='file' ref='avainput' hidden accept="image/png, image/jpeg, image/gif")
 </template>
 
 <script lang="ts">
+import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({
   name: 'PanThumb'
 })
 export default class extends Vue {
+  public readonly $refs!: {
+    avainput: HTMLInputElement,
+    avaimg: HTMLImageElement
+  }
+
   @Prop({ required: true }) private image!: string
   @Prop({ default: '150px' }) private width!: string
   @Prop({ default: '150px' }) private height!: string
   @Prop({ default: 1 }) private zIndex!: number
+
+  private changeAva() {
+    if (!this.isIam) {
+      return
+    }
+    this.$refs.avainput.onchange = (ev: any) => {
+      const reader = new FileReader()
+      const img = this.$refs.avaimg
+      reader.onload = (e: any) => { // e: ProgressEvent<FileReader>
+        img.src = e.target.result
+        CurrentUserProfileModule.PatchAvatar(ev.target.files[0]).then(() => {
+          this.$message.success('Аватар успешно сохранён')
+        })
+      }
+      reader.readAsDataURL(ev.target.files[0])
+    }
+    this.$refs.avainput.click()
+  }
+
+  get isIam() {
+    return this.$store.state.userprofile.pk === CurrentUserProfileModule.pk
+  }
 }
 </script>
 

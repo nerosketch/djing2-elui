@@ -73,6 +73,16 @@ export const setResponsibilityGroups = (uname: string, groups: number[]) =>
 export const setProfilePassword = (uname: string, newPassw: IPasswordUpdateForm) =>
   request.put(`${baseAccUrl}${uname}/change_password/`, newPassw)
 
+export const changeAvatar = (uname: string, ava: HTMLImageElement): IUserProfileAxoisResponsePromise => {
+  const formData = new FormData()
+  formData.append('avatar', ava as any)
+  return request.patch<IUserProfile>(`${baseAccUrl}${uname}/`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
 export const login = (data: any) =>
   request({
     url: '/profiles/token-auth/',
