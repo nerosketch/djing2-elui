@@ -31,7 +31,7 @@ export default class extends Vue {
   @Prop({ default: 1 }) private zIndex!: number
 
   private changeAva() {
-    if (!this.isIam) {
+    if (!this.isIam()) {
       return
     }
     this.$refs.avainput.onchange = (ev: any) => {
@@ -48,7 +48,7 @@ export default class extends Vue {
     this.$refs.avainput.click()
   }
 
-  get isIam() {
+  private isIam() {
     return this.$store.state.userprofile.pk === CurrentUserProfileModule.pk
   }
 }
