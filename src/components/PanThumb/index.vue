@@ -5,16 +5,11 @@
   )
     .pan-info
       .pan-info-roles-container
-    .pan-thumb(
-      v-if="isIam"
-      :style="{backgroundImage: `url(${image})`}"
+    img.pan-thumb(
+      :src="image"
+      ref="avaimg"
     )
-    template(v-else)
-      img.pan-thumb(
-        :src="image"
-        ref="avaimg"
-      )
-      input(type='file' ref='avainput' hidden accept="image/png, image/jpeg, image/gif")
+    input(type='file' ref='avainput' hidden accept="image/png, image/jpeg, image/gif")
 </template>
 
 <script lang="ts">
