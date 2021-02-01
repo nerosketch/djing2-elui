@@ -1,14 +1,17 @@
+import { pushSendNotifications } from "@/api/push/req"
+
 type SubscribeResponseCallback = (v: Response) => Response | PromiseLike<Response> | void
 type ShowMessageCallback = (message: string) => void
 
 export default class PushNotificationsClass {
-  private isPushEnabled = false
+  public isPushEnabled = false
   private registration?: ServiceWorkerRegistration
   private VAPID_KEY = 'BFeowi8N_dBBpJRIECUv-gu5ckTEP-W0CjjuzbMBbnTnfekbXsH3W_smTU37VgleRt7ry_q9eo6UD7vNngxXHcc'
   private showMsgCallback?: ShowMessageCallback
 
   constructor(showMsgCallback?: ShowMessageCallback) {
     this.showMsgCallback = showMsgCallback
+    this.isPushEnabled = this.getQuestionAnswer()
     // Do everything if the Browser Supports Service Worker
     if ('serviceWorker' in navigator) {
       const serviceWorker = 'service-worker.js'
@@ -20,6 +23,23 @@ export default class PushNotificationsClass {
       // If service worker not supported, show warning to the message box
       this.showMessage('Service Worker is not supported in your Browser!')
     }
+  }
+
+  public wasThereQuestion() {
+    const v = localStorage.getItem('pushEnabled')
+    if (v) {
+      return v in ['0', '1']
+    }
+    return false
+  }
+
+  public setQuestionAnswer(answer: boolean) {
+    localStorage.setItem('pushEnabled', answer ? '1': '0')
+    this.isPushEnabled = answer
+  }
+
+  private getQuestionAnswer() {
+    return localStorage.getItem('pushEnabled') === '1'
   }
 
   public toggleSubscribe() {
@@ -68,7 +88,7 @@ export default class PushNotificationsClass {
             // Show unsubscribe button instead
             // subBtn.textContent = 'Unsubscribe to Push Messaging'
             // subBtn.disabled = false
-            this.isPushEnabled = true
+            this.setQuestionAnswer(true)
             this.showMessage('Successfully subscribed for Push Notification')
           }
         })
@@ -110,7 +130,7 @@ export default class PushNotificationsClass {
               // Show unsubscribe button instead
               // subBtn.textContent = 'Unsubscribe to Push Messaging'
               // subBtn.disabled = false
-              this.isPushEnabled = true
+              this.setQuestionAnswer(true)
               this.showMessage('Successfully subscribed for Push Notification')
             }
           })
@@ -158,7 +178,7 @@ export default class PushNotificationsClass {
               .then(() => {
                 // subBtn.textContent = 'Subscribe to Push Messaging'
                 this.showMessage('Successfully unsubscribed for Push Notification')
-                this.isPushEnabled = false
+                this.setQuestionAnswer(false)
                 // subBtn.disabled = false
               }).catch(() => {
                 // subBtn.textContent = 'Unsubscribe to Push Messaging'
@@ -189,11 +209,6 @@ export default class PushNotificationsClass {
       group: 'group_name'
     }
 
-    fetch('/webpush/save_information', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-      credentials: 'include'
-    }).then(callback)
+    pushSendNotifications(data).then(callback)
   }
 }

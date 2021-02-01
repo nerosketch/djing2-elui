@@ -136,6 +136,35 @@ export default class extends mixins(Ws) {
       this.$perms.SET_IS_SUPERUSER(profile.is_superuser || false)
     })
     this.$perms.GetCurrentAuthPermissions()
+
+    // Question about push subscription
+    if (!this.$messagingMng.wasThereQuestion()) {
+      this.$confirm('Вы хотите получать уведомления из билинга?', 'Уведомления', {
+        type: 'info',
+        showClose: false,
+        closeOnClickModal: false,
+        closeOnPressEscape: false,
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then(() => {
+        this.pushSubscribe()
+      }).catch(() => {
+        this.$confirm('Точно не нужно? Можно пропустить всё важное и интересное :)', {
+          type: 'info',
+          showClose: false,
+          confirmButtonText: 'Ладно',
+        cancelButtonText: 'Точно нет!'
+        }).then(() => {
+          this.pushSubscribe()
+        }).catch(() => {
+          this.$messagingMng.setQuestionAnswer(false)
+        })
+      })
+    }
+  }
+
+  private pushSubscribe() {
+    this.$messagingMng.toggleSubscribe()
   }
 }
 </script>
