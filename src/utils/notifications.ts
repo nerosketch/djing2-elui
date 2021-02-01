@@ -14,7 +14,7 @@ export default class PushNotificationsClass {
     this.isPushEnabled = this.getQuestionAnswer()
     // Do everything if the Browser Supports Service Worker
     if ('serviceWorker' in navigator) {
-      const serviceWorker = 'service-worker.js'
+      const serviceWorker = '/service-worker.js'
       navigator.serviceWorker.register(serviceWorker).then(reg => {
         this.registration = reg
         this.initialiseState(reg)

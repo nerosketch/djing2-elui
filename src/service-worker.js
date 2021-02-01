@@ -6,7 +6,7 @@
 // }
 
 // push
-self.addEventListener('push', event => {
+self.addEventListener('push', function(event) {
   const message = JSON.parse(event.data.text())
   console.log('MSG:', message)
   event.waitUntil(
