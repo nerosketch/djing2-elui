@@ -1,21 +1,19 @@
-import { pushSendNotifications } from "@/api/push/req"
+import { getVapidPublicKey, pushSendNotifications } from '@/api/push/req'
+import { AxiosPromise, AxiosResponse } from 'axios'
 
-type SubscribeResponseCallback = (v: Response) => Response | PromiseLike<Response> | void
+type SubscribeResponseCallback = (v: AxiosResponse) => AxiosResponse | AxiosPromise | void
 type ShowMessageCallback = (message: string) => void
 
 export default class PushNotificationsClass {
-  public isPushEnabled = false
   private registration?: ServiceWorkerRegistration
-  private VAPID_KEY = 'BFeowi8N_dBBpJRIECUv-gu5ckTEP-W0CjjuzbMBbnTnfekbXsH3W_smTU37VgleRt7ry_q9eo6UD7vNngxXHcc'
+  private VAPID_KEY?: string
   private showMsgCallback?: ShowMessageCallback
 
   constructor(showMsgCallback?: ShowMessageCallback) {
     this.showMsgCallback = showMsgCallback
-    this.isPushEnabled = this.getQuestionAnswer()
     // Do everything if the Browser Supports Service Worker
     if ('serviceWorker' in navigator) {
-      const serviceWorker = '/service-worker.js'
-      navigator.serviceWorker.register(serviceWorker).then(reg => {
+      navigator.serviceWorker.register('/service-worker.js').then(reg => {
         this.registration = reg
         this.initialiseState(reg)
       })
@@ -23,27 +21,30 @@ export default class PushNotificationsClass {
       // If service worker not supported, show warning to the message box
       this.showMessage('Service Worker is not supported in your Browser!')
     }
+
+    getVapidPublicKey().then(vk => {
+      this.VAPID_KEY = vk.data
+    })
   }
 
   public wasThereQuestion() {
     const v = localStorage.getItem('pushEnabled')
     if (v) {
-      return v in ['0', '1']
+      return ['0', '1'].includes(v)
     }
-    return false
+    return ['denied', 'granted'].includes(Notification.permission)
   }
 
   public setQuestionAnswer(answer: boolean) {
-    localStorage.setItem('pushEnabled', answer ? '1': '0')
-    this.isPushEnabled = answer
+    localStorage.setItem('pushEnabled', answer ? '1' : '0')
   }
 
   private getQuestionAnswer() {
-    return localStorage.getItem('pushEnabled') === '1'
+    return Notification.permission === 'granted'
   }
 
   public toggleSubscribe() {
-    if (this.isPushEnabled) {
+    if (this.getQuestionAnswer()) {
       return this.unsubscribe(this.registration)
     }
     return this.subscribe(this.registration)
@@ -88,7 +89,7 @@ export default class PushNotificationsClass {
             // Show unsubscribe button instead
             // subBtn.textContent = 'Unsubscribe to Push Messaging'
             // subBtn.disabled = false
-            this.setQuestionAnswer(true)
+            // this.setQuestionAnswer(true)
             this.showMessage('Successfully subscribed for Push Notification')
           }
         })
@@ -110,16 +111,18 @@ export default class PushNotificationsClass {
 
     // Get the Subscription or register one
     reg.pushManager.getSubscription().then(subscription => {
-      const applicationServerKey = this.VAPID_KEY
       let options = {}
       // Check if Subscription is available
       if (subscription) {
         return subscription
       }
 
+      if (!this.VAPID_KEY) {
+        throw Error('VAPID KEY does not exists')
+      }
       options = {
         userVisibleOnly: true,
-        applicationServerKey: this.urlB64ToUint8Array(applicationServerKey)
+        applicationServerKey: this.urlB64ToUint8Array(this.VAPID_KEY)
       }
       // If not, register one
       reg.pushManager.subscribe(options)
@@ -130,7 +133,7 @@ export default class PushNotificationsClass {
               // Show unsubscribe button instead
               // subBtn.textContent = 'Unsubscribe to Push Messaging'
               // subBtn.disabled = false
-              this.setQuestionAnswer(true)
+              // this.setQuestionAnswer(true)
               this.showMessage('Successfully subscribed for Push Notification')
             }
           })
@@ -178,7 +181,7 @@ export default class PushNotificationsClass {
               .then(() => {
                 // subBtn.textContent = 'Subscribe to Push Messaging'
                 this.showMessage('Successfully unsubscribed for Push Notification')
-                this.setQuestionAnswer(false)
+                // this.setQuestionAnswer(false)
                 // subBtn.disabled = false
               }).catch(() => {
                 // subBtn.textContent = 'Unsubscribe to Push Messaging'
