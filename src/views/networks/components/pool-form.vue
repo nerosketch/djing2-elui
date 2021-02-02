@@ -130,13 +130,18 @@ export default class extends mixins(FormMixin) {
       if (valid) {
         this.isLoading = true
         let newDat
-        if (this.isNewPool) {
-          newDat = await NetworkIpPoolModule.AddPool(this.frmMod)
-        } else {
-          newDat = await NetworkIpPoolModule.PatchPool(this.frmMod)
+        try {
+          if (this.isNewPool) {
+            newDat = await NetworkIpPoolModule.AddPool(this.frmMod)
+          } else {
+            newDat = await NetworkIpPoolModule.PatchPool(this.frmMod)
+          }
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
         }
-        this.isLoading = false
-        this.$emit('done', newDat)
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
