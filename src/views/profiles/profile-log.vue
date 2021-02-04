@@ -14,7 +14,6 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { IUserProfileLog } from '@/api/profiles/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getProfileLogs } from '@/api/profiles/req'
-import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 
 class DataTableComp extends DataTable<IUserProfileLog> {}
 
@@ -44,8 +43,8 @@ export default class extends Vue {
     }
   ]
 
-  private async getAllLog(params?: IDRFRequestListParameters) {
-    return getProfileLogs(params, UserProfileModule.pk)
+  private getAllLog(params?: IDRFRequestListParameters) {
+    return getProfileLogs(params, this.$store.state.userprofile.pk)
   }
 }
 </script>

@@ -18,7 +18,9 @@ import {
   IUserGroupList,
   IUserGroupAxoisResponsePromise,
   IUserGroup,
-  IUserProfilePlainListAxiosResponsePromise
+  IUserProfilePlainListAxiosResponsePromise,
+  IUserProfileAuthLogListAxiosResponsePromise,
+  IUserProfileAuthLogList
 } from '@/api/profiles/types'
 
 // IUserProfileLog
@@ -124,3 +126,6 @@ export const delUserGroup = (id: number) =>
 
 export const getCurrentAuthPermissions = (): AxiosPromise<string[]> =>
   request.get<string[]>('/profiles/get_current_auth_permissions/')
+
+export const getAuthLog = (params?: IDRFRequestListParameters, profile?: number): IUserProfileAuthLogListAxiosResponsePromise =>
+  request.get<IUserProfileAuthLogList>('/profiles/auth-log/', { params: Object.assign(params, { profile }) })

@@ -12,18 +12,20 @@
       )
         el-card
           el-tabs(v-model='activeTab')
+            el-tab-pane(label='Изменить' name='account' v-if="userProfile")
+              keep-alive
+                profile-form(:user='userProfile')
             el-tab-pane(label='Ответственность за группы' name='activity' lazy)
               group-responsibility(:profileUname='profileUname')
+            el-tab-pane(label="Права на классы действий" v-if="isProfileSuperUser" lazy)
+              keep-alive
+                user-class-perms
             el-tab-pane(label='Лог действий' name='timeline' lazy)
               keep-alive
                 profile-log
-            el-tab-pane(label='Изменить' name='account' lazy v-if="userProfile")
+            el-tab-pane(label='Лог авторизаций' name='authlog' lazy)
               keep-alive
-                profile-form(:user='userProfile')
-            el-tab-pane(label="Права на классы действий" v-if="isProfileSuperUser")
-              keep-alive
-                user-class-perms
-
+                profile-auth-log
 </template>
 
 <script lang="ts">
@@ -36,6 +38,7 @@ import GroupResponsibility from './group-responsibility.vue'
 import ProfileLog from './profile-log.vue'
 import UserClassPerms from './user-class-perms.vue'
 import ProfilesMixin from './profiles-mixin'
+import ProfileAuthLog from './profile-auth-log.vue'
 
 @Component({
   name: 'ProfileDetails',
@@ -44,14 +47,15 @@ import ProfilesMixin from './profiles-mixin'
     UserCard,
     GroupResponsibility,
     ProfileLog,
-    UserClassPerms
+    UserClassPerms,
+    ProfileAuthLog
   }
 })
 export default class extends mixins(ProfilesMixin) {
   @Prop({ default: '' }) private profileUname!: string
 
   private userProfile = this.profileStateGetter
-  private activeTab = 'activity'
+  private activeTab = 'account'
 
   created() {
     this.loadProfile()
