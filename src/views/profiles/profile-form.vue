@@ -100,12 +100,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { latinValidator, telephoneValidator, emailValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import PasswordForm from './password-form.vue'
 import ProfileGroups from './profile-groups.vue'
+import { IUserProfile } from '@/api/profiles/types'
 
 @Component({
   name: 'ProfileForm',
@@ -129,6 +130,17 @@ export default class extends Vue {
 
   private get isNew() {
     return UserProfileModule.pk === 0
+  }
+
+  @Watch('$store.state.userprofile', { deep: true })
+  private onChProfileId(profile: IUserProfile) {
+    this.frmMod.username = profile.username
+    this.frmMod.fio = profile.fio
+    this.frmMod.birth_day = profile.birth_day
+    this.frmMod.username = profile.username
+    this.frmMod.username = profile.username
+    this.frmMod.username = profile.username
+    this.frmMod.username = profile.username
   }
 
   private frmRules = {
