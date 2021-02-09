@@ -65,10 +65,7 @@ export default class extends Vue {
     is_dynamic: CustomerIpLeaseModule.is_dynamic
   }
 
-  get leaseId() {
-    return CustomerIpLeaseModule.id
-  }
-  @Watch('leaseId')
+  @Watch('$store.state.iplease.id')
   private async onNetwCh() {
     this.frmMod = await CustomerIpLeaseModule.GetAllLeaseState()
   }

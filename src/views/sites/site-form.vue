@@ -46,10 +46,7 @@ export default class extends Vue {
     ]
   }
 
-  get onChId() {
-    return SiteModule.id
-  }
-  @Watch('onChId')
+  @Watch('$store.state.sites.id')
   private onChangeSite() {
     this.frmMod.name = SiteModule.name
     this.frmMod.domain = SiteModule.domain

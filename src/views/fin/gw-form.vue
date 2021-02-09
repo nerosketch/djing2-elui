@@ -62,10 +62,7 @@ export default class extends Vue {
     ]
   }
 
-  get onChId() {
-    return PayAllTimeGatewayModule.id
-  }
-  @Watch('onChId')
+  @Watch('$store.state.payalltimegateway.id')
   private onChangeGw() {
     this.frmMod.title = PayAllTimeGatewayModule.title
     this.frmMod.service_id = PayAllTimeGatewayModule.service_id

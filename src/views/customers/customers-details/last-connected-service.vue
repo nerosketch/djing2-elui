@@ -22,11 +22,7 @@ export default class extends Vue {
   private autoRenewalService = CustomerModule.auto_renewal_service
   private serviceBlockLoad = false
 
-  get autoRenSrvId() {
-    return CustomerModule.auto_renewal_service
-  }
-
-  @Watch('autoRenSrvId')
+  @Watch('$store.state.customer.auto_renewal_service')
   private onChRS(nv: boolean) {
     this.autoRenewalService = nv
   }

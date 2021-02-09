@@ -74,7 +74,6 @@ export default class extends Vue {
     return SearchModule.devices
   }
 
-
   @Watch('searchTextGetter')
   private async doSearch() {
     SearchModule.DoSearch()

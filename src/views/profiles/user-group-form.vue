@@ -44,10 +44,8 @@ export default class extends Vue {
   get isNew() {
     return UserGroupModule.id === 0
   }
-  get uGroupNameGetter() {
-    return UserGroupModule.name
-  }
-  @Watch('uGroupNameGetter')
+
+  @Watch('$store.state.usergroup.name')
   private onCHUGroupName(name: string) {
     this.frmMod.name = name
   }

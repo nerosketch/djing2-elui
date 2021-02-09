@@ -69,10 +69,7 @@ export default class extends Vue {
     is_management: VlanIfModule.is_management
   }
 
-  get vId() {
-    return VlanIfModule.id
-  }
-  @Watch('vId')
+  @Watch('$store.state.vlan.id')
   private async onVlanCh() {
     this.frmMod = await VlanIfModule.GetAllVlanState()
   }

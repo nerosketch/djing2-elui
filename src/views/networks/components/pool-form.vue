@@ -107,10 +107,7 @@ export default class extends mixins(FormMixin) {
     is_dynamic: NetworkIpPoolModule.is_dynamic
   }
 
-  get netId() {
-    return NetworkIpPoolModule.id
-  }
-  @Watch('netId')
+  @Watch('$store.state.netpool.id')
   private async onNetwCh() {
     this.frmMod = await NetworkIpPoolModule.GetAllPoolState()
     this.frmInitial = Object.assign({}, this.frmMod)

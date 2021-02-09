@@ -70,10 +70,7 @@ export default class extends Vue {
     }
   }
 
-  get onChId() {
-    return CustomerModule.pk
-  }
-  @Watch('onChId')
+  @Watch('$store.state.customer.pk')
   private onChangedId() {
     this.frmMod = {
       device: CustomerModule.device,

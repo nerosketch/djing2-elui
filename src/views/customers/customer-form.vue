@@ -126,7 +126,7 @@
       :visible.sync='openPasswordDlg'
     )
       customer-password(
-        :customerId="customerIdGetter"
+        :customerId="$store.state.customer.pk"
         :initialPassw="$store.state.customer.raw_password"
         v-on:done="openPasswordDlg=false"
       )
@@ -200,10 +200,7 @@ export default class extends mixins(FormMixin) {
     this.onChangedId()
   }
 
-  get customerIdGetter() {
-    return CustomerModule.pk
-  }
-  @Watch('customerIdGetter')
+  @Watch('$store.state.customer.pk')
   private onChangedId() {
     this.frmMod = {
       username: CustomerModule.username,
@@ -221,10 +218,7 @@ export default class extends mixins(FormMixin) {
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm
   }
 
-  get onChGrp() {
-    return CustomerModule.group
-  }
-  @Watch('onChGrp')
+  @Watch('$store.state.customer.group')
   private onChangedGroup() {
     this.loadStreets()
   }
@@ -235,7 +229,7 @@ export default class extends mixins(FormMixin) {
       const { data } = await getStreets({
         page: 1,
         page_size: 0,
-        group: this.onChGrp
+        group: this.$store.state.customer.group
       }) as any
       this.customerStreets = data
     } catch (err) {
@@ -291,7 +285,7 @@ export default class extends mixins(FormMixin) {
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
       try {
-        const currGroup = this.onChGrp
+        const currGroup = this.$store.state.customer.group
         await CustomerModule.DelCustomer()
         this.$message.success('Учётка удалена')
         this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
@@ -305,7 +299,7 @@ export default class extends mixins(FormMixin) {
     this.taskFormDialogLoading = true
     try {
       const { data } = await TaskModule.GetNewTaskInitial({
-        groupId: this.onChGrp,
+        groupId: this.$store.state.customer.group,
         customerId: CustomerModule.pk
       })
       if (data.status > 0) {

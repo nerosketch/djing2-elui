@@ -81,10 +81,7 @@ export default class extends Vue {
   }
 
   // Breadcrumbs
-  get devGrp() {
-    return DeviceModule.group
-  }
-  @Watch('devGrp')
+  @Watch('$store.state.devicemodule.group')
   private async onGrpCh(grpId: number) {
     if (grpId > 0) {
       await GroupModule.GetGroup(grpId)

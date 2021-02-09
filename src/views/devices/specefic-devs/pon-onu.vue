@@ -179,10 +179,7 @@ export default class extends Vue {
     return this.device && this.onuDetails ? this.device.mac_addr !== this.macFromOlt : false
   }
 
-  get snmpGetter() {
-    return DeviceModule.snmp_extra
-  }
-  @Watch('snmpGetter')
+  @Watch('$store.state.devicemodule.snmp_extra')
   private onDevChanged() {
     this.getDetails()
   }

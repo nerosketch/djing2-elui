@@ -51,7 +51,7 @@ export default class extends Vue {
     return this.port === null || this.portId === 0
   }
 
-  @Watch('port')
+  @Watch('port', { deep: true })
   private OnChangedPort(p: IScannedPort | null) {
     if (p !== null) {
       this.pstate = p.status
