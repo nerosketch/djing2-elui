@@ -1,10 +1,3 @@
-// if (workbox) {
-//   console.log(`Workbox is loaded`)
-//   workbox.precaching.precacheAndRoute(self.__precacheManifest)
-// } else {
-//   console.log(`Workbox didn't load`)
-// }
-
 // push
 self.addEventListener('push', function(event) {
   const message = JSON.parse(event.data.text())
@@ -12,7 +5,8 @@ self.addEventListener('push', function(event) {
   event.waitUntil(
     self.registration.showNotification(message.title, {
       body: message.body,
-      icon: message.icon
+      icon: message.icon || '/img/icons/android-chrome-192x192.png',
+      click_action: message.url
     })
   )
 })
