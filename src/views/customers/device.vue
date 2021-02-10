@@ -19,11 +19,11 @@ el-form(
         )
     el-row
       el-col(:span='8')
-        b Порт оборудования
+        b Порт
       el-col(:span='16')
         selected-dev-port(v-model='frmMod.dev_port' :deviceId='frmMod.device')
     el-row
-      el-col(:span='8')
+      el-col
         el-button-group
           el-button(
             icon='el-icon-upload'
