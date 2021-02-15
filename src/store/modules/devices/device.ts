@@ -199,6 +199,7 @@ class Device extends VuexModule implements IDeviceInterace {
       { nm: 'Onu ZTE F660', v: IDeviceTypeEnum.OnuZTE_F660 },
       { nm: 'Onu ZTE F601', v: IDeviceTypeEnum.OnuZTE_F601 },
       { nm: 'Huawei S2300', v: IDeviceTypeEnum.HuaweiS2300 },
+      { nm: 'Huawei S5300 10P LI AC', v: IDeviceTypeEnum.HuaweiS5300_10P_LI_ACInterface },
       { nm: 'Dlink DGS_3120_24SC', v: IDeviceTypeEnum.DlinkDGS_3120_24SCSwitchInterface },
       { nm: 'Dlink DGS_1100_06/ME', v: IDeviceTypeEnum.DlinkDGS_1100_06MESwitchInterface },
       { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }

@@ -19,7 +19,8 @@ export enum IDeviceTypeEnum {
   HuaweiS2300 = 8,
   DlinkDGS_3120_24SCSwitchInterface = 9,
   DlinkDGS_1100_06MESwitchInterface = 10,
-  DlinkDGS_3627GSwitchInterface = 11
+  DlinkDGS_3627GSwitchInterface = 11,
+  HuaweiS5300_10P_LI_ACInterface = 12
 }
 
 export interface IDevice {
