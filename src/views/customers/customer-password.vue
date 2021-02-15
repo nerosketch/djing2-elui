@@ -1,5 +1,11 @@
 <template lang="pug">
-  el-form(size="mini")
+  el-form(
+    ref='passwfrm'
+    size='mini'
+    :rules='frmRules'
+    status-icon
+    :model='frmMod'
+  )
     el-form-item(
       label="Пароль"
       prop='password'
@@ -7,7 +13,6 @@
       el-input(
         v-model="frmMod.password"
         maxlength="128"
-        ref="passwinp"
         :type="passwordType"
         placeholder="пароль"
       )
@@ -19,18 +24,20 @@
 
     el-form-item
       el-button(
-        type="primary"
+        type='primary'
         @click="onSubmit"
         icon='el-icon-upload'
         size='mini'
-        :disabled="isEmpty"
+        :disabled='isEmpty'
         :loading="loading"
       ) Сохранить
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Form } from 'element-ui'
 import { changeCustomer } from '@/api/customers/req'
+import { regexpVal } from '@/utils/validate'
 
 @Component({
   name: 'CustomerPassword'
@@ -45,21 +52,38 @@ export default class extends Vue {
     password: this.initialPassw
   }
 
+  private frmRules = {
+    password: [
+      { required: true, message: 'Пароль абонента обязателен', trigger: 'blur' },
+      {
+        validator: regexpVal(/^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/i),
+        trigger: 'change',
+        message: 'Минимум 8 символов, 1 символ в нижнем регистре, 1 в верхнем, 1 число, 1 спец символ !@#$%^&*'
+      }
+    ]
+  }
+
   get isEmpty() {
     return Boolean(!this.frmMod.password)
   }
 
-  private async onSubmit() {
-    try {
-      this.loading = true
-      const { data } = await changeCustomer(this.customerId, this.frmMod)
-      this.$message.success('Пароль успешно обновлён')
-      this.$emit('done', data)
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.loading = false
-    }
+  private onSubmit() {
+    (this.$refs['passwfrm'] as Form).validate(async valid => {
+      if (valid) {
+        try {
+          this.loading = true
+          const { data } = await changeCustomer(this.customerId, this.frmMod)
+          this.$message.success('Пароль успешно обновлён')
+          this.$emit('done', data)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.loading = false
+        }
+      } else {
+        this.$message.error('Исправь ошибки')
+      }
+    })
   }
 
   private togglePwd() {
