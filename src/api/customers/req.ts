@@ -112,6 +112,9 @@ export const pingAllIps = (id: number): ISimpleResponseResultAxiosResponsePromis
 export const makePeriodicPay4Customer = (id: number, req: IPeriodicPayForIdRequest) =>
   request.post<string>(`${custApiUrl}${id}/make_periodic_pay/`, req)
 
+export const generateCustomerPassword = (): AxiosPromise<string> =>
+  request.get<string>(`${custApiUrl}generate_password/`)
+
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>
   request.get<ICustomerGroupList>(`${custApiUrl}groups/`, { params })

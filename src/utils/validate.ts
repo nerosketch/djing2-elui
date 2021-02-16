@@ -32,7 +32,7 @@ export const positiveValidator = (rule: any, value: number, callback: Function) 
 }
 
 export const positiveNumberValueAvailable = (rule: any, value: number, callback: Function) => {
-  if (value && value > 0) {
+  if (value && typeof value === 'number' && value > 0) {
     callback()
   } else {
     callback(new Error(rule.message))

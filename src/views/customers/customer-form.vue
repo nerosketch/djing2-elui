@@ -112,6 +112,8 @@
     el-dialog(
       title="Паспортные данные"
       :visible.sync="openPasportDlg"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       passport(
         v-on:done="openPasportDlg=false"
@@ -119,11 +121,15 @@
     el-dialog(
       title='Создание задачи'
       :visible.sync='taskFormDialog'
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       task-form
     el-dialog(
       title='Пароль абонента'
       :visible.sync='openPasswordDlg'
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       customer-password(
         :customerId="$store.state.customer.pk"

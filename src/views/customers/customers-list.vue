@@ -91,6 +91,8 @@
     el-dialog(
       :visible.sync="editStreetsDialog"
       title="Редактировать улицы"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       edit-streets(
         :groupId="groupId"

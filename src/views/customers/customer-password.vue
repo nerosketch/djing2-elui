@@ -1,10 +1,6 @@
 <template lang="pug">
   el-form(
-    ref='passwfrm'
     size='mini'
-    :rules='frmRules'
-    status-icon
-    :model='frmMod'
   )
     el-form-item(
       label="Пароль"
@@ -21,6 +17,11 @@
             @click="togglePwd"
             :icon="passwordType === 'password' ? 'el-icon-view' : 'el-icon-minus'"
           )
+          el-button(
+            @click="genPasw"
+            :loading="passwLoading"
+            icon='el-icon-refresh'
+          )
 
     el-form-item
       el-button(
@@ -35,9 +36,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Form } from 'element-ui'
-import { changeCustomer } from '@/api/customers/req'
-import { regexpVal } from '@/utils/validate'
+import { changeCustomer, generateCustomerPassword } from '@/api/customers/req'
 
 @Component({
   name: 'CustomerPassword'
@@ -47,43 +46,27 @@ export default class extends Vue {
   @Prop({ required: true }) private customerId!: number
   private passwordType = 'password'
   private loading = false
+  private passwLoading = false
 
   private frmMod = {
     password: this.initialPassw
-  }
-
-  private frmRules = {
-    password: [
-      { required: true, message: 'Пароль абонента обязателен', trigger: 'blur' },
-      {
-        validator: regexpVal(/^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/i),
-        trigger: 'change',
-        message: 'Минимум 8 символов, 1 символ в нижнем регистре, 1 в верхнем, 1 число, 1 спец символ !@#$%^&*'
-      }
-    ]
   }
 
   get isEmpty() {
     return Boolean(!this.frmMod.password)
   }
 
-  private onSubmit() {
-    (this.$refs['passwfrm'] as Form).validate(async valid => {
-      if (valid) {
-        try {
-          this.loading = true
-          const { data } = await changeCustomer(this.customerId, this.frmMod)
-          this.$message.success('Пароль успешно обновлён')
-          this.$emit('done', data)
-        } catch (err) {
-          this.$message.error(err)
-        } finally {
-          this.loading = false
-        }
-      } else {
-        this.$message.error('Исправь ошибки')
-      }
-    })
+  private async onSubmit() {
+    try {
+      this.loading = true
+      const { data } = await changeCustomer(this.customerId, this.frmMod)
+      this.$message.success('Пароль успешно обновлён')
+      this.$emit('done', data)
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 
   private togglePwd() {
@@ -91,6 +74,19 @@ export default class extends Vue {
       this.passwordType = 'text'
     } else {
       this.passwordType = 'password'
+    }
+  }
+
+  private async genPasw() {
+    this.passwLoading = true
+    try {
+      const { data } = await generateCustomerPassword()
+      this.frmMod.password = data
+    } catch (err) {
+      this.$message.error(err)
+      this.frmMod.password = ''
+    } finally {
+      this.passwLoading = false
     }
   }
 }
