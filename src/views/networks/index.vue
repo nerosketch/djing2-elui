@@ -5,19 +5,19 @@
       type="border-card"
     )
       el-tab-pane(
-        label='Вланы'
-        name='vlans'
-        lazy
-      )
-        keep-alive
-          vlan-list
-      el-tab-pane(
         label='Подсети'
         name='pools'
         lazy
       )
         keep-alive
           pool-list
+      el-tab-pane(
+        label='Вланы'
+        name='vlans'
+        lazy
+      )
+        keep-alive
+          vlan-list
       el-tab-pane(
         label='Сессии'
         name='leases'
@@ -42,7 +42,7 @@ import PoolList from './components/poollist.vue'
   }
 })
 export default class extends Vue {
-  private activeName = 'vlans'
+  private activeName = 'pools'
 
   @Watch('activeName')
   private onActiveNameChange(value: string) {

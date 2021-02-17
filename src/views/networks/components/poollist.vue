@@ -124,6 +124,12 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
+      prop: 'vid',
+      label: 'vid',
+      'min-width': 100,
+      align: DataTableColumnAlign.CENTER
+    },
+    {
       prop: 'oper',
       label: 'Кнопки',
       'min-width': 160,
@@ -161,7 +167,7 @@ export default class extends Vue {
 
   private async loadPools(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count,sites'
+      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count,sites,vid,vlan_if'
     }
     return getNetworkIpPools(params)
   }
