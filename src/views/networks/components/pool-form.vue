@@ -110,7 +110,8 @@ export default class extends mixins(FormMixin, VlanMixin) {
     ]
   }
 
-  private frmMod = {
+  private frmMod: INetworkIpPool = {
+    id: NetworkIpPoolModule.id,
     network: NetworkIpPoolModule.network,
     description: NetworkIpPoolModule.description,
     groups: NetworkIpPoolModule.groups,
@@ -118,13 +119,14 @@ export default class extends mixins(FormMixin, VlanMixin) {
     ip_end: NetworkIpPoolModule.ip_end,
     gateway: NetworkIpPoolModule.gateway,
     is_dynamic: NetworkIpPoolModule.is_dynamic,
-    vlan_if: NetworkIpPoolModule.vlan_if
+    vlan_if: NetworkIpPoolModule.vlan_if,
+    kind: NetworkIpPoolModule.kind
   }
 
   @Watch('$store.state.netpool', { deep: true })
   private async onNetwCh(nstate: INetworkIpPool) {
-    this.frmMod = nstate
-    this.frmInitial = Object.assign({}, nstate)
+    this.frmMod = {...nstate}
+    this.frmInitial = {...nstate}
   }
 
   get isNewPool() {

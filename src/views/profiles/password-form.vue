@@ -108,11 +108,11 @@ export default class extends Vue {
           })
           this.$emit('done', changedUser)
         } catch (err) {
-          // this.$message.error(err.response.data)
           if (typeof err === 'object' && err.hasOwnProperty('response')) {
-            for (const n in err.response.data) {
-              this.frmErr[n] = err.response.data[n].join('')
-            }
+            const d = err.response.data
+            this.frmErr.old_passw = d['old_passw']
+            this.frmErr.new_passw = d['new_passw']
+            this.frmErr.retype_passw = d['retype_passw']
           }
         } finally {
           this.loading = false
