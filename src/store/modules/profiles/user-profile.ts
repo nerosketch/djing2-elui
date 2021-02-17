@@ -97,7 +97,7 @@ class UserProfile extends VuexModule implements IUserProfile {
     return data
   }
 
-  @Action
+  @Action({ rawError: true })
   public async PatchPassword(newPassw: IPasswordUpdateForm) {
     const { data } = await setProfilePassword(this.username, newPassw)
     this.SET_ALL_PROFILE(data)
