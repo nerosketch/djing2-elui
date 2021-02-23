@@ -51,6 +51,17 @@
           :value="v.id"
         )
     el-form-item(
+      label='Тип сети'
+      prop='kind'
+    )
+      el-select(v-model="frmMod.kind")
+        el-option(
+          v-for="k in networkPoolKinds"
+          :key="k.val"
+          :label="k.title"
+          :value="k.val"
+        )
+    el-form-item(
       label='Динамический'
       prop='is_dynamic'
     )
@@ -122,6 +133,15 @@ export default class extends mixins(FormMixin, VlanMixin) {
     vlan_if: NetworkIpPoolModule.vlan_if,
     kind: NetworkIpPoolModule.kind
   }
+
+  private networkPoolKinds = [
+    { val: 0, title: 'Не определён' },
+    { val: 1, title: 'Интернет' },
+    { val: 2, title: 'Гостевой' },
+    { val: 3, title: 'Доверенный' },
+    { val: 4, title: 'Устройства' },
+    { val: 5, title: 'Административный' },
+  ]
 
   @Watch('$store.state.netpool', { deep: true })
   private async onNetwCh(nstate: INetworkIpPool) {
