@@ -5,7 +5,7 @@
       type="border-card"
     )
       el-tab-pane(
-        label='Сессии'
+        label='Гостевые сессии'
         name='sessions'
         lazy
       )

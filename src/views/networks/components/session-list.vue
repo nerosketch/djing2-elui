@@ -17,11 +17,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IUserSession } from '@/api/sessions/types'
 import { IDRFRequestListParameters } from '@/api/types'
-import { finishGuestSession, getSessionList } from '@/api/sessions/req'
+import { finishGuestSession, getSessionList, getGuestSessionList } from '@/api/sessions/req'
 
 class DataTableComp extends DataTable<IUserSession> {}
 
@@ -30,6 +30,8 @@ class DataTableComp extends DataTable<IUserSession> {}
   components: { 'datatable': DataTableComp }
 })
 export default class extends Vue {
+  @Prop({ default: null }) private uid!: number | null
+
   public readonly $refs!: {
     table: DataTableComp
   }
@@ -89,9 +91,12 @@ export default class extends Vue {
 
   private loadSessions(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,assign_time,session_duration,ip_lease_ip,ip_lease_mac,closed,h_input_octets,h_output_octets,h_input_packets,h_output_packets,is_guest_session'
+      params.fields = 'id,assign_time,session_duration,ip_lease_ip,ip_lease_mac,closed,h_input_octets,h_output_octets,h_input_packets,h_output_packets,is_guest_session'
     }
-    return getSessionList(params)
+    if (this.uid === null) {
+      return getGuestSessionList(params)
+    }
+    return getSessionList(Object.assign(params, { customer: this.uid }) )
   }
 
   private shutdownSesion(ses: IUserSession) {

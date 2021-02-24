@@ -31,7 +31,7 @@ const customerRoutes: RouteConfig = {
     {
       path: 'c:uid/session/',
       name: 'customerSessions',
-      component: () => import(/* webpackChunkName: "customersessions" */ '@/views/customers/customers-details/session-list.vue'),
+      component: () => import(/* webpackChunkName: "customersessions" */ '@/views/customers/customers-details/authorized-session-list.vue'),
       props: ({ params }) => ({
         uid: Number(params.uid),
         gid: Number(params.gid),
