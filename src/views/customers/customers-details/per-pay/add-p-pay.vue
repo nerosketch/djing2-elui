@@ -22,7 +22,7 @@
         v-model="deadline"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm"
-        format="d MMM yyyy HH:mm"
+        format="d.MM.yyyy HH:mm"
       )
     el-form-item
       el-button(
