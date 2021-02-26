@@ -70,7 +70,7 @@
           v-model="frmMod.out_date"
           type="date"
           value-format="yyyy-MM-dd"
-          format="d MMM yyyy"
+          format="d.MM.yyyy"
         )
     el-form-item
       el-button-group

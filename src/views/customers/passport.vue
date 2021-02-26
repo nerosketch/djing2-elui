@@ -31,7 +31,12 @@
       label="Дата выдачи"
       prop='date_of_acceptance'
     )
-      el-date-picker(v-model="frmMod.date_of_acceptance" type="date" value-format="yyyy-MM-dd" format="d MMM yyyy")
+      el-date-picker(
+        v-model="frmMod.date_of_acceptance"
+        type="date"
+        value-format="d.MM.yyyy"
+        format="d.MM.yyyy"
+      )
     el-form-item
       el-button(
         icon='el-icon-upload'
