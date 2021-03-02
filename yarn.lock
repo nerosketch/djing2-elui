@@ -2831,6 +2831,11 @@
     "lodash.memoize" "^4.1.2"
     "lodash.uniq" "^4.5.0"
 
+"caniuse-lite@^1.0.0", "caniuse-lite@^1.0.30001035", "caniuse-lite@^1.0.30001036", "caniuse-lite@^1.0.30001194":
+  "integrity" "sha512-iDUOH+oFeBYk5XawYsPtsx/8fFpndAPUQJC7gBTfxHM8xw5nOZv7ceAD4frS1MKCLUac7QL5wdAJiFQlDRjXlA=="
+  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001194.tgz"
+  "version" "1.0.30001194"
+
 "capture-exit@^1.2.0":
   "integrity" "sha1-HF/MSJ/QqwDU8ax64QcuMXP7q28="
   "resolved" "https://registry.npmjs.org/capture-exit/-/capture-exit-1.2.0.tgz"

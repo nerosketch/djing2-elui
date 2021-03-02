@@ -13,6 +13,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "caniuse-lite": "^1.0.30001194",
     "echarts": "^4.9.0",
     "el-table-infinite-scroll": "^1.0.10",
     "element-ui": "^2.13.2",
