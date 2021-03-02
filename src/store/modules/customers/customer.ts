@@ -11,7 +11,7 @@ import {
   pickService, makeShot,
   stopService, addBalance,
   getCurrentService,
-  setGroupAccessory,
+  setServiceGroupAccessory,
   makePeriodicPay4Customer
 } from '@/api/customers/req'
 import store from '@/store'
@@ -210,8 +210,8 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async SetGroupAccessory(services: number[]) {
-    await setGroupAccessory(this.pk, this.group, services)
+  public async SetServiceGroupAccessory(services: number[]) {
+    await setServiceGroupAccessory(this.pk, this.group, services)
   }
 
   @Action
