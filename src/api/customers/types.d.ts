@@ -74,7 +74,7 @@ export interface IServiceUser {
   username: string
   fio: string
 }
-export type IServiceUserList = IDRFListResponse<IServiceUser>
+export type IServiceUserList = IServiceUser[]
 export type IServiceUserAxoisResponsePromise = IDRFAxiosResponsePromise<IServiceUser>
 export type IServiceUserListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceUserList>
 
