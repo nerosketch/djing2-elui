@@ -78,7 +78,7 @@ export default class extends Vue {
   async saveAccessory() {
     let selectedState = this.selected.filter(s => s.state)
     let res = selectedState.map(s => s.pk)
-    await CustomerModule.SetGroupAccessory(res)
+    await CustomerModule.SetServiceGroupAccessory(res)
     this.$message.success('Группы привязаны')
     this.$emit('done')
   }

@@ -34,7 +34,7 @@
       el-date-picker(
         v-model="frmMod.date_of_acceptance"
         type="date"
-        value-format="d.MM.yyyy"
+        value-format="yyyy-MM-d"
         format="d.MM.yyyy"
       )
     el-form-item

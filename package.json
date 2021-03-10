@@ -47,6 +47,7 @@
     "axios": ">=0.21.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
+    "caniuse-lite": "^1.0.30001194",
     "eslint": "^6.2.2",
     "eslint-plugin-vue": "^5.2.3",
     "fibers": "^4.0.1",
