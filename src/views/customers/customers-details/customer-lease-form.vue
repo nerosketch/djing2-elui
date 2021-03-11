@@ -45,6 +45,11 @@
       prop='mac_address'
     )
       el-input(v-model="frmMod.mac_address")
+    el-form-item(
+      label="dhcp"
+      prop='is_dynamic'
+    )
+      el-checkbox(v-model='frmMod.is_dynamic')
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -125,7 +130,7 @@ export default class extends Vue {
 
   private async getFreeIp() {
     this.getFreeIpLoad = true
-    await NetworkIpPoolModule.SET_ID(this.frmMod.pool)
+    NetworkIpPoolModule.SET_ID(this.frmMod.pool)
     try {
       const ip = await NetworkIpPoolModule.GetFreeIP()
       if (ip) {

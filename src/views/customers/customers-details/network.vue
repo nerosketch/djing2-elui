@@ -52,7 +52,6 @@
               type='primary' size='mini'
               icon='el-icon-edit'
               @click="editLease(row)"
-              :disabled="row.is_dynamic"
             )
             el-button(
               type='danger' size='mini'
