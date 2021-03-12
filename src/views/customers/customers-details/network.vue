@@ -83,10 +83,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import {
-  ICustomerIpLease
-} from '@/api/networks/types'
+import { ICustomerIpLease } from '@/api/networks/types'
 import { getCustomerIpLeases } from '@/api/networks/req'
+import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import LeasePing from '@/components/MyButtons/leaseping.vue'
 import CustomerLeaseForm from './customer-lease-form.vue'
 
@@ -142,8 +141,19 @@ export default class extends Vue {
     this.$refs.customerleaseformref.editLease(JSON.parse(JSON.stringify(l)))
   }
 
-  private delLease(l: ICustomerIpLease) {
-    this.$refs.customerleaseformref.delLease(l)
+  public delLease(lease: ICustomerIpLease) {
+    this.$confirm('Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.', {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Нет'
+    }).then(async() => {
+      try {
+        await CustomerIpLeaseModule.DelLease(lease.id)
+        this.$message.success('Аренда удалена')
+        this.loadLeases()
+      } catch (err) {
+        this.$message.error(err)
+      }
+    })
   }
 
   private async addLease() {

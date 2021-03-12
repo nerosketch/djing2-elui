@@ -153,21 +153,6 @@ export default class extends Vue {
     this.frmMod = lease
   }
 
-  public delLease(lease: ICustomerIpLease) {
-    this.$confirm('Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.', {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Нет'
-    }).then(async() => {
-      try {
-        await CustomerIpLeaseModule.DelLease(lease.id)
-        this.$message.success('Аренда удалена')
-        this.$emit('done')
-      } catch (err) {
-        this.$message.error(err)
-      }
-    })
-  }
-
   public async addLease() {
     this.frmMod = {
       ip_address: '',
