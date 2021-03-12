@@ -21,7 +21,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IUserSession } from '@/api/sessions/types'
 import { IDRFRequestListParameters } from '@/api/types'
-import { finishGuestSession, getSessionList, getGuestSessionList } from '@/api/sessions/req'
+import { delSession, getSessionList, getGuestSessionList } from '@/api/sessions/req'
 
 class DataTableComp extends DataTable<IUserSession> {}
 
@@ -101,7 +101,7 @@ export default class extends Vue {
 
   private shutdownSesion(ses: IUserSession) {
     this.$confirm('Завершить сессию?').then(async() => {
-      await finishGuestSession(ses.id)
+      await delSession(ses.id)
       this.$refs.table.GetTableData()
     }).catch(err => {
       this.$message.error(err)

@@ -13,5 +13,5 @@ export const getSessionList = (params?: IDRFRequestListParameters): IUserSession
 export const getGuestSessionList = (params?: IDRFRequestListParameters): IUserSessionListAxiosResponsePromise =>
   request.get<IUserSessionList>(`${surl}guest_list/`, { params })
 
-export const finishGuestSession = (sessionId: number) =>
-  request.get(`${surl}${sessionId}/destroy_session/`)
+export const delSession = (id: number) =>
+  request.delete(`${surl}${id}/`)
