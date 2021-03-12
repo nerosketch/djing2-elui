@@ -65,7 +65,7 @@
       ) Добавить
       el-button(
         size='mini' icon='el-icon-s-data'
-        @click="openSessions"
+        @click="authorizedSessionsDialog=true"
       ) Сессии
 
     el-dialog(
@@ -78,6 +78,14 @@
         v-on:cancel="editDialog=false"
         ref="customerleaseformref"
       )
+    el-dialog(
+      title="Сессии авторизации"
+      top="1vh"
+      :visible.sync="authorizedSessionsDialog"
+    )
+      session-list(
+        :uid="$store.state.customer.pk"
+      )
 </template>
 
 <script lang="ts">
@@ -88,12 +96,14 @@ import { getCustomerIpLeases } from '@/api/networks/req'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import LeasePing from '@/components/MyButtons/leaseping.vue'
 import CustomerLeaseForm from './customer-lease-form.vue'
+import SessionList from '@/views/networks/components/session-list.vue'
 
 @Component({
   name: 'Network',
   components: {
     LeasePing,
-    CustomerLeaseForm
+    CustomerLeaseForm,
+    SessionList
   }
 })
 export default class extends Vue {
@@ -101,6 +111,7 @@ export default class extends Vue {
   private loading = false
   private editDialog = false
   private isAddNewLease = false
+  private authorizedSessionsDialog = false
 
   public readonly $refs!: {
     customerleaseformref: CustomerLeaseForm
@@ -120,18 +131,6 @@ export default class extends Vue {
 
   async created() {
     await this.loadLeases()
-  }
-
-  private openSessions() {
-    this.$router.push({
-      name: 'customerSessions',
-      params: {
-        uid: CustomerModule.pk.toString(),
-        gid: CustomerModule.group.toString(),
-        grpName: CustomerModule.group_title,
-        customerName: CustomerModule.full_name
-      }
-    })
   }
 
   private async editLease(l: ICustomerIpLease) {
