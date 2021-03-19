@@ -78,10 +78,6 @@ export default class extends Vue {
       label: 'Исходящих пакетов'
     },
     {
-      prop: 'is_guest_session',
-      label: 'Гостевая'
-    },
-    {
       prop: 'oper',
       label: 'Oper',
       'min-width': 130,
@@ -91,12 +87,12 @@ export default class extends Vue {
 
   private loadSessions(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,assign_time,session_duration,ip_lease_ip,ip_lease_mac,closed,h_input_octets,h_output_octets,h_input_packets,h_output_packets,is_guest_session'
+      params.fields = 'id,assign_time,session_duration,ip_lease_ip,ip_lease_mac,closed,h_input_octets,h_output_octets,h_input_packets,h_output_packets'
     }
     if (this.uid === null) {
       return getGuestSessionList(params)
     }
-    return getSessionList(Object.assign(params, { customer: this.uid }) )
+    return getSessionList(Object.assign(params, { customer: this.uid }))
   }
 
   private shutdownSesion(ses: IUserSession) {

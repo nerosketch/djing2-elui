@@ -90,13 +90,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerIpLease } from '@/api/networks/types'
 import { getCustomerIpLeases } from '@/api/networks/req'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import LeasePing from '@/components/MyButtons/leaseping.vue'
 import CustomerLeaseForm from './customer-lease-form.vue'
 import SessionList from '@/views/networks/components/session-list.vue'
+import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 
 @Component({
   name: 'Network',
@@ -120,7 +120,7 @@ export default class extends Vue {
   private async loadLeases() {
     this.loading = true
     try {
-      const { data } = await getCustomerIpLeases(undefined, CustomerModule.pk)
+      const { data } = await getCustomerIpLeases(undefined, this.$store.state.cusotmer.pk)
       this.leases = data as ICustomerIpLease[]
     } catch (err) {
       this.$message.error(err)
@@ -131,6 +131,13 @@ export default class extends Vue {
 
   async created() {
     await this.loadLeases()
+
+    // subscribe to customer update lease events
+    this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER_LEASES, this.onSignalUpdateLeases)
+  }
+
+  beforeDestroy() {
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATE_CUSTOMER_LEASES)
   }
 
   private async editLease(l: ICustomerIpLease) {
@@ -165,6 +172,13 @@ export default class extends Vue {
   private leaseFrmDone() {
     this.loadLeases()
     this.editDialog = false
+  }
+
+  private onSignalUpdateLeases({ data }: IWsMessage) {
+    const customerId = data['customerId']
+    if (customerId === this.$store.state.cusotmer.pk) {
+      this.loadLeases()
+    }
   }
 }
 </script>
