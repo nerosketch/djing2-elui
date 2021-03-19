@@ -120,7 +120,7 @@ export default class extends Vue {
   private async loadLeases() {
     this.loading = true
     try {
-      const { data } = await getCustomerIpLeases(undefined, this.$store.state.cusotmer.pk)
+      const { data } = await getCustomerIpLeases(undefined, this.$store.state.customer.pk)
       this.leases = data as ICustomerIpLease[]
     } catch (err) {
       this.$message.error(err)
@@ -176,7 +176,7 @@ export default class extends Vue {
 
   private onSignalUpdateLeases({ data }: IWsMessage) {
     const customerId = data['customerId']
-    if (customerId === this.$store.state.cusotmer.pk) {
+    if (customerId === this.$store.state.customer.pk) {
       this.loadLeases()
     }
   }
