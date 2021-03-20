@@ -35,7 +35,6 @@ div
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import AdditionalTels from './additional-tels.vue'
-import { IAdditionalTelephone } from '@/api/customers/types'
 import TelForm from './tel-form.vue'
 import { AdditionalTelephoneModule } from '@/store/modules/customers/telephones'
 
@@ -78,7 +77,7 @@ export default class extends Vue {
     this.openAddTelsDlg = true
   }
 
-  private telsFormDone(tel: IAdditionalTelephone) {
+  private telsFormDone() {
     this.openAddTelsDlg = false
     this.$refs.additionaltels.loadTels()
   }
