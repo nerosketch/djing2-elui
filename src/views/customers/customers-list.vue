@@ -341,14 +341,15 @@ export default class extends Vue {
   created() {
     document.title = 'Список абонентов'
     this.loadStreets()
-    this.onGrpCh(this.groupId)
+    this.setCrumbs()
   }
 
   // Breadcrumbs
-  // @Watch('groupId')
-  private async onGrpCh(grpId: number) {
-    await GroupModule.GetGroup(grpId)
-    await BreadcrumbsModule.SetCrumbs([
+  private async setCrumbs() {
+    if (this.$store.state.group.pk !== this.groupId) {
+      await GroupModule.GetGroup(this.groupId)
+    }
+    BreadcrumbsModule.SetCrumbs([
       {
         path: '/customers/',
         meta: {
@@ -360,13 +361,10 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: this.grpName
+          title: this.$store.state.group.title
         }
       }
     ] as RouteRecord[])
-  }
-  get grpName() {
-    return GroupModule.title
   }
   // End Breadcrumbs
 
