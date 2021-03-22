@@ -5,7 +5,6 @@
   )
     el-form-item(
       label="Периодический платёж"
-      prop='service_id'
     )
       el-select(v-model="pserviceId")
         el-option(
@@ -16,7 +15,6 @@
         )
     el-form-item(
       label="Дата следующего платежа"
-      prop='deadline'
     )
       el-date-picker(
         v-model="deadline"
