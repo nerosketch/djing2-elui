@@ -47,7 +47,8 @@ import {
   CustomerActivityReportResult,
   IPeriodicPayForIdRequest,
   IPeriodicPayForIdListAxiosResponsePromise,
-  IPeriodicPayForIdList
+  IPeriodicPayForIdList,
+  IBuyPayloadType
 } from './types'
 
 // ICustomer
@@ -73,8 +74,8 @@ export const changeCustomer = (id: number, newData: object): ICustomerAxoisRespo
 export const delCustomer = (id: number) =>
   request.delete(`${custApiUrl}${id}/`)
 
-export const pickService = (id: number, serviceId: number, deadline?: string) =>
-  request.post(`${custApiUrl}${id}/pick_service/`, { service_id: serviceId, deadline })
+export const pickService = (id: number, data: IBuyPayloadType) =>
+  request.post(`${custApiUrl}${id}/pick_service/`, data)
 
 export const makeShot = (id: number, shotId: number) =>
   request.post(`${custApiUrl}${id}/make_shot/`, { shot_id: shotId })

@@ -116,7 +116,7 @@
       )
     el-dialog(
       :visible.sync="macsDialog"
-      title="ARP таблица для порта"
+      title="Таблица MAC адресов порта"
     )
       port-mac-list(
         :portId="currPortId"

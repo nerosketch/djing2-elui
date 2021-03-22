@@ -3,23 +3,17 @@
     v-loading='loading'
     size="mini"
   )
-    el-form-item(
-      label="Услуга"
-      prop='service_id'
-    )
-      el-select(v-model="serviceId")
+    el-form-item(label="Услуга")
+      el-select(v-model="frmMod.service_id")
         el-option(
           v-for="srv in services"
           :key="srv.pk"
           :label="srv.title"
           :value="srv.pk"
         )
-    el-form-item(
-      label="Дата завершения"
-      prop='deadline'
-    )
+    el-form-item(label="Дата завершения")
       el-date-picker(
-        v-model="deadline"
+        v-model="frmMod.deadline"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm"
         format="d.MM.yyyy HH:mm"
@@ -42,8 +36,11 @@ import { IService } from '@/api/services/types'
 })
 export default class extends Vue {
   private loading = false
-  private serviceId: number = 0
-  private deadline?: string = ''
+
+  private frmMod = {
+    service_id: 0,
+    deadline: ''
+  }
 
   @Prop({ default: [] })
   private services!: IService[]
@@ -53,14 +50,14 @@ export default class extends Vue {
 
   @Watch('selectedServiceId')
   private onSelectedServiceIdChanged(v: number) {
-    this.serviceId = v
+    this.frmMod.service_id = v
   }
 
-  @Watch('serviceId')
+  @Watch('frmMod.service_id')
   private onServiceIdChanged(v: number) {
     for (const srv of this.services) {
       if (srv.pk === v) {
-        this.deadline = srv.planned_deadline
+        this.frmMod.deadline = srv.planned_deadline
         return
       }
     }
@@ -68,22 +65,20 @@ export default class extends Vue {
 
   created() {
     if (this.selectedServiceId > 0) {
-      this.serviceId = this.selectedServiceId
+      this.frmMod.service_id = this.selectedServiceId
     } else if (this.services.length > 0) {
-      this.serviceId = this.services[0].pk
+      this.frmMod.service_id = this.services[0].pk
     }
   }
 
   private async onSubmit() {
     this.loading = true
-    if (this.serviceId === 0) {
+    if (this.frmMod.service_id === 0) {
       this.$message.error('Надо выбрать услугу')
       return
     }
     try {
-      await CustomerModule.PickService(
-        this.serviceId, this.deadline
-      )
+      await CustomerModule.PickService(this.frmMod)
       this.$emit('done')
     } catch (err) {
       this.$message.error(err)

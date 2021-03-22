@@ -2,7 +2,8 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import {
   ICustomer, IBalanceAmountRequest,
-  IPeriodicPayForIdRequest
+  IPeriodicPayForIdRequest,
+  IBuyPayloadType
 } from '@/api/customers/types'
 import {
   getCustomer, addCustomer,
@@ -174,8 +175,8 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async PickService(serviceId: number, deadline?: string) {
-    await pickService(this.pk, serviceId, deadline)
+  public async PickService(buyPayload: IBuyPayloadType) {
+    await pickService(this.pk, buyPayload)
   }
 
   @Action
