@@ -40,6 +40,17 @@
     )
       el-input(v-model="frmMod.gateway")
     el-form-item(
+      label="Vlan"
+      prop="vlan_if"
+    )
+      el-select(v-model="frmMod.vlan_if" v-loading='vlanLoading')
+        el-option(
+          v-for="v in vlans"
+          :key="v.id"
+          :label="`[${v.vid}] ${v.title}`"
+          :value="v.id"
+        )
+    el-form-item(
       label='Динамический'
       prop='is_dynamic'
     )
@@ -50,7 +61,12 @@
     )
       el-input(v-model="frmMod.description" type="textarea" rows="5")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+        :disabled="isFormUntouched"
+      ) Сохранить
 </template>
 
 <script lang="ts">
@@ -62,11 +78,13 @@ import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
 import FormMixin from '@/utils/forms'
+import VlanMixin from './vlan-mixin'
+import { INetworkIpPool } from '@/api/networks/types'
 
 @Component({
   name: 'pool-form'
 })
-export default class extends mixins(FormMixin) {
+export default class extends mixins(FormMixin, VlanMixin) {
   private isLoading = false
   private groups: IGroup[] = []
 
@@ -92,23 +110,23 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
-  private frmMod = {
+  private frmMod: INetworkIpPool = {
+    id: NetworkIpPoolModule.id,
     network: NetworkIpPoolModule.network,
     description: NetworkIpPoolModule.description,
     groups: NetworkIpPoolModule.groups,
     ip_start: NetworkIpPoolModule.ip_start,
     ip_end: NetworkIpPoolModule.ip_end,
     gateway: NetworkIpPoolModule.gateway,
-    is_dynamic: NetworkIpPoolModule.is_dynamic
+    is_dynamic: NetworkIpPoolModule.is_dynamic,
+    vlan_if: NetworkIpPoolModule.vlan_if,
+    kind: NetworkIpPoolModule.kind
   }
 
-  get netId() {
-    return NetworkIpPoolModule.id
-  }
-  @Watch('netId')
-  private async onNetwCh() {
-    this.frmMod = await NetworkIpPoolModule.GetAllPoolState()
-    this.frmInitial = Object.assign({}, this.frmMod)
+  @Watch('$store.state.netpool', { deep: true })
+  private async onNetwCh(nstate: INetworkIpPool) {
+    this.frmMod = {...nstate}
+    this.frmInitial = {...nstate}
   }
 
   get isNewPool() {
@@ -118,6 +136,7 @@ export default class extends mixins(FormMixin) {
   created() {
     this.loadGroups()
     this.frmInitial = Object.assign({}, this.frmMod)
+    this.loadVlans(undefined, 'id,title,vid')
   }
 
   private onSubmit() {
@@ -125,13 +144,18 @@ export default class extends mixins(FormMixin) {
       if (valid) {
         this.isLoading = true
         let newDat
-        if (this.isNewPool) {
-          newDat = await NetworkIpPoolModule.AddPool(this.frmMod)
-        } else {
-          newDat = await NetworkIpPoolModule.PatchPool(this.frmMod)
+        try {
+          if (this.isNewPool) {
+            newDat = await NetworkIpPoolModule.AddPool(this.frmMod)
+          } else {
+            newDat = await NetworkIpPoolModule.PatchPool(this.frmMod)
+          }
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
         }
-        this.isLoading = false
-        this.$emit('done', newDat)
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
@@ -140,13 +164,18 @@ export default class extends mixins(FormMixin) {
 
   private async loadGroups() {
     this.isLoading = true
-    const { data } = await getGroups({
-      page: 1,
-      page_size: 500,
-      fields: 'pk,title'
-    })
-    this.groups = data.results
-    this.isLoading = false
+    try {
+      const { data } = await getGroups({
+        page: 1,
+        page_size: 0,
+        fields: 'pk,title'
+      }) as any
+      this.groups = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.isLoading = false
+    }
   }
 }
 </script>

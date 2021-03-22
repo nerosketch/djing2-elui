@@ -1,6 +1,9 @@
 import request from '@/utils/request'
-import { IGatewayList, IGatewayListAxiosResponsePromise, IGatewayAxoisResponsePromise,
-  IGateway } from './types'
+import {
+  IGatewayList, IGatewayListAxiosResponsePromise,
+  IGatewayAxoisResponsePromise,
+  IGateway
+} from './types'
 import { IDRFRequestListParameters } from '@/api/types'
 
 const gwUrl = '/gateways/'

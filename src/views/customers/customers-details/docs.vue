@@ -6,8 +6,11 @@
     :before-remove="beforeRemove"
     :http-request="uploadReq"
     :file-list="fileList"
+    :disabled="!$perms.customers.view_customerattachment"
   )
-    el-button(size="small" type="primary") Добавить документ
+    el-button(
+      size="mini" type="primary"
+    ) Добавить документ
 </template>
 
 <script lang="ts">
@@ -65,9 +68,13 @@ export default class extends Vue {
 
   private async loadFileList() {
     if (this.customerId && this.customerId > 0) {
-      const { data } = await getAttachments(this.customerId)
-      for (const el of data.results) {
-        this.addFileListItem(el)
+      try {
+        const { data } = await getAttachments(this.customerId)
+        for (const el of data) {
+          this.addFileListItem(el)
+        }
+      } catch (err) {
+        this.$message.error(err)
       }
     } else {
       this.$message.error('Не передан id абонента. Это к разработчику')

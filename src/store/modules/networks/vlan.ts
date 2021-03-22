@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import {
@@ -12,26 +13,7 @@ class VlanIf extends VuexModule implements IVlanIf {
   title = ''
   vid = 0
   is_management = false
-
-  @Mutation
-  private SET_PK(pk: number) {
-    this.id = pk
-  }
-
-  @Mutation
-  private SET_TITLE(title: string) {
-    this.title = title
-  }
-
-  @Mutation
-  private SET_VID(vid: number) {
-    this.vid = vid
-  }
-
-  @Mutation
-  private SET_IS_MNG(isMng: boolean) {
-    this.is_management = isMng
-  }
+  sites?: number[] = []
 
   @Mutation
   public RESET_ALL_VLAN() {
@@ -39,6 +21,7 @@ class VlanIf extends VuexModule implements IVlanIf {
     this.title = ''
     this.vid = 0
     this.is_management = false
+    this.sites = []
     return this
   }
 
@@ -48,6 +31,7 @@ class VlanIf extends VuexModule implements IVlanIf {
     this.title = data.title
     this.vid = data.vid
     this.is_management = data.is_management
+    this.sites = data.sites
     return this
   }
 

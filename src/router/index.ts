@@ -7,6 +7,7 @@ import deviceRoutes from './modules/devices'
 import taskRoutes from './modules/tasks'
 import profileRoutes from './modules/profiles'
 import finRoutes from './modules/fin'
+import sitesRoutes from './modules/sites'
 
 Vue.use(Router)
 
@@ -51,7 +52,7 @@ export const constantRoutes: RouteConfig [] = [
         component: () => import(/* webpackChunkName: "groups" */ '@/views/groups/group-list.vue'),
         meta: {
           title: 'Группы',
-          icon: 'dashboard'
+          icon: 'el-icon-s-management'
         }
       }
     ]
@@ -65,7 +66,7 @@ export const constantRoutes: RouteConfig [] = [
         component: () => import(/* webpackChunkName: "servicesindex" */ '@/views/services/index.vue'),
         meta: {
           title: 'Тарифы',
-          icon: 'dashboard'
+          icon: 'el-icon-s-order'
         }
       }
     ]
@@ -79,7 +80,7 @@ export const constantRoutes: RouteConfig [] = [
         component: () => import(/* webpackChunkName: "network" */ '@/views/networks/index.vue'),
         meta: {
           title: 'Сеть',
-          icon: 'dashboard'
+          icon: 'el-icon-upload'
         }
       }
     ]
@@ -94,7 +95,7 @@ export const constantRoutes: RouteConfig [] = [
         component: () => import(/* webpackChunkName: "gatewaysList" */ '@/views/gateways/gw-list.vue'),
         meta: {
           title: 'Шлюзы',
-          icon: 'dashboard'
+          icon: 'el-icon-receiving'
         }
       }
     ]
@@ -112,7 +113,21 @@ export const constantRoutes: RouteConfig [] = [
       }
     ]
   },
+  {
+    path: '/reports',
+    component: Layout,
+    meta: { hidden: true },
+    children: [
+      {
+        path: '',
+        name: 'reportsIndex',
+        component: () => import(/* webpackChunkName: "reports" */ '@/views/reports/index.vue'),
+        meta: { hidden: true }
+      }
+    ]
+  },
   finRoutes,
+  sitesRoutes,
   {
     path: '*',
     redirect: '/404',

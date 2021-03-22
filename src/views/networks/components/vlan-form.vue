@@ -23,7 +23,11 @@
       el-checkbox(v-model="frmMod.is_management") Является-ли вланом управления.
         b {{ frmMod.is_management ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+      ) Сохранить
 </template>
 
 <script lang="ts">
@@ -65,10 +69,7 @@ export default class extends Vue {
     is_management: VlanIfModule.is_management
   }
 
-  get vId() {
-    return VlanIfModule.id
-  }
-  @Watch('vId')
+  @Watch('$store.state.vlan.id')
   private async onVlanCh() {
     this.frmMod = await VlanIfModule.GetAllVlanState()
   }
@@ -87,8 +88,9 @@ export default class extends Vue {
           this.$emit('done', newVlan)
         } catch (err) {
           this.$message.error(err)
+        } finally {
+          this.isLoading = false
         }
-        this.isLoading = false
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

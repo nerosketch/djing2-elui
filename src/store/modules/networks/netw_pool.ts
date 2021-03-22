@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import {
@@ -20,6 +21,8 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   gateway = ''
   is_dynamic = false
   pool_tag = ''
+  sites?: number[] = []
+  vlan_if = 0
 
   @Mutation
   private SET_GROUPS(groups: number[]) {
@@ -43,6 +46,8 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
     this.gateway = ''
     this.is_dynamic = false
     this.pool_tag = ''
+    this.vlan_if = 0
+    this.sites = []
     return this
   }
 
@@ -58,6 +63,8 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
     this.gateway = data.gateway
     this.is_dynamic = data.is_dynamic
     this.pool_tag = data.pool_tag!
+    this.vlan_if = data.vlan_if || 0
+    this.sites = data.sites || []
     return this
   }
 
@@ -69,30 +76,17 @@ class NetworkIpPool extends VuexModule implements INetworkIpPool {
   }
 
   @Action
-  public async GetAllPoolState() {
-    return {
-      id: this.id,
-      network: this.network,
-      kind: this.kind,
-      description: this.description,
-      groups: this.groups,
-      ip_start: this.ip_start,
-      ip_end: this.ip_end,
-      gateway: this.gateway,
-      is_dynamic: this.is_dynamic,
-      pool_tag: this.pool_tag
-    }
-  }
-
-  @Action
-  public async AddPool(data: object) {
-    return await addNetworkIpPool(data)
+  public async AddPool(newInfo: object) {
+    const { data } = await addNetworkIpPool(newInfo)
+    this.SET_ALL_POOL(data)
+    return data
   }
 
   @Action
   public async PatchPool(newData: object) {
     const { data } = await changeNetworkIpPool(this.id, newData)
     this.SET_ALL_POOL(data)
+    return data
   }
 
   @Action

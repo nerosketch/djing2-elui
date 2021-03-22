@@ -22,12 +22,7 @@
       label="Телефон"
       prop='telephone'
     )
-      el-input(v-model="frmMod.telephone")
-        template(v-slot:append)
-          el-button
-            a(:href="`tel:${frmMod.telephone}`") call
-          el-button(@click="openTelsDlg=true") tels
-          el-button Add
+      tels-input(v-model="frmMod.telephone")
     el-form-item(
       label="Улица"
       prop='street'
@@ -53,7 +48,7 @@
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
-        format="d MMM yyyy"
+        format="d.MM.yyyy"
       )
     el-form-item(
       label="Опции"
@@ -65,7 +60,7 @@
       prop='group'
       v-loading="isGroupLoading"
     )
-      el-select(v-model="frmMod.group")
+      el-select(v-model="frmMod.group" :disabled="groups.length == 0")
         el-option(
           v-for="grp in groups"
           :key="grp.pk"
@@ -84,9 +79,30 @@
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40")
     el-form-item
       el-button-group
-        el-button(type="primary" icon='el-icon-download' @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
-        el-button(type="success" icon='el-icon-plus' @click="openTaskFormDialog" :loading="taskFormDialogLoading") Добавить задачу
-        el-button(@click="openPasportDlg = true" icon='el-icon-paperclip') Паспорт
+        el-button(
+          type="primary" icon='el-icon-upload'
+          @click="onSubmit"
+          :loading="isLoading"
+          :disabled="isFormUntouched"
+        ) Сохранить
+        el-button(
+          type="success" icon='el-icon-plus'
+          @click="openTaskFormDialog"
+          :loading="taskFormDialogLoading"
+        ) Добавить задачу
+        el-button(
+          @click="openPasportDlg = true" icon='el-icon-paperclip'
+          :disabled="!$perms.customers.view_passportinfo"
+        ) Паспорт
+        el-button(
+          @click="openPasswordDlg = true"
+          icon='el-icon-lock'
+        ) Пароль
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="sitesDlg = true"
+          icon='el-icon-lock'
+        ) Сайты
         el-button(
           type='danger'
           title="Полное удаление учётной записи абонента из билинга"
@@ -96,20 +112,38 @@
     el-dialog(
       title="Паспортные данные"
       :visible.sync="openPasportDlg"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       passport(
         v-on:done="openPasportDlg=false"
       )
     el-dialog(
-      title="Дополнительные телефоны"
-      :visible.sync="openTelsDlg"
-    )
-      additional-tels
-    el-dialog(
       title='Создание задачи'
       :visible.sync='taskFormDialog'
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       task-form
+    el-dialog(
+      title='Пароль абонента'
+      :visible.sync='openPasswordDlg'
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
+    )
+      customer-password(
+        :customerId="$store.state.customer.pk"
+        :initialPassw="$store.state.customer.raw_password"
+        v-on:done="openPasswordDlg=false"
+      )
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.customer.sites"
+        v-on:save="customerSitesSave"
+      )
 </template>
 
 <script lang="ts">
@@ -124,17 +158,19 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
 import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
-import AdditionalTels from './customers-details/additional-tels.vue'
+import CustomerPassword from './customer-password.vue'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
+import TelsInput from './tels/tels-input.vue'
 
 @Component({
   name: 'customer-form',
   components: {
-    AdditionalTels,
     TaskForm,
     GwsSelectfield,
-    Passport
+    Passport,
+    CustomerPassword,
+    TelsInput
   }
 })
 export default class extends mixins(FormMixin) {
@@ -144,9 +180,10 @@ export default class extends mixins(FormMixin) {
   private customerStreets: ICustomerStreet[] = []
   private groups: ICustomerGroup[] = []
   private openPasportDlg = false
-  private openTelsDlg = false
+  private openPasswordDlg = false
   private taskFormDialog = false
   private taskFormDialogLoading = false
+  private sitesDlg = false
 
   private frmRules = {
     username: [
@@ -169,10 +206,7 @@ export default class extends mixins(FormMixin) {
     this.onChangedId()
   }
 
-  get onChId() {
-    return CustomerModule.pk
-  }
-  @Watch('onChId')
+  @Watch('$store.state.customer.pk')
   private onChangedId() {
     this.frmMod = {
       username: CustomerModule.username,
@@ -190,52 +224,64 @@ export default class extends mixins(FormMixin) {
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm
   }
 
-  get onChGrp() {
-    return CustomerModule.group
-  }
-  @Watch('onChGrp')
+  @Watch('$store.state.customer.group')
   private onChangedGroup() {
     this.loadStreets()
   }
 
   private async loadStreets() {
     this.isStreetLoading = true
-    const { data } = await getStreets({
-      page: 1,
-      page_size: 100,
-      group: this.onChGrp
-    })
-    this.customerStreets = data.results
-    this.isStreetLoading = false
+    try {
+      const { data } = await getStreets({
+        page: 1,
+        page_size: 0,
+        group: this.$store.state.customer.group
+      }) as any
+      this.customerStreets = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.isStreetLoading = false
+    }
   }
 
   private async loadGroups() {
     this.isGroupLoading = true
-    const { data } = await getCustomerGroups()
-    this.groups = data.results
-    this.isGroupLoading = false
+    try {
+      const { data } = await getCustomerGroups() as any
+      this.groups = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.isGroupLoading = false
+    }
   }
 
   private onSubmit() {
     (this.$refs['customerfrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        const newDat = await CustomerModule.PatchCustomer(this.frmMod)
-        this.isLoading = false
-        this.$emit('done', newDat)
-        this.frmInitial = Object.assign({}, {
-          username: newDat.username,
-          telephone: newDat.telephone,
-          fio: newDat.fio,
-          group: newDat.group,
-          street: newDat.street,
-          house: newDat.house,
-          is_active: newDat.is_active,
-          is_dynamic_ip: newDat.is_dynamic_ip,
-          gateway: newDat.gateway,
-          description: newDat.description
-        })
-        this.$message.success('Абонент сохранён')
+        try {
+          const newDat = await CustomerModule.PatchCustomer(this.frmMod)
+          this.$emit('done', newDat)
+          this.frmInitial = Object.assign({}, {
+            username: newDat.username,
+            telephone: newDat.telephone,
+            fio: newDat.fio,
+            group: newDat.group,
+            street: newDat.street,
+            house: newDat.house,
+            is_active: newDat.is_active,
+            is_dynamic_ip: newDat.is_dynamic_ip,
+            gateway: newDat.gateway,
+            description: newDat.description
+          })
+          this.$message.success('Абонент сохранён')
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
@@ -244,10 +290,14 @@ export default class extends mixins(FormMixin) {
 
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
-      const currGroup = this.onChGrp
-      await CustomerModule.DelCustomer()
-      this.$message.success('Учётка удалена')
-      this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
+      try {
+        const currGroup = this.$store.state.customer.group
+        await CustomerModule.DelCustomer()
+        this.$message.success('Учётка удалена')
+        this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
+      } catch (err) {
+        this.$message.error(err)
+      }
     })
   }
 
@@ -255,7 +305,7 @@ export default class extends mixins(FormMixin) {
     this.taskFormDialogLoading = true
     try {
       const { data } = await TaskModule.GetNewTaskInitial({
-        groupId: this.onChGrp,
+        groupId: this.$store.state.customer.group,
         customerId: CustomerModule.pk
       })
       if (data.status > 0) {
@@ -270,7 +320,10 @@ export default class extends mixins(FormMixin) {
           duration: 10000
         })
         if (data.task_id && data.task_id > 0) {
-          this.$router.push({ name: 'taskDetails', params: { taskId: data.task_id.toString() }})
+          this.$router.push({
+            name: 'taskDetails',
+            params: { taskId: data.task_id.toString() }
+          })
         } else {
           this.$message.error('Task id expected from backend')
         }
@@ -280,6 +333,15 @@ export default class extends mixins(FormMixin) {
     } finally {
       this.taskFormDialogLoading = false
     }
+  }
+
+  private customerSitesSave(selectedSiteIds: number[]) {
+    CustomerModule.PatchCustomer({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$message.success('Принадлежность абонента сайтам сохранена')
+    })
+    this.sitesDlg = false
   }
 }
 </script>

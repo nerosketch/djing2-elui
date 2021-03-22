@@ -8,9 +8,11 @@
     )
     br
     el-button(
+      icon='el-icon-upload'
       type='primary' size='mini'
       @click="saveResp"
       :loading="loading"
+      :disabled="!$perms.is_superuser"
     ) Сохранить
 </template>
 
@@ -32,29 +34,28 @@ export default class extends Vue {
   private groups: IGroupWState[] = []
   private loading = false
 
-  async loadChackedRespGroups() {
-    const { data } = await getResponsibilityGroups(this.profileUname)
-    return data
-  }
-
   async loadGroups() {
     this.loading = true
     const { data } = await getGroups({
       page: 1,
-      page_size: 1000,
+      page_size: 0,
       fields: 'pk,title'
-    })
-    if (data.results.length < 1) {
+    }) as any
+    if (data.length < 1) {
       this.loading = false
       this.$message.error('Не удалось получить группы')
       return
     }
-    const checkedGroups = await this.loadChackedRespGroups()
-    for (const grp of data.results) {
-      let state = checkedGroups.includes(grp.pk)
-      this.groups.push(Object.assign({ state }, grp))
+    try {
+      const checkedGroups = await getResponsibilityGroups(this.profileUname)
+      this.groups = data.map((grp: IGroup) => Object.assign({
+        state: checkedGroups.data.includes(grp.pk)
+      }, grp))
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
     }
-    this.loading = false
   }
 
   created() {
@@ -63,12 +64,8 @@ export default class extends Vue {
 
   async saveResp() {
     this.loading = true
-    let res: number[] = []
-    for (const v of this.groups) {
-      if (v.state) {
-        res.push(v.pk)
-      }
-    }
+    let filtered = this.groups.filter(v => v.state)
+    let res = filtered.map(v => v.pk)
     await setResponsibilityGroups(this.profileUname, res)
     this.$message.success('Ответственность за группы сохранена')
     this.loading = false

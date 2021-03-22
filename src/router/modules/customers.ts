@@ -11,7 +11,7 @@ const customerRoutes: RouteConfig = {
       name: 'customersGroupList',
       meta: {
         title: 'Абоненты',
-        icon: 'tree'
+        icon: 'el-icon-user-solid'
       }
     },
     {
@@ -26,6 +26,18 @@ const customerRoutes: RouteConfig = {
       name: 'customerDetails',
       component: () => import(/* webpackChunkName: "customerdetails" */ '@/views/customers/customer-details.vue'),
       props: ({ params }) => ({ uid: Number(params.uid || 0) }),
+      meta: { hidden: true }
+    },
+    {
+      path: 'c:uid/session/',
+      name: 'customerSessions',
+      component: () => import(/* webpackChunkName: "customersessions" */ '@/views/customers/customers-details/session-list.vue'),
+      props: ({ params }) => ({
+        uid: Number(params.uid),
+        gid: Number(params.gid),
+        grpName: params.grpName,
+        customerName: params.customerName
+      }),
       meta: { hidden: true }
     }
   ]

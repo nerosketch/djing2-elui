@@ -5,6 +5,7 @@
     :type="btnType"
     :loading="loading"
     @click="delFromOltOnu"
+    :disabled="!$perms.devices.can_remove_from_olt"
   ) {{ btnText }}
 </template>
 

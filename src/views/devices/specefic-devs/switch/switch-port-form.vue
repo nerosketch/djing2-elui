@@ -19,7 +19,11 @@
     )
       el-input(v-model="frmMod.descr" size='mini')
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="loading") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type="primary" @click="onSubmit" :loading="loading"
+        :disabled="!$perms.devices.change_port"
+      ) Сохранить
 </template>
 
 <script lang="ts">
@@ -50,10 +54,15 @@ export default class extends Vue {
   private async loadPort() {
     if (this.portId > 0) {
       this.loading = true
-      const { data } = await PortModule.GetPort(this.portId)
-      this.frmMod.num = data.num
-      this.frmMod.descr = data.descr
-      this.loading = false
+      try {
+        const { data } = await PortModule.GetPort(this.portId)
+        this.frmMod.num = data.num
+        this.frmMod.descr = data.descr
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.loading = false
+      }
     } else {
       this.frmMod.num = this.initialNum
       this.frmMod.descr = ''

@@ -6,7 +6,7 @@
     p Автор задачи: {{ authorName }}
     div Исполнители:
       ul
-        li(v-for="rec in taskRecipients" :key='rec.pk') {{ rec.full_name }}
+        li(v-for="rec in taskRecipients" :key='rec.pk') {{ rec.full_name || rec.username }}
     b Приоритет: 
     span {{ taskPrior }}
     br
@@ -26,8 +26,8 @@
     span {{ taskState }}
     br
     b Абонент: 
-    el-link(type="primary")
-      router-link(:to="taskCustomerLink") {{ taskCustomerName }}
+    router-link(:to="taskCustomerLink")
+      el-link(type="primary") {{ taskCustomerName }}
     el-divider
     task-docs(:taskId="taskId")
 </template>
@@ -94,14 +94,8 @@ export default class extends Vue {
   }
 
   get taskRecipients() {
-    let res = []
     const recipIds = TaskModule.recipients
-    for (const r of this.recipients) {
-      if (recipIds.includes(r.pk)) {
-        res.push(r)
-      }
-    }
-    return res
+    return this.recipients.filter(r => recipIds.includes(r.pk))
   }
 }
 </script>

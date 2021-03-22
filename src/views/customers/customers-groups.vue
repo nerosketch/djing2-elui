@@ -3,15 +3,12 @@
     datatable(
       :columns="tableColumns"
       :getData="getGroups"
-      :loading="groupsLoading"
-      :heightDiff='75'
+      :heightDiff='89'
       widthStorageNamePrefix='customerGroups'
     )
-      template(v-slot:pk="{row}") {{ row.pk }}
-
       template(v-slot:title="{row}")
-        el-link(type="primary")
-          router-link(:to="{name: 'customersList', params:{ groupId: row.pk }}") {{ row.title }}
+        router-link(:to="{name: 'customersList', params:{ groupId: row.pk }}")
+          el-link(type="primary") {{ row.title }}
 
       template(v-slot:usercount="{row}") {{ row.usercount }}
 </template>
@@ -32,8 +29,6 @@ class DataTableComp extends DataTable<ICustomerGroup> {}
   components: { 'datatable': DataTableComp }
 })
 export default class extends Vue {
-  private groupsLoading = true
-
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -52,14 +47,11 @@ export default class extends Vue {
     }
   ]
 
-  private async getGroups(params?: IDRFRequestListParameters) {
-    this.groupsLoading = true
+  private getGroups(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'pk,title,usercount'
     }
-    const r = await getCustomerGroups(params)
-    this.groupsLoading = false
-    return r
+    return getCustomerGroups(params)
   }
 
   // Breadcrumbs

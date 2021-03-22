@@ -10,18 +10,23 @@
       el-table-column(
         label="IP Адрес"
         min-width='110'
+        prop='ip_address'
       )
-        template(v-slot:default="{row}") {{ row.ip_address }}
       el-table-column(
         label="MAC Адрес"
         min-width='110'
+        prop='mac_address'
       )
-        template(v-slot:default="{row}") {{ row.mac_address }}
       el-table-column(
         label="Время аренды"
         min-width='110'
+        prop='lease_time'
       )
-        template(v-slot:default="{row}") {{ row.lease_time }}
+      el-table-column(
+        label="Последнее обновление"
+        min-width='110'
+        prop='last_update'
+      )
       el-table-column(
         label="Дин."
         align="center"
@@ -54,7 +59,15 @@
               icon='el-icon-delete'
               @click="delLease(row)"
             )
-    el-button(size='small' type='success' icon='el-icon-plus', @click="addLease") Добавить
+    el-button-group
+      el-button(
+        size='mini' type='success' icon='el-icon-plus',
+        @click="addLease"
+      ) Добавить
+      el-button(
+        size='mini' icon='el-icon-s-data'
+        @click="openSessions"
+      ) Сессии
 
     el-dialog(
       :title="(isAddNewLease ? 'Добавить' : 'Изменить') + ' аренду ip'"
@@ -98,7 +111,12 @@
         )
           el-input(v-model="frmMod.mac_address")
         el-form-item
-          el-button(type="primary" @click="onSubmit" :loading="frmLoading") Сохранить
+          el-button(
+            icon='el-icon-upload'
+            type="primary"
+            @click="onSubmit"
+            :loading="frmLoading"
+          ) Сохранить
 </template>
 
 <script lang="ts">
@@ -107,7 +125,10 @@ import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { AppModule } from '@/store/modules/app'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { ICustomerIpLease, INetworkIpPool } from '@/api/networks/types'
+import {
+  ICustomerIpLease,
+  INetworkIpPool
+} from '@/api/networks/types'
 import { getCustomerIpLeases, getNetworkIpPools } from '@/api/networks/req'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
@@ -153,18 +174,28 @@ export default class extends Vue {
 
   private async loadLeases() {
     this.loading = true
-    const { data } = await getCustomerIpLeases(undefined, CustomerModule.pk)
-    this.leases = data.results
-    this.loading = false
+    try {
+      const { data } = await getCustomerIpLeases(undefined, CustomerModule.pk)
+      this.leases = data as ICustomerIpLease[]
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 
   private async loadPools() {
     this.poolsLoading = true
-    const { data } = await getNetworkIpPools({
-      groups: CustomerModule.group
-    })
-    this.pools = data.results
-    this.poolsLoading = false
+    try {
+      const { data } = await getNetworkIpPools({
+        groups: CustomerModule.group
+      }) as any
+      this.pools = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.poolsLoading = false
+    }
   }
 
   async created() {
@@ -183,7 +214,7 @@ export default class extends Vue {
       if (valid) {
         this.frmLoading = true
         try {
-          if(this.isAddNewLease) {
+          if (this.isAddNewLease) {
             await CustomerIpLeaseModule.AddLease(this.frmMod)
           } else {
             await CustomerIpLeaseModule.PatchLease(this.frmMod)
@@ -191,9 +222,10 @@ export default class extends Vue {
           this.loadLeases()
         } catch (err) {
           this.$message.error(err)
+        } finally {
+          this.frmLoading = false
+          this.editDialog = false
         }
-        this.frmLoading = false
-        this.editDialog = false
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
@@ -205,9 +237,13 @@ export default class extends Vue {
       confirmButtonText: 'OK',
       cancelButtonText: 'Нет'
     }).then(async() => {
-      await CustomerIpLeaseModule.DelLease(lease.id)
-      this.$message.success('Аренда удалена')
-      this.loadLeases()
+      try {
+        await CustomerIpLeaseModule.DelLease(lease.id)
+        this.$message.success('Аренда удалена')
+        this.loadLeases()
+      } catch (err) {
+        this.$message.error(err)
+      }
     })
   }
 
@@ -227,13 +263,30 @@ export default class extends Vue {
   private async getFreeIp() {
     this.getFreeIpLoad = true
     await NetworkIpPoolModule.SET_ID(this.frmMod.pool)
-    const ip = await NetworkIpPoolModule.GetFreeIP()
-    if(ip) {
-      this.frmMod.ip_address = ip
-    } else {
-      this.$message.error('Не получилось подобрать ip :(')
+    try {
+      const ip = await NetworkIpPoolModule.GetFreeIP()
+      if (ip) {
+        this.frmMod.ip_address = ip
+      } else {
+        this.$message.error('Не получилось подобрать ip :(')
+      }
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.getFreeIpLoad = false
     }
-    this.getFreeIpLoad = false
+  }
+
+  private openSessions() {
+    this.$router.push({
+      name: 'customerSessions',
+      params: {
+        uid: CustomerModule.pk.toString(),
+        gid: CustomerModule.group.toString(),
+        grpName: CustomerModule.group_title,
+        customerName: CustomerModule.full_name
+      }
+    })
   }
 }
 </script>

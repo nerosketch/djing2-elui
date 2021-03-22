@@ -23,7 +23,11 @@
           :value="grp.pk"
         )
     el-form-item
-      el-button(type="success" @click="onSubmit" :loading="loading") Добавить
+      el-button(
+        type="success" @click="onSubmit"
+        :loading="loading"
+        :disabled="!$perms.customers.add_customerstreet"
+      ) Добавить
 </template>
 
 <script lang="ts">
@@ -67,9 +71,14 @@ export default class extends Vue {
 
   private async loadGroups() {
     this.loading = true
-    const { data } = await getGroups()
-    this.groups = data.results
-    this.loading = false
+    try {
+      const { data } = await getGroups() as any
+      this.groups = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 
   created() {

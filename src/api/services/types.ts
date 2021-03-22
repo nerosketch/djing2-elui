@@ -1,4 +1,9 @@
-import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '../types'
+/* eslint-disable camelcase */
+import {
+  IDRFAxiosResponsePromise,
+  IDRFListResponse,
+  IDRFRequestListParameters
+} from '@/api/types'
 
 export enum IServiceTypeEnum {
   BASE = 0,
@@ -21,10 +26,11 @@ export interface IService {
   usercount: number
   planned_deadline: string
   calc_type_name: string
+  sites?: number[]
 }
 export type IServiceList = IDRFListResponse<IService>
 export type IServiceAxoisResponsePromise = IDRFAxiosResponsePromise<IService>
-export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList>
+export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList> | IDRFAxiosResponsePromise<IService[]>
 
 export interface IDRFRequestListParametersService extends IDRFRequestListParameters {
   groups: number
@@ -36,16 +42,18 @@ export interface IPeriodicPay {
   name: string
   when_add?: string
   amount: number
+  sites?: number[]
 }
 export type IPeriodicPayList = IDRFListResponse<IPeriodicPay>
 export type IPeriodicPayAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPay>
-export type IPeriodicPayListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayList>
+export type IPeriodicPayListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayList> | IDRFAxiosResponsePromise<IPeriodicPay[]>
 
 // IOneShotPay
 export interface IOneShotPay {
   pk: number
   name: string
   cost: number
+  sites?: number[]
 }
 export type IOneShotPayPayList = IDRFListResponse<IOneShotPay>
 export type IOneShotPayPayAxoisResponsePromise = IDRFAxiosResponsePromise<IOneShotPay>

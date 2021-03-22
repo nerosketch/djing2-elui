@@ -1,15 +1,16 @@
 <template lang="pug">
   smg(
-    :width="width.toString()" :height="height.toString()"
+    :width="width.toString()"
+    :height="height.toString()"
     v-bind:u_time="uTime"
     v-bind:u_resolution="[width, height]"
   )
 </template>
 
 <script>
-import smogShader from "./smog.frag";
+import smogShader from './smog.frag'
 export default {
-  name: "smog",
+  name: 'Smog',
   components: {
     smg: smogShader
   },
@@ -23,19 +24,19 @@ export default {
       default: 240.0
     }
   },
-  mounted() {
-    this.timerTime = setInterval(() => {
-      this.uTime += 0.06;
-    }, 16);
-  },
   data() {
     return {
       uTime: 0.0,
       timerTime: 0
-    };
+    }
+  },
+  mounted() {
+    this.timerTime = setInterval(() => {
+      this.uTime += 0.06
+    }, 16)
   },
   beforeDestroy() {
-    clearInterval(this.timerTime);
+    clearInterval(this.timerTime)
   }
-};
+}
 </script>

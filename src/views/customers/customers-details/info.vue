@@ -32,7 +32,13 @@ import Markers from './markers.vue'
 
 @Component({
   name: 'Info',
-  components: { CustomerForm, Device, Network, CustomerDocs, Markers }
+  components: {
+    CustomerForm,
+    Device,
+    Network,
+    CustomerDocs,
+    Markers
+  }
 })
 export default class extends Vue {}
 </script>

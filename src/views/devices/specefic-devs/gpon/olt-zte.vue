@@ -1,11 +1,15 @@
 <template lang="pug">
-  el-card.box-card
+  el-card
     template(v-slot:header)
       .clearfix
         span zte -
         small {{ ` ${device.ip_address || device.mac_addr} ` }}
         small {{ details }}
-        el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
+        el-button(
+          style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
+          @click="openDevForm"
+          :disabled="!$perms.devices.change_device"
+        )
     el-row
       el-col(:xl="2" :md="3" :sm="6" :xs="12" v-for="(p, i) in allPorts" :key="i")
         olt-zte-port(
@@ -23,28 +27,28 @@
       el-table-column(
         label="Мак"
         min-width="150"
+        prop='mac'
       )
-        template(v-slot:default="{row}") {{ row.mac }}
       el-table-column(
         label="Версия прошивки"
         min-width="150"
+        prop='firmware_ver'
       )
-        template(v-slot:default="{row}") {{ row.firmware_ver }}
       el-table-column(
         label="LOID пароль"
         min-width="100"
+        prop='loid_passw'
       )
-        template(v-slot:default="{row}") {{ row.loid_passw }}
       el-table-column(
         label="LOID"
         min-width="150"
+        prop='loid'
       )
-        template(v-slot:default="{row}") {{ row.loid }}
       el-table-column(
         label="sn"
         min-width="150"
+        prop='sn'
       )
-        template(v-slot:default="{row}") {{ row.sn }}
       el-table-column(
         label="Сохранить"
         min-width="70"
@@ -105,18 +109,28 @@ export default class extends Vue {
   private async loadFibers() {
     if (this.device !== null) {
       this.loading = true
-      const { data } = await scanOltFibers(this.devPk)
-      this.allPorts = data
-      this.loading = false
+      try {
+        const { data } = await scanOltFibers(this.devPk)
+        this.allPorts = data
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.loading = false
+      }
     }
   }
 
   private async loadUnregistered() {
     if (this.device !== null) {
       this.unrloading = true
-      const { data } = await scanUnitsUnregistered(this.devPk)
-      this.unregistered = data
-      this.unrloading = false
+      try {
+        const { data } = await scanUnitsUnregistered(this.devPk)
+        this.unregistered = data
+      } catch (err) {
+        this.$message.error(err)
+      } finally {
+        this.unrloading = false
+      }
     }
   }
 

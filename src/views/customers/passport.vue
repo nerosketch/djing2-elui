@@ -23,19 +23,33 @@
     )
       el-input(v-model="frmMod.distributor" :maxlength='64')
     el-form-item(
+      label="Код подразделения"
+      prop='division_code'
+    )
+      el-input(v-model="frmMod.division_code" :maxlength='64')
+    el-form-item(
       label="Дата выдачи"
       prop='date_of_acceptance'
     )
-      el-date-picker(v-model="frmMod.date_of_acceptance" type="date" value-format="yyyy-MM-dd" format="d MMM yyyy")
+      el-date-picker(
+        v-model="frmMod.date_of_acceptance"
+        type="date"
+        value-format="yyyy-MM-d"
+        format="d.MM.yyyy"
+      )
     el-form-item
-      el-button(type="primary" size='mini' @click="onSubmit" :loading="loading") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type='primary' size='mini' @click="onSubmit" :loading="loading"
+        :disabled="!$perms.customers.add_passportinfo || !$perms.customers.change_passportinfo"
+      ) Сохранить
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { IPassportInfo } from '@/api/customers/types'
-import { setPassportInfo, getPassportInfo } from '../../api/customers/req'
+import { setPassportInfo, getPassportInfo } from '@/api/customers/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
 
 @Component({
@@ -49,7 +63,8 @@ export default class extends Vue {
     series: '',
     number: '',
     distributor: '',
-    date_of_acceptance: ''
+    date_of_acceptance: '',
+    division_code: ''
   }
 
   private frmRules = {

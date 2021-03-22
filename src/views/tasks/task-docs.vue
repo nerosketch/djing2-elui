@@ -7,7 +7,10 @@
     :http-request="uploadReq"
     :file-list="fileList"
   )
-    el-button(size="small" type="primary") Добавить документ
+    el-button(
+      size="small" type="primary"
+      v-if="$perms.tasks.add_taskdocumentattachment"
+    ) Добавить документ
 </template>
 
 <script lang="ts">
@@ -16,6 +19,7 @@ import { TaskAttachmentModule } from '@/store/modules/tasks/attachments'
 import { HttpRequestOptions } from 'element-ui/types/upload'
 import { getAttachments } from '@/api/tasks/req'
 import { ITaskDocumentAttachment } from '@/api/tasks/types'
+import { CurrentPermissions } from '@/store/current-user-permissions'
 
 interface IFileItem {
   id: number
@@ -27,17 +31,20 @@ interface IFileItem {
   name: 'TaskDocs'
 })
 export default class extends Vue {
+  private $perms!: CurrentPermissions
   @Prop({ default: 0 }) private taskId!: number
 
   private fileList: IFileItem[] = []
 
   private handleRemove(file: IFileItem) {
+    if (!this.$perms.tasks.delete_taskdocumentattachment) return
     TaskAttachmentModule.DelAttachment(file.id)
   }
   private handlePreview(file: IFileItem) {
     window.open(file.url, '_blank')
   }
   private beforeRemove(file: IFileItem) {
+    if (!this.$perms.tasks.delete_taskdocumentattachment) return false
     return this.$confirm(`Удалить "${file.name}"?`)
   }
 
@@ -61,7 +68,7 @@ export default class extends Vue {
 
   private async loadFileList() {
     const { data } = await getAttachments(this.taskId)
-    for (const el of data.results) {
+    for (const el of data) {
       this.addFileListItem(el)
     }
   }

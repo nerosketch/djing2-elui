@@ -1,10 +1,18 @@
 <template lang="pug">
-  el-card.box-card
+  el-card
     template(v-slot:header)
       .clearfix
         span {{ device.comment || 'Коммутатор' }}
-        small {{ ` ${device.ip_address || device.mac_addr}` }}
-        el-button(style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary' @click="openDevForm")
+        small {{ ` ${device.ip_address || device.mac_addr} ` }}
+        template(v-if="device.parent_dev_name")
+          | Родительское устр.:
+          router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+            el-link(type="primary") {{ device.parent_dev_name }}
+        el-button(
+          style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
+          @click="openDevForm"
+          :disabled="!$perms.devices.change_device"
+        )
     el-table(
       :data="allPorts"
       :loading="loading"
@@ -33,8 +41,8 @@
       el-table-column(
         label="Описание"
         min-width='267'
+        prop='descr'
       )
-        template(v-slot:default="{row}") {{ row.descr }}
       el-table-column(
         label="Абонов"
         width="70"
@@ -65,10 +73,14 @@
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
             el-button(size='mini' icon='el-icon-notebook-2' @click="openMacsDialog(row)")
-            el-button(size='mini' icon='el-icon-view' @click="openVidsDialog(row)")
-            el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)")
-            el-button(size='mini' type='primary' icon='el-icon-edit' @click="openPortEdit(row)")
-          el-button(v-else size='mini' icon='el-icon-plus' circle @click="openPortAdd(row)")
+            el-button(size='mini' icon='el-icon-view' @click="openVidsDialog(row)" :disabled="!$perms.devices.view_portvlanmembermodel")
+            el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)" :disabled="!$perms.devices.delete_port")
+            el-button(size='mini' type='primary' icon='el-icon-edit' @click="openPortEdit(row)" :disabled="!$perms.devices.change_port")
+          el-button(
+            v-else size='mini' icon='el-icon-plus' circle
+            @click="openPortAdd(row)"
+            :disabled="!$perms.devices.add_port"
+          )
     el-dialog(
       :visible.sync="portViewDialog"
       title="Абоненты на порту"
@@ -104,7 +116,7 @@
       )
     el-dialog(
       :visible.sync="macsDialog"
-      title="ARP таблица для порта"
+      title="Таблица MAC адресов порта"
     )
       port-mac-list(
         :portId="currPortId"
@@ -112,6 +124,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable camelcase */
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IPort, IScannedPort } from '@/api/devices/types'
 import { PortModule } from '@/store/modules/devices/port'
@@ -180,15 +193,17 @@ export default class extends Vue {
 
   private async loadPorts() {
     if (this.device !== null) {
-      const { data } = await getPorts(this.device.pk)
-      for (const p of data.results) {
-        this.allPorts.push({
+      try {
+        const { data } = await getPorts(this.device.pk)
+        this.allPorts = data.map(p => ({
           pk: p.pk,
           num: p.num,
           descr: p.descr,
           user_count: p.user_count,
           isdb: true
-        } as IFinPort)
+        }))
+      } catch (err) {
+        this.$message.error(err)
       }
     }
   }

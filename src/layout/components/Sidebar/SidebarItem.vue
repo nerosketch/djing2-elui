@@ -12,9 +12,9 @@
           :index="resolvePath(theOnlyOneChild.path)"
           :class="{'submenu-title-noDropdown': isFirstLevel}"
         >
-          <svg-icon
+          <i
             v-if="theOnlyOneChild.meta.icon"
-            :name="theOnlyOneChild.meta.icon"
+            :class="theOnlyOneChild.meta.icon"
           />
           <span
             v-if="theOnlyOneChild.meta.title"
@@ -35,9 +35,9 @@
       popper-append-to-body
     >
       <template slot="title">
-        <svg-icon
+        <i
           v-if="item.meta && item.meta.icon"
-          :name="item.meta.icon"
+          :class="item.meta.icon"
         />
         <span
           v-if="item.meta && item.meta.title"
@@ -62,7 +62,7 @@
 <script lang="ts">
 import path from 'path'
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Route, RouteConfig } from 'vue-router'
+import { RouteConfig } from 'vue-router'
 import { isExternal } from '@/utils/validate'
 import SidebarItemLink from './SidebarItemLink.vue'
 
@@ -182,15 +182,5 @@ export default class extends Vue {
   padding: 5px 8px;
   font-weight: bold;
   color: #304156;
-}
-
-.svg-icon {
-  margin-right: 16px;
-}
-
-.simple-mode {
-  .svg-icon {
-    margin-left: 20px;
-  }
 }
 </style>

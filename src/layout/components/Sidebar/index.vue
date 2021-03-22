@@ -75,8 +75,8 @@ export default class extends Vue {
       if (profiles.includes(this.$store.state['currentuserprofile'].pk)) {
         this.$eventHub.$emit('dilim')
         this.$message.info({
-          message: msg.text || 'Изменения в высокоприоритетной задаче в которой вы учавствуете',
-          duration: 15000,
+          message: msg.text || 'Изменения в высокоприоритетной задаче, в которой вы учавствуете',
+          duration: 300000,
           showClose: true
         })
       }

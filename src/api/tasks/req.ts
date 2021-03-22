@@ -2,15 +2,18 @@ import request from '@/utils/request'
 import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
 import { ITaskList, ITaskListAxiosResponsePromise, ITask,
   ITaskAxoisResponsePromise, IChangeLogList, IChangeLogListAxiosResponsePromise,
-  IChangeLog, IChangeLogAxoisResponsePromise, IExtraCommentList,
-  IExtraCommentListAxiosResponsePromise, IExtraCommentAxoisResponsePromise,
-  IExtraComment, ITaskDocumentAttachmentListAxiosResponsePromise,
+  IChangeLog, IChangeLogAxoisResponsePromise,
+  IExtraCommentAxoisResponsePromise, IExtraCommentListAxoisResponsePromise,
+  IExtraComment,
   ITaskDocumentAttachmentList, ITaskDocumentAttachmentAxoisResponsePromise,
   ITaskDocumentAttachment,
   INewTaskInitialSimpleResponseResultAxoisResponsePromise,
-  INewTaskInitialSimpleResponseResult
+  INewTaskInitialSimpleResponseResult,
+  TaskStatePercentReport,
+  TaskStatePercentReportAxoisResponsePromise,
+  TaskModeReport,
+  TaskModeReportAxoisResponsePromise
 } from './types'
-import { IUserProfileListAxiosResponsePromise } from '@/api/profiles/types'
 
 // ITask
 const baseTaskUrl = '/tasks/'
@@ -64,8 +67,8 @@ export const delChangeLog = (id: number) =>
 
 // IExtraComment
 const baseCommentUrl = '/tasks/comments/'
-export const getComments = (task: number): IExtraCommentListAxiosResponsePromise =>
-  request.get<IExtraCommentList>(baseCommentUrl, { params: { task } })
+export const getComments = (task: number): IExtraCommentListAxoisResponsePromise =>
+  request.get<IExtraComment[]>(baseCommentUrl, { params: { task } })
 
 export const getComment = (id: number): IExtraCommentAxoisResponsePromise =>
   request.get<IExtraComment>(`${baseCommentUrl}${id}/`)
@@ -83,8 +86,8 @@ export const delComment = (id: number) =>
 
 // ITaskDocumentAttachment
 const TaskAttachmUrl = '/tasks/attachment/'
-export const getAttachments = (task: number): ITaskDocumentAttachmentListAxiosResponsePromise =>
-  request.get<ITaskDocumentAttachmentList>(TaskAttachmUrl, { params: { task } })
+export const getAttachments = (task: number): ITaskDocumentAttachmentList =>
+  request.get<ITaskDocumentAttachment[]>(TaskAttachmUrl, { params: { task } })
 
 export const getAttachment = (id: number): ITaskDocumentAttachmentAxoisResponsePromise =>
   request.get<ITaskDocumentAttachment>(`${TaskAttachmUrl}${id}/`)
@@ -99,3 +102,9 @@ export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponse
 
 export const delAttachment = (id: number) =>
   request.delete(`${TaskAttachmUrl}${id}/`)
+
+export const taskStatePercentReport = (stateNum: number): TaskStatePercentReportAxoisResponsePromise =>
+  request.get<TaskStatePercentReport>(`/tasks/state_percent_report/${stateNum}/`)
+
+export const taskModeReportRequest = (): TaskModeReportAxoisResponsePromise =>
+  request.get<TaskModeReport>('/tasks/task_mode_report/')

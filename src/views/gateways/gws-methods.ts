@@ -11,12 +11,17 @@ export default class extends Vue {
 
   protected async loadGateways(fields?: string) {
     this.loadingGws = true
-    const { data } = await getGateways({
-      page: 1,
-      page_size: 100500,
-      fields
-    })
-    this.gwlist = data.results
-    this.loadingGws = false
+    try {
+      const { data } = await getGateways({
+        page: 1,
+        page_size: 0,
+        fields
+      }) as any
+      this.gwlist = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loadingGws = false
+    }
   }
 }

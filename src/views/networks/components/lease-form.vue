@@ -22,7 +22,12 @@
     )
       el-checkbox(v-model="frmMod.is_dynamic") {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type='primary' @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type='primary'
+        @click="onSubmit"
+        :loading="isLoading"
+      ) Сохранить
 </template>
 
 <script lang="ts">
@@ -55,14 +60,12 @@ export default class extends Vue {
     pool: CustomerIpLeaseModule.pool,
     customer: CustomerIpLeaseModule.customer,
     lease_time: CustomerIpLeaseModule.lease_time,
+    last_update: CustomerIpLeaseModule.last_update,
     mac_address: CustomerIpLeaseModule.mac_address,
     is_dynamic: CustomerIpLeaseModule.is_dynamic
   }
 
-  get leaseId() {
-    return CustomerIpLeaseModule.id
-  }
-  @Watch('leaseId')
+  @Watch('$store.state.iplease.id')
   private async onNetwCh() {
     this.frmMod = await CustomerIpLeaseModule.GetAllLeaseState()
   }
@@ -71,10 +74,15 @@ export default class extends Vue {
     (this.$refs['leasefrm'] as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        await CustomerIpLeaseModule.SET_ALL_LEASE(this.frmMod)
-        const newDat = await CustomerIpLeaseModule.SaveLease()
-        this.isLoading = false
-        this.$emit('done', newDat)
+        try {
+          await CustomerIpLeaseModule.SET_ALL_LEASE(this.frmMod)
+          const newDat = await CustomerIpLeaseModule.SaveLease()
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

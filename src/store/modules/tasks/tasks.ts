@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {
   VuexModule, Module, Action,
   Mutation, getModule

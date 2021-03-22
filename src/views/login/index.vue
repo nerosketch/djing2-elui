@@ -1,39 +1,34 @@
-<template>
-  <div class="login-container">
-    <el-form
+<template lang="pug">
+  .login-container
+    el-form.login-form(
       ref="loginForm"
       :model="loginForm"
       :rules="loginRules"
-      class="login-form"
       autocomplete="on"
       label-position="left"
-    >
-      <div class="title-container">
-        <glsl-smog-effect id="smogblock" :width="518" :height="73"/>
-        <h3 class="title">
-          Войти
-        </h3>
-      </div>
+    )
+      .title-container
+        glsl-smog-effect(id="smogblock" :width="518" :height="73")
+        h3.title Войти
 
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon name="user" />
-        </span>
-        <el-input
+      el-form-item(prop="username")
+        span.svg-container
+          i.el-icon-user-solid
+
+        el-input(
           ref="username"
           v-model="loginForm.username"
           name="username"
           type="text"
           autocomplete="on"
           placeholder="логин"
-        />
-      </el-form-item>
+        )
 
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon name="password" />
-        </span>
-        <el-input
+      el-form-item(prop="password")
+        span.svg-container
+          i.el-icon-lock
+
+        el-input(
           :key="passwordType"
           ref="password"
           v-model="loginForm.password"
@@ -42,25 +37,19 @@
           name="password"
           autocomplete="on"
           @keyup.enter.native="handleLogin"
-        />
-        <span
-          class="show-pwd"
+        )
+        span.show-pwd(
           @click="showPwd"
-        >
-          <svg-icon :name="passwordType === 'password' ? 'eye-off' : 'eye-on'" />
-        </span>
-      </el-form-item>
+        )
+          i(:class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'")
 
-      <el-button
+      el-button(
         :loading="loading"
         type="primary"
         style="width:100%; margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      >
-        Войти
-      </el-button>
-    </el-form>
-  </div>
+      ) Войти
+
 </template>
 
 <script lang="ts">
@@ -70,13 +59,16 @@ import { Dictionary } from 'vue-router/types/router'
 import { Form as ElForm, Input } from 'element-ui'
 import { latinValidator } from '@/utils/validate'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
-import GlslSmogEffect from "@/components/shaders/glsl-smog-effect.vue"
+import { IUserProfile } from '@/api/profiles/types'
+import { CurrentPermissions } from '@/store/current-user-permissions'
+import GlslSmogEffect from '@/components/shaders/glsl-smog-effect.vue'
 
 @Component({
   name: 'Login',
   components: { GlslSmogEffect }
 })
 export default class extends Vue {
+  private $perms!: CurrentPermissions
   private loginForm = {
     username: '',
     password: ''
@@ -117,6 +109,10 @@ export default class extends Vue {
     }
   }
 
+  created() {
+    document.title = 'Вход'
+  }
+
   private showPwd() {
     if (this.passwordType === 'password') {
       this.passwordType = ''
@@ -134,6 +130,10 @@ export default class extends Vue {
         this.loading = true
         try {
           await CurrentUserProfileModule.Login(this.loginForm)
+          CurrentUserProfileModule.GetSelf().then((profile: IUserProfile) => {
+            this.$perms.SET_IS_SUPERUSER(profile.is_superuser || false)
+          })
+          this.$perms.GetCurrentAuthPermissions()
           this.$router.push({
             path: this.redirect || '/',
             query: this.otherQuery

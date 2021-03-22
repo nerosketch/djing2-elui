@@ -14,7 +14,12 @@
           .clearfix
             span {{ c.author_name }} 
             small {{ c.date_create }}
-            el-button(style="float: right; padding: 3px 0" type="text" icon='el-icon-close' v-if="c.can_remove" @click="delComment(c)")
+            el-button.comment_btn(
+              type="text" icon='el-icon-close'
+              v-if="c.can_remove"
+              @click="delComment(c)"
+              :disabled="!$perms.tasks.delete_extracomment"
+            )
         el-avatar(shape="square" size='medium' :src='c.author_avatar')
         span &nbsp; {{ c.text }}
     el-form
@@ -24,7 +29,11 @@
       )
         el-input(v-model="currentComment" type="textarea" cols="40" rows="10")
       el-form-item
-        el-button(type="primary" @click="onSendComment" icon="el-icon-s-promotion" size='small') Отправить
+        el-button(
+          type="primary" icon="el-icon-s-promotion" size='small'
+          @click="onSendComment"
+          :disabled="!$perms.tasks.add_extracomment"
+        ) Отправить
 </template>
 
 <script lang="ts">
@@ -46,9 +55,14 @@ export default class extends Vue {
 
   private async loadComments() {
     this.loading = true
-    const { data } = await getComments(TaskModule.id)
-    this.comments = data.results
-    this.loading = false
+    try {
+      const { data } = await getComments(TaskModule.id)
+      this.comments = data
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loading = false
+    }
   }
 
   created() {
@@ -57,7 +71,7 @@ export default class extends Vue {
 
   private async onSendComment() {
     this.loading = true
-    const { data } = await addComment(this.currentComment, TaskModule.id)
+    await addComment(this.currentComment, TaskModule.id)
     this.currentComment = ''
     await this.loadComments()
     this.loading = false
@@ -69,9 +83,16 @@ export default class extends Vue {
       cancelButtonText: 'нет'
     }).then(async() => {
       await delComment(c.id)
-      await this.loadComments()
+      this.loadComments()
       this.$message.success('Комментарий удалён')
     })
   }
 }
 </script>
+
+<style>
+.comment_btn {
+  float: right;
+  padding: 3px 0;
+}
+</style>

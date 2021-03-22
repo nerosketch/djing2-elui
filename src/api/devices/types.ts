@@ -1,6 +1,11 @@
+/* eslint-disable camelcase */
 import { AxiosPromise } from 'axios'
-import { IDRFAxiosResponsePromise, IDRFListResponse } from '../types'
-import { IDRFRequestListParameters, ISimpleResponseResult } from '@/api/types'
+import {
+  IDRFAxiosResponsePromise,
+  IDRFListResponse,
+  IDRFRequestListParameters,
+  ISimpleResponseResult
+} from '@/api/types'
 
 export enum IDeviceTypeEnum {
   UNKNOWN = 0,
@@ -14,7 +19,8 @@ export enum IDeviceTypeEnum {
   HuaweiS2300 = 8,
   DlinkDGS_3120_24SCSwitchInterface = 9,
   DlinkDGS_1100_06MESwitchInterface = 10,
-  DlinkDGS_3627GSwitchInterface = 11
+  DlinkDGS_3627GSwitchInterface = 11,
+  HuaweiS5300_10P_LI_ACInterface = 12
 }
 
 export interface IDevice {
@@ -35,6 +41,7 @@ export interface IDevice {
   status: number
   is_noticeable: boolean
   code: string
+  sites?: number[]
 }
 export interface IDeviceInterace extends IDevice {
   ScanAllDevVlans(devId: number): Promise<IDevVlan[]>
@@ -63,9 +70,12 @@ export interface IPort {
   descr: string
   user_count: number
 }
-export type IPortList = IDRFListResponse<IPort>
 export type IPortAxoisResponsePromise = IDRFAxiosResponsePromise<IPort>
-export type IPortListAxiosResponsePromise = IDRFAxiosResponsePromise<IPortList>
+
+export interface IDevTogglePortRequest {
+  port_state: IDevPortState
+  port_snmp_num: number
+}
 
 export interface IDevGroup {
   pk: number
@@ -143,7 +153,6 @@ export interface IDevVlan {
 }
 export type IDevVlanListAxiosResponsePromise = AxiosPromise<IDevVlan[]>
 
-
 export interface IDevOnuVlan {
   vid: number
   native: boolean
@@ -159,7 +168,6 @@ export interface IDeviceOnuConfigTemplate {
   configTypeCode: string
   vlanConfig: IDevOnuVlanInfo[]
 }
-
 
 export interface IDevMacPort {
   vid: number

@@ -8,18 +8,18 @@
     el-table-column(
       label="Название"
       min-width='200'
+      prop='name'
     )
-      template(v-slot:default="{row}") {{ row.name }}
     el-table-column(
       label="VID"
       min-width='64'
+      prop='vid'
     )
-      template(v-slot:default="{row}") {{ row.vid }}
     el-table-column(
       label="MAC"
       min-width='121'
+      prop='mac'
     )
-      template(v-slot:default="{row}") {{ row.mac }}
 
 </template>
 
@@ -54,7 +54,7 @@ export default class extends Vue {
       try {
         this.macs = await PortModule.ScanMacAddressPort(pid)
         this.macsLoading = false
-      } catch(err) {
+      } catch (err) {
         this.macsLoading = false
         this.$message.error(err)
       }

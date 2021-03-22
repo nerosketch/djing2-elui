@@ -13,7 +13,7 @@
       )
 
     template(v-if="isAcceptVlanSelectedConfig")
-      el-card.box-card(
+      el-card(
         shadow='never'
         v-for="portVlanConf in currentConfig.vlanConfig"
         :key="portVlanConf.port"
@@ -52,10 +52,11 @@
           icon="el-icon-plus"
           size='mini'
           circle
+          :disabled="!$perms.networks.view_vlanif"
           @click="openAddVlanDialog(portVlanConf.port)"
         )
 
-    el-card.box-card(
+    el-card(
       shadow='never'
       v-else
     )
@@ -67,6 +68,7 @@
         icon="el-icon-download"
         @click="onSubmit"
         :loading="vlanLoading"
+        :disabled="!$perms.devices.can_apply_onu_config"
         size='mini'
       ) Применить
 
@@ -83,7 +85,6 @@
 
 <script lang="ts">
 import { Component, Watch } from 'vue-property-decorator'
-import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 import { DeviceModule } from '@/store/modules/devices/device'
@@ -102,7 +103,7 @@ export default class extends mixins(VlanMixin) {
   private configTypeCodes: IDevConfigChoice[] = []
   private currentAddVlanPort = 0
   private currentConfig: IDeviceOnuConfigTemplate = {
-    configTypeCode: this.devCodeGetter,
+    configTypeCode: this.$store.state.devicemodule.code,
     vlanConfig: []
   }
 
@@ -113,23 +114,23 @@ export default class extends mixins(VlanMixin) {
   }
 
   private async onSubmit() {
-    if (this.devIdGetter > 0) {
+    if (this.$store.state.devicemodule.pk > 0) {
       this.vlanLoading = true
       try {
-        await applyDeviceOnuConfig(this.devIdGetter, this.currentConfig)
+        await applyDeviceOnuConfig(this.$store.state.devicemodule.pk, this.currentConfig)
         this.vlanLoading = false
         this.$message.success({
           message: 'ONU успешно зарегистрирована',
           duration: 15000,
           showClose: true
         })
-        DeviceModule.GetDevice(this.devIdGetter)
+        DeviceModule.GetDevice(this.$store.state.devicemodule.pk)
       } catch (err) {
         this.vlanLoading = false
         this.$message.error(err)
       }
     } else {
-      this.$message.error('Id устройства не передан')
+      this.$message.error('Id оборудования не передан')
     }
   }
 
@@ -191,13 +192,7 @@ export default class extends mixins(VlanMixin) {
     })
   }
 
-  get devCodeGetter() {
-    return DeviceModule.code
-  }
-  get devIdGetter() {
-    return DeviceModule.pk || 0
-  }
-  @Watch('devIdGetter')
+  @Watch('$store.state.devicemodule.pk')
   private onDevIdChanged(devId: number) {
     this.getDevConfigTypes(devId)
   }
@@ -209,10 +204,12 @@ export default class extends mixins(VlanMixin) {
 
   private async scanDevOnuVlan(devId?: number) {
     if (!devId || devId === 0) {
-      devId = this.devIdGetter
+      devId = this.$store.state.devicemodule.pk
     }
-    const { data } = await readOnuVlanInfo(devId)
-    this.currentConfig.vlanConfig = data
+    if (devId && devId > 0) {
+      const { data } = await readOnuVlanInfo(devId)
+      this.currentConfig.vlanConfig = data
+    }
   }
 
   private calcVlanTitleByVid(vid: number) {

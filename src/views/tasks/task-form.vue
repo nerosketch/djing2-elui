@@ -18,7 +18,7 @@
     )
       el-select(v-model="frmMod.recipients" multiple)
         el-option(
-          v-for="rec in intrnalRecipients"
+          v-for="rec in potentialRecipients"
           :key="rec.pk"
           :label="rec.full_name || rec.username"
           :value="rec.pk"
@@ -70,12 +70,22 @@
           v-model="frmMod.out_date"
           type="date"
           value-format="yyyy-MM-dd"
-          format="d MMM yyyy"
+          format="d.MM.yyyy"
         )
     el-form-item
       el-button-group
-        el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isFormUntouched") Сохранить
-        el-button(v-if="!isNewTask" type="danger" @click="onDel" icon="el-icon-delete" size='small') Удалить
+        el-button(
+          type="primary"
+          @click="onSubmit"
+          icon='el-icon-upload'
+          size='small'
+          :disabled="isFormUntouched"
+        ) Сохранить
+        el-button(
+          v-if="!isNewTask" type="danger" icon="el-icon-delete" size='small'
+          @click="onDel"
+          :disabled="!$perms.tasks.delete_task"
+        ) Удалить
         el-button(v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check" size='small') Завершить
 </template>
 
@@ -85,23 +95,21 @@ import { mixins } from 'vue-class-component'
 import { ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
 import CustomerField from '@/components/CustomerField/index.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
-import { getProfiles } from '@/api/profiles/req'
 import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { IUserProfile } from '@/api/profiles/types'
 import FormMixin from '@/utils/forms'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
+import TaskMixin from './task-mixin'
 
 @Component({
   name: 'TaskForm',
   components: { CustomerField }
 })
-export default class extends mixins(FormMixin) {
+export default class extends mixins(FormMixin, TaskMixin) {
   @Prop({ default: () => [] })
   private recipients!: IUserProfile[]
-
-  private intrnalRecipients: IUserProfile[] = []
 
   private loading = false
 
@@ -117,7 +125,7 @@ export default class extends mixins(FormMixin) {
     { nm: 'настройка роутера', v: ITaskType.ROUTER_SETUP },
     { nm: 'настройка onu', v: ITaskType.CONFIGURE_ONU },
     { nm: 'обжать кабель', v: ITaskType.CRIMP_CABLE },
-    { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
+    // { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
     { nm: 'другое', v: ITaskType.OTHER }
   ]
   private taskPriorities = [
@@ -166,9 +174,9 @@ export default class extends mixins(FormMixin) {
 
   created() {
     if (this.recipients.length < 1) {
-      this.loadRecipients()
+      this.loadPotentialRecipients()
     } else {
-      this.intrnalRecipients = this.recipients
+      this.potentialRecipients = this.recipients
     }
     this.frmInitial = Object.assign({}, this.frmMod)
 
@@ -235,15 +243,6 @@ export default class extends mixins(FormMixin) {
     this.$router.push({
       name: 'taskList'
     })
-  }
-
-  private async loadRecipients() {
-    const { data } = await getProfiles({
-      page: 1,
-      page_size: 9000,
-      fields: 'pk,full_name,username'
-    })
-    this.intrnalRecipients = data.results
   }
 }
 </script>

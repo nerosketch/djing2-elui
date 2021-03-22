@@ -1,45 +1,56 @@
-<template>
-  <div>
-    <el-table
+<template lang="pug">
+  div
+    el-table(
       v-loading="intLoading"
       v-el-table-infinite-scroll="infGetData"
       :data="tableData"
       :row-class-name="tableRowClassName"
-      v-bind="$attrs"
       :height="tblHeight"
+      :default-sort="defaultSorting"
+      v-bind="$attrs"
       border
       v-on="listeners"
-      :default-sort="defaultSorting"
-    >
-      <slot name="columns">
-        <el-table-column
-          v-for="column in columns"
-          :key="column.prop"
-          :sortable="column.sortable ? 'custom' : false"
-          :align="column.align"
-          :width="getColumnWidth(column)"
-          v-bind="column"
-        >
-          <template v-slot:default="{row}">
-            <slot
-              :name="column.prop"
-              :row="row"
-            >
-              {{ row[column.prop] }}
-            </slot>
-          </template>
-        </el-table-column>
-      </slot>
-    </el-table>
-    <slot name="default" />
-  </div>
+    )
+      slot(name="columns")
+        el-table-column(
+          v-if="selectable"
+          type="selection"
+          width="40"
+          align="center"
+        )
+        template(v-for="col in localCols")
+          el-table-column(
+            v-if="col.visible"
+            :key="col.prop"
+            :sortable="col.sortable ? 'custom' : false"
+            :align="col.align"
+            :width="getColumnWidth(col)"
+            v-bind="col"
+          )
+            template(v-slot:default="{row}")
+              slot(
+                :name="col.prop"
+                :row="row"
+              ) {{ row[col.prop] }}
+    slot(name="default")
+
+    el-dialog(
+      title="Отображаемые поля таблицы"
+      :visible.sync="editFieldsVisibleloc"
+    )
+      template(v-if="editFieldsVisibleloc")
+        datatable-edit-fields(
+          :columns.sync="localCols"
+          :storePrefix="widthStorageNamePrefix"
+          v-on:done="editFieldsVisibleloc=false"
+        )
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
 import { IDRFListResponse, IDRFRequestListParameters, IDRFAxiosResponseListPromise } from '@/api/types'
-import { TableColumn } from 'element-ui'
+import DatatableEditFields from './edit-fields.vue'
 
 export enum DataTableColumnAlign {
   CENTER = 'center',
@@ -55,6 +66,10 @@ export interface IDataTableColumn {
   'min-width'?: number
 }
 
+export interface ILocalDataTableColumn extends IDataTableColumn {
+  visible: boolean
+}
+
 export class DataTableColumn implements IDataTableColumn {
   sortable = false
   prop = 'Prop'
@@ -67,19 +82,31 @@ interface getTableDataParam {
   limit: number
 }
 
+function loadFieldVisibility(pref: string, col: IDataTableColumn): boolean {
+  const store = localStorage.getItem(`${pref}_visible_${col.prop}`)
+  if (store === null || store === '1') {
+    return true
+  }
+  return false
+}
+
 @Component({
   directives: {
     'el-table-infinite-scroll': elTableInfiniteScroll
+  },
+  components: {
+    DatatableEditFields
   }
 })
 export default class <T> extends Vue {
   @Prop({ default: () => [] }) private columns!: IDataTableColumn[]
   @Prop({ default: () => Promise.resolve([]) }) private getData!: (params: IDRFRequestListParameters) => IDRFAxiosResponseListPromise<T>
-  @Prop({ default: null }) private fields?: string
   @Prop({ default: false }) private loading!: boolean
-  @Prop({ default: (r: object) => ('') }) private tableRowClassName!: (r: object) => string
-  @Prop({ default: 100 }) private heightDiff!: number
+  @Prop({ default: () => ('') }) private tableRowClassName!: (r: object) => string
+  @Prop({ default: 118 }) private heightDiff!: number
   @Prop({ default: 'width' }) private widthStorageNamePrefix!: string
+  @Prop({ default: false }) private selectable!: boolean
+  @Prop({ default: false }) private editFieldsVisible!: boolean
 
   @Watch('loading')
   private onChangeLoading(l: boolean) {
@@ -96,6 +123,25 @@ export default class <T> extends Vue {
   private page = 1
   private intLoading = false
   private tblHeight = 0
+  private endPage = false
+  private loadBusy = false
+  private editFieldsVisibleloc = false
+  private localCols: ILocalDataTableColumn[] = []
+
+  @Watch('editFieldsVisible')
+  private onChVis(i: boolean) {
+    this.editFieldsVisibleloc = i
+  }
+
+  @Watch('editFieldsVisibleloc')
+  private onChLoc(i: boolean) {
+    this.$emit('update:editFieldsVisible', i)
+  }
+
+  @Watch('localCols')
+  private onChLocCols(lcols: ILocalDataTableColumn[]) {
+    this.$emit('update:columns', lcols)
+  }
 
   get listeners() {
     return {
@@ -111,29 +157,33 @@ export default class <T> extends Vue {
 
   public async GetTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     this.page = 1
-    this.loadRemoteData(params, otherParams)
+    if (this.intLoading) return
+    try {
+      this.intLoading = true
+      await this.loadRemoteData(params, otherParams)
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.intLoading = false
+    }
   }
 
   private async loadRemoteData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
-    if (this.intLoading) return
-    this.intLoading = true
     const { page } = params
     const allParams = Object.assign(otherParams, {
       page: page || this.page,
-      page_size: 30,
-      ordering: this.$route.query.ordering as string | undefined,
-      fields: this.fields
+      page_size: 60,
+      ordering: this.$route.query.ordering as string | undefined
     })
-    try {
-      let response = await this.getData(allParams)
-      this.responseData = response.data
-      if (this.page > 1) {
-        this.tableData = this.tableData.concat(this.responseData.results)
-      } else {
-        this.tableData = this.responseData.results
-      }
-    } finally {
-      this.intLoading = false
+    let response = await this.getData(allParams)
+    this.responseData = response.data
+    if (response.data.next === null) {
+      this.endPage = true
+    }
+    if (this.page > 1) {
+      this.tableData = this.tableData.concat(this.responseData.results)
+    } else {
+      this.tableData = this.responseData.results
     }
   }
 
@@ -177,6 +227,10 @@ export default class <T> extends Vue {
   }
 
   created() {
+    this.localCols = this.columns.map(col => Object.assign(col, {
+      visible: loadFieldVisibility(this.widthStorageNamePrefix, col)
+    }))
+
     this.GetTableData()
     window.addEventListener('resize', this.onWinResize)
     this.onWinResize()
@@ -189,17 +243,24 @@ export default class <T> extends Vue {
     this.tblHeight = window.innerHeight - this.heightDiff
   }
 
-  private infGetData() {
-    if (this.intLoading || this.lDisabled) return
-    this.page++
-    this.loadRemoteData()
+  private async infGetData() {
+    if (this.loadBusy || this.lDisabled || this.endPage) return
+    try {
+      this.loadBusy = true
+      this.page++
+      await this.loadRemoteData()
+    } catch (err) {
+      this.$message.error(err)
+    } finally {
+      this.loadBusy = false
+    }
   }
 
-  private onFieldWidthChange(newWidth: number, oldWidth: number, column: any, event: MouseEvent) {
+  private onFieldWidthChange(newWidth: number, oldWidth: number, column: any) {
     localStorage.setItem(`${this.widthStorageNamePrefix}_${column.property}`, String(newWidth))
   }
 
-  private getColumnWidth(column: TableColumn): string | null {
+  private getColumnWidth(column: IDataTableColumn): string | null {
     return localStorage.getItem(`${this.widthStorageNamePrefix}_${column.prop}`)
   }
 }

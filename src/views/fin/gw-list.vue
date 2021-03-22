@@ -6,22 +6,18 @@
       widthStorageNamePrefix='gws'
       ref='table'
     )
-      template(v-slot:id="{row}") {{ row.id }}
-
-      template(v-slot:title="{row}") {{ row.title }}
-
-      template(v-slot:service_id="{row}") {{ row.service_id }}
-
-      template(v-slot:slug="{row}") {{ row.slug }}
-
-      template(v-slot:secret="{row}") {{ row.secret }}
-
-      template(v-slot:secret="{row}") {{ row.pay_count }}
-
       template(v-slot:oper="{row}")
         el-button-group
+          el-button(
+            v-if="$perms.is_superuser"
+            @click="openSitesDlg(row)"
+            size="mini"
+          ) C
           el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delPayGw(row)")
+          el-button(
+            type="danger" icon="el-icon-delete" size="mini" @click="delPayGw(row)"
+            :disabled="!$perms.fin_app.delete_payalltimegateway"
+          )
 
       el-button(
         size='mini'
@@ -37,14 +33,25 @@
         v-on:done="frmDone"
       )
 
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.payalltimegateway.sites"
+        v-on:save="payGwSitesSave"
+      )
+
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getPayGateways } from '@/api/fin/req'
 import { IPayAllTimeGateway } from '@/api/fin/types'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { PayAllTimeGatewayModule } from '@/store/modules/fin'
 import PayGwForm from './gw-form.vue'
 
@@ -63,6 +70,7 @@ export default class extends Vue {
   }
   private dialogTitle = 'Платёжный шлюз'
   private dialogVisible = false
+  private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -96,18 +104,17 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
   ]
 
-  private async loadPayGws(params?: IDRFRequestListParameters) {
+  private loadPayGws(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,service_id,slug,secret,pay_count'
+      params['fields'] = 'id,title,service_id,slug,secret,pay_count,sites'
     }
-    const r = await getPayGateways(params)
-    return r
+    return getPayGateways(params)
   }
 
   private openEdit(gw: IPayAllTimeGateway) {
@@ -126,10 +133,38 @@ export default class extends Vue {
     this.dialogTitle = 'Создать платёжный шлюз'
     this.dialogVisible = true
   }
-  private frmDone(gw: IPayAllTimeGateway) {
+  private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
     this.$message.success('Платёжный шлюз добавлен')
+  }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Финансы'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
+
+  private payGwSitesSave(selectedSiteIds: number[]) {
+    PayAllTimeGatewayModule.PatchPayGw({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность платёжного шлюза сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(grp: IPayAllTimeGateway) {
+    PayAllTimeGatewayModule.SET_ALL_PAYGW(grp)
+    this.sitesDlg = true
   }
 }
 </script>

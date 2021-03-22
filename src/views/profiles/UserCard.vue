@@ -5,49 +5,46 @@ el-card(style='margin-bottom:20px;')
       span Инфо
   .user-profile
     .box-center
-      pan-thumb(:image='user.avatar', :height="'100px'", :width="'100px'", :hoverable='false')
-        div Прив!
-        |           {{ user.roles }}
+      pan-thumb(
+        :image='$store.state.userprofile.avatar || defAvaConst'
+        height="100px"
+        width="100px"
+        :hoverable='false'
+      )
     .box-center
       .user-name.text-center
-        | {{ user.username }}
+        | {{ $store.state.userprofile.username }}
       .user-role.text-center.text-muted
-        | {{ user.fio }}
+        | {{ $store.state.userprofile.fio }}
   .user-bio
     .user-education.user-bio-section
-      .user-bio-section-header
-        svg-icon(name='education')
-          span Education
       .user-bio-section-body
         dl
           dt
             b Телефон
-          dd {{ user.telephone }}
+          dd {{ $store.state.userprofile.telephone }}
           dt
             b Логин
-          dd {{ user.username }}
+          dd {{ $store.state.userprofile.username }}
           dt
             b Имя и отчество
-          dd {{ user.fio }}
+          dd {{ $store.state.userprofile.fio }}
           dt
             b Включён-ли
           dd
-            el-checkbox(v-model="user.is_active" disabled)
-          dt
-            b Последний вход
-          dd {{ user.last_login }}
+            el-checkbox(v-model="$store.state.userprofile.is_active" disabled)
           dt
             b Суперпользователь
           dd
-            el-checkbox(v-model="user.is_superuser" disabled)
+            el-checkbox(v-model="$store.state.userprofile.is_superuser" disabled)
     .user-skills.user-bio-section
-      .user-bio-section-header
-        svg-icon(name='skill')
-          span Skills
       .user-bio-section-body
         .progress-item
-          span Какой-то прогресс
-          el-progress(:percentage='51')
+          span Уровень доступа
+          el-progress(
+            :percentage='$store.state.userprofile.access_level'
+            :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'
+          )
         .progress-item
           span Какой-то другой прогресс
           el-progress(:percentage='45')
@@ -56,13 +53,13 @@ el-card(style='margin-bottom:20px;')
           el-progress(:percentage='4')
         .progress-item
           span Что-то завершённое
-          el-progress(:percentage='100', status='success')
+          el-progress(:percentage='100' status='success')
 
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { IUserProfile } from '@/api/profiles/types'
+import { Component, Vue } from 'vue-property-decorator'
+import { DEFAULT_USER_AVA } from '@/api/profiles/types'
 import PanThumb from '@/components/PanThumb/index.vue'
 
 @Component({
@@ -72,7 +69,7 @@ import PanThumb from '@/components/PanThumb/index.vue'
   }
 })
 export default class extends Vue {
-  @Prop({ required: true }) private user!: IUserProfile
+  private defAvaConst = DEFAULT_USER_AVA
 }
 </script>
 
@@ -125,13 +122,6 @@ export default class extends Vue {
   .user-bio-section {
     font-size: 14px;
     // padding: 15px 0;
-
-    .user-bio-section-header {
-      border-bottom: 1px solid #dfe6ec;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
   }
 }
 </style>

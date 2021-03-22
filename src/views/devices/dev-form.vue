@@ -23,7 +23,7 @@
     )
       el-input(v-model="frmMod.comment" size='mini')
     el-form-item(
-      label="Тип устройства"
+      label="Тип оборудования"
       prop='dev_type'
     )
       el-select(v-model="frmMod.dev_type" size='mini')
@@ -65,7 +65,11 @@
       el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="loading" :disabled="isFormUntouched") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type="primary" @click="onSubmit" :loading="loading"
+        :disabled="isFormUntouched || !$perms.devices.change_device"
+      ) Сохранить
 </template>
 
 <script lang="ts">
@@ -87,7 +91,7 @@ import FormMixin from '@/utils/forms'
   }
 })
 export default class extends mixins(FormMixin) {
-  private loading = false
+  private loading = DeviceModule.loadProgress
   private groups: IGroup[] = []
 
   private frmRules = {
@@ -107,6 +111,11 @@ export default class extends mixins(FormMixin) {
 
   private frmMod = this.devFrmData
 
+  @Watch('$store.state.devicemodule.loadProgress')
+  private onChLoading(l: boolean) {
+    this.loading = l
+  }
+
   get devFrmData() {
     return {
       ip_address: DeviceModule.ip_address,
@@ -125,18 +134,13 @@ export default class extends mixins(FormMixin) {
     return DeviceModule.parent_dev_name
   }
 
-  get devId() {
-    return DeviceModule.pk
-  }
-  @Watch('devId')
+  @Watch('$store.state.devicemodule.pk')
   private async onDevCh() {
     this.frmMod = this.devFrmData
     this.frmInitial = Object.assign({}, this.devFrmData)
   }
-  get devSnmp() {
-    return DeviceModule.snmp_extra
-  }
-  @Watch('devSnmp')
+
+  @Watch('$store.state.devicemodule.snmp_extra')
   private async onChSnmp() {
     this.onDevCh()
   }
@@ -163,12 +167,16 @@ export default class extends mixins(FormMixin) {
   }
 
   private async loadGroups() {
-    const { data } = await getGroups({
-      page: 1,
-      page_size: 1000,
-      fields: 'pk,title'
-    })
-    this.groups = data.results
+    try {
+      const { data } = await getGroups({
+        page: 1,
+        page_size: 0,
+        fields: 'pk,title'
+      }) as any
+      this.groups = data
+    } catch (err) {
+      this.$message.error(err)
+    }
   }
 }
 </script>

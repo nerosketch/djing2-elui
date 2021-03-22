@@ -5,6 +5,12 @@ module.exports = {
   publicPath: '/',
   lintOnSave: process.env.NODE_ENV === 'development',
   pwa: {
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      // swSrc is required in InjectManifest mode.
+      swSrc: 'src/service-worker.js'
+      // ...other Workbox options...
+    },
     name: name
   },
   pluginOptions: {
@@ -30,5 +36,8 @@ module.exports = {
         }
       ]
     }
+  },
+  devServer: {
+    disableHostCheck: true
   }
 }

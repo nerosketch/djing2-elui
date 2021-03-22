@@ -3,26 +3,21 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadLeases"
-    :loading="leaseLoading"
-    :heightDiff='142'
+    :heightDiff='160'
     widthStorageNamePrefix='leases'
     ref='table'
   )
-    template(v-slot:id="{row}") {{ row.id }}
-
-    template(v-slot:ip_address="{row}") {{ row.ip_address }}
-
-    template(v-slot:lease_time="{row}") {{ row.lease_time }}
-
-    template(v-slot:mac_address="{row}") {{ row.mac_address }}
-
     template(v-slot:is_dynamic="{row}")
       el-checkbox(v-model="row.is_dynamic" disabled) {{ row.is_dynamic ? 'Да' : 'Нет' }}
 
     template(v-slot:oper="{row}")
       el-button-group
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
-        el-button(type="danger" icon="el-icon-delete" size="mini" @click="delLease(row)")
+        el-button(
+          type="danger" icon="el-icon-delete" size="mini"
+          @click="delLease(row)"
+          :disabled="!$perms.networks.delete_customeripleasemodel"
+        )
 
   el-dialog(
     title="Изменение Сессии"
@@ -71,6 +66,11 @@ export default class extends Vue {
       'min-width': 200
     },
     {
+      prop: 'last_update',
+      label: 'Время последнего обновления',
+      'min-width': 200
+    },
+    {
       prop: 'mac_address',
       label: 'MAC Адрес',
       sortable: true,
@@ -88,7 +88,6 @@ export default class extends Vue {
     }
   ]
   private dialogVisible = false
-  private leaseLoading = false
 
   private async openEdit(lease: ICustomerIpLease) {
     await CustomerIpLeaseModule.SET_ALL_LEASE(lease)
@@ -96,21 +95,18 @@ export default class extends Vue {
   }
 
   private async delLease(lease: ICustomerIpLease) {
-    this.$confirm(`Ты действительно хочешь удалить сессию "${lease.ip_address}"?`).then(async() => {
+    this.$confirm(`Действительно удалить сессию "${lease.ip_address}"?`).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
       this.$message.success('Сессия удалена')
       this.$refs.table.GetTableData()
     })
   }
 
-  private async loadLeases(params?: IDRFRequestListParameters) {
-    this.leaseLoading = true
+  private loadLeases(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,ip_address,lease_time,mac_address,is_dynamic'
+      params['fields'] = 'id,ip_address,lease_time,last_update,mac_address,is_dynamic'
     }
-    const r = await getCustomerIpLeases(params)
-    this.leaseLoading = false
-    return r
+    return getCustomerIpLeases(params)
   }
 
   private frmDone() {

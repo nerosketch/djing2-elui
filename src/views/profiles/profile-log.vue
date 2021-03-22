@@ -3,17 +3,9 @@
     datatable(
       :columns="tableColumns"
       :getData="getAllLog"
-      :loading="loading"
-      :heightDiff='185'
+      :heightDiff='201'
       widthStorageNamePrefix='profile_log'
-      ref='tbl'
     )
-      template(v-slot:action_date="{row}") {{ row.action_date }}
-
-      template(v-slot:additional_text="{row}") {{ row.additional_text }}
-
-      template(v-slot:do_type_text="{row}") {{ row.do_type_text }}
-
 </template>
 
 <script lang="ts">
@@ -22,7 +14,6 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { IUserProfileLog } from '@/api/profiles/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getProfileLogs } from '@/api/profiles/req'
-import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 
 class DataTableComp extends DataTable<IUserProfileLog> {}
 
@@ -33,11 +24,6 @@ class DataTableComp extends DataTable<IUserProfileLog> {}
   }
 })
 export default class extends Vue {
-  public readonly $refs!: {
-    tbl: DataTableComp
-  }
-  private loading = false
-
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'action_date',
@@ -57,11 +43,8 @@ export default class extends Vue {
     }
   ]
 
-  private async getAllLog(params?: IDRFRequestListParameters) {
-    this.loading = true
-    const r = await getProfileLogs(params, UserProfileModule.pk)
-    this.loading = false
-    return r
+  private getAllLog(params?: IDRFRequestListParameters) {
+    return getProfileLogs(params, this.$store.state.userprofile.pk)
   }
 }
 </script>

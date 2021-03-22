@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { IDRFAxiosResponsePromise, IDRFListResponse, ISimpleResponseResult } from '@/api/types'
 
 export enum ITaskPriority {
@@ -24,7 +25,7 @@ export enum ITaskType {
   ROUTER_SETUP = 8,
   CONFIGURE_ONU = 9,
   CRIMP_CABLE = 10,
-  INTERNET_CRASH = 11,
+  // INTERNET_CRASH = 11,
   OTHER = 12
 }
 
@@ -86,9 +87,8 @@ export interface IExtraComment {
   task: number
   can_remove?: boolean
 }
-export type IExtraCommentList = IDRFListResponse<IExtraComment>
+export type IExtraCommentListAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment[]>
 export type IExtraCommentAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment>
-export type IExtraCommentListAxiosResponsePromise = IDRFAxiosResponsePromise<IExtraCommentList>
 
 export interface ITaskDocumentAttachment {
   id: number
@@ -98,12 +98,27 @@ export interface ITaskDocumentAttachment {
   author: number
   task: number
 }
-export type ITaskDocumentAttachmentList = IDRFListResponse<ITaskDocumentAttachment>
+export type ITaskDocumentAttachmentList = IDRFAxiosResponsePromise<ITaskDocumentAttachment[]>
 export type ITaskDocumentAttachmentAxoisResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachment>
-export type ITaskDocumentAttachmentListAxiosResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachmentList>
 
 export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResult {
   recipients?: number[]
   task_id?: number
 }
 export type INewTaskInitialSimpleResponseResultAxoisResponsePromise = IDRFAxiosResponsePromise<INewTaskInitialSimpleResponseResult>
+
+export interface TaskStatePercentReportTypeCount {
+  mode: string
+  task_count: number
+}
+export interface TaskModeReport {
+  // all_task_count: number
+  annotation: TaskStatePercentReportTypeCount[]
+}
+export type TaskModeReportAxoisResponsePromise = IDRFAxiosResponsePromise<TaskModeReport>
+
+export interface TaskStatePercentReport {
+  state_count: number
+  state_percent: number
+}
+export type TaskStatePercentReportAxoisResponsePromise = IDRFAxiosResponsePromise<TaskStatePercentReport>

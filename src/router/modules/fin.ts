@@ -11,7 +11,7 @@ const finRoutes: RouteConfig = {
       component: () => import(/* webpackChunkName: "fin" */ '@/views/fin/gw-list.vue'),
       meta: {
         title: 'Финансы',
-        icon: 'hamburger'
+        icon: 'el-icon-shopping-cart-full'
       }
     }
   ]

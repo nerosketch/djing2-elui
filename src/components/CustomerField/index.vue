@@ -30,7 +30,7 @@ export default class extends Vue {
     if (this.loading) return
     this.loading = true
     findCustomers(queryString).then(({ data }) => {
-      cb(data.results)
+      cb(data)
       this.loading = false
     })
   }

@@ -2,8 +2,7 @@
   datatable(
     :columns="tableColumns"
     :getData="loadTLog"
-    :loading="loading"
-    :heightDiff='149'
+    :heightDiff='167'
     widthStorageNamePrefix='customerTaskHistory'
     ref='tlogtbl'
   )
@@ -35,7 +34,6 @@ class DataTableComp extends DataTable<ITask> {}
   }
 })
 export default class extends Vue {
-  private loading = false
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'viewbtn',
@@ -72,17 +70,15 @@ export default class extends Vue {
 
   private async loadTLog(params?: IDRFRequestListParameters) {
     let r
-    this.loading = true
     if (params) {
       const newParams = Object.assign({
         customer: CustomerModule.pk,
-        fields: 'id,author,author_uname,descr,state_str,mode_str,time_of_create,comment_count'
+        fields: 'id,author_uname,descr,state_str,mode_str,time_of_create,comment_count'
       }, params)
       r = await getTasks(newParams)
     } else {
       r = await getTasks()
     }
-    this.loading = false
     return r
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { ICustomerAttachement } from '@/api/customers/types'

@@ -5,11 +5,12 @@
     icon='el-icon-magic-stick'
     @click="tryToFixOnu"
     :loading="fixLoading"
+    :disabled="!$perms.devices.can_fix_onu"
   ) {{ buttonText }}
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { DeviceModule } from '@/store/modules/devices/device'
 
 @Component({
@@ -23,7 +24,7 @@ export default class extends Vue {
   get statusType() {
     if (this.buttonStatus > 0) {
       return 'success'
-    } else if(this.buttonStatus < 0) {
+    } else if (this.buttonStatus < 0) {
       return 'danger'
     }
     return 'default'

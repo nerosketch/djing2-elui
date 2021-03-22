@@ -10,9 +10,17 @@
     )
       el-input(v-model="str.name" maxlength='64')
         template(v-slot:append)
-          el-button(type='danger' icon='el-icon-close' @click="delStreet(str)")
+          el-button(
+            type='danger' icon='el-icon-close'
+            @click="delStreet(str)"
+            :disabled="!$perms.customers.delete_customerstreet"
+          )
     el-form-item
-      el-button(type="primary" @click="onSubmit") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type="primary" @click="onSubmit"
+        :disabled="!$perms.customers.change_customerstreet"
+      ) Сохранить
 </template>
 
 <script lang="ts">

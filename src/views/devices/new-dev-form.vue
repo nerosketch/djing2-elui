@@ -23,7 +23,7 @@
     )
       el-input(v-model="frmMod.comment" size='mini')
     el-form-item(
-      label="Тип устройства"
+      label="Тип оборудования"
       prop='dev_type'
     )
       el-select(v-model="frmMod.dev_type" size='mini')
@@ -68,7 +68,11 @@
       el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
-      el-button(type="success" @click="onSubmit" :loading="loading" icon="el-icon-plus") Добавить
+      el-button(
+        type="success" @click="onSubmit" icon="el-icon-plus"
+        :loading="loading"
+        :disabled="!$perms.devices.add_device"
+      ) Добавить
 </template>
 
 <script lang="ts">
@@ -156,12 +160,16 @@ export default class extends Vue {
   }
 
   private async loadGroups() {
-    const { data } = await getGroups({
-      page: 1,
-      page_size: 1000,
-      fields: 'pk,title'
-    })
-    this.groups = data.results
+    try {
+      const { data } = await getGroups({
+        page: 1,
+        page_size: 0,
+        fields: 'pk,title'
+      }) as any
+      this.groups = data
+    } catch (err) {
+      this.$message.error(err)
+    }
   }
 }
 </script>

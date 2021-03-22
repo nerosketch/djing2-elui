@@ -1,14 +1,19 @@
 import request from '@/utils/request'
 import { AxiosPromise } from 'axios'
-import { IDRFRequestListParameters, ISimpleResponseResultAxiosResponsePromise } from '@/api/types'
+import {
+  IDRFRequestListParameters,
+  ISimpleResponseResultAxiosResponsePromise,
+  IObjectGroupPermsInitial,
+  IObjectGroupPermsInitialAxiosResponsePromise,
+  IObjectGroupPermsResultStruct
+} from '@/api/types'
 import {
   IDevice, IDeviceList, IDeviceAxoisResponsePromise,
   IDeviceListAxiosResponsePromise,
-  IPort, IPortList, IPortAxoisResponsePromise,
-  IPortListAxiosResponsePromise,
+  IPort, IPortAxoisResponsePromise,
   IDevGroupList, IDevGroupListAxiosResponsePromise,
   IDRFRequestListParametersDevGroup,
-  IDevPortState, IDevMacPort, IDevMacPortListAxiosResponsePromise,
+  IDevMacPort, IDevMacPortListAxiosResponsePromise,
   IDevVlan, IDevVlanListAxiosResponsePromise,
   IDevFiber, IDevFiberListAxiosResponsePromise,
   IScannedPort, IScannedPortListAxiosPromise,
@@ -16,7 +21,8 @@ import {
   IScannedZTEONUListAxiosPromise, IScannedZTEONU,
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
   IDevOnuVlanInfoAxiosResponsePromise, IDevOnuVlanInfo,
-  IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise
+  IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise,
+  IDevTogglePortRequest
 } from './types'
 
 const baseDevUrl = '/devices/'
@@ -29,7 +35,11 @@ export const getDevice = (devId: number): IDeviceAxoisResponsePromise =>
   request.get<IDevice>(`${baseDevUrl}${devId}/`)
 
 export const findDevices = (devtext: string): IDeviceListAxiosResponsePromise =>
-  request.get<IDeviceList>(baseDevUrl, { params: { search: devtext } })
+  request.get<IDeviceList>(baseDevUrl, { params: {
+    search: devtext,
+    page_size: 30,
+    fields: 'pk,comment'
+  } })
 
 export const addDevice = (newDev: object): IDeviceAxoisResponsePromise =>
   request.post<IDevice>(baseDevUrl, newDev)
@@ -85,8 +95,8 @@ export const scanUnitsUnregistered = (devId: number): IUnitUnregisteredListAxios
 // IPort
 const basePortUrl = '/devices/ports/'
 
-export const getPorts = (devId: number, portNum?: number): IPortListAxiosResponsePromise =>
-  request.get<IPortList>(basePortUrl, { params: { device: devId, num: portNum } })
+export const getPorts = (devId: number, portNum?: number): AxiosPromise<IPort[]> =>
+  request.get<IPort[]>(basePortUrl, { params: { device: devId, num: portNum } })
 
 export const getPort = (portId: number): IPortAxoisResponsePromise =>
   request.get<IPort>(`${basePortUrl}${portId}/`)
@@ -100,8 +110,8 @@ export const changePort = (portId: number, newData: object): IPortAxoisResponseP
 export const delPort = (portId: number) =>
   request.delete(`${basePortUrl}${portId}/`)
 
-export const togglePort = (portId: number, pstate: IDevPortState) =>
-  request.get(`${basePortUrl}${portId}/toggle_port/`, { params: { port_state: pstate } })
+export const togglePort = (portId: number, preq: IDevTogglePortRequest) =>
+  request.get(`${basePortUrl}${portId}/toggle_port/`, { params: preq })
 
 export const scanMacAddressPort = (portId: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${basePortUrl}${portId}/scan_mac_address_port/`)
@@ -115,3 +125,12 @@ export const scanPortVlans = (portId: number): IDevVlanListAxiosResponsePromise 
 // IDevGroup
 export const getDevGroups = (params?: IDRFRequestListParameters): IDevGroupListAxiosResponsePromise =>
   request.get<IDevGroupList>('/devices/groups/', { params })
+
+export const getDevObjectsPerms = (devId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
+  request.get<IObjectGroupPermsInitial>(`/devices/${devId}/get_object_perms/`)
+
+export const setDevObjectsPerms = (devId: number, dat: IObjectGroupPermsResultStruct) =>
+  request.put(`/devices/${devId}/set_object_perms/`, dat)
+
+export const getDeviceSelectedObjectPerms = (devId: number, profileGroupId: number): AxiosPromise<number[]> =>
+  request.get(`/devices/${devId}/get_selected_object_perms/${profileGroupId}/`)

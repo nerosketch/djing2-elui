@@ -11,7 +11,7 @@
         center
       )
     el-col(:lg="12" :sm='24' v-if="device")
-      el-card.box-card(
+      el-card(
         shadow="never"
         body-style="padding: 10px;"
       )
@@ -27,21 +27,25 @@
           | {{ device.comment }}
         .text.item.list-item
           b Родительское устройство: 
-          el-link(type="primary")
-            router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}") {{ device.parent_dev_name }}
+          router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+            el-link(type="primary") {{ device.parent_dev_name }}
         .text.item.list-item(v-if="device.iface_name")
           b Интерфейс: 
           | {{ device.iface_name }}
         .text.item.list-item
           b Прикреплённые абоненты: 
-          el-link(type="primary" v-for="(ab, i) in device.attached_users" :key="i")
-            router-link(:to="{name: 'customerDetails', params:{ uid: ab.pk }}") {{ ab.full_name }}
+          router-link(v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.pk }}")
+            el-link(type="primary") {{ ab.full_name }}
         el-button-group
           delete-from-olt-btn(:devId="device.pk" v-on:done="getDetails")
-          el-button(type="danger" icon="el-icon-delete" size="mini" @click="delDevice") Удалить
+          el-button(
+            type="danger" icon="el-icon-delete" size="mini"
+            @click="delDevice"
+            :disabled="!$perms.devices.delete_device"
+          ) Удалить
 
     el-col(:lg="12" :sm='24')
-      el-card.box-card(
+      el-card(
         shadow="never"
         body-style="padding: 10px;"
       )
@@ -156,7 +160,7 @@ export default class extends Vue {
     this.devFormDialog = true
   }
 
-  private devFrmDone(device: IDevice) {
+  private devFrmDone() {
     this.devFormDialog = false
     this.$message.success('Успешно сохранено')
     this.refreshDev()
@@ -175,10 +179,7 @@ export default class extends Vue {
     return this.device && this.onuDetails ? this.device.mac_addr !== this.macFromOlt : false
   }
 
-  get snmpGetter() {
-    return DeviceModule.snmp_extra
-  }
-  @Watch('snmpGetter')
+  @Watch('$store.state.devicemodule.snmp_extra')
   private onDevChanged() {
     this.getDetails()
   }

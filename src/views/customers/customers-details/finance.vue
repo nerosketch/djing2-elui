@@ -3,20 +3,16 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadLog"
-    :loading="loading"
-    :heightDiff='180'
+    :heightDiff='202'
     widthStorageNamePrefix='customerFin'
     ref='fintbl'
   )
-    template(v-slot:cost="{row}") {{ row.cost }}
-
-    template(v-slot:date="{row}") {{ row.date }}
-
     template(v-slot:author_name="{row}") {{ row.author_name || 'Система' }}
 
-    template(v-slot:comment="{row}") {{ row.comment }}
-
-    el-button(@click="addCashDialog=true") Пополнить счёт
+    el-button(
+      @click="addCashDialog=true"
+      :disabled="!$perms.customers.can_add_balance"
+    ) Пополнить счёт
 
   el-dialog(
     title="Пополнить счёт"
@@ -44,7 +40,6 @@ export default class extends Vue {
   public readonly $refs!: {
     fintbl: DataTableComp
   }
-  private loading = false
   private addCashDialog = false
 
   private tableColumns: IDataTableColumn[] = [
@@ -72,7 +67,6 @@ export default class extends Vue {
 
   private async loadLog(params?: IDRFRequestListParameters) {
     let r
-    this.loading = true
     if (params) {
       const newParams = Object.assign({
         customer: CustomerModule.pk,
@@ -82,7 +76,6 @@ export default class extends Vue {
     } else {
       r = await getCustomerPayLog()
     }
-    this.loading = false
     return r
   }
 

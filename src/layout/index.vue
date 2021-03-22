@@ -19,7 +19,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { DeviceType, AppModule } from '@/store/modules/app'
+import { AppModule } from '@/store/modules/app'
 import { AppMain, Navbar, Sidebar } from './components'
 import ResizeMixin from './mixin/resize'
 
@@ -70,6 +70,7 @@ export default class extends mixins(ResizeMixin) {
   transition: margin-left .14s;
   margin-left: $sideBarWidth;
   position: relative;
+  background-color: #f3f8fd;
 }
 
 .sidebar-container {

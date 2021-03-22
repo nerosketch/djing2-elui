@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import {
@@ -12,6 +13,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
   name = ''
   when_add = ''
   amount = 0
+  sites?: number[] = []
 
   @Mutation
   public SET_ALL_PPAY(data: IPeriodicPay) {
@@ -19,6 +21,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
     this.name = data.name
     this.when_add = data.when_add!
     this.amount = data.amount
+    this.sites = data.sites || []
   }
 
   @Mutation
@@ -27,6 +30,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
     this.name = ''
     this.when_add = ''
     this.amount = 0
+    this.sites = []
     return this
   }
 
@@ -38,8 +42,9 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
   }
 
   @Action
-  public async AddPeriodicPay(data: IPeriodicPay) {
-    await addPeriodicPay(data)
+  public async AddPeriodicPay(newInfo: object) {
+    const { data } = await addPeriodicPay(newInfo)
+    return data
   }
 
   @Action

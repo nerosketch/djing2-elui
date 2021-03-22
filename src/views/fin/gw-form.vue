@@ -29,13 +29,16 @@
     )
       el-input(v-model="frmMod.secret")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type="primary" @click="onSubmit" :loading="isLoading"
+        :disabled="!$perms.fin_app.change_payalltimegateway"
+      ) Сохранить
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { PayAllTimeGatewayModule } from '@/store/modules/fin/index'
-import { latinValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
 
 @Component({
@@ -59,10 +62,7 @@ export default class extends Vue {
     ]
   }
 
-  get onChId() {
-    return PayAllTimeGatewayModule.id
-  }
-  @Watch('onChId')
+  @Watch('$store.state.payalltimegateway.id')
   private onChangeGw() {
     this.frmMod.title = PayAllTimeGatewayModule.title
     this.frmMod.service_id = PayAllTimeGatewayModule.service_id

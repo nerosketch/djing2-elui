@@ -7,28 +7,13 @@ import store from '@/store'
 class Group extends VuexModule implements IGroup {
   public pk = 0
   public title = ''
-  public code = ''
-
-  @Mutation
-  private SET_PK(pk: number): void {
-    this.pk = pk
-  }
-
-  @Mutation
-  private SET_TITLE(title: string): void {
-    this.title = title
-  }
-
-  @Mutation
-  private SET_CODE(code: string): void {
-    this.code = code
-  }
+  public sites?: number[] = []
 
   @Mutation
   public SET_ALL_MGROUP(data: IGroup) {
     this.pk = data.pk
     this.title = data.title
-    this.code = data.code
+    this.sites = data.sites || []
     return this
   }
 
@@ -36,7 +21,7 @@ class Group extends VuexModule implements IGroup {
   public RESET_ALL_MGROUP() {
     this.pk = 0
     this.title = ''
-    this.code = ''
+    this.sites = []
     return this
   }
 
@@ -51,14 +36,6 @@ class Group extends VuexModule implements IGroup {
   public async AddGroup(grp: object) {
     const { data } = await addGroup(grp)
     this.SET_ALL_MGROUP(data)
-  }
-
-  @Action
-  public async SaveGroup() {
-    await this.PatchGroup({
-      title: this.title,
-      code: this.code
-    })
   }
 
   @Action

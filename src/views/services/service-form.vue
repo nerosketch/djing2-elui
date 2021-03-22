@@ -56,17 +56,28 @@
         )
 
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+        :disabled="isFormUntouched"
+      ) Сохранить
 </template>
 
 <script lang="ts">
 import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
-import { positiveValidator } from '@/utils/validate'
-import { IService, IServiceTypeEnum } from '@/api/services/types'
+import { positiveValidator, positiveNumberValueAvailable } from '@/utils/validate'
+import { IServiceTypeEnum } from '@/api/services/types'
 import { ServiceModule } from '@/store/modules/services/service'
 import FormMixin from '@/utils/forms'
+
+const speedRule = {
+  validator: positiveNumberValueAvailable,
+  message: 'Скорость должна быть положительной',
+  trigger: 'change'
+}
 
 @Component({
   name: 'service-form'
@@ -78,10 +89,15 @@ export default class extends mixins(FormMixin) {
     title: [
       { required: true, message: 'Название надо указать', trigger: 'blur' }
     ],
+    descr: [
+      { required: true, message: 'Описание обязательно', trigger: 'blur' }
+    ],
     speed_in: [
+      speedRule,
       { required: true, message: 'Укажи исходящую скорость', trigger: 'blur' }
     ],
     speed_out: [
+      speedRule,
       { required: true, message: 'Укажи входящую скорость', trigger: 'blur' }
     ],
     cost: [
@@ -108,10 +124,7 @@ export default class extends mixins(FormMixin) {
     calc_type: ServiceModule.calc_type
   }
 
-  get srvId() {
-    return ServiceModule.pk
-  }
-  @Watch('srvId')
+  @Watch('$store.state.service.pk')
   private async onSrvCh() {
     this.frmMod = {
       title: ServiceModule.title,
@@ -129,10 +142,22 @@ export default class extends mixins(FormMixin) {
   private onSubmit() {
     (this.$refs['srvfrm'] as Form).validate(async valid => {
       if (valid) {
-        this.isLoading = true
-        const newDat = await ServiceModule.PatchService(this.frmMod)
-        this.isLoading = false
-        this.$emit('done', newDat)
+        try {
+          this.isLoading = true
+          let newDat
+          if (ServiceModule.pk === 0) {
+            newDat = await ServiceModule.AddService(this.frmMod)
+            this.$message.success('Услуга создана')
+          } else {
+            newDat = await ServiceModule.PatchService(this.frmMod)
+            this.$message.success('Услуга изменена')
+          }
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

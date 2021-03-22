@@ -4,31 +4,30 @@
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix Редактировать задачу № {{ taskId }}
-        task-form(v-if='taskReady' :recipients="recipients")
+        task-form(v-if='taskReady' :recipients="potentialRecipients")
     el-col(:lg='12' :sm='24')
-      task-info(v-if='taskReady' :recipients="recipients" :taskId="taskId")
+      task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
     el-col(:lg='12' :sm='24')
       comments(v-if='taskReady')
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { TaskModule } from '@/store/modules/tasks/tasks'
-import { getProfiles } from '@/api/profiles/req'
-import { IUserProfile } from '@/api/profiles/types'
 import TaskForm from './task-form.vue'
 import TaskInfo from './task-info.vue'
 import Comments from './comments.vue'
+import taskMixin from './task-mixin'
 
 @Component({
   name: 'TaskDetails',
   components: { TaskForm, TaskInfo, Comments }
 })
-export default class extends Vue {
+export default class extends mixins(taskMixin) {
   @Prop({ default: 0 })
   private taskId!: number
   private taskReady = false
-  private recipients: IUserProfile[] = []
 
   private async loadTask() {
     if (this.taskId === 0) {
@@ -36,21 +35,13 @@ export default class extends Vue {
       return
     }
     await TaskModule.GetTask(this.taskId)
-  }
-
-  private async loadRecipients() {
-    const r = await getProfiles({
-      page: 1,
-      page_size: 9000,
-      fields: 'pk,full_name,username'
-    })
-    this.recipients = r.data.results
+    document.title = `Задача по ${TaskModule.customer_full_name}`
   }
 
   async created() {
     this.taskReady = false
     await this.loadTask()
-    await this.loadRecipients()
+    await this.loadPotentialRecipients()
     this.taskReady = true
   }
 }
