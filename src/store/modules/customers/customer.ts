@@ -13,7 +13,8 @@ import {
   stopService, addBalance,
   getCurrentService,
   setServiceGroupAccessory,
-  makePeriodicPay4Customer
+  makePeriodicPay4Customer,
+  setCustomerMarkers
 } from '@/api/customers/req'
 import store from '@/store'
 
@@ -50,6 +51,7 @@ class Customer extends VuexModule implements ICustomer {
   lease_count = 0
   sites: number[] = []
   traf_octs = 0
+  markers: string[] = []
 
   @Mutation
   public SET_ID_CUSTOMER(id: number) {
@@ -89,6 +91,7 @@ class Customer extends VuexModule implements ICustomer {
     this.lease_count = data.lease_count
     this.traf_octs = data.traf_octs!
     this.sites = data.sites
+    this.markers = data.markers
     return this
   }
 
@@ -125,6 +128,7 @@ class Customer extends VuexModule implements ICustomer {
     this.lease_count = 0
     this.sites = []
     this.traf_octs = 0
+    this.markers = []
     return this
   }
 
@@ -211,13 +215,22 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async SetServiceGroupAccessory(services: number[]) {
-    await setServiceGroupAccessory(this.pk, this.group, services)
+  public SetServiceGroupAccessory(services: number[]) {
+    return setServiceGroupAccessory(this.pk, this.group, services)
   }
 
   @Action
   public MakePeriodicPay(req: IPeriodicPayForIdRequest) {
     return makePeriodicPay4Customer(this.pk, req)
+  }
+
+  @Action
+  public SetMarkers(markerNames?: string[]) {
+    if (markerNames) {
+      return setCustomerMarkers(this.pk, markerNames)
+    } else {
+      return setCustomerMarkers(this.pk, this.markers)
+    }
   }
 }
 

@@ -116,6 +116,9 @@ export const makePeriodicPay4Customer = (id: number, req: IPeriodicPayForIdReque
 export const generateCustomerPassword = (): AxiosPromise<string> =>
   request.get<string>(`${custApiUrl}generate_password/`)
 
+export const setCustomerMarkers = (id: number, flags: string[]) =>
+  request.post(`${custApiUrl}${id}/set_markers/`, flags)
+
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>
   request.get<ICustomerGroupList>(`${custApiUrl}groups/`, { params })

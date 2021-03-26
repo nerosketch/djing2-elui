@@ -14,7 +14,11 @@
           @selection-change="handleSelectionChange"
         )
           template(v-slot:pk="{row}")
-            el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
+            el-button(
+              v-if="$perms.is_superuser"
+              size='mini' icon='el-icon-lock'
+              @click="openPermsDialog(row)"
+            )
             span(v-else) {{ row.pk }}
 
           template(v-slot:username="{row}")
@@ -24,11 +28,11 @@
           template(v-slot:telephone="{row}")
             el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
 
-          template(v-slot:marker_icons="{row}")
-            template(v-if="row.marker_icons.length > 0")
+          template(v-slot:markers="{row}")
+            template(v-if="row.markers.length > 0")
               span.m-icon(
-                v-for="(ic, i) in row.marker_icons"
-                :class="ic"
+                v-for="(ic, i) in row.markers"
+                :class="`m-${ic}`"
                 :key="i"
               )
             span(v-else)
@@ -256,7 +260,7 @@ export default class extends Vue {
       'min-width': 170
     },
     {
-      prop: 'marker_icons',
+      prop: 'markers',
       label: 'Маркер'
     },
     {
@@ -296,7 +300,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs,marker_icons'
+        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs,markers'
       })
       if (street) {
         newParams.street = Number(street)
