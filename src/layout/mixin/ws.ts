@@ -2,7 +2,8 @@ import { Component, Vue } from 'vue-property-decorator'
 
 export enum IWsMessageEventTypeEnum {
   UPDATETASK = 'updatetask',
-  UPDATEPERMS = 'updateperms'
+  UPDATEPERMS = 'updateperms',
+  UPDATE_CUSTOMER_LEASES = 'ucls'
 }
 
 export interface IWsMessage {
@@ -21,8 +22,8 @@ export default class extends Vue {
   protected wsConnect() {
     if (process.env.NODE_ENV === 'production') {
       this.wsInstance = new WebSocket(`wss://${location.host}/ws`)
+      // this.wsInstance = new WebSocket(`ws://${location.host}/ws`)
     }
-    // this.wsInstance = new WebSocket('ws://127.0.0.1:8081/ws')
     /* this.wsInstance.onopen = () => {
       console.log('WS подключенно')
     }

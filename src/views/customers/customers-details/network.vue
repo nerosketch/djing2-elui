@@ -52,7 +52,6 @@
               type='primary' size='mini'
               icon='el-icon-edit'
               @click="editLease(row)"
-              :disabled="row.is_dynamic"
             )
             el-button(
               type='danger' size='mini'
@@ -66,116 +65,62 @@
       ) Добавить
       el-button(
         size='mini' icon='el-icon-s-data'
-        @click="openSessions"
+        @click="authorizedSessionsDialog=true"
       ) Сессии
 
     el-dialog(
       :title="(isAddNewLease ? 'Добавить' : 'Изменить') + ' аренду ip'"
       :visible.sync='editDialog'
     )
-      el-form(
-        ref='frm'
-        v-loading='frmLoading'
-        :label-width="isMobileView ? undefined : '100px'"
-        size="mini"
-        status-icon
-        :rules='frmRules'
-        :model='frmMod'
+      customer-lease-form(
+        :isAddNewLease="isAddNewLease"
+        v-on:done="leaseFrmDone"
+        v-on:cancel="editDialog=false"
+        ref="customerleaseformref"
       )
-        el-form-item(
-          label="IP Адрес"
-          prop='ip_address'
-        )
-          el-input(v-model="frmMod.ip_address")
-            template(v-slot:append)
-              el-button(
-                icon='el-icon-refresh'
-                @click="getFreeIp" :loading='getFreeIpLoad'
-                :disabled="frmMod.pool === 0"
-              )
-        el-form-item(
-          label="IP Pool"
-          prop='pool'
-        )
-          el-select(v-model="frmMod.pool" v-loading="poolsLoading")
-            el-option(
-              v-if="pools.length > 0"
-              v-for="p in pools"
-              :key="p.id"
-              :label="`${p.network} - ${p.description}`"
-              :value="p.id"
-            )
-        el-form-item(
-          label="MAC Адрес"
-          prop='mac_address'
-        )
-          el-input(v-model="frmMod.mac_address")
-        el-form-item
-          el-button(
-            icon='el-icon-upload'
-            type="primary"
-            @click="onSubmit"
-            :loading="frmLoading"
-          ) Сохранить
+    el-dialog(
+      title="Сессии авторизации"
+      top="1vh"
+      :visible.sync="authorizedSessionsDialog"
+    )
+      session-list(
+        :uid="$store.state.customer.pk"
+      )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Form } from 'element-ui'
-import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
-import { AppModule } from '@/store/modules/app'
-import { CustomerModule } from '@/store/modules/customers/customer'
-import {
-  ICustomerIpLease,
-  INetworkIpPool
-} from '@/api/networks/types'
-import { getCustomerIpLeases, getNetworkIpPools } from '@/api/networks/req'
+import { ICustomerIpLease } from '@/api/networks/types'
+import { getCustomerIpLeases } from '@/api/networks/req'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
-import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
 import LeasePing from '@/components/MyButtons/leaseping.vue'
+import CustomerLeaseForm from './customer-lease-form.vue'
+import SessionList from '@/views/networks/components/session-list.vue'
+import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 
 @Component({
   name: 'Network',
   components: {
-    LeasePing
+    LeasePing,
+    CustomerLeaseForm,
+    SessionList
   }
 })
 export default class extends Vue {
   private leases: ICustomerIpLease[] = []
-  private pools: INetworkIpPool[] = []
   private loading = false
-  private poolsLoading = false
   private editDialog = false
-  private frmLoading = false
-  private getFreeIpLoad = false
   private isAddNewLease = false
+  private authorizedSessionsDialog = false
 
-  private frmRules = {
-    ip_address: [
-      { required: true, message: 'IP не может быть пустым', trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: 'Не правильный ip' }
-    ],
-    mac_address: [
-      { validator: macAddrValidator, trigger: 'change', message: 'Не правильный mac' }
-    ]
-  }
-
-  private frmMod = {
-    ip_address: '',
-    pool: 0,
-    customer: 0,
-    mac_address: '',
-    is_dynamic: false
-  }
-
-  private get isMobileView() {
-    return AppModule.IsMobileDevice
+  public readonly $refs!: {
+    customerleaseformref: CustomerLeaseForm
   }
 
   private async loadLeases() {
     this.loading = true
     try {
-      const { data } = await getCustomerIpLeases(undefined, CustomerModule.pk)
+      const { data } = await getCustomerIpLeases(undefined, this.$store.state.customer.pk)
       this.leases = data as ICustomerIpLease[]
     } catch (err) {
       this.$message.error(err)
@@ -184,55 +129,25 @@ export default class extends Vue {
     }
   }
 
-  private async loadPools() {
-    this.poolsLoading = true
-    try {
-      const { data } = await getNetworkIpPools({
-        groups: CustomerModule.group
-      }) as any
-      this.pools = data
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.poolsLoading = false
-    }
-  }
-
   async created() {
     await this.loadLeases()
+
+    // subscribe to customer update lease events
+    this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER_LEASES, this.onSignalUpdateLeases)
   }
 
-  private editLease(lease: ICustomerIpLease) {
-    CustomerIpLeaseModule.SET_ALL_LEASE(lease)
-    this.frmMod = lease
-    this.isAddNewLease = false
+  beforeDestroy() {
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATE_CUSTOMER_LEASES)
+  }
+
+  private async editLease(l: ICustomerIpLease) {
     this.editDialog = true
+    this.isAddNewLease = false
+    await this.$nextTick()
+    this.$refs.customerleaseformref.editLease(JSON.parse(JSON.stringify(l)))
   }
 
-  private onSubmit() {
-    (this.$refs['frm'] as Form).validate(async valid => {
-      if (valid) {
-        this.frmLoading = true
-        try {
-          if (this.isAddNewLease) {
-            await CustomerIpLeaseModule.AddLease(this.frmMod)
-          } else {
-            await CustomerIpLeaseModule.PatchLease(this.frmMod)
-          }
-          this.loadLeases()
-        } catch (err) {
-          this.$message.error(err)
-        } finally {
-          this.frmLoading = false
-          this.editDialog = false
-        }
-      } else {
-        this.$message.error('Исправь ошибки в форме')
-      }
-    })
-  }
-
-  private delLease(lease: ICustomerIpLease) {
+  public delLease(lease: ICustomerIpLease) {
     this.$confirm('Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.', {
       confirmButtonText: 'OK',
       cancelButtonText: 'Нет'
@@ -248,45 +163,22 @@ export default class extends Vue {
   }
 
   private async addLease() {
-    this.frmMod = {
-      ip_address: '',
-      pool: 0,
-      customer: CustomerModule.pk,
-      mac_address: '',
-      is_dynamic: false
-    }
-    this.loadPools()
-    this.isAddNewLease = true
     this.editDialog = true
+    this.isAddNewLease = true
+    await this.$nextTick()
+    this.$refs.customerleaseformref.addLease()
   }
 
-  private async getFreeIp() {
-    this.getFreeIpLoad = true
-    await NetworkIpPoolModule.SET_ID(this.frmMod.pool)
-    try {
-      const ip = await NetworkIpPoolModule.GetFreeIP()
-      if (ip) {
-        this.frmMod.ip_address = ip
-      } else {
-        this.$message.error('Не получилось подобрать ip :(')
-      }
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.getFreeIpLoad = false
+  private leaseFrmDone() {
+    this.loadLeases()
+    this.editDialog = false
+  }
+
+  private onSignalUpdateLeases({ data }: IWsMessage) {
+    const customerId = data['customerId']
+    if (customerId === this.$store.state.customer.pk) {
+      this.loadLeases()
     }
-  }
-
-  private openSessions() {
-    this.$router.push({
-      name: 'customerSessions',
-      params: {
-        uid: CustomerModule.pk.toString(),
-        gid: CustomerModule.group.toString(),
-        grpName: CustomerModule.group_title,
-        customerName: CustomerModule.full_name
-      }
-    })
   }
 }
 </script>

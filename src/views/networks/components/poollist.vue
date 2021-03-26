@@ -167,7 +167,7 @@ export default class extends Vue {
 
   private async loadPools(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count,sites,vid,vlan_if'
+      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count,sites,vid,vlan_if,kind'
     }
     return getNetworkIpPools(params)
   }
