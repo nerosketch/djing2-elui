@@ -27,11 +27,11 @@ export default class extends Vue {
   private loading = false
 
   created() {
-    this.usedMarkers = this.$store.state.customer.markers
+    this.usedMarkers = this.$store.state.customer.marker_isons
     this.setMarkerValues(this.usedMarkers)
   }
 
-  @Watch('$store.state.customer.markers', { deep: true })
+  @Watch('$store.state.customer.marker_icons', { deep: true })
   private onCustomerChanged(markers: string[]) {
     this.setMarkerValues(markers)
   }

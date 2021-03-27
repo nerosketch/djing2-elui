@@ -28,10 +28,10 @@
           template(v-slot:telephone="{row}")
             el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
 
-          template(v-slot:markers="{row}")
-            template(v-if="row.markers.length > 0")
+          template(v-slot:marker_icons="{row}")
+            template(v-if="row.marker_icons.length > 0")
               span.m-icon(
-                v-for="(ic, i) in row.markers"
+                v-for="(ic, i) in row.marker_icons"
                 :class="`m-${ic}`"
                 :key="i"
               )
@@ -260,7 +260,7 @@ export default class extends Vue {
       'min-width': 170
     },
     {
-      prop: 'markers',
+      prop: 'marker_icons',
       label: 'Маркер'
     },
     {
@@ -300,7 +300,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs,markers'
+        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs,marker_icons'
       })
       if (street) {
         newParams.street = Number(street)

@@ -51,7 +51,7 @@ class Customer extends VuexModule implements ICustomer {
   lease_count = 0
   sites: number[] = []
   traf_octs = 0
-  markers: string[] = []
+  marker_icons: string[] = []
 
   @Mutation
   public SET_ID_CUSTOMER(id: number) {
@@ -91,7 +91,7 @@ class Customer extends VuexModule implements ICustomer {
     this.lease_count = data.lease_count
     this.traf_octs = data.traf_octs!
     this.sites = data.sites
-    this.markers = data.markers
+    this.marker_icons = data.marker_icons
     return this
   }
 
@@ -128,7 +128,7 @@ class Customer extends VuexModule implements ICustomer {
     this.lease_count = 0
     this.sites = []
     this.traf_octs = 0
-    this.markers = []
+    this.marker_icons = []
     return this
   }
 
@@ -229,7 +229,7 @@ class Customer extends VuexModule implements ICustomer {
     if (markerNames) {
       return setCustomerMarkers(this.pk, markerNames)
     } else {
-      return setCustomerMarkers(this.pk, this.markers)
+      return setCustomerMarkers(this.pk, this.marker_icons)
     }
   }
 }

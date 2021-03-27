@@ -41,7 +41,7 @@ export interface ICustomer {
   lease_count: number
   sites: number[]
   traf_octs: number | null
-  markers: string[]
+  marker_icons: string[]
 }
 export type ICustomerList = IDRFListResponse<ICustomer>
 export type ICustomerAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomer>
