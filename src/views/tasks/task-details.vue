@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable camelcase */
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { TaskModule } from '@/store/modules/tasks/tasks'
@@ -19,6 +20,11 @@ import TaskForm from './task-form.vue'
 import TaskInfo from './task-info.vue'
 import Comments from './comments.vue'
 import taskMixin from './task-mixin'
+import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
+
+interface ITaskEventData {
+  task_id: number
+}
 
 @Component({
   name: 'TaskDetails',
@@ -43,6 +49,20 @@ export default class extends mixins(taskMixin) {
     await this.loadTask()
     await this.loadPotentialRecipients()
     this.taskReady = true
+
+    // Subscribe for task update event from server
+    this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
+  }
+
+  beforeDestroy() {
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
+  }
+
+  private onUpdateTask(msg: IWsMessage) {
+    const dat = msg.data as ITaskEventData
+    if (dat.task_id === this.taskId) {
+      this.loadTask()
+    }
   }
 }
 </script>

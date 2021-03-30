@@ -24,13 +24,13 @@ export default class extends Vue {
       this.wsInstance = new WebSocket(`wss://${location.host}/ws`)
       // this.wsInstance = new WebSocket(`ws://${location.host}/ws`)
     }
-    /* this.wsInstance.onopen = () => {
-      console.log('WS подключенно')
-    }
-    this.wsInstance.onclose = (eventclose: CloseEvent) => {
-      console.log('соеденение закрыто причина: ' + eventclose.reason)
-    } */
     if (this.wsInstance) {
+      this.wsInstance.onopen = () => {
+        console.log('WS подключенно')
+      }
+      this.wsInstance.onclose = (eventclose: CloseEvent) => {
+        console.log('WS соеденение закрыто, причина: ' + eventclose.reason)
+      }
       this.wsInstance.onmessage = (msg: MessageEvent) => {
         let newData = JSON.parse(msg.data)
         // console.log('Сообщение:', msg)
@@ -50,10 +50,10 @@ export default class extends Vue {
   }
 
   beforeDestroy() {
+    this.$eventHub.$off('dilim', this.playNotify)
     if (this.wsInstance) {
       this.wsInstance.close()
     }
-    this.$eventHub.$off('dilim')
   }
 
   protected onMsg(msg: IWsMessage) {

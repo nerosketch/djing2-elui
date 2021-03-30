@@ -62,7 +62,7 @@ export default class extends Vue {
   }
 
   beforeDestroy() {
-    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATETASK)
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
   }
 
   private onUpdateTask(msg: IWsMessage) {

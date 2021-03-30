@@ -137,7 +137,7 @@ export default class extends Vue {
   }
 
   beforeDestroy() {
-    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATE_CUSTOMER_LEASES)
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATE_CUSTOMER_LEASES, this.onSignalUpdateLeases)
   }
 
   private async editLease(l: ICustomerIpLease) {
