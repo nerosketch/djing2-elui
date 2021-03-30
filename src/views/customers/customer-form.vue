@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='customerfrm'
-    :label-width="isMobileView ? undefined : '115px'"
+    :label-width="$store.getters.app.IsMobileDevice ? undefined : '115px'"
     size="mini"
     status-icon
     :rules='frmRules'
@@ -195,9 +195,6 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
-  private get isMobileView() {
-    return AppModule.IsMobileDevice
-  }
   private frmMod: ICustomerFrm = {} as ICustomerFrm
 
   created() {
@@ -206,7 +203,7 @@ export default class extends mixins(FormMixin) {
     this.onChangedId()
   }
 
-  @Watch('$store.state.customer.pk')
+  @Watch('$store.state.customer', { deep: true })
   private onChangedId() {
     this.frmMod = {
       username: CustomerModule.username,

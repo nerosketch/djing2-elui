@@ -3,7 +3,8 @@ import { Component, Vue } from 'vue-property-decorator'
 export enum IWsMessageEventTypeEnum {
   UPDATETASK = 'updatetask',
   UPDATEPERMS = 'updateperms',
-  UPDATE_CUSTOMER_LEASES = 'ucls'
+  UPDATE_CUSTOMER_LEASES = 'ucls',
+  UPDATE_CUSTOMER = 'update_customer'
 }
 
 export interface IWsMessage {
