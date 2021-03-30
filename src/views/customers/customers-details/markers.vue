@@ -18,7 +18,6 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { CustomerModule } from '@/store/modules/customers/customer'
 
-
 @Component({
   name: 'Markers'
 })
@@ -27,7 +26,7 @@ export default class extends Vue {
   private loading = false
 
   created() {
-    this.usedMarkers = this.$store.state.customer.marker_isons
+    this.usedMarkers = this.$store.state.customer.marker_icons
     this.setMarkerValues(this.usedMarkers)
   }
 
@@ -37,7 +36,7 @@ export default class extends Vue {
   }
 
   private setMarkerValues(active: string[]) {
-    for (let i=0; i < this.markerData.length; i++) {
+    for (let i = 0; i < this.markerData.length; i++) {
       const f = this.markerData[i]
       const el = active.find(e => e === f[0])
       this.markerData[i][1] = el !== undefined
