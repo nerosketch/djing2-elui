@@ -58,9 +58,7 @@ import { SearchModule } from '@/store/modules/search'
 export default class extends Vue {
   private loading = false
 
-  get defCardStyle() {
-    return { padding: '10px 13px' }
-  }
+  private defCardStyle = { padding: '10px 13px' }
 
   get searchTextGetter() {
     return SearchModule.searchStr

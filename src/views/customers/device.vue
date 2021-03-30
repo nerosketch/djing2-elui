@@ -2,7 +2,7 @@
 el-form(
   :model='frmMod'
   v-loading='isLoading'
-  :label-width="isMobileView ? undefined : '100px'"
+  :label-width="$store.getters.isMobileView ? undefined : '100px'"
   size="mini"
 )
   el-card(shadow="never")
@@ -42,7 +42,6 @@ el-form(
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { AppModule } from '@/store/modules/app'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import DeviceSelect from '@/components/DeviceSelect/index.vue'
 import SelectedDevPort from '@/components/DeviceSelect/selectDevPort.vue'
@@ -53,10 +52,6 @@ import SelectedDevPort from '@/components/DeviceSelect/selectDevPort.vue'
 })
 export default class extends Vue {
   private isLoading = false
-
-  private get isMobileView() {
-    return AppModule.IsMobileDevice
-  }
 
   private frmMod = {
     device: CustomerModule.device,

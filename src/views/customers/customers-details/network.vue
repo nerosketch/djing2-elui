@@ -129,11 +129,11 @@ export default class extends Vue {
     }
   }
 
-  async created() {
-    await this.loadLeases()
-
+  created() {
     // subscribe to customer update lease events
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER_LEASES, this.onSignalUpdateLeases)
+
+    this.loadLeases()
   }
 
   beforeDestroy() {

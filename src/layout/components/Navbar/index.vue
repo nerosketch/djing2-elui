@@ -1,7 +1,7 @@
 <template lang="pug">
   .navbar
     hamburger.hamburger-container(
-      :is-active="sidebar.opened"
+      :is-active="$store.state.app.sidebar.opened"
       @toggleClick="toggleSideBar"
     )
 
@@ -26,7 +26,7 @@
       )
         .avatar-wrapper
           img.user-avatar(
-            v-if="isAva"
+            v-if="$store.getters.isAvatar"
             :src="avatar"
           )
           span(v-else) {{ profileUname }}
@@ -66,13 +66,6 @@ import Ws from '@/layout/mixin/ws'
 export default class extends mixins(Ws) {
   private $perms!: CurrentPermissions
   private searchStr = ''
-  get sidebar() {
-    return AppModule.sidebar
-  }
-
-  get device() {
-    return AppModule.device.toString()
-  }
 
   get avatar() {
     if (!CurrentUserProfileModule.isAvatar) {
@@ -82,10 +75,6 @@ export default class extends mixins(Ws) {
       this.$perms.GetCurrentAuthPermissions()
     }
     return CurrentUserProfileModule.getCurrentAvatar
-  }
-
-  get isAva() {
-    return CurrentUserProfileModule.isAvatar
   }
 
   get profileUname() {

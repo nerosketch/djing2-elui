@@ -2,7 +2,7 @@
   el-form(
     ref='frm'
     v-loading='frmLoading'
-    :label-width="isMobileView ? undefined : '100px'"
+    :label-width="$store.getters.isMobileView ? undefined : '100px'"
     size="mini"
     status-icon
     :rules='frmRules'
@@ -83,10 +83,6 @@ export default class extends Vue {
 
   @Prop({ required: true })
   private isAddNewLease!: boolean
-
-  private get isMobileView() {
-    return AppModule.IsMobileDevice
-  }
 
   private frmRules = {
     ip_address: [
