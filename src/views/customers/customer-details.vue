@@ -98,7 +98,7 @@ export default class extends Vue {
         path: { name: 'customersList', params: { groupId: grpId } },
         meta: {
           hidden: true,
-          title: this.$store.state.customer.full_name || '-'
+          title: this.$store.state.customer.group_title || '-'
         }
       },
       {
