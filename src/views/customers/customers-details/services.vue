@@ -51,7 +51,7 @@
     el-col(:sm='24' :md='12')
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix Назначенные периодические платежы
+          .clearfix Назначенные периодические платежи
 
         periodic-services-list
 
