@@ -12,11 +12,6 @@ self.addEventListener('push', function(event) {
 
 workbox.core.setCacheNameDetails({ prefix: 'djing2-elui' })
 
-/**
- * The workboxSW.precacheAndRoute() method efficiently caches and responds to
- * requests for URLs in the manifest.
- * See https://goo.gl/S9QRab
- */
-self.__precacheManifest = [].concat(self.__precacheManifest || [])
-workbox.precaching.suppressWarnings()
+// workbox.precaching.suppressWarnings()
+workbox.core.clientsClaim()
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {})

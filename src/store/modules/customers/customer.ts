@@ -31,7 +31,7 @@ class Customer extends VuexModule implements ICustomer {
   balance = 0.0
   description = ''
   street = 0
-  street_name = ''
+  street_name?: string
   house = ''
   is_active = false
   gateway = 0
@@ -71,7 +71,7 @@ class Customer extends VuexModule implements ICustomer {
     this.balance = data.balance
     this.description = data.description
     this.street = data.street
-    this.street_name = data.street_name!
+    this.street_name = data.street_name
     this.house = data.house
     this.is_active = data.is_active
     this.gateway = data.gateway
@@ -107,8 +107,8 @@ class Customer extends VuexModule implements ICustomer {
     this.group_title = ''
     this.balance = 0.0
     this.description = ''
-    delete this.street
-    this.street_name = ''
+    this.street = 0
+    delete this.street_name
     this.house = ''
     this.is_active = false
     this.gateway = 0
