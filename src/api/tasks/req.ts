@@ -56,14 +56,14 @@ export const getChangeLogs = (params: IDRFRequestListParameters): IChangeLogList
 export const getChangeLog = (id: number): IChangeLogAxoisResponsePromise =>
   request.get<IChangeLog>(`${baseTaskLogUrl}${id}/`)
 
-export const addChangeLog = (dat: IChangeLog): IChangeLogAxoisResponsePromise =>
-  request.post<IChangeLog>(baseTaskLogUrl, dat)
+// export const addChangeLog = (dat: IChangeLog): IChangeLogAxoisResponsePromise =>
+//   request.post<IChangeLog>(baseTaskLogUrl, dat)
 
-export const changeChangeLog = (id: number, newData: IChangeLog): IChangeLogAxoisResponsePromise =>
-  request.patch<IChangeLog>(`${baseTaskLogUrl}${id}/`, newData)
+// export const changeChangeLog = (id: number, newData: IChangeLog): IChangeLogAxoisResponsePromise =>
+//   request.patch<IChangeLog>(`${baseTaskLogUrl}${id}/`, newData)
 
-export const delChangeLog = (id: number) =>
-  request.delete(`${baseTaskLogUrl}${id}/`)
+// export const delChangeLog = (id: number) =>
+//   request.delete(`${baseTaskLogUrl}${id}/`)
 
 // IExtraComment
 const baseCommentUrl = '/tasks/comments/'
