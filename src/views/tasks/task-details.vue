@@ -1,13 +1,13 @@
 <template lang="pug">
   el-row.app-container(:gutter="5")
-    el-col(:lg="12" :sm='24')
+    el-col.mt5(:lg="12" :sm='24')
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix Редактировать задачу № {{ taskId }}
         task-form(v-if='taskReady' :recipients="potentialRecipients")
-    el-col(:lg='12' :sm='24')
+    el-col.mt5(:lg='12' :sm='24')
       task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
-    el-col(:lg='12' :sm='24')
+    el-col.mt5(:lg='12' :sm='24')
       comments(v-if='taskReady')
 </template>
 
@@ -33,6 +33,7 @@ interface ITaskEventData {
 export default class extends mixins(taskMixin) {
   @Prop({ default: 0 })
   private taskId!: number
+
   private taskReady = false
 
   private async loadTask() {

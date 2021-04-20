@@ -29,25 +29,6 @@ export enum ITaskType {
   OTHER = 12
 }
 
-export enum IChangeLogAct {
-  CHANGE_TASK = 1,
-  CREATE_TASK = 2,
-  DELETE_TASK = 3,
-  COMPLETING_TASK = 4,
-  FAILED_TASK = 5
-}
-
-export interface IChangeLog {
-  id: number
-  task: number
-  act_type: IChangeLogAct
-  when: string,
-  who: number
-}
-export type IChangeLogList = IDRFListResponse<IChangeLog>
-export type IChangeLogAxoisResponsePromise = IDRFAxiosResponsePromise<IChangeLog>
-export type IChangeLogListAxiosResponsePromise = IDRFAxiosResponsePromise<IChangeLogList>
-
 export interface ITask {
   id: number
   author_full_name?: string
@@ -77,6 +58,8 @@ export type ITaskList = IDRFListResponse<ITask>
 export type ITaskAxoisResponsePromise = IDRFAxiosResponsePromise<ITask>
 export type ITaskListAxiosResponsePromise = IDRFAxiosResponsePromise<ITaskList>
 
+type IExtraCommentChangeLogType = 'comment' | 'log'
+
 export interface IExtraComment {
   id: number
   author_id: number
@@ -86,9 +69,22 @@ export interface IExtraComment {
   date_create: string
   task: number
   can_remove?: boolean
+  type?: IExtraCommentChangeLogType
 }
 export type IExtraCommentListAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment[]>
 export type IExtraCommentAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment>
+
+export interface IExtraCommentChangeLog {
+  readonly id: number
+  who: number
+  readonly who_name: string
+  // who_avatar: string
+  when: string
+  human_representation: string
+  readonly type: IExtraCommentChangeLogType
+}
+export type IExtraCommentCombinedWithTaskStateChangeLog = IExtraComment | IExtraCommentChangeLog
+export type IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraCommentCombinedWithTaskStateChangeLog[]>
 
 export interface ITaskDocumentAttachment {
   id: number
