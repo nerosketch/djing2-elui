@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevPortState, IScannedPort } from '@/api/devices/types'
 import { PortModule } from '@/store/modules/devices/port'
 
 @Component({
-  name: 'SwitchPortToggleButton' 
+  name: 'SwitchPortToggleButton'
 })
 export default class extends Vue {
   @Prop({ default: null }) private port!: IScannedPort | null

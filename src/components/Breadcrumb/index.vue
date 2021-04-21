@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import pathToRegexp from 'path-to-regexp'
+import { compile } from 'path-to-regexp'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { RouteRecord } from 'vue-router'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -39,6 +39,7 @@ export default class extends Vue {
       }
     ] as RouteRecord[]
   }
+
   @Watch('crumbsGetter')
   private onChangeCrumbs(crumbs: RouteRecord[]) {
     this.breadcrumbs = crumbs
@@ -50,7 +51,7 @@ export default class extends Vue {
       return path
     }
     const { params } = this.$route
-    const toPath = pathToRegexp.compile(path)
+    const toPath = compile(path)
     return toPath(params)
   }
 

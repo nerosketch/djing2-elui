@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import echarts from 'echarts'
+import * as echarts from 'echarts'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import ResizeMixin from '@/components/Charts/mixins/resize'
