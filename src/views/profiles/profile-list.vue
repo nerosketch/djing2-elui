@@ -4,21 +4,22 @@
       :columns="tableColumns"
       :getData="getAllProfiles"
       :tableRowClassName="rowColor"
-      :loading="loading"
-      :heightDiff='171'
+      :heightDiff='190'
       widthStorageNamePrefix='profiles'
       ref='tbl'
     )
       template(v-slot:avatar="{row}")
-        el-avatar(:src="row.avatar" size='medium' shape="square")
+        el-avatar(:src="row.avatar || defAvaConst" size='medium' shape="square")
 
       template(v-slot:username="{row}")
-        el-link(
-          type="primary"
-          :icon="row.is_superuser ? 'el-icon-warning' : ''"
+        router-link(
           v-if="$perms.is_superuser"
+          :to="{name: 'profileDetail', params:{ profileUname: row.username }}"
         )
-          router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}") {{ row.username }}
+          el-link(
+            type="primary"
+            :icon="row.is_superuser ? 'el-icon-warning' : ''"
+          ) {{ row.username }}
         span(v-else) {{ row.username }}
 
       template(v-slot:telephone="{row}")
@@ -28,7 +29,7 @@
         el-button(
           type="danger" size="mini"
           icon='el-icon-close' circle
-          @click="delUserProfile"
+          @click="delUserProfile(row)"
           :disabled="!$perms.is_superuser"
         )
       el-button(
@@ -43,7 +44,6 @@
     )
       profile-form(
         v-on:done="addProfileDone"
-        v-on:fail="addProfileFail"
       )
 </template>
 
@@ -51,7 +51,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
-import { IUserProfile } from '@/api/profiles/types'
+import { DEFAULT_USER_AVA, IUserProfile } from '@/api/profiles/types'
 import { getProfiles, delProfile } from '@/api/profiles/req'
 import ProfileForm from './profile-form.vue'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
@@ -74,8 +74,9 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
-  private loading = false
   private profileFormDialog = false
+
+  private defAvaConst = DEFAULT_USER_AVA
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -111,20 +112,11 @@ export default class extends Vue {
     }
   ]
 
-  private async getAllProfiles(params?: IDRFRequestListParameters) {
-    this.loading = true
+  private getAllProfiles(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'avatar,username,fio,telephone,email,is_active,is_superuser'
     }
-    try {
-      const r = await getProfiles(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.loading = false
-    }
-    return null
+    return getProfiles(params)
   }
 
   private async addNewProfile() {
@@ -137,10 +129,6 @@ export default class extends Vue {
     this.$router.push({ name: 'profileDetail', params: { profileUname: newProfile.username } })
   }
 
-  private async addProfileFail() {
-    this.profileFormDialog = false
-  }
-
   private rowColor(r: ITableRowClassName) {
     return r.row.is_active ? '' : 'error-row'
   }
@@ -148,7 +136,7 @@ export default class extends Vue {
   private delUserProfile(usr: IUserProfile) {
     this.$confirm('Удалить учётную запись?').then(async() => {
       await delProfile(usr.username)
-      this.$message.success('Учётную запись уалена')
+      this.$message.success('Учётная запись удалена')
     })
   }
 }

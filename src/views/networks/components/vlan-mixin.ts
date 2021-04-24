@@ -10,9 +10,9 @@ export default class extends Vue {
   protected vlans: IVlanIf[] = []
   protected vlanLoading = false
 
-  protected async loadVlans(params?: IDRFRequestListParameters) {
+  protected async loadVlans(params?: IDRFRequestListParameters, fields?: string) {
     this.vlanLoading = true
-    const defaultFIelds = 'id,title,vid,is_management'
+    const defaultFIelds = fields || 'id,title,vid,is_management,sites'
     if (params) {
       params.fields = defaultFIelds
       params.page_size = 100000

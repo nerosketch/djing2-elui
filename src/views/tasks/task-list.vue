@@ -3,15 +3,15 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadTasks"
-    :loading="loading"
     :tableRowClassName="tableRowClassName"
-    :heightDiff='168'
+    :heightDiff='188'
+    :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='tasks'
     ref='tbl'
   )
     template(v-slot:customer_full_name="{row}")
-      el-link(type="primary")
-        router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }") {{ row.customer_full_name }}
+      router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }")
+        el-link(type="primary") {{ row.customer_full_name }}
 
     template(v-slot:id="{row}")
       router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
@@ -22,12 +22,18 @@ div
           span(v-if="row.comment_count > 0") {{ row.comment_count }}
           i.el-icon-view(v-else)
 
-    el-button(
-      icon="el-icon-plus"
-      size='mini'
-      @click="openNew"
-      :disabled="!$perms.tasks.add_task"
-    ) Добавить задачу
+    el-button-group
+      el-button(
+        icon="el-icon-plus"
+        size='mini'
+        @click="openNew"
+        :disabled="!$perms.tasks.add_task"
+      ) Добавить задачу
+      el-button(
+        icon='el-icon-s-operation'
+        size='mini'
+        @click="editFieldsVisible=true"
+      ) Поля
 
   el-dialog(
     title='Создание задачи'
@@ -58,6 +64,7 @@ export default class extends Vue {
     tbl: DataTableComp
   }
   private formDialog = false
+  private editFieldsVisible = false
 
   @Prop({ default: '' })
   private tabUrl!: string
@@ -119,27 +126,17 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
-  private loading = false
 
   private async openNew() {
     await TaskModule.RESET_ALL_TASK()
     this.formDialog = true
   }
 
-  private async loadTasks(params?: IDRFRequestListParameters) {
-    this.loading = true
+  private loadTasks(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
     }
-    try {
-      const r = await getTasks(params, this.tabUrl)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.loading = false
-    }
-    return null
+    return getTasks(params, this.tabUrl)
   }
 
   // Breadcrumbs

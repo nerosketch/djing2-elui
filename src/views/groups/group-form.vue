@@ -13,19 +13,18 @@
       prop='title'
     )
       el-input(v-model="frmMod.title")
-    el-form-item(
-      label="Тех.код"
-      prop='code'
-    )
-      el-input(v-model="frmMod.code")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading") Сохранить
+      el-button(
+        icon='el-icon-upload'
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+      ) Сохранить
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
-import { latinValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
 
 @Component({
@@ -37,25 +36,16 @@ export default class extends Vue {
   private frmRules = {
     title: [
       { required: true, message: 'Название группы надо указать', trigger: 'blur' }
-    ],
-    code: [
-      { max: 12, message: 'Максимум 12 символов для кода', trigger: 'change' },
-      { validator: latinValidator, trigger: 'change', message: 'Только латиница' }
     ]
   }
 
-  get onChId() {
-    return GroupModule.pk
-  }
-  @Watch('onChId')
+  @Watch('$store.state.group.pk')
   private onChangeGroup() {
     this.frmMod.title = GroupModule.title
-    this.frmMod.code = GroupModule.code
   }
 
   private frmMod = {
-    title: '',
-    code: ''
+    title: ''
   }
   get isNew() {
     return GroupModule.pk === 0

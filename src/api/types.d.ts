@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { AxiosResponse, AxiosPromise } from 'axios'
 
 export interface IDRFListResponse<T> {
@@ -14,9 +15,9 @@ export interface IDRFRequestListParameters {
   fields?: string
 }
 
-export interface IDRFAxiosResponse<T> extends AxiosResponse<T> {}
-export interface IDRFAxiosResponsePromise<T> extends AxiosPromise<T> {}
-export interface IDRFAxiosResponseListPromise<T> extends IDRFAxiosResponsePromise<IDRFListResponse<T>> {}
+export type IDRFAxiosResponse<T> = AxiosResponse<T>
+export type IDRFAxiosResponsePromise<T> = AxiosPromise<T>
+export type IDRFAxiosResponseListPromise<T> = AxiosResponse<IDRFListResponse<T>>
 
 // Simple response
 export interface ISimpleResponseResult {

@@ -26,28 +26,28 @@
             el-table-column(
               label="SNMP Ном."
               min-width="97"
+              prop="number"
             )
-              template(v-slot:default="{row}") {{ row.number }}
             el-table-column(
               label="Имя"
               min-width="93"
+              prop="title"
             )
-              template(v-slot:default="{row}") {{ row.title }}
             el-table-column(
               label="Мак"
               min-width="123"
+              prop="mac_addr"
             )
-              template(v-slot:default="{row}") {{ row.mac_addr }}
             el-table-column(
               label="Ур. сигнала"
               min-width="92"
+              prop='signal'
             )
-              template(v-slot:default="{row}") {{ row.signal }}
             el-table-column(
               label="В сети"
               min-width="151"
+              prop='uptime'
             )
-              template(v-slot:default="{row}") {{ row.uptime }}
             el-table-column(
               label='#'
               width='60'
@@ -59,7 +59,7 @@
                   @click="openSaveOnu(row)"
                   :disabled="!$perms.devices.add_device"
                 )
-    el-progress.disable_animations(
+    el-progress.progress_disable_animations(
       v-else
       :percentage="loadPercent"
     )
@@ -75,6 +75,8 @@
         :initialDevType="onuType"
         :initialGroup="device.group"
         :initialSnmpSxtra="currentOnu.number"
+        :initialParentDev="device.pk"
+        :initialParentDevName="`${device.ip_address} ${device.comment}`"
       )
 </template>
 
@@ -104,42 +106,39 @@ export default class extends Vue {
   private currentOnu: IScannedONU | null = null
   private onuType = IDeviceTypeEnum.EPON_BDCOM_FORA
 
-  private fetchItems() {
+  private async fetchItems() {
     if (this.device) {
-      return scanOnuList(this.device.pk, (c: ProgressEvent) => {
+      const { data } = await scanOnuList(this.device.pk, (c: ProgressEvent) => {
         this.loadPercent = Math.floor((100 * c.loaded) / c.total)
-      }).then(({ data }) => {
-        for (const line of data.split('\n')) {
-          try {
-            let onu = JSON.parse(line) as IScannedONU
-            const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === onu.fiberid)
-            if (fibIndex !== undefined) {
-              this.fibers[fibIndex].onuList.push(onu)
-            }
-          } catch (e) {
-            continue
-          }
-        }
-        this.ready = true
       })
+      for (const line of data.split('\n')) {
+        try {
+          let onu = JSON.parse(line) as IScannedONU
+          const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === onu.fiberid)
+          if (fibIndex !== undefined) {
+            this.fibers[fibIndex].onuList.push(onu)
+          }
+        } catch (e) {
+          continue
+        }
+      }
+      this.ready = true
     }
-    return new Promise((r) => (r()))
   }
 
-  private fetchFibers() {
+  private async fetchFibers() {
     if (this.device) {
-      return scanOltFibers(this.device.pk).then(({ data }) => {
+      await scanOltFibers(this.device.pk).then(({ data }) => {
         this.fibers = data.map(fib => Object.assign({ onuList: [] }, fib))
       })
     }
-    return new Promise((r) => (r()))
   }
 
   private loadAll() {
     this.loading = true
     this.ready = false
     if (this.device) {
-      return this.fetchFibers().then(() => {
+      this.fetchFibers().then(() => {
         this.fetchItems()
       }).finally(() => {
         this.loading = false
@@ -160,7 +159,7 @@ export default class extends Vue {
         devId: newOnu.pk.toString()
       } })
   }
-  private frmErr(err: Error) {
+  private frmErr() {
     this.dialogVisible = false
   }
 
@@ -170,9 +169,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style>
-.disable_animations * {
-  transition: none !important;
-}
-</style>

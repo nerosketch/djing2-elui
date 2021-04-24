@@ -3,8 +3,8 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadVlans"
-    :loading="vlanLoading"
-    :heightDiff='170'
+    :heightDiff='188'
+    :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='vlans'
     ref='table'
   )
@@ -13,6 +13,11 @@ div
 
     template(v-slot:oper="{row}")
       el-button-group
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="openSitesDlg(row)"
+          size="mini"
+        ) C
         el-button(
           icon="el-icon-edit" size="mini"
           @click="openEdit(row)"
@@ -24,11 +29,17 @@ div
           :disabled="!$perms.networks.delete_vlanif"
         )
 
-    el-button(
-      icon='el-icon-plus' size='mini'
-      @click='openNew'
-      :disabled="!$perms.networks.add_vlanif"
-    ) Добавить
+    el-button-group
+      el-button(
+        icon='el-icon-plus' size='mini'
+        @click='openNew'
+        :disabled="!$perms.networks.add_vlanif"
+      ) Добавить
+      el-button(
+        icon='el-icon-s-operation'
+        size='mini'
+        @click="editFieldsVisible=true"
+      ) Поля
 
   el-dialog(
     :title="dialogTitle"
@@ -37,14 +48,24 @@ div
     vlan-form(
       v-on:done="frmDone"
     )
+  el-dialog(
+    title="Принадлежность сайтам"
+    :visible.sync="sitesDlg"
+  )
+    sites-attach(
+      :selectedSiteIds="$store.state.vlan.sites"
+      v-on:save="vlanSitesSave"
+    )
 </template>
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
+import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IVlanIf } from '@/api/networks/types'
 import { VlanIfModule } from '@/store/modules/networks/vlan'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import VlanForm from './vlan-form.vue'
 import VlanMixin from './vlan-mixin'
 
@@ -84,12 +105,14 @@ export default class extends mixins(VlanMixin) {
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: 'Кнопки',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
   private dialogVisible = false
+  private sitesDlg = false
+  private editFieldsVisible = false
 
   get dialogTitle() {
     let w = 'Изменение'
@@ -108,7 +131,7 @@ export default class extends mixins(VlanMixin) {
   }
 
   private async delVlan(vlan: IVlanIf) {
-    this.$confirm(`Ты действительно хочешь удалить влан "${vlan.title}"?`).then(async() => {
+    this.$confirm(`Действительно удалить влан "${vlan.title}"?`).then(async() => {
       await VlanIfModule.DelVlan(vlan.id)
       this.$message.success('Vlan удалён')
       this.$refs.table.GetTableData()
@@ -118,6 +141,34 @@ export default class extends mixins(VlanMixin) {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
+  }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Сеть'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
+
+  private vlanSitesSave(selectedSiteIds: number[]) {
+    VlanIfModule.PatchVlan({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность vlan сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(vlan: IVlanIf) {
+    VlanIfModule.SET_ALL_VLAN(vlan)
+    this.sitesDlg = true
   }
 }
 </script>

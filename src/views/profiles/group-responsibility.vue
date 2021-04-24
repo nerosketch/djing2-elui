@@ -8,6 +8,7 @@
     )
     br
     el-button(
+      icon='el-icon-upload'
       type='primary' size='mini'
       @click="saveResp"
       :loading="loading"
@@ -64,7 +65,7 @@ export default class extends Vue {
   async saveResp() {
     this.loading = true
     let filtered = this.groups.filter(v => v.state)
-    let res = filtered.map( v => v.pk)
+    let res = filtered.map(v => v.pk)
     await setResponsibilityGroups(this.profileUname, res)
     this.$message.success('Ответственность за группы сохранена')
     this.loading = false

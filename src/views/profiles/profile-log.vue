@@ -3,8 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="getAllLog"
-      :loading="loading"
-      :heightDiff='185'
+      :heightDiff='201'
       widthStorageNamePrefix='profile_log'
     )
 </template>
@@ -15,7 +14,6 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { IUserProfileLog } from '@/api/profiles/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getProfileLogs } from '@/api/profiles/req'
-import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 
 class DataTableComp extends DataTable<IUserProfileLog> {}
 
@@ -26,8 +24,6 @@ class DataTableComp extends DataTable<IUserProfileLog> {}
   }
 })
 export default class extends Vue {
-  private loading = false
-
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'action_date',
@@ -47,17 +43,8 @@ export default class extends Vue {
     }
   ]
 
-  private async getAllLog(params?: IDRFRequestListParameters) {
-    this.loading = true
-    try {
-      const r = await getProfileLogs(params, UserProfileModule.pk)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.loading = false
-    }
-    return null
+  private getAllLog(params?: IDRFRequestListParameters) {
+    return getProfileLogs(params, this.$store.state.userprofile.pk)
   }
 }
 </script>

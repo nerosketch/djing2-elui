@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { IUserProfile, IPasswordUpdateForm } from '@/api/profiles/types'
@@ -27,6 +28,7 @@ class UserProfile extends VuexModule implements IUserProfile {
   user_permissions: number[] = []
   groups: number[] = []
   access_level = 0
+  sites: number[] = []
 
   @Mutation
   public SET_ALL_PROFILE(data: IUserProfile) {
@@ -45,6 +47,7 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.user_permissions = data.user_permissions
     this.groups = data.groups
     this.access_level = data.access_level
+    this.sites = data.sites || []
   }
 
   @Mutation
@@ -64,6 +67,7 @@ class UserProfile extends VuexModule implements IUserProfile {
     this.user_permissions = []
     this.groups = []
     this.access_level = 0
+    this.sites = []
   }
 
   @Action
@@ -93,7 +97,7 @@ class UserProfile extends VuexModule implements IUserProfile {
     return data
   }
 
-  @Action
+  @Action({ rawError: true })
   public async PatchPassword(newPassw: IPasswordUpdateForm) {
     const { data } = await setProfilePassword(this.username, newPassw)
     this.SET_ALL_PROFILE(data)

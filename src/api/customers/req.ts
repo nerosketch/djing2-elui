@@ -44,7 +44,11 @@ import {
   CustomerServiceTypeReportResult,
   CustomerServiceTypeReportResultAxoisResponsePromise,
   CustomerActivityReportResultAxoisResponsePromise,
-  CustomerActivityReportResult
+  CustomerActivityReportResult,
+  IPeriodicPayForIdRequest,
+  IPeriodicPayForIdListAxiosResponsePromise,
+  IPeriodicPayForIdList,
+  IBuyPayloadType
 } from './types'
 
 // ICustomer
@@ -70,8 +74,8 @@ export const changeCustomer = (id: number, newData: object): ICustomerAxoisRespo
 export const delCustomer = (id: number) =>
   request.delete(`${custApiUrl}${id}/`)
 
-export const pickService = (id: number, serviceId: number, deadline?: string) =>
-  request.post(`${custApiUrl}${id}/pick_service/`, { service_id: serviceId, deadline })
+export const pickService = (id: number, data: IBuyPayloadType) =>
+  request.post(`${custApiUrl}${id}/pick_service/`, data)
 
 export const makeShot = (id: number, shotId: number) =>
   request.post(`${custApiUrl}${id}/make_shot/`, { shot_id: shotId })
@@ -88,8 +92,8 @@ export const addBalance = (id: number, dat: IBalanceAmountRequest) =>
 export const getCurrentService = (id: number): ICustomerServiceAxoisResponsePromise =>
   request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)
 
-export const setGroupAccessory = (id: number, groupId: number, services: number[]) =>
-  request.post(`${custApiUrl}${id}/set_group_accessory/`, {
+export const setServiceGroupAccessory = (id: number, groupId: number, services: number[]) =>
+  request.post(`${custApiUrl}${id}/set_service_group_accessory/`, {
     group_id: groupId,
     services
   })
@@ -106,6 +110,15 @@ export const filterDevicePort = (deviceId: number, portId: number): ICustomersOn
 export const pingAllIps = (id: number): ISimpleResponseResultAxiosResponsePromise =>
   request.get<ISimpleResponseResult>(`${custApiUrl}${id}/ping_all_ips/`)
 
+export const makePeriodicPay4Customer = (id: number, req: IPeriodicPayForIdRequest) =>
+  request.post<string>(`${custApiUrl}${id}/make_periodic_pay/`, req)
+
+export const generateCustomerPassword = (): AxiosPromise<string> =>
+  request.get<string>(`${custApiUrl}generate_password/`)
+
+export const setCustomerMarkers = (id: number, flags: string[]) =>
+  request.post(`${custApiUrl}${id}/set_markers/`, flags)
+
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>
   request.get<ICustomerGroupList>(`${custApiUrl}groups/`, { params })
@@ -118,10 +131,10 @@ export const getTelephones = (customerId: number): IAdditionalTelephoneListAxios
 export const getTelephone = (id: number): IAdditionalTelephoneAxoisResponsePromise =>
   request.get<IAdditionalTelephone>(`${telBaseUrl}${id}/`)
 
-export const addTelephone = (data: IAdditionalTelephone): IAdditionalTelephoneAxoisResponsePromise =>
+export const addTelephone = (data: object): IAdditionalTelephoneAxoisResponsePromise =>
   request.post<IAdditionalTelephone>(telBaseUrl, data)
 
-export const changeTelephone = (id: number, newData: IAdditionalTelephone): IAdditionalTelephoneAxoisResponsePromise =>
+export const changeTelephone = (id: number, newData: object): IAdditionalTelephoneAxoisResponsePromise =>
   request.patch<IAdditionalTelephone>(`${telBaseUrl}${id}/`, newData)
 
 export const delTelephone = (id: number) =>
@@ -205,3 +218,12 @@ export const customerServiceTypeReportRequest = (): CustomerServiceTypeReportRes
 
 export const customersActivityReportRequest = (): CustomerActivityReportResultAxoisResponsePromise =>
   request.get<CustomerActivityReportResult>('/customers/activity_report/')
+
+// PeriodicPayForId
+const CustomerPPayUrl = '/customers/periodic-pay/'
+
+export const getAssignedPeriodicPays = (account: number): IPeriodicPayForIdListAxiosResponsePromise =>
+  request.get<IPeriodicPayForIdList>(CustomerPPayUrl, { params: { account } })
+
+export const delAssignedPeriodicPay = (pid: number) =>
+  request.delete(`${CustomerPPayUrl}${pid}/`)

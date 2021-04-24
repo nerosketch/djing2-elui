@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import { getGateway, delGateway, addGateway, changeGateway } from '@/api/gateways/req'
 import { IGateway } from '@/api/gateways/types'
@@ -15,11 +16,7 @@ class Gateway extends VuexModule implements IGateway {
   public is_default = false
   public enabled = false
   public customers_count = 0
-
-  @Mutation
-  private SET_ID(gid: number): void {
-    this.id = gid
-  }
+  public sites?: number[] = []
 
   @Mutation
   public SET_ALL_GATEWAY(data: IGateway) {
@@ -33,6 +30,7 @@ class Gateway extends VuexModule implements IGateway {
     this.is_default = data.is_default
     this.enabled = data.enabled
     this.customers_count = data.customers_count!
+    this.sites = data.sites || []
     return this
   }
 
@@ -48,6 +46,7 @@ class Gateway extends VuexModule implements IGateway {
     this.is_default = false
     this.enabled = false
     this.customers_count = 0
+    this.sites = []
     return this
   }
 

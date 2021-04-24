@@ -3,13 +3,15 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevs"
-      :heightDiff='100'
+      :heightDiff='118'
+      :editFieldsVisible.sync="editFieldsVisible"
       widthStorageNamePrefix='devs'
       ref='table'
     )
       template(v-slot:pk="{row}")
-        el-link(type="primary" v-if="$perms.devices.view_device")
-          router-link(:to="{name: 'device-view', params: { devId: row.pk }}") {{ row.pk }}
+        template(v-if="$perms.devices.view_device")
+          router-link(:to="{name: 'device-view', params: { devId: row.pk }}")
+            el-link(type="primary") {{ row.pk }}
         span(v-else) {{ row.pk }}
 
       template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
@@ -20,6 +22,11 @@
 
       template(v-slot:oper="{row}")
         el-button-group
+          el-button(
+            v-if="$perms.is_superuser"
+            @click="openSitesDlg(row)"
+            size="mini"
+          ) C
           el-button(
             size='mini' icon='el-icon-lock'
             @click="openPermsDialog(row)"
@@ -36,12 +43,18 @@
             :disabled="!$perms.devices.delete_device"
           )
 
-      el-button(
-        size='mini'
-        icon='el-icon-plus'
-        @click="openNew"
-        :disabled="!$perms.devices.add_device"
-      ) Добавить устройство
+      el-button-group
+        el-button(
+          size='mini'
+          icon='el-icon-plus'
+          @click="openNew"
+          :disabled="!$perms.devices.add_device"
+        ) Добавить устройство
+        el-button(
+          icon='el-icon-s-operation'
+          size='mini'
+          @click="editFieldsVisible=true"
+        ) Поля
 
     el-dialog(
       title="Железка"
@@ -71,6 +84,15 @@
         :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
         :getSelectedObjectPerms="deviceGetSelectedObjectPerms"
         :objId="deviceIdGetter"
+      )
+
+    el-dialog(
+      title="Принадлежность оборудования сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.devicemodule.sites"
+        v-on:save="devSitesSave"
       )
 
 </template>
@@ -106,6 +128,8 @@ export default class extends Vue {
   private dialogVisible = false
   private dialogNewDev = false
   private permsDialog = false
+  private sitesDlg = false
+  private editFieldsVisible = false
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -123,7 +147,7 @@ export default class extends Vue {
       'min-width': 300
     },
     {
-      prop: 'dev_type',
+      prop: 'dev_type_str',
       label: 'Тип',
       'min-width': 150
     },
@@ -142,14 +166,14 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
   ]
 
-  private async openEdit(dev: IDevice) {
-    await DeviceModule.SET_ALL_DEV(dev)
+  private openEdit(dev: IDevice) {
+    DeviceModule.GetDevice(dev.pk)
     this.dialogVisible = true
   }
 
@@ -158,23 +182,18 @@ export default class extends Vue {
     this.dialogNewDev = true
   }
 
-  private async loadDevs(params: IDRFRequestListParametersDevGroup) {
-    try {
-      const r = await getDevices({
-        page: params.page,
-        page_size: params.page_size,
-        group: this.groupId,
-        ordering: params.ordering,
-        fields: 'pk,ip_address,comment,dev_type,dev_type_str,mac_addr,status,is_noticeable,group,man_passw,snmp_extra'
-      })
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
+  private loadDevs(params: IDRFRequestListParametersDevGroup) {
+    return getDevices({
+      page: params.page,
+      page_size: params.page_size,
+      group: this.groupId,
+      ordering: params.ordering,
+      fields: 'pk,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group'
+    })
   }
 
   private async delDevice(dev: IDevice) {
-    this.$confirm(`Ты действительно хочешь удалить устройство "${dev.comment}"?`).then(async() => {
+    this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
       await DeviceModule.DelDevice(dev.pk)
       this.$message.success('Удалено')
       this.$refs.table.GetTableData()
@@ -197,6 +216,7 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
+    document.title = `Оборудование - ${this.grpName}`
     this.onGrpCh(this.groupId)
   }
   @Watch('groupId')
@@ -207,7 +227,7 @@ export default class extends Vue {
         path: '/devices',
         meta: {
           hidden: true,
-          title: 'Группы'
+          title: 'Оборудование'
         }
       },
       {
@@ -236,12 +256,26 @@ export default class extends Vue {
     return getDevObjectsPerms(this.deviceIdGetter)
   }
   private openPermsDialog(d: IDevice) {
-    DeviceModule.SET_ALL_DEV(d)
+    DeviceModule.GetDevice(d.pk)
     this.permsDialog = true
   }
 
   private deviceGetSelectedObjectPerms(devId: number, profileGroupId: number) {
     return getDeviceSelectedObjectPerms(devId, profileGroupId)
+  }
+
+  private devSitesSave(selectedSiteIds: number[]) {
+    DeviceModule.PatchDevice({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность оборудования сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(dev: IDevice) {
+    DeviceModule.GetDevice(dev.pk)
+    this.sitesDlg = true
   }
 }
 </script>

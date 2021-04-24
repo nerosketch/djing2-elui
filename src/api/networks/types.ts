@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '@/api/types'
 
 export interface IVlanIf {
@@ -5,6 +6,7 @@ export interface IVlanIf {
   title: string
   vid: number
   is_management: boolean
+  sites?: number[]
 }
 
 export type IVlanIfList = IDRFListResponse<IVlanIf>
@@ -31,6 +33,8 @@ export interface INetworkIpPool {
   gateway: string
   is_dynamic: boolean
   pool_tag?: string
+  sites?: number[]
+  vlan_if?: number
 }
 export type INetworkIpPoolList = IDRFListResponse<INetworkIpPool>
 export type INetworkIpPoolAxoisResponsePromise = IDRFAxiosResponsePromise<INetworkIpPool>
@@ -41,7 +45,8 @@ export interface ICustomerIpLease {
   ip_address: string
   pool: number
   customer: number
-  lease_time: number
+  lease_time: string
+  last_update: string
   mac_address: string
   is_dynamic: boolean
 }

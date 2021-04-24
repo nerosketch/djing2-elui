@@ -4,10 +4,15 @@
       :columns="tableColumns"
       :getData="loadGroups"
       widthStorageNamePrefix='groups'
-      ref='table'
+      ref='grouptable'
     )
       template(v-slot:oper="{row}")
         el-button-group
+          el-button(
+            v-if="$perms.is_superuser"
+            @click="openSitesDlg(row)"
+            size="mini"
+          ) C
           el-button(
             icon='el-icon-lock' size='mini'
             @click="openPermsDialog(row)"
@@ -44,9 +49,20 @@
       :visible.sync="permsDialog"
       top="5vh"
     )
-      recursive-group-object-perms(
-        :userGroupId="groupIdGetter"
-        v-on:done="permsDialog=false"
+      object-perms(
+        v-on:save="changeGroupObjectPerms"
+        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="groupGetSelectedObjectPerms"
+        :objId="groupIdGetter"
+      )
+
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.group.sites"
+        v-on:save="groupSitesSave"
       )
 
 </template>
@@ -54,14 +70,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
-import { IDRFRequestListParameters } from '@/api/types'
-import { getGroups } from '@/api/groups/req'
+import { IDRFRequestListParameters, IObjectGroupPermsResultStruct } from '@/api/types'
+import { getGroups, setGroupObjectsPerms, getGroupObjectsPerms, getGroupSelectedObjectPerms } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
 import GroupForm from './group-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
-import RecursiveGroupObjectPerms from './recursive-group-object-perms.vue'
 
 class DataTableComp extends DataTable<IGroup> {}
 
@@ -69,16 +84,16 @@ class DataTableComp extends DataTable<IGroup> {}
   name: 'GroupList',
   components: {
     GroupForm,
-    RecursiveGroupObjectPerms,
     'datatable': DataTableComp
   }
 })
 export default class extends Vue {
   public readonly $refs!: {
-    table: DataTableComp
+    grouptable: DataTableComp
   }
   private dialogVisible = false
   private permsDialog = false
+  private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -93,15 +108,9 @@ export default class extends Vue {
       'min-width': 250
     },
     {
-      prop: 'code',
-      label: 'Тех.код',
-      sortable: true,
-      'min-width': 100
-    },
-    {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
   ]
@@ -131,31 +140,25 @@ export default class extends Vue {
     return GroupModule.pk
   }
 
-  private async loadGroups(params?: IDRFRequestListParameters) {
+  private loadGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,title,code'
+      params['fields'] = 'pk,title,sites'
     }
-    try {
-      const r = await getGroups(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getGroups(params)
   }
 
   private delGroup(group: IGroup) {
-    this.$confirm(`Ты действительно хочешь удалить группу "${group.title}"?`).then(async() => {
+    this.$confirm(`Действительно удалить группу "${group.title}"?`).then(async() => {
       await GroupModule.DelGroup(group.pk)
       this.$message.success(`Группа "${group.title}" удалена`)
-      this.$refs.table.GetTableData()
+      this.$refs.grouptable.GetTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Группа сохранена')
-    this.$refs.table.GetTableData()
+    this.$refs.grouptable.GetTableData()
   }
 
   // Breadcrumbs
@@ -175,6 +178,31 @@ export default class extends Vue {
   private openPermsDialog(grp: IGroup) {
     GroupModule.SET_ALL_MGROUP(grp)
     this.permsDialog = true
+  }
+
+  private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
+    await setGroupObjectsPerms(this.groupIdGetter, info)
+    this.permsDialog = false
+  }
+  private getGroupObjectPermsFunc4Grp() {
+    return getGroupObjectsPerms(this.groupIdGetter)
+  }
+  private groupGetSelectedObjectPerms(grpId: number, profileGroupId: number) {
+    return getGroupSelectedObjectPerms(grpId, profileGroupId)
+  }
+
+  private groupSitesSave(selectedSiteIds: number[]) {
+    GroupModule.PatchGroup({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.grouptable.GetTableData()
+      this.$message.success('Принадлежность группы сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(grp: IGroup) {
+    GroupModule.SET_ALL_MGROUP(grp)
+    this.sitesDlg = true
   }
 }
 </script>

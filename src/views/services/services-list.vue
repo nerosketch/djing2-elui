@@ -3,18 +3,21 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadServices"
-    :loading="loading"
-    :heightDiff='143'
+    :heightDiff='189'
+    :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='services'
     ref='table'
   )
     template(v-slot:isadm="{row}")
       el-checkbox(v-model="row.is_admin" disabled) {{ row.is_admin ? 'Да' : 'Нет'}}
 
-    template(v-slot:usercount="{row}") {{ row.usercount }}
-
     template(v-slot:oper="{row}")
       el-button-group
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="openSitesDlg(row)"
+          size="mini"
+        ) C
         el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(
@@ -23,8 +26,28 @@ div
           :disabled="!$perms.services.delete_service"
         )
 
+    template(v-slot:usercount="{row}")
+      el-button(
+        size='mini'
+        @click="openCustomerServiceListDialog(row.pk)"
+      ) {{ row.usercount }}
+
+    el-button-group
+      el-button(
+        size='mini'
+        icon='el-icon-plus'
+        type='success'
+        @click="openNew"
+        :disabled="!$perms.services.add_service"
+      ) Добавить
+      el-button(
+        icon='el-icon-s-operation'
+        size='mini'
+        @click="editFieldsVisible=true"
+      ) Поля
+
   el-dialog(
-    title="Изменение Услуги"
+    :title="(isNew ? 'Создание' : 'Изменение') + ' услуги'"
     :visible.sync="dialogVisible"
   )
     service-form(
@@ -41,22 +64,45 @@ div
       :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
       :objId="srvIdGetter"
     )
+  el-dialog(
+    title="Принадлежность сайтам"
+    :visible.sync="sitesDlg"
+  )
+    sites-attach(
+      :selectedSiteIds="$store.state.service.sites"
+      v-on:save="serviceSitesSave"
+    )
+  el-dialog(
+    title="Пользователи услуги"
+    :visible.sync="customerServiceVisible"
+    top="2vh"
+  )
+    customer-service-list(
+      :serviceId="currentCustomerServiceId"
+    )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { RouteRecord } from 'vue-router'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
 import { getServices, setServiceObjectsPerms, getServiceObjectsPerms, getServiceOSelectedObjectPerms } from '@/api/services/req'
 import { ServiceModule } from '@/store/modules/services/service'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import ServiceForm from './service-form.vue'
+import CustomerServiceList from './customer-service-list.vue'
 
 class DataTableComp extends DataTable<IService> {}
 
 @Component({
   name: 'ServiceList',
-  components: { 'datatable': DataTableComp, ServiceForm }
+  components: {
+    'datatable': DataTableComp,
+    ServiceForm,
+    CustomerServiceList
+  }
 })
 export default class extends Vue {
   public readonly $refs!: {
@@ -118,47 +164,51 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
   ]
   private services: IService[] = []
   private dialogVisible = false
-  private loading = false
   private permsDialog = false
+  private sitesDlg = false
+  private editFieldsVisible = false
+  private customerServiceVisible = false
+  private currentCustomerServiceId = 0
 
   private async openEdit(srv: IService) {
     await ServiceModule.SET_ALL_SERVICE(srv)
     this.dialogVisible = true
   }
 
+  private openNew() {
+    ServiceModule.RESET_ALL_SERVICE()
+    this.dialogVisible = true
+  }
+
   private async delSrv(srv: IService) {
-    if (confirm(`Ты действительно хочешь удалить услугу "${srv.title}"?`)) {
+    if (confirm(`Действительно удалить услугу "${srv.title}"?`)) {
       await ServiceModule.DelService(srv.pk)
+      this.$message.success('Услуга удалена')
       this.$refs.table.GetTableData()
     }
   }
 
-  private async loadServices(params?: IDRFRequestListParametersService) {
-    this.loading = true
+  private loadServices(params?: IDRFRequestListParametersService) {
     if (params) {
-      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type'
+      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
     }
-    try {
-      const r = await getServices(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.loading = false
-    }
-    return null
+    return getServices(params)
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
+  }
+
+  get isNew(): boolean {
+    return this.srvIdGetter === 0
   }
 
   get srvIdGetter() {
@@ -177,6 +227,39 @@ export default class extends Vue {
   }
   private serviceGetSelectedObjectPerms(srvId: number, profileGroupId: number) {
     return getServiceOSelectedObjectPerms(srvId, profileGroupId)
+  }
+
+  private openCustomerServiceListDialog(serviceId: number) {
+    this.currentCustomerServiceId = serviceId
+    this.customerServiceVisible = true
+  }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Тарифы'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
+
+  private serviceSitesSave(selectedSiteIds: number[]) {
+    ServiceModule.PatchService({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность услуги сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(srv: IService) {
+    ServiceModule.SET_ALL_SERVICE(srv)
+    this.sitesDlg = true
   }
 }
 </script>

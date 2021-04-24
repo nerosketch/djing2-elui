@@ -5,12 +5,12 @@
       type="border-card"
     )
       el-tab-pane(
-        label='Вланы'
-        name='vlans'
+        label='Гостевые сессии'
+        name='sessions'
         lazy
       )
         keep-alive
-          vlan-list
+          session-list
       el-tab-pane(
         label='Подсети'
         name='pools'
@@ -19,7 +19,14 @@
         keep-alive
           pool-list
       el-tab-pane(
-        label='Сессии'
+        label='Вланы'
+        name='vlans'
+        lazy
+      )
+        keep-alive
+          vlan-list
+      el-tab-pane(
+        label='Аренды ip'
         name='leases'
         lazy
       )
@@ -32,17 +39,19 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import VlanList from './components/vlanlist.vue'
 import LeaseList from './components/leaselist.vue'
 import PoolList from './components/poollist.vue'
+import SessionList from './components/session-list.vue'
 
 @Component({
   name: 'NetworksIndex',
   components: {
     VlanList,
     LeaseList,
-    PoolList
+    PoolList,
+    SessionList
   }
 })
 export default class extends Vue {
-  private activeName = 'vlans'
+  private activeName = 'sessions'
 
   @Watch('activeName')
   private onActiveNameChange(value: string) {

@@ -73,6 +73,7 @@ export default class extends Vue {
   // End Breadcrumbs
 
   created() {
+    document.title = 'Отчёты всякие'
     this.buildBreadcrumb()
   }
 }

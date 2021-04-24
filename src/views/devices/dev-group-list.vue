@@ -3,13 +3,12 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevGroups"
-      :heightDiff='80'
+      :heightDiff='96'
       widthStorageNamePrefix='devGroups'
       ref='table'
     )
       template(v-slot:title="{row}")
-        el-link
-          router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
+        router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
 
 </template>
 
@@ -34,7 +33,6 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
-  private groupDevs: IDevGroup[] = []
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'pk',
@@ -53,18 +51,11 @@ export default class extends Vue {
     }
   ]
 
-  private async loadDevGroups(params?: IDRFRequestListParameters) {
+  private loadDevGroups(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'pk,title,device_count'
     }
-    try {
-      const r = await getDevGroups(params)
-      this.groupDevs = r.data.results
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getDevGroups(params)
   }
 
   // Breadcrumbs
@@ -74,7 +65,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Группы'
+          title: 'Оборудование'
         }
       }
     ] as RouteRecord[])

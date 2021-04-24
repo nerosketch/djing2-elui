@@ -4,8 +4,8 @@ div
   template(v-else)
     div(v-if="customers.length > 0")
       div(v-for="(cst, i) in customers" :key="i")
-        el-link(type='primary')
-          router-link(:to="{name: 'customerDetails', params:{uid: cst.pk }}") {{ cst.full_name }}
+        router-link(:to="{name: 'customerDetails', params:{uid: cst.pk }}")
+          el-link(type='primary') {{ cst.full_name }}
     h4(v-else) Абоненты на порту не найдены
 </template>
 
@@ -25,7 +25,7 @@ export default class extends Vue {
   private loading = false
 
   @Watch('portId')
-  private onPortChange(portId: number) {
+  private onPortChange() {
     this.loadCustomers()
   }
 

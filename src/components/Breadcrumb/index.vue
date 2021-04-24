@@ -1,28 +1,25 @@
-<template>
-  <el-breadcrumb
-    class="app-breadcrumb"
-    separator="/"
-  >
-    <el-breadcrumb-item
+<template lang="pug">
+  el-breadcrumb.app-breadcrumb(separator="/")
+    el-breadcrumb-item
+      i.el-icon-s-home
+    el-breadcrumb-item(
       v-for="(item, index) in breadcrumbs"
       :key="index"
-    >
-      <span
+    )
+      span.no-redirect(
         v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
-        class="no-redirect"
-      >{{ item.meta.title }}</span>
-      <a
+      ) {{ item.meta.title }}
+      a(
         v-else
         @click.prevent="handleLink(item)"
-      >{{ item.meta.title }}</a>
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+      ) {{ item.meta.title }}
+
 </template>
 
 <script lang="ts">
-import pathToRegexp from 'path-to-regexp'
+import { compile } from 'path-to-regexp'
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { RouteRecord, Route } from 'vue-router'
+import { RouteRecord } from 'vue-router'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 @Component({
@@ -42,6 +39,7 @@ export default class extends Vue {
       }
     ] as RouteRecord[]
   }
+
   @Watch('crumbsGetter')
   private onChangeCrumbs(crumbs: RouteRecord[]) {
     this.breadcrumbs = crumbs
@@ -53,7 +51,7 @@ export default class extends Vue {
       return path
     }
     const { params } = this.$route
-    const toPath = pathToRegexp.compile(path)
+    const toPath = compile(path)
     return toPath(params)
   }
 
@@ -78,7 +76,7 @@ export default class extends Vue {
   display: inline-block;
   font-size: 14px;
   line-height: 50px;
-  margin-left: 8px;
+  margin-left: 12px;
 
   .no-redirect {
     color: #97a8be;

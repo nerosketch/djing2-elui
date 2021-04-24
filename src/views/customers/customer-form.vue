@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='customerfrm'
-    :label-width="isMobileView ? undefined : '115px'"
+    :label-width="$store.getters.isMobileView ? undefined : '115px'"
     size="mini"
     status-icon
     :rules='frmRules'
@@ -22,14 +22,7 @@
       label="Телефон"
       prop='telephone'
     )
-      el-input(v-model="frmMod.telephone")
-        template(v-slot:append)
-          el-button
-            a(:href="`tel:${frmMod.telephone}`") call
-          el-button(
-            @click="openTelsDlg=true"
-            :disabled="!$perms.customers.view_additionaltelephone"
-          ) tels
+      tels-input(v-model="frmMod.telephone")
     el-form-item(
       label="Улица"
       prop='street'
@@ -55,7 +48,7 @@
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
-        format="d MMM yyyy"
+        format="d.MM.yyyy"
       )
     el-form-item(
       label="Опции"
@@ -87,7 +80,7 @@
     el-form-item
       el-button-group
         el-button(
-          type="primary" icon='el-icon-download'
+          type="primary" icon='el-icon-upload'
           @click="onSubmit"
           :loading="isLoading"
           :disabled="isFormUntouched"
@@ -106,6 +99,11 @@
           icon='el-icon-lock'
         ) Пароль
         el-button(
+          v-if="$perms.is_superuser"
+          @click="sitesDlg = true"
+          icon='el-icon-lock'
+        ) Сайты
+        el-button(
           type='danger'
           title="Полное удаление учётной записи абонента из билинга"
           icon='el-icon-close'
@@ -114,28 +112,37 @@
     el-dialog(
       title="Паспортные данные"
       :visible.sync="openPasportDlg"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       passport(
         v-on:done="openPasportDlg=false"
       )
     el-dialog(
-      title="Дополнительные телефоны"
-      :visible.sync="openTelsDlg"
-    )
-      additional-tels
-    el-dialog(
       title='Создание задачи'
       :visible.sync='taskFormDialog'
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       task-form
     el-dialog(
       title='Пароль абонента'
       :visible.sync='openPasswordDlg'
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       customer-password(
-        :customerId="customerIdGetter"
+        :customerId="$store.state.customer.pk"
         :initialPassw="$store.state.customer.raw_password"
         v-on:done="openPasswordDlg=false"
+      )
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.customer.sites"
+        v-on:save="customerSitesSave"
       )
 </template>
 
@@ -152,18 +159,18 @@ import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
 import CustomerPassword from './customer-password.vue'
-import AdditionalTels from './customers-details/additional-tels.vue'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
+import TelsInput from './tels/tels-input.vue'
 
 @Component({
   name: 'customer-form',
   components: {
-    AdditionalTels,
     TaskForm,
     GwsSelectfield,
     Passport,
-    CustomerPassword
+    CustomerPassword,
+    TelsInput
   }
 })
 export default class extends mixins(FormMixin) {
@@ -174,9 +181,9 @@ export default class extends mixins(FormMixin) {
   private groups: ICustomerGroup[] = []
   private openPasportDlg = false
   private openPasswordDlg = false
-  private openTelsDlg = false
   private taskFormDialog = false
   private taskFormDialogLoading = false
+  private sitesDlg = false
 
   private frmRules = {
     username: [
@@ -188,9 +195,6 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
-  private get isMobileView() {
-    return AppModule.IsMobileDevice
-  }
   private frmMod: ICustomerFrm = {} as ICustomerFrm
 
   created() {
@@ -199,10 +203,7 @@ export default class extends mixins(FormMixin) {
     this.onChangedId()
   }
 
-  get customerIdGetter() {
-    return CustomerModule.pk
-  }
-  @Watch('customerIdGetter')
+  @Watch('$store.state.customer', { deep: true })
   private onChangedId() {
     this.frmMod = {
       username: CustomerModule.username,
@@ -220,10 +221,7 @@ export default class extends mixins(FormMixin) {
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm
   }
 
-  get onChGrp() {
-    return CustomerModule.group
-  }
-  @Watch('onChGrp')
+  @Watch('$store.state.customer.group')
   private onChangedGroup() {
     this.loadStreets()
   }
@@ -234,7 +232,7 @@ export default class extends mixins(FormMixin) {
       const { data } = await getStreets({
         page: 1,
         page_size: 0,
-        group: this.onChGrp
+        group: this.$store.state.customer.group
       }) as any
       this.customerStreets = data
     } catch (err) {
@@ -290,7 +288,7 @@ export default class extends mixins(FormMixin) {
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
       try {
-        const currGroup = this.onChGrp
+        const currGroup = this.$store.state.customer.group
         await CustomerModule.DelCustomer()
         this.$message.success('Учётка удалена')
         this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
@@ -304,7 +302,7 @@ export default class extends mixins(FormMixin) {
     this.taskFormDialogLoading = true
     try {
       const { data } = await TaskModule.GetNewTaskInitial({
-        groupId: this.onChGrp,
+        groupId: this.$store.state.customer.group,
         customerId: CustomerModule.pk
       })
       if (data.status > 0) {
@@ -332,6 +330,15 @@ export default class extends mixins(FormMixin) {
     } finally {
       this.taskFormDialogLoading = false
     }
+  }
+
+  private customerSitesSave(selectedSiteIds: number[]) {
+    CustomerModule.PatchCustomer({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$message.success('Принадлежность абонента сайтам сохранена')
+    })
+    this.sitesDlg = false
   }
 }
 </script>

@@ -2,8 +2,12 @@
   el-card
     template(v-slot:header)
       .clearfix
-        span {{ device.comment || 'Коммутатор' }} 
-        small {{ ` ${device.ip_address || device.mac_addr}` }}
+        span {{ device.comment || 'Коммутатор' }}
+        small {{ ` ${device.ip_address || device.mac_addr} ` }}
+        template(v-if="device.parent_dev_name")
+          | Родительское устр.:
+          router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+            el-link(type="primary") {{ device.parent_dev_name }}
         el-button(
           style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
           @click="openDevForm"
@@ -37,8 +41,8 @@
       el-table-column(
         label="Описание"
         min-width='267'
+        prop='descr'
       )
-        template(v-slot:default="{row}") {{ row.descr }}
       el-table-column(
         label="Абонов"
         width="70"
@@ -112,7 +116,7 @@
       )
     el-dialog(
       :visible.sync="macsDialog"
-      title="ARP таблица для порта"
+      title="Таблица MAC адресов порта"
     )
       port-mac-list(
         :portId="currPortId"
@@ -120,6 +124,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable camelcase */
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IPort, IScannedPort } from '@/api/devices/types'
 import { PortModule } from '@/store/modules/devices/port'
@@ -191,12 +196,12 @@ export default class extends Vue {
       try {
         const { data } = await getPorts(this.device.pk)
         this.allPorts = data.map(p => ({
-            pk: p.pk,
-            num: p.num,
-            descr: p.descr,
-            user_count: p.user_count,
-            isdb: true
-          }))
+          pk: p.pk,
+          num: p.num,
+          descr: p.descr,
+          user_count: p.user_count,
+          isdb: true
+        }))
       } catch (err) {
         this.$message.error(err)
       }

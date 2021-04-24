@@ -24,6 +24,7 @@
       |  Загрузка доступных прав...
     el-divider
     el-button(
+      icon='el-icon-upload'
       type="primary" @click="onSubmit"
       :disabled="!$perms.is_superuser"
       size='small'
@@ -41,7 +42,7 @@ import {
   IObjectGroupPermsInitial
 } from '@/api/types'
 import { IUserGroup } from '@/api/profiles/types'
-import { getUserGroups, getAllPermissions } from '@/api/profiles/req'
+import { getUserGroups } from '@/api/profiles/req'
 
 interface IExPermission extends IPermission {
   checked?: boolean

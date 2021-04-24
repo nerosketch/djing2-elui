@@ -13,7 +13,7 @@
       el-button-group
         el-button(
           type="primary" @click="onSubmit"
-          icon="el-icon-download" size='small'
+          icon='el-icon-upload' size='small'
           :disabled="isEmpty || !$perms.is_superuser"
         ) Сохранить
         el-button(
@@ -24,9 +24,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { UserGroupModule } from '@/store/modules/profiles/user-group'
-import { Form } from 'element-ui'
 
 @Component({
   name: 'UserGroupForm'
@@ -45,10 +44,8 @@ export default class extends Vue {
   get isNew() {
     return UserGroupModule.id === 0
   }
-  get uGroupNameGetter() {
-    return UserGroupModule.name
-  }
-  @Watch('uGroupNameGetter')
+
+  @Watch('$store.state.usergroup.name')
   private onCHUGroupName(name: string) {
     this.frmMod.name = name
   }

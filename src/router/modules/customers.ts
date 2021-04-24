@@ -11,7 +11,7 @@ const customerRoutes: RouteConfig = {
       name: 'customersGroupList',
       meta: {
         title: 'Абоненты',
-        icon: 'tree'
+        icon: 'el-icon-user-solid'
       }
     },
     {

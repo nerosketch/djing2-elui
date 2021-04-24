@@ -1,5 +1,7 @@
 <template lang="pug">
-  el-form(size="mini")
+  el-form(
+    size='mini'
+  )
     el-form-item(
       label="Пароль"
       prop='password'
@@ -7,7 +9,6 @@
       el-input(
         v-model="frmMod.password"
         maxlength="128"
-        ref="passwinp"
         :type="passwordType"
         placeholder="пароль"
       )
@@ -16,21 +17,26 @@
             @click="togglePwd"
             :icon="passwordType === 'password' ? 'el-icon-view' : 'el-icon-minus'"
           )
+          el-button(
+            @click="genPasw"
+            :loading="passwLoading"
+            icon='el-icon-refresh'
+          )
 
     el-form-item
       el-button(
-        type="primary"
+        type='primary'
         @click="onSubmit"
-        icon="el-icon-download"
+        icon='el-icon-upload'
         size='mini'
-        :disabled="isEmpty"
+        :disabled='isEmpty'
         :loading="loading"
       ) Сохранить
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { changeCustomer } from '@/api/customers/req'
+import { changeCustomer, generateCustomerPassword } from '@/api/customers/req'
 
 @Component({
   name: 'CustomerPassword'
@@ -40,6 +46,7 @@ export default class extends Vue {
   @Prop({ required: true }) private customerId!: number
   private passwordType = 'password'
   private loading = false
+  private passwLoading = false
 
   private frmMod = {
     password: this.initialPassw
@@ -58,7 +65,7 @@ export default class extends Vue {
     } catch (err) {
       this.$message.error(err)
     } finally {
-      this.loading = true
+      this.loading = false
     }
   }
 
@@ -67,6 +74,19 @@ export default class extends Vue {
       this.passwordType = 'text'
     } else {
       this.passwordType = 'password'
+    }
+  }
+
+  private async genPasw() {
+    this.passwLoading = true
+    try {
+      const { data } = await generateCustomerPassword()
+      this.frmMod.password = data
+    } catch (err) {
+      this.$message.error(err)
+      this.frmMod.password = ''
+    } finally {
+      this.passwLoading = false
     }
   }
 }

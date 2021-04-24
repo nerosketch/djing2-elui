@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Module, getModule, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import store from '@/store'
 import { getCurrentAuthPermissions } from '@/api/profiles/req'
@@ -58,7 +59,12 @@ export class CurrentPermissions extends VuexModule {
     add_customerattachment: false,
     view_customerattachment: false,
     change_customerattachment: false,
-    delete_customerattachment: false
+    delete_customerattachment: false,
+
+    add_periodicpayforid: false,
+    view_periodicpayforid: false,
+    change_periodicpayforid: false,
+    delete_periodicpayforid: false
   }
 
   public networks = {

@@ -10,22 +10,31 @@
     el-form-item(
       label="Старый пароль"
       prop='old_passw'
+      :error="frmErr.old_passw"
       v-if="!this.$perms.is_superuser"
     )
       el-input(v-model="frmMod.old_passw" maxlength="128" type="password")
     el-form-item(
       label="Новый пароль"
       prop='new_passw'
+      :error="frmErr.new_passw"
     )
       el-input(v-model="frmMod.new_passw" maxlength="128" type="password")
     el-form-item(
       label="Повтори пароль"
       prop='retype_passw'
+      :error="frmErr.retype_passw"
     )
       el-input(v-model="frmMod.retype_passw" maxlength="128" type="password")
     el-form-item
       el-button-group
-        el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isEmpty") Сохранить
+        el-button(
+          type="primary"
+          @click="onSubmit"
+          icon="el-icon-download"
+          size='small'
+          :disabled="isEmpty"
+        ) Сохранить
         el-button(@click="$emit('cancel')" icon="el-icon-close" size='small') Отмена
 </template>
 
@@ -75,6 +84,11 @@ export default class extends Vue {
     new_passw: '',
     retype_passw: ''
   }
+  private frmErr = {
+    old_passw: '',
+    new_passw: '',
+    retype_passw: ''
+  }
 
   private get isEmpty() {
     if (!this.frmMod.new_passw || !this.frmMod.retype_passw) {
@@ -92,10 +106,15 @@ export default class extends Vue {
             old_passw: this.frmMod.old_passw,
             new_passw: this.frmMod.retype_passw
           })
-          this.loading = false
           this.$emit('done', changedUser)
         } catch (err) {
-          this.$message.error(err)
+          if (typeof err === 'object' && err.hasOwnProperty('response')) {
+            const d = err.response.data
+            this.frmErr.old_passw = d['old_passw']
+            this.frmErr.new_passw = d['new_passw']
+            this.frmErr.retype_passw = d['retype_passw']
+          }
+        } finally {
           this.loading = false
         }
       } else {

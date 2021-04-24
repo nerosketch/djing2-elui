@@ -5,46 +5,11 @@
         template(v-slot:header)
           .clearfix
             span Услуги для заказа
-        el-table(
-          v-loading='servicesLoading'
-          :data='services'
-          border fit
-          size='small'
+        services-list(
+          v-on:buydone="loadCurrentService"
+          :isServiceAvailable="isServiceAvailable"
         )
-          el-table-column(
-            align="center"
-            label="Заказ."
-            width="60"
-          )
-            template(v-slot:default="{row}")
-              el-button(
-                type='primary' size='small'
-                @click="buyOpen(row)" :disabled="isServiceAvailable || !$perms.customers.can_buy_service"
-                icon='el-icon-shopping-cart-2' circle
-              )
-          el-table-column(
-            align="center"
-            label="ID"
-            width="60"
-          )
-            template(v-slot:default="{row}") {{ row.pk }}
-          el-table-column(
-            label="Услуга"
-          )
-            template(v-slot:default="{row}") {{ row.title }}
-          el-table-column(
-            label="Сумма"
-          )
-            template(v-slot:default="{row}") {{ row.cost }}
-          el-table-column(
-            label="Входящая скорость"
-          )
-            template(v-slot:default="{row}") {{ row.speed_in }}
-          el-table-column(
-            label="Исходящая скорость"
-          )
-            template(v-slot:default="{row}") {{ row.speed_out }}
-        el-button(@click="srvAccDialog=true" icon="el-icon-s-tools" type="primary" size='mini') Привязать услуги к этой группе
+
     el-col(:sm='24' :md='12')
       el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
         template(v-slot:header)
@@ -86,70 +51,33 @@
     el-col(:sm='24' :md='12')
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix Периодический платёж
-        el-button(type='primary' size='mini' disabled) Добавить периодический платёж
+          .clearfix Назначенные периодические платежи
 
-    el-dialog(
-      title="Купить услугу"
-      :visible.sync="buyDialog"
-    )
-      buy-service(
-        v-on:done="buyDone"
-        :services="services"
-        :selectedServiceId="selectedServiceId"
-      )
-    el-dialog(
-      title="Принадлежность услуг к группам"
-      :visible.sync="srvAccDialog"
-    )
-      service-accessory(v-on:done="srvAccDone")
+        periodic-services-list
+
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { IService } from '@/api/services/types'
-import { getServices } from '@/api/services/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerService } from '@/api/customers/types'
-import BuyService from './buyService.vue'
-import ServiceAccessory from './service-accessory.vue'
 import LastConnectedService from './last-connected-service.vue'
+import PeriodicServicesList from './per-pay/srv-list.vue'
+import ServicesList from './srv/srv-list.vue'
 
 @Component({
   name: 'Services',
   components: {
-    BuyService,
-    ServiceAccessory,
-    LastConnectedService
+    LastConnectedService,
+    PeriodicServicesList,
+    ServicesList
   }
 })
 export default class extends Vue {
-  private services: IService[] = []
-  private servicesLoading = false
   private serviceBlockLoad = false
   private currentService: ICustomerService | null = null
-  private buyDialog = false
-  private selectedServiceId = 0
-  private srvAccDialog = false
-
-  private async loadServices() {
-    this.servicesLoading = true
-    try {
-      const { data } = await getServices({
-        page: 1,
-        page_size: 0,
-        groups: CustomerModule.group
-      }) as any
-      this.services = data
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.servicesLoading = false
-    }
-  }
 
   async created() {
-    this.loadServices()
     this.loadCurrentService()
   }
 
@@ -173,30 +101,6 @@ export default class extends Vue {
     }
   }
 
-  buyDone() {
-    this.buyDialog = false
-    this.$message.success('Услуга успешно куплена')
-    this.loadCurrentService()
-    CustomerModule.UpdateCustomer()
-  }
-  buyOpen(s: IService) {
-    if (s.cost > CustomerModule.balance) {
-      this.$confirm('У абонента не достаточно средств для включения услуги, включить её в минус?', {
-        confirmButtonText: 'Да',
-        cancelButtonText: 'Нет, не надо',
-        type: 'warning'
-      }).then(() => {
-        this.selectedServiceId = s.pk
-        this.buyDialog = true
-      }).catch(() => {
-        this.$message.info('Отмена покупки услуги')
-      })
-    } else {
-      this.selectedServiceId = s.pk
-      this.buyDialog = true
-    }
-  }
-
   onStopService() {
     this.$confirm('Завершить услугу абонента досрочно?', {
       confirmButtonText: 'Да',
@@ -208,11 +112,6 @@ export default class extends Vue {
       await this.loadCurrentService()
       this.$message.success('Услуга остановлена досрочно')
     })
-  }
-
-  srvAccDone() {
-    this.srvAccDialog = false
-    this.loadServices()
   }
 }
 </script>

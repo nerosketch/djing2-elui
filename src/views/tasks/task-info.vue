@@ -26,8 +26,8 @@
     span {{ taskState }}
     br
     b Абонент: 
-    el-link(type="primary")
-      router-link(:to="taskCustomerLink") {{ taskCustomerName }}
+    router-link(:to="taskCustomerLink")
+      el-link(type="primary") {{ taskCustomerName }}
     el-divider
     task-docs(:taskId="taskId")
 </template>

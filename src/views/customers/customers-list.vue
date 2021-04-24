@@ -5,35 +5,60 @@
         datatable(
           :columns="tableColumns"
           :getData="getAllCustomers"
-          :loading="customersLoading"
           :tableRowClassName="rowColor"
-          :heightDiff="100"
+          :heightDiff="118"
+          :editFieldsVisible.sync="editFieldsVisible"
           widthStorageNamePrefix='customers'
           ref='tbl'
+          :selectable="$perms.is_superuser"
+          @selection-change="handleSelectionChange"
         )
           template(v-slot:pk="{row}")
-            el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
+            el-button(
+              v-if="$perms.is_superuser"
+              size='mini' icon='el-icon-lock'
+              @click="openPermsDialog(row)"
+            )
             span(v-else) {{ row.pk }}
 
           template(v-slot:username="{row}")
-            el-link(type="primary")
-              router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}") {{ row.username }}
+            router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}")
+              el-link(type="primary") {{ row.username }}
 
           template(v-slot:telephone="{row}")
             el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
 
-          template(v-slot:current_service__service__title="{row}") {{ row.service_title }}
+          template(v-slot:marker_icons="{row}")
+            template(v-if="row.marker_icons.length > 0")
+              span.m-icon(
+                v-for="(ic, i) in row.marker_icons"
+                :class="`m-${ic}`"
+                :key="i"
+              )
+            span(v-else)
 
           template(v-slot:ping="{row}")
             ping-profile(:customer="row")
 
-          el-button(
-            size='mini'
-            icon='el-icon-plus'
-            type='success'
-            @click="addCustomerDialog=true"
-            :disabled="!$perms.customers.add_customer"
-          ) Добавить абонента
+          el-button-group
+            el-button(
+              icon='el-icon-plus'
+              type='success'
+              size='mini'
+              @click="addCustomerDialog=true"
+              :disabled="!$perms.customers.add_customer"
+            ) Добавить абонента
+            el-button(
+              icon='el-icon-set-up'
+              size='mini'
+              @click="sitesDlg=true"
+              v-if="isSomeoneSelected"
+            ) Сайты
+            el-button(
+              icon='el-icon-s-operation'
+              size='mini'
+              @click="editFieldsVisible=true"
+            ) Поля
 
       el-col(:lg='4' :md='6')
         list(
@@ -79,6 +104,8 @@
     el-dialog(
       :visible.sync="editStreetsDialog"
       title="Редактировать улицы"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       edit-streets(
         :groupId="groupId"
@@ -91,11 +118,30 @@
       top="5vh"
     )
       object-perms(
-        v-on:save="changeGroupObjectPerms"
-        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        v-on:save="changeCustomerObjectPerms"
+        :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
         :getSelectedObjectPerms="customerGetSelectedObjectPerms"
         :objId="customerIdGetter"
       )
+    el-dialog(
+      v-if="$perms.is_superuser"
+      title="Принадлежность выбранных абонентов сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        v-on:save="selectedCustomerSitesSave"
+      )
+      el-dialog(
+        width="40%"
+        :visible.sync="sitesDlgProgress"
+        append-to-body
+        :show-close="false"
+        :close-on-press-escape="false"
+        :close-on-click-modal="false"
+      )
+        el-progress.progress_disable_animations(
+          :percentage="sitesProgress"
+        )
 </template>
 
 <script lang="ts">
@@ -156,8 +202,11 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
-
-
+  private selectedCustomers: number[] = []
+  private sitesDlg = false
+  private sitesDlgProgress = false
+  private sitesProgress = 0
+  private editFieldsVisible = false
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -211,6 +260,14 @@ export default class extends Vue {
       'min-width': 170
     },
     {
+      prop: 'marker_icons',
+      label: 'Маркер'
+    },
+    {
+      prop: 'traf_octs',
+      label: 'Траф'
+    },
+    {
       prop: 'ping',
       label: 'Ping',
       'min-width': 150
@@ -219,7 +276,6 @@ export default class extends Vue {
 
   private streets: ICustomerStreet[] = []
 
-  private customersLoading = true
   private streetsLoading = false
 
   private async loadStreets() {
@@ -239,26 +295,19 @@ export default class extends Vue {
   }
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
-    this.customersLoading = true
-    let street = this.routerQueryStreetGetter
+    const street = this.routerQueryStreetGetter
     let r
-    try {
-      if (params) {
-        let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
-          group: this.groupId,
-          fields: 'pk,username,fio,street_name,house,telephone,service_title,balance,gateway_title,is_active,lease_count'
-        })
-        if (street) {
-          newParams.street = Number(street)
-        }
-        r = await getCustomers(newParams)
-      } else {
-        r = await getCustomers()
+    if (params) {
+      let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
+        group: this.groupId,
+        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs,marker_icons'
+      })
+      if (street) {
+        newParams.street = Number(street)
       }
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.customersLoading = false
+      r = await getCustomers(newParams)
+    } else {
+      r = await getCustomers()
     }
     return r
   }
@@ -269,7 +318,7 @@ export default class extends Vue {
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.pk.toString() } })
   }
 
-  private onStreetClick(item: ICustomerStreet, num: number) {
+  private onStreetClick(item: ICustomerStreet) {
     let qr = Object.assign({}, this.$route.query) as Record<string, any>
     const qstreet = qr.street
     delete qr.street
@@ -277,7 +326,8 @@ export default class extends Vue {
     if (item.pk != qstreet) {
       qr.street = item.pk
     }
-    this.$router.push({ path: this.$route.path, query: qr})
+    this.$router.push({ path: this.$route.path, query: qr })
+    document.title = `Абоненты ул. ${item.name}`
     scrollTo(0, 600)
   }
 
@@ -306,15 +356,17 @@ export default class extends Vue {
   }
 
   created() {
+    document.title = 'Список абонентов'
     this.loadStreets()
-    this.onGrpCh(this.groupId)
+    this.setCrumbs()
   }
 
   // Breadcrumbs
-  // @Watch('groupId')
-  private async onGrpCh(grpId: number) {
-    await GroupModule.GetGroup(grpId)
-    await BreadcrumbsModule.SetCrumbs([
+  private async setCrumbs() {
+    if (this.$store.state.group.pk !== this.groupId) {
+      await GroupModule.GetGroup(this.groupId)
+    }
+    BreadcrumbsModule.SetCrumbs([
       {
         path: '/customers/',
         meta: {
@@ -326,29 +378,26 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: this.grpName
+          title: this.$store.state.group.title
         }
       }
     ] as RouteRecord[])
   }
-  get grpName() {
-    return GroupModule.title
-  }
   // End Breadcrumbs
 
-  private rowColor(r: ITableRowClassName) {
-    return r.row.is_active ? '' : 'error-row'
+  private rowColor({ row }: ITableRowClassName) {
+    return row.is_active ? '' : 'error-row'
   }
 
   get customerIdGetter() {
     return CustomerModule.pk
   }
 
-  private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
+  private async changeCustomerObjectPerms(info: IObjectGroupPermsResultStruct) {
     await setCustomerObjectsPerms(this.customerIdGetter, info)
     this.permsDialog = false
   }
-  private getGroupObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+  private getCustomerObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
     return getCustomerObjectsPerms(this.customerIdGetter)
   }
   private openPermsDialog(c: ICustomer) {
@@ -358,6 +407,30 @@ export default class extends Vue {
 
   private customerGetSelectedObjectPerms(customerId: number, profileGroupId: number) {
     return getCustomerSelectedObjectPerms(customerId, profileGroupId)
+  }
+
+  private handleSelectionChange(customers: ICustomer[]) {
+    this.selectedCustomers = customers.map(c => c.pk)
+  }
+  get isSomeoneSelected() {
+    return this.selectedCustomers.length > 0
+  }
+
+  private async selectedCustomerSitesSave(selectedSiteIds: number[]) {
+    this.sitesProgress = 0
+    this.sitesDlgProgress = true
+
+    const ln = this.selectedCustomers.length
+    for (let i = 0; i < ln; i++) {
+      const customerId = this.selectedCustomers[i]
+      await CustomerModule.SET_ID_CUSTOMER(customerId)
+      await CustomerModule.PatchCustomer({
+        sites: selectedSiteIds
+      })
+      this.sitesProgress = Math.ceil(i * 100 / ln)
+    }
+    this.$message.success('Готово')
+    this.sitesDlgProgress = false
   }
 }
 </script>

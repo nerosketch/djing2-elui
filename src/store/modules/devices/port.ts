@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import {
@@ -6,7 +7,7 @@ import {
   togglePort, scanMacAddressPort,
   scanPortVlans
 } from '@/api/devices/req'
-import { IPort, IDevPortState } from '@/api/devices/types'
+import { IPort, IDevTogglePortRequest } from '@/api/devices/types'
 
 @Module({ dynamic: true, store, name: 'port' })
 class Port extends VuexModule implements IPort {
@@ -66,8 +67,8 @@ class Port extends VuexModule implements IPort {
   }
 
   @Action
-  public async TogglePort(pstate: IDevPortState) {
-    await togglePort(this.pk, pstate)
+  public async TogglePort(preq: IDevTogglePortRequest) {
+    await togglePort(this.pk, preq)
   }
 
   @Action

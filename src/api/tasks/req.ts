@@ -1,9 +1,11 @@
 import request from '@/utils/request'
 import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
-import { ITaskList, ITaskListAxiosResponsePromise, ITask,
-  ITaskAxoisResponsePromise, IChangeLogList, IChangeLogListAxiosResponsePromise,
-  IChangeLog, IChangeLogAxoisResponsePromise,
-  IExtraCommentAxoisResponsePromise, IExtraCommentListAxoisResponsePromise,
+import {
+  ITaskList, ITaskListAxiosResponsePromise, ITask,
+  ITaskAxoisResponsePromise,
+  IExtraCommentAxoisResponsePromise,
+  IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise,
+  IExtraCommentCombinedWithTaskStateChangeLog,
   IExtraComment,
   ITaskDocumentAttachmentList, ITaskDocumentAttachmentAxoisResponsePromise,
   ITaskDocumentAttachment,
@@ -48,27 +50,11 @@ export const remindTask = (id: number) =>
 export const getNewTaskInitial = (groupId: number, customerId: number): INewTaskInitialSimpleResponseResultAxoisResponsePromise =>
   request.get<INewTaskInitialSimpleResponseResult>(`${baseTaskUrl}new_task_initial/${groupId}/${customerId}/`)
 
-// IChangeLog
-const baseTaskLogUrl = '/tasks/log/'
-export const getChangeLogs = (params: IDRFRequestListParameters): IChangeLogListAxiosResponsePromise =>
-  request.get<IChangeLogList>(baseTaskLogUrl, { params })
-
-export const getChangeLog = (id: number): IChangeLogAxoisResponsePromise =>
-  request.get<IChangeLog>(`${baseTaskLogUrl}${id}/`)
-
-export const addChangeLog = (dat: IChangeLog): IChangeLogAxoisResponsePromise =>
-  request.post<IChangeLog>(baseTaskLogUrl, dat)
-
-export const changeChangeLog = (id: number, newData: IChangeLog): IChangeLogAxoisResponsePromise =>
-  request.patch<IChangeLog>(`${baseTaskLogUrl}${id}/`, newData)
-
-export const delChangeLog = (id: number) =>
-  request.delete(`${baseTaskLogUrl}${id}/`)
-
 // IExtraComment
 const baseCommentUrl = '/tasks/comments/'
-export const getComments = (task: number): IExtraCommentListAxoisResponsePromise =>
-  request.get<IExtraComment[]>(baseCommentUrl, { params: { task } })
+
+export const getCommentsWithLogs = (task: number): IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise =>
+  request.get<IExtraCommentCombinedWithTaskStateChangeLog[]>(`${baseCommentUrl}combine_with_logs/`, { params: { task } })
 
 export const getComment = (id: number): IExtraCommentAxoisResponsePromise =>
   request.get<IExtraComment>(`${baseCommentUrl}${id}/`)
@@ -93,7 +79,7 @@ export const getAttachment = (id: number): ITaskDocumentAttachmentAxoisResponseP
   request.get<ITaskDocumentAttachment>(`${TaskAttachmUrl}${id}/`)
 
 export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponsePromise => {
-  let formData = new FormData()
+  const formData = new FormData()
   formData.append('doc_file', newAtt.doc_file)
   formData.append('title', newAtt.title)
   formData.append('task', newAtt.task)

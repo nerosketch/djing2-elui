@@ -55,7 +55,7 @@ export const getPeriodicPays = (params?: IDRFRequestListParameters): IPeriodicPa
 export const getPeriodicPay = (id: number): IPeriodicPayAxoisResponsePromise =>
   request.get<IPeriodicPay>(`${basePPUrl}${id}/`)
 
-export const addPeriodicPay = (newPP: IPeriodicPay): IPeriodicPayAxoisResponsePromise =>
+export const addPeriodicPay = (newPP: object): IPeriodicPayAxoisResponsePromise =>
   request.post<IPeriodicPay>(basePPUrl, newPP)
 
 export const changePeriodicPay = (id: number, newPP: object): IPeriodicPayAxoisResponsePromise =>
@@ -73,7 +73,7 @@ export const getOneShotPays = (params?: IDRFRequestListParameters): IOneShotPayP
 export const getOneShotPay = (id: number): IOneShotPayPayAxoisResponsePromise =>
   request.get<IOneShotPay>(`${baseOSPUrl}${id}/`)
 
-export const addOneShotPay = (newSrv: IOneShotPay): IOneShotPayPayAxoisResponsePromise =>
+export const addOneShotPay = (newSrv: object): IOneShotPayPayAxoisResponsePromise =>
   request.post<IOneShotPay>(baseOSPUrl, newSrv)
 
 export const changeOneShotPay = (id: number, newData: object): IOneShotPayPayAxoisResponsePromise =>

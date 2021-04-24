@@ -25,7 +25,7 @@
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
-        format="d MMM yyyy"
+        format="d.MM.yyyy"
       )
     el-form-item(
       label="Включён"
@@ -57,16 +57,26 @@
       el-input(v-model="frmMod.password" type="password" autocomplete="new-password")
     el-form-item
       el-button-group
-        el-button(:type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-download" size='small') {{ isNew ? 'Добавить' : 'Сохранить' }}
-        el-button(@click="openPasswordForm" icon="el-icon-lock" size='small') Пароль
-        el-button(@click="openGroupsForm" icon="el-icon-lock" size='small' v-if="$perms.is_superuser") Группы пользователей
+        el-button(
+          :type="isNew ? 'success' : 'primary'"
+          @click="onSubmit"
+          icon='el-icon-upload'
+        ) {{ isNew ? 'Добавить' : 'Сохранить' }}
+        template(v-if="!isNew")
+          el-button(@click="openPasswordForm" icon="el-icon-lock") Пароль
+          template(v-if="$perms.is_superuser")
+            el-button(@click="openGroupsForm" icon="el-icon-lock") Группы пользователей
+            el-button(
+              @click="sitesDlg = true"
+              icon='el-icon-lock'
+            ) Сайты
 
     el-dialog(
       title="Поменять пароль"
       :visible.sync="passwordFormDialog"
     )
       password-form(
-        :profileId="profileId"
+        :profileId="$store.state.userprofile.pk"
         v-on:done="passwordDone"
         v-on:cancel="passwordCancel"
       )
@@ -78,17 +88,25 @@
       profile-groups(
         v-on:done="userGroupAccessDone"
       )
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+    )
+      sites-attach(
+        :selectedSiteIds="$store.state.userprofile.sites"
+        v-on:save="profileSitesSave"
+      )
 
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { latinValidator, telephoneValidator, emailValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import PasswordForm from './password-form.vue'
-import { IUserProfile } from '@/api/profiles/types'
 import ProfileGroups from './profile-groups.vue'
+import { IUserProfile } from '@/api/profiles/types'
 
 @Component({
   name: 'ProfileForm',
@@ -98,6 +116,7 @@ export default class extends Vue {
   private loading = false
   private passwordFormDialog = false
   private userGroupAccessDialog = false
+  private sitesDlg = false
   private frmMod = {
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,
@@ -113,10 +132,24 @@ export default class extends Vue {
     return UserProfileModule.pk === 0
   }
 
+  @Watch('$store.state.userprofile', { deep: true })
+  private onChProfileId(profile: IUserProfile) {
+    this.frmMod.username = profile.username
+    this.frmMod.fio = profile.fio
+    this.frmMod.birth_day = profile.birth_day
+    this.frmMod.username = profile.username
+    this.frmMod.username = profile.username
+    this.frmMod.username = profile.username
+    this.frmMod.username = profile.username
+  }
+
   private frmRules = {
     username: [
       { required: true, message: 'Логин не может быть пустым', trigger: 'blur' },
       { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
+    ],
+    birth_day: [
+      { required: true, message: 'Логин не может быть пустым', trigger: 'blur' }
     ],
     telephone: [
       { required: true, message: 'Номер телефона обязательно', trigger: 'blur' },
@@ -133,10 +166,6 @@ export default class extends Vue {
       { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
     ]
-  }
-
-  private get profileId() {
-    return UserProfileModule.pk
   }
 
   private onSubmit() {
@@ -157,8 +186,6 @@ export default class extends Vue {
         } catch (err) {
           this.$message.error(err)
           this.loading = false
-          this.$emit('fail')
-          return null
         }
       } else {
         this.$message.error('Исправь ошибки в форме')
@@ -170,7 +197,7 @@ export default class extends Vue {
     this.passwordFormDialog = true
   }
 
-  private passwordDone(profile: IUserProfile) {
+  private passwordDone() {
     this.$message.success('Пароль успешно изменён')
     this.passwordFormDialog = false
   }
@@ -182,8 +209,17 @@ export default class extends Vue {
     this.userGroupAccessDialog = true
   }
 
-  private userGroupAccessDone(profile: IUserProfile) {
+  private userGroupAccessDone() {
     this.userGroupAccessDialog = false
+  }
+
+  private profileSitesSave(selectedSiteIds: number[]) {
+    UserProfileModule.PatchProfile({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$message.success('Принадлежность учётных записей сайтам сохранена')
+    })
+    this.sitesDlg = false
   }
 }
 </script>

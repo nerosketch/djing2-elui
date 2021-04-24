@@ -3,8 +3,8 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadPools"
-    :loading="poolsLoading"
-    :heightDiff='170'
+    :heightDiff='188'
+    :editFieldsVisible.sync="editFieldsVisible"
     widthStorageNamePrefix='pools'
     ref='table'
   )
@@ -13,6 +13,11 @@ div
 
     template(v-slot:oper="{row}")
       el-button-group
+        el-button(
+          v-if="$perms.is_superuser"
+          @click="openSitesDlg(row)"
+          size="mini"
+        ) C
         el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
         el-button(
           type="danger" icon="el-icon-delete" size="mini"
@@ -20,11 +25,17 @@ div
           :disabled="!$perms.networks.delete_networkippool"
         )
 
-    el-button(
-      icon='el-icon-plus' size='mini'
-      @click='openNew'
-      :disabled="!$perms.networks.add_networkippool"
-    ) Добавить
+    el-button-group
+      el-button(
+        icon='el-icon-plus' size='mini'
+        @click='openNew'
+        :disabled="!$perms.networks.add_networkippool"
+      ) Добавить
+      el-button(
+        icon='el-icon-s-operation'
+        size='mini'
+        @click="editFieldsVisible=true"
+      ) Поля
 
   el-dialog(
     :title="dialogTitle"
@@ -32,6 +43,14 @@ div
   )
     pool-form(
       v-on:done="frmDone"
+    )
+  el-dialog(
+    title="Принадлежность сайтам"
+    :visible.sync="sitesDlg"
+  )
+    sites-attach(
+      :selectedSiteIds="$store.state.netpool.sites"
+      v-on:save="netpoolSitesSave"
     )
 </template>
 
@@ -105,15 +124,22 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
+      prop: 'vid',
+      label: 'vid',
+      'min-width': 100,
+      align: DataTableColumnAlign.CENTER
+    },
+    {
       prop: 'oper',
-      label: 'Oper',
-      'min-width': 130,
+      label: 'Кнопки',
+      'min-width': 160,
       align: DataTableColumnAlign.CENTER
     }
   ]
   private pools: INetworkIpPool[] = []
   private dialogVisible = false
-  private poolsLoading = false
+  private sitesDlg = false
+  private editFieldsVisible = false
 
   get dialogTitle() {
     let w = 'Изменить'
@@ -132,7 +158,7 @@ export default class extends Vue {
   }
 
   private delPool(pool: INetworkIpPool) {
-    this.$confirm(`Ты действительно хочешь удалить пул "${pool.network}"?`).then(async() => {
+    this.$confirm(`Действительно удалить пул "${pool.network}"?`).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
       this.$message.success('Подсеть удалена')
       this.$refs.table.GetTableData()
@@ -140,25 +166,30 @@ export default class extends Vue {
   }
 
   private async loadPools(params?: IDRFRequestListParameters) {
-    this.poolsLoading = true
     if (params) {
-      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count'
+      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count,sites,vid,vlan_if,kind'
     }
-    try {
-      const r = await getNetworkIpPools(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.poolsLoading = false
-    }
-    return null
+    return getNetworkIpPools(params)
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Подсеть сохранена')
     this.$refs.table.GetTableData()
+  }
+
+  private netpoolSitesSave(selectedSiteIds: number[]) {
+    NetworkIpPoolModule.PatchPool({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.table.GetTableData()
+      this.$message.success('Принадлежность подсети сайтам сохранена')
+    })
+    this.sitesDlg = false
+  }
+  private openSitesDlg(net: INetworkIpPool) {
+    NetworkIpPoolModule.SET_ALL_POOL(net)
+    this.sitesDlg = true
   }
 }
 </script>

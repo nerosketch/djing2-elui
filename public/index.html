@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="author" content="https://t.me/nerosketch">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= webpackConfig.name %></title>
+    <link rel="icon" href="<%= BASE_URL %>favicon.png">
+    <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
     <noscript>
-      <strong>Очень жаль, но <%= webpackConfig.name %> не работает с выключенным JavaScript. Пожалуйста включи его для продолжения.</strong>
+      <strong>Очень жаль, но <%= htmlWebpackPlugin.options.title %> не работает с выключенным JavaScript. Пожалуйста включи его для продолжения.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->

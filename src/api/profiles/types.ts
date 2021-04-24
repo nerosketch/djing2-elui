@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { IDRFListResponse, IDRFAxiosResponsePromise } from '@/api/types'
 
 export interface IUserProfile {
@@ -17,6 +18,7 @@ export interface IUserProfile {
   user_permissions: number[]
   groups: number[]
   access_level: number
+  sites?: number[]
 }
 export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>
@@ -57,3 +59,15 @@ export interface IUserGroup {
 export type IUserGroupList = IDRFListResponse<IUserGroup>
 export type IUserGroupAxoisResponsePromise = IDRFAxiosResponsePromise<IUserGroup>
 export type IUserGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserGroupList>
+
+export const DEFAULT_USER_AVA = '/img/user_ava_min.gif'
+
+export interface IUserProfileAuthLog {
+  id: number
+  time: string
+  remote_ip: string
+  user_agent: string
+  profile: number
+}
+export type IUserProfileAuthLogList = IDRFListResponse<IUserProfileAuthLog> | IDRFListResponse<IUserProfileAuthLog[]>
+export type IUserProfileAuthLogListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfileAuthLogList>

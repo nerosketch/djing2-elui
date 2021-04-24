@@ -3,8 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadLog"
-    :loading="loading"
-    :heightDiff='180'
+    :heightDiff='202'
     widthStorageNamePrefix='customerFin'
     ref='fintbl'
   )
@@ -41,7 +40,6 @@ export default class extends Vue {
   public readonly $refs!: {
     fintbl: DataTableComp
   }
-  private loading = false
   private addCashDialog = false
 
   private tableColumns: IDataTableColumn[] = [
@@ -69,21 +67,14 @@ export default class extends Vue {
 
   private async loadLog(params?: IDRFRequestListParameters) {
     let r
-    this.loading = true
-    try {
-      if (params) {
-        const newParams = Object.assign({
-          customer: CustomerModule.pk,
-          fields: 'cost,date,author_name,comment'
-        }, params)
-        r = await getCustomerPayLog(newParams)
-      } else {
-        r = await getCustomerPayLog()
-      }
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.loading = false
+    if (params) {
+      const newParams = Object.assign({
+        customer: CustomerModule.pk,
+        fields: 'cost,date,author_name,comment'
+      }, params)
+      r = await getCustomerPayLog(newParams)
+    } else {
+      r = await getCustomerPayLog()
     }
     return r
   }

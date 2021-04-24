@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { IPayAllTimeGateway } from '@/api/fin/types'
@@ -11,6 +12,7 @@ class PayAllTimeGateway extends VuexModule implements IPayAllTimeGateway {
   public service_id = ''
   public slug = ''
   public pay_count = 0
+  public sites?: number[] = []
 
   @Mutation
   public SET_ALL_PAYGW(data: IPayAllTimeGateway) {
@@ -20,6 +22,7 @@ class PayAllTimeGateway extends VuexModule implements IPayAllTimeGateway {
     this.service_id = data.service_id
     this.slug = data.slug
     this.pay_count = data.pay_count
+    this.sites = data.sites
     return this
   }
 
@@ -31,6 +34,7 @@ class PayAllTimeGateway extends VuexModule implements IPayAllTimeGateway {
     this.service_id = ''
     this.slug = ''
     this.pay_count = 0
+    this.sites = []
     return this
   }
 

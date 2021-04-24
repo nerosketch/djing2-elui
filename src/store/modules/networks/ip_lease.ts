@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
 import {
@@ -12,7 +13,8 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   ip_address = ''
   pool = 0
   customer = 0
-  lease_time = 0
+  lease_time = ''
+  last_update = ''
   mac_address = ''
   is_dynamic = false
 
@@ -22,7 +24,8 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
     this.ip_address = ''
     this.pool = 0
     this.customer = 0
-    this.lease_time = 0
+    this.lease_time = ''
+    this.last_update = ''
     this.mac_address = ''
     this.is_dynamic = false
     return this
@@ -35,6 +38,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
     this.pool = data.pool
     this.customer = data.customer
     this.lease_time = data.lease_time
+    this.last_update = data.last_update
     this.mac_address = data.mac_address
     this.is_dynamic = data.is_dynamic
     return this
@@ -59,6 +63,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
     const r = await changeCustomerIpLease(this.id, <ICustomerIpLease>{
       ip_address: this.ip_address,
       lease_time: this.lease_time,
+      last_update: this.last_update,
       mac_address: this.mac_address,
       pool: this.pool,
       customer: this.customer,
@@ -76,6 +81,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
       pool: this.pool,
       customer: this.customer,
       lease_time: this.lease_time,
+      last_update: this.last_update,
       mac_address: this.mac_address,
       is_dynamic: this.is_dynamic
     }

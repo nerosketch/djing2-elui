@@ -3,11 +3,7 @@
     :class="[{'is-active': isActive}]"
     @click="toggleClick"
   >
-    <svg-icon
-      name="hamburger"
-      width="20"
-      height="20"
-    />
+    <i class="hamb el-icon-s-fold" />
   </div>
 </template>
 
@@ -27,10 +23,12 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.svg-icon {
-  vertical-align: middle;
+.hamb {
+  width: 20px;
+  height: 20px;
+  vertical-align: sub;
+  font-size: larger;
 }
-
 .is-active {
   transform: rotate(180deg);
 }

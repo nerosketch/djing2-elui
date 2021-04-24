@@ -4,24 +4,17 @@
       .clearfix
         b Комментарии задачи
     div
-      el-card(
-        shadow="hover"
-        :body-style="defCardStyle"
-        v-for="c in comments"
-        :key="c.id"
-      )
-        template(v-slot:header)
-          .clearfix
-            span {{ c.author_name }} 
-            small {{ c.date_create }}
-            el-button(
-              style="float: right; padding: 3px 0" type="text" icon='el-icon-close'
-              v-if="c.can_remove"
-              @click="delComment(c)"
-              :disabled="!$perms.tasks.delete_extracomment"
-            )
-        el-avatar(shape="square" size='medium' :src='c.author_avatar')
-        span &nbsp; {{ c.text }}
+      template(v-for="c in commentlogs")
+        comment-item.mt5(
+          v-if="c.type === 'comment'"
+          :key="c.id"
+          :comment="c"
+          @del="loadComments"
+        )
+        comment-change-log.mt5(
+          v-else
+          :log="c"
+        )
     el-form
       el-form-item(
         label="Текст комментария"
@@ -38,26 +31,28 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { IExtraComment } from '@/api/tasks/types'
-import { getComments, addComment, delComment } from '@/api/tasks/req'
-import { TaskModule } from '@/store/modules/tasks/tasks'
+import { IExtraCommentCombinedWithTaskStateChangeLog } from '@/api/tasks/types'
+import { getCommentsWithLogs, addComment } from '@/api/tasks/req'
+import CommentItem from './comment-item.vue'
+import CommentChangeLog from './comment-change-log.vue'
 
 @Component({
-  name: 'Comments'
+  name: 'Comments',
+  components: {
+    CommentItem,
+    CommentChangeLog
+  }
 })
 export default class extends Vue {
-  get defCardStyle() {
-    return { padding: '10px 13px' }
-  }
   private loading = false
   private currentComment = ''
-  private comments: IExtraComment[] = []
+  private commentlogs: IExtraCommentCombinedWithTaskStateChangeLog[] = []
 
   private async loadComments() {
     this.loading = true
     try {
-      const { data } = await getComments(TaskModule.id)
-      this.comments = data
+      const { data } = await getCommentsWithLogs(this.$store.state.task.id)
+      this.commentlogs = data
     } catch (err) {
       this.$message.error(err)
     } finally {
@@ -71,21 +66,10 @@ export default class extends Vue {
 
   private async onSendComment() {
     this.loading = true
-    const { data } = await addComment(this.currentComment, TaskModule.id)
+    await addComment(this.currentComment, this.$store.state.task.id)
     this.currentComment = ''
     await this.loadComments()
     this.loading = false
-  }
-
-  private delComment(c: IExtraComment) {
-    this.$confirm('Удалить комментарий?', {
-      confirmButtonText: 'да',
-      cancelButtonText: 'нет'
-    }).then(async() => {
-      await delComment(c.id)
-      this.loadComments()
-      this.$message.success('Комментарий удалён')
-    })
   }
 }
 </script>

@@ -3,8 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadUserGroups"
-    :loading="ugloading"
-    :heightDiff='171'
+    :heightDiff='190'
     widthStorageNamePrefix='upg'
     ref='tbl'
   )
@@ -52,12 +51,14 @@ div
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getUserGroups, delUserGroup } from '@/api/profiles/req'
 import { IUserGroup } from '@/api/profiles/types'
-import UserGroupForm from './user-group-form.vue'
 import { UserGroupModule } from '@/store/modules/profiles/user-group'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import UserGroupForm from './user-group-form.vue'
 import UserGroupPerms from './user-group-perms.vue'
 
 class DataTableComp extends DataTable<IUserGroup> {}
@@ -74,7 +75,6 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
-  private ugloading = false
   private ugFormDialog = false
   private dialogTitle = ''
   private ugpDialog = false
@@ -100,20 +100,11 @@ export default class extends Vue {
     }
   ]
 
-  private async loadUserGroups(params?: IDRFRequestListParameters) {
-    this.ugloading = true
+  private loadUserGroups(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'id,name,permcount,usercount,permissions'
     }
-    try {
-      const r = await getUserGroups(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.ugloading = false
-    }
-    return null
+    return getUserGroups(params)
   }
 
   private async editNewUserGroup(grp: IUserGroup) {
@@ -136,7 +127,7 @@ export default class extends Vue {
     })
   }
 
-  private frmDone(ugrp?: IUserGroup) {
+  private frmDone() {
     this.ugFormDialog = false
     this.$refs.tbl.GetTableData()
   }
@@ -146,9 +137,23 @@ export default class extends Vue {
     this.ugpDialog = true
   }
 
-  private editPermsDone(grp: IUserGroup) {
+  private editPermsDone() {
     this.ugpDialog = false
     this.$refs.tbl.GetTableData()
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Учётные записи'
+        }
+      }
+    ] as RouteRecord[])
+  }
+  // End Breadcrumbs
 }
 </script>

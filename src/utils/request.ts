@@ -23,43 +23,20 @@ service.interceptors.request.use(
 
 // Response interceptors
 service.interceptors.response.use(
-  async(response) => {
-    // Some example codes here:
-    // code == 20000: success
-    // code == 50001: invalid access token
-    // code == 50002: already login in other place
-    // code == 50003: access token expired
-    // code == 50004: invalid user (user not exist)
-    // code == 50005: username or password is incorrect
-    // You can change this part for your own usage.
-    const res = response
-    if (![200, 201, 202, 204].includes(res['status'])) {
+  async response => {
+    if (![200, 201, 202, 204].includes(response.status)) {
       let er = Object.entries(response.data).join('\n')
       Message({
         message: er || 'Не известная ошибка',
         type: 'error',
         duration: 15000
       })
-      /* if (res.code === 500 || res.code === 50012 || res.code === 50014) {
-        MessageBox.confirm(
-          'You have been logged out, try to login again.',
-          'Log out',
-          {
-            confirmButtonText: 'Relogin',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }
-        ).then(() => {
-          UserModule.ResetToken()
-          location.reload() // To prevent bugs from vue-router
-        })
-      } */
       return Promise.reject(new Error('Error'))
     } else {
-      return res
+      return response
     }
   },
-  (error) => {
+  error => {
     if (error.response.status === 403) {
       console.log('Permission Denied', error.response)
       return
@@ -71,7 +48,8 @@ service.interceptors.response.use(
     Message({
       message: er || 'Неизвестная ошибка',
       type: 'error',
-      duration: 7000
+      duration: 7000,
+      showClose: true
     })
     return Promise.reject(error)
   }

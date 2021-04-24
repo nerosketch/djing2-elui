@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators'
 import { IPassportInfo } from '@/api/customers/types'
 import store from '@/store'
@@ -9,6 +10,7 @@ class PassportInfo extends VuexModule implements IPassportInfo {
   number = ''
   distributor = ''
   date_of_acceptance = ''
+  division_code = ''
 
   @Mutation
   public SET_ALL_PASSPORT(data: IPassportInfo) {
@@ -17,6 +19,7 @@ class PassportInfo extends VuexModule implements IPassportInfo {
     this.number = data.number
     this.distributor = data.distributor
     this.date_of_acceptance = data.date_of_acceptance
+    this.division_code = data.division_code
   }
 
   @Mutation
@@ -26,6 +29,7 @@ class PassportInfo extends VuexModule implements IPassportInfo {
     this.number = ''
     this.distributor = ''
     this.date_of_acceptance = ''
+    this.division_code = ''
   }
 }
 export const PassportInfoModule = getModule(PassportInfo)

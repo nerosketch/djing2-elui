@@ -1,5 +1,9 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import store from '@/store'
+import {
+  IDevice, IDeviceInterace,
+  IDeviceTypeEnum
+} from '@/api/devices/types'
 import {
   getDevice, delDevice,
   addDevice, changeDevice,
@@ -10,7 +14,7 @@ import {
   removeFromOlt,
   fixOnu
 } from '@/api/devices/req'
-import { IDevice, IDeviceInterace, IDeviceTypeEnum } from '@/api/devices/types'
+import store from '@/store'
 
 @Module({ dynamic: true, store, name: 'devicemodule' })
 class Device extends VuexModule implements IDeviceInterace {
@@ -30,6 +34,14 @@ class Device extends VuexModule implements IDeviceInterace {
   status = 0
   is_noticeable = false
   code = ''
+  sites?: number[] = []
+
+  loadProgress = false
+
+  @Mutation
+  private SET_LOADING(l: boolean) {
+    this.loadProgress = l
+  }
 
   @Mutation
   public RESET_ALL_DEV() {
@@ -48,6 +60,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.status = 0
     this.is_noticeable = false
     this.code = ''
+    this.sites = []
     return this
   }
 
@@ -69,6 +82,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.status = data.status
     this.is_noticeable = data.is_noticeable
     this.code = data.code
+    this.sites = data.sites
     return this
   }
 
@@ -79,23 +93,38 @@ class Device extends VuexModule implements IDeviceInterace {
 
   @Action
   public async GetDevice(id: number) {
-    const r = await getDevice(id)
-    this.SET_ALL_DEV(r.data)
-    return r
+    this.SET_LOADING(true)
+    try {
+      const r = await getDevice(id)
+      this.SET_ALL_DEV(r.data)
+      return r
+    } finally {
+      this.SET_LOADING(false)
+    }
   }
 
   @Action
   public async AddDevice(newDev: object) {
-    const { data } = await addDevice(newDev)
-    this.SET_ALL_DEV(data)
-    return data
+    this.SET_LOADING(true)
+    try {
+      const { data } = await addDevice(newDev)
+      this.SET_ALL_DEV(data)
+      return data
+    } finally {
+      this.SET_LOADING(false)
+    }
   }
 
   @Action
   public async PatchDevice(newData: object) {
-    const r = await changeDevice(this.pk, newData)
-    this.SET_ALL_DEV(r.data)
-    return r
+    this.SET_LOADING(true)
+    try {
+      const r = await changeDevice(this.pk, newData)
+      this.SET_ALL_DEV(r.data)
+      return r
+    } finally {
+      this.SET_LOADING(false)
+    }
   }
 
   @Action
@@ -170,6 +199,7 @@ class Device extends VuexModule implements IDeviceInterace {
       { nm: 'Onu ZTE F660', v: IDeviceTypeEnum.OnuZTE_F660 },
       { nm: 'Onu ZTE F601', v: IDeviceTypeEnum.OnuZTE_F601 },
       { nm: 'Huawei S2300', v: IDeviceTypeEnum.HuaweiS2300 },
+      { nm: 'Huawei S5300 10P LI AC', v: IDeviceTypeEnum.HuaweiS5300_10P_LI_ACInterface },
       { nm: 'Dlink DGS_3120_24SC', v: IDeviceTypeEnum.DlinkDGS_3120_24SCSwitchInterface },
       { nm: 'Dlink DGS_1100_06/ME', v: IDeviceTypeEnum.DlinkDGS_1100_06MESwitchInterface },
       { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }

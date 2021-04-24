@@ -1,5 +1,10 @@
+/* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { ICustomer, IBalanceAmountRequest } from '@/api/customers/types'
+import {
+  ICustomer, IBalanceAmountRequest,
+  IPeriodicPayForIdRequest,
+  IBuyPayloadType
+} from '@/api/customers/types'
 import {
   getCustomer, addCustomer,
   getCustomerFormInitial,
@@ -7,7 +12,9 @@ import {
   pickService, makeShot,
   stopService, addBalance,
   getCurrentService,
-  setGroupAccessory
+  setServiceGroupAccessory,
+  makePeriodicPay4Customer,
+  setCustomerMarkers
 } from '@/api/customers/req'
 import store from '@/store'
 
@@ -24,7 +31,7 @@ class Customer extends VuexModule implements ICustomer {
   balance = 0.0
   description = ''
   street = 0
-  street_name = ''
+  street_name?: string
   house = ''
   is_active = false
   gateway = 0
@@ -36,12 +43,20 @@ class Customer extends VuexModule implements ICustomer {
   last_connected_service = 0
   last_connected_service_title = ''
   current_service = 0
-  service_title = ''
+  current_service__service__title = ''
   service_id = 0
   is_dynamic_ip = false
   full_name = ''
   raw_password = ''
   lease_count = 0
+  sites: number[] = []
+  traf_octs = 0
+  marker_icons: string[] = []
+
+  @Mutation
+  public SET_ID_CUSTOMER(id: number) {
+    this.pk = id
+  }
 
   @Mutation
   public SET_ALL_CUSTOMER(data: ICustomer) {
@@ -56,7 +71,7 @@ class Customer extends VuexModule implements ICustomer {
     this.balance = data.balance
     this.description = data.description
     this.street = data.street
-    this.street_name = data.street_name!
+    this.street_name = data.street_name
     this.house = data.house
     this.is_active = data.is_active
     this.gateway = data.gateway
@@ -68,12 +83,15 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = data.last_connected_service!
     this.last_connected_service_title = data.last_connected_service_title
     this.current_service = data.current_service!
-    this.service_title = data.service_title!
+    this.current_service__service__title = data.current_service__service__title!
     this.service_id = data.service_id!
     this.is_dynamic_ip = data.is_dynamic_ip
     this.full_name = data.full_name!
     this.raw_password = data.raw_password!
     this.lease_count = data.lease_count
+    this.traf_octs = data.traf_octs!
+    this.sites = data.sites
+    this.marker_icons = data.marker_icons
     return this
   }
 
@@ -89,8 +107,8 @@ class Customer extends VuexModule implements ICustomer {
     this.group_title = ''
     this.balance = 0.0
     this.description = ''
-    delete this.street
-    this.street_name = ''
+    this.street = 0
+    delete this.street_name
     this.house = ''
     this.is_active = false
     this.gateway = 0
@@ -102,12 +120,15 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = 0!
     this.last_connected_service_title = ''
     this.current_service = 0!
-    this.service_title = ''!
+    this.current_service__service__title = ''!
     this.service_id = 0
     this.is_dynamic_ip = false
     this.full_name = ''
     this.raw_password = ''
     this.lease_count = 0
+    this.sites = []
+    this.traf_octs = 0
+    this.marker_icons = []
     return this
   }
 
@@ -125,6 +146,7 @@ class Customer extends VuexModule implements ICustomer {
       throw Error('Verification failed, please Login again.')
     }
     this.SET_ALL_CUSTOMER(data)
+    return data
   }
 
   @Action
@@ -157,8 +179,8 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async PickService(serviceId: number, deadline?: string) {
-    await pickService(this.pk, serviceId, deadline)
+  public async PickService(buyPayload: IBuyPayloadType) {
+    await pickService(this.pk, buyPayload)
   }
 
   @Action
@@ -193,8 +215,22 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async SetGroupAccessory(services: number[]) {
-    await setGroupAccessory(this.pk, this.group, services)
+  public SetServiceGroupAccessory(services: number[]) {
+    return setServiceGroupAccessory(this.pk, this.group, services)
+  }
+
+  @Action
+  public MakePeriodicPay(req: IPeriodicPayForIdRequest) {
+    return makePeriodicPay4Customer(this.pk, req)
+  }
+
+  @Action
+  public SetMarkers(markerNames?: string[]) {
+    if (markerNames) {
+      return setCustomerMarkers(this.pk, markerNames)
+    } else {
+      return setCustomerMarkers(this.pk, this.marker_icons)
+    }
   }
 }
 

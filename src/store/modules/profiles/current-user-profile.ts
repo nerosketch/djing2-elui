@@ -1,8 +1,14 @@
+/* eslint-disable camelcase */
 import { Module, Mutation, Action, getModule, VuexModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
-import { getSelfProfile, login, changeProfile } from '@/api/profiles/req'
-import { IUserProfile } from '@/api/profiles/types'
+import {
+  getSelfProfile,
+  login,
+  changeProfile,
+  changeAvatar
+} from '@/api/profiles/req'
+import { DEFAULT_USER_AVA, IUserProfile } from '@/api/profiles/types'
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
 class CurrentUserProfile extends VuexModule implements IUserProfile {
@@ -69,7 +75,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
     if (this.avatar) {
       return this.avatar
     } else {
-      return '/img/user_ava_min.gif'
+      return DEFAULT_USER_AVA
     }
   }
 
@@ -89,7 +95,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
     return data
   }
 
-  @Action({ commit: 'SET_TOKEN'})
+  @Action({ commit: 'SET_TOKEN' })
   public async Login(userInfo: { username: string, password: string }) {
     userInfo.username = userInfo.username.trim()
     const { data } = await login(userInfo)
@@ -117,6 +123,13 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
   public async PatchPermissions(info: object) {
     const { data } = await changeProfile(this.username, info)
     this.SET_ALL_CURRENT_PROFILE(data as IUserProfile)
+    return data
+  }
+
+  @Action
+  public async PatchAvatar(ava: HTMLImageElement) {
+    const { data } = await changeAvatar(this.username, ava)
+    this.SET_ALL_CURRENT_PROFILE(data)
     return data
   }
 }

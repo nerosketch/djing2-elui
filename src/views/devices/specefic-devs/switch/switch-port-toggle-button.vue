@@ -1,8 +1,8 @@
 <template lang="pug">
   el-button(
     size='mini'
-    :type="pstate ? 'danger' : 'success'"
-    :icon="pstate ? 'el-icon-remove' : 'el-icon-circle-plus'"
+    :type="portStateGetter ? 'danger' : 'success'"
+    :icon="portStateGetter ? 'el-icon-remove' : 'el-icon-circle-plus'"
     :loading="loading"
     :disabled="isdis || !$perms.devices.can_toggle_ports"
     @click="togglePort"
@@ -21,12 +21,11 @@ import { PortModule } from '@/store/modules/devices/port'
 export default class extends Vue {
   @Prop({ default: null }) private port!: IScannedPort | null
   @Prop({ default: 0 }) private portId!: number
-  private pstate = false
   private loading = false
 
   private togglePort() {
     if (!this.isdis) {
-      if (this.pstate) {
+      if (this.portStateGetter) {
         this.$confirm('Выключить порт? Отключится линк. Внимательно, не выключи uplink, иначе коммутатор потеряется').then(async() => {
           this.performToggle(true)
         })
@@ -39,8 +38,10 @@ export default class extends Vue {
   private async performToggle(st: boolean) {
     this.loading = true
     await PortModule.SET_PORT_PK(this.portId)
-    await PortModule.TogglePort(st ? IDevPortState.DOWN : IDevPortState.UP)
-    this.pstate = !st
+    await PortModule.TogglePort({
+      port_state: st ? IDevPortState.DOWN : IDevPortState.UP,
+      port_snmp_num: this.port ? this.port.snmp_number : 0
+    })
     this.loading = false
   }
 
@@ -48,10 +49,11 @@ export default class extends Vue {
     return this.port === null || this.portId === 0
   }
 
-  created() {
-    if (this.port !== null) {
-      this.pstate = this.port.status
+  get portStateGetter(): boolean {
+    if (this.port) {
+      return this.port.status
     }
+    return false
   }
 }
 </script>

@@ -22,7 +22,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { AppModule } from '@/store/modules/app'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/_variables.scss'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
@@ -40,10 +39,6 @@ interface IHightPriorityTaskEventData {
   }
 })
 export default class extends Vue {
-  get sidebar() {
-    return AppModule.sidebar
-  }
-
   get routes() {
     return (this.$router as any).options.routes
   }
@@ -53,7 +48,7 @@ export default class extends Vue {
   }
 
   get isCollapse() {
-    return !this.sidebar.opened
+    return !this.$store.state.app.sidebar.opened
   }
 
   created() {
@@ -62,7 +57,7 @@ export default class extends Vue {
   }
 
   beforeDestroy() {
-    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATETASK)
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
   }
 
   private onUpdateTask(msg: IWsMessage) {
@@ -75,8 +70,8 @@ export default class extends Vue {
       if (profiles.includes(this.$store.state['currentuserprofile'].pk)) {
         this.$eventHub.$emit('dilim')
         this.$message.info({
-          message: msg.text || 'Изменения в высокоприоритетной задаче в которой вы учавствуете',
-          duration: 15000,
+          message: msg.text || 'Изменения в высокоприоритетной задаче, в которой вы учавствуете',
+          duration: 300000,
           showClose: true
         })
       }

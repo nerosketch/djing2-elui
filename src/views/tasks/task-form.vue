@@ -60,7 +60,10 @@
       label="Абонент"
       prop='customer'
     )
-      customer-field(v-model="frmMod.customer" :defaultName="customerName")
+      customer-field(
+        v-model="frmMod.customer"
+        :defaultName="$store.state.task.customer_full_name"
+      )
     el-form-item(
       label="Актуальность"
       prop='out_date'
@@ -70,11 +73,17 @@
           v-model="frmMod.out_date"
           type="date"
           value-format="yyyy-MM-dd"
-          format="d MMM yyyy"
+          format="d.MM.yyyy"
         )
     el-form-item
       el-button-group
-        el-button(type="primary" @click="onSubmit" icon="el-icon-download" size='small' :disabled="isFormUntouched") Сохранить
+        el-button(
+          type="primary"
+          @click="onSubmit"
+          icon='el-icon-upload'
+          size='small'
+          :disabled="isFormUntouched"
+        ) Сохранить
         el-button(
           v-if="!isNewTask" type="danger" icon="el-icon-delete" size='small'
           @click="onDel"
@@ -84,7 +93,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
 import CustomerField from '@/components/CustomerField/index.vue'
@@ -147,6 +156,12 @@ export default class extends mixins(FormMixin, TaskMixin) {
     }
   }
 
+  @Watch('$store.state.task', { deep: true })
+  private onUpdateTask() {
+    this.frmMod = this.fromTaskModule
+    this.frmInitial = Object.assign({}, this.frmMod)
+  }
+
   private frmRules = {
     recipients: [
       { required: true, message: 'Надо выбрать хотябы одного исполнителя', trigger: 'blur' }
@@ -154,10 +169,6 @@ export default class extends mixins(FormMixin, TaskMixin) {
     customer: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: 'Нужно выбрать абонента' }
     ]
-  }
-
-  get customerName() {
-    return TaskModule.customer_full_name
   }
 
   get initialDate() {

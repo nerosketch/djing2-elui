@@ -3,8 +3,7 @@ div
   datatable(
     :columns="tableColumns"
     :getData="loadLeases"
-    :loading="leaseLoading"
-    :heightDiff='142'
+    :heightDiff='160'
     widthStorageNamePrefix='leases'
     ref='table'
   )
@@ -67,6 +66,11 @@ export default class extends Vue {
       'min-width': 200
     },
     {
+      prop: 'last_update',
+      label: 'Время последнего обновления',
+      'min-width': 200
+    },
+    {
       prop: 'mac_address',
       label: 'MAC Адрес',
       sortable: true,
@@ -84,7 +88,6 @@ export default class extends Vue {
     }
   ]
   private dialogVisible = false
-  private leaseLoading = false
 
   private async openEdit(lease: ICustomerIpLease) {
     await CustomerIpLeaseModule.SET_ALL_LEASE(lease)
@@ -92,27 +95,18 @@ export default class extends Vue {
   }
 
   private async delLease(lease: ICustomerIpLease) {
-    this.$confirm(`Ты действительно хочешь удалить сессию "${lease.ip_address}"?`).then(async() => {
+    this.$confirm(`Действительно удалить сессию "${lease.ip_address}"?`).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
       this.$message.success('Сессия удалена')
       this.$refs.table.GetTableData()
     })
   }
 
-  private async loadLeases(params?: IDRFRequestListParameters) {
-    this.leaseLoading = true
+  private loadLeases(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,ip_address,lease_time,mac_address,is_dynamic'
+      params['fields'] = 'id,ip_address,lease_time,last_update,mac_address,is_dynamic'
     }
-    try {
-      const r = await getCustomerIpLeases(params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.leaseLoading = false
-    }
-    return null
+    return getCustomerIpLeases(params)
   }
 
   private frmDone() {
