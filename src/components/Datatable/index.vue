@@ -157,6 +157,7 @@ export default class <T> extends Vue {
 
   public async GetTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     this.page = 1
+    this.endPage = false
     if (this.intLoading) return
     try {
       this.intLoading = true
