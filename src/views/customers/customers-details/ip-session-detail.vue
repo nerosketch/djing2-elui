@@ -1,6 +1,5 @@
 <template lang="pug">
 el-popover(
-  placement='right'
   trigger='manual'
   width='400'
   v-model="isDisplay"
@@ -10,8 +9,8 @@ el-popover(
     style="font-size: small;"
     v-loading="detailLoading"
   )
-    template(v-slot:header)
-      .clearfix Сессия
+    template(v-slot:header) Сессия
+      el-link(style="float: right" icon='el-icon-close' @click="isDisplay=false" :underline='false')
     template(v-if="ses")
       template(v-if="lease")
         b {{ lease.ip_address }}
