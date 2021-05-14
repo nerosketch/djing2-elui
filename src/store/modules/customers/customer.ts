@@ -2,7 +2,8 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import {
   ICustomer, IBalanceAmountRequest,
-  IPeriodicPayForIdRequest
+  IPeriodicPayForIdRequest,
+  IBuyPayloadType
 } from '@/api/customers/types'
 import {
   getCustomer, addCustomer,
@@ -11,8 +12,9 @@ import {
   pickService, makeShot,
   stopService, addBalance,
   getCurrentService,
-  setGroupAccessory,
-  makePeriodicPay4Customer
+  setServiceGroupAccessory,
+  makePeriodicPay4Customer,
+  setCustomerMarkers
 } from '@/api/customers/req'
 import store from '@/store'
 
@@ -29,7 +31,7 @@ class Customer extends VuexModule implements ICustomer {
   balance = 0.0
   description = ''
   street = 0
-  street_name = ''
+  street_name?: string
   house = ''
   is_active = false
   gateway = 0
@@ -49,6 +51,7 @@ class Customer extends VuexModule implements ICustomer {
   lease_count = 0
   sites: number[] = []
   traf_octs = 0
+  marker_icons: string[] = []
 
   @Mutation
   public SET_ID_CUSTOMER(id: number) {
@@ -68,7 +71,7 @@ class Customer extends VuexModule implements ICustomer {
     this.balance = data.balance
     this.description = data.description
     this.street = data.street
-    this.street_name = data.street_name!
+    this.street_name = data.street_name
     this.house = data.house
     this.is_active = data.is_active
     this.gateway = data.gateway
@@ -88,6 +91,7 @@ class Customer extends VuexModule implements ICustomer {
     this.lease_count = data.lease_count
     this.traf_octs = data.traf_octs!
     this.sites = data.sites
+    this.marker_icons = data.marker_icons
     return this
   }
 
@@ -103,8 +107,8 @@ class Customer extends VuexModule implements ICustomer {
     this.group_title = ''
     this.balance = 0.0
     this.description = ''
-    delete this.street
-    this.street_name = ''
+    this.street = 0
+    delete this.street_name
     this.house = ''
     this.is_active = false
     this.gateway = 0
@@ -124,6 +128,7 @@ class Customer extends VuexModule implements ICustomer {
     this.lease_count = 0
     this.sites = []
     this.traf_octs = 0
+    this.marker_icons = []
     return this
   }
 
@@ -174,8 +179,8 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async PickService(serviceId: number, deadline?: string) {
-    await pickService(this.pk, serviceId, deadline)
+  public async PickService(buyPayload: IBuyPayloadType) {
+    await pickService(this.pk, buyPayload)
   }
 
   @Action
@@ -210,13 +215,22 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async SetGroupAccessory(services: number[]) {
-    await setGroupAccessory(this.pk, this.group, services)
+  public SetServiceGroupAccessory(services: number[]) {
+    return setServiceGroupAccessory(this.pk, this.group, services)
   }
 
   @Action
   public MakePeriodicPay(req: IPeriodicPayForIdRequest) {
     return makePeriodicPay4Customer(this.pk, req)
+  }
+
+  @Action
+  public SetMarkers(markerNames?: string[]) {
+    if (markerNames) {
+      return setCustomerMarkers(this.pk, markerNames)
+    } else {
+      return setCustomerMarkers(this.pk, this.marker_icons)
+    }
   }
 }
 

@@ -14,7 +14,11 @@
           @selection-change="handleSelectionChange"
         )
           template(v-slot:pk="{row}")
-            el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
+            el-button(
+              v-if="$perms.is_superuser"
+              size='mini' icon='el-icon-lock'
+              @click="openPermsDialog(row)"
+            )
             span(v-else) {{ row.pk }}
 
           template(v-slot:username="{row}")
@@ -23,6 +27,15 @@
 
           template(v-slot:telephone="{row}")
             el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
+
+          template(v-slot:marker_icons="{row}")
+            template(v-if="row.marker_icons.length > 0")
+              span.m-icon(
+                v-for="(ic, i) in row.marker_icons"
+                :class="`m-${ic}`"
+                :key="i"
+              )
+            span(v-else)
 
           template(v-slot:ping="{row}")
             ping-profile(:customer="row")
@@ -91,6 +104,8 @@
     el-dialog(
       :visible.sync="editStreetsDialog"
       title="Редактировать улицы"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       edit-streets(
         :groupId="groupId"
@@ -245,6 +260,10 @@ export default class extends Vue {
       'min-width': 170
     },
     {
+      prop: 'marker_icons',
+      label: 'Маркер'
+    },
+    {
       prop: 'traf_octs',
       label: 'Траф'
     },
@@ -281,7 +300,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs'
+        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs,marker_icons'
       })
       if (street) {
         newParams.street = Number(street)
@@ -339,14 +358,15 @@ export default class extends Vue {
   created() {
     document.title = 'Список абонентов'
     this.loadStreets()
-    this.onGrpCh(this.groupId)
+    this.setCrumbs()
   }
 
   // Breadcrumbs
-  // @Watch('groupId')
-  private async onGrpCh(grpId: number) {
-    await GroupModule.GetGroup(grpId)
-    await BreadcrumbsModule.SetCrumbs([
+  private async setCrumbs() {
+    if (this.$store.state.group.pk !== this.groupId) {
+      await GroupModule.GetGroup(this.groupId)
+    }
+    BreadcrumbsModule.SetCrumbs([
       {
         path: '/customers/',
         meta: {
@@ -358,13 +378,10 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: this.grpName
+          title: this.$store.state.group.title
         }
       }
     ] as RouteRecord[])
-  }
-  get grpName() {
-    return GroupModule.title
   }
   // End Breadcrumbs
 

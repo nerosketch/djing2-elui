@@ -39,10 +39,7 @@ export default class extends Vue {
     ]
   }
 
-  get onChId() {
-    return GroupModule.pk
-  }
-  @Watch('onChId')
+  @Watch('$store.state.group.pk')
   private onChangeGroup() {
     this.frmMod.title = GroupModule.title
   }

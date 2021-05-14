@@ -1,5 +1,9 @@
 /* eslint-disable camelcase */
-import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '@/api/types'
+import {
+  IDRFAxiosResponsePromise,
+  IDRFListResponse,
+  IDRFRequestListParameters
+} from '@/api/types'
 import { IGroup } from '@/api/groups/types'
 import { IService } from '@/api/services/types'
 import { AxiosPromise } from 'axios'
@@ -37,6 +41,7 @@ export interface ICustomer {
   lease_count: number
   sites: number[]
   traf_octs: number | null
+  marker_icons: string[]
 }
 export type ICustomerList = IDRFListResponse<ICustomer>
 export type ICustomerAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomer>
@@ -70,7 +75,7 @@ export interface IServiceUser {
   username: string
   fio: string
 }
-export type IServiceUserList = IDRFListResponse<IServiceUser>
+export type IServiceUserList = IServiceUser[]
 export type IServiceUserAxoisResponsePromise = IDRFAxiosResponsePromise<IServiceUser>
 export type IServiceUserListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceUserList>
 
@@ -164,6 +169,7 @@ export interface IPassportInfo {
   number: string
   distributor: string
   date_of_acceptance: string
+  division_code: string
 }
 export type IPassportInfoList = IDRFListResponse<IPassportInfo>
 export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
@@ -225,3 +231,9 @@ export interface IPeriodicPayForId {
 export type IPeriodicPayForIdList = IDRFListResponse<IPeriodicPayForId>
 // export type IPeriodicPayForIdAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForId>
 export type IPeriodicPayForIdListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForIdList> | IDRFAxiosResponsePromise<IPeriodicPayForId[]>
+
+
+export interface IBuyPayloadType {
+  service_id: number,
+  deadline?: string
+}

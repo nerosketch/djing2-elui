@@ -67,7 +67,7 @@
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
-        format="d MMM yyyy"
+        format="d.MM.yyyy"
       )
     el-form-item
       el-button(
@@ -130,10 +130,7 @@ export default class extends Vue {
     ]
   }
 
-  get onChId() {
-    return CustomerModule.pk
-  }
-  @Watch('onChId')
+  @Watch('$store.state.customer.pk')
   private onChangedId() {
     this.frmMod = {
       username: CustomerModule.username,

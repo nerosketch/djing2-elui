@@ -124,10 +124,7 @@ export default class extends mixins(FormMixin) {
     calc_type: ServiceModule.calc_type
   }
 
-  get srvId() {
-    return ServiceModule.pk
-  }
-  @Watch('srvId')
+  @Watch('$store.state.service.pk')
   private async onSrvCh() {
     this.frmMod = {
       title: ServiceModule.title,

@@ -18,7 +18,9 @@ import {
   IUserGroupList,
   IUserGroupAxoisResponsePromise,
   IUserGroup,
-  IUserProfilePlainListAxiosResponsePromise
+  IUserProfilePlainListAxiosResponsePromise,
+  IUserProfileAuthLogListAxiosResponsePromise,
+  IUserProfileAuthLogList
 } from '@/api/profiles/types'
 
 // IUserProfileLog
@@ -73,6 +75,16 @@ export const setResponsibilityGroups = (uname: string, groups: number[]) =>
 export const setProfilePassword = (uname: string, newPassw: IPasswordUpdateForm) =>
   request.put(`${baseAccUrl}${uname}/change_password/`, newPassw)
 
+export const changeAvatar = (uname: string, ava: HTMLImageElement): IUserProfileAxoisResponsePromise => {
+  const formData = new FormData()
+  formData.append('avatar', ava as any)
+  return request.patch<IUserProfile>(`${baseAccUrl}${uname}/`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
 export const login = (data: any) =>
   request({
     url: '/profiles/token-auth/',
@@ -114,3 +126,6 @@ export const delUserGroup = (id: number) =>
 
 export const getCurrentAuthPermissions = (): AxiosPromise<string[]> =>
   request.get<string[]>('/profiles/get_current_auth_permissions/')
+
+export const getAuthLog = (params?: IDRFRequestListParameters, profile?: number): IUserProfileAuthLogListAxiosResponsePromise =>
+  request.get<IUserProfileAuthLogList>('/profiles/auth-log/', { params: Object.assign(params, { profile }) })

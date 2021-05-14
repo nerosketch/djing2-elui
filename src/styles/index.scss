@@ -1,6 +1,7 @@
 // @import './variables.scss'; // Already imported in style-resources-loader
 // @import './mixins.scss'; // Already imported in style-resources-loader
 @import './transition.scss';
+@import './_markericon.css';
 
 /* Global scss */
 
@@ -13,6 +14,7 @@ body {
 
 html {
   height: 100%;
+  line-height: 1.2;
 }
 
 #app {
@@ -47,7 +49,11 @@ div:focus {
 
 .el-card__header {
   background-color: #e4f0fb;
-  padding: 6px 11px
+  padding: 6px 7px
+}
+
+.el-card__body {
+  padding: 0 7px;
 }
 
 .el-table {
@@ -111,8 +117,8 @@ List
 }
 
 .list-item.active {
-    background-color: #3376c8;
-    color: white;
+  background-color: #3376c8;
+  color: white;
 }
 .list-item.active:hover {
   background-color: #5f9bf4;
@@ -150,4 +156,18 @@ List
 
 .progress_disable_animations * {
   transition: none !important;
+}
+
+
+/* Global */
+.mt5 {
+  margin-top: 5px;
+}
+
+p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+ul {
+  margin: 8px 0 8px 0;
 }

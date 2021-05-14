@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='customerfrm'
-    :label-width="isMobileView ? undefined : '115px'"
+    :label-width="$store.getters.isMobileView ? undefined : '115px'"
     size="mini"
     status-icon
     :rules='frmRules'
@@ -48,7 +48,7 @@
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
-        format="d MMM yyyy"
+        format="d.MM.yyyy"
       )
     el-form-item(
       label="Опции"
@@ -112,6 +112,8 @@
     el-dialog(
       title="Паспортные данные"
       :visible.sync="openPasportDlg"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       passport(
         v-on:done="openPasportDlg=false"
@@ -119,14 +121,18 @@
     el-dialog(
       title='Создание задачи'
       :visible.sync='taskFormDialog'
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       task-form
     el-dialog(
       title='Пароль абонента'
       :visible.sync='openPasswordDlg'
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
     )
       customer-password(
-        :customerId="customerIdGetter"
+        :customerId="$store.state.customer.pk"
         :initialPassw="$store.state.customer.raw_password"
         v-on:done="openPasswordDlg=false"
       )
@@ -189,9 +195,6 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
-  private get isMobileView() {
-    return AppModule.IsMobileDevice
-  }
   private frmMod: ICustomerFrm = {} as ICustomerFrm
 
   created() {
@@ -200,10 +203,7 @@ export default class extends mixins(FormMixin) {
     this.onChangedId()
   }
 
-  get customerIdGetter() {
-    return CustomerModule.pk
-  }
-  @Watch('customerIdGetter')
+  @Watch('$store.state.customer', { deep: true })
   private onChangedId() {
     this.frmMod = {
       username: CustomerModule.username,
@@ -221,10 +221,7 @@ export default class extends mixins(FormMixin) {
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm
   }
 
-  get onChGrp() {
-    return CustomerModule.group
-  }
-  @Watch('onChGrp')
+  @Watch('$store.state.customer.group')
   private onChangedGroup() {
     this.loadStreets()
   }
@@ -235,7 +232,7 @@ export default class extends mixins(FormMixin) {
       const { data } = await getStreets({
         page: 1,
         page_size: 0,
-        group: this.onChGrp
+        group: this.$store.state.customer.group
       }) as any
       this.customerStreets = data
     } catch (err) {
@@ -291,7 +288,7 @@ export default class extends mixins(FormMixin) {
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
       try {
-        const currGroup = this.onChGrp
+        const currGroup = this.$store.state.customer.group
         await CustomerModule.DelCustomer()
         this.$message.success('Учётка удалена')
         this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
@@ -305,7 +302,7 @@ export default class extends mixins(FormMixin) {
     this.taskFormDialogLoading = true
     try {
       const { data } = await TaskModule.GetNewTaskInitial({
-        groupId: this.onChGrp,
+        groupId: this.$store.state.customer.group,
         customerId: CustomerModule.pk
       })
       if (data.status > 0) {

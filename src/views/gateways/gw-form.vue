@@ -85,10 +85,7 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
-  get onChId() {
-    return GatewayModule.id
-  }
-  @Watch('onChId')
+  @Watch('$store.state.gateway.id')
   private onChangeGroup() {
     this.frmMod.title = GatewayModule.title
     this.frmMod.ip_address = GatewayModule.ip_address

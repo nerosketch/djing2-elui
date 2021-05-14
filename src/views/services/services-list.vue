@@ -26,6 +26,12 @@ div
           :disabled="!$perms.services.delete_service"
         )
 
+    template(v-slot:usercount="{row}")
+      el-button(
+        size='mini'
+        @click="openCustomerServiceListDialog(row.pk)"
+      ) {{ row.usercount }}
+
     el-button-group
       el-button(
         size='mini'
@@ -66,6 +72,14 @@ div
       :selectedSiteIds="$store.state.service.sites"
       v-on:save="serviceSitesSave"
     )
+  el-dialog(
+    title="Пользователи услуги"
+    :visible.sync="customerServiceVisible"
+    top="2vh"
+  )
+    customer-service-list(
+      :serviceId="currentCustomerServiceId"
+    )
 </template>
 
 <script lang="ts">
@@ -78,12 +92,17 @@ import { getServices, setServiceObjectsPerms, getServiceObjectsPerms, getService
 import { ServiceModule } from '@/store/modules/services/service'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import ServiceForm from './service-form.vue'
+import CustomerServiceList from './customer-service-list.vue'
 
 class DataTableComp extends DataTable<IService> {}
 
 @Component({
   name: 'ServiceList',
-  components: { 'datatable': DataTableComp, ServiceForm }
+  components: {
+    'datatable': DataTableComp,
+    ServiceForm,
+    CustomerServiceList
+  }
 })
 export default class extends Vue {
   public readonly $refs!: {
@@ -155,6 +174,8 @@ export default class extends Vue {
   private permsDialog = false
   private sitesDlg = false
   private editFieldsVisible = false
+  private customerServiceVisible = false
+  private currentCustomerServiceId = 0
 
   private async openEdit(srv: IService) {
     await ServiceModule.SET_ALL_SERVICE(srv)
@@ -206,6 +227,11 @@ export default class extends Vue {
   }
   private serviceGetSelectedObjectPerms(srvId: number, profileGroupId: number) {
     return getServiceOSelectedObjectPerms(srvId, profileGroupId)
+  }
+
+  private openCustomerServiceListDialog(serviceId: number) {
+    this.currentCustomerServiceId = serviceId
+    this.customerServiceVisible = true
   }
 
   // Breadcrumbs

@@ -1,9 +1,9 @@
 <template lang="pug">
   .app-container
     span Баланс: 
-    small {{ balance }}. 
+    small {{ $store.state.customer.balance }}. 
     span Создан: 
-    small {{ createDate }}
+    small {{ $store.state.customer.create_date }}
     el-tabs.border-card
       el-tab-pane(label="Инфо" lazy)
         keep-alive
@@ -22,11 +22,12 @@
           el-card
             template(v-slot:header) История трафика
             traf-report(
-              :customerId="$store.state.customer.pk"
+              :customerId="uid"
             )
 </template>
 
 <script lang="ts">
+/* eslint-disable camelcase */
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
@@ -36,6 +37,11 @@ import TrafReport from './customers-details/traf-report.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
+import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
+
+interface ICustomerUpdateEventData {
+  customer_id: number
+}
 
 @Component({
   name: 'CustomerDetails',
@@ -52,20 +58,30 @@ export default class extends Vue {
 
   private loaded = false
 
-  async created() {
+  created() {
+    // Subscribe for customer update event from server
+    this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER, this.onCustomerServerUpdate)
+
+    this.loadCustomer()
+  }
+
+  beforeDestroy() {
+    this.$eventHub.$off(IWsMessageEventTypeEnum.UPDATE_CUSTOMER, this.onCustomerServerUpdate)
+  }
+
+  private async loadCustomer() {
     this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
-    this.setCrumbs(CustomerModule.group)
+    this.setCrumbs(this.$store.state.customer.group)
     this.loaded = true
-    document.title = CustomerModule.full_name || 'Абонент'
+    document.title = this.$store.state.customer.full_name || 'Абонент'
   }
 
-  get createDate() {
-    return CustomerModule.create_date
-  }
-
-  get balance() {
-    return CustomerModule.balance
+  private onCustomerServerUpdate(msg: IWsMessage) {
+    const dat = msg.data as ICustomerUpdateEventData
+    if (dat.customer_id === this.uid) {
+      this.loadCustomer()
+    }
   }
 
   private async setCrumbs(grpId: number) {
@@ -82,21 +98,17 @@ export default class extends Vue {
         path: { name: 'customersList', params: { groupId: grpId } },
         meta: {
           hidden: true,
-          title: this.grpName
+          title: this.$store.state.customer.group_title || '-'
         }
       },
       {
         path: '',
         meta: {
           hidden: true,
-          title: CustomerModule.full_name || '-'
+          title: this.$store.state.customer.full_name || '-'
         }
       }
     ] as RouteRecord[])
-  }
-
-  get grpName() {
-    return CustomerModule.group_title
   }
   // End Breadcrumbs
 }

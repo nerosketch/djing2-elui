@@ -134,18 +134,13 @@ export default class extends mixins(FormMixin) {
     return DeviceModule.parent_dev_name
   }
 
-  get devId() {
-    return DeviceModule.pk
-  }
-  @Watch('devId')
+  @Watch('$store.state.devicemodule.pk')
   private async onDevCh() {
     this.frmMod = this.devFrmData
     this.frmInitial = Object.assign({}, this.devFrmData)
   }
-  get devSnmp() {
-    return DeviceModule.snmp_extra
-  }
-  @Watch('devSnmp')
+
+  @Watch('$store.state.devicemodule.snmp_extra')
   private async onChSnmp() {
     this.onDevCh()
   }

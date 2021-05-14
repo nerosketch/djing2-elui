@@ -26,8 +26,6 @@ export default class extends Vue {
   private async pingIcmp() {
     if (this.lease) {
       this.loading = true
-      let btnTextOrig = this.btnText
-      let origIcon = this.defIcon
       try {
         const pingRes = await CustomerIpLeaseModule.PingIcmp(this.lease.id)
         this.btnText = pingRes.text
@@ -42,9 +40,9 @@ export default class extends Vue {
         this.$message.error(err)
       }
       let tv = setTimeout(() => {
-        this.btnText = btnTextOrig
+        this.btnText = 'Ping'
         this.defType = ''
-        this.defIcon = origIcon
+        this.defIcon = 'el-icon-mouse'
         clearTimeout(tv)
       }, 10000)
       this.loading = false

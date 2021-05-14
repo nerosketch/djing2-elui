@@ -15,6 +15,7 @@ import App from '@/App.vue'
 import store from '@/store'
 import router from '@/router'
 import '@/permission'
+import PushNotificationsClass from './utils/notifications'
 
 // configure language
 locale.use(lang)
@@ -30,11 +31,14 @@ Vue.prototype.$perms = CurrentPermissionsModule
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $eventHub: Vue
+    $eventHub: Vue,
+    $messagingMng: PushNotificationsClass
   }
 }
 
 Vue.prototype.$eventHub = new Vue() // Global event bus
+
+Vue.prototype.$messagingMng = new PushNotificationsClass()
 
 new Vue({
   router,

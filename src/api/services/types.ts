@@ -1,5 +1,9 @@
 /* eslint-disable camelcase */
-import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '@/api/types'
+import {
+  IDRFAxiosResponsePromise,
+  IDRFListResponse,
+  IDRFRequestListParameters
+} from '@/api/types'
 
 export enum IServiceTypeEnum {
   BASE = 0,

@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   el-alert(
-    v-if="isSuperAdmin"
+    v-if="$store.state.userprofile.is_superuser"
     title="Внимание!"
     description='Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно'
     type="warning"
@@ -42,7 +42,7 @@ import PermMngMixin from './perm-mng-mixin'
   name: 'UserClassPerms'
 })
 export default class extends mixins(PermMngMixin) {
-  private assignedPerms: number[] = this.assignedUserPerms
+  private assignedPerms: number[] = this.$store.state.userprofile.user_permissions
 
   private async savePerms() {
     this.saveLoading = true
@@ -53,21 +53,13 @@ export default class extends mixins(PermMngMixin) {
     this.$message.success('Права для пользователся сохранены')
   }
 
-  get assignedUserPerms(): number[] {
-    return UserProfileModule.user_permissions
-  }
-
-  get isSuperAdmin() {
-    return UserProfileModule.is_superuser
-  }
-
-  @Watch('assignedUserPerms')
+  @Watch('$store.state.userprofile.user_permissions')
   private onChangedUserAssignedPerms(perms: number[]) {
     this.assignedPerms = perms
   }
 
   get isUnTouched() {
-    return this.assignedPerms === this.assignedUserPerms
+    return this.assignedPerms === this.$store.state.userprofile.user_permissions
   }
 }
 </script>

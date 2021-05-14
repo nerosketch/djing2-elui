@@ -47,7 +47,8 @@ import {
   CustomerActivityReportResult,
   IPeriodicPayForIdRequest,
   IPeriodicPayForIdListAxiosResponsePromise,
-  IPeriodicPayForIdList
+  IPeriodicPayForIdList,
+  IBuyPayloadType
 } from './types'
 
 // ICustomer
@@ -73,8 +74,8 @@ export const changeCustomer = (id: number, newData: object): ICustomerAxoisRespo
 export const delCustomer = (id: number) =>
   request.delete(`${custApiUrl}${id}/`)
 
-export const pickService = (id: number, serviceId: number, deadline?: string) =>
-  request.post(`${custApiUrl}${id}/pick_service/`, { service_id: serviceId, deadline })
+export const pickService = (id: number, data: IBuyPayloadType) =>
+  request.post(`${custApiUrl}${id}/pick_service/`, data)
 
 export const makeShot = (id: number, shotId: number) =>
   request.post(`${custApiUrl}${id}/make_shot/`, { shot_id: shotId })
@@ -91,8 +92,8 @@ export const addBalance = (id: number, dat: IBalanceAmountRequest) =>
 export const getCurrentService = (id: number): ICustomerServiceAxoisResponsePromise =>
   request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)
 
-export const setGroupAccessory = (id: number, groupId: number, services: number[]) =>
-  request.post(`${custApiUrl}${id}/set_group_accessory/`, {
+export const setServiceGroupAccessory = (id: number, groupId: number, services: number[]) =>
+  request.post(`${custApiUrl}${id}/set_service_group_accessory/`, {
     group_id: groupId,
     services
   })
@@ -111,6 +112,12 @@ export const pingAllIps = (id: number): ISimpleResponseResultAxiosResponsePromis
 
 export const makePeriodicPay4Customer = (id: number, req: IPeriodicPayForIdRequest) =>
   request.post<string>(`${custApiUrl}${id}/make_periodic_pay/`, req)
+
+export const generateCustomerPassword = (): AxiosPromise<string> =>
+  request.get<string>(`${custApiUrl}generate_password/`)
+
+export const setCustomerMarkers = (id: number, flags: string[]) =>
+  request.post(`${custApiUrl}${id}/set_markers/`, flags)
 
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>

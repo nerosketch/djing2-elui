@@ -34,6 +34,7 @@ export interface INetworkIpPool {
   is_dynamic: boolean
   pool_tag?: string
   sites?: number[]
+  vlan_if?: number
 }
 export type INetworkIpPoolList = IDRFListResponse<INetworkIpPool>
 export type INetworkIpPoolAxoisResponsePromise = IDRFAxiosResponsePromise<INetworkIpPool>

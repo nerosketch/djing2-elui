@@ -2,7 +2,12 @@
 import { Module, Mutation, Action, getModule, VuexModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
-import { getSelfProfile, login, changeProfile } from '@/api/profiles/req'
+import {
+  getSelfProfile,
+  login,
+  changeProfile,
+  changeAvatar
+} from '@/api/profiles/req'
 import { DEFAULT_USER_AVA, IUserProfile } from '@/api/profiles/types'
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
@@ -118,6 +123,13 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
   public async PatchPermissions(info: object) {
     const { data } = await changeProfile(this.username, info)
     this.SET_ALL_CURRENT_PROFILE(data as IUserProfile)
+    return data
+  }
+
+  @Action
+  public async PatchAvatar(ava: HTMLImageElement) {
+    const { data } = await changeAvatar(this.username, ava)
+    this.SET_ALL_CURRENT_PROFILE(data)
     return data
   }
 }

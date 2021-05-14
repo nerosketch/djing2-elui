@@ -1,72 +1,49 @@
-<template>
-  <div class="navbar">
-    <hamburger
-      :is-active="sidebar.opened"
-      class="hamburger-container"
+<template lang="pug">
+  .navbar
+    hamburger.hamburger-container(
+      :is-active="$store.state.app.sidebar.opened"
       @toggleClick="toggleSideBar"
-    />
+    )
 
-    <form
-      class="center-header"
+    form.center-header(
       @submit.prevent="doSearch"
-    >
-      <el-input
+    )
+      el-input(
         v-model="searchStr"
         placeholder="Поиск"
         prefix-icon="el-icon-search"
         size="small"
-      >
-        <template v-slot:append>
-          <el-button
+      )
+        template(v-slot:append)
+          el-button(
             icon="el-icon-search"
             @click="doSearch"
-          />
-        </template>
-      </el-input>
-    </form>
+          )
 
-    <div class="right-menu">
-      <el-dropdown
-        class="avatar-container right-menu-item hover-effect"
+    .right-menu
+      el-dropdown.avatar-container.right-menu-item.hover-effect(
         trigger="click"
-      >
-        <div class="avatar-wrapper">
-          <img
-            v-if="isAva"
+      )
+        .avatar-wrapper
+          img.user-avatar(
+            v-if="$store.getters.isAvatar"
             :src="avatar"
-            class="user-avatar"
-          >
-          <span v-else>{{ profileUname }}</span>
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <template v-slot:dropdown>
-          <el-dropdown-menu>
-            <router-link to="/customers">
-              <el-dropdown-item>
-                Домашняя
-              </el-dropdown-item>
-            </router-link>
-            <router-link to="/reports">
-              <el-dropdown-item>
-                Отчёты
-              </el-dropdown-item>
-            </router-link>
-            <router-link to="/sites">
-              <el-dropdown-item>
-                Домены
-              </el-dropdown-item>
-            </router-link>
-            <el-dropdown-item divided>
-              <span
+          )
+          span(v-else) {{ profileUname }}
+          i.el-icon-caret-bottom
+        template(v-slot:dropdown)
+          el-dropdown-menu
+            router-link(to="/customers")
+              el-dropdown-item Домашняя
+            //- router-link(to="/reports")
+              el-dropdown-item Отчёты
+            router-link(to="/sites")
+              el-dropdown-item Домены
+            el-dropdown-item(divided)
+              span(
                 style="display:block;"
                 @click="logout"
-              >Выйти</span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </div>
-  </div>
+              ) Выйти
 </template>
 
 <script lang="ts">
@@ -89,13 +66,6 @@ import Ws from '@/layout/mixin/ws'
 export default class extends mixins(Ws) {
   private $perms!: CurrentPermissions
   private searchStr = ''
-  get sidebar() {
-    return AppModule.sidebar
-  }
-
-  get device() {
-    return AppModule.device.toString()
-  }
 
   get avatar() {
     if (!CurrentUserProfileModule.isAvatar) {
@@ -105,10 +75,6 @@ export default class extends mixins(Ws) {
       this.$perms.GetCurrentAuthPermissions()
     }
     return CurrentUserProfileModule.getCurrentAvatar
-  }
-
-  get isAva() {
-    return CurrentUserProfileModule.isAvatar
   }
 
   get profileUname() {
@@ -136,6 +102,35 @@ export default class extends mixins(Ws) {
       this.$perms.SET_IS_SUPERUSER(profile.is_superuser || false)
     })
     this.$perms.GetCurrentAuthPermissions()
+
+    // Question about push subscription
+    if (!this.$messagingMng.wasThereQuestion()) {
+      this.$confirm('Вы хотите получать уведомления из билинга?', 'Уведомления', {
+        type: 'info',
+        showClose: false,
+        closeOnClickModal: false,
+        closeOnPressEscape: false,
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then(() => {
+        this.pushSubscribe()
+      }).catch(() => {
+        this.$confirm('Точно не нужно? Можно пропустить всё важное и интересное :)', {
+          type: 'info',
+          showClose: false,
+          confirmButtonText: 'Ладно',
+          cancelButtonText: 'Точно нет!'
+        }).then(() => {
+          this.pushSubscribe()
+        }).catch(() => {
+          this.$messagingMng.setQuestionAnswer(false)
+        })
+      })
+    }
+  }
+
+  private pushSubscribe() {
+    this.$messagingMng.toggleSubscribe()
   }
 }
 </script>

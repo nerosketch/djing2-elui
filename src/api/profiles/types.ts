@@ -61,3 +61,13 @@ export type IUserGroupAxoisResponsePromise = IDRFAxiosResponsePromise<IUserGroup
 export type IUserGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserGroupList>
 
 export const DEFAULT_USER_AVA = '/img/user_ava_min.gif'
+
+export interface IUserProfileAuthLog {
+  id: number
+  time: string
+  remote_ip: string
+  user_agent: string
+  profile: number
+}
+export type IUserProfileAuthLogList = IDRFListResponse<IUserProfileAuthLog> | IDRFListResponse<IUserProfileAuthLog[]>
+export type IUserProfileAuthLogListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfileAuthLogList>

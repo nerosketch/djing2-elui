@@ -1,4 +1,4 @@
-import { IDRFAxiosResponsePromise } from '../types'
+import { IDRFAxiosResponsePromise } from '@/api/types'
 
 export interface ITrafArchiveItem {
   time: string

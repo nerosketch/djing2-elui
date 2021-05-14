@@ -32,7 +32,7 @@ import PermMngMixin from './perm-mng-mixin'
   name: 'UserGroupPerms'
 })
 export default class extends mixins(PermMngMixin) {
-  private assignedPerms: number[] = this.assignedGroupPerms
+  private assignedPerms: number[] = this.$store.state.usergroup.permissions
 
   private async savePerms() {
     this.saveLoading = true
@@ -44,17 +44,13 @@ export default class extends mixins(PermMngMixin) {
     this.$emit('done', updatedGroup)
   }
 
-  get assignedGroupPerms(): number[] {
-    return UserGroupModule.permissions
-  }
-
-  @Watch('assignedGroupPerms')
+  @Watch('$store.state.usergroup.permissions')
   private onChangedGroupAssignedPerms(perms: number[]) {
     this.assignedPerms = perms
   }
 
   get isUnTouched() {
-    return this.assignedPerms === this.assignedGroupPerms
+    return this.assignedPerms === this.$store.state.usergroup.permissions
   }
 }
 </script>
