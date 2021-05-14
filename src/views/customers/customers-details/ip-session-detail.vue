@@ -37,6 +37,9 @@ el-popover(
         dt
           b Исход. пакеты
         dd {{ ses.h_output_packets || '-----' }}
+      free-session-button(
+        :sessionId="ses.id"
+      )
     div(v-else) Нет сессии
   el-button(
     slot='reference'
@@ -51,9 +54,11 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { getSessionByLease } from '@/api/sessions/req'
 import { IUserSession } from '@/api/sessions/types'
 import { ICustomerIpLease } from '@/api/networks/types'
+import FreeSessionButton from './free-session-button.vue'
 
 @Component({
-  name: 'IpSessionDetail'
+  name: 'IpSessionDetail',
+  components: { FreeSessionButton }
 })
 export default class extends Vue {
   @Prop({ required: true })

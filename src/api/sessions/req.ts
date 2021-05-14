@@ -23,3 +23,7 @@ export const getSessionByLease = (leaseId: number): IUserSessionAxoisResponsePro
 
 export const delSession = (id: number) =>
   request.delete(`${surl}${id}/`)
+
+export const sessionRequestFree = (sessionId: number) =>
+  request.post(`${surl}${sessionId}/free_session_request/`)
+
