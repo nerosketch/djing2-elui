@@ -7,10 +7,18 @@
       ref='addrtable'
     )
       template(v-slot:oper="{row}")
-        el-button(
-          icon="el-icon-edit" size="mini"
-          @click="openEdit(row)"
-        )
+        el-button-group
+          el-button(
+            icon="el-icon-edit"
+            size="mini"
+            @click="openEdit(row)"
+          ) Изменить
+          el-button(
+            icon='el-icon-remove'
+            type='danger'
+            size='mini'
+            @click="delIt(row)"
+          ) Удалить
       el-button(
         size='mini'
         icon='el-icon-plus'
@@ -23,6 +31,7 @@
     )
       addr-form(
         v-on:done="frmDone"
+        :addrsList="loadedDataList"
       )
 </template>
 
@@ -50,6 +59,7 @@ export default class extends Vue {
   }
 
   private dialogVisible = false
+  private loadedDataList: IFiasRecursiveAddress[] = []
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -74,6 +84,10 @@ export default class extends Vue {
       'min-width': 250
     },
     {
+      prop: 'parent_ao_name',
+      label: 'Родительский объект'
+    },
+    {
       prop: 'oper',
       label: 'Кнопки',
       'min-width': 130,
@@ -81,11 +95,13 @@ export default class extends Vue {
     }
   ]
 
-  private loadAddrs(params?: IDRFRequestListParameters) {
+  private async loadAddrs(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,ao_level_name,ao_type_name'
+      params['fields'] = 'id,title,ao_level_name,ao_type_name,parent_ao,groups,parent_ao_name'
     }
-    return getAddrs(params)
+    const r = await getAddrs(params)
+    this.loadedDataList = r.data.results
+    return r
   }
 
   private openEdit(addr: IFiasRecursiveAddress) {
@@ -101,6 +117,14 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.addrtable.GetTableData()
+  }
+
+  private delIt(addr: IFiasRecursiveAddress) {
+    this.$confirm('Все дочерние объекты потеряют родителя.', 'Удалить адресный объект?').then(async() => {
+      await FiasRecursiveAddressModule.DelAddress(addr.id)
+      this.$refs.addrtable.GetTableData()
+      this.$message.success('Адресный объект успешно удалён.')
+    })
   }
 }
 </script>

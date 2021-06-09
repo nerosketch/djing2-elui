@@ -31,46 +31,100 @@
       el-select(
         size='mini'
         v-model="frmMod.ao_type"
-        :disabled="addrTypes.length === 0"
+        :disabled="!addrTypesLoaded"
         :loading='typesLoading'
       )
-        el-option(
-          v-for="at in addrTypes"
-          :key="at[0]"
-          :label="at[1]"
-          :value="at[0]"
-        )
+        template(v-if="addrTypesLoaded")
+          el-option(
+            v-for="at in addrTypes"
+            :key="at[0]"
+            :label="at[1]"
+            :value="at[0]"
+          )
 
-    el-form-item
-      el-button(
-        type="primary"
-        @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+    el-form-item(
+      label="Родительский объект"
+    )
+      el-select(
+        v-model='frmMod.parent_ao'
+        :disabled="!addrTypesLoaded || !frmMod.title"
+      )
+        template(v-if="addrTypesLoaded")
+          el-option(
+            v-for="a in addrsList"
+            :key="a.id"
+            :label="a.title"
+            :value="a.id"
+          )
+
+    el-form-item(
+      label="Группы"
+    )
+      el-select(
+        v-model="frmMod.groups"
+        :diabled="!groupsListLoaded"
+        multiple
+      )
+        template(v-if="groupsListLoaded")
+          el-option(
+            v-for="g in groupsList"
+            :key="g.pk"
+            :label="g.title"
+            :value="g.pk"
+          )
+
+    el-button(
+      :type="isNew ? 'success' : 'primary'"
+      size='mini'
+      @click="onSubmit"
+      :loading="isLoading"
+    ) {{ isNew ? 'Добавить' : 'Сохранить' }}
 </template>
 
 <script lang="ts">
+import { getGroups } from '@/api/groups/req'
+import { IGroup } from '@/api/groups/types'
 import { getAddrLevels, getAddrTypes } from '@/api/sorm/req'
-import { IAddrLevelItem, IAddrTypeItem } from '@/api/sorm/types'
+import { IAddrLevelItem, IAddrTypeItem, IFiasRecursiveAddress } from '@/api/sorm/types'
 import { FiasRecursiveAddressModule } from '@/store/modules/sorm'
 import { Form } from 'element-ui'
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 
 @Component({
   name: 'AddrForm'
 })
 export default class extends Vue {
+  @Prop({ default: () => ([]) })
+  private addrsList!: IFiasRecursiveAddress[]
+
   private isLoading = false
   private typesLoading = false
 
-  private frmMod = {
+  get addrTypesLoaded() {
+    return this.addrTypes.length > 0
+  }
+
+  get groupsListLoaded() {
+    return this.groupsList.length > 0
+  }
+
+  private frmMod: {
+    title: string,
+    ao_level?: number,
+    ao_type?: number,
+    parent_ao?: number,
+    groups: number[]
+  } = {
     title: '',
-    ao_level: 0,
-    ao_type: 0
+    ao_level: undefined,
+    ao_type: undefined,
+    parent_ao: undefined,
+    groups: []
   }
 
   private addrLevels: IAddrLevelItem[] = []
   private addrTypes: IAddrTypeItem[] = []
+  private groupsList: IGroup[] = []
 
   private frmRules = {
     title: [
@@ -90,19 +144,24 @@ export default class extends Vue {
 
   created() {
     this.getAddrLevels()
+    this.loadAllGroups()
+    this.getAddrTypes()
+    if (!this.isNew) {
+      this.onAddrChanged()
+    }
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
         let newDat
         if (this.isNew) {
           newDat = await FiasRecursiveAddressModule.AddAddr(this.frmMod)
-          this.$message.success('Адресный объект изменён')
+          this.$message.success('Адресный объект создан')
         } else {
           newDat = await FiasRecursiveAddressModule.PatchAddr(this.frmMod)
-          this.$message.success('Адресный объект создан')
+          this.$message.success('Адресный объект изменён')
         }
         this.isLoading = false
         this.$emit('done', newDat)
@@ -132,11 +191,19 @@ export default class extends Vue {
     }
   }
 
+  private async loadAllGroups() {
+    const { data } = await getGroups()
+    this.groupsList = data as IGroup[]
+    return data
+  }
+
   @Watch('$store.state.fiasaddrs.id')
-  private onAddrChanged(id: number) {
+  private onAddrChanged() {
     this.frmMod.title = FiasRecursiveAddressModule.title
-    this.frmMod.ao_level = FiasRecursiveAddressModule.ao_level
-    this.frmMod.ao_type = FiasRecursiveAddressModule.ao_type
+    this.frmMod.ao_level = FiasRecursiveAddressModule.ao_level || undefined
+    this.frmMod.ao_type = FiasRecursiveAddressModule.ao_type || undefined
+    this.frmMod.parent_ao = FiasRecursiveAddressModule.parent_ao || undefined
+    this.frmMod.groups = FiasRecursiveAddressModule.groups
   }
 }
 </script>
