@@ -155,16 +155,21 @@ export default class extends Vue {
     (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        let newDat
-        if (this.isNew) {
-          newDat = await FiasRecursiveAddressModule.AddAddr(this.frmMod)
-          this.$message.success('Адресный объект создан')
-        } else {
-          newDat = await FiasRecursiveAddressModule.PatchAddr(this.frmMod)
-          this.$message.success('Адресный объект изменён')
+        try {
+          let newDat
+          if (this.isNew) {
+            newDat = await FiasRecursiveAddressModule.AddAddr(this.frmMod)
+            this.$message.success('Адресный объект создан')
+          } else {
+            newDat = await FiasRecursiveAddressModule.PatchAddr(this.frmMod)
+            this.$message.success('Адресный объект изменён')
+          }
+          this.$emit('done', newDat)
+        } catch (err) {
+          this.$message.error(err)
+        } finally {
+          this.isLoading = false
         }
-        this.isLoading = false
-        this.$emit('done', newDat)
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
