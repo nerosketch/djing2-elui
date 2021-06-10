@@ -102,7 +102,7 @@
       )
     el-dialog(
       :visible.sync="devFormDialog"
-      title="Порт коммутатора"
+      title="Информация устройства"
     )
       dev-form(
         v-on:done="devFrmDone"
