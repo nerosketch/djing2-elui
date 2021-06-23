@@ -79,6 +79,17 @@
       @click="onSubmit"
       :loading="isLoading"
     ) {{ isNew ? 'Добавить' : 'Сохранить' }}
+
+    el-divider(
+      direction="vertical"
+    )
+
+    el-link(
+      href="https://github.com/hflabs/socrbase/blob/master/socrbase.csv"
+      target="_blank"
+      type="info"
+      icon="el-icon-view"
+    ) Справочник адресных объектов
 </template>
 
 <script lang="ts">
