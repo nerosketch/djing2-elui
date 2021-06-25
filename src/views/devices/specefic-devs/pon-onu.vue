@@ -50,7 +50,7 @@
       )
         template(v-slot:header) Состояние ONU
           el-link(style="float: right" icon='el-icon-refresh' @click="refreshDev")
-        el-row(type='flex' v-if="isOnuRegistered")
+        el-row(type='flex' v-if="$store.state.devicemodule.isOnuRegistered")
           el-col(style='width: 128px;')
             i.icon-big(:class="iconStatusClass")
           el-col(v-if="onuDetails !== null")
@@ -121,10 +121,6 @@ export default class extends Vue {
   }
   get isStatusUnknown() {
     return !this.onuDetails || this.onuDetails.status === IOnuDetailsStatus.UNKNOWN
-  }
-
-  get isOnuRegistered() {
-    return DeviceModule.isOnuRegistered
   }
 
   get macFromOlt(): string {
