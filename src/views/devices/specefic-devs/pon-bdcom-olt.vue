@@ -108,15 +108,21 @@ export default class extends Vue {
 
   private async fetchItems() {
     if (this.device) {
-      const { data } = await scanOnuList(this.device.pk, (c: ProgressEvent) => {
+      let { data } = await scanOnuList(this.device.pk, (c: ProgressEvent) => {
         this.loadPercent = Math.floor((100 * c.loaded) / c.total)
       })
-      for (const line of data.split('\n')) {
+      let newData
+      if (typeof data === 'string') {
+        newData = data.trim().split('\n').map(k => JSON.parse(k))
+      } else {
+        newData = [data]
+      }
+      for (const line of newData) {
         try {
-          let onu = JSON.parse(line) as IScannedONU
-          const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === onu.fiberid)
+          //let onu = JSON.parse(line) as IScannedONU
+          const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === line.fiberid)
           if (fibIndex !== undefined) {
-            this.fibers[fibIndex].onuList.push(onu)
+            this.fibers[fibIndex].onuList.push(line)
           }
         } catch (e) {
           continue
@@ -144,7 +150,6 @@ export default class extends Vue {
         this.loading = false
       })
     }
-    throw new Error('devId is required')
   }
 
   created() {
