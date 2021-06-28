@@ -36,7 +36,6 @@ import CustomerTaskHistory from './customers-details/customer-task-history.vue'
 import TrafReport from './customers-details/traf-report.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 
 interface ICustomerUpdateEventData {
@@ -108,7 +107,7 @@ export default class extends Vue {
           title: this.$store.state.customer.full_name || '-'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 }

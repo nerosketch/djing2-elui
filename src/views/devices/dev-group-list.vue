@@ -68,7 +68,7 @@ export default class extends Vue {
           title: 'Оборудование'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 }

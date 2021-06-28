@@ -106,7 +106,6 @@ import DevForm from './dev-form.vue'
 import NewDevForm from './new-dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 import { GroupModule } from '@/store/modules/groups'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 
@@ -237,7 +236,7 @@ export default class extends Vue {
           title: this.grpName
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   get grpName() {
     return GroupModule.title

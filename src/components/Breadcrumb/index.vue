@@ -37,7 +37,7 @@ export default class extends Vue {
           title: '/'
         }
       }
-    ] as RouteRecord[]
+    ] as any[]
   }
 
   @Watch('crumbsGetter')

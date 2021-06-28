@@ -20,7 +20,6 @@ import { getCustomerGroups } from '@/api/customers/req'
 import { ICustomerGroup } from '@/api/customers/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 
 class DataTableComp extends DataTable<ICustomerGroup> {}
 
@@ -64,7 +63,7 @@ export default class extends Vue {
           title: 'Группы абонентов'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 }

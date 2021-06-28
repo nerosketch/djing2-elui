@@ -84,7 +84,6 @@ div
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { RouteRecord } from 'vue-router'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
@@ -244,7 +243,7 @@ export default class extends Vue {
           title: 'Тарифы'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 

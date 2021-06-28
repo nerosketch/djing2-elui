@@ -61,7 +61,6 @@ div
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IVlanIf } from '@/api/networks/types'
 import { VlanIfModule } from '@/store/modules/networks/vlan'
@@ -153,7 +152,7 @@ export default class extends mixins(VlanMixin) {
           title: 'Сеть'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 

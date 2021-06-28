@@ -74,7 +74,6 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { RouteRecord } from 'vue-router'
 import { IGateway } from '@/api/gateways/types'
 import GwForm from './gw-form.vue'
 import { GatewayModule } from '@/store/modules/gateways'
@@ -102,7 +101,7 @@ export default class extends mixins(GwsMethods) {
           title: 'Шлюзы'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
     // End Breadcrumbs
   }
 

@@ -170,7 +170,6 @@ import List from '@/components/List/index.vue'
 import NewStreetForm from './street/new-street-form.vue'
 import EditStreets from './street/edit-streets.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 import { GroupModule } from '@/store/modules/groups'
 import PingProfile from './ping-profile.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
@@ -381,7 +380,7 @@ export default class extends Vue {
           title: this.$store.state.group.title
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 

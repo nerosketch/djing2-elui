@@ -46,7 +46,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getPayGateways } from '@/api/fin/req'
@@ -149,7 +148,7 @@ export default class extends Vue {
           title: 'Финансы'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 
