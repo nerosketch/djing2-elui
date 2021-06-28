@@ -33,7 +33,7 @@ import Device from '@/views/customers/device.vue'
 import Network from './network.vue'
 import CustomerDocs from './docs.vue'
 import Markers from './markers.vue'
-import CustomerCommentList from '@/views/customers/comments/list.vue'
+import CustomerCommentList from '@/views/customers/comments.vue'
 
 @Component({
   name: 'Info',

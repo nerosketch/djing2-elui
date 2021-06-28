@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import {
   IDRFAxiosResponsePromise,
-  IDRFListResponse,
 } from '@/api/types'
 
 export interface ICustomerComment {
@@ -12,7 +11,7 @@ export interface ICustomerComment {
   author_name: string
   author_avatar: string
   text: string
-  create_time: string
+  date_create: string
   can_remove: boolean
 }
 export type ICustomerCommentList = ICustomerComment[]

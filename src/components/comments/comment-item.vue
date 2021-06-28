@@ -6,7 +6,7 @@ el-card(
   template(v-slot:header)
     .clearfix
       span {{ comment.author_name }} 
-      small {{ comment.create_time }}
+      small {{ comment.date_create }}
       el-button.comment_del_btn(
         type="text" icon='el-icon-close'
         v-if="comment.can_remove"
@@ -18,15 +18,14 @@ el-card(
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { deleteCustomerComment } from '@/api/customer_comments/req'
-import { ICustomerComment } from '@/api/customer_comments/type'
+import { IComment } from './types'
 
 @Component({
   name: 'CommentItem'
 })
 export default class extends Vue {
   @Prop({ required: true })
-  private comment!: ICustomerComment
+  private comment!: IComment
 
   get defCardStyle() {
     return { padding: '10px 13px' }
@@ -36,11 +35,16 @@ export default class extends Vue {
     this.$confirm('Удалить комментарий?', {
       confirmButtonText: 'да',
       cancelButtonText: 'нет'
-    }).then(async() => {
-      await deleteCustomerComment(this.comment.id)
-      this.$message.success('Комментарий удалён')
-      this.$emit('deleted')
+    }).then(() => {
+      this.$emit('delete', this.comment.id)
     })
   }
 }
 </script>
+
+<style>
+.comment_del_btn {
+  float: right;
+  padding: 3px 0;
+}
+</style>
