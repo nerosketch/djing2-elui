@@ -7,7 +7,7 @@
       .clearfix
         span {{ comment.author_name }} 
         small {{ comment.date_create }}
-        el-button.comment_btn(
+        el-button.comment_del_btn(
           type="text" icon='el-icon-close'
           v-if="comment.can_remove"
           @click="delComment"
@@ -45,10 +45,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style>
-.comment_btn {
-  float: right;
-  padding: 3px 0;
-}
-</style>
