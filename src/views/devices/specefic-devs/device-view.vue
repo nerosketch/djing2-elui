@@ -46,10 +46,11 @@ export default class extends Vue {
     try {
       const { data } = await DeviceModule.GetDevice(this.devId)
       this.device = data
-      this.ready = true
       return data
     } catch (err) {
       this.$message.error(err)
+    } finally {
+      this.ready = true
     }
   }
 

@@ -49,7 +49,7 @@ export default class extends Vue {
   private async onSubmit() {
     this.loading = true
     for (const st of this.streets) {
-      await CustomerStreetModule.SET_PK(st.pk)
+      CustomerStreetModule.SET_PK(st.pk)
       await CustomerStreetModule.PatchStreet(st)
     }
     this.loading = false
