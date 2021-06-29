@@ -11,6 +11,7 @@
       top="5vh"
       title="Список ONU на глазу"
       :visible.sync="onuListDialog"
+      :close-on-click-modal="false"
     )
       onu-on-fiber(
         :devId="devId"

@@ -47,6 +47,7 @@ div
   el-dialog(
     title="Принадлежность услуг к группам"
     :visible.sync="srvAccDialog"
+    :close-on-click-modal="false"
   )
     service-accessory(
       v-on:done="srvAccDone"
@@ -55,6 +56,7 @@ div
   el-dialog(
     title="Купить услугу"
     :visible.sync="buyDialog"
+    :close-on-click-modal="false"
   )
     buy-service(
       v-on:done="buyDone"

@@ -31,6 +31,7 @@ div
   el-dialog(
     :title="(isNew ? 'Создание' : 'Изменение') + ' одноразового платежа'"
     :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
   )
     shot-form(
       v-on:done="frmDone"
@@ -38,6 +39,7 @@ div
   el-dialog(
     title="Принадлежность сайтам"
     :visible.sync="sitesDlg"
+    :close-on-click-modal="false"
   )
     sites-attach(
       :selectedSiteIds="$store.state.oneshotpay.sites"

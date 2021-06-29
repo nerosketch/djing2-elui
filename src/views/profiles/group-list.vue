@@ -33,6 +33,7 @@ div
   el-dialog(
     :title="dialogTitle"
     :visible.sync="ugFormDialog"
+    :close-on-click-modal="false"
   )
     user-group-form(
       v-on:done="frmDone"
@@ -43,6 +44,7 @@ div
     top="5vh"
     width="80%"
     :visible.sync="ugpDialog"
+    :close-on-click-modal="false"
   )
     user-group-perms(
       v-on:done="editPermsDone"

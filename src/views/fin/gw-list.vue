@@ -28,6 +28,7 @@
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       pay-gw-form(
         v-on:done="frmDone"
@@ -36,6 +37,7 @@
     el-dialog(
       title="Принадлежность сайтам"
       :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
     )
       sites-attach(
         :selectedSiteIds="$store.state.payalltimegateway.sites"

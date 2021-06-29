@@ -49,6 +49,7 @@ div
   el-dialog(
     :title="(isNew ? 'Создание' : 'Изменение') + ' услуги'"
     :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
   )
     service-form(
       v-on:done="frmDone"
@@ -57,6 +58,7 @@ div
     title="Кто имеет права на услугу"
     :visible.sync="permsDialog"
     top="5vh"
+    :close-on-click-modal="false"
   )
     object-perms(
       v-on:save="changeSrvObjectPerms"
@@ -67,6 +69,7 @@ div
   el-dialog(
     title="Принадлежность сайтам"
     :visible.sync="sitesDlg"
+    :close-on-click-modal="false"
   )
     sites-attach(
       :selectedSiteIds="$store.state.service.sites"
@@ -76,6 +79,7 @@ div
     title="Пользователи услуги"
     :visible.sync="customerServiceVisible"
     top="2vh"
+    :close-on-click-modal="false"
   )
     customer-service-list(
       :serviceId="currentCustomerServiceId"

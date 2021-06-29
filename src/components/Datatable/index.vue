@@ -37,6 +37,7 @@
     el-dialog(
       title="Отображаемые поля таблицы"
       :visible.sync="editFieldsVisibleloc"
+      :close-on-click-modal="false"
     )
       template(v-if="editFieldsVisibleloc")
         datatable-edit-fields(

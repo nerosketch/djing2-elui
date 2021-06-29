@@ -41,6 +41,7 @@
     el-dialog(
       title="Добавить учётку"
       :visible.sync="profileFormDialog"
+      :close-on-click-modal="false"
     )
       profile-form(
         v-on:done="addProfileDone"

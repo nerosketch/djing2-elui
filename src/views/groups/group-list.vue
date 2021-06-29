@@ -39,6 +39,7 @@
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       group-form(
         v-on:done="frmDone"
@@ -48,6 +49,7 @@
       :title="`Кто имеет права на группу абонентов \"${GroupTitleGetter}\"`"
       :visible.sync="permsDialog"
       top="5vh"
+      :close-on-click-modal="false"
     )
       object-perms(
         v-on:save="changeGroupObjectPerms"
@@ -59,6 +61,7 @@
     el-dialog(
       title="Принадлежность сайтам"
       :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
     )
       sites-attach(
         :selectedSiteIds="$store.state.group.sites"

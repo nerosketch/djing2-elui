@@ -28,6 +28,7 @@
     el-dialog(
       title="Адресный объект"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       addr-form(
         v-on:done="frmDone"

@@ -40,6 +40,7 @@ div
   el-dialog(
     :title="dialogTitle"
     :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
   )
     pool-form(
       v-on:done="frmDone"
@@ -47,6 +48,7 @@ div
   el-dialog(
     title="Принадлежность сайтам"
     :visible.sync="sitesDlg"
+    :close-on-click-modal="false"
   )
     sites-attach(
       :selectedSiteIds="$store.state.netpool.sites"

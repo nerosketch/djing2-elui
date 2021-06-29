@@ -59,6 +59,7 @@
     el-dialog(
       title="Железка"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       dev-form(
         v-if="dialogVisible"
@@ -67,6 +68,7 @@
     el-dialog(
       title="Добавить устройство"
       :visible.sync="dialogNewDev"
+      :close-on-click-modal="false"
     )
       new-dev-form(
         v-if="dialogNewDev"
@@ -78,6 +80,7 @@
       title="Кто имеет права на устройство"
       :visible.sync="permsDialog"
       top="5vh"
+      :close-on-click-modal="false"
     )
       object-perms(
         v-on:save="changeDeviceObjectPerms"
@@ -89,6 +92,7 @@
     el-dialog(
       title="Принадлежность оборудования сайтам"
       :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
     )
       sites-attach(
         :selectedSiteIds="$store.state.devicemodule.sites"

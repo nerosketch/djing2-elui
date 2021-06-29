@@ -63,6 +63,7 @@
   el-dialog(
     :visible.sync="gwFormDialog"
     title="Изменить шлюз доступа"
+    :close-on-click-modal="false"
   )
     gw-form(
       v-on:done="gwFrmDone"

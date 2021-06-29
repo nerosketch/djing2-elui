@@ -67,6 +67,7 @@
     el-dialog(
       :visible.sync="devFormDialog"
       title="Изменить ONU"
+      :close-on-click-modal="false"
     )
       dev-form(
         v-on:done="devFrmDone"

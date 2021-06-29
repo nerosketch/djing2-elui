@@ -66,6 +66,7 @@
     el-dialog(
       title="Добавить ONU"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       new-dev-form(
         v-if="dialogVisible"

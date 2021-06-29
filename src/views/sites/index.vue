@@ -21,6 +21,7 @@
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       site-form(
         v-on:done="frmDone"

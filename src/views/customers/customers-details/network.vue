@@ -61,6 +61,7 @@
     el-dialog(
       :title="(isAddNewLease ? 'Добавить' : 'Изменить') + ' аренду ip'"
       :visible.sync='editDialog'
+      :close-on-click-modal="false"
     )
       customer-lease-form(
         :isAddNewLease="isAddNewLease"

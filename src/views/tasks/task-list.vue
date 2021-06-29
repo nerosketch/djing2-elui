@@ -38,6 +38,7 @@ div
   el-dialog(
     title='Создание задачи'
     :visible.sync='formDialog'
+    :close-on-click-modal="false"
   )
     task-form
 </template>

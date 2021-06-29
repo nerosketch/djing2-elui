@@ -17,6 +17,7 @@ div
   el-dialog(
     title="Пополнить счёт"
     :visible.sync="addCashDialog"
+    :close-on-click-modal="false"
   )
     add-cash(v-on:done="addCashDone")
 </template>

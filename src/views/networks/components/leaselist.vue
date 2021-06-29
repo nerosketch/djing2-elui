@@ -22,6 +22,7 @@ div
   el-dialog(
     title="Изменение Сессии"
     :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
   )
     lease-form(
       v-on:done="frmDone"

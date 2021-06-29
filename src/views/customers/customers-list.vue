@@ -87,6 +87,7 @@
       title='Добавить абонента'
       :visible.sync='addCustomerDialog'
       top="5vh"
+      :close-on-click-modal="false"
     )
       new-customer-form(
         :selectedGroup='groupId'
@@ -96,6 +97,7 @@
     el-dialog(
       :visible.sync="addStreetDialog"
       title="Добавить улицу"
+      :close-on-click-modal="false"
     )
       new-street-form(
         v-on:done="addStreetDone"
@@ -116,6 +118,7 @@
       title="Кто имеет права на абонента"
       :visible.sync="permsDialog"
       top="5vh"
+      :close-on-click-modal="false"
     )
       object-perms(
         v-on:save="changeCustomerObjectPerms"
@@ -127,6 +130,7 @@
       v-if="$perms.is_superuser"
       title="Принадлежность выбранных абонентов сайтам"
       :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
     )
       sites-attach(
         v-on:save="selectedCustomerSitesSave"
