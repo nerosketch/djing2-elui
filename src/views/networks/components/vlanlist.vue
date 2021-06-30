@@ -82,11 +82,6 @@ export default class extends mixins(VlanMixin) {
   }
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'id',
-      label: 'ID',
-      'min-width': 70
-    },
-    {
       prop: 'title',
       label: 'Название',
       sortable: true,

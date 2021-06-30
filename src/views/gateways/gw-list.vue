@@ -41,9 +41,6 @@
             b Абоны с услугой
           dd
             i {{ gw.customer_count_w_service }}
-          dt
-            b ID
-          dd {{ gw.id }}
         el-button-group
           el-button(
             size='mini' icon='el-icon-edit' @click="openGwForm(gw)"

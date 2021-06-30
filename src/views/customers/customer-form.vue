@@ -73,7 +73,7 @@
     )
       gws-selectfield(v-model="frmMod.gateway")
     el-form-item(
-      label="Комментарий"
+      label="Памятка"
       prop='description'
     )
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40")

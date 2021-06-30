@@ -50,11 +50,6 @@ export default class extends Vue {
   }
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'id',
-      label: 'ID',
-      'min-width': 70
-    },
-    {
       prop: 'ip_address',
       label: 'IP Адрес',
       sortable: true,

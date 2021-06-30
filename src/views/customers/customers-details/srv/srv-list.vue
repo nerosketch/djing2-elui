@@ -18,12 +18,6 @@ div
           icon='el-icon-shopping-cart-2' circle
         )
     el-table-column(
-      align="center"
-      label="ID"
-      width="60"
-      prop='pk'
-    )
-    el-table-column(
       label="Услуга"
       prop='title'
     )

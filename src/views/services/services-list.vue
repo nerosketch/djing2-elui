@@ -89,7 +89,7 @@ div
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
-import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
 import { getServices, setServiceObjectsPerms, getServiceObjectsPerms, getServiceOSelectedObjectPerms } from '@/api/services/req'
 import { ServiceModule } from '@/store/modules/services/service'
@@ -112,12 +112,6 @@ export default class extends Vue {
     table: DataTableComp
   }
   private tableColumns: IDataTableColumn[] = [
-    {
-      prop: 'pk',
-      label: 'ID',
-      'min-width': 50,
-      align: DataTableColumnAlign.CENTER
-    },
     {
       prop: 'title',
       label: 'Название',

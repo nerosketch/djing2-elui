@@ -267,10 +267,6 @@ export default class extends Vue {
       label: 'Маркер'
     },
     {
-      prop: 'traf_octs',
-      label: 'Траф'
-    },
-    {
       prop: 'ping',
       label: 'Ping',
       'min-width': 150
@@ -303,7 +299,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs,marker_icons'
+        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,marker_icons'
       })
       if (street) {
         newParams.street = Number(street)

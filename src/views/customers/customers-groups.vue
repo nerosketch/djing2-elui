@@ -30,11 +30,6 @@ class DataTableComp extends DataTable<ICustomerGroup> {}
 export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'pk',
-      label: 'ID',
-      'min-width': 60
-    },
-    {
       prop: 'title',
       label: 'Название',
       'min-width': 250

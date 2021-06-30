@@ -69,11 +69,6 @@ export default class extends Vue {
   }
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'pk',
-      label: 'ID',
-      'min-width': 70
-    },
-    {
       prop: 'name',
       label: 'Название платежа',
       'min-width': 200
