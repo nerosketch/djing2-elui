@@ -44,6 +44,7 @@
         p(type='flex' v-if="macsNotEqual")
           b Внимание!
           span  Мак адрес в билинге не совпадает на мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить".
+            | Если ONU не найдена на OLT то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
         el-row(type='flex' v-else-if="$store.getters.isOnuRegistered")
           el-col(style='width: 128px;')
             i.icon-big(:class="iconStatusClass")
