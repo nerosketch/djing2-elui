@@ -70,7 +70,7 @@
       label="Описание"
       prop='description'
     )
-      el-input(v-model="frmMod.description" type="textarea" rows="5")
+      el-input(v-model="frmMod.description" type="textarea" rows="5" autosize)
     el-form-item
       el-button(
         type="primary"

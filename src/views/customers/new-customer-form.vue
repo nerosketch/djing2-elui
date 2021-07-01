@@ -42,7 +42,7 @@
       label="Комментарий"
       prop='description'
     )
-      el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40")
+      el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize)
     el-form-item(
       label="Улица"
       prop='street'
