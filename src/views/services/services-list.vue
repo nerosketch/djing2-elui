@@ -89,7 +89,7 @@ div
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
-import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
+import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
 import { getServices, setServiceObjectsPerms, getServiceObjectsPerms, getServiceOSelectedObjectPerms } from '@/api/services/req'
 import { ServiceModule } from '@/store/modules/services/service'
@@ -102,7 +102,7 @@ class DataTableComp extends DataTable<IService> {}
 @Component({
   name: 'ServiceList',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     ServiceForm,
     CustomerServiceList
   }
@@ -111,6 +111,7 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
@@ -166,6 +167,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private services: IService[] = []
   private dialogVisible = false
   private permsDialog = false
@@ -194,7 +196,7 @@ export default class extends Vue {
 
   private loadServices(params?: IDRFRequestListParametersService) {
     if (params) {
-      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
+      params.fields = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
     }
     return getServices(params)
   }
@@ -211,17 +213,21 @@ export default class extends Vue {
   get srvIdGetter() {
     return ServiceModule.pk
   }
+
   private openPermsDialog(s: IService) {
     ServiceModule.SET_ALL_SERVICE(s)
     this.permsDialog = true
   }
+
   private async changeSrvObjectPerms(info: IObjectGroupPermsResultStruct) {
     await setServiceObjectsPerms(this.srvIdGetter, info)
     this.permsDialog = false
   }
+
   private getSrvObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
     return getServiceObjectsPerms(this.srvIdGetter)
   }
+
   private serviceGetSelectedObjectPerms(srvId: number, profileGroupId: number) {
     return getServiceOSelectedObjectPerms(srvId, profileGroupId)
   }
@@ -254,6 +260,7 @@ export default class extends Vue {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(srv: IService) {
     ServiceModule.SET_ALL_SERVICE(srv)
     this.sitesDlg = true
