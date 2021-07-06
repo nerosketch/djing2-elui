@@ -11,7 +11,6 @@ div
 
     el-button(
       @click="addCashDialog=true"
-      :disabled="!$perms.customers.can_add_balance"
     ) Пополнить счёт
 
   el-dialog(
