@@ -22,7 +22,6 @@
         icon='el-icon-upload'
         type="primary" @click="onSubmit"
         :loading="loading"
-        :disabled="!$perms.customers.can_add_balance"
       ) Сохранить
 </template>
 
@@ -67,13 +66,16 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['frm'] as Form).validate(async valid => {
+    (this.$refs.frm as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        await CustomerModule.AddBalance(this.frmMod)
-        await CustomerModule.UpdateCustomer()
-        this.loading = false
-        this.$emit('done', this.frmMod.cost)
+        try {
+          await CustomerModule.AddBalance(this.frmMod)
+          await CustomerModule.UpdateCustomer()
+          this.$emit('done', this.frmMod.cost)
+        } finally {
+          this.loading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

@@ -150,8 +150,8 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async UpdateCustomer() {
-    await this.GetCustomer(this.pk)
+  public UpdateCustomer() {
+    return this.GetCustomer(this.pk)
   }
 
   @Action
@@ -179,23 +179,23 @@ class Customer extends VuexModule implements ICustomer {
   }
 
   @Action
-  public async PickService(buyPayload: IBuyPayloadType) {
-    await pickService(this.pk, buyPayload)
+  public PickService(buyPayload: IBuyPayloadType) {
+    return pickService(this.pk, buyPayload)
   }
 
   @Action
-  public async MakeShot(shotId: number) {
-    await makeShot(this.pk, shotId)
+  public MakeShot(shotId: number) {
+    return makeShot(this.pk, shotId)
   }
 
   @Action
-  public async StopService() {
-    await stopService(this.pk)
+  public StopService() {
+    return stopService(this.pk)
   }
 
   @Action
-  public async AddBalance(qry: IBalanceAmountRequest) {
-    await addBalance(this.pk, qry)
+  public AddBalance(qry: IBalanceAmountRequest) {
+    return addBalance(this.pk, qry)
   }
 
   @Action

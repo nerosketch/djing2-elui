@@ -37,11 +37,18 @@ service.interceptors.response.use(
     }
   },
   error => {
-    if (error.response.status === 403) {
-      console.log('Permission Denied', error.response)
-      return
-    }
     let er = error.response.data
+    if (error.response.status === 403) {
+      if (er.detail) {
+        Message({
+          message: er.detail || error.response.statusText,
+          type: 'error',
+          duration: 7000,
+          showClose: true
+        })
+      }
+      return Promise.reject(error)
+    }
     if (typeof er === 'object') {
       er = Object.entries(er).join('\n')
     }
