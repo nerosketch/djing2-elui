@@ -8,10 +8,8 @@ import {
   IMessengerSubscriberList,
   IMessengerSubscriberAxoisResponsePromise,
   IMessengerSubscriber,
-  IMessengerMessageList,
-  IMessengerMessageListAxiosResponsePromise,
-  IMessengerMessage,
-  IMessengerMessageAxoisResponsePromise
+  IBotTypesAxiosPromise,
+  IBotType,
 } from '@/api/messenger/types'
 import { IDRFRequestListParameters } from '@/api/types'
 
@@ -36,20 +34,8 @@ export const messengerSendWebHook = (mId: number) =>
 export const messengerStopWebHook = (mId: number) =>
   request.get(`/messenger/${mId}/stop_webhook/`)
 
-export const getMessengerMessages = (params?: IDRFRequestListParameters): IMessengerMessageListAxiosResponsePromise =>
-  request.get<IMessengerMessageList>('/messenger/msg/', { params })
-
-export const getMessengerMessage = (mId: number): IMessengerMessageAxoisResponsePromise =>
-  request.get<IMessengerMessage>(`/messenger/msg/${mId}/`)
-
-export const addMessengerMessage = (newDat: object): IMessengerMessageAxoisResponsePromise =>
-  request.post<IMessengerMessage>('/messenger/msg/', newDat)
-
-export const patchMessengerMessage = (mId: number, newDat: object): IMessengerMessageAxoisResponsePromise =>
-  request.patch<IMessengerMessage>(`/messenger/msg/${mId}/`, newDat)
-
-export const deleteMessengerMessage = (mId: number) =>
-  request.delete(`/messenger/msg/${mId}/`)
+export const getMessengerTypes = (): IBotTypesAxiosPromise =>
+  request.get<IBotType[]>('/messenger/get_bot_types/')
 
 export const getMessengerSubscribers = (params?: IDRFRequestListParameters): IMessengerSubscriberListAxiosResponsePromise =>
   request.get<IMessengerSubscriberList>('/messenger/subscriber/', { params })

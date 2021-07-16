@@ -8,7 +8,6 @@
     :model='frmMod'
     v-loading='isLoading'
   )
-    p frmMod {{ frmMod }}
     el-form-item(
       label="Название"
       prop='title'
@@ -18,72 +17,79 @@
       label="Описание"
       prop='description'
     )
-      el-text(v-model="frmMod.description")
+      el-input(v-model="frmMod.description")
     el-form-item(
       label="Тех.код"
       prop='bot_type'
     )
       el-select(v-model="frmMod.bot_type")
         el-option(
-          v-for="mbt in MessengerBotTypes"
+          v-for="mbt in messengerBotTypes"
           :key="mbt.val"
           :value="mbt.val"
           :label="mbt.text"
         )
     el-form-item(
-      label="название в url"
-      prop='slug'
+      label="Токен"
+      prop='token'
     )
-      el-input(v-model="frmMod.slug")
-    el-form-item(
-      label="название в url"
-      prop='slug'
-    )
-      span Token: {{ $perms.state.messenger.token }}
+      el-input(v-model="frmMod.token")
     el-form-item
-      el-button(type="primary" @click="onSubmit" :loading="isLoading" :disabled="frmMod.bot_type===0") Сохранить
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+      ) Сохранить
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { latinValidator } from '@/utils/validate'
+import { Component, Vue } from 'vue-property-decorator'
+import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { MessengerModule } from '@/store/modules/messenger/base-messenger'
-import { IMessengerBotType } from '@/api/messenger/types'
+import { getMessengerTypes } from '@/api/messenger/req'
+
+const tx = 'Нужно знать с каким API будет работать бот'
 
 @Component({
   name: 'MessengerForm'
 })
 export default class extends Vue {
   private isLoading = false
-  private MessengerBotTypes = [
-    { val: 0, text: 'не определено' },
-    { val: 1, text: 'Viber' },
-    { val: 2, text: 'Telegram' }
-  ]
+
+  private messengerBotTypes: {
+    val: number
+    text: string
+  }[] = []
 
   private frmRules = {
     title: [
       { required: true, message: 'Название для мессенджера надо указать', trigger: 'blur' }
     ],
-    slug: [
-      { max: 50, message: 'Максимум 50 символов', trigger: 'change' },
-      { validator: latinValidator, trigger: 'change', message: 'Только латиница' },
-      { required: true, message: 'Название для мессенджера надо указать', trigger: 'blur' }
+    token: [
+      { required: true, message: 'Токен для мессенджера надо указать', trigger: 'blur' }
+    ],
+    bot_type: [
+      { validator: positiveNumberValueAvailable, trigger: 'change', message: tx },
+      { required: true, message: tx, trigger: 'blur' }
     ]
   }
 
   private frmMod = {
     title: '',
     description: '',
-    bot_type: IMessengerBotType.UNDEFINED,
-    slug: ''
+    bot_type: 0,
+    token: ''
   }
 
   created() {
     this.frmMod.title = ''
-    this.frmMod.bot_type = IMessengerBotType.UNDEFINED
-    this.frmMod.slug = ''
+    this.frmMod.description = ''
+    this.frmMod.bot_type = 0
+    this.frmMod.token = ''
+    if (this.messengerBotTypes.length === 0) {
+      this.loadMessengerTypes()
+    }
   }
 
   private onSubmit() {
@@ -102,6 +108,13 @@ export default class extends Vue {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  private async loadMessengerTypes() {
+    const { data } = await getMessengerTypes()
+    const mt = data.map(m => ({ val: m[0], text: m[1] }))
+    mt.unshift({ val: 0, text: 'не определено' })
+    this.messengerBotTypes = mt
   }
 }
 </script>

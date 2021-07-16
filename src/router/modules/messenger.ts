@@ -11,7 +11,7 @@ const messengerRoutes: RouteConfig = {
       component: () => import(/* webpackChunkName: "messenger" */ '@/views/messenger/messenger-list.vue'),
       meta: {
         title: 'Мессенджеры',
-        icon: 'hamburger'
+        icon: 'el-icon-s-promotion'
       }
     },
     {
