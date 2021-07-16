@@ -20,11 +20,13 @@ div
   el-dialog(
     title="Дополнительные телефоны"
     :visible.sync="openTelsDlg"
+    :close-on-click-modal="false"
   )
     additional-tels(ref="additionaltels")
   el-dialog(
     title="Добавить телефон"
     :visible.sync="openAddTelsDlg"
+    :close-on-click-modal="false"
   )
     tel-form(
       :customer="$store.state.customer.pk"

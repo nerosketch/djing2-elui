@@ -103,7 +103,6 @@ import { Form } from 'element-ui'
 import { IUserProfile } from '@/api/profiles/types'
 import FormMixin from '@/utils/forms'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 import TaskMixin from './task-mixin'
 
 @Component({
@@ -201,7 +200,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
           title: 'Редактировать'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
     // End Breadcrumbs
   }
 

@@ -1,24 +1,28 @@
 <template lang="pug">
   el-row(:gutter="5")
-    el-col(:sm='24' :md='12')
+    el-col.vert_space(:sm='24' :md='12')
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix Изменение абонента
         customer-form
-    el-col(:sm='24' :md='12')
+    el-col.vert_space(:sm='24' :md='12')
       device
-    el-col(:sm='24' :md='12')
+    el-col.vert_space(:sm='24' :md='12')
       network
-    el-col(:sm='24' :md='12')
-      el-card(shadow="never")
-        template(v-slot:header)
-          .clearfix Загрузки
-        customer-docs
-    el-col(:sm='24' :md='12')
+    el-col.vert_space(:sm='24' :md='12')
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix Флаги абонента
         markers
+    el-col.vert_space(:sm='24' :md='12')
+      el-card(shadow="never")
+        template(v-slot:header)
+          .clearfix Документы
+        customer-docs
+    el-col.vert_space(:sm='24' :md='12')
+      customer-comment-list(
+        :customerId="$store.state.customer.pk"
+      )
 
 </template>
 
@@ -29,6 +33,7 @@ import Device from '@/views/customers/device.vue'
 import Network from './network.vue'
 import CustomerDocs from './docs.vue'
 import Markers from './markers.vue'
+import CustomerCommentList from '@/views/customers/comments.vue'
 
 @Component({
   name: 'Info',
@@ -37,8 +42,15 @@ import Markers from './markers.vue'
     Device,
     Network,
     CustomerDocs,
-    Markers
+    Markers,
+    CustomerCommentList
   }
 })
 export default class extends Vue {}
 </script>
+
+<style scoped>
+.vert_space {
+  padding-bottom: 3px;
+}
+</style>

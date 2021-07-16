@@ -1,15 +1,5 @@
 <template lang="pug">
   el-row(:gutter='5')
-    el-col(:span='24')
-      el-alert(
-        v-if="macsNotEqual"
-        title="Внимание!"
-        description='Мак адрес в билинге не совпадает на мак адресом, полученным с OLT. Нужно обновить "Доп. инфо для snmp". Или нажмите кнопку "Исправить ниже"'
-        type="warning"
-        effect="dark"
-        show-icon
-        center
-      )
     el-col(:lg="12" :sm='24' v-if="device")
       el-card(
         shadow="never"
@@ -51,7 +41,12 @@
       )
         template(v-slot:header) Состояние ONU
           el-link(style="float: right" icon='el-icon-refresh' @click="refreshDev")
-        el-row(type='flex' v-if="isOnuRegistered")
+        p(type='flex' v-if="macsNotEqual")
+          b Внимание!
+          span  Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить".
+            |  Если И она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
+            |  Так же можно проверить место на "глазе" olt, может он заполнен.
+        el-row(type='flex' v-else-if="$store.getters.isOnuRegistered")
           el-col(style='width: 128px;')
             i.icon-big(:class="iconStatusClass")
           el-col(v-if="onuDetails !== null")
@@ -65,8 +60,7 @@
               b {{ inf[0] }}: 
               | {{ inf[1] }}
         el-row(v-else)
-          el-col
-            b ONU не зарегистрирована
+          el-col Нет информации об ONU. (Поле "Доп. инфо для snmp" в форме редактирования устройства). Возможно, onu не зарегистрирована.
         fix-onu-btn(v-if="macsNotEqual")
 
     el-col(:lg="12" :sm='24')
@@ -75,6 +69,7 @@
     el-dialog(
       :visible.sync="devFormDialog"
       title="Изменить ONU"
+      :close-on-click-modal="false"
     )
       dev-form(
         v-on:done="devFrmDone"
@@ -124,10 +119,6 @@ export default class extends Vue {
     return !this.onuDetails || this.onuDetails.status === IOnuDetailsStatus.UNKNOWN
   }
 
-  get isOnuRegistered() {
-    return DeviceModule.isOnuRegistered
-  }
-
   get macFromOlt(): string {
     return this.onuDetails ? this.onuDetails.mac : ''
   }
@@ -152,6 +143,7 @@ export default class extends Vue {
   private async getDetails() {
     if (this.device !== null) {
       const { data } = await scanPonDetails(this.device.pk)
+      console.log('onu Info:', data)
       this.onuDetails = data
     }
   }
@@ -177,11 +169,6 @@ export default class extends Vue {
 
   get macsNotEqual(): boolean {
     return this.device && this.onuDetails ? this.device.mac_addr !== this.macFromOlt : false
-  }
-
-  @Watch('$store.state.devicemodule.snmp_extra')
-  private onDevChanged() {
-    this.getDetails()
   }
 }
 </script>

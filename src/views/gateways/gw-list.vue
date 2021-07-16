@@ -41,9 +41,6 @@
             b Абоны с услугой
           dd
             i {{ gw.customer_count_w_service }}
-          dt
-            b ID
-          dd {{ gw.id }}
         el-button-group
           el-button(
             size='mini' icon='el-icon-edit' @click="openGwForm(gw)"
@@ -63,6 +60,7 @@
   el-dialog(
     :visible.sync="gwFormDialog"
     title="Изменить шлюз доступа"
+    :close-on-click-modal="false"
   )
     gw-form(
       v-on:done="gwFrmDone"
@@ -74,7 +72,6 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { RouteRecord } from 'vue-router'
 import { IGateway } from '@/api/gateways/types'
 import GwForm from './gw-form.vue'
 import { GatewayModule } from '@/store/modules/gateways'
@@ -102,7 +99,7 @@ export default class extends mixins(GwsMethods) {
           title: 'Шлюзы'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
     // End Breadcrumbs
   }
 

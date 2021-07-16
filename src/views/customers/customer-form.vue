@@ -73,10 +73,10 @@
     )
       gws-selectfield(v-model="frmMod.gateway")
     el-form-item(
-      label="Комментарий"
+      label="Памятка"
       prop='description'
     )
-      el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40")
+      el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize)
     el-form-item
       el-button-group
         el-button(
@@ -139,6 +139,7 @@
     el-dialog(
       title="Принадлежность сайтам"
       :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
     )
       sites-attach(
         :selectedSiteIds="$store.state.customer.sites"

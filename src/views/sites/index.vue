@@ -21,6 +21,7 @@
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       site-form(
         v-on:done="frmDone"
@@ -36,7 +37,6 @@ import { getSites } from '@/api/sites/req'
 import SiteForm from './site-form.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 
 class DataTableComp extends DataTable<ISite> {}
 
@@ -94,12 +94,12 @@ export default class extends Vue {
     return getSites(params)
   }
 
-  private async openEdit(site: ISite) {
-    await SiteModule.SET_ALL_SITE(site)
+  private openEdit(site: ISite) {
+    SiteModule.SET_ALL_SITE(site)
     this.dialogVisible = true
   }
-  private async openNew() {
-    await SiteModule.RESET_ALL_SITE()
+  private openNew() {
+    SiteModule.RESET_ALL_SITE()
     this.dialogVisible = true
   }
 
@@ -119,7 +119,7 @@ export default class extends Vue {
           title: 'Сайты'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 }

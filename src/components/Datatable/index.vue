@@ -37,6 +37,7 @@
     el-dialog(
       title="Отображаемые поля таблицы"
       :visible.sync="editFieldsVisibleloc"
+      :close-on-click-modal="false"
     )
       template(v-if="editFieldsVisibleloc")
         datatable-edit-fields(
@@ -157,6 +158,7 @@ export default class <T> extends Vue {
 
   public async GetTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     this.page = 1
+    this.endPage = false
     if (this.intLoading) return
     try {
       this.intLoading = true

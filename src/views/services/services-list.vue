@@ -49,6 +49,7 @@ div
   el-dialog(
     :title="(isNew ? 'Создание' : 'Изменение') + ' услуги'"
     :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
   )
     service-form(
       v-on:done="frmDone"
@@ -57,6 +58,7 @@ div
     title="Кто имеет права на услугу"
     :visible.sync="permsDialog"
     top="5vh"
+    :close-on-click-modal="false"
   )
     object-perms(
       v-on:save="changeSrvObjectPerms"
@@ -67,6 +69,7 @@ div
   el-dialog(
     title="Принадлежность сайтам"
     :visible.sync="sitesDlg"
+    :close-on-click-modal="false"
   )
     sites-attach(
       :selectedSiteIds="$store.state.service.sites"
@@ -76,6 +79,7 @@ div
     title="Пользователи услуги"
     :visible.sync="customerServiceVisible"
     top="2vh"
+    :close-on-click-modal="false"
   )
     customer-service-list(
       :serviceId="currentCustomerServiceId"
@@ -84,7 +88,6 @@ div
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { RouteRecord } from 'vue-router'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
@@ -99,7 +102,7 @@ class DataTableComp extends DataTable<IService> {}
 @Component({
   name: 'ServiceList',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     ServiceForm,
     CustomerServiceList
   }
@@ -108,13 +111,8 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
-    {
-      prop: 'pk',
-      label: 'ID',
-      'min-width': 50,
-      align: DataTableColumnAlign.CENTER
-    },
     {
       prop: 'title',
       label: 'Название',
@@ -169,6 +167,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private services: IService[] = []
   private dialogVisible = false
   private permsDialog = false
@@ -197,7 +196,7 @@ export default class extends Vue {
 
   private loadServices(params?: IDRFRequestListParametersService) {
     if (params) {
-      params['fields'] = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
+      params.fields = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
     }
     return getServices(params)
   }
@@ -214,17 +213,21 @@ export default class extends Vue {
   get srvIdGetter() {
     return ServiceModule.pk
   }
+
   private openPermsDialog(s: IService) {
     ServiceModule.SET_ALL_SERVICE(s)
     this.permsDialog = true
   }
+
   private async changeSrvObjectPerms(info: IObjectGroupPermsResultStruct) {
     await setServiceObjectsPerms(this.srvIdGetter, info)
     this.permsDialog = false
   }
+
   private getSrvObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
     return getServiceObjectsPerms(this.srvIdGetter)
   }
+
   private serviceGetSelectedObjectPerms(srvId: number, profileGroupId: number) {
     return getServiceOSelectedObjectPerms(srvId, profileGroupId)
   }
@@ -244,7 +247,7 @@ export default class extends Vue {
           title: 'Тарифы'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 
@@ -257,6 +260,7 @@ export default class extends Vue {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(srv: IService) {
     ServiceModule.SET_ALL_SERVICE(srv)
     this.sitesDlg = true

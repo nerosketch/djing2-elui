@@ -59,6 +59,7 @@
     el-dialog(
       title="Сохранить ONU"
       :visible.sync="saveOnuFormDialog"
+      :close-on-click-modal="false"
     )
       new-dev-form(
         :initialMac="newOnuInitialMac"

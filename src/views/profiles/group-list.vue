@@ -33,6 +33,7 @@ div
   el-dialog(
     :title="dialogTitle"
     :visible.sync="ugFormDialog"
+    :close-on-click-modal="false"
   )
     user-group-form(
       v-on:done="frmDone"
@@ -43,6 +44,7 @@ div
     top="5vh"
     width="80%"
     :visible.sync="ugpDialog"
+    :close-on-click-modal="false"
   )
     user-group-perms(
       v-on:done="editPermsDone"
@@ -51,7 +53,6 @@ div
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getUserGroups, delUserGroup } from '@/api/profiles/req'
@@ -152,7 +153,7 @@ export default class extends Vue {
           title: 'Учётные записи'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 }

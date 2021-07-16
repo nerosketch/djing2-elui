@@ -9,6 +9,7 @@ import profileRoutes from './modules/profiles'
 import finRoutes from './modules/fin'
 import messengerRoutes from './modules/messenger'
 import sitesRoutes from './modules/sites'
+import sormRoutes from './modules/sorm'
 
 Vue.use(Router)
 
@@ -130,6 +131,7 @@ export const constantRoutes: RouteConfig [] = [
   finRoutes,
   messengerRoutes,
   sitesRoutes,
+  sormRoutes,
   {
     path: '*',
     redirect: '/404',

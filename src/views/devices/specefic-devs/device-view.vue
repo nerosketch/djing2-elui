@@ -25,7 +25,6 @@ import PonOnu from './pon-onu.vue'
 import OltZte from './gpon/olt-zte.vue'
 import { GroupModule } from '@/store/modules/groups'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 
 @Component({
   name: 'DeviceView',
@@ -47,10 +46,11 @@ export default class extends Vue {
     try {
       const { data } = await DeviceModule.GetDevice(this.devId)
       this.device = data
-      this.ready = true
       return data
     } catch (err) {
       this.$message.error(err)
+    } finally {
+      this.ready = true
     }
   }
 
@@ -107,7 +107,7 @@ export default class extends Vue {
             title: DeviceModule.comment
           }
         }
-      ] as RouteRecord[])
+      ] as any[])
     }
   }
   get grpName() {

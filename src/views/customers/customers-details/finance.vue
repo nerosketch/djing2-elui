@@ -11,12 +11,12 @@ div
 
     el-button(
       @click="addCashDialog=true"
-      :disabled="!$perms.customers.can_add_balance"
     ) Пополнить счёт
 
   el-dialog(
     title="Пополнить счёт"
     :visible.sync="addCashDialog"
+    :close-on-click-modal="false"
   )
     add-cash(v-on:done="addCashDone")
 </template>

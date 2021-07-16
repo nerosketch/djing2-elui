@@ -74,6 +74,7 @@
     el-dialog(
       title="Поменять пароль"
       :visible.sync="passwordFormDialog"
+      :close-on-click-modal="false"
     )
       password-form(
         :profileId="$store.state.userprofile.pk"
@@ -84,6 +85,7 @@
     el-dialog(
       title="Назначить принадлежность группам пользователей"
       :visible.sync="userGroupAccessDialog"
+      :close-on-click-modal="false"
     )
       profile-groups(
         v-on:done="userGroupAccessDone"
@@ -91,6 +93,7 @@
     el-dialog(
       title="Принадлежность сайтам"
       :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
     )
       sites-attach(
         :selectedSiteIds="$store.state.userprofile.sites"

@@ -2,7 +2,9 @@
   el-card
     template(v-slot:header)
       .clearfix {{ device.comment || 'BDCOM' }}
-        small {{ ` ${device.ip_address || device.mac_addr}` }}
+        small {{ ` ${device.ip_address || device.mac_addr} ` }}
+        router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+          el-link(type="primary") [{{ device.parent_dev_name }}]
     el-row(v-if="ready")
       el-col(
         :span="24"
@@ -66,6 +68,7 @@
     el-dialog(
       title="Добавить ONU"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       new-dev-form(
         v-if="dialogVisible"
@@ -108,15 +111,21 @@ export default class extends Vue {
 
   private async fetchItems() {
     if (this.device) {
-      const { data } = await scanOnuList(this.device.pk, (c: ProgressEvent) => {
+      let { data } = await scanOnuList(this.device.pk, (c: ProgressEvent) => {
         this.loadPercent = Math.floor((100 * c.loaded) / c.total)
       })
-      for (const line of data.split('\n')) {
+      let newData
+      if (typeof data === 'string') {
+        newData = data.trim().split('\n').map(k => JSON.parse(k))
+      } else {
+        newData = [data]
+      }
+      for (const line of newData) {
         try {
-          let onu = JSON.parse(line) as IScannedONU
-          const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === onu.fiberid)
+          //let onu = JSON.parse(line) as IScannedONU
+          const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === line.fiberid)
           if (fibIndex !== undefined) {
-            this.fibers[fibIndex].onuList.push(onu)
+            this.fibers[fibIndex].onuList.push(line)
           }
         } catch (e) {
           continue
@@ -144,7 +153,6 @@ export default class extends Vue {
         this.loading = false
       })
     }
-    throw new Error('devId is required')
   }
 
   created() {

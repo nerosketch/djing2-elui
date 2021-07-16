@@ -75,6 +75,7 @@
     el-dialog(
       :visible.sync="addVlanVisible"
       title="Добавить vlan на порт"
+      :close-on-click-modal="false"
     )
       keep-alive
         add-vlan(

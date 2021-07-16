@@ -84,6 +84,7 @@
     el-dialog(
       :visible.sync="portViewDialog"
       title="Абоненты на порту"
+      :close-on-click-modal="false"
     )
       switch-port-view(
         :device="device"
@@ -92,6 +93,7 @@
     el-dialog(
       :visible.sync="portFormDialog"
       title="Порт коммутатора"
+      :close-on-click-modal="false"
     )
       switch-port-form(
         :deviceId="device.pk"
@@ -102,7 +104,8 @@
       )
     el-dialog(
       :visible.sync="devFormDialog"
-      title="Порт коммутатора"
+      title="Информация устройства"
+      :close-on-click-modal="false"
     )
       dev-form(
         v-on:done="devFrmDone"
@@ -110,6 +113,7 @@
     el-dialog(
       :visible.sync="vidsDialog"
       title="Vlan'ы"
+      :close-on-click-modal="false"
     )
       vids-view(
         :portId="currPortId"
@@ -117,6 +121,7 @@
     el-dialog(
       :visible.sync="macsDialog"
       title="Таблица MAC адресов порта"
+      :close-on-click-modal="false"
     )
       port-mac-list(
         :portId="currPortId"

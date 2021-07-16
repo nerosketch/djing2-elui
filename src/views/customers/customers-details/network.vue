@@ -35,56 +35,39 @@
         template(v-slot:default="{row}")
           el-checkbox(v-model="row.is_dynamic" disabled)
       el-table-column(
-        label="Ping"
-        align="center"
-        min-width='100'
-      )
-        template(v-slot:default="{row}")
-          lease-ping(:lease="row")
-      el-table-column(
         label="#"
         align="center"
-        width="120"
+        width="259"
       )
         template(v-slot:default="{row}")
           el-button-group
-            el-button(
-              type='primary' size='mini'
-              icon='el-icon-edit'
-              @click="editLease(row)"
-            )
             el-button(
               type='danger' size='mini'
               icon='el-icon-delete'
               @click="delLease(row)"
             )
-    el-button-group
-      el-button(
-        size='mini' type='success' icon='el-icon-plus',
-        @click="addLease"
-      ) Добавить
-      el-button(
-        size='mini' icon='el-icon-s-data'
-        @click="authorizedSessionsDialog=true"
-      ) Сессии
+            el-button(
+              type='primary' size='mini'
+              icon='el-icon-edit'
+              @click="editLease(row)"
+            )
+            lease-ping(:lease="row")
+            ip-session-detail(:lease="row")
+    el-button(
+      size='mini' type='success' icon='el-icon-plus',
+      @click="addLease"
+    ) Добавить
 
     el-dialog(
       :title="(isAddNewLease ? 'Добавить' : 'Изменить') + ' аренду ip'"
       :visible.sync='editDialog'
+      :close-on-click-modal="false"
     )
       customer-lease-form(
         :isAddNewLease="isAddNewLease"
         v-on:done="leaseFrmDone"
         v-on:cancel="editDialog=false"
         ref="customerleaseformref"
-      )
-    el-dialog(
-      title="Сессии авторизации"
-      top="1vh"
-      :visible.sync="authorizedSessionsDialog"
-    )
-      session-list(
-        :uid="$store.state.customer.pk"
       )
 </template>
 
@@ -95,7 +78,7 @@ import { getCustomerIpLeases } from '@/api/networks/req'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import LeasePing from '@/components/MyButtons/leaseping.vue'
 import CustomerLeaseForm from './customer-lease-form.vue'
-import SessionList from '@/views/networks/components/session-list.vue'
+import IpSessionDetail from './ip-session-detail.vue'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 
 @Component({
@@ -103,7 +86,7 @@ import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
   components: {
     LeasePing,
     CustomerLeaseForm,
-    SessionList
+    IpSessionDetail
   }
 })
 export default class extends Vue {
@@ -111,7 +94,6 @@ export default class extends Vue {
   private loading = false
   private editDialog = false
   private isAddNewLease = false
-  private authorizedSessionsDialog = false
 
   public readonly $refs!: {
     customerleaseformref: CustomerLeaseForm

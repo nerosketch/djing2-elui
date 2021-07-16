@@ -112,7 +112,7 @@ export default class extends Vue {
 
   get childCalc() {
     let c = this.theOnlyOneChild
-    if (c && c.meta.calc) {
+    if (c && c.meta && c.meta.calc) {
       return c.meta.calc()
     }
     return null

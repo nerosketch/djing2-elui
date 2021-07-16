@@ -28,6 +28,7 @@
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       pay-gw-form(
         v-on:done="frmDone"
@@ -36,6 +37,7 @@
     el-dialog(
       title="Принадлежность сайтам"
       :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
     )
       sites-attach(
         :selectedSiteIds="$store.state.payalltimegateway.sites"
@@ -46,7 +48,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getPayGateways } from '@/api/fin/req'
@@ -73,11 +74,6 @@ export default class extends Vue {
   private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
-    {
-      prop: 'id',
-      label: 'ID',
-      'min-width': 70
-    },
     {
       prop: 'title',
       label: 'Название',
@@ -149,7 +145,7 @@ export default class extends Vue {
           title: 'Финансы'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 

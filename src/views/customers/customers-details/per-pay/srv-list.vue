@@ -41,12 +41,13 @@ div
   ) Добавить периодический платёж
 
   el-dialog(
-      title="Добавить периодический платёж"
-      :visible.sync="pSrvDialog"
+    title="Добавить периодический платёж"
+    :visible.sync="pSrvDialog"
+    :close-on-click-modal="false"
+  )
+    add-p-pay(
+      v-on:done="addPPayDone"
     )
-      add-p-pay(
-        v-on:done="addPPayDone"
-      )
 </template>
 
 <script lang="ts">

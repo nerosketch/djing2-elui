@@ -42,7 +42,6 @@
 <script lang="ts">
 import 'echarts/theme/macarons.js' // Theme used in BarChart, LineChart, PieChart and RadarChart
 import { Component, Vue } from 'vue-property-decorator'
-import { RouteRecord } from 'vue-router'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import TaskModeReportPieChart from './task-mode-report-pie-chart.vue'
 import CustomerServiceTypeReport from './customer-service-type-report.vue'
@@ -68,7 +67,7 @@ export default class extends Vue {
           title: 'Отчёты всякие'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 

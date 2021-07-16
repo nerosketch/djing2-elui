@@ -87,6 +87,7 @@
       title='Добавить абонента'
       :visible.sync='addCustomerDialog'
       top="5vh"
+      :close-on-click-modal="false"
     )
       new-customer-form(
         :selectedGroup='groupId'
@@ -96,6 +97,7 @@
     el-dialog(
       :visible.sync="addStreetDialog"
       title="Добавить улицу"
+      :close-on-click-modal="false"
     )
       new-street-form(
         v-on:done="addStreetDone"
@@ -116,6 +118,7 @@
       title="Кто имеет права на абонента"
       :visible.sync="permsDialog"
       top="5vh"
+      :close-on-click-modal="false"
     )
       object-perms(
         v-on:save="changeCustomerObjectPerms"
@@ -127,6 +130,7 @@
       v-if="$perms.is_superuser"
       title="Принадлежность выбранных абонентов сайтам"
       :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
     )
       sites-attach(
         v-on:save="selectedCustomerSitesSave"
@@ -170,7 +174,6 @@ import List from '@/components/List/index.vue'
 import NewStreetForm from './street/new-street-form.vue'
 import EditStreets from './street/edit-streets.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 import { GroupModule } from '@/store/modules/groups'
 import PingProfile from './ping-profile.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
@@ -264,10 +267,6 @@ export default class extends Vue {
       label: 'Маркер'
     },
     {
-      prop: 'traf_octs',
-      label: 'Траф'
-    },
-    {
       prop: 'ping',
       label: 'Ping',
       'min-width': 150
@@ -300,7 +299,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,traf_octs,marker_icons'
+        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,marker_icons'
       })
       if (street) {
         newParams.street = Number(street)
@@ -381,7 +380,7 @@ export default class extends Vue {
           title: this.$store.state.group.title
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 

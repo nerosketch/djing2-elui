@@ -38,6 +38,7 @@ div
   el-dialog(
     title='Создание задачи'
     :visible.sync='formDialog'
+    :close-on-click-modal="false"
   )
     task-form
 </template>
@@ -51,7 +52,6 @@ import { getTasks } from '@/api/tasks/req'
 import TaskForm from './task-form.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 
 class DataTableComp extends DataTable<ITask> {}
 
@@ -149,7 +149,7 @@ export default class extends Vue {
           title: 'Задачи'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 }

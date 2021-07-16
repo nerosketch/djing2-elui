@@ -22,6 +22,7 @@ div
   el-dialog(
     title="Изменение Сессии"
     :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
   )
     lease-form(
       v-on:done="frmDone"
@@ -48,11 +49,6 @@ export default class extends Vue {
     table: DataTableComp
   }
   private tableColumns: IDataTableColumn[] = [
-    {
-      prop: 'id',
-      label: 'ID',
-      'min-width': 70
-    },
     {
       prop: 'ip_address',
       label: 'IP Адрес',

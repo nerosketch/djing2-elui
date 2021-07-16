@@ -44,6 +44,7 @@ div
   el-dialog(
     :title="dialogTitle"
     :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
   )
     vlan-form(
       v-on:done="frmDone"
@@ -51,6 +52,7 @@ div
   el-dialog(
     title="Принадлежность сайтам"
     :visible.sync="sitesDlg"
+    :close-on-click-modal="false"
   )
     sites-attach(
       :selectedSiteIds="$store.state.vlan.sites"
@@ -61,7 +63,6 @@ div
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { RouteRecord } from 'vue-router'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IVlanIf } from '@/api/networks/types'
 import { VlanIfModule } from '@/store/modules/networks/vlan'
@@ -80,11 +81,6 @@ export default class extends mixins(VlanMixin) {
     table: DataTableComp
   }
   private tableColumns: IDataTableColumn[] = [
-    {
-      prop: 'id',
-      label: 'ID',
-      'min-width': 70
-    },
     {
       prop: 'title',
       label: 'Название',
@@ -153,7 +149,7 @@ export default class extends mixins(VlanMixin) {
           title: 'Сеть'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 

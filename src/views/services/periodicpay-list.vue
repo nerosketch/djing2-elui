@@ -32,6 +32,7 @@ div
   el-dialog(
     :title="(isNew ? 'Создание' : 'Изменение') + ' периодического платежа'"
     :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
   )
     periodicpay-form(
       v-on:done="frmDone"
@@ -39,6 +40,7 @@ div
   el-dialog(
     title="Принадлежность сайтам"
     :visible.sync="sitesDlg"
+    :close-on-click-modal="false"
   )
     sites-attach(
       :selectedSiteIds="$store.state.periodicpay.sites"
@@ -66,11 +68,6 @@ export default class extends Vue {
     table: DataTableComp
   }
   private tableColumns: IDataTableColumn[] = [
-    {
-      prop: 'pk',
-      label: 'ID',
-      'min-width': 70
-    },
     {
       prop: 'name',
       label: 'Название платежа',

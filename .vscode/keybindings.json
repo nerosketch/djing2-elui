@@ -1,0 +1,10 @@
+[
+    {
+        "key": "alt+right",
+        "commend": "workbench.action.nextEditor"
+    },
+    {
+        "key": "alt+left",
+        "commend": "workbench.action.previousEditor"
+    }
+]
