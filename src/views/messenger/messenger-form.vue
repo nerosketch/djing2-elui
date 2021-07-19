@@ -43,11 +43,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { MessengerModule } from '@/store/modules/messenger/base-messenger'
 import { getMessengerTypes } from '@/api/messenger/req'
+import { IMessenger } from '@/api/messenger/types'
 
 const tx = 'Нужно знать с каким API будет работать бот'
 
@@ -83,10 +84,7 @@ export default class extends Vue {
   }
 
   created() {
-    this.frmMod.title = ''
-    this.frmMod.description = ''
-    this.frmMod.bot_type = 0
-    this.frmMod.token = ''
+    this.onChangeMsg(this.$store.state.messenger)
     if (this.messengerBotTypes.length === 0) {
       this.loadMessengerTypes()
     }
@@ -97,7 +95,14 @@ export default class extends Vue {
       if (valid) {
         this.isLoading = true
         try {
-          const newDat = await MessengerModule.AddMessenger(this.frmMod)
+          let newDat
+          if (this.isNew) {
+            newDat = await MessengerModule.AddMessenger(this.frmMod)
+            this.$message.success('Чат бот создан')
+          } else {
+            newDat = await MessengerModule.PatchMessenger(this.frmMod)
+            this.$message.success('Чат бот изменён')
+          }
           this.$emit('done', newDat)
         } catch (err) {
           this.$message.error(err)
@@ -108,6 +113,17 @@ export default class extends Vue {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  @Watch('$store.state.messenger', { deep: true })
+  private onChangeMsg(m: IMessenger) {
+    this.frmMod.title = m.title
+    this.frmMod.description = m.description
+    this.frmMod.bot_type = m.bot_type
+  }
+  
+  private get isNew() {
+    return this.$store.state.messenger.id === 0
   }
 
   private async loadMessengerTypes() {

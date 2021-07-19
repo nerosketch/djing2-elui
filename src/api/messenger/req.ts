@@ -20,7 +20,7 @@ export const getMessenger = (mId: number): IMessengerAxoisResponsePromise =>
   request.get<IMessenger>(`/messenger/${mId}/`)
 
 export const addMessenger = (newDat: object): IMessengerAxoisResponsePromise =>
-  request.post<IMessenger>('/messenger/', newDat)
+  request.post<IMessenger>('/messenger/create_inherited/', newDat)
 
 export const patchMessenger = (mId: number, newDat: object): IMessengerAxoisResponsePromise =>
   request.patch<IMessenger>(`/messenger/${mId}/`, newDat)

@@ -112,7 +112,6 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success('Чат бот создан')
     this.$refs.table.GetTableData()
   }
 

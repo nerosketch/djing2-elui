@@ -13,8 +13,6 @@ import {
   addMessenger,
   patchMessenger,
   deleteMessenger,
-  messengerSendWebHook,
-  messengerStopWebHook
 } from '@/api/messenger/req'
 import store from '@/store'
 
@@ -73,16 +71,6 @@ class Messenger extends VuexModule implements IMessenger {
   public async DelMessenger(mId: number) {
     await deleteMessenger(mId)
     this.RESET_ALL_MESSENGER()
-  }
-
-  @Action
-  public SendWebhook(mId?: number) {
-    return messengerSendWebHook(mId || this.id)
-  }
-
-  @Action
-  public StopWebhook(mId?: number) {
-    return messengerStopWebHook(mId || this.id)
   }
 }
 
