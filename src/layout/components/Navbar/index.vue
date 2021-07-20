@@ -39,6 +39,8 @@
               el-dropdown-item Отчёты
             router-link(to="/sites")
               el-dropdown-item Домены
+            router-link(to='/messenger')
+              el-dropdown-item Мессенжеры
             el-dropdown-item(divided)
               span(
                 style="display:block;"

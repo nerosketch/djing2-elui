@@ -4,14 +4,14 @@ import Layout from '@/layout/index.vue'
 const messengerRoutes: RouteConfig = {
   path: '/messenger',
   component: Layout,
+  meta: { hidden: true },
   children: [
     {
       path: '',
       name: 'messengerList',
       component: () => import(/* webpackChunkName: "messenger" */ '@/views/messenger/messenger-list.vue'),
       meta: {
-        title: 'Мессенджеры',
-        icon: 'el-icon-s-promotion'
+        hidden: true
       }
     },
     {
