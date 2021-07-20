@@ -23,8 +23,11 @@
 
 <script lang="ts">
 import { messengerSendWebHook, messengerStopWebHook } from '@/api/messenger/req'
+import { RouteRecord } from 'vue-router'
+import { IMessenger } from '@/api/messenger/types'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { MessengerModule } from '@/store/modules/messenger/base-messenger'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import MessengerForm from './messenger-form.vue'
 
 @Component({
@@ -45,8 +48,9 @@ export default class extends Vue {
 
   private async loadMsg() {
     try{
-      await MessengerModule.GetMessenger(this.mId)
+      const msg = await MessengerModule.GetMessenger(this.mId)
       this.isReady = true
+      this.onMessengerIdCh(msg)
     } catch (err) {
       this.isReady = false
       this.$message.error(err)
@@ -69,6 +73,26 @@ export default class extends Vue {
     } finally {
       this.stopWebhookLoading = false
     }
+  }
+
+  @Watch('$store.state.messenger', { deep: true })
+  private onMessengerIdCh(msg: IMessenger) {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/messenger',
+        meta: {
+          hidden: true,
+          title: 'Мессенджеры'
+        }
+      },
+      {
+        path: '',
+        meta: {
+          hidden: true,
+          title: msg.title
+        }
+      }
+    ] as RouteRecord[])
   }
 }
 </script>
