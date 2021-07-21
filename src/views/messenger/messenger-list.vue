@@ -26,6 +26,7 @@
     el-dialog(
       title="Создать messenger"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
     )
       messenger-form(
         v-on:done="frmDone"
