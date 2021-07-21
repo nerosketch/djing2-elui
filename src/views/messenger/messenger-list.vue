@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
 import MessengerForm from './messenger-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
@@ -58,6 +58,10 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
+  @Prop({ required: true })
+  private messengerTypeName!: string
+
   private dialogVisible = false
 
   private tableColumns: IDataTableColumn[] = [
@@ -78,6 +82,10 @@ export default class extends Vue {
       'min-width': 100
     },
     {
+      prop: 'global_link',
+      label: 'Ссылка'
+    },
+    {
       prop: 'oper',
       label: 'Oper',
       'min-width': 130,
@@ -92,10 +100,10 @@ export default class extends Vue {
 
   private async loadMessengers(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,bot_type_name'
+      params['fields'] = 'id,title,bot_type_name,global_link'
     }
     try {
-      const r = await getMessengers(params)
+      const r = await getMessengers(this.messengerTypeName, params)
       return r
     } catch (err) {
       this.$message.error(err)
@@ -117,17 +125,27 @@ export default class extends Vue {
   }
 
   private go2Messenger(m: IMessenger) {
-    this.$router.push({ name: 'messengerDetails', params: { mId: m.id.toString() } })
+    this.$router.push({ name: 'messengerDetails', params: {
+      mId: m.id.toString(),
+      messengerTypeName: this.messengerTypeName
+    }})
   }
 
   // Breadcrumbs
   created() {
     BreadcrumbsModule.SetCrumbs([
       {
-        path: '/',
+        path: '/messenger',
         meta: {
           hidden: true,
           title: 'Мессенджеры'
+        }
+      },
+      {
+        path: '/messenger',
+        meta: {
+          hidden: true,
+          title: this.messengerTypeName
         }
       }
     ] as RouteRecord[])

@@ -25,6 +25,7 @@ class Messenger extends VuexModule implements IMessenger {
   public bot_type_name = ''
   public token = ''
   public avatar = ''
+  public global_link = ''
 
   @Mutation
   public SET_ALL_MESSENGER(m: IMessenger) {
@@ -35,6 +36,7 @@ class Messenger extends VuexModule implements IMessenger {
     this.bot_type_name = m.bot_type_name
     this.token = m.token
     this.avatar = m.avatar
+    this.global_link = m.global_link
   }
 
   @Mutation
@@ -46,30 +48,31 @@ class Messenger extends VuexModule implements IMessenger {
     this.bot_type_name = ''
     this.token = ''
     this.avatar = ''
+    this.global_link = ''
   }
 
   @Action
-  public async GetMessenger(mId: number) {
-    const { data } = await getMessenger(mId)
+  public async GetMessenger(info: { mId: number, typeName: string} ) {
+    const { data } = await getMessenger(info.typeName, info.mId)
     this.SET_ALL_MESSENGER(data)
     return data
   }
 
   @Action
   public async AddMessenger(m: object) {
-    const { data } = await addMessenger(m)
+    const { data } = await addMessenger(m, this.bot_type_name)
     this.SET_ALL_MESSENGER(data)
   }
 
   @Action
   public async PatchMessenger(newData: object) {
-    const { data } = await patchMessenger(this.id, newData)
+    const { data } = await patchMessenger(this.bot_type_name, this.id, newData)
     this.SET_ALL_MESSENGER(data)
   }
 
   @Action
   public async DelMessenger(mId: number) {
-    await deleteMessenger(mId)
+    await deleteMessenger(this.bot_type_name, mId)
     this.RESET_ALL_MESSENGER()
   }
 }

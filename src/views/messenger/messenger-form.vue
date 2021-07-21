@@ -22,7 +22,10 @@
       label="Тип бота"
       prop='bot_type'
     )
-      el-select(v-model="frmMod.bot_type")
+      el-select(
+        v-model="frmMod.bot_type"
+        :loading="messengerTypesLoading"
+      )
         el-option(
           v-for="mbt in messengerBotTypes"
           :key="mbt.val"
@@ -47,21 +50,17 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { MessengerModule } from '@/store/modules/messenger/base-messenger'
-import { getMessengerTypes } from '@/api/messenger/req'
 import { IMessenger } from '@/api/messenger/types'
+import { mixins } from 'vue-class-component'
+import BotTypesMixin from './bot_types_mixin'
 
 const tx = 'Нужно знать с каким API будет работать бот'
 
 @Component({
   name: 'MessengerForm'
 })
-export default class extends Vue {
+export default class extends mixins(BotTypesMixin) {
   private isLoading = false
-
-  private messengerBotTypes: {
-    val: number
-    text: string
-  }[] = []
 
   private frmRules = {
     title: [
@@ -85,8 +84,11 @@ export default class extends Vue {
 
   created() {
     this.onChangeMsg(this.$store.state.messenger)
+
     if (this.messengerBotTypes.length === 0) {
-      this.loadMessengerTypes()
+      this.loadMessengerTypes().then(() => {
+        this.messengerBotTypes.unshift({ val: 0, text: 'не определено' })
+      })
     }
   }
 
@@ -124,13 +126,6 @@ export default class extends Vue {
   
   private get isNew() {
     return this.$store.state.messenger.id === 0
-  }
-
-  private async loadMessengerTypes() {
-    const { data } = await getMessengerTypes()
-    const mt = data.map(m => ({ val: m[0], text: m[1] }))
-    mt.unshift({ val: 0, text: 'не определено' })
-    this.messengerBotTypes = mt
   }
 }
 </script>

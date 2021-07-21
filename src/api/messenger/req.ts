@@ -13,29 +13,29 @@ import {
 } from '@/api/messenger/types'
 import { IDRFRequestListParameters } from '@/api/types'
 
-export const getMessengers = (params?: IDRFRequestListParameters): IMessengerListAxiosResponsePromise =>
-  request.get<IMessengerList>('/messenger/', { params })
-
-export const getMessenger = (mId: number): IMessengerAxoisResponsePromise =>
-  request.get<IMessenger>(`/messenger/${mId}/`)
-
-export const addMessenger = (newDat: object): IMessengerAxoisResponsePromise =>
-  request.post<IMessenger>('/messenger/create_inherited/', newDat)
-
-export const patchMessenger = (mId: number, newDat: object): IMessengerAxoisResponsePromise =>
-  request.patch<IMessenger>(`/messenger/${mId}/`, newDat)
-
-export const deleteMessenger = (mId: number) =>
-  request.delete(`/messenger/${mId}/`)
-
-export const messengerSendWebHook = (mId: number) =>
-  request.get(`/messenger/${mId}/send_webhook/`)
-
-export const messengerStopWebHook = (mId: number) =>
-  request.get(`/messenger/${mId}/stop_webhook/`)
-
 export const getMessengerTypes = (): IBotTypesAxiosPromise =>
   request.get<IBotType[]>('/messenger/get_bot_types/')
+
+export const getMessengers = (typeName: string, params?: IDRFRequestListParameters): IMessengerListAxiosResponsePromise =>
+  request.get<IMessengerList>(`/messenger/${typeName}`, { params })
+
+export const getMessenger = (typeName: string, mId: number): IMessengerAxoisResponsePromise =>
+  request.get<IMessenger>(`/messenger/${typeName}/${mId}/`)
+
+export const addMessenger = (newDat: object, messengerTypeName: string): IMessengerAxoisResponsePromise =>
+  request.post<IMessenger>(`/messenger/${messengerTypeName}/`, newDat)
+
+export const patchMessenger = (typeName: string, mId: number, newDat: object): IMessengerAxoisResponsePromise =>
+  request.patch<IMessenger>(`/messenger/${typeName}/${mId}/`, newDat)
+
+export const deleteMessenger = (typeName: string, mId: number) =>
+  request.delete(`/messenger/${typeName}/${mId}/`)
+
+export const messengerSendWebHook = (typeName: string, mId: number) =>
+  request.get(`/messenger/${typeName}/${mId}/send_webhook/`)
+
+export const messengerStopWebHook = (typeName: string, mId: number) =>
+  request.get(`/messenger/${typeName}/${mId}/stop_webhook/`)
 
 export const getMessengerSubscribers = (params?: IDRFRequestListParameters): IMessengerSubscriberListAxiosResponsePromise =>
   request.get<IMessengerSubscriberList>('/messenger/subscriber/', { params })

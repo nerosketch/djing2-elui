@@ -9,6 +9,7 @@ export interface IMessenger {
   bot_type_name: string
   token: string
   avatar: string
+  global_link: string
 }
 export type IMessengerList = IDRFListResponse<IMessenger>
 export type IMessengerAxoisResponsePromise = IDRFAxiosResponsePromise<IMessenger>

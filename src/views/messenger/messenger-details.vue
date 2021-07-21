@@ -37,7 +37,12 @@ import MessengerForm from './messenger-form.vue'
   }
 })
 export default class extends Vue {
-  @Prop({ required: true }) private mId!: number
+  @Prop({ required: true })
+  private mId!: number
+
+  @Prop({ required: true })
+  private messengerTypeName!: string
+
   private isReady = false
   private setWebhookLoading = false
   private stopWebhookLoading = false
@@ -47,8 +52,12 @@ export default class extends Vue {
   }
 
   private async loadMsg() {
+    this.isReady = false
     try{
-      const msg = await MessengerModule.GetMessenger(this.mId)
+      const msg = await MessengerModule.GetMessenger({
+        mId: this.mId,
+        typeName: this.messengerTypeName
+      })
       this.isReady = true
       this.onMessengerIdCh(msg)
     } catch (err) {
@@ -60,7 +69,7 @@ export default class extends Vue {
   private async setWebhook() {
     this.setWebhookLoading = true
     try {
-      await messengerSendWebHook(this.mId)
+      await messengerSendWebHook(this.messengerTypeName, this.mId)
     } finally {
       this.setWebhookLoading = false
     }
@@ -69,7 +78,7 @@ export default class extends Vue {
   private async stopWebhook() {
     this.stopWebhookLoading = true
     try {
-      await messengerStopWebHook(this.mId)
+      await messengerStopWebHook(this.messengerTypeName, this.mId)
     } finally {
       this.stopWebhookLoading = false
     }
@@ -83,6 +92,13 @@ export default class extends Vue {
         meta: {
           hidden: true,
           title: 'Мессенджеры'
+        }
+      },
+      {
+        path: `/messenger/${this.messengerTypeName}`,
+        meta: {
+          hidden: true,
+          title: this.messengerTypeName
         }
       },
       {
