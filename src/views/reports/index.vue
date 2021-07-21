@@ -27,16 +27,10 @@
       el-card
         template(v-slot:header)
           .clearfix Активность абонентов
-        customer-activity-report
-    //- el-col(
-    //-   :xs="24"
-    //-   :sm="24"
-    //-   :lg="8"
-    //- )
-    //-   el-card
-    //-     template(v-slot:header)
-    //-       .clearfix График игрульный
-    //-     radar-chart
+        customer-activity-report(
+          v-if="$perms.customers.can_view_activity_report"
+        )
+        h4(v-else) Не достаточно прав
 </template>
 
 <script lang="ts">

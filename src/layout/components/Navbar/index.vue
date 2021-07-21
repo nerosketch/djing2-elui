@@ -35,7 +35,7 @@
           el-dropdown-menu
             router-link(to="/customers")
               el-dropdown-item Домашняя
-            //- router-link(to="/reports")
+            router-link(to="/reports")
               el-dropdown-item Отчёты
             router-link(to="/sites")
               el-dropdown-item Домены
