@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import { positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { MessengerModule } from '@/store/modules/messenger/base-messenger'
@@ -66,9 +66,9 @@ export default class extends mixins(BotTypesMixin) {
     title: [
       { required: true, message: 'Название для мессенджера надо указать', trigger: 'blur' }
     ],
-    token: [
+    token: this.isNew ? [
       { required: true, message: 'Токен для мессенджера надо указать', trigger: 'blur' }
-    ],
+    ] : [],
     bot_type: [
       { validator: positiveNumberValueAvailable, trigger: 'change', message: tx },
       { required: true, message: tx, trigger: 'blur' }
@@ -79,7 +79,7 @@ export default class extends mixins(BotTypesMixin) {
     title: '',
     description: '',
     bot_type: 0,
-    token: ''
+    token: undefined
   }
 
   created() {

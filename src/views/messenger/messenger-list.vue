@@ -6,6 +6,13 @@
       widthStorageNamePrefix='messengers'
       ref='table'
     )
+      template(v-slot:title="{row}")
+        el-link(
+          type='primary'
+          :href="row.global_link"
+          target="_blank"
+        ) {{ row.title }}
+
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
@@ -77,13 +84,13 @@ export default class extends Vue {
       'min-width': 250
     },
     {
+      prop: 'description',
+      label: 'Описание'
+    },
+    {
       prop: 'bot_type_name',
       label: 'Тип бота',
       'min-width': 100
-    },
-    {
-      prop: 'global_link',
-      label: 'Ссылка'
     },
     {
       prop: 'oper',
@@ -100,7 +107,7 @@ export default class extends Vue {
 
   private async loadMessengers(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,bot_type_name,global_link'
+      params['fields'] = 'id,title,description,bot_type_name,global_link'
     }
     try {
       const r = await getMessengers(this.messengerTypeName, params)

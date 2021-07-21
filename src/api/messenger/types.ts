@@ -10,6 +10,7 @@ export interface IMessenger {
   token: string
   avatar: string
   global_link: string
+  current_webhook: string
 }
 export type IMessengerList = IDRFListResponse<IMessenger>
 export type IMessengerAxoisResponsePromise = IDRFAxiosResponsePromise<IMessenger>

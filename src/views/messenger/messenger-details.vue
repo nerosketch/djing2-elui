@@ -6,8 +6,9 @@
           .clearfix Подробности бота "{{ $store.state.messenger.title }}"
         messenger-form(v-if='isReady')
     el-col.mt5(:lg='12' :sm='24')
-      b Текущий webhook url: 
-      span {{ $store.state.messenger.title }}
+      div
+        b Текущий webhook url: 
+        span {{ $store.state.messenger.current_webhook }}
       el-button-group
         el-button(
           @click="setWebhook"

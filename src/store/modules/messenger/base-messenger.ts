@@ -26,6 +26,7 @@ class Messenger extends VuexModule implements IMessenger {
   public token = ''
   public avatar = ''
   public global_link = ''
+  public current_webhook = ''
 
   @Mutation
   public SET_ALL_MESSENGER(m: IMessenger) {
@@ -37,6 +38,7 @@ class Messenger extends VuexModule implements IMessenger {
     this.token = m.token
     this.avatar = m.avatar
     this.global_link = m.global_link
+    this.current_webhook = m.current_webhook
   }
 
   @Mutation
@@ -49,6 +51,7 @@ class Messenger extends VuexModule implements IMessenger {
     this.token = ''
     this.avatar = ''
     this.global_link = ''
+    this.current_webhook = ''
   }
 
   @Action
@@ -65,7 +68,8 @@ class Messenger extends VuexModule implements IMessenger {
   }
 
   @Action
-  public async PatchMessenger(newData: object) {
+  public async PatchMessenger(newData: any) {
+    newData.token = newData.token || undefined
     const { data } = await patchMessenger(this.bot_type_name, this.id, newData)
     this.SET_ALL_MESSENGER(data)
   }
