@@ -19,7 +19,7 @@
     )
       el-input(v-model="frmMod.description")
     el-form-item(
-      label="Тех.код"
+      label="Тип бота"
       prop='bot_type'
     )
       el-select(v-model="frmMod.bot_type")
