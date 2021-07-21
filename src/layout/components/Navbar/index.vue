@@ -37,7 +37,7 @@
               el-dropdown-item Домашняя
             router-link(to="/reports")
               el-dropdown-item Отчёты
-            router-link(to="/sites")
+            router-link(to="/sites" v-if="$perms.is_superuser")
               el-dropdown-item Домены
             el-dropdown-item(divided)
               span(
