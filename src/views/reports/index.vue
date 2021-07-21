@@ -18,7 +18,10 @@
       el-card
         template(v-slot:header)
           .clearfix Распределение использования услуг абонентами
-        customer-service-type-report
+        customer-service-type-report(
+          v-if="$perms.customers.can_view_service_type_report"
+        )
+        h4(v-else) Не достаточно прав
     el-col(
       :xs="24"
       :sm="24"
