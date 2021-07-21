@@ -12,7 +12,7 @@
         task-mode-report-pie-chart(
           v-if="$perms.tasks.can_view_task_mode_report"
         )
-        h4(v-else) Не достаточно прав
+        h4(v-else) Недостаточно прав
     el-col(
       :xs="24"
       :sm="24"
@@ -24,7 +24,7 @@
         customer-service-type-report(
           v-if="$perms.customers.can_view_service_type_report"
         )
-        h4(v-else) Не достаточно прав
+        h4(v-else) Недостаточно прав
     el-col(
       :xs="24"
       :sm="24"
@@ -36,7 +36,7 @@
         customer-activity-report(
           v-if="$perms.customers.can_view_activity_report"
         )
-        h4(v-else) Не достаточно прав
+        h4(v-else) Недостаточно прав
 </template>
 
 <script lang="ts">
