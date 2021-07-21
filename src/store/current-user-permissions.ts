@@ -94,6 +94,7 @@ export class CurrentPermissions extends VuexModule {
 
     // can_viewall: false,
     can_remind: false,
+    can_view_task_mode_report: false,
 
     add_extracomment: false,
     view_extracomment: false,

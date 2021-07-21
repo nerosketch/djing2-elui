@@ -8,8 +8,11 @@
     )
       el-card
         template(v-slot:header)
-          .clearfix Частота использования характеров задач
-        task-mode-report-pie-chart
+          .clearfix Частота использования характеров задач 
+        task-mode-report-pie-chart(
+          v-if="$perms.tasks.can_view_task_mode_report"
+        )
+        h4(v-else) Не достаточно прав
     el-col(
       :xs="24"
       :sm="24"
