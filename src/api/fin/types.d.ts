@@ -37,5 +37,6 @@ export interface IPayReportParams {
   from_date: string,
   pay_gw: number,
   group_by_day: boolean,
-  group_by_mon: boolean
+  group_by_mon: boolean,
+  group_by_week: boolean
 }

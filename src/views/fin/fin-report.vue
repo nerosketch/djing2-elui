@@ -26,6 +26,10 @@
     ) Группировать по дню
 
     el-checkbox(
+      v-model="reportParams.group_by_week"
+    ) Группировать по неделе
+
+    el-checkbox(
       v-model="reportParams.group_by_mon"
     ) Группировать по месяцу
 
@@ -82,8 +86,9 @@ export default class extends Vue {
   private reportParams: IPayReportParams = {
     from_date: '2021-05-22',
     pay_gw: 0,
-    group_by_day: true,
-    group_by_mon: false
+    group_by_day: false,
+    group_by_mon: true,
+    group_by_week: false
   }
 
   @Watch('reportParams', { deep: true })
@@ -119,16 +124,19 @@ export default class extends Vue {
 
   private get isAllowRequest() {
     const rp = this.reportParams
-
-    const r = rp.group_by_day === rp.group_by_mon || !rp.from_date
-    return !r
+    const y = [rp.group_by_day, rp.group_by_mon, rp.group_by_week].filter(g => g)
+    return y.length === 1 && Boolean(rp.from_date)
   }
 
   private async loadPayGateways() {
     this.gatewaysLoading = true
     try {
-      const { data } = await getPayGateways()
-      this.payGateways = data as any
+      const { data } = await getPayGateways() as any
+      data.unshift({
+        title: 'Не выбран',
+        id: 0
+      })
+      this.payGateways = data
     } finally {
       this.gatewaysLoading = false
     }
