@@ -31,7 +31,12 @@
 
     el-checkbox(
       v-model="reportParams.group_by_mon"
-    ) Группировать по месяцу
+    ) Группировать по месяцу 
+
+    el-button(
+      size='mini'
+      @click='downloadCsv'
+    ) Скачать csv
 
     el-table(
       v-loading="loading"
@@ -61,6 +66,7 @@ import { IPayAllTimeGateway, IPayReport, IPayReportParams } from '@/api/fin/type
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getPayGateways, getPayReport } from '@/api/fin/req'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import save2file from '@/utils/save2file'
 
 @Component({
   name: 'FinReport'
@@ -140,6 +146,13 @@ export default class extends Vue {
     } finally {
       this.gatewaysLoading = false
     }
+  }
+
+  private downloadCsv() {
+    const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
+    dat.unshift(['Дата', 'Сумма', 'Колич. платежей'])
+    const sdat = dat.join('\n')
+    save2file(sdat, 'text/csv', `fin_report_${this.reportParams.from_date}.csv`)
   }
 }
 </script>
