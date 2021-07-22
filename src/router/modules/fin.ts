@@ -13,6 +13,12 @@ const finRoutes: RouteConfig = {
         title: 'Финансы',
         icon: 'el-icon-shopping-cart-full'
       }
+    },
+    {
+      path: 'report',
+      name: 'finReport',
+      component: () => import(/* webpackChunkName: "finreport" */ '@/views/fin/fin-report.vue'),
+      meta: { hidden: true }
     }
   ]
 }

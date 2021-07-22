@@ -35,9 +35,9 @@
           el-dropdown-menu
             router-link(to="/customers")
               el-dropdown-item Домашняя
-            //- router-link(to="/reports")
+            router-link(to="/reports")
               el-dropdown-item Отчёты
-            router-link(to="/sites")
+            router-link(to="/sites" v-if="$perms.is_superuser")
               el-dropdown-item Домены
             router-link(to='/messenger')
               el-dropdown-item Мессенжеры

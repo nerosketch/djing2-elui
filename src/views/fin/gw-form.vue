@@ -31,7 +31,9 @@
     el-form-item
       el-button(
         icon='el-icon-upload'
-        type="primary" @click="onSubmit" :loading="isLoading"
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
         :disabled="!$perms.fin_app.change_payalltimegateway"
       ) Сохранить
 </template>

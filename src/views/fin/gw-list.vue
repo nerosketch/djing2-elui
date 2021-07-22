@@ -6,6 +6,9 @@
       widthStorageNamePrefix='gws'
       ref='table'
     )
+      template(v-slot:title="{row}")
+        router-link(:to="{ name: 'finReport' }")
+          el-link(type='primary') {{ row.title }}
       template(v-slot:oper="{row}")
         el-button-group
           el-button(

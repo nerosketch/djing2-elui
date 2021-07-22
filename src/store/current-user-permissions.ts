@@ -35,6 +35,8 @@ export class CurrentPermissions extends VuexModule {
     can_add_balance: false,
     can_ping: false,
     can_complete_service: false,
+    can_view_activity_report: false,
+    can_view_service_type_report: false,
 
     add_additionaltelephone: false,
     delete_additionaltelephone: false,
@@ -92,6 +94,7 @@ export class CurrentPermissions extends VuexModule {
 
     // can_viewall: false,
     can_remind: false,
+    can_view_task_mode_report: false,
 
     add_extracomment: false,
     view_extracomment: false,

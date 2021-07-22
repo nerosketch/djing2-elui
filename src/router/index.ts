@@ -115,7 +115,7 @@ export const constantRoutes: RouteConfig [] = [
       }
     ]
   },
-  /*{
+  {
     path: '/reports',
     component: Layout,
     meta: { hidden: true },
@@ -123,11 +123,11 @@ export const constantRoutes: RouteConfig [] = [
       {
         path: '',
         name: 'reportsIndex',
-        component: () => import(/* webpackChunkName: "reports" * / '@/views/reports/index.vue'),
+        component: () => import(/* webpackChunkName: "reports" */ '@/views/reports/index.vue'),
         meta: { hidden: true }
       }
     ]
-  },*/
+  },
   finRoutes,
   messengerRoutes,
   sitesRoutes,

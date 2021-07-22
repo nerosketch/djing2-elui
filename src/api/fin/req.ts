@@ -5,7 +5,10 @@ import {
   IPayAllTimeGatewayAxoisResponsePromise,
   IPayAllTimeGatewayListAxiosResponsePromise,
   IAllTimePayLogList,
-  IAllTimePayLogListAxiosResponsePromise
+  IAllTimePayLogListAxiosResponsePromise,
+  IPayReportList,
+  IPayReport,
+  IPayReportParams
 } from './types'
 import { IDRFRequestListParameters } from '@/api/types'
 
@@ -28,3 +31,6 @@ export const delPayGateway = (gwId: number) =>
 
 export const getPayLog = (): IAllTimePayLogListAxiosResponsePromise =>
   request.get<IAllTimePayLogList>(`${pgwUrl}log/`)
+
+export const getPayReport = (params: IPayReportParams): IPayReportList =>
+  request.get<IPayReport[]>('/fin/pays_report/', { params })
