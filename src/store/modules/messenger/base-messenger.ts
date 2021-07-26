@@ -62,8 +62,8 @@ class Messenger extends VuexModule implements IMessenger {
   }
 
   @Action
-  public async AddMessenger(m: object) {
-    const { data } = await addMessenger(m, this.bot_type_name)
+  public async AddMessenger(info: { m: object, typeName: string }) {
+    const { data } = await addMessenger(info)
     this.SET_ALL_MESSENGER(data)
   }
 

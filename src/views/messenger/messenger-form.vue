@@ -99,8 +99,17 @@ export default class extends mixins(BotTypesMixin) {
         try {
           let newDat
           if (this.isNew) {
-            newDat = await MessengerModule.AddMessenger(this.frmMod)
-            this.$message.success('Чат бот создан')
+            const botTypes = this.messengerBotTypes.filter( m => (m.val === this.frmMod.bot_type))
+            if (botTypes.length > 0)
+            {
+              newDat = await MessengerModule.AddMessenger({
+                m: this.frmMod,
+                typeName: botTypes[0].text
+              })
+              this.$message.success('Чат бот создан')
+            } else {
+              this.$message.error('Выбери тип мессенжера')
+            }
           } else {
             newDat = await MessengerModule.PatchMessenger(this.frmMod)
             this.$message.success('Чат бот изменён')

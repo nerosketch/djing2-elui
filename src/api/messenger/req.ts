@@ -22,8 +22,8 @@ export const getMessengers = (typeName: string, params?: IDRFRequestListParamete
 export const getMessenger = (typeName: string, mId: number): IMessengerAxoisResponsePromise =>
   request.get<IMessenger>(`/messenger/${typeName}/${mId}/`)
 
-export const addMessenger = (newDat: object, messengerTypeName: string): IMessengerAxoisResponsePromise =>
-  request.post<IMessenger>(`/messenger/${messengerTypeName}/`, newDat)
+export const addMessenger = (info: { m: object, typeName: string }): IMessengerAxoisResponsePromise =>
+  request.post<IMessenger>(`/messenger/${info.typeName}/`, info.m)
 
 export const patchMessenger = (typeName: string, mId: number, newDat: object): IMessengerAxoisResponsePromise =>
   request.patch<IMessenger>(`/messenger/${typeName}/${mId}/`, newDat)
