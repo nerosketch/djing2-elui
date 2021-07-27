@@ -1,5 +1,5 @@
 import { RouteConfig } from 'vue-router'
-import Layout from '@/layout/index.vue'
+import Layout from '@/layout/regular.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 
 const taskRoutes: RouteConfig = {

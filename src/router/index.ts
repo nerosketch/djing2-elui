@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router, { RouteConfig } from 'vue-router'
-import Layout from '@/layout/index.vue'
+import Layout from '@/layout/regular.vue'
 
 import customerRoutes from './modules/customers'
 import deviceRoutes from './modules/devices'
@@ -10,6 +10,8 @@ import finRoutes from './modules/fin'
 import messengerRoutes from './modules/messenger'
 import sitesRoutes from './modules/sites'
 import sormRoutes from './modules/sorm'
+import mapsRoutes from './modules/maps'
+
 
 Vue.use(Router)
 
@@ -132,6 +134,7 @@ export const constantRoutes: RouteConfig [] = [
   messengerRoutes,
   sitesRoutes,
   sormRoutes,
+  mapsRoutes,
   {
     path: '*',
     redirect: '/404',

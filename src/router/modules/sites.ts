@@ -1,5 +1,5 @@
 import { RouteConfig } from 'vue-router'
-import Layout from '@/layout/index.vue'
+import Layout from '@/layout/regular.vue'
 
 const sitesRoutes: RouteConfig = {
   path: '/sites',
