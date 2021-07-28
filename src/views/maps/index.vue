@@ -12,13 +12,13 @@
     l-control(
       position="topright"
     )
-      el-card(v-loading='dotsLoading')
+      el-card(
+        v-loading='dotsLoading'
+        :body-style="{padding: '0'}"
+      )
         template(v-slot:header) Гео точки
-        div(style="overflow:auto;height:90vh")
-          .text.item(v-for="d in dots")
-            el-button(
-              size='mini'
-            ) {{ d.title }}
+        #dot-list(style="overflow:auto;height:90vh")
+          a.text.item(v-for="d in dots" href='#') {{ d.title }}
         el-button-group
           el-button(
             size='mini'
@@ -37,17 +37,17 @@
       :lat-lng="[d.latitude, d.longitude]"
     )
       l-popup
-          b header
-          .text.item askdhasjkd
-          .text.item sdsdfergte
-          .text.item ioasiopasd
-          .text.item mjqwklqklf
-          el-button-group
-            el-button(
-              size='mini'
-              type='danger'
-              icon='el-icon-close'
-            )
+        b header
+        .text.item askdhasjkd
+        .text.item sdsdfergte
+        .text.item ioasiopasd
+        .text.item mjqwklqklf
+        el-button-group
+          el-button(
+            size='mini'
+            type='danger'
+            icon='el-icon-close'
+          )
 
     el-dialog(:visible.sync="formVisible")
       dot-form(
@@ -129,3 +129,21 @@ export default class extends mixins(ResizeMixin) {
   }
 }
 </script>
+
+<style scoped>
+#dot-list .text.item {
+  border-bottom: 1px solid #d2d2d2;
+  padding: 3px 11px;
+  display: block;
+  color: #1d1d1d;
+}
+
+#dot-list .text.item:hover {
+  color: #495057;
+  background-color: #f8f9fa;
+}
+#dot-list .text.item:active {
+  color: #303030;
+  background-color: #dfdfdf;
+}
+</style>

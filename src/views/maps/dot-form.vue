@@ -2,7 +2,7 @@
   el-form(
     ref='form'
     size="mini"
-    label-width="130px"
+    label-width="140px"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -14,10 +14,12 @@
       el-input(v-model="frmMod.title")
     el-form-item(
       label="Широта(latitude)"
+      prop='latitude'
     )
       el-input(v-model="frmMod.latitude")
     el-form-item(
       label="Долгота(longitude)"
+      prop='longitude'
     )
       el-input(v-model="frmMod.longitude")
     el-button(
@@ -56,6 +58,12 @@ export default class extends Vue {
   private frmRules = {
     title: [
       { required: true, message: 'Название обязательно', trigger: 'blur' }
+    ],
+    latitude: [
+      { required: true, message: 'Укажите широту', trigger: 'blur' }
+    ],
+    longitude: [
+      { required: true, message: 'Укажите долготу', trigger: 'blur' }
     ]
   }
 
