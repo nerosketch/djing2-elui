@@ -36,10 +36,20 @@
       v-for="d in dots"
       :lat-lng="[d.latitude, d.longitude]"
     )
+      l-popup
+          b header
+          .text.item askdhasjkd
+          .text.item sdsdfergte
+          .text.item ioasiopasd
+          .text.item mjqwklqklf
+          el-button-group
+            el-button(
+              size='mini'
+              type='danger'
+              icon='el-icon-close'
+            )
 
-    el-dialog(
-      :visible.sync="formVisible"
-    )
+    el-dialog(:visible.sync="formVisible")
       dot-form(
         :lat="latLon.lat"
         :lon="latLon.lon"
@@ -53,7 +63,7 @@ import '@/views/maps/leaflet'
 import { mixins } from 'vue-class-component'
 import { Component } from 'vue-property-decorator'
 // import L from 'leaflet'
-import { LMap, LTileLayer, LControl, LMarker } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LMarker, LPopup } from 'vue2-leaflet'
 import ResizeMixin from '@/layout/mixin/resize'
 import 'leaflet/dist/leaflet.css'
 import { IMapDot } from '@/api/maps/types'
@@ -67,7 +77,8 @@ import DotForm from './dot-form.vue'
     LTileLayer,
     LControl,
     LMarker,
-    DotForm
+    DotForm,
+    LPopup
   }
 })
 export default class extends mixins(ResizeMixin) {
