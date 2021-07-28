@@ -3,25 +3,48 @@
     style="height: 100vh"
     :zoom="zoom"
     :center="center"
+    :options="opts"
+    @dblclick="mapDblClick"
   )
     l-tile-layer(
       :url="url"
     )
-    l-control(position="topright")
-      el-card(
-        v-loading='dotsLoading'
-      )
+    l-control(
+      position="topright"
+    )
+      el-card(v-loading='dotsLoading')
         template(v-slot:header) Гео точки
         div(style="overflow:auto;height:90vh")
           .text.item(v-for="d in dots")
             el-button(
               size='mini'
             ) {{ d.title }}
-    
+        el-button-group
+          el-button(
+            size='mini'
+            type='success'
+            icon='el-icon-plus'
+          ) Добавить
+          el-button(
+            size='mini'
+            icon='el-icon-refresh'
+            type='primary'
+            @click="loadDots"
+          ) Обновить
+
     l-marker(
       v-for="d in dots"
       :lat-lng="[d.latitude, d.longitude]"
     )
+
+    el-dialog(
+      :visible.sync="formVisible"
+    )
+      dot-form(
+        :lat="latLon.lat"
+        :lon="latLon.lon"
+        @done="addDotDone"
+      )
 
 </template>
 
@@ -35,6 +58,7 @@ import ResizeMixin from '@/layout/mixin/resize'
 import 'leaflet/dist/leaflet.css'
 import { IMapDot } from '@/api/maps/types'
 import { loadMapDots } from '@/api/maps/req'
+import DotForm from './dot-form.vue'
 
 @Component({
   name: 'MapsIndex',
@@ -42,7 +66,8 @@ import { loadMapDots } from '@/api/maps/req'
     LMap,
     LTileLayer,
     LControl,
-    LMarker
+    LMarker,
+    DotForm
   }
 })
 export default class extends mixins(ResizeMixin) {
@@ -51,8 +76,18 @@ export default class extends mixins(ResizeMixin) {
   private url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 
   private dotsLoading = false
+  private formVisible = false
+  private latLon = {
+    lat: 0,
+    lon: 0
+  }
 
   private dots: IMapDot[] = []
+
+  private opts = {
+    doubleClickZoom: false,
+    scrollWheelZoom: false
+  }
 
   private async loadDots() {
     this.dotsLoading = true
@@ -67,6 +102,19 @@ export default class extends mixins(ResizeMixin) {
   created() {
     this.loadDots()
   }
+
+  private mapDblClick(a: any) {
+    // console.log('mapDblClick', a, typeof a, this.latLon)
+    this.latLon.lat = a.latlng.lat
+    this.latLon.lon = a.latlng.lng
+    this.formVisible = true
+  }
+
+  private addDotDone(dot: IMapDot) {
+    // console.log('done', dot)
+    this.formVisible = false
+    this.$message.success('Новая точка добавлена')
+    this.loadDots()
+  }
 }
 </script>
-02t,geldwj0
