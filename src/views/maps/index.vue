@@ -18,35 +18,35 @@
       )
         template(v-slot:header) Гео точки
         #dot-list(style="overflow:auto;height:90vh")
-          a.text.item(v-for="d in dots" href='#') {{ d.title }}
-        el-button-group
-          el-button(
-            size='mini'
-            type='success'
-            icon='el-icon-plus'
-          ) Добавить
-          el-button(
-            size='mini'
-            icon='el-icon-refresh'
-            type='primary'
-            @click="loadDots"
-          ) Обновить
+          a.text.item(
+            v-for="d in dots"
+            href='#'
+            @click="dotClick(d)"
+          ) {{ d.title }}
+        el-button(
+          size='mini'
+          icon='el-icon-refresh'
+          type='primary'
+          @click="loadDots"
+        ) Обновить
 
     l-marker(
       v-for="d in dots"
       :lat-lng="[d.latitude, d.longitude]"
     )
       l-popup
-        b header
-        .text.item askdhasjkd
-        .text.item sdsdfergte
-        .text.item ioasiopasd
-        .text.item mjqwklqklf
+        div
+          b {{ d.title }}
+        //- .text.item askdhasjkd
+        //- .text.item sdsdfergte
+        //- .text.item ioasiopasd
+        //- .text.item mjqwklqklf
         el-button-group
           el-button(
             size='mini'
             type='danger'
             icon='el-icon-close'
+            @click="delDot(d)"
           )
 
     el-dialog(:visible.sync="formVisible")
@@ -67,7 +67,7 @@ import { LMap, LTileLayer, LControl, LMarker, LPopup } from 'vue2-leaflet'
 import ResizeMixin from '@/layout/mixin/resize'
 import 'leaflet/dist/leaflet.css'
 import { IMapDot } from '@/api/maps/types'
-import { loadMapDots } from '@/api/maps/req'
+import { delMapDot, loadMapDots } from '@/api/maps/req'
 import DotForm from './dot-form.vue'
 
 @Component({
@@ -115,17 +115,27 @@ export default class extends mixins(ResizeMixin) {
   }
 
   private mapDblClick(a: any) {
-    // console.log('mapDblClick', a, typeof a, this.latLon)
     this.latLon.lat = a.latlng.lat
     this.latLon.lon = a.latlng.lng
     this.formVisible = true
   }
 
   private addDotDone(dot: IMapDot) {
-    // console.log('done', dot)
     this.formVisible = false
     this.$message.success('Новая точка добавлена')
     this.loadDots()
+  }
+
+  private dotClick(dot: IMapDot) {
+    this.center = [dot.latitude, dot.longitude]
+  }
+
+  private delDot(dot: IMapDot) {
+    this.$alert('Удалить точку?').then(async() => {
+      await delMapDot(dot.id)
+      this.$message.success('Точка удалена')
+      this.loadDots()
+    })
   }
 }
 </script>

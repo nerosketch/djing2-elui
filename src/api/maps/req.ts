@@ -11,3 +11,6 @@ export const loadMapDots = (): IMapDotListAxiosResponsePromise =>
 
 export const addMapDot = (d: object): IMapDotAxoisResponsePromise =>
   request.post<IMapDot>('/maps/', d)
+
+export const delMapDot = (dotId: number) =>
+  request.delete(`/maps/${dotId}/`)
