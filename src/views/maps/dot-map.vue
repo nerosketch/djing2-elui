@@ -3,6 +3,7 @@ l-marker(
   :lat-lng="[dot.latitude, dot.longitude]"
   @popupopen="popop"
   @popupclose='popclo'
+  :icon='markerIcon'
 )
   l-popup(
     v-loading="devsLoading"
@@ -27,6 +28,7 @@ import { delMapDot, loadDotDevs } from '@/api/maps/req'
 import { LPopup, LMarker } from 'vue2-leaflet'
 import { IMapDot, IMapDotDevice } from '@/api/maps/types'
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import MapDotIcons from './icons'
 
 @Component({
   name: 'DotMap',
@@ -42,6 +44,10 @@ export default class extends Vue {
   private devsLoading = false
   private devsList: IMapDotDevice[] = []
   private isDevsListVisible = false
+
+  get markerIcon() {
+    return MapDotIcons.skyrimIcon
+  }
 
   private delDot(dot: IMapDot) {
     this.$alert('Удалить точку?').then(async() => {
