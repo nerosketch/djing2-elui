@@ -6,12 +6,8 @@
     :options="opts"
     @dblclick="mapDblClick"
   )
-    l-tile-layer(
-      :url="url"
-    )
-    l-control(
-      position="topright"
-    )
+    l-tile-layer(:url="url")
+    l-control(position="topright")
       el-card(
         v-loading='dotsLoading'
         :body-style="{padding: '0'}"
@@ -30,15 +26,11 @@
           @click="loadDots"
         ) Обновить
 
-    l-marker(
+    dot-map(
       v-for="d in dots"
-      :lat-lng="[d.latitude, d.longitude]"
+      :dot='d'
+      @done="delDotDone"
     )
-      l-popup
-        dot-popup(
-          :dot="d"
-          @done="delDotDone"
-        )
 
     el-dialog(:visible.sync="formVisible")
       dot-form(
@@ -53,13 +45,13 @@
 import '@/views/maps/leaflet'
 import { mixins } from 'vue-class-component'
 import { Component } from 'vue-property-decorator'
-import { LMap, LTileLayer, LControl, LMarker, LPopup } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl } from 'vue2-leaflet'
 import ResizeMixin from '@/layout/mixin/resize'
 import 'leaflet/dist/leaflet.css'
 import { IMapDot } from '@/api/maps/types'
 import { loadMapDots } from '@/api/maps/req'
 import DotForm from './dot-form.vue'
-import DotPopup from './dot-popup.vue'
+import DotMap from './dot-map.vue'
 
 @Component({
   name: 'MapsIndex',
@@ -67,10 +59,8 @@ import DotPopup from './dot-popup.vue'
     LMap,
     LTileLayer,
     LControl,
-    LMarker,
-    LPopup,
     DotForm,
-    DotPopup,
+    DotMap,
   }
 })
 export default class extends mixins(ResizeMixin) {
