@@ -11,6 +11,7 @@ div
 
     el-button(
       @click="addCashDialog=true"
+      size='small'
     ) Пополнить счёт
 
   el-dialog(
@@ -44,8 +45,18 @@ export default class extends Vue {
 
   private tableColumns: IDataTableColumn[] = [
     {
+      prop: 'from_balance',
+      label: 'Было',
+      'min-width': 80
+    },
+    {
       prop: 'cost',
       label: 'Сумма',
+      'min-width': 80
+    },
+    {
+      prop: 'to_balance',
+      label: 'Стало',
       'min-width': 80
     },
     {
@@ -70,7 +81,7 @@ export default class extends Vue {
     if (params) {
       const newParams = Object.assign({
         customer: CustomerModule.pk,
-        fields: 'cost,date,author_name,comment'
+        fields: 'cost,date,author_name,from_balance,to_balance,comment'
       }, params)
       r = await getCustomerPayLog(newParams)
     } else {
@@ -81,7 +92,7 @@ export default class extends Vue {
 
   private addCashDone(cost: number) {
     this.addCashDialog = false
-    this.$refs['fintbl'].GetTableData()
+    this.$refs.fintbl.GetTableData()
     this.$message.success(`Счёт пополнен на ${cost}`)
   }
 }
