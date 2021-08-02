@@ -46,7 +46,7 @@ export default class extends Vue {
   private isDevsListVisible = false
 
   get markerIcon() {
-    return MapDotIcons.skyrimIcon
+    return MapDotIcons.dev
   }
 
   private delDot(dot: IMapDot) {
