@@ -28,12 +28,12 @@
         prop='last_update'
       )
       el-table-column(
-        label="Дин."
+        label="Авто"
         align="center"
         width="50"
       )
         template(v-slot:default="{row}")
-          el-checkbox(v-model="row.is_dynamic" disabled)
+          i.el-icon-circle-check(v-if="row.is_dynamic")
       el-table-column(
         label="#"
         align="center"

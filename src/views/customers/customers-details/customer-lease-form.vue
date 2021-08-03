@@ -16,7 +16,8 @@
         template(v-slot:append)
           el-button(
             icon='el-icon-refresh'
-            @click="getFreeIp" :loading='getFreeIpLoad'
+            @click="getFreeIp"
+            :loading='getFreeIpLoad'
             :disabled="frmMod.pool === 0"
           )
     el-form-item(
@@ -45,11 +46,6 @@
       prop='mac_address'
     )
       el-input(v-model="frmMod.mac_address")
-    el-form-item(
-      label="dhcp"
-      prop='is_dynamic'
-    )
-      el-checkbox(v-model='frmMod.is_dynamic')
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -62,7 +58,6 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { AppModule } from '@/store/modules/app'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
 import { CustomerModule } from '@/store/modules/customers/customer'
@@ -99,7 +94,6 @@ export default class extends Vue {
     pool: 0,
     customer: 0,
     mac_address: '',
-    is_dynamic: false
   }
 
   private onSubmit() {
@@ -155,7 +149,6 @@ export default class extends Vue {
       pool: 0,
       customer: CustomerModule.pk,
       mac_address: '',
-      is_dynamic: false
     }
     if (this.pools.length === 0) {
       this.loadPools()
