@@ -19,10 +19,10 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { IDevice } from '@/api/devices/types'
 import { DeviceModule } from '@/store/modules/devices/device'
-import PonBdcomOlt from './pon-bdcom-olt.vue'
+import PonBdcomOlt from './pon/pon-bdcom-olt.vue'
 import SwitchView from './switch-view.vue'
-import PonOnu from './pon-onu.vue'
-import OltZte from './gpon/olt-zte.vue'
+import PonOnu from './pon/pon-onu.vue'
+import OltZte from './pon/gpon/olt-zte.vue'
 import { GroupModule } from '@/store/modules/groups'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 

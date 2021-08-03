@@ -133,7 +133,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IPort, IScannedPort } from '@/api/devices/types'
 import { PortModule } from '@/store/modules/devices/port'
-import PonBdcomOlt from './pon-bdcom-olt.vue'
+import PonBdcomOlt from './pon/pon-bdcom-olt.vue'
 import { getPorts, scanPorts } from '@/api/devices/req'
 import SwitchPortView from './switch/switch-port-view.vue'
 import SwitchPortForm from './switch/switch-port-form.vue'

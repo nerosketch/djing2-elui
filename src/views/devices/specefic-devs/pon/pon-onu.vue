@@ -77,12 +77,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanPonDetails } from '@/api/devices/req'
 import { DeviceModule } from '@/store/modules/devices/device'
-import DevForm from '../dev-form.vue'
-import DeleteFromOltBtn from '@/views/devices/specefic-devs/epon-onu/delete-from-olt-btn.vue'
+import DevForm from '@/views/devices/dev-form.vue'
+import DeleteFromOltBtn from './epon-onu/delete-from-olt-btn.vue'
 import OnuVlanForm from './onu-vlan-form.vue'
 import FixOnuBtn from './fix-onu-btn.vue'
 
