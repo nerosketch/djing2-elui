@@ -68,7 +68,7 @@
         icon="el-icon-download"
         @click="onSubmit"
         :loading="vlanLoading"
-        :disabled="!$perms.devices.can_apply_onu_config"
+        :disabled="!$perms.devices.can_apply_onu_config || disabled"
         size='mini'
       ) Применить
 
@@ -85,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 import { DeviceModule } from '@/store/modules/devices/device'
@@ -100,6 +100,9 @@ const multipleAccessVlanMsg = 'Порт не может содержать бо�
   components: { AddVlan }
 })
 export default class extends mixins(VlanMixin) {
+  @Prop({ default: false })
+  private disabled!: boolean
+
   private addVlanVisible = false
   private configTypeCodes: IDevConfigChoice[] = []
   private currentAddVlanPort = 0

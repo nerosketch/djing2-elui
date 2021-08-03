@@ -64,7 +64,10 @@
         fix-onu-btn(v-if="macsNotEqual")
 
     el-col(:lg="12" :sm='24')
-      onu-vlan-form(:style="{'margin-top': '5px'}")
+      onu-vlan-form(
+        :disabled="macsNotEqual"
+        :style="{'margin-top': '5px'}"
+      )
 
     el-dialog(
       :visible.sync="devFormDialog"
