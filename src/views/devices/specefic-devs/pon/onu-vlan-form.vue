@@ -28,24 +28,10 @@
           )
           | Vlan на порт №{{ portVlanConf.port }}
         el-row
-          el-col(:span="4" v-for="(v, i) in portVlanConf.vids" :key="i")
-            el-tooltip.item(
-              :content="calcVlanTitleByVid(v.vid)"
-              placement="top"
-            )
-              el-button-group
-                el-button.onuvlan_miniwidth(
-                  :type='v.native ? "info" : "primary"'
-                  size='mini'
-                  @click="changeVlanMode(portVlanConf.port, v)"
-                ) {{ v.native ? 'A' : 'T' }}
-                el-button(size='mini') {{ v.vid }}
-                el-button.onuvlan_miniwidth(
-                  type='danger'
-                  size='mini'
-                  icon='el-icon-close'
-                  @click="vlanRemove(portVlanConf.port, v)"
-                )
+          generic-vlan-config(
+            :portVlanConf="portVlanConf"
+            :vlans="vlans"
+          )
 
         el-button(
           type="success"
@@ -89,11 +75,9 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 import { DeviceModule } from '@/store/modules/devices/device'
-import { IDevConfigChoice, IDevOnuVlanInfo, IDevOnuVlan, IDeviceOnuConfigTemplate } from '@/api/devices/types'
+import { IDevConfigChoice, IDevOnuVlan, IDeviceOnuConfigTemplate } from '@/api/devices/types'
 import { readOnuVlanInfo, applyDeviceOnuConfig } from '@/api/devices/req'
 import AddVlan from './add-vlan.vue'
-
-const multipleAccessVlanMsg = 'Порт не может содержать больше одного access vlan'
 
 @Component({
   name: 'OnuVlanForm',
@@ -136,30 +120,6 @@ export default class extends mixins(VlanMixin) {
     } else {
       this.$message.error('Id оборудования не передан')
     }
-  }
-
-  private vlanRemove(portNum: number, remVlan: IDevOnuVlan) {
-    this.$confirm('Удалить vlan с порта?').then(() => {
-      const confObj = this.findPortConf(portNum)
-      if (confObj) {
-        const confIndex = confObj.vids.findIndex(v => v.vid === remVlan.vid)
-        if (confIndex > -1) {
-          confObj.vids.splice(confIndex, 1)
-          this.$message.success(`Влан ${remVlan.vid} удалён с порта №${portNum}`)
-        } else {
-          this.$message.error('Не найден vid=' + remVlan.vid)
-        }
-      }
-    })
-  }
-
-  private changeVlanMode(portNum: number, v: IDevOnuVlan) {
-    if (!v.native && this.nativeVlanCount(portNum) > 0) {
-      this.$message.error(multipleAccessVlanMsg)
-      return
-    }
-    v.native = !v.native
-    this.$message.success('Изменён режим Trunk/Success')
   }
 
   private addVlanDone(vlanConf: IDevOnuVlan) {
@@ -216,50 +176,9 @@ export default class extends mixins(VlanMixin) {
     }
   }
 
-  private calcVlanTitleByVid(vid: number) {
-    const vlan = this.vlans.find(v => v.vid === vid)
-    if (vlan) {
-      return vlan.title
-    }
-    return undefined
-  }
-
   private openAddVlanDialog(portNum: number) {
     this.currentAddVlanPort = portNum
     this.addVlanVisible = true
-  }
-
-  private nativeVlanCount(portNum: number): number {
-    const confObj = this.findPortConf(portNum)
-    let nativeCount = 0
-    if (confObj) {
-      confObj.vids.forEach(portVid => {
-        if (portVid.native) {
-          nativeCount++
-        }
-      })
-    }
-    return nativeCount
-  }
-  private isVlanExists(portNum: number, vid: number): boolean {
-    const confObj = this.findPortConf(portNum)
-    if (confObj) {
-      for (let portVid of confObj.vids) {
-        if (portVid.vid === vid) {
-          return true
-        }
-      }
-    }
-    return false
-  }
-
-  private findPortConf(portNum: number): IDevOnuVlanInfo | undefined {
-    const confObj = this.currentConfig.vlanConfig.find(v => v.port === portNum)
-    if (confObj) {
-      return confObj
-    }
-    this.$message.error('Не найден конфиг для порта №' + portNum)
-    return undefined
   }
 
   private get isAcceptVlanSelectedConfig(): boolean {
@@ -271,9 +190,3 @@ export default class extends mixins(VlanMixin) {
   }
 }
 </script>
-
-<style>
-.onuvlan_miniwidth{
-  padding: 7px 3px;
-}
-</style>

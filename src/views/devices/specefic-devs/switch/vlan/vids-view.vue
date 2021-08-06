@@ -27,6 +27,10 @@
         //- input(:checked="row.is_management" disabled type="checkbox")
         | {{ row.is_management ? 'Да' : 'Нет' }}
 
+    port-vlan-config(
+      :vlans='vlans'
+    )
+
 </template>
 
 <script lang="ts">
@@ -34,9 +38,13 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 // import { Form } from 'element-ui'
 import { PortModule } from '@/store/modules/devices/port'
 import { IDevVlan } from '@/api/devices/types'
+import PortVlanConfig from './port-vlan-config.vue'
 
 @Component({
-  name: 'VidsView'
+  name: 'VidsView',
+  components: {
+    PortVlanConfig
+  }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) portId!: number

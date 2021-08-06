@@ -25,7 +25,7 @@ import {
   IDevTogglePortRequest
 } from './types'
 
-const baseDevUrl = '/devices/'
+const baseDevUrl = '/devices/all/'
 
 // IDevice
 export const getDevices = (params: IDRFRequestListParametersDevGroup): IDeviceListAxiosResponsePromise =>
@@ -53,44 +53,46 @@ export const delDevice = (devId: number) =>
 export const scanAllDevVlans = (devId: number): IDevVlanListAxiosResponsePromise =>
   request.get<IDevVlan[]>(`${baseDevUrl}${devId}/scan_all_vlan_list/`)
 
+const baseDevPonUrl = '/devices/pon/'
+
 export const readOnuVlanInfo = (devId: number): IDevOnuVlanInfoAxiosResponsePromise =>
-  request.get<IDevOnuVlanInfo[]>(`${baseDevUrl}pon/${devId}/read_onu_vlan_info/`)
+  request.get<IDevOnuVlanInfo[]>(`${baseDevPonUrl}${devId}/read_onu_vlan_info/`)
 
 export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${baseDevUrl}${devId}/scan_mac_address_vlan/`, { params: { vid } })
 
 export const removeFromOlt = (devId: number): ISimpleResponseResultAxiosResponsePromise =>
-  request.get(`${baseDevUrl}pon/${devId}/remove_from_olt/`)
+  request.get(`${baseDevPonUrl}${devId}/remove_from_olt/`)
 
 export const getDeviceConfigChoices = (devId: number): IOnuConfigOptionsAxiosResponsePromise =>
-  request.get<IOnuConfigOptions>(`${baseDevUrl}pon/${devId}/get_onu_config_options/`)
+  request.get<IOnuConfigOptions>(`${baseDevPonUrl}${devId}/get_onu_config_options/`)
 
 export const applyDeviceOnuConfig = (devId: number, devConfig: IDeviceOnuConfigTemplate) =>
-  request.post(`${baseDevUrl}pon/${devId}/apply_device_onu_config_template/`, devConfig)
+  request.post(`${baseDevPonUrl}${devId}/apply_device_onu_config_template/`, devConfig)
 
 export const fixOnu = (devId: number): IFixOnuSimpleResponseResultAxiosResponsePromise =>
-  request.get(`${baseDevUrl}pon/${devId}/fix_onu/`)
+  request.get(`${baseDevPonUrl}${devId}/fix_onu/`)
 
 export const sendReboot = (devId: number) =>
   request.put(`${baseDevUrl}${devId}/send_reboot/`)
 
 export const scanOltFibers = (devId: number): IDevFiberListAxiosResponsePromise =>
-  request.get<IDevFiber[]>(`${baseDevUrl}pon/${devId}/scan_olt_fibers/`)
+  request.get<IDevFiber[]>(`${baseDevPonUrl}${devId}/scan_olt_fibers/`)
 
 export const scanFiberOnuList = (devId: number, fiberNum: number): IScannedZTEONUListAxiosPromise =>
-  request.get<IScannedZTEONU[]>(`${baseDevUrl}pon/${devId}/scan_onu_on_fiber/${fiberNum}/`)
+  request.get<IScannedZTEONU[]>(`${baseDevPonUrl}${devId}/scan_onu_on_fiber/${fiberNum}/`)
 
 export const scanPonDetails = (devId: number) =>
-  request.get(`${baseDevUrl}pon/${devId}/scan_pon_details/`)
+  request.get(`${baseDevPonUrl}${devId}/scan_pon_details/`)
 
 export const scanPorts = (devId: number): IScannedPortListAxiosPromise =>
   request.get<IScannedPort[]>(`${baseDevUrl}${devId}/scan_ports/`)
 
 export const scanOnuList = (devId: number, onProgress: (c: ProgressEvent) => void): AxiosPromise<string> =>
-  request.get(`${baseDevUrl}pon/${devId}/scan_onu_list/`, { onDownloadProgress: onProgress })
+  request.get(`${baseDevPonUrl}${devId}/scan_onu_list/`, { onDownloadProgress: onProgress })
 
 export const scanUnitsUnregistered = (devId: number): IUnitUnregisteredListAxiosPromise =>
-  request.get<IUnitUnregistered[]>(`${baseDevUrl}pon/${devId}/scan_units_unregistered/`)
+  request.get<IUnitUnregistered[]>(`${baseDevPonUrl}${devId}/scan_units_unregistered/`)
 
 // IPort
 const basePortUrl = '/devices/ports/'
@@ -127,10 +129,10 @@ export const getDevGroups = (params?: IDRFRequestListParameters): IDevGroupListA
   request.get<IDevGroupList>('/devices/groups/', { params })
 
 export const getDevObjectsPerms = (devId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
-  request.get<IObjectGroupPermsInitial>(`/devices/${devId}/get_object_perms/`)
+  request.get<IObjectGroupPermsInitial>(`${baseDevUrl}${devId}/get_object_perms/`)
 
 export const setDevObjectsPerms = (devId: number, dat: IObjectGroupPermsResultStruct) =>
-  request.put(`/devices/${devId}/set_object_perms/`, dat)
+  request.put(`${baseDevUrl}${devId}/set_object_perms/`, dat)
 
 export const getDeviceSelectedObjectPerms = (devId: number, profileGroupId: number): AxiosPromise<number[]> =>
-  request.get(`/devices/${devId}/get_selected_object_perms/${profileGroupId}/`)
+  request.get(`${baseDevUrl}${devId}/get_selected_object_perms/${profileGroupId}/`)
