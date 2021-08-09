@@ -50,6 +50,7 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { PortModule } from '@/store/modules/devices/port'
 import { IDevVlan, IDevVlanSimpleInfo } from '@/api/devices/types'
 import GenericVlanConfig from '@/views/devices/vlan-config/generic-vlan-config.vue'
+import { vlanConfigApply } from '@/api/devices/req'
 
 @Component({
   name: 'VidsView',
@@ -59,10 +60,12 @@ import GenericVlanConfig from '@/views/devices/vlan-config/generic-vlan-config.v
 })
 export default class extends Vue {
   @Prop({ default: 0 }) portId!: number
+  @Prop({ default: 0 }) portNum!: number
   private loading = false
   private deviceVlans: IDevVlan[] = []
+
   private portVlanConf: IDevVlanSimpleInfo = {
-    port: this.portId,
+    port: this.portNum,
     vids: [{ vid: 1, native: true }]
   }
 
@@ -99,6 +102,7 @@ export default class extends Vue {
 
   private onApplySwitchVlanConfig() {
     console.log('onApplySwitchVlanConfig')
+    vlanConfigApply(this.portId, this.portVlanConf)
   }
 }
 </script>

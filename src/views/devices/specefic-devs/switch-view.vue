@@ -117,6 +117,7 @@
     )
       vids-view(
         :portId="currPortId"
+        :portNum="initialNum"
       )
     el-dialog(
       :visible.sync="macsDialog"
@@ -334,6 +335,7 @@ export default class extends Vue {
 
   private openVidsDialog(port: IPort) {
     this.currPortId = port.pk
+    this.initialNum = port.num
     this.vidsDialog = true
   }
 

@@ -121,8 +121,8 @@ export const scanMacAddressPort = (portId: number): IDevMacPortListAxiosResponse
 export const scanPortVlans = (portId: number): IDevVlanListAxiosResponsePromise =>
   request.get<IDevVlan[]>(`${basePortUrl}${portId}/scan_vlan/`)
 
-// export const vlanConfigApply = (portId: number, conf: IPortVlanConfig) =>
-//   request.post(`${basePortUrl}${portId}/`, conf)
+export const vlanConfigApply = (portId: number, conf: IDevVlanSimpleInfo) =>
+  request.post(`${basePortUrl}${portId}/vlan_config_apply/`, conf)
 
 // IDevGroup
 export const getDevGroups = (params?: IDRFRequestListParameters): IDevGroupListAxiosResponsePromise =>
