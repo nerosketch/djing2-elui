@@ -27,26 +27,16 @@
             @click="delVlanPort(portVlanConf.port)"
           )
           | Vlan на порт №{{ portVlanConf.port }}
-        el-row
-          generic-vlan-config(
-            :portVlanConf="portVlanConf"
-            :vlans="vlans"
-          )
 
-        el-button(
-          type="success"
-          icon="el-icon-plus"
-          size='mini'
-          circle
-          :disabled="!$perms.networks.view_vlanif"
-          @click="openAddVlanDialog(portVlanConf.port)"
+        generic-vlan-config(
+          :portVlanConf.sync="portVlanConf"
+          :vlans="vlans"
         )
 
     el-card(
       shadow='never'
       v-else
-    )
-      span Настройка VLAN не принимается выбранным конфигом
+    ) Настройка VLAN не принимается выбранным конфигом
 
     el-button-group
       el-button(
@@ -58,16 +48,6 @@
         size='mini'
       ) Применить
 
-    el-dialog(
-      :visible.sync="addVlanVisible"
-      title="Добавить vlan на порт"
-      :close-on-click-modal="false"
-    )
-      keep-alive
-        add-vlan(
-          v-on:done="addVlanDone"
-          :vlans="vlans"
-        )
 </template>
 
 <script lang="ts">
@@ -75,21 +55,21 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 import { DeviceModule } from '@/store/modules/devices/device'
-import { IDevConfigChoice, IDevOnuVlan, IDeviceOnuConfigTemplate } from '@/api/devices/types'
+import { IDevConfigChoice, IDeviceOnuConfigTemplate } from '@/api/devices/types'
 import { readOnuVlanInfo, applyDeviceOnuConfig } from '@/api/devices/req'
-import AddVlan from './add-vlan.vue'
+import GenericVlanConfig from '@/views/devices/vlan-config/generic-vlan-config.vue'
 
 @Component({
   name: 'OnuVlanForm',
-  components: { AddVlan }
+  components: {
+    GenericVlanConfig
+  }
 })
 export default class extends mixins(VlanMixin) {
   @Prop({ default: false })
   private disabled!: boolean
 
-  private addVlanVisible = false
   private configTypeCodes: IDevConfigChoice[] = []
-  private currentAddVlanPort = 0
   private currentConfig: IDeviceOnuConfigTemplate = {
     configTypeCode: this.$store.state.devicemodule.code,
     vlanConfig: []
@@ -119,30 +99,6 @@ export default class extends mixins(VlanMixin) {
       }
     } else {
       this.$message.error('Id оборудования не передан')
-    }
-  }
-
-  private addVlanDone(vlanConf: IDevOnuVlan) {
-    this.addVlanVisible = false
-    const portNum = this.currentAddVlanPort
-
-    if (this.isVlanExists(portNum, vlanConf.vid)) {
-      this.$message.error('Порт должен содержать уникальные vlan')
-      return
-    }
-
-    if (vlanConf.native && this.nativeVlanCount(portNum) > 0) {
-      this.$message.error(multipleAccessVlanMsg)
-      return
-    }
-
-    const confObj = this.findPortConf(portNum)
-    if (confObj) {
-      confObj.vids.push(vlanConf)
-      this.$message({
-        type: 'success',
-        message: `vlan Id: ${vlanConf.vid}, ${vlanConf.native ? 'access' : 'trunk'}`
-      })
     }
   }
 
@@ -176,12 +132,7 @@ export default class extends mixins(VlanMixin) {
     }
   }
 
-  private openAddVlanDialog(portNum: number) {
-    this.currentAddVlanPort = portNum
-    this.addVlanVisible = true
-  }
-
-  private get isAcceptVlanSelectedConfig(): boolean {
+  private get isAcceptVlanSelectedConfig() {
     let selectedConf = this.configTypeCodes.find(val => val.code === this.currentConfig.configTypeCode)
     if (selectedConf) {
       return selectedConf.accept_vlan || false
