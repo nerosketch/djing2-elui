@@ -1,6 +1,7 @@
 <template lang="pug">
+div
   el-table(
-    :data="vlans"
+    :data="deviceVlans"
     v-loading="loading"
     empty-text="Vlan'ы на порту не найдены"
     border fit size='small'
@@ -19,17 +20,27 @@
       label="native"
     )
       template(v-slot:default="{row}")
-        | {{ row.native ? 'Да' : 'Нет' }}
+        i(:class="{'el-icon-circle-check': row.native, 'el-icon-circle-close': !row.native}")
     el-table-column(
       label="Управление"
     )
       template(v-slot:default="{row}")
-        //- input(:checked="row.is_management" disabled type="checkbox")
-        | {{ row.is_management ? 'Да' : 'Нет' }}
+        i(:class="{'el-icon-circle-check': row.is_management, 'el-icon-circle-close': !row.is_management}")
 
-    port-vlan-config(
-      :vlans='vlans'
-    )
+  el-divider
+
+  generic-vlan-config(
+    :portVlanConf.sync="portVlanConf"
+  )
+
+  el-button(
+    type="primary"
+    icon="el-icon-download"
+    @click="onApplySwitchVlanConfig"
+    :loading="loading"
+    :disabled="!$perms.devices.can_apply_onu_config"
+    size='mini'
+  ) Применить
 
 </template>
 
@@ -37,19 +48,23 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 // import { Form } from 'element-ui'
 import { PortModule } from '@/store/modules/devices/port'
-import { IDevVlan } from '@/api/devices/types'
-import PortVlanConfig from './port-vlan-config.vue'
+import { IDevVlan, IDevVlanSimpleInfo } from '@/api/devices/types'
+import GenericVlanConfig from '@/views/devices/vlan-config/generic-vlan-config.vue'
 
 @Component({
   name: 'VidsView',
   components: {
-    PortVlanConfig
+    GenericVlanConfig
   }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) portId!: number
   private loading = false
-  private vlans: IDevVlan[] = []
+  private deviceVlans: IDevVlan[] = []
+  private portVlanConf: IDevVlanSimpleInfo = {
+    port: this.portId,
+    vids: [{ vid: 1, native: true }]
+  }
 
   @Watch('portId')
   private onChPoId() {
@@ -64,7 +79,14 @@ export default class extends Vue {
     if (this.portId > 0) {
       this.loading = true
       try {
-        this.vlans = await PortModule.ScanPortVlans(this.portId)
+        const deviceVlans = await PortModule.ScanPortVlans(this.portId)
+
+        // generate initial vlan config
+        this.portVlanConf.vids = deviceVlans.map(v => ({
+          vid: v.vid,
+          native: v.native
+        }))
+        this.deviceVlans = deviceVlans
       } catch (err) {
         this.$message.error(err)
       } finally {
@@ -73,6 +95,10 @@ export default class extends Vue {
     } else {
       this.$message.error('portId parameter is required')
     }
+  }
+
+  private onApplySwitchVlanConfig() {
+    console.log('onApplySwitchVlanConfig')
   }
 }
 </script>

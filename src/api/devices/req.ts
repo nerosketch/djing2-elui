@@ -20,7 +20,7 @@ import {
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
   IScannedZTEONUListAxiosPromise, IScannedZTEONU,
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
-  IDevOnuVlanInfoAxiosResponsePromise, IDevOnuVlanInfo,
+  IDevVlanSimpleInfoAxiosResponsePromise, IDevVlanSimpleInfo,
   IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise,
   IDevTogglePortRequest
 } from './types'
@@ -55,8 +55,8 @@ export const scanAllDevVlans = (devId: number): IDevVlanListAxiosResponsePromise
 
 const baseDevPonUrl = '/devices/pon/'
 
-export const readOnuVlanInfo = (devId: number): IDevOnuVlanInfoAxiosResponsePromise =>
-  request.get<IDevOnuVlanInfo[]>(`${baseDevPonUrl}${devId}/read_onu_vlan_info/`)
+export const readOnuVlanInfo = (devId: number): IDevVlanSimpleInfoAxiosResponsePromise =>
+  request.get<IDevVlanSimpleInfo[]>(`${baseDevPonUrl}${devId}/read_onu_vlan_info/`)
 
 export const scanAllDevMac = (devId: number, vid: number): IDevMacPortListAxiosResponsePromise =>
   request.get<IDevMacPort[]>(`${baseDevUrl}${devId}/scan_mac_address_vlan/`, { params: { vid } })

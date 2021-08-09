@@ -32,6 +32,5 @@ export default class extends Vue {
     } finally {
       this.vlanLoading = false
     }
-    return null
   }
 }

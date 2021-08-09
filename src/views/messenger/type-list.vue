@@ -26,7 +26,6 @@ import BotTypesMixin from './bot_types_mixin'
 })
 export default class extends mixins(BotTypesMixin) {
   created() {
-    console.log('Loading data')
     this.loadMessengerTypes()
 
     BreadcrumbsModule.SetCrumbs([

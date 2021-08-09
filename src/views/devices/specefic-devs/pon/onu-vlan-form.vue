@@ -30,7 +30,7 @@
 
         generic-vlan-config(
           :portVlanConf.sync="portVlanConf"
-          :vlans="vlans"
+          :allVlans="vlans"
         )
 
     el-card(
@@ -38,15 +38,14 @@
       v-else
     ) Настройка VLAN не принимается выбранным конфигом
 
-    el-button-group
-      el-button(
-        type="primary"
-        icon="el-icon-download"
-        @click="onSubmit"
-        :loading="vlanLoading"
-        :disabled="!$perms.devices.can_apply_onu_config || disabled"
-        size='mini'
-      ) Применить
+    el-button(
+      type="primary"
+      icon="el-icon-download"
+      @click="onSubmit"
+      :loading="vlanLoading"
+      :disabled="!$perms.devices.can_apply_onu_config || disabled"
+      size='mini'
+    ) Применить
 
 </template>
 

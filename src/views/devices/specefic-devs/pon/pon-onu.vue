@@ -146,7 +146,6 @@ export default class extends Vue {
   private async getDetails() {
     if (this.device !== null) {
       const { data } = await scanPonDetails(this.device.pk)
-      console.log('onu Info:', data)
       this.onuDetails = data
     }
   }
