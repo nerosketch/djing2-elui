@@ -37,7 +37,7 @@ div
     type="primary"
     icon="el-icon-download"
     @click="onApplySwitchVlanConfig"
-    :loading="loading"
+    :loading="applyLoading"
     :disabled="!$perms.devices.can_apply_onu_config"
     size='mini'
   ) Применить
@@ -62,6 +62,7 @@ export default class extends Vue {
   @Prop({ default: 0 }) portId!: number
   @Prop({ default: 0 }) portNum!: number
   private loading = false
+  private applyLoading = false
   private deviceVlans: IDevVlan[] = []
 
   private portVlanConf: IDevVlanSimpleInfo = {
@@ -100,9 +101,15 @@ export default class extends Vue {
     }
   }
 
-  private onApplySwitchVlanConfig() {
-    console.log('onApplySwitchVlanConfig')
-    vlanConfigApply(this.portId, this.portVlanConf)
+  private async onApplySwitchVlanConfig() {
+    this.applyLoading = true
+    try {
+      await vlanConfigApply(this.portId, this.portVlanConf)
+      this.$message.success('Vlan config успешно применён')
+      this.$emit('applydone')
+    } finally {
+      this.applyLoading = false
+    }
   }
 }
 </script>

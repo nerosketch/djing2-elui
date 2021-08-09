@@ -118,6 +118,7 @@
       vids-view(
         :portId="currPortId"
         :portNum="initialNum"
+        @applydone="vidsDialog=false"
       )
     el-dialog(
       :visible.sync="macsDialog"
