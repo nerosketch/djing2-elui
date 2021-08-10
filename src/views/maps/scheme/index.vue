@@ -1,6 +1,7 @@
 <template lang="pug">
 div
-  .full_height(ref="area")
+  drop(@drop="onDrop")
+    .full_height(ref="area")
   .absolute_block
     el-card(shadow="hover")
       template(v-slot:header) Панель инструментов
@@ -19,6 +20,7 @@ import { registerNodes } from "./node_comps/index"
 import VueClassContainer from './node_comps/class-container'
 import { nodes } from "./node_comps/index"
 import ToolItem from './tool-item.vue'
+import { Drop, DnDEvent } from "vue-easy-dnd"
 
 
 function _clc(editor: any, pos: number, p: string) {
@@ -30,7 +32,8 @@ function _clc(editor: any, pos: number, p: string) {
 @Component({
   name: 'MapsSchemeIndex',
   components: {
-    ToolItem
+    ToolItem,
+    Drop
   }
 })
 export default class extends Vue {
@@ -62,9 +65,6 @@ export default class extends Vue {
       'vue',       // typenode
     )
 
-    editor.addConnection(1, 2, "output_1", "input_1");
-    editor.addConnection(1, 3, "output_1", "input_1");
-
     editor.on("nodeCreated", this.onNodeCreated)
     editor.on("nodeSelected", this.onNodeSelected)
     // etc...
@@ -78,6 +78,11 @@ export default class extends Vue {
 
   private onNodeSelected() {
     console.log("On node selected")
+  }
+
+  private onDrop(ev: DnDEvent) {
+    const nev = ev.native as MouseEvent
+    this.addNode(ev.data, nev.clientX, nev.clientY)
   }
 
   public addNode(nodeContainer: VueClassContainer, pos_x: number, pos_y: number) {
