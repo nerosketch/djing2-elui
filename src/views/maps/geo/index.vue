@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import '@/views/maps/leaflet'
+import './leaflet'
 import { mixins } from 'vue-class-component'
 import { Component } from 'vue-property-decorator'
 import { LMap, LTileLayer, LControl } from 'vue2-leaflet'

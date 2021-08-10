@@ -1,17 +1,28 @@
 import { RouteConfig } from 'vue-router'
 import Layout from '@/layout/flat.vue'
-// import LeftMenuOnly from '@/layout/left-menu-only.vue'
 
 const messengerRoutes: RouteConfig = {
-  path: '/maps',
+  path: '',
   component: Layout,
+  meta: {
+    title: 'Карты',
+    icon: 'el-icon-map-location'
+  },
   children: [
     {
-      path: '',
-      component: () => import(/* webpackChunkName: "mapsIndex" */ '@/views/maps/index.vue'),
+      path: '/maps',
+      component: () => import(/* webpackChunkName: "mapsIndex" */ '@/views/maps/geo/index.vue'),
       meta: {
         title: 'Карта',
-        icon: 'el-icon-map-location'
+        icon: 'el-icon-location'
+      }
+    },
+    {
+      path: '/scheme',
+      component: () => import(/* webpackChunkName: "mapsSchemeIndex" */ '@/views/maps/scheme/index.vue'),
+      meta: {
+        title: 'Схема',
+        icon: 'el-icon-share'
       }
     },
   ]

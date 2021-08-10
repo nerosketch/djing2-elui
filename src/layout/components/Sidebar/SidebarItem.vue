@@ -131,8 +131,19 @@ export default class extends Vue {
 </script>
 
 <style lang="scss">
+
+.el-submenu .el-submenu__title {
+  height: 36px;
+  line-height: 36px;
+}
+.el-submenu .el-menu-item {
+  height: 30px;
+  line-height: 30px;
+}
+
 .el-submenu.is-active > .el-submenu__title {
   color: $subMenuActiveText !important;
+
 }
 
 .full-mode {
