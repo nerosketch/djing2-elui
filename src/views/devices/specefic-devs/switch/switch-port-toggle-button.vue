@@ -1,6 +1,5 @@
 <template lang="pug">
   el-button(
-    size='mini'
     :type="portStateGetter ? 'danger' : 'success'"
     :icon="portStateGetter ? 'el-icon-remove' : 'el-icon-circle-plus'"
     :loading="loading"

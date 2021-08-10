@@ -4,7 +4,7 @@
       span Варианты конфигурации на ONU
 
     span Шаблон конфига для ONU
-    el-select(v-model="currentConfig.configTypeCode" size='mini' placeholder="Шаблон конфига")
+    el-select(v-model="currentConfig.configTypeCode" placeholder="Шаблон конфига")
       el-option(
         :value='v.code'
         :label='v.title'
@@ -21,7 +21,6 @@
         template(v-slot:header)
           el-link(
             style="float: right"
-            size='mini'
             icon='el-icon-close'
             type='danger'
             @click="delVlanPort(portVlanConf.port)"
@@ -44,7 +43,6 @@
       @click="onSubmit"
       :loading="vlanLoading"
       :disabled="!$perms.devices.can_apply_onu_config || disabled"
-      size='mini'
     ) Применить
 
 </template>

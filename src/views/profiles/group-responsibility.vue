@@ -9,7 +9,7 @@
     br
     el-button(
       icon='el-icon-upload'
-      type='primary' size='mini'
+      type='primary'
       @click="saveResp"
       :loading="loading"
       :disabled="!$perms.is_superuser"

@@ -10,17 +10,14 @@
         el-button-group
           el-button(
             icon="el-icon-edit"
-            size="mini"
             @click="openEdit(row)"
           ) Изменить
           el-button(
             icon='el-icon-remove'
             type='danger'
-            size='mini'
             @click="delIt(row)"
           ) Удалить
       el-button(
-        size='mini'
         icon='el-icon-plus'
         @click='openNew'
       ) Добавить адресный объект

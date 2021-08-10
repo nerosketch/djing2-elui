@@ -2,7 +2,6 @@
   el-form(
     ref='frm'
     v-loading='loading'
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'

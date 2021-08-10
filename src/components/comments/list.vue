@@ -18,7 +18,7 @@ el-card(shadow="never" :loading="loading")
       el-input(v-model="currentComment" type="textarea" cols="40" rows="4" autosize)
     el-form-item
       el-button(
-        type="primary" icon="el-icon-s-promotion" size='small'
+        type="primary" icon="el-icon-s-promotion"
         @click="onSendComment"
         :loading="sendLoading"
       ) Отправить

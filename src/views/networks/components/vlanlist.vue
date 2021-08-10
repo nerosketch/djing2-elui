@@ -16,28 +16,26 @@ div
         el-button(
           v-if="$perms.is_superuser"
           @click="openSitesDlg(row)"
-          size="mini"
         ) C
         el-button(
-          icon="el-icon-edit" size="mini"
+          icon="el-icon-edit"
           @click="openEdit(row)"
           :disabled="!$perms.networks.change_vlanif"
         )
         el-button(
-          type="danger" icon="el-icon-delete" size="mini"
+          type="danger" icon="el-icon-delete"
           @click="delVlan(row)"
           :disabled="!$perms.networks.delete_vlanif"
         )
 
     el-button-group
       el-button(
-        icon='el-icon-plus' size='mini'
+        icon='el-icon-plus'
         @click='openNew'
         :disabled="!$perms.networks.add_vlanif"
       ) Добавить
       el-button(
         icon='el-icon-s-operation'
-        size='mini'
         @click="editFieldsVisible=true"
       ) Поля
 

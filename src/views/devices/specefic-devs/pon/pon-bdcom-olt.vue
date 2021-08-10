@@ -16,7 +16,7 @@
             .clearfix {{ fiber.fb_name }} ({{ fiber.fb_active_onu }}/{{ fiber.fb_onu_num }})
           el-table(
             :data="fiber.onuList"
-            border fit size='small'
+            border fit
           )
             el-table-column(
               label="#"
@@ -57,7 +57,7 @@
             )
               template(v-slot:default="{row}")
                 el-button(
-                  size='mini' icon='el-icon-plus' circle
+                  icon='el-icon-plus' circle
                   @click="openSaveOnu(row)"
                   :disabled="!$perms.devices.add_device"
                 )

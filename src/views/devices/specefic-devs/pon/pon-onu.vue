@@ -29,7 +29,7 @@
         el-button-group
           delete-from-olt-btn(:devId="device.pk" v-on:done="getDetails")
           el-button(
-            type="danger" icon="el-icon-delete" size="mini"
+            type="danger" icon="el-icon-delete"
             @click="delDevice"
             :disabled="!$perms.devices.delete_device"
           ) Удалить

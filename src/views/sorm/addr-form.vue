@@ -2,7 +2,6 @@
   el-form(
     ref='form'
     label-width="205px"
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -17,7 +16,7 @@
       label="Уровень адресного объекта"
       prop='ao_level'
     )
-      el-select(v-model="frmMod.ao_level" size='mini')
+      el-select(v-model="frmMod.ao_level")
         el-option(
           v-for="al in addrLevels"
           :key="al[0]"
@@ -29,7 +28,6 @@
       prop='ao_type'
     )
       el-select(
-        size='mini'
         v-model="frmMod.ao_type"
         :disabled="!addrTypesLoaded"
         :loading='typesLoading'
@@ -75,7 +73,6 @@
 
     el-button(
       :type="isNew ? 'success' : 'primary'"
-      size='mini'
       @click="onSubmit"
       :loading="isLoading"
     ) {{ isNew ? 'Добавить' : 'Сохранить' }}

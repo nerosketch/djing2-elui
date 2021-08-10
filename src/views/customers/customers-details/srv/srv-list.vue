@@ -4,7 +4,6 @@ div
     v-loading='loading'
     :data='services'
     border fit
-    size='small'
   )
     el-table-column(
       align="center"
@@ -13,7 +12,7 @@ div
     )
       template(v-slot:default="{row}")
         el-button(
-          type='primary' size='small'
+          type='primary'
           @click="buyOpen(row)" :disabled="isServiceAvailable || !$perms.customers.can_buy_service"
           icon='el-icon-shopping-cart-2' circle
         )
@@ -35,7 +34,7 @@ div
     )
   el-button(
     @click="srvAccDialog=true" icon="el-icon-s-tools"
-    type="primary" size='mini'
+    type="primary"
   ) Привязать услуги к этой группе
 
   el-dialog(

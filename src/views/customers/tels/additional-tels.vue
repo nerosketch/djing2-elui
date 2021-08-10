@@ -3,7 +3,6 @@
     v-loading='loading'
     :data='tels'
     border fit
-    size='small'
   )
     el-table-column(
       label="Владелец телефона"

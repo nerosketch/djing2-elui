@@ -39,7 +39,7 @@
               dd {{ currentService.deadline }}
 
             el-button(
-              type='danger' size='mini'
+              type='danger'
               icon='el-icon-delete'
               @click="onStopService"
               :disabled="!$perms.customers.can_complete_service"

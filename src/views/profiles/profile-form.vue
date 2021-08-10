@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='frm'
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'

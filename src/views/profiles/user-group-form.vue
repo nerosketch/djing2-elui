@@ -1,6 +1,5 @@
 <template lang="pug">
   el-form(
-    size="mini"
     :model="frmMod"
     v-loading="loading"
   )
@@ -13,13 +12,12 @@
       el-button-group
         el-button(
           type="primary" @click="onSubmit"
-          icon='el-icon-upload' size='small'
+          icon='el-icon-upload'
           :disabled="isEmpty || !$perms.is_superuser"
         ) Сохранить
         el-button(
           @click="$emit('cancel')"
           icon="el-icon-close"
-          size='small'
         ) Отмена
 </template>
 

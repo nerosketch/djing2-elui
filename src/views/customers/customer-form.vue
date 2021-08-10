@@ -2,7 +2,6 @@
   el-form(
     ref='customerfrm'
     :label-width="$store.getters.isMobileView ? undefined : '115px'"
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'

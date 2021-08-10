@@ -12,7 +12,6 @@
         v-model="searchStr"
         placeholder="Поиск"
         prefix-icon="el-icon-search"
-        size="small"
       )
         template(v-slot:append)
           el-button(

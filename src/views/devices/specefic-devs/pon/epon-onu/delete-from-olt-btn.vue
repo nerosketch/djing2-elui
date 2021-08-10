@@ -1,6 +1,5 @@
 <template lang="pug">
   el-button(
-    size='mini'
     icon='el-icon-close'
     :type="btnType"
     :loading="loading"

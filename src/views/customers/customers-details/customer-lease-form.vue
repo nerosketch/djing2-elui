@@ -3,7 +3,6 @@
     ref='frm'
     v-loading='frmLoading'
     :label-width="$store.getters.isMobileView ? undefined : '100px'"
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'

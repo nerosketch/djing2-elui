@@ -9,7 +9,7 @@
           router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
             el-link(type="primary") {{ device.parent_dev_name }}
         el-button(
-          style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
+          style="float: right; padding: 7px" circle icon='el-icon-edit' type='primary'
           @click="openDevForm"
           :disabled="!$perms.devices.change_device"
         )
@@ -17,7 +17,7 @@
       :data="allPorts"
       :loading="loading"
       :row-class-name="tableRowClassName"
-      border fit size='small'
+      border fit
     )
       el-table-column(
         label="Порт"
@@ -37,7 +37,7 @@
             :port="row"
             :portId="row.pk"
           )
-          el-button(v-else size='mini' icon='el-icon-close' circle disabled)
+          el-button(v-else icon='el-icon-close' circle disabled)
       el-table-column(
         label="Описание"
         min-width='267'
@@ -72,12 +72,12 @@
       )
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
-            el-button(size='mini' icon='el-icon-notebook-2' @click="openMacsDialog(row)")
-            el-button(size='mini' icon='el-icon-view' @click="openVidsDialog(row)" :disabled="!$perms.devices.view_portvlanmembermodel")
-            el-button(size='mini' type='danger' icon='el-icon-delete' @click="delPort(row)" :disabled="!$perms.devices.delete_port")
-            el-button(size='mini' type='primary' icon='el-icon-edit' @click="openPortEdit(row)" :disabled="!$perms.devices.change_port")
+            el-button(icon='el-icon-notebook-2' @click="openMacsDialog(row)")
+            el-button(icon='el-icon-view' @click="openVidsDialog(row)" :disabled="!$perms.devices.view_portvlanmembermodel")
+            el-button(type='danger' icon='el-icon-delete' @click="delPort(row)" :disabled="!$perms.devices.delete_port")
+            el-button(type='primary' icon='el-icon-edit' @click="openPortEdit(row)" :disabled="!$perms.devices.change_port")
           el-button(
-            v-else size='mini' icon='el-icon-plus' circle
+            v-else icon='el-icon-plus' circle
             @click="openPortAdd(row)"
             :disabled="!$perms.devices.add_port"
           )

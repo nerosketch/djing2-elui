@@ -2,7 +2,6 @@
   el-form(
     ref='form'
     label-width="115px"
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'

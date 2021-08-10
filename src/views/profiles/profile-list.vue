@@ -9,7 +9,7 @@
       ref='tbl'
     )
       template(v-slot:avatar="{row}")
-        el-avatar(:src="row.avatar || defAvaConst" size='medium' shape="square")
+        el-avatar(:src="row.avatar || defAvaConst" shape="square")
 
       template(v-slot:username="{row}")
         router-link(
@@ -27,14 +27,13 @@
 
       template(v-slot:btn="{row}")
         el-button(
-          type="danger" size="mini"
+          type="danger"
           icon='el-icon-close' circle
           @click="delUserProfile(row)"
           :disabled="!$perms.is_superuser"
         )
       el-button(
         icon='el-icon-plus'
-        size='mini'
         @click="addNewProfile"
         :disabled="!$perms.is_superuser"
       ) Добавить

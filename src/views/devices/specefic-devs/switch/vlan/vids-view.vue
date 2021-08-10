@@ -4,7 +4,7 @@ div
     :data="deviceVlans"
     v-loading="loading"
     empty-text="Vlan'ы на порту не найдены"
-    border fit size='small'
+    border fit
   )
     el-table-column(
       label="Название"
@@ -39,7 +39,6 @@ div
     @click="onApplySwitchVlanConfig"
     :loading="loading"
     :disabled="!$perms.devices.can_apply_onu_config"
-    size='mini'
   ) Применить
 
 </template>
