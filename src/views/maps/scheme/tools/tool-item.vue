@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Drag } from "vue-easy-dnd"
-import { VueClassContainer } from './node_comps'
+import { VueClassContainer } from '../node_comps'
 
 
 @Component({

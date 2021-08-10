@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   h3 Точка входа
-  span Сюда попадает пользователь при первом посещении бота.
+  span Описание
 </template>
 
 <script lang="ts">

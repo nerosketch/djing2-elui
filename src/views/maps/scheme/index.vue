@@ -2,14 +2,10 @@
 div
   drop(@drop="onDrop")
     .full_height(ref="area")
-  .absolute_block
-    el-card(shadow="hover")
-      template(v-slot:header) Панель инструментов
-    tool-item(
-      v-for="(n, i) in componentNodesGetter"
-      :key="i"
-      :nodeItem="n"
-    )
+  .absolute_block.topright
+    tools-index
+  .absolute_block.bottom
+    bot-panel
 </template>
 
 <script lang="ts">
@@ -18,9 +14,9 @@ import { Component, Vue } from 'vue-property-decorator'
 import 'drawflow/dist/drawflow.min.css'
 import { registerNodes } from "./node_comps/index"
 import VueClassContainer from './node_comps/class-container'
-import { nodes } from "./node_comps/index"
-import ToolItem from './tool-item.vue'
+import ToolsIndex from './tools/index.vue'
 import { Drop, DnDEvent } from "vue-easy-dnd"
+import BotPanel from './bot-panel/index.vue'
 
 
 function _clc(editor: any, pos: number, p: string) {
@@ -32,7 +28,8 @@ function _clc(editor: any, pos: number, p: string) {
 @Component({
   name: 'MapsSchemeIndex',
   components: {
-    ToolItem,
+    ToolsIndex,
+    BotPanel,
     Drop
   }
 })
@@ -111,10 +108,6 @@ export default class extends Vue {
       this.editor.clear()
     }
   }
-
-  get componentNodesGetter() {
-    return nodes
-  }
 }
 </script>
 
@@ -125,8 +118,14 @@ export default class extends Vue {
 
 .absolute_block {
   position: absolute;
+  z-index: 2;
+}
+.absolute_block.topright {
   right: 46px;
   top: 10px;
-  z-index: 2;
+}
+.absolute_block.bottom {
+  right: 50%;
+  bottom: 10px;
 }
 </style>
