@@ -2,7 +2,7 @@
   el-table.app-container(
     v-loading='messengerTypesLoading'
     :data="messengerBotTypes"
-    border fit size='small'
+    border fit
   )
     el-table-column(
       label="Тип бота"
@@ -26,7 +26,6 @@ import BotTypesMixin from './bot_types_mixin'
 })
 export default class extends mixins(BotTypesMixin) {
   created() {
-    console.log('Loading data')
     this.loadMessengerTypes()
 
     BreadcrumbsModule.SetCrumbs([

@@ -12,12 +12,10 @@
       el-button-group
         el-button(
           @click="setWebhook"
-          size='mini'
           :loading='setWebhookLoading'
         ) Отправить webhook url
         el-button(
           @click="stopWebhook"
-          size='mini'
           :loading='stopWebhookLoading'
         ) Остановить webhook
 </template>

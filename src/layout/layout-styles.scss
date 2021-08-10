@@ -6,8 +6,6 @@
   height: 19px;
 }
 
-
-
 .app-wrapper {
   @include clearfix;
   position: relative;
@@ -81,9 +79,9 @@
   }
 }
 
-.withoutAnimation {
-  .main-container,
-  .sidebar-container {
-    transition: none;
-  }
-}
+// .withoutAnimation {
+//   .main-container,
+//   .sidebar-container {
+//     transition: none;
+//   }
+// }

@@ -4,14 +4,12 @@
       v-model="reportParams.from_date"
       type='date'
       placeholder="Дата отсчёта"
-      size='mini'
       value-format="yyyy-MM-dd"
     )
     el-select(
       v-model="reportParams.pay_gw"
       placeholder="Платёжный шлюз"
       v-loading="gatewaysLoading"
-      size='mini'
       :style="{width: '10%'}"
     )
       el-option(
@@ -21,27 +19,27 @@
         :value="gw.id"
       )
 
-    el-checkbox(
-      v-model="reportParams.group_by_day"
+    el-radio(
+      v-model="reportParams.group_by"
+      :label="1"
     ) Группировать по дню
-
-    el-checkbox(
-      v-model="reportParams.group_by_week"
+    el-radio(
+      v-model="reportParams.group_by"
+      :label="2"
     ) Группировать по неделе
-
-    el-checkbox(
-      v-model="reportParams.group_by_mon"
-    ) Группировать по месяцу 
+    el-radio(
+      v-model="reportParams.group_by"
+      :label="3"
+    ) Группировать по месяцу
 
     el-button(
-      size='mini'
       @click='downloadCsv'
     ) Скачать csv
 
     el-table(
       v-loading="loading"
       :data="tableData"
-      border fit size='small'
+      border fit
     )
       el-table-column(
         label="Дата"
@@ -92,9 +90,7 @@ export default class extends Vue {
   private reportParams: IPayReportParams = {
     from_date: '2021-05-22',
     pay_gw: 0,
-    group_by_day: false,
-    group_by_mon: true,
-    group_by_week: false
+    group_by: 3,
   }
 
   @Watch('reportParams', { deep: true })
@@ -130,8 +126,7 @@ export default class extends Vue {
 
   private get isAllowRequest() {
     const rp = this.reportParams
-    const y = [rp.group_by_day, rp.group_by_mon, rp.group_by_week].filter(g => g)
-    return y.length === 1 && Boolean(rp.from_date)
+    return rp.group_by > 0 && Boolean(rp.from_date)
   }
 
   private async loadPayGateways() {

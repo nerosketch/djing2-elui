@@ -14,7 +14,7 @@
     el-divider
     el-button(
       icon='el-icon-upload'
-      type='primary' size='mini'
+      type='primary'
       @click="saveGroups"
       :loading="loading"
       :disabled="!$perms.is_superuser"

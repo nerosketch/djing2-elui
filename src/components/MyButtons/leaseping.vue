@@ -1,6 +1,5 @@
 <template lang="pug">
   el-button(
-    size='mini'
     :icon='defIcon'
     @click="pingIcmp(row)"
     :type="defType"

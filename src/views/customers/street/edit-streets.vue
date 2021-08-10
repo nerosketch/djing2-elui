@@ -2,7 +2,6 @@
   el-form(
     v-loading='loading'
     label-width="0"
-    size="mini"
   )
     el-form-item(
       v-for="(str, i) in streets"

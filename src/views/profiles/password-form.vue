@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='form'
-    size="mini"
     status-icon
     :rules="frmRules"
     :model="frmMod"
@@ -32,10 +31,9 @@
           type="primary"
           @click="onSubmit"
           icon="el-icon-download"
-          size='small'
           :disabled="isEmpty"
         ) Сохранить
-        el-button(@click="$emit('cancel')" icon="el-icon-close" size='small') Отмена
+        el-button(@click="$emit('cancel')" icon="el-icon-close") Отмена
 </template>
 
 <script lang="ts">

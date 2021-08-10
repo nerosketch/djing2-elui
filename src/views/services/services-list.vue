@@ -16,25 +16,22 @@ div
         el-button(
           v-if="$perms.is_superuser"
           @click="openSitesDlg(row)"
-          size="mini"
         ) C
-        el-button(size='mini' icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
-        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+        el-button(icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
+        el-button(icon="el-icon-edit" @click="openEdit(row)")
         el-button(
-          type="danger" icon="el-icon-delete" size="mini"
+          type="danger" icon="el-icon-delete"
           @click="delSrv(row)"
           :disabled="!$perms.services.delete_service"
         )
 
     template(v-slot:usercount="{row}")
       el-button(
-        size='mini'
         @click="openCustomerServiceListDialog(row.pk)"
       ) {{ row.usercount }}
 
     el-button-group
       el-button(
-        size='mini'
         icon='el-icon-plus'
         type='success'
         @click="openNew"
@@ -42,7 +39,6 @@ div
       ) Добавить
       el-button(
         icon='el-icon-s-operation'
-        size='mini'
         @click="editFieldsVisible=true"
       ) Поля
 

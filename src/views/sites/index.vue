@@ -8,12 +8,11 @@
     )
       template(v-slot:oper="{row}")
         el-button(
-          icon="el-icon-edit" size="mini"
+          icon="el-icon-edit"
           @click="openEdit(row)"
           :disabled="!$perms.is_superuser"
         )
       el-button(
-        size='mini'
         icon='el-icon-plus'
         @click='openNew'
       ) Добавить домен

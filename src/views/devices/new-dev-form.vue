@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='form'
-    size="mini"
     status-icon
     :rules="frmRules"
     :model="frmMod"
@@ -11,22 +10,22 @@
       label="IP Адрес"
       prop='ip_address'
     )
-      el-input(v-model="frmMod.ip_address" size='mini')
+      el-input(v-model="frmMod.ip_address")
     el-form-item(
       label="MAC Адрес"
       prop='mac_addr'
     )
-      el-input(v-model="frmMod.mac_addr" size='mini')
+      el-input(v-model="frmMod.mac_addr")
     el-form-item(
       label="Описание"
       prop='comment'
     )
-      el-input(v-model="frmMod.comment" size='mini')
+      el-input(v-model="frmMod.comment")
     el-form-item(
       label="Тип оборудования"
       prop='dev_type'
     )
-      el-select(v-model="frmMod.dev_type" size='mini')
+      el-select(v-model="frmMod.dev_type")
         el-option(
           v-for="dt in deviceTypeNames"
           :key="dt.v"
@@ -37,12 +36,12 @@
       label="SNMP Community"
       prop="man_passw"
     )
-      el-input(v-model="frmMod.man_passw" size='mini')
+      el-input(v-model="frmMod.man_passw")
     el-form-item(
       label="Группа"
       prop='group'
     )
-      el-select(v-model="frmMod.group" size='mini')
+      el-select(v-model="frmMod.group")
         el-option(
           v-for="g in groups"
           :key="g.pk"
@@ -61,7 +60,7 @@
       label="Доп. инфо для snmp"
       prop="snmp_extra"
     )
-      el-input(v-model="frmMod.snmp_extra" size='mini')
+      el-input(v-model="frmMod.snmp_extra")
     el-form-item(
       prop="is_noticeable"
     )

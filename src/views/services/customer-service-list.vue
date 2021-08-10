@@ -3,7 +3,6 @@
     v-loading='loading'
     :data="customeServiceList"
     border fit
-    size='small'
   )
     el-table-column(
       label="Логин"

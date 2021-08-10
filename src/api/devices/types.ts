@@ -153,20 +153,20 @@ export interface IDevVlan {
 }
 export type IDevVlanListAxiosResponsePromise = AxiosPromise<IDevVlan[]>
 
-export interface IDevOnuVlan {
+export interface IDevVlanSimple {
   vid: number
   native: boolean
 }
 // Vlan onu info for one port.
 // Port number it is an array index
-export interface IDevOnuVlanInfo {
+export interface IDevVlanSimpleInfo {
   port: number
-  vids: IDevOnuVlan[]
+  vids: IDevVlanSimple[]
 }
-export type IDevOnuVlanInfoAxiosResponsePromise = AxiosPromise<IDevOnuVlanInfo[]>
+export type IDevVlanSimpleInfoAxiosResponsePromise = AxiosPromise<IDevVlanSimpleInfo[]>
 export interface IDeviceOnuConfigTemplate {
   configTypeCode: string
-  vlanConfig: IDevOnuVlanInfo[]
+  vlanConfig: IDevVlanSimpleInfo[]
 }
 
 export interface IDevMacPort {

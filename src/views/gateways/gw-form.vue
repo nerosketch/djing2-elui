@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='form'
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -36,7 +35,7 @@
       label="Тип NAS"
       prop='gw_type'
     )
-      el-select(v-model="frmMod.gw_type" size='mini')
+      el-select(v-model="frmMod.gw_type")
         el-option(label="Микротик" :value="0")
         el-option(label="Linux" :value="1")
     el-form-item(

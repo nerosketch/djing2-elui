@@ -11,7 +11,6 @@ div
 
     el-button(
       @click="addCashDialog=true"
-      size='small'
     ) Пополнить счёт
 
   el-dialog(

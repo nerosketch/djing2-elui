@@ -8,7 +8,7 @@
       span.m-icon(:class="`m-${ic[0]}`")
     el-divider
     el-button(
-      size='mini' icon='el-icon-download'
+      icon='el-icon-download'
       :loading='loading'
       @click='saveMarkers'
     ) Сохранить

@@ -2,7 +2,6 @@
   el-form(
     ref='poolfrm'
     label-width="120px"
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'

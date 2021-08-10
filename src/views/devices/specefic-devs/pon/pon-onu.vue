@@ -29,7 +29,7 @@
         el-button-group
           delete-from-olt-btn(:devId="device.pk" v-on:done="getDetails")
           el-button(
-            type="danger" icon="el-icon-delete" size="mini"
+            type="danger" icon="el-icon-delete"
             @click="delDevice"
             :disabled="!$perms.devices.delete_device"
           ) Удалить
@@ -64,7 +64,10 @@
         fix-onu-btn(v-if="macsNotEqual")
 
     el-col(:lg="12" :sm='24')
-      onu-vlan-form(:style="{'margin-top': '5px'}")
+      onu-vlan-form(
+        :disabled="macsNotEqual"
+        :style="{'margin-top': '5px'}"
+      )
 
     el-dialog(
       :visible.sync="devFormDialog"
@@ -77,12 +80,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IDevice, IOnuDetails, IOnuDetailsStatus } from '@/api/devices/types'
 import { scanPonDetails } from '@/api/devices/req'
 import { DeviceModule } from '@/store/modules/devices/device'
-import DevForm from '../dev-form.vue'
-import DeleteFromOltBtn from '@/views/devices/specefic-devs/epon-onu/delete-from-olt-btn.vue'
+import DevForm from '@/views/devices/dev-form.vue'
+import DeleteFromOltBtn from './epon-onu/delete-from-olt-btn.vue'
 import OnuVlanForm from './onu-vlan-form.vue'
 import FixOnuBtn from './fix-onu-btn.vue'
 
@@ -143,7 +146,6 @@ export default class extends Vue {
   private async getDetails() {
     if (this.device !== null) {
       const { data } = await scanPonDetails(this.device.pk)
-      console.log('onu Info:', data)
       this.onuDetails = data
     }
   }

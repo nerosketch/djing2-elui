@@ -16,7 +16,6 @@
       icon='el-icon-upload'
       type="primary" @click="onSubmit"
       :disabled="!$perms.is_superuser"
-      size='small'
     ) Сохранить
 </template>
 
