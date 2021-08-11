@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div Порт №{{ portNum }}
   el-table(
     :data="deviceVlans"
     v-loading="loading"
@@ -29,7 +29,7 @@ div
 
   el-divider
 
-  generic-vlan-config(
+  port-vlan-config(
     :portVlanConf.sync="portVlanConf"
   )
 
@@ -46,16 +46,19 @@ div
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-// import { Form } from 'element-ui'
 import { PortModule } from '@/store/modules/devices/port'
-import { IDevVlan, IDevVlanSimpleInfo } from '@/api/devices/types'
-import GenericVlanConfig from '@/views/devices/vlan-config/generic-vlan-config.vue'
+import {
+  IDevVlan,
+  IDeviceSwitchPortConfigChoicesEnum,
+  IDeviceSwitchPortConfigTemplate
+} from '@/api/devices/types'
 import { vlanConfigApply } from '@/api/devices/req'
+import PortVlanConfig from './port-vlan-config.vue'
 
 @Component({
   name: 'VidsView',
   components: {
-    GenericVlanConfig
+    PortVlanConfig
   }
 })
 export default class extends Vue {
@@ -65,9 +68,10 @@ export default class extends Vue {
   private applyLoading = false
   private deviceVlans: IDevVlan[] = []
 
-  private portVlanConf: IDevVlanSimpleInfo = {
+  private portVlanConf: IDeviceSwitchPortConfigTemplate = {
     port: this.portNum,
-    vids: [{ vid: 1, native: true }]
+    vids: [{ vid: 1, native: true }],
+    config_mode: IDeviceSwitchPortConfigChoicesEnum.TRUNK
   }
 
   @Watch('portId')

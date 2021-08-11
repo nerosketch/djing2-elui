@@ -169,6 +169,15 @@ export interface IDeviceOnuConfigTemplate {
   vlanConfig: IDevVlanSimpleInfo[]
 }
 
+export enum IDeviceSwitchPortConfigChoicesEnum {
+  TRUNK = 'trunk',
+  ACCESS = 'access'
+}
+
+export interface IDeviceSwitchPortConfigTemplate extends IDevVlanSimpleInfo {
+  config_mode: IDeviceSwitchPortConfigChoicesEnum
+}
+
 export interface IDevMacPort {
   vid: number
   name: string

@@ -22,7 +22,8 @@ import {
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
   IDevVlanSimpleInfoAxiosResponsePromise, IDevVlanSimpleInfo,
   IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise,
-  IDevTogglePortRequest
+  IDevTogglePortRequest,
+  IDeviceSwitchPortConfigTemplate
 } from './types'
 
 const baseDevUrl = '/devices/all/'
@@ -121,7 +122,7 @@ export const scanMacAddressPort = (portId: number): IDevMacPortListAxiosResponse
 export const scanPortVlans = (portId: number): IDevVlanListAxiosResponsePromise =>
   request.get<IDevVlan[]>(`${basePortUrl}${portId}/scan_vlan/`)
 
-export const vlanConfigApply = (portId: number, conf: IDevVlanSimpleInfo) =>
+export const vlanConfigApply = (portId: number, conf: IDeviceSwitchPortConfigTemplate) =>
   request.post(`${basePortUrl}${portId}/vlan_config_apply/`, conf)
 
 // IDevGroup
