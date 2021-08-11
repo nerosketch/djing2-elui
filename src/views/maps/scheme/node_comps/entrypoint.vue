@@ -1,7 +1,5 @@
 <template lang="pug">
-div
-  h3 Точка входа
-  span Описание
+.entrypoint_item
 </template>
 
 <script lang="ts">
@@ -15,3 +13,11 @@ import nodeMixin from './node-mixin'
 export default class extends mixins(nodeMixin) {
 }
 </script>
+
+<style>
+.entrypoint_item {
+  width: 64px;
+  height: 46px;
+  background: url(/maps/router.png) no-repeat center;
+}
+</style>

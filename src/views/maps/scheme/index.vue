@@ -11,7 +11,7 @@ div
 <script lang="ts">
 import Drawflow from "drawflow"
 import { Component, Vue } from 'vue-property-decorator'
-import 'drawflow/dist/drawflow.min.css'
+import './drawflow.css'
 import { registerNodes } from "./node_comps/index"
 import VueClassContainer from './node_comps/class-container'
 import ToolsIndex from './tools/index.vue'
