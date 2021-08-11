@@ -23,3 +23,11 @@ export const loadDotDevs = (dotId: number): IMapDotDeviceListAxiosResponsePromis
       fields: 'pk,comment,ip_address,mac_addr,status,is_noticeable'
     }
   })
+
+
+// Scheme app
+export const getScheme = () =>
+  request.get('/map_scheme/')
+
+export const putScheme = (data: object) =>
+  request.post('/map_scheme/', data)

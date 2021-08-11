@@ -4,8 +4,10 @@ div
     .full_height(ref="area")
   .absolute_block.topright
     tools-index
-  .absolute_block.bottom
-    bot-panel
+  .absolute_block.bottom(v-if="isEditorExists")
+    bot-panel(
+      :editor="editor"
+    )
 </template>
 
 <script lang="ts">
@@ -17,6 +19,7 @@ import VueClassContainer from './node_comps/class-container'
 import ToolsIndex from './tools/index.vue'
 import { Drop, DnDEvent } from "vue-easy-dnd"
 import BotPanel from './bot-panel/index.vue'
+import { getScheme } from "@/api/maps/req"
 
 
 function _clc(editor: any, pos: number, p: string) {
@@ -37,6 +40,7 @@ export default class extends Vue {
   public readonly $refs!: {
     area: HTMLDivElement
   }
+  private isEditorExists = false
 
   private editor?: Drawflow
 
@@ -55,6 +59,13 @@ export default class extends Vue {
     // etc...
 
     this.editor = editor
+    this.isEditorExists = true
+
+    getScheme().then(({ data }) => {
+      console.log('mapData', data)
+      console.log('editor', editor)
+      editor.import(data)
+    })    
   }
 
   private onNodeCreated() {
