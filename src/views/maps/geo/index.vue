@@ -32,7 +32,10 @@
       @done="delDotDone"
     )
 
-    el-dialog(:visible.sync="formVisible")
+    el-dialog(
+      title="Добавить точку"
+      :visible.sync="formVisible"
+    )
       dot-form(
         :lat="latLon.lat"
         :lon="latLon.lon"
