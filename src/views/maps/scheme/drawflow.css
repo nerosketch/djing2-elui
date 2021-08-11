@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   position: absolute;
-  background-color: #e4f0fb;
+  background-color: #e4f0fb69;
   /* width: 160px; */
   min-height: 40px;
   border-radius:4px;
@@ -49,10 +49,9 @@
 }
 
 .drawflow .drawflow-node .input, .drawflow .drawflow-node .output {
-
   position: relative;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   background: white;
   border-radius: 50%;
   border: 2px solid black;
@@ -62,12 +61,12 @@
 }
 
 .drawflow .drawflow-node .input {
-  left: -27px;
+  left: -20px;
   top: 2px;
-  background: yellow;
+  background: white;
 }
 .drawflow .drawflow-node .output {
-  right: -3px;
+  right: -10px;
   top: 2px;
 }
 
@@ -82,7 +81,7 @@
 }
 .drawflow .connection .main-path {
   fill: none;
-  stroke-width: 5px;
+  stroke-width: 1px;
   stroke: steelblue;
   pointer-events: all;
 }

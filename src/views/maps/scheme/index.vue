@@ -50,18 +50,6 @@ export default class extends Vue {
 
     editor.start()
 
-    editor.addNode(
-      'myentr',    // name
-      1,           // inputs
-      1,           // outputs
-      100,   // posx
-      200,   // posy
-      'Entrypoint',    // className
-      {},          // data
-      'Entrypoint',    // html
-      'vue',       // typenode
-    )
-
     editor.on("nodeCreated", this.onNodeCreated)
     editor.on("nodeSelected", this.onNodeSelected)
     // etc...

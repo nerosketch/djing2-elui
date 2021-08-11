@@ -1,13 +1,15 @@
 import Drawflow from 'drawflow'
 import VueClassContainer from './class-container'
 import Test from "./test.vue"
-import Entrypoint from "./entrypoint.vue"
+import Router from "./router.vue"
 import Device from './device.vue'
+import SwitchNode from './switch.vue'
 
 const nodes: VueClassContainer[] = [
   new VueClassContainer(Test, 'Тест'),
-  new VueClassContainer(Entrypoint, 'Точка входа', 0, 1),
-  new VueClassContainer(Device, 'Устройство', 1, 1, { text: '' })
+  new VueClassContainer(Router, 'Роутер', 2, 2),
+  new VueClassContainer(Device, 'Устройство', 1, 1, { text: '' }),
+  new VueClassContainer(SwitchNode, 'Свич', 12, 12)
 ]
 
 function registerNodes(editor: Drawflow) {
