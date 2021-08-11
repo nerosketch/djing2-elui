@@ -62,8 +62,6 @@ export default class extends Vue {
     this.isEditorExists = true
 
     getScheme().then(({ data }) => {
-      console.log('mapData', data)
-      console.log('editor', editor)
       editor.import(data)
     })    
   }

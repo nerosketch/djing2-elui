@@ -1,5 +1,7 @@
 <template lang="pug">
 .switch_node
+  img(src="maps/switch.png")
+  span asldkasd
 </template>
 
 <script lang="ts">
@@ -16,7 +18,6 @@ export default class extends mixins(nodeMixin) {}
 <style>
 .switch_node {
   width: 64px;
-  height: 46px;
-  background: url(/maps/switch.png) no-repeat center;
+  height: 59px;
 }
 </style>

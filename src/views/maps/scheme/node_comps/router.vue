@@ -1,5 +1,7 @@
 <template lang="pug">
 .router_node
+  span(contenteditable) asldkasd
+  img(src="/maps/router.png")
 </template>
 
 <script lang="ts">
@@ -17,7 +19,11 @@ export default class extends mixins(nodeMixin) {
 <style>
 .router_node {
   width: 64px;
-  height: 46px;
-  background: url(/maps/router.png) no-repeat center;
+  /* height: 59px; */
+  /* align-content: center; */
+}
+.router_node span {
+  display: block;
+  text-align: center;
 }
 </style>
