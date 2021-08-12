@@ -8,11 +8,13 @@
       widthStorageNamePrefix='devs'
       ref='table'
     )
-      template(v-slot:pk="{row}")
-        template(v-if="$perms.devices.view_device")
-          router-link(:to="{name: 'device-view', params: { devId: row.pk }}")
-            el-link(type="primary") {{ row.pk }}
-        span(v-else) {{ row.pk }}
+      template(v-slot:comment="{row}")
+        router-link(
+          v-if="$perms.devices.view_device"
+          :to="{name: 'device-view', params: { devId: row.pk }}"
+        )
+          el-link(type="primary") {{ row.comment }}
+        span(v-else) {{ row.comment }}
 
       template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
 
@@ -132,19 +134,14 @@ export default class extends Vue {
   private editFieldsVisible = false
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'pk',
-      label: 'ID',
-      'min-width': 70
+      prop: 'comment',
+      label: 'Коммент',
+      'min-width': 300
     },
     {
       prop: 'ip_address',
       label: 'IP Адрес',
       'min-width': 120
-    },
-    {
-      prop: 'comment',
-      label: 'Коммент',
-      'min-width': 300
     },
     {
       prop: 'dev_type_str',

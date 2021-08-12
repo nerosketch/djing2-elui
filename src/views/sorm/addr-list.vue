@@ -61,6 +61,11 @@ export default class extends Vue {
 
   private tableColumns: IDataTableColumn[] = [
     {
+      prop: 'ao_type_name',
+      label: 'Тип адресного объекта',
+      'min-width': 250
+    },
+    {
       prop: 'title',
       label: 'Название',
       sortable: true,
@@ -69,11 +74,6 @@ export default class extends Vue {
     {
       prop: 'ao_level_name',
       label: 'Уровень адресного объекта',
-      'min-width': 250
-    },
-    {
-      prop: 'ao_type_name',
-      label: 'Тип адресного объекта',
       'min-width': 250
     },
     {
