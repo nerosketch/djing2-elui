@@ -5,9 +5,9 @@ div
   .absolute_block.topright
     tools-index
   .absolute_block.bottom(v-if="isEditorExists")
-    bot-panel(
-      :editor="editor"
-    )
+    bot-panel(:editor="editor")
+  .absolute_block.midright
+    node-opts-index
 </template>
 
 <script lang="ts">
@@ -20,7 +20,7 @@ import ToolsIndex from './tools/index.vue'
 import { Drop, DnDEvent } from "vue-easy-dnd"
 import BotPanel from './bot-panel/index.vue'
 import { getScheme } from "@/api/maps/req"
-
+import NodeOptsIndex from './node-opts/index.vue'
 
 function _clc(editor: any, pos: number, p: string) {
   const ep = editor.precanvas
@@ -33,7 +33,8 @@ function _clc(editor: any, pos: number, p: string) {
   components: {
     ToolsIndex,
     BotPanel,
-    Drop
+    Drop,
+    NodeOptsIndex
   }
 })
 export default class extends Vue {
@@ -56,6 +57,7 @@ export default class extends Vue {
 
     editor.on("nodeCreated", this.onNodeCreated)
     editor.on("nodeSelected", this.onNodeSelected)
+    editor.on("nodeUnselected", this.onNodeUnselected)
     // etc...
 
     this.editor = editor
@@ -66,13 +68,16 @@ export default class extends Vue {
     })    
   }
 
-  private onNodeCreated() {
-    console.log("On node created")
+  private onNodeCreated(el: any) {
+    console.log("On node created", el, typeof el)
   }
 
-  private onNodeSelected() {
-    console.log("On node selected")
+  private onNodeSelected(el: any) {
+    console.log("On node selected", el, typeof el)
   }
+  private onNodeUnselected(el: any) {
+    console.log("On node unSelected", el, typeof el)
+  }  
 
   private onDrop(ev: DnDEvent) {
     const nev = ev.native as MouseEvent
@@ -93,7 +98,7 @@ export default class extends Vue {
       nodeContainer.outputs,
       pos_x,
       pos_y,
-      nodeContainer.name,
+      '',
       JSON.parse(JSON.stringify(nodeContainer.data)),
       nodeContainer.name,
       "vue"
@@ -124,5 +129,9 @@ export default class extends Vue {
 .absolute_block.bottom {
   right: 50%;
   bottom: 10px;
+}
+.absolute_block.midright {
+  right: 46px;
+  top: 50%;
 }
 </style>
