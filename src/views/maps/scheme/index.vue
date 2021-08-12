@@ -6,8 +6,6 @@ div
     tools-index
   .absolute_block.bottom(v-if="isEditorExists")
     bot-panel(:editor="editor")
-  .absolute_block.midright
-    node-opts-index
 </template>
 
 <script lang="ts">
@@ -20,7 +18,6 @@ import ToolsIndex from './tools/index.vue'
 import { Drop, DnDEvent } from "vue-easy-dnd"
 import BotPanel from './bot-panel/index.vue'
 import { getScheme } from "@/api/maps/req"
-import NodeOptsIndex from './node-opts/index.vue'
 
 function _clc(editor: any, pos: number, p: string) {
   const ep = editor.precanvas
@@ -34,7 +31,6 @@ function _clc(editor: any, pos: number, p: string) {
     ToolsIndex,
     BotPanel,
     Drop,
-    NodeOptsIndex
   }
 })
 export default class extends Vue {
@@ -72,8 +68,9 @@ export default class extends Vue {
     console.log("On node created", el, typeof el)
   }
 
-  private onNodeSelected(el: any) {
-    console.log("On node selected", el, typeof el)
+  private onNodeSelected(nodeId: number) {
+    const node = this.editor?.getNodeFromId(nodeId)
+    console.log("On node selected", nodeId, node)
   }
   private onNodeUnselected(el: any) {
     console.log("On node unSelected", el, typeof el)
@@ -129,9 +126,5 @@ export default class extends Vue {
 .absolute_block.bottom {
   right: 50%;
   bottom: 10px;
-}
-.absolute_block.midright {
-  right: 46px;
-  top: 50%;
 }
 </style>

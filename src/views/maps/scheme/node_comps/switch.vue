@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { mixins } from 'vue-class-component';
+import { mixins } from 'vue-class-component'
 import { Component } from 'vue-property-decorator'
-import nodeMixin from './node-mixin';
+import nodeMixin from './node-mixin'
 
 @Component({
   name: 'SwitchNode'
