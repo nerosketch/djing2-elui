@@ -72,8 +72,4 @@ export default class extends Vue {
 .pagination-container {
   padding: 5px 0;
 }
-
-.pagination-container.hidden {
-  display: none;
-}
 </style>

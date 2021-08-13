@@ -61,7 +61,7 @@ export default class extends Vue {
 
     getScheme().then(({ data }) => {
       editor.import(data)
-    })    
+    })
   }
 
   private onNodeCreated(el: any) {
