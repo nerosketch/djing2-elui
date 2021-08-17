@@ -57,6 +57,19 @@
         :defaultName="initialParentDevName"
       )
     el-form-item(
+      label="Дата создания"
+    )
+      el-date-picker(
+        v-model="frmMod.create_time"
+        type="datetime"
+        value-format="yyyy-MM-dd HH:mm"
+        format="d.MM.yyyy HH:mm"
+      )
+    el-form-item(
+      label="Адрес нахождения"
+    )
+      el-input(v-model="frmMod.place")
+    el-form-item(
       label="Доп. инфо для snmp"
       prop="snmp_extra"
     )
@@ -129,7 +142,9 @@ export default class extends Vue {
     is_noticeable: this.initialIsNotic,
     man_passw: this.initialManPassw,
     parent_dev: this.initialParentDev,
-    snmp_extra: this.initialSnmpSxtra
+    snmp_extra: this.initialSnmpSxtra,
+    create_time: '',
+    place: ''
   }
 
   private onSubmit() {
@@ -153,8 +168,8 @@ export default class extends Vue {
   }
 
   created() {
-    this.loadGroups().then(async() => {
-      this.deviceTypeNames = await DeviceModule.getDeviceTypeNames()
+    this.loadGroups().then(() => {
+      this.deviceTypeNames = DeviceModule.getDeviceTypeNames()
     })
   }
 

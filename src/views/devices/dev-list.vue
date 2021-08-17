@@ -11,7 +11,7 @@
       template(v-slot:comment="{row}")
         router-link(
           v-if="$perms.devices.view_device"
-          :to="{name: 'device-view', params: { devId: row.pk }}"
+          :to="{name: 'device-view', params: { devId: row.id }}"
         )
           el-link(type="primary") {{ row.comment }}
         span(v-else) {{ row.comment }}
@@ -162,6 +162,14 @@ export default class extends Vue {
       label: 'Оповещения'
     },
     {
+      prop: 'place',
+      label: 'Адрес нахождения'
+    },
+    {
+      prop: 'create_time',
+      label: 'Дата создания'
+    },
+    {
       prop: 'oper',
       label: 'Кнопки',
       'min-width': 195,
@@ -170,7 +178,7 @@ export default class extends Vue {
   ]
 
   private openEdit(dev: IDevice) {
-    DeviceModule.GetDevice(dev.pk)
+    DeviceModule.GetDevice(dev.id)
     this.dialogVisible = true
   }
 
@@ -185,13 +193,13 @@ export default class extends Vue {
       page_size: params.page_size,
       group: this.groupId,
       ordering: params.ordering,
-      fields: 'pk,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group'
+      fields: 'id,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group,create_time,place'
     })
   }
 
   private async delDevice(dev: IDevice) {
     this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
-      await DeviceModule.DelDevice(dev.pk)
+      await DeviceModule.DelDevice(dev.id)
       this.$message.success('Удалено')
       this.$refs.table.GetTableData()
     })
@@ -207,7 +215,7 @@ export default class extends Vue {
     this.$message.success('Новое устройство сохранено')
     this.$router.push({ name: 'device-view',
       params: {
-        devId: newDev.pk.toString()
+        devId: newDev.id.toString()
       } })
   }
 
@@ -242,7 +250,7 @@ export default class extends Vue {
   // End Breadcrumbs
 
   get deviceIdGetter() {
-    return DeviceModule.pk
+    return DeviceModule.id
   }
 
   private async changeDeviceObjectPerms(info: IObjectGroupPermsResultStruct) {
@@ -253,7 +261,7 @@ export default class extends Vue {
     return getDevObjectsPerms(this.deviceIdGetter)
   }
   private openPermsDialog(d: IDevice) {
-    DeviceModule.GetDevice(d.pk)
+    DeviceModule.GetDevice(d.id)
     this.permsDialog = true
   }
 
@@ -271,7 +279,7 @@ export default class extends Vue {
     this.sitesDlg = false
   }
   private openSitesDlg(dev: IDevice) {
-    DeviceModule.GetDevice(dev.pk)
+    DeviceModule.GetDevice(dev.id)
     this.sitesDlg = true
   }
 }

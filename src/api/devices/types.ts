@@ -24,7 +24,7 @@ export enum IDeviceTypeEnum {
 }
 
 export interface IDevice {
-  pk: number
+  id: number
   ip_address: string
   mac_addr: string
   comment: string
@@ -42,6 +42,8 @@ export interface IDevice {
   is_noticeable: boolean
   code: string
   sites?: number[]
+  create_time: string
+  place: string
 }
 export interface IDeviceInterace extends IDevice {
   ScanAllDevVlans(devId: number): Promise<IDevVlan[]>

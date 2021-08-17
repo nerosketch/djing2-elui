@@ -78,7 +78,7 @@
         :initialDevType="onuType"
         :initialGroup="device.group"
         :initialSnmpSxtra="currentOnu.number"
-        :initialParentDev="device.pk"
+        :initialParentDev="device.id"
         :initialParentDevName="`${device.ip_address} ${device.comment}`"
       )
 </template>
@@ -111,7 +111,7 @@ export default class extends Vue {
 
   private async fetchItems() {
     if (this.device) {
-      let { data } = await scanOnuList(this.device.pk, (c: ProgressEvent) => {
+      let { data } = await scanOnuList(this.device.id, (c: ProgressEvent) => {
         this.loadPercent = Math.floor((100 * c.loaded) / c.total)
       })
       let newData
@@ -137,7 +137,7 @@ export default class extends Vue {
 
   private async fetchFibers() {
     if (this.device) {
-      await scanOltFibers(this.device.pk).then(({ data }) => {
+      await scanOltFibers(this.device.id).then(({ data }) => {
         this.fibers = data.map(fib => Object.assign({ onuList: [] }, fib))
       })
     }
@@ -164,7 +164,7 @@ export default class extends Vue {
     this.$message.success('Новая onu сохранена')
     this.$router.push({ name: 'device-view',
       params: {
-        devId: newOnu.pk.toString()
+        devId: newOnu.id.toString()
       } })
   }
   private frmErr() {

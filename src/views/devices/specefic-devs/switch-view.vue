@@ -96,7 +96,7 @@
       :close-on-click-modal="false"
     )
       switch-port-form(
-        :deviceId="device.pk"
+        :deviceId="device.id"
         :portId="currPortId"
         :initialNum="initialNum"
         v-on:editdone="editPortDone"
@@ -199,7 +199,7 @@ export default class extends Vue {
   private async loadPorts() {
     if (this.device !== null) {
       try {
-        const { data } = await getPorts(this.device.pk)
+        const { data } = await getPorts(this.device.id)
         this.allPorts = data.map(p => ({
           pk: p.pk,
           num: p.num,
@@ -215,7 +215,7 @@ export default class extends Vue {
 
   private async scanPorts() {
     if (this.device !== null) {
-      const { data } = await scanPorts(this.device.pk)
+      const { data } = await scanPorts(this.device.id)
       for (const p of data) {
         const pInd = this.allPorts.findIndex(fport => fport.num === p.num)
         if (pInd > -1) {

@@ -54,6 +54,19 @@
     )
       device-autocomplete-field(v-model="frmMod.parent_dev" :defaultName="devParentName")
     el-form-item(
+      label="Дата создания"
+    )
+      el-date-picker(
+        v-model="frmMod.create_time"
+        type="datetime"
+        value-format="yyyy-MM-dd HH:mm"
+        format="d.MM.yyyy HH:mm"
+      )
+    el-form-item(
+      label="Адрес нахождения"
+    )
+      el-input(v-model="frmMod.place")
+    el-form-item(
       label="Доп. инфо для snmp"
       prop="snmp_extra"
     )
@@ -125,7 +138,9 @@ export default class extends mixins(FormMixin) {
       is_noticeable: DeviceModule.is_noticeable,
       man_passw: DeviceModule.man_passw,
       parent_dev: DeviceModule.parent_dev,
-      snmp_extra: DeviceModule.snmp_extra
+      snmp_extra: DeviceModule.snmp_extra,
+      create_time: DeviceModule.create_time,
+      place: DeviceModule.place
     }
   }
 
@@ -133,7 +148,7 @@ export default class extends mixins(FormMixin) {
     return DeviceModule.parent_dev_name
   }
 
-  @Watch('$store.state.devicemodule.pk')
+  @Watch('$store.state.devicemodule', { deep: true })
   private async onDevCh() {
     this.frmMod = this.devFrmData
     this.frmInitial = Object.assign({}, this.devFrmData)
@@ -148,10 +163,13 @@ export default class extends mixins(FormMixin) {
     (this.$refs['form'] as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        const newDat = await DeviceModule.PatchDevice(this.frmMod)
-        this.loading = false
-        this.$emit('done', newDat.data)
-        this.frmInitial = Object.assign({}, this.devFrmData)
+        try {
+          const newDat = await DeviceModule.PatchDevice(this.frmMod)
+          this.frmInitial = Object.assign({}, this.devFrmData)
+          this.$emit('done', newDat.data)
+        } finally {
+          this.loading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
@@ -159,8 +177,8 @@ export default class extends mixins(FormMixin) {
   }
 
   created() {
-    this.loadGroups().then(async() => {
-      this.deviceTypeNames = await DeviceModule.getDeviceTypeNames()
+    this.loadGroups().then(() => {
+      this.deviceTypeNames = DeviceModule.getDeviceTypeNames()
     })
     this.frmInitial = Object.assign({}, this.frmMod)
   }

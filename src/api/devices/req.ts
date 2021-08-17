@@ -38,7 +38,7 @@ export const findDevices = (devtext: string): IDeviceListAxiosResponsePromise =>
   request.get<IDeviceList>(baseDevUrl, { params: {
     search: devtext,
     page_size: 30,
-    fields: 'pk,comment'
+    fields: 'id,comment'
   } })
 
 export const addDevice = (newDev: object): IDeviceAxoisResponsePromise =>

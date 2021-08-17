@@ -79,17 +79,17 @@ export default class extends mixins(VlanMixin) {
   }
 
   private async onSubmit() {
-    if (this.$store.state.devicemodule.pk > 0) {
+    if (this.$store.state.devicemodule.id > 0) {
       this.vlanLoading = true
       try {
-        await applyDeviceOnuConfig(this.$store.state.devicemodule.pk, this.currentConfig)
+        await applyDeviceOnuConfig(this.$store.state.devicemodule.id, this.currentConfig)
         this.vlanLoading = false
         this.$message.success({
           message: 'ONU успешно зарегистрирована',
           duration: 15000,
           showClose: true
         })
-        DeviceModule.GetDevice(this.$store.state.devicemodule.pk)
+        DeviceModule.GetDevice(this.$store.state.devicemodule.id)
       } catch (err) {
         this.vlanLoading = false
         this.$message.error(err)
@@ -109,7 +109,7 @@ export default class extends mixins(VlanMixin) {
     })
   }
 
-  @Watch('$store.state.devicemodule.pk')
+  @Watch('$store.state.devicemodule.id')
   private onDevIdChanged(devId: number) {
     this.getDevConfigTypes(devId)
   }
@@ -121,7 +121,7 @@ export default class extends mixins(VlanMixin) {
 
   private async scanDevOnuVlan(devId?: number) {
     if (!devId || devId === 0) {
-      devId = this.$store.state.devicemodule.pk
+      devId = this.$store.state.devicemodule.id
     }
     if (devId && devId > 0) {
       const { data } = await readOnuVlanInfo(devId)

@@ -43,7 +43,7 @@ export default class extends Vue {
 
   private getGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,title,usercount'
+      params['fields'] = 'id,title,usercount'
     }
     return getCustomerGroups(params)
   }

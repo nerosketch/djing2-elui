@@ -143,7 +143,7 @@ export default class extends Vue {
 
   get devPk() {
     if (this.device) {
-      return this.device.pk
+      return this.device.id
     }
     return 0
   }
@@ -160,7 +160,7 @@ export default class extends Vue {
   private frmNewOnuDone(newDev: IDevice) {
     this.saveOnuFormDialog = false
     this.$message.success('Новая onu сохранена')
-    this.$router.push({ name: 'device-view', params: { devId: newDev.pk.toString() } })
+    this.$router.push({ name: 'device-view', params: { devId: newDev.id.toString() } })
   }
 
   private async scanZteDetails() {
