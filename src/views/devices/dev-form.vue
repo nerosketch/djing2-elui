@@ -54,7 +54,7 @@
     )
       device-autocomplete-field(v-model="frmMod.parent_dev" :defaultName="devParentName")
     el-form-item(
-      label="Дата создания"
+      label="Введения в эксплуатацию"
     )
       el-date-picker(
         v-model="frmMod.create_time"
@@ -63,7 +63,7 @@
         format="d.MM.yyyy HH:mm"
       )
     el-form-item(
-      label="Адрес нахождения"
+      label="Адрес установки"
     )
       el-input(v-model="frmMod.place")
     el-form-item(

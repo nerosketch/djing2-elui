@@ -163,11 +163,11 @@ export default class extends Vue {
     },
     {
       prop: 'place',
-      label: 'Адрес нахождения'
+      label: 'Адрес установки'
     },
     {
       prop: 'create_time',
-      label: 'Дата создания'
+      label: 'Дата введения в эксплуатацию'
     },
     {
       prop: 'oper',

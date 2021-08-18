@@ -57,7 +57,7 @@
         :defaultName="initialParentDevName"
       )
     el-form-item(
-      label="Дата создания"
+      label="Дата введения в эксплуатация"
     )
       el-date-picker(
         v-model="frmMod.create_time"
@@ -66,7 +66,7 @@
         format="d.MM.yyyy HH:mm"
       )
     el-form-item(
-      label="Адрес нахождения"
+      label="Адрес установки"
     )
       el-input(v-model="frmMod.place")
     el-form-item(
