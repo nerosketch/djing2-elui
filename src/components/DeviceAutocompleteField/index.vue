@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { IDevice } from '@/api/devices/types'
 import { findDevices } from '@/api/devices/req'
 
@@ -37,8 +37,9 @@ export default class extends Vue {
     this.$emit('input', d.id)
   }
 
-  created() {
-    this.inpName = this.defaultName
+  @Watch('defaultName')
+  private onChangedDefaultName(name: string) {
+    this.inpName = name
   }
 }
 </script>

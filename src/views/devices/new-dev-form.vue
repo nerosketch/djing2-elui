@@ -91,10 +91,9 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
-import { DeviceModule } from '@/store/modules/devices/device'
+import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
-import { IDeviceTypeEnum } from '@/api/devices/types'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 
 @Component({
@@ -131,7 +130,7 @@ export default class extends Vue {
     ]
   }
 
-  private deviceTypeNames: {nm: string, v: IDeviceTypeEnum}[] = []
+  private deviceTypeNames: IDeviceTypeName[] = []
 
   private frmMod = {
     ip_address: this.initialIp || null,
@@ -168,8 +167,9 @@ export default class extends Vue {
   }
 
   created() {
-    this.loadGroups().then(() => {
-      this.deviceTypeNames = DeviceModule.getDeviceTypeNames()
+    this.loadGroups()
+    DeviceModule.getDeviceTypeNames().then(d => {
+      this.deviceTypeNames = d
     })
   }
 

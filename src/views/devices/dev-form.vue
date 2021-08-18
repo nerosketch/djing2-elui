@@ -52,7 +52,10 @@
       label="Родит. устройство"
       prop="parent_dev"
     )
-      device-autocomplete-field(v-model="frmMod.parent_dev" :defaultName="devParentName")
+      device-autocomplete-field(
+        v-model="frmMod.parent_dev"
+        :defaultName="$store.state.devicemodule.parent_dev_name"
+      )
     el-form-item(
       label="Введения в эксплуатацию"
     )
@@ -89,8 +92,7 @@ import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
-import { IDeviceTypeEnum } from '@/api/devices/types'
-import { DeviceModule } from '@/store/modules/devices/device'
+import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
@@ -119,7 +121,7 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
-  private deviceTypeNames: {nm: string, v: IDeviceTypeEnum}[] = []
+  private deviceTypeNames: IDeviceTypeName[] = []
 
   private frmMod = this.devFrmData
 
@@ -142,10 +144,6 @@ export default class extends mixins(FormMixin) {
       create_time: DeviceModule.create_time,
       place: DeviceModule.place
     }
-  }
-
-  get devParentName() {
-    return DeviceModule.parent_dev_name
   }
 
   @Watch('$store.state.devicemodule', { deep: true })
@@ -177,8 +175,9 @@ export default class extends mixins(FormMixin) {
   }
 
   created() {
-    this.loadGroups().then(async () => {
-      this.deviceTypeNames = await DeviceModule.getDeviceTypeNames()
+    this.loadGroups()
+    DeviceModule.getDeviceTypeNames().then(d => {
+      this.deviceTypeNames = d
     })
     this.frmInitial = Object.assign({}, this.frmMod)
   }

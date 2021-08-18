@@ -16,6 +16,11 @@ import {
 } from '@/api/devices/req'
 import store from '@/store'
 
+export interface IDeviceTypeName {
+  nm: string,
+  v: IDeviceTypeEnum
+}
+
 @Module({ dynamic: true, store, name: 'devicemodule' })
 class Device extends VuexModule implements IDeviceInterace {
   id = 0
@@ -194,7 +199,7 @@ class Device extends VuexModule implements IDeviceInterace {
   }
 
   @Action
-  public getDeviceTypeNames() {
+  public getDeviceTypeNames(): Promise<IDeviceTypeName[]> {
     return [
       { nm: 'Не выбрано', v: IDeviceTypeEnum.UNKNOWN },
       { nm: 'Dlink DGS1100_10/ME', v: IDeviceTypeEnum.DlinkDGS1100_10ME },
@@ -209,7 +214,7 @@ class Device extends VuexModule implements IDeviceInterace {
       { nm: 'Dlink DGS_3120_24SC', v: IDeviceTypeEnum.DlinkDGS_3120_24SCSwitchInterface },
       { nm: 'Dlink DGS_1100_06/ME', v: IDeviceTypeEnum.DlinkDGS_1100_06MESwitchInterface },
       { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }
-    ]
+    ] as any
   }
 
   public get isOnuRegistered(): boolean {
