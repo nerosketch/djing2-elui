@@ -177,8 +177,8 @@ export default class extends mixins(FormMixin) {
   }
 
   created() {
-    this.loadGroups().then(() => {
-      this.deviceTypeNames = DeviceModule.getDeviceTypeNames()
+    this.loadGroups().then(async () => {
+      this.deviceTypeNames = await DeviceModule.getDeviceTypeNames()
     })
     this.frmInitial = Object.assign({}, this.frmMod)
   }
