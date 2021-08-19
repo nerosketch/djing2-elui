@@ -2,7 +2,6 @@
   el-form(
     ref='form'
     label-width="100px"
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -12,12 +11,12 @@
       label="№ порта"
       prop='num'
     )
-      el-input(v-model="frmMod.num" size='mini' type='number')
+      el-input(v-model="frmMod.num" type='number')
     el-form-item(
       label="Описание"
       prop='descr'
     )
-      el-input(v-model="frmMod.descr" size='mini')
+      el-input(v-model="frmMod.descr")
     el-form-item
       el-button(
         icon='el-icon-upload'

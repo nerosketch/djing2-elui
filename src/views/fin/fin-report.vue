@@ -4,14 +4,12 @@
       v-model="reportParams.from_date"
       type='date'
       placeholder="Дата отсчёта"
-      size='mini'
       value-format="yyyy-MM-dd"
     )
     el-select(
       v-model="reportParams.pay_gw"
       placeholder="Платёжный шлюз"
       v-loading="gatewaysLoading"
-      size='mini'
       :style="{width: '10%'}"
     )
       el-option(
@@ -35,14 +33,13 @@
     ) Группировать по месяцу
 
     el-button(
-      size='mini'
       @click='downloadCsv'
     ) Скачать csv
 
     el-table(
       v-loading="loading"
       :data="tableData"
-      border fit size='small'
+      border fit
     )
       el-table-column(
         label="Дата"

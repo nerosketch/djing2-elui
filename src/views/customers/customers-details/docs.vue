@@ -9,7 +9,7 @@
     :disabled="!$perms.customers.view_customerattachment"
   )
     el-button(
-      size="mini" type="primary"
+      type="primary"
     ) Добавить документ
 </template>
 

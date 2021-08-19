@@ -16,7 +16,7 @@
           template(v-slot:pk="{row}")
             el-button(
               v-if="$perms.is_superuser"
-              size='mini' icon='el-icon-lock'
+              icon='el-icon-lock'
               @click="openPermsDialog(row)"
             )
             span(v-else) {{ row.pk }}
@@ -44,19 +44,16 @@
             el-button(
               icon='el-icon-plus'
               type='success'
-              size='mini'
               @click="addCustomerDialog=true"
               :disabled="!$perms.customers.add_customer"
             ) Добавить абонента
             el-button(
               icon='el-icon-set-up'
-              size='mini'
               @click="sitesDlg=true"
               v-if="isSomeoneSelected"
             ) Сайты
             el-button(
               icon='el-icon-s-operation'
-              size='mini'
               @click="editFieldsVisible=true"
             ) Поля
 
@@ -73,12 +70,12 @@
           template(v-slot:footer)
             el-button-group
               el-button(
-                type='success' icon='el-icon-plus' size='mini'
+                type='success' icon='el-icon-plus'
                 @click="addStreetDialog=true"
                 :disabled="!$perms.customers.add_customerstreet"
               ) Доб.
               el-button(
-                type='primary' icon='el-icon-edit' size='mini'
+                type='primary' icon='el-icon-edit'
                 @click="editStreetsDialog=true"
                 :disabled="!$perms.customers.change_customerstreet"
               ) Изм.

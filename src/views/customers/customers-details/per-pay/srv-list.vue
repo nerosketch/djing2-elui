@@ -4,7 +4,6 @@ div
     v-loading='loading'
     :data='pservices'
     border fit
-    size='small'
   )
     el-table-column(
       label="Последний платёж"
@@ -31,12 +30,12 @@ div
     )
       template(v-slot:default="{row}")
         el-button(
-          size='mini' icon='el-icon-close'
+          icon='el-icon-close'
           circle type='danger'
           @click="delP4IdPay(row)"
         )
   el-button(
-    type='primary' size='mini'
+    type='primary'
     @click="pSrvDialog=true"
   ) Добавить периодический платёж
 

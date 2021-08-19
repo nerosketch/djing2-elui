@@ -9,11 +9,9 @@ div
   )
     template(v-slot:left-footer)
       el-button.transfer-footer(
-        size="small"
         @click="selectReadonly"
       ) Выделить права на чтение
   el-button(
-    size="small"
     icon='el-icon-upload'
     type="primary"
     :loading="saveLoading"

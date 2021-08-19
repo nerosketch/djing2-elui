@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     v-loading='loading'
-    size="mini"
   )
     el-form-item(
       label="Периодический платёж"

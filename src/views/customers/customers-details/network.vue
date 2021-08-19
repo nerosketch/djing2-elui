@@ -5,7 +5,7 @@
     el-table(
       v-loading='loading'
       :data="leases"
-      border fit size='small'
+      border fit
     )
       el-table-column(
         label="IP Адрес"
@@ -42,19 +42,19 @@
         template(v-slot:default="{row}")
           el-button-group
             el-button(
-              type='danger' size='mini'
+              type='danger'
               icon='el-icon-delete'
               @click="delLease(row)"
             )
             el-button(
-              type='primary' size='mini'
+              type='primary'
               icon='el-icon-edit'
               @click="editLease(row)"
             )
             lease-ping(:lease="row")
             ip-session-detail(:lease="row")
     el-button(
-      size='mini' type='success' icon='el-icon-plus',
+      type='success' icon='el-icon-plus',
       @click="addLease"
     ) Добавить
 

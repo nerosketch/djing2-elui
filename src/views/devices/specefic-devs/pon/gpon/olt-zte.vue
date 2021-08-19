@@ -6,7 +6,7 @@
         small {{ ` ${device.ip_address || device.mac_addr} ` }}
         small {{ details }}
         el-button(
-          style="float: right; padding: 7px" circle size='mini' icon='el-icon-edit' type='primary'
+          style="float: right; padding: 7px" circle icon='el-icon-edit' type='primary'
           @click="openDevForm"
           :disabled="!$perms.devices.change_device"
         )
@@ -22,7 +22,7 @@
       :data="unregistered"
       :loading="unrloading"
       v-if="device !== null"
-      border fit size='small'
+      border fit
     )
       el-table-column(
         label="Мак"
@@ -54,7 +54,7 @@
         min-width="70"
       )
         template(v-slot:default="{row}")
-          el-button(size='mini' icon='el-icon-plus' @click="onSaveOnu(row)")
+          el-button(icon='el-icon-plus' @click="onSaveOnu(row)")
 
     el-dialog(
       title="Сохранить ONU"
@@ -143,7 +143,7 @@ export default class extends Vue {
 
   get devPk() {
     if (this.device) {
-      return this.device.pk
+      return this.device.id
     }
     return 0
   }
@@ -160,7 +160,7 @@ export default class extends Vue {
   private frmNewOnuDone(newDev: IDevice) {
     this.saveOnuFormDialog = false
     this.$message.success('Новая onu сохранена')
-    this.$router.push({ name: 'device-view', params: { devId: newDev.pk.toString() } })
+    this.$router.push({ name: 'device-view', params: { devId: newDev.id.toString() } })
   }
 
   private async scanZteDetails() {

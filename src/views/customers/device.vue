@@ -3,7 +3,6 @@ el-form(
   :model='frmMod'
   v-loading='isLoading'
   :label-width="$store.getters.isMobileView ? undefined : '100px'"
-  size="mini"
 )
   el-card(shadow="never")
     template(v-slot:header)
@@ -27,16 +26,16 @@ el-form(
         el-button-group
           el-button(
             icon='el-icon-upload'
-            type="primary" size="mini" @click="onSubmit"
+            type="primary" @click="onSubmit"
             :loading="isLoading"
           ) Сохранить
           el-button(
-            icon="el-icon-view" size="mini" @click="onGo2Dev"
+            icon="el-icon-view" @click="onGo2Dev"
             :disabled="!frmMod.device"
           ) Смотреть
           el-button(
             type="danger" icon="el-icon-delete"
-            size="mini" @click="onClearDevice"
+            @click="onClearDevice"
           ) Очистить
 </template>
 

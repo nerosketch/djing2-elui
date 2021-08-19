@@ -10,17 +10,14 @@
         el-button-group
           el-button(
             icon="el-icon-edit"
-            size="mini"
             @click="openEdit(row)"
           ) Изменить
           el-button(
             icon='el-icon-remove'
             type='danger'
-            size='mini'
             @click="delIt(row)"
           ) Удалить
       el-button(
-        size='mini'
         icon='el-icon-plus'
         @click='openNew'
       ) Добавить адресный объект
@@ -64,6 +61,11 @@ export default class extends Vue {
 
   private tableColumns: IDataTableColumn[] = [
     {
+      prop: 'ao_type_name',
+      label: 'Тип адресного объекта',
+      'min-width': 250
+    },
+    {
       prop: 'title',
       label: 'Название',
       sortable: true,
@@ -72,11 +74,6 @@ export default class extends Vue {
     {
       prop: 'ao_level_name',
       label: 'Уровень адресного объекта',
-      'min-width': 250
-    },
-    {
-      prop: 'ao_type_name',
-      label: 'Тип адресного объекта',
       'min-width': 250
     },
     {

@@ -1,10 +1,10 @@
 <template lang="pug">
-  el-select(v-model='selectedDeviceId' size="mini" :disabled="devices.length == 0")
+  el-select(v-model='selectedDeviceId' :disabled="devices.length == 0")
     el-option(
       v-for="dv in devices"
-      :key="dv.pk"
+      :key="dv.id"
       :label="`${dv.comment} ` + (dv.ip_address ? `(${dv.ip_address})` : '')"
-      :value="dv.pk"
+      :value="dv.id"
     )
 </template>
 
@@ -34,7 +34,7 @@ export default class extends Vue {
   }
 
   private addDevice(dev: IDevice) {
-    const dv = this.devices.find(fd => fd.pk === dev.pk)
+    const dv = this.devices.find(fd => fd.id === dev.id)
     if (dv === undefined) {
       this.devices.push(dev)
     }
@@ -57,7 +57,7 @@ export default class extends Vue {
         page: 1,
         page_size: 0,
         group: this.groupId,
-        fields: 'pk,comment,ip_address'
+        fields: 'id,comment,ip_address'
       }) as any
       this.devices = data
     } catch (err) {

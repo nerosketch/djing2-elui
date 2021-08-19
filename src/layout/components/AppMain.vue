@@ -3,13 +3,13 @@
     <breadcrumb
       class="breadcrumb-container"
     />
-    <router-view />
-    <!--<transition
+    <!-- <router-view /> -->
+    <transition
       name="fade-transform"
       mode="out-in"
     >
       <router-view />
-    </transition> -->
+    </transition>
   </section>
 </template>
 

@@ -12,9 +12,9 @@ div
 
     template(v-slot:oper="{row}")
       el-button-group
-        el-button(icon="el-icon-edit" size="mini" @click="openEdit(row)")
+        el-button(icon="el-icon-edit" @click="openEdit(row)")
         el-button(
-          type="danger" icon="el-icon-delete" size="mini"
+          type="danger" icon="el-icon-delete"
           @click="delLease(row)"
           :disabled="!$perms.networks.delete_customeripleasemodel"
         )

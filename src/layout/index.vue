@@ -36,7 +36,7 @@ export default class extends mixins(ResizeMixin) {
     return {
       hideSidebar: !this.sidebar.opened,
       openSidebar: this.sidebar.opened,
-      withoutAnimation: this.sidebar.withoutAnimation,
+      // withoutAnimation: this.sidebar.withoutAnimation,
       mobile: AppModule.IsMobileDevice
     }
   }
@@ -121,10 +121,10 @@ export default class extends mixins(ResizeMixin) {
   }
 }
 
-.withoutAnimation {
-  .main-container,
-  .sidebar-container {
-    transition: none;
-  }
-}
+// .withoutAnimation {
+//   .main-container,
+//   .sidebar-container {
+//     transition: none;
+//   }
+// }
 </style>

@@ -3,7 +3,6 @@
     h4 Какие группы сотрудников будут иметь доступ
     el-select(
       v-model="selectedProfileGroup"
-      size="mini"
     )
       el-option(
         v-for="grp in groups"
@@ -27,7 +26,6 @@
       icon='el-icon-upload'
       type="primary" @click="onSubmit"
       :disabled="!$perms.is_superuser"
-      size='small'
       :loading="oGroupsLoading"
     ) Сохранить
 </template>

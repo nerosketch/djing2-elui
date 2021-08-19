@@ -16,16 +16,15 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
-            type="danger" icon="el-icon-delete" size="mini"
+            type="danger" icon="el-icon-delete"
             @click="delMessenger(row)"
           )
           el-button(
-            icon="el-icon-view" size="mini"
+            icon="el-icon-view"
             @click="go2Messenger(row)"
           )
 
       el-button(
-        size='mini'
         icon='el-icon-plus'
         @click='openNew'
       ) Добавить Messenger

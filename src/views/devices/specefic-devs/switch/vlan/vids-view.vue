@@ -4,7 +4,7 @@ div Порт №{{ portNum }}
     :data="deviceVlans"
     v-loading="loading"
     empty-text="Vlan'ы на порту не найдены"
-    border fit size='small'
+    border fit
   )
     el-table-column(
       label="Название"
@@ -39,7 +39,6 @@ div Порт №{{ portNum }}
     @click="onApplySwitchVlanConfig"
     :loading="applyLoading"
     :disabled="!$perms.devices.can_apply_onu_config"
-    size='mini'
   ) Применить
 
 </template>

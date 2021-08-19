@@ -10,24 +10,21 @@ div
     template(v-slot:btn="{row}")
       el-button-group
         el-button(
-          size='mini'
           icon='el-icon-lock'
           @click="editGroupPerms(row)"
         )
         el-button(
-          size="mini"
           icon='el-icon-edit'
           @click="editNewUserGroup(row)"
         )
         el-button(
-          type="danger" size="mini"
+          type="danger"
           icon='el-icon-close'
           @click="delUserGroup(row)"
         )
 
     el-button(
       icon='el-icon-plus'
-      size='mini'
       @click="addNewUserGroup"
     ) Добавить
   el-dialog(

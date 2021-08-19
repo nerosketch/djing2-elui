@@ -1,6 +1,5 @@
 <template lang="pug">
   el-button(
-    size='mini'
     :type='statusType'
     icon='el-icon-magic-stick'
     @click="tryToFixOnu"

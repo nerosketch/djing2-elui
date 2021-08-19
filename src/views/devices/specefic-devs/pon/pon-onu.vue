@@ -27,9 +27,9 @@
           router-link(v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.pk }}")
             el-link(type="primary") {{ ab.full_name }}
         el-button-group
-          delete-from-olt-btn(:devId="device.pk" v-on:done="getDetails")
+          delete-from-olt-btn(:devId="device.id" v-on:done="getDetails")
           el-button(
-            type="danger" icon="el-icon-delete" size="mini"
+            type="danger" icon="el-icon-delete"
             @click="delDevice"
             :disabled="!$perms.devices.delete_device"
           ) Удалить
@@ -133,7 +133,7 @@ export default class extends Vue {
         this.$message.error('Не удалили, похоже уже кто-то удалил')
         return
       }
-      await DeviceModule.DelDevice(this.device.pk)
+      await DeviceModule.DelDevice(this.device.id)
       this.$message.success('Удалена')
       if (this.device.group) {
         this.$router.push({ name: 'devicesList', params: { groupId: this.device.group.toString() } })
@@ -145,7 +145,7 @@ export default class extends Vue {
 
   private async getDetails() {
     if (this.device !== null) {
-      const { data } = await scanPonDetails(this.device.pk)
+      const { data } = await scanPonDetails(this.device.id)
       this.onuDetails = data
     }
   }

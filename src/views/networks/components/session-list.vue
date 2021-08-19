@@ -11,7 +11,7 @@
 
     template(v-slot:oper="{row}")
       el-button(
-        icon="el-icon-delete-solid" size="mini"
+        icon="el-icon-delete-solid"
         @click="shutdownSesion(row)"
       )
 </template>
