@@ -9,7 +9,7 @@ div
     ref='table'
   )
     template(v-slot:is_dynamic="{row}")
-      el-checkbox(v-model="row.is_dynamic" disabled)
+      i.el-icon-circle-check(v-if="row.is_dynamic")
 
     template(v-slot:oper="{row}")
       el-button-group
