@@ -41,6 +41,14 @@
             b Абоны с услугой
           dd
             i {{ gw.customer_count_w_service }}
+          dt
+            b Дата создания
+          dd
+            i {{ gw.create_time }}
+          dt
+            b Адрес
+          dd
+            i {{ gw.place || ' - ' }}
         el-button-group
           el-button(
             icon='el-icon-edit' @click="openGwForm(gw)"
