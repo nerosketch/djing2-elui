@@ -20,7 +20,7 @@ import PushNotificationsClass from './utils/notifications'
 // configure language
 locale.use(lang)
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, { size: 'mini' })
 
 Vue.component('object-perms', ObjectPerms)
 Vue.component('sites-attach', SitesAttach)

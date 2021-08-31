@@ -4,7 +4,7 @@
       span Варианты конфигурации на ONU
 
     span Шаблон конфига для ONU
-    el-select(v-model="currentConfig.configTypeCode" size='mini' placeholder="Шаблон конфига")
+    el-select(v-model="currentConfig.configTypeCode" placeholder="Шаблон конфига")
       el-option(
         :value='v.code'
         :label='v.title'
@@ -21,7 +21,6 @@
         template(v-slot:header)
           el-link(
             style="float: right"
-            size='mini'
             icon='el-icon-close'
             type='danger'
             @click="delVlanPort(portVlanConf.port)"
@@ -44,7 +43,6 @@
       @click="onSubmit"
       :loading="vlanLoading"
       :disabled="!$perms.devices.can_apply_onu_config || disabled"
-      size='mini'
     ) Применить
 
 </template>
@@ -81,17 +79,17 @@ export default class extends mixins(VlanMixin) {
   }
 
   private async onSubmit() {
-    if (this.$store.state.devicemodule.pk > 0) {
+    if (this.$store.state.devicemodule.id > 0) {
       this.vlanLoading = true
       try {
-        await applyDeviceOnuConfig(this.$store.state.devicemodule.pk, this.currentConfig)
+        await applyDeviceOnuConfig(this.$store.state.devicemodule.id, this.currentConfig)
         this.vlanLoading = false
         this.$message.success({
           message: 'ONU успешно зарегистрирована',
           duration: 15000,
           showClose: true
         })
-        DeviceModule.GetDevice(this.$store.state.devicemodule.pk)
+        DeviceModule.GetDevice(this.$store.state.devicemodule.id)
       } catch (err) {
         this.vlanLoading = false
         this.$message.error(err)
@@ -111,7 +109,7 @@ export default class extends mixins(VlanMixin) {
     })
   }
 
-  @Watch('$store.state.devicemodule.pk')
+  @Watch('$store.state.devicemodule.id')
   private onDevIdChanged(devId: number) {
     this.getDevConfigTypes(devId)
   }
@@ -123,7 +121,7 @@ export default class extends mixins(VlanMixin) {
 
   private async scanDevOnuVlan(devId?: number) {
     if (!devId || devId === 0) {
-      devId = this.$store.state.devicemodule.pk
+      devId = this.$store.state.devicemodule.id
     }
     if (devId && devId > 0) {
       const { data } = await readOnuVlanInfo(devId)

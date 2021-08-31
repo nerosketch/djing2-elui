@@ -4,7 +4,6 @@
     :disabled="pingDisabled || !$perms.customers.can_ping"
     @click="pingProfile"
     :loading="pingLoading"
-    size='mini'
   ) {{ isCustomerNotHere ? 'Не передан абонент' : btnText }}
 </template>
 

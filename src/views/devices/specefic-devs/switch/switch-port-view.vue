@@ -33,7 +33,7 @@ export default class extends Vue {
     if (this.device !== null && this.portId > 0) {
       this.loading = true
       try {
-        const { data } = await filterDevicePort(this.device.pk, this.portId)
+        const { data } = await filterDevicePort(this.device.id, this.portId)
         this.customers = data
       } catch (err) {
         this.$message.error(err)

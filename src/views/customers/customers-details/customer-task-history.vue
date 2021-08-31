@@ -10,7 +10,6 @@
       router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
         el-button(
           :type="row.comment_count > 0 ? 'success' : 'primary'"
-          size='mini'
         )
           template(v-if="row.comment_count > 0") {{ row.comment_count }}
           i.el-icon-view(v-else)

@@ -8,7 +8,7 @@
     :file-list="fileList"
   )
     el-button(
-      size="small" type="primary"
+      type="primary"
       v-if="$perms.tasks.add_taskdocumentattachment"
     ) Добавить документ
 </template>

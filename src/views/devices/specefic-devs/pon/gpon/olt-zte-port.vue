@@ -5,8 +5,8 @@
       b {{ port.fb_onu_num }}
       port-svg-icon
       el-button-group
-        el-button(size='mini' icon='el-icon-view' @click="onuListDialog=true" :disabled="port.fb_onu_num === 0")
-        el-button(size='mini' icon='el-icon-lock' disabled)
+        el-button(icon='el-icon-view' @click="onuListDialog=true" :disabled="port.fb_onu_num === 0")
+        el-button(icon='el-icon-lock' disabled)
     el-dialog(
       top="5vh"
       title="Список ONU на глазу"

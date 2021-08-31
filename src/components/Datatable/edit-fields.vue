@@ -11,7 +11,6 @@ div
   el-divider
   el-button(
     icon='el-icon-upload'
-    size='mini'
     type='primary'
     @click="saveFieldsVisible"
   ) Сохранить

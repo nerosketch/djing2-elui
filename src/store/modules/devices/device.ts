@@ -16,9 +16,14 @@ import {
 } from '@/api/devices/req'
 import store from '@/store'
 
+export interface IDeviceTypeName {
+  nm: string,
+  v: IDeviceTypeEnum
+}
+
 @Module({ dynamic: true, store, name: 'devicemodule' })
 class Device extends VuexModule implements IDeviceInterace {
-  pk = 0
+  id = 0
   ip_address = ''
   mac_addr = ''
   comment = ''
@@ -35,6 +40,8 @@ class Device extends VuexModule implements IDeviceInterace {
   is_noticeable = false
   code = ''
   sites?: number[] = []
+  create_time = ''
+  place = ''
 
   loadProgress = false
 
@@ -45,7 +52,7 @@ class Device extends VuexModule implements IDeviceInterace {
 
   @Mutation
   public RESET_ALL_DEV() {
-    this.pk = 0
+    this.id = 0
     this.ip_address = ''
     this.mac_addr = ''
     this.comment = ''
@@ -61,12 +68,14 @@ class Device extends VuexModule implements IDeviceInterace {
     this.is_noticeable = false
     this.code = ''
     this.sites = []
+    this.create_time = ''
+    this.place = ''
     return this
   }
 
   @Mutation
   public SET_ALL_DEV(data: IDevice) {
-    this.pk = data.pk
+    this.id = data.id
     this.ip_address = data.ip_address
     this.mac_addr = data.mac_addr
     this.comment = data.comment
@@ -83,6 +92,8 @@ class Device extends VuexModule implements IDeviceInterace {
     this.is_noticeable = data.is_noticeable
     this.code = data.code
     this.sites = data.sites
+    this.create_time = data.create_time
+    this.place = data.place
     return this
   }
 
@@ -119,7 +130,7 @@ class Device extends VuexModule implements IDeviceInterace {
   public async PatchDevice(newData: object) {
     this.SET_LOADING(true)
     try {
-      const r = await changeDevice(this.pk, newData)
+      const r = await changeDevice(this.id, newData)
       this.SET_ALL_DEV(r.data)
       return r
     } finally {
@@ -136,7 +147,7 @@ class Device extends VuexModule implements IDeviceInterace {
   @Action
   public async ScanAllDevVlans(devId?: number) {
     if (!devId || devId === 0) {
-      devId = this.pk
+      devId = this.id
     }
     const { data } = await scanAllDevVlans(devId)
     return data
@@ -169,7 +180,7 @@ class Device extends VuexModule implements IDeviceInterace {
   @Action
   public async GetConfigChoices(devId?: number) {
     if (!devId || devId === 0) {
-      devId = this.pk
+      devId = this.id
     }
     const { data } = await getDeviceConfigChoices(devId)
     return data
@@ -178,7 +189,7 @@ class Device extends VuexModule implements IDeviceInterace {
   @Action
   public async RemoveFromOlt(devId?: number) {
     if (!devId || devId === 0) {
-      devId = this.pk
+      devId = this.id
     }
     const { data } = await removeFromOlt(devId)
     if (data.status === 1) {
@@ -188,7 +199,7 @@ class Device extends VuexModule implements IDeviceInterace {
   }
 
   @Action
-  public getDeviceTypeNames() {
+  public getDeviceTypeNames(): Promise<IDeviceTypeName[]> {
     return [
       { nm: 'Не выбрано', v: IDeviceTypeEnum.UNKNOWN },
       { nm: 'Dlink DGS1100_10/ME', v: IDeviceTypeEnum.DlinkDGS1100_10ME },
@@ -203,7 +214,7 @@ class Device extends VuexModule implements IDeviceInterace {
       { nm: 'Dlink DGS_3120_24SC', v: IDeviceTypeEnum.DlinkDGS_3120_24SCSwitchInterface },
       { nm: 'Dlink DGS_1100_06/ME', v: IDeviceTypeEnum.DlinkDGS_1100_06MESwitchInterface },
       { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }
-    ]
+    ] as any
   }
 
   public get isOnuRegistered(): boolean {
@@ -213,7 +224,7 @@ class Device extends VuexModule implements IDeviceInterace {
   @Action
   public async FixOnu(devId?: number) {
     if (!devId || devId === 0) {
-      devId = this.pk
+      devId = this.id
     }
     let { data } = await fixOnu(devId)
     this.SET_ALL_DEV(data.device)

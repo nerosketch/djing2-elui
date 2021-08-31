@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='form'
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -11,22 +10,21 @@
       label="IP Адрес"
       prop='ip_address'
     )
-      el-input(v-model="frmMod.ip_address" size='mini')
+      el-input(v-model="frmMod.ip_address")
     el-form-item(
       label="MAC Адрес"
       prop='mac_addr'
     )
-      el-input(v-model="frmMod.mac_addr" size='mini')
+      el-input(v-model="frmMod.mac_addr")
     el-form-item(
       label="Описание"
       prop='comment'
     )
-      el-input(v-model="frmMod.comment" size='mini')
+      el-input(v-model="frmMod.comment")
     el-form-item(
       label="Тип оборудования"
-      prop='dev_type'
     )
-      el-select(v-model="frmMod.dev_type" size='mini')
+      el-select(v-model="frmMod.dev_type")
         el-option(
           v-for="dt in deviceTypeNames"
           :key="dt.v"
@@ -35,14 +33,12 @@
         )
     el-form-item(
       label="SNMP Community"
-      prop="man_passw"
     )
-      el-input(v-model="frmMod.man_passw" size='mini')
+      el-input(v-model="frmMod.man_passw")
     el-form-item(
       label="Группа"
-      prop='group'
     )
-      el-select(v-model="frmMod.group" size='mini')
+      el-select(v-model="frmMod.group")
         el-option(
           v-for="g in groups"
           :key="g.pk"
@@ -51,14 +47,28 @@
         )
     el-form-item(
       label="Родит. устройство"
-      prop="parent_dev"
     )
-      device-autocomplete-field(v-model="frmMod.parent_dev" :defaultName="devParentName")
+      device-autocomplete-field(
+        v-model="frmMod.parent_dev"
+        :defaultName="$store.state.devicemodule.parent_dev_name"
+      )
+    el-form-item(
+      label="Дата введения в эксплуатацию"
+    )
+      el-date-picker(
+        v-model="frmMod.create_time"
+        type="datetime"
+        value-format="yyyy-MM-dd HH:mm"
+        format="d.MM.yyyy HH:mm"
+      )
+    el-form-item(
+      label="Адрес установки"
+    )
+      el-input(v-model="frmMod.place")
     el-form-item(
       label="Доп. инфо для snmp"
-      prop="snmp_extra"
     )
-      el-input(v-model="frmMod.snmp_extra" size='mini')
+      el-input(v-model="frmMod.snmp_extra")
     el-form-item(
       prop="is_noticeable"
     )
@@ -77,8 +87,7 @@ import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
-import { IDeviceTypeEnum } from '@/api/devices/types'
-import { DeviceModule } from '@/store/modules/devices/device'
+import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
@@ -107,7 +116,7 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
-  private deviceTypeNames: {nm: string, v: IDeviceTypeEnum}[] = []
+  private deviceTypeNames: IDeviceTypeName[] = []
 
   private frmMod = this.devFrmData
 
@@ -126,15 +135,13 @@ export default class extends mixins(FormMixin) {
       is_noticeable: DeviceModule.is_noticeable,
       man_passw: DeviceModule.man_passw,
       parent_dev: DeviceModule.parent_dev,
-      snmp_extra: DeviceModule.snmp_extra
+      snmp_extra: DeviceModule.snmp_extra,
+      create_time: DeviceModule.create_time,
+      place: DeviceModule.place
     }
   }
 
-  get devParentName() {
-    return DeviceModule.parent_dev_name
-  }
-
-  @Watch('$store.state.devicemodule.pk')
+  @Watch('$store.state.devicemodule', { deep: true })
   private async onDevCh() {
     this.frmMod = this.devFrmData
     this.frmInitial = Object.assign({}, this.devFrmData)
@@ -149,10 +156,13 @@ export default class extends mixins(FormMixin) {
     (this.$refs['form'] as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        const newDat = await DeviceModule.PatchDevice(this.frmMod)
-        this.loading = false
-        this.$emit('done', newDat.data)
-        this.frmInitial = Object.assign({}, this.devFrmData)
+        try {
+          const newDat = await DeviceModule.PatchDevice(this.frmMod)
+          this.frmInitial = Object.assign({}, this.devFrmData)
+          this.$emit('done', newDat.data)
+        } finally {
+          this.loading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
@@ -160,8 +170,9 @@ export default class extends mixins(FormMixin) {
   }
 
   created() {
-    this.loadGroups().then(async() => {
-      this.deviceTypeNames = await DeviceModule.getDeviceTypeNames()
+    this.loadGroups()
+    DeviceModule.getDeviceTypeNames().then(d => {
+      this.deviceTypeNames = d
     })
     this.frmInitial = Object.assign({}, this.frmMod)
   }

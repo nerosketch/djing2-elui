@@ -3,7 +3,7 @@
     :data="macs"
     v-loading="macsLoading"
     empty-text="MAC адреса на порту не найдены"
-    border fit size='small'
+    border fit
   )
     el-table-column(
       label="Название"

@@ -17,7 +17,6 @@ div
       router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
         el-button(
           :type="row.comment_count > 0 ? 'success' : 'primary'"
-          size='mini'
         )
           span(v-if="row.comment_count > 0") {{ row.comment_count }}
           i.el-icon-view(v-else)
@@ -25,13 +24,11 @@ div
     el-button-group
       el-button(
         icon="el-icon-plus"
-        size='mini'
         @click="openNew"
         :disabled="!$perms.tasks.add_task"
       ) Добавить задачу
       el-button(
         icon='el-icon-s-operation'
-        size='mini'
         @click="editFieldsVisible=true"
       ) Поля
 

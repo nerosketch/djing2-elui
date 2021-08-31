@@ -2,7 +2,7 @@
   el-table.app-container(
     v-loading='messengerTypesLoading'
     :data="messengerBotTypes"
-    border fit size='small'
+    border fit
   )
     el-table-column(
       label="Тип бота"

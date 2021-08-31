@@ -43,7 +43,6 @@ el-popover(
     div(v-else) Нет сессии
   el-button(
     slot='reference'
-    size='mini'
     icon='el-icon-s-data'
     @click="isDisplay=!isDisplay"
   ) Detail

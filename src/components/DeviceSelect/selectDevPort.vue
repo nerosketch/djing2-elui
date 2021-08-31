@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model='selectedPort' size="mini")
+  el-select(v-model='selectedPort')
     el-option(
       label='Не выбрано'
       :value='0'

@@ -10,7 +10,6 @@ div(v-loading='loading')
     range-separator="-"
     start-placeholder="Начало среза"
     end-placeholder="Конец среза"
-    size='mini'
   )
 </template>
 

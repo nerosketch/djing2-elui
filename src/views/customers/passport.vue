@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='pspfrm'
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -40,7 +39,7 @@
     el-form-item
       el-button(
         icon='el-icon-upload'
-        type='primary' size='mini' @click="onSubmit" :loading="loading"
+        type='primary' @click="onSubmit" :loading="loading"
         :disabled="!$perms.customers.add_passportinfo || !$perms.customers.change_passportinfo"
       ) Сохранить
 </template>

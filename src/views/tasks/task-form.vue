@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='form'
-    size="mini"
     status-icon
     :rules="frmRules"
     :model="frmMod"
@@ -11,7 +10,10 @@
       label="Описание"
       prop='descr'
     )
-      el-input(v-model="frmMod.descr" maxlength="128")
+      el-input(
+        v-model="frmMod.descr"
+        maxlength="128"
+      )
     el-form-item(
       label="Исполнители"
       prop='recipients'
@@ -68,7 +70,10 @@
       label="Актуальность"
       prop='out_date'
     )
-      el-tooltip(content="дата, до которой нужно завершить задачу" placement="right")
+      el-tooltip(
+        content="дата, до которой нужно завершить задачу"
+        placement="right"
+      )
         el-date-picker(
           v-model="frmMod.out_date"
           type="date"
@@ -81,15 +86,21 @@
           type="primary"
           @click="onSubmit"
           icon='el-icon-upload'
-          size='small'
           :disabled="isFormUntouched"
         ) Сохранить
         el-button(
-          v-if="!isNewTask" type="danger" icon="el-icon-delete" size='small'
+          v-if="!isNewTask"
+          type="danger"
+          icon="el-icon-delete"
           @click="onDel"
           :disabled="!$perms.tasks.delete_task"
         ) Удалить
-        el-button(v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check" size='small') Завершить
+        el-button(
+          v-if="!isNewTask"
+          type="success"
+          @click="onFinish"
+          icon="el-icon-check"
+        ) Завершить
 </template>
 
 <script lang="ts">

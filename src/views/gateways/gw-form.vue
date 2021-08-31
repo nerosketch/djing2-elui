@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='form'
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -19,7 +18,6 @@
       el-input(v-model="frmMod.ip_address")
     el-form-item(
       label="Порт"
-      prop='ip_port'
     )
       el-input(v-model="frmMod.ip_port" type="number")
     el-form-item(
@@ -29,26 +27,36 @@
       el-input(v-model="frmMod.auth_login")
     el-form-item(
       label="Пароль для входа"
-      prop='auth_passw'
     )
       el-input(v-model="frmMod.auth_passw")
     el-form-item(
       label="Тип NAS"
-      prop='gw_type'
     )
-      el-select(v-model="frmMod.gw_type" size='mini')
+      el-select(v-model="frmMod.gw_type")
         el-option(label="Микротик" :value="0")
         el-option(label="Linux" :value="1")
     el-form-item(
       label="По умолчанию"
-      prop='is_default'
     )
       el-checkbox(v-model="frmMod.is_default")
     el-form-item(
       label="Включен"
-      prop='enabled'
     )
       el-checkbox(v-model="frmMod.enabled")
+    el-form-item(
+      label="Класс шлюза"
+    )
+      el-select(v-model="frmMod.gw_class")
+        el-option(
+          v-for="(gwc, i) in gwClassChoices"
+          :key="i"
+          :value="gwc.v"
+          :label="gwc.t"
+        )
+    el-form-item(
+      label="Адрес установки"
+    )
+      el-input(v-model="frmMod.place")
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -66,6 +74,8 @@ import { ipAddrValidator, latinValidator } from '@/utils/validate'
 import FormMixin from '@/utils/forms'
 import { Form } from 'element-ui'
 import { GatewayModule } from '@/store/modules/gateways'
+import { IGatewayClassChoiceType } from '@/api/gateways/types'
+import { getGwClassChoices } from '@/api/gateways/req'
 
 @Component({
   name: 'GwForm'
@@ -85,6 +95,8 @@ export default class extends mixins(FormMixin) {
     ]
   }
 
+  private gwClassChoices: IGatewayClassChoiceType[] = []
+
   @Watch('$store.state.gateway.id')
   private onChangeGroup() {
     this.frmMod.title = GatewayModule.title
@@ -93,8 +105,10 @@ export default class extends mixins(FormMixin) {
     this.frmMod.auth_login = GatewayModule.auth_login
     this.frmMod.auth_passw = GatewayModule.auth_passw
     this.frmMod.gw_type = GatewayModule.gw_type
+    this.frmMod.gw_class = GatewayModule.gw_class
     this.frmMod.is_default = GatewayModule.is_default
     this.frmMod.enabled = GatewayModule.enabled
+    this.frmMod.place = GatewayModule.place
     this.frmInitial = Object.assign({}, this.frmMod)
   }
 
@@ -105,8 +119,10 @@ export default class extends mixins(FormMixin) {
     auth_login: GatewayModule.auth_login,
     auth_passw: GatewayModule.auth_passw,
     gw_type: GatewayModule.gw_type,
+    gw_class: GatewayModule.gw_class,
     is_default: GatewayModule.is_default,
-    enabled: GatewayModule.enabled
+    enabled: GatewayModule.enabled,
+    place: GatewayModule.place
   }
   get isNew() {
     return GatewayModule.id === 0
@@ -114,6 +130,7 @@ export default class extends mixins(FormMixin) {
 
   created() {
     this.frmInitial = Object.assign({}, this.frmMod)
+    this.loadGwClassChoices()
   }
 
   private onSubmit() {
@@ -137,6 +154,11 @@ export default class extends mixins(FormMixin) {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  private async loadGwClassChoices() {
+    const { data } = await getGwClassChoices()
+    this.gwClassChoices = data
   }
 }
 </script>

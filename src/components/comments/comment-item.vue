@@ -12,7 +12,7 @@ el-card(
         v-if="comment.can_remove"
         @click="delComment"
       )
-  el-avatar(shape="square" size='medium' :src='comment.author_avatar')
+  el-avatar(shape="square" :src='comment.author_avatar')
   span &nbsp; {{ comment.text }}
 </template>
 

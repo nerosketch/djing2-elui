@@ -1,7 +1,5 @@
 <template lang="pug">
-  el-form(
-    size='mini'
-  )
+  el-form
     el-form-item(
       label="Пароль"
       prop='password'
@@ -28,7 +26,6 @@
         type='primary'
         @click="onSubmit"
         icon='el-icon-upload'
-        size='mini'
         :disabled='isEmpty'
         :loading="loading"
       ) Сохранить

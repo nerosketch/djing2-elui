@@ -5,7 +5,7 @@ span
     :data="onuList"
     v-loading="lloading"
     :row-class-name="onuRowColor"
-    border fit size='small'
+    border fit
   )
     el-table-column(
       label="Тип"

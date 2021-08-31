@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='frm'
-    size="mini"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -29,13 +28,11 @@
       )
     el-form-item(
       label="Включён"
-      prop='is_active'
     )
       el-switch(v-model="frmMod.is_active")
       small {{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}
     el-form-item(
       label="Суперпользователь"
-      prop='is_superuser'
     )
       el-switch(v-model="frmMod.is_superuser")
       small {{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}
@@ -120,6 +117,7 @@ export default class extends Vue {
   private passwordFormDialog = false
   private userGroupAccessDialog = false
   private sitesDlg = false
+
   private frmMod = {
     username: UserProfileModule.username,
     fio: UserProfileModule.fio,
@@ -140,10 +138,10 @@ export default class extends Vue {
     this.frmMod.username = profile.username
     this.frmMod.fio = profile.fio
     this.frmMod.birth_day = profile.birth_day
-    this.frmMod.username = profile.username
-    this.frmMod.username = profile.username
-    this.frmMod.username = profile.username
-    this.frmMod.username = profile.username
+    this.frmMod.is_active = profile.is_active
+    this.frmMod.is_superuser = profile.is_superuser || false
+    this.frmMod.telephone = profile.telephone
+    this.frmMod.email = profile.email
   }
 
   private frmRules = {
@@ -184,10 +182,10 @@ export default class extends Vue {
             newDat = await UserProfileModule.PatchProfile(this.frmMod)
             this.$message.success('Учётка сохранена')
           }
-          this.loading = false
           this.$emit('done', newDat)
         } catch (err) {
           this.$message.error(err)
+        } finally {
           this.loading = false
         }
       } else {

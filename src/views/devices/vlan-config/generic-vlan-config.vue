@@ -5,7 +5,7 @@
         width='400'
         trigger="click"
       )
-        el-select(v-model="addVlanFrmMod.vid" size='mini')
+        el-select(v-model="addVlanFrmMod.vid")
           el-option(
             v-for="v in vlans"
             :key="v.id"
@@ -22,7 +22,6 @@
         el-button(
           type="success"
           icon='el-icon-plus'
-          size='mini'
           @click="onAddVidToPort"
         ) Добавить
 
@@ -30,7 +29,6 @@
           slot='reference'
           type="success"
           icon="el-icon-plus"
-          size='mini'
           circle
         )
 
@@ -42,13 +40,11 @@
       el-button-group
         el-button.btn_miniwidth(
           :type='v.native ? "info" : "primary"'
-          size='mini'
           @click="changeVlanMode(v)"
         ) {{ v.native ? 'A' : 'T' }}
-        el-button(size='mini') {{ v.vid }}
+        el-button {{ v.vid }}
         el-button.btn_miniwidth(
           type='danger'
-          size='mini'
           icon='el-icon-close'
           @click="vlanRemove(v)"
         )

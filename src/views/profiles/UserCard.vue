@@ -32,11 +32,13 @@ el-card(style='margin-bottom:20px;')
           dt
             b Включён-ли
           dd
-            el-checkbox(v-model="$store.state.userprofile.is_active" disabled)
+            i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
+            i.el-icon-circle-close(v-else)
           dt
             b Суперпользователь
           dd
-            el-checkbox(v-model="$store.state.userprofile.is_superuser" disabled)
+            i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
+            i.el-icon-circle-close(v-else)
     .user-skills.user-bio-section
       .user-bio-section-body
         .progress-item

@@ -11,26 +11,24 @@
           el-button(
             v-if="$perms.is_superuser"
             @click="openSitesDlg(row)"
-            size="mini"
           ) C
           el-button(
-            icon='el-icon-lock' size='mini'
+            icon='el-icon-lock'
             @click="openPermsDialog(row)"
             v-if="$perms.is_superuser"
           )
           el-button(
-            icon="el-icon-edit" size="mini"
+            icon="el-icon-edit"
             @click="openEdit(row)"
             :disabled="!$perms.groupapp.change_group"
           )
           el-button(
-            type="danger" icon="el-icon-delete" size="mini"
+            type="danger" icon="el-icon-delete"
             @click="delGroup(row)"
             :disabled="!$perms.groupapp.delete_group"
           )
 
       el-button(
-        size='mini'
         icon='el-icon-plus'
         @click='openNew'
         :disabled="!$perms.groupapp.add_group"
