@@ -23,7 +23,6 @@
       el-input(v-model="frmMod.comment")
     el-form-item(
       label="Тип оборудования"
-      prop='dev_type'
     )
       el-select(v-model="frmMod.dev_type")
         el-option(
@@ -34,12 +33,10 @@
         )
     el-form-item(
       label="SNMP Community"
-      prop="man_passw"
     )
       el-input(v-model="frmMod.man_passw")
     el-form-item(
       label="Группа"
-      prop='group'
     )
       el-select(v-model="frmMod.group")
         el-option(
@@ -50,14 +47,13 @@
         )
     el-form-item(
       label="Родит. устройство"
-      prop="parent_dev"
     )
       device-autocomplete-field(
         v-model="frmMod.parent_dev"
         :defaultName="$store.state.devicemodule.parent_dev_name"
       )
     el-form-item(
-      label="Введения в эксплуатацию"
+      label="Дата введения в эксплуатацию"
     )
       el-date-picker(
         v-model="frmMod.create_time"
@@ -71,7 +67,6 @@
       el-input(v-model="frmMod.place")
     el-form-item(
       label="Доп. инфо для snmp"
-      prop="snmp_extra"
     )
       el-input(v-model="frmMod.snmp_extra")
     el-form-item(

@@ -32,7 +32,6 @@ export interface INetworkIpPool {
   ip_end: string
   gateway: string
   is_dynamic: boolean
-  pool_tag?: string
   sites?: number[]
   vlan_if?: number
 }

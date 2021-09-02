@@ -34,12 +34,10 @@
         )
     el-form-item(
       label="SNMP Community"
-      prop="man_passw"
     )
       el-input(v-model="frmMod.man_passw")
     el-form-item(
       label="Группа"
-      prop='group'
     )
       el-select(v-model="frmMod.group")
         el-option(
@@ -50,14 +48,13 @@
         )
     el-form-item(
       label="Родит. устройство"
-      prop="parent_dev"
     )
       device-autocomplete-field(
         v-model="frmMod.parent_dev"
         :defaultName="initialParentDevName"
       )
     el-form-item(
-      label="Дата введения в эксплуатация"
+      label="Дата введения в эксплуатацию"
     )
       el-date-picker(
         v-model="frmMod.create_time"
@@ -71,12 +68,9 @@
       el-input(v-model="frmMod.place")
     el-form-item(
       label="Доп. инфо для snmp"
-      prop="snmp_extra"
     )
       el-input(v-model="frmMod.snmp_extra")
-    el-form-item(
-      prop="is_noticeable"
-    )
+    el-form-item
       el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
     el-form-item
@@ -90,11 +84,12 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
+import { ipAddrValidator, macAddrValidator, positiveNumberValueAvailable } from '@/utils/validate'
 import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
 import { IGroup } from '@/api/groups/types'
 import { getGroups } from '@/api/groups/req'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
+import dateCounter from '@/utils/date-counter'
 
 @Component({
   name: 'NewDevForm',
@@ -127,6 +122,9 @@ export default class extends Vue {
     ],
     comment: [
       { required: true, message: 'Укажи устройству какое-то имя', trigger: 'blur' }
+    ],
+    dev_type: [
+      { validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно указать тип устройства' }
     ]
   }
 
@@ -166,11 +164,20 @@ export default class extends Vue {
     })
   }
 
+  private localTimer?: NodeJS.Timeout
+
   created() {
     this.loadGroups()
     DeviceModule.getDeviceTypeNames().then(d => {
       this.deviceTypeNames = d
     })
+    this.localTimer = dateCounter(this.frmMod, 'create_time')
+  }
+
+  beforeDestroy() {
+    if (this.localTimer) {
+      clearInterval(this.localTimer)
+    }
   }
 
   private async loadGroups() {

@@ -2,7 +2,9 @@ import request from '@/utils/request'
 import {
   IGatewayList, IGatewayListAxiosResponsePromise,
   IGatewayAxoisResponsePromise,
-  IGateway
+  IGateway,
+  IGatewayClassChoiceTypeList,
+  IGatewayClassChoiceType
 } from './types'
 import { IDRFRequestListParameters } from '@/api/types'
 
@@ -22,6 +24,9 @@ export const changeGateway = (gwId: number, newData: object): IGatewayAxoisRespo
 
 export const delGateway = (gwId: number) =>
   request.delete(`${gwUrl}${gwId}/`)
+
+export const getGwClassChoices = (): IGatewayClassChoiceTypeList =>
+  request.get<IGatewayClassChoiceType[]>('/gateways/gateway_class_choices/')
 
 // export const fetchCustomersSrvnetCredentialsbgw = (gwId: number) =>
 //   request.get(`${gwUrl}fetch_customers_srvnet_credentials_by_gw/`, { params: {

@@ -41,5 +41,9 @@ export default class extends Vue {
   private onChangedDefaultName(name: string) {
     this.inpName = name
   }
+
+  mounted() {
+    this.onChangedDefaultName(this.defaultName)
+  }
 }
 </script>
