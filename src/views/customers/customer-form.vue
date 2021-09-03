@@ -7,16 +7,14 @@
     :model='frmMod'
     v-loading='isLoading'
   )
+    customer-form-fio(
+      v-model="frmMod.fio"
+    )
     el-form-item(
       label="Логин"
       prop='username'
     )
       el-input(v-model="frmMod.username")
-    el-form-item(
-      label="ФИО"
-      prop='fio'
-    )
-      el-input(v-model="frmMod.fio")
     el-form-item(
       label="Телефон"
       prop='telephone'
@@ -24,7 +22,6 @@
       tels-input(v-model="frmMod.telephone")
     el-form-item(
       label="Улица"
-      prop='street'
       v-loading="isStreetLoading"
     )
       el-select(v-model="frmMod.street")
@@ -36,12 +33,10 @@
         )
     el-form-item(
       label="Дом"
-      prop='house'
     )
       el-input(v-model="frmMod.house" :maxlength='12')
     el-form-item(
       label="День рождения"
-      prop='birth_day'
     )
       el-date-picker(
         v-model="frmMod.birth_day"
@@ -56,7 +51,6 @@
       el-checkbox(v-model="frmMod.is_dynamic_ip") - Динамические настройки по dhcp: {{ frmMod.is_dynamic_ip ? 'Да' : 'Нет' }}
     el-form-item(
       label="Группа"
-      prop='group'
       v-loading="isGroupLoading"
     )
       el-select(v-model="frmMod.group" :disabled="groups.length == 0")
@@ -68,12 +62,10 @@
         )
     el-form-item(
       label="Шлюз доступа"
-      prop='gateway'
     )
       gws-selectfield(v-model="frmMod.gateway")
     el-form-item(
       label="Памятка"
-      prop='description'
     )
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize)
     el-form-item
@@ -161,6 +153,7 @@ import CustomerPassword from './customer-password.vue'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
 import TelsInput from './tels/tels-input.vue'
+import CustomerFormFio from './customer-form-fio.vue'
 
 @Component({
   name: 'customer-form',
@@ -169,7 +162,8 @@ import TelsInput from './tels/tels-input.vue'
     GwsSelectfield,
     Passport,
     CustomerPassword,
-    TelsInput
+    TelsInput,
+    CustomerFormFio,
   }
 })
 export default class extends mixins(FormMixin) {
