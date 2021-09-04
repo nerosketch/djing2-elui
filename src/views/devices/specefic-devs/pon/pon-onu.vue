@@ -41,10 +41,10 @@
       )
         template(v-slot:header) Состояние ONU
           el-link(style="float: right" icon='el-icon-refresh' @click="refreshDev")
-        p(type='flex' v-if="macsNotEqual")
+        p(type='flex' v-if="$store.getters.isOnuRegistered && macsNotEqual")
           b Внимание!
           span  Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить".
-            |  Если И она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
+            |  Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
             |  Так же можно проверить место на "глазе" olt, может он заполнен.
         el-row(type='flex' v-else-if="$store.getters.isOnuRegistered")
           el-col(style='width: 128px;')
@@ -61,11 +61,11 @@
               | {{ inf[1] }}
         el-row(v-else)
           el-col Нет информации об ONU. (Поле "Доп. инфо для snmp" в форме редактирования устройства). Возможно, onu не зарегистрирована.
-        fix-onu-btn(v-if="macsNotEqual")
+        fix-onu-btn(v-if="$store.getters.isOnuRegistered && macsNotEqual")
 
     el-col(:lg="12" :sm='24')
       onu-vlan-form(
-        :disabled="macsNotEqual"
+        :disabled="$store.getters.isOnuRegistered && macsNotEqual"
         :style="{'margin-top': '5px'}"
       )
 
@@ -169,7 +169,7 @@ export default class extends Vue {
     this.$emit('reqrefresh')
   }
 
-  get macsNotEqual(): boolean {
+  get macsNotEqual() {
     return this.device && this.onuDetails ? this.device.mac_addr !== this.macFromOlt : false
   }
 }
