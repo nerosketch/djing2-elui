@@ -28,7 +28,6 @@
             v-bind="col"
           )
             template(v-slot:default="{row}")
-              span col.colWidth: {{ col.colWidth }}
               slot(
                 :name="col.prop"
                 :row="row"
