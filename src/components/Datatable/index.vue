@@ -28,6 +28,7 @@
             v-bind="col"
           )
             template(v-slot:default="{row}")
+              span col.colWidth: {{ col.colWidth }}
               slot(
                 :name="col.prop"
                 :row="row"
@@ -229,7 +230,7 @@ export default class <T> extends Vue {
   created() {
     this.localCols = this.columns.map(col => Object.assign(col, {
       visible: loadFieldVisibility(this.widthStorageNamePrefix, col),
-      colWidth: Number(localStorage.getItem(`${this.widthStorageNamePrefix}_${col.prop}`) || col['min-width'] || 90)
+      colWidth: Number(localStorage.getItem(`${this.widthStorageNamePrefix}_${col.prop}`))
     }))
 
     this.GetTableData()
