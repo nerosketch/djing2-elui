@@ -26,52 +26,21 @@ div Порт №{{ portNum }}
     )
       template(v-slot:default="{row}")
         i(:class="{'el-icon-circle-check': row.is_management, 'el-icon-circle-close': !row.is_management}")
-
-  el-divider
-
-  port-vlan-config(
-    :portVlanConf.sync="portVlanConf"
-  )
-
-  el-button(
-    type="primary"
-    icon="el-icon-download"
-    @click="onApplySwitchVlanConfig"
-    :loading="applyLoading"
-    :disabled="!$perms.devices.can_apply_onu_config"
-  ) Применить
-
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { PortModule } from '@/store/modules/devices/port'
-import {
-  IDevVlan,
-  IDeviceSwitchPortConfigChoicesEnum,
-  IDeviceSwitchPortConfigTemplate
-} from '@/api/devices/types'
-import { vlanConfigApply } from '@/api/devices/req'
-import PortVlanConfig from './port-vlan-config.vue'
+import { IDevVlan } from '@/api/devices/types'
 
 @Component({
-  name: 'VidsView',
-  components: {
-    PortVlanConfig
-  }
+  name: 'VidsView'
 })
 export default class extends Vue {
   @Prop({ default: 0 }) portId!: number
   @Prop({ default: 0 }) portNum!: number
   private loading = false
-  private applyLoading = false
   private deviceVlans: IDevVlan[] = []
-
-  private portVlanConf: IDeviceSwitchPortConfigTemplate = {
-    port: this.portNum,
-    vids: [{ vid: 1, native: true }],
-    config_mode: IDeviceSwitchPortConfigChoicesEnum.TRUNK
-  }
 
   @Watch('portId')
   private onChPoId() {
@@ -86,14 +55,7 @@ export default class extends Vue {
     if (this.portId > 0) {
       this.loading = true
       try {
-        const deviceVlans = await PortModule.ScanPortVlans(this.portId)
-
-        // generate initial vlan config
-        this.portVlanConf.vids = deviceVlans.map(v => ({
-          vid: v.vid,
-          native: v.native
-        }))
-        this.deviceVlans = deviceVlans
+        this.deviceVlans = await PortModule.ScanPortVlans(this.portId)
       } catch (err) {
         this.$message.error(err)
       } finally {
@@ -101,17 +63,6 @@ export default class extends Vue {
       }
     } else {
       this.$message.error('portId parameter is required')
-    }
-  }
-
-  private async onApplySwitchVlanConfig() {
-    this.applyLoading = true
-    try {
-      await vlanConfigApply(this.portId, this.portVlanConf)
-      this.$message.success('Vlan config успешно применён')
-      this.$emit('applydone')
-    } finally {
-      this.applyLoading = false
     }
   }
 }
