@@ -34,7 +34,8 @@ export interface IPayReport {
 export type IPayReportList = IDRFAxiosResponsePromise<IPayReport[]>
 
 export interface IPayReportParams {
-  from_date: string,
+  from_time: string,
+  to_time: string,
   pay_gw: number,
   group_by: number,
 }
