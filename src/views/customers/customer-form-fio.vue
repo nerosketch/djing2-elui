@@ -1,10 +1,10 @@
 <template lang="pug">
   el-collapse(v-model="collapse")
-    el-collapse-item(name="fioels")
+    el-collapse-item
       template(slot="title")
         el-form-item(
           label="ФИО"
-          style="margin-bottom: 0px;"
+          style="margin-bottom: 0"
         )
           b {{ fioGetter }}
       el-form(
@@ -16,19 +16,15 @@
         el-form-item(
           label="Фамилия"
           prop="surname"
-          style="margin-bottom: 1px;"
         )
           el-input(v-model="frmData.surname")
         el-form-item(
           label="Имя"
           prop="firstName"
-          style="margin-bottom: 1px;"
         )
           el-input(v-model="frmData.firstName")
         el-form-item(
           label="Отчество"
-          prop="lastName"
-          style="margin-bottom: 1px;"
         )
           el-input(v-model="frmData.lastName")
 
@@ -61,10 +57,10 @@ export default class extends Vue {
       { required: true, message: 'Имя обязательно', trigger: 'blur' },
       { validator: nameValidator, trigger: 'change', message: errText }
     ],
-    lastName: [
+    /* lastName: [
       { required: true, message: 'Отчество обязательно', trigger: 'blur' },
       { validator: nameValidator, trigger: 'change', message: errText }
-    ],
+    ], */
     surname: [
       { required: true, message: 'Фамилия обязательна', trigger: 'blur' },
       { validator: nameValidator, trigger: 'change', message: errText }
