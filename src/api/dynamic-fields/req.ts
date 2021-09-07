@@ -6,11 +6,13 @@ import {
   IDynamicField,
   IDynamicFieldAxoisResponsePromise,
   IDynamicFieldList,
-  IDynamicFieldListAxiosResponsePromise
+  IDynamicFieldListAxiosResponsePromise,
+  IFieldChoiceType,
+  IFieldChoiceTypeListAxiosResponsePromise
 } from './types'
 
 // IDynamicField
-export const getFields = (params: IDRFRequestListParameters): IDynamicFieldListAxiosResponsePromise =>
+export const getFields = (params?: IDRFRequestListParameters): IDynamicFieldListAxiosResponsePromise =>
   request.get<IDynamicFieldList>('/dynamicfields/', { params })
 
 export const getField = (id: number): IDynamicFieldAxoisResponsePromise =>
@@ -24,3 +26,6 @@ export const delField = (id: number) =>
 
 export const patchField = (id: number, info: object): IDynamicFieldAxoisResponsePromise =>
   request.patch<IDynamicField>(`/dynamicfields/${id}/`, info)
+
+export const getFieldTypeChoices = (): IFieldChoiceTypeListAxiosResponsePromise =>
+  request.get<IFieldChoiceType[]>('/dynamicfields/get_type_choices/')
