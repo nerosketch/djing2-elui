@@ -89,7 +89,7 @@ export type IDevGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevGro
 
 export interface IScannedPort {
   num: number
-  snmp_number: number
+  snmp_num: number
   name: string
   status: boolean
   mac_addr: string
