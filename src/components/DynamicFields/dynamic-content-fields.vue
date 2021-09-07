@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-card
+  el-card(shadow="never")
     template(v-slot:header)
       .clearfix Дополнительные данные
     el-form
