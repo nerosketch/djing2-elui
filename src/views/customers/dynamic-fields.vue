@@ -1,5 +1,5 @@
 <template lang="pug">
-  dynamic-fields(
+  dynamic-content-fields(
     :contents="contents"
     @save="saveData"
     v-loading="loading"
@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import DynamicFields from '@/components/DynamicFields/dynamic-fields.vue'
+import DynamicContentFields from '@/components/DynamicFields/dynamic-content-fields.vue'
 import { IDynamicContentField } from '@/api/dynamic-fields/types'
 import { changeContentFields, getCombinedContentFields } from '@/api/customers/req'
 
@@ -19,7 +19,7 @@ interface IDynamicContentCustomerField extends IDynamicContentField {
 @Component({
   name: 'CustomerDynamicFields',
   components: {
-    DynamicFields
+    DynamicContentFields
   }
 })
 export default class extends Vue {

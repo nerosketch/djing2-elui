@@ -23,7 +23,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { IDynamicContentFieldList } from '@/api/dynamic-fields/types'
 
 @Component({
-  name: 'DynamicFields'
+  name: 'DynamicContentFields'
 })
 export default class extends Vue {
   @Prop({ required: true })
