@@ -1,5 +1,6 @@
 <template lang="pug">
   dynamic-content-fields(
+    v-show="contents.length > 0"
     :contents="contents"
     @save="saveData"
     v-loading="loading"

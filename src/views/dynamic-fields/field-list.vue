@@ -40,6 +40,7 @@ import { IDynamicField } from '@/api/dynamic-fields/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import FieldForm from './field-form.vue'
 import { DynamicFieldModule } from '@/store/modules/dynamicfields/dynamic-field'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 class DataTableComp extends DataTable<IDynamicField> {}
 
@@ -105,5 +106,19 @@ export default class extends Vue {
     await DynamicFieldModule.RESET_ALL_DYFIELD()
     this.fieldFormVisible = true
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/',
+        meta: {
+          hidden: true,
+          title: 'Формы'
+        }
+      }
+    ] as any[])
+  }
+  // End Breadcrumbs
 }
 </script>
