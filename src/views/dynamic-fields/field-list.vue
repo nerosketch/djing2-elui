@@ -17,6 +17,10 @@
           icon='el-icon-close'
           @click="delDynamicField(row)"
         )
+    el-button(
+      icon='el-icon-plus'
+      @click='openNew'
+    ) Добавить поля
   
   el-dialog(
     title="Поле"
@@ -95,6 +99,11 @@ export default class extends Vue {
     this.fieldFormVisible = false
     this.$message.success('Сохранено')
     this.$refs.fieldtable.GetTableData()
+  }
+
+  private async openNew() {
+    await DynamicFieldModule.RESET_ALL_DYFIELD()
+    this.fieldFormVisible = true
   }
 }
 </script>
