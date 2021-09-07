@@ -23,7 +23,6 @@ import {
   IDevVlanSimpleInfoAxiosResponsePromise, IDevVlanSimpleInfo,
   IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise,
   IDevTogglePortRequest,
-  IDeviceSwitchPortConfigTemplate
 } from './types'
 
 const baseDevUrl = '/devices/all/'

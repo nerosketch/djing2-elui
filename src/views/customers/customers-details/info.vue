@@ -23,6 +23,8 @@
       customer-comment-list(
         :customerId="$store.state.customer.pk"
       )
+    el-col.vert_space(:sm='24' :md='12')
+      customer-dynamic-fields
 
 </template>
 
@@ -34,6 +36,7 @@ import Network from './network.vue'
 import CustomerDocs from './docs.vue'
 import Markers from './markers.vue'
 import CustomerCommentList from '@/views/customers/comments.vue'
+import CustomerDynamicFields from '@/views/customers/dynamic-fields.vue'
 
 @Component({
   name: 'Info',
@@ -43,7 +46,8 @@ import CustomerCommentList from '@/views/customers/comments.vue'
     Network,
     CustomerDocs,
     Markers,
-    CustomerCommentList
+    CustomerCommentList,
+    CustomerDynamicFields,
   }
 })
 export default class extends Vue {}
