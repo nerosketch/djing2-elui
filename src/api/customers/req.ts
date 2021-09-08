@@ -104,7 +104,7 @@ export const filterDevicePort = (deviceId: number, portId: number): ICustomersOn
     params: {
       device_id: deviceId,
       port_id: portId,
-      fields: 'pk,telephone,group,dev_port,full_name'
+      fields: 'id,telephone,group,dev_port,full_name'
     }
   })
 

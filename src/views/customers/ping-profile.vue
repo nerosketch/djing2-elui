@@ -27,7 +27,7 @@ export default class extends Vue {
       return
     }
     this.pingLoading = true
-    let { data } = await pingAllIps(this.customer.pk)
+    let { data } = await pingAllIps(this.customer.id)
     if (data.status) {
       this.$message.success(data.text)
       this.btnType = 'success'
@@ -44,7 +44,7 @@ export default class extends Vue {
   }
 
   get isCustomerNotHere(): boolean {
-    return this.customer === null || this.customer.pk === 0
+    return this.customer === null || this.customer.id === 0
   }
 }
 </script>

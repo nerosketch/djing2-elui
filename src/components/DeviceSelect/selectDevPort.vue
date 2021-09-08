@@ -7,9 +7,9 @@
     template(v-if='devPorts && devPorts.length > 0')
       el-option(
         v-for="dp in devPorts"
-        :key="dp.pk"
+        :key="dp.id"
         :label="`${dp.num}: ${dp.descr}`"
-        :value="dp.pk"
+        :value="dp.id"
       )
     el-option(
       v-else
@@ -62,9 +62,9 @@ export default class extends Vue {
         const { data } = await getPorts(devId)
         this.devPorts = data
 
-        const fnd = this.devPorts.find(dp => dp.pk === this.selectedPort)
+        const fnd = this.devPorts.find(dp => dp.id === this.selectedPort)
         if (fnd) {
-          this.selectedPort = fnd.pk
+          this.selectedPort = fnd.id
         } else {
           this.selectedPort = 0
         }

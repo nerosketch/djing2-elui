@@ -44,7 +44,7 @@ export default class extends Vue {
   ]
 
   private getAllLog(params?: IDRFRequestListParameters) {
-    return getProfileLogs(params, this.$store.state.userprofile.pk)
+    return getProfileLogs(params, this.$store.state.userprofile.id)
   }
 }
 </script>

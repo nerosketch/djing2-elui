@@ -14,7 +14,7 @@ export enum IServiceTypeEnum {
 
 // IService
 export interface IService {
-  pk: number
+  id: number
   title: string
   descr: string
   speed_in: number
@@ -38,7 +38,7 @@ export interface IDRFRequestListParametersService extends IDRFRequestListParamet
 
 // IPeriodicPay
 export interface IPeriodicPay {
-  pk: number
+  id: number
   name: string
   when_add?: string
   amount: number
@@ -50,7 +50,7 @@ export type IPeriodicPayListAxiosResponsePromise = IDRFAxiosResponsePromise<IPer
 
 // IOneShotPay
 export interface IOneShotPay {
-  pk: number
+  id: number
   name: string
   cost: number
   sites?: number[]

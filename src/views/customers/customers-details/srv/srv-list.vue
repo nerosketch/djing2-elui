@@ -115,13 +115,13 @@ export default class extends Vue {
         cancelButtonText: 'Нет, не надо',
         type: 'warning'
       }).then(() => {
-        this.selectedServiceId = s.pk
+        this.selectedServiceId = s.id
         this.buyDialog = true
       }).catch(() => {
         this.$message.info('Отмена покупки услуги')
       })
     } else {
-      this.selectedServiceId = s.pk
+      this.selectedServiceId = s.id
       this.buyDialog = true
     }
   }

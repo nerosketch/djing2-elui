@@ -27,9 +27,9 @@
       el-select(v-model="frmMod.street")
         el-option(
           v-for="cs in customerStreets"
-          :key="cs.pk"
+          :key="cs.id"
           :label="cs.name"
-          :value="cs.pk"
+          :value="cs.id"
         )
     el-form-item(
       label="Дом"
@@ -56,9 +56,9 @@
       el-select(v-model="frmMod.group" :disabled="groups.length == 0")
         el-option(
           v-for="grp in groups"
-          :key="grp.pk"
+          :key="grp.id"
           :label="grp.title"
-          :value="grp.pk"
+          :value="grp.id"
         )
     el-form-item(
       label="Шлюз доступа"
@@ -123,7 +123,7 @@
       :close-on-click-modal="false"
     )
       customer-password(
-        :customerId="$store.state.customer.pk"
+        :customerId="$store.state.customer.id"
         :initialPassw="$store.state.customer.raw_password"
         v-on:done="openPasswordDlg=false"
       )
@@ -284,11 +284,11 @@ export default class extends mixins(FormMixin) {
     try {
       const { data } = await TaskModule.GetNewTaskInitial({
         groupId: this.$store.state.customer.group,
-        customerId: this.$store.state.customer.pk
+        customerId: this.$store.state.customer.id
       })
       if (data.status > 0) {
         // Task with this customer does not exists, ok
-        TaskModule.SET_CUSTOMER(CustomerModule.pk)
+        TaskModule.SET_CUSTOMER(CustomerModule.id)
         TaskModule.SET_CUSTOMER_FULLNAME(CustomerModule.full_name)
         this.taskFormDialog = true
       } else {

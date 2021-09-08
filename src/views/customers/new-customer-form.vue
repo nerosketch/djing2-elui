@@ -26,9 +26,9 @@
       el-select(v-model="frmMod.group")
         el-option(
           v-for="grp in groups"
-          :key="grp.pk"
+          :key="grp.id"
           :label="grp.title"
-          :value="grp.pk"
+          :value="grp.id"
         )
     el-form-item(
       label="Шлюз доступа"
@@ -47,9 +47,9 @@
       el-select(v-model="frmMod.street")
         el-option(
           v-for="cs in customerStreets"
-          :key="cs.pk"
+          :key="cs.id"
           :label="cs.name"
-          :value="cs.pk"
+          :value="cs.id"
         )
     el-form-item(
       label="Дом"
@@ -129,7 +129,7 @@ export default class extends Vue {
     ]
   }
 
-  @Watch('$store.state.customer.pk')
+  @Watch('$store.state.customer.id')
   private onChangedId() {
     this.frmMod = {
       username: CustomerModule.username,

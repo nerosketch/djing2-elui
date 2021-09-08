@@ -8,7 +8,7 @@
       ref='table'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{name: 'devicesList', params:{ groupId: row.pk }}") {{ row.title }}
+        router-link(:to="{name: 'devicesList', params:{ groupId: row.id }}") {{ row.title }}
 
 </template>
 
@@ -48,7 +48,7 @@ export default class extends Vue {
 
   private loadDevGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,title,device_count'
+      params['fields'] = 'id,title,device_count'
     }
     return getDevGroups(params)
   }

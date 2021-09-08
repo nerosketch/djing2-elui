@@ -76,7 +76,7 @@ export default class extends Vue {
   }
 
   get isNew() {
-    return PeriodicPayModule.pk === 0
+    return PeriodicPayModule.id === 0
   }
 }
 </script>

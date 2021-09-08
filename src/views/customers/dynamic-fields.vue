@@ -50,13 +50,13 @@ export default class extends Vue {
     }
   }
 
-  @Watch('$store.state.customer.pk')
+  @Watch('$store.state.customer.id')
   private onChCustomer(customerId: number) {
     this.loadContentFields(customerId)
   }
 
   created() {
-    const customerId = this.$store.state.customer.pk
+    const customerId = this.$store.state.customer.id
     if (customerId) {
       this.loadContentFields(customerId)
     }

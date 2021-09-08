@@ -1,7 +1,7 @@
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '@/api/types'
 
 export interface IGroup {
-  pk: number
+  id: number
   title: string
   sites?: number[]
 }

@@ -75,7 +75,7 @@ export default class extends Vue {
   }
 
   get isNew(): boolean {
-    return OneShotPayModule.pk === 0
+    return OneShotPayModule.id === 0
   }
 }
 </script>

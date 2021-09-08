@@ -123,7 +123,7 @@ export default class extends mixins(FormMixin) {
     calc_type: ServiceModule.calc_type
   }
 
-  @Watch('$store.state.service.pk')
+  @Watch('$store.state.service.id')
   private async onSrvCh() {
     this.frmMod = {
       title: ServiceModule.title,
@@ -144,7 +144,7 @@ export default class extends mixins(FormMixin) {
         try {
           this.isLoading = true
           let newDat
-          if (ServiceModule.pk === 0) {
+          if (ServiceModule.id === 0) {
             newDat = await ServiceModule.AddService(this.frmMod)
             this.$message.success('Услуга создана')
           } else {

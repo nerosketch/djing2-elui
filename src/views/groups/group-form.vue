@@ -38,7 +38,7 @@ export default class extends Vue {
     ]
   }
 
-  @Watch('$store.state.group.pk')
+  @Watch('$store.state.group.id')
   private onChangeGroup() {
     this.frmMod.title = GroupModule.title
   }
@@ -47,7 +47,7 @@ export default class extends Vue {
     title: ''
   }
   get isNew() {
-    return GroupModule.pk === 0
+    return GroupModule.id === 0
   }
 
   created() {

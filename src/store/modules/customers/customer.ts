@@ -20,7 +20,7 @@ import store from '@/store'
 
 @Module({ dynamic: true, store, name: 'customer' })
 class Customer extends VuexModule implements ICustomer {
-  pk = 0
+  id = 0
   username = ''
   telephone = ''
   fio = ''
@@ -55,12 +55,12 @@ class Customer extends VuexModule implements ICustomer {
 
   @Mutation
   public SET_ID_CUSTOMER(id: number) {
-    this.pk = id
+    this.id = id
   }
 
   @Mutation
   public SET_ALL_CUSTOMER(data: ICustomer) {
-    this.pk = data.pk
+    this.id = data.id
     this.username = data.username
     this.telephone = data.telephone
     this.fio = data.fio
@@ -97,7 +97,7 @@ class Customer extends VuexModule implements ICustomer {
 
   @Mutation
   public RESET_ALL_CUSTOMER() {
-    this.pk = 0
+    this.id = 0
     this.username = ''
     this.telephone = ''
     this.fio = ''
@@ -151,7 +151,7 @@ class Customer extends VuexModule implements ICustomer {
 
   @Action
   public UpdateCustomer() {
-    return this.GetCustomer(this.pk)
+    return this.GetCustomer(this.id)
   }
 
   @Action
@@ -163,7 +163,7 @@ class Customer extends VuexModule implements ICustomer {
 
   @Action
   public async PatchCustomer(newData: object) {
-    const { data } = await changeCustomer(this.pk, newData)
+    const { data } = await changeCustomer(this.id, newData)
     this.SET_ALL_CUSTOMER(data)
     return data
   }
@@ -173,40 +173,40 @@ class Customer extends VuexModule implements ICustomer {
     if (id) {
       await delCustomer(id)
     } else {
-      await delCustomer(this.pk)
+      await delCustomer(this.id)
     }
     this.RESET_ALL_CUSTOMER()
   }
 
   @Action
   public PickService(buyPayload: IBuyPayloadType) {
-    return pickService(this.pk, buyPayload)
+    return pickService(this.id, buyPayload)
   }
 
   @Action
   public MakeShot(shotId: number) {
-    return makeShot(this.pk, shotId)
+    return makeShot(this.id, shotId)
   }
 
   @Action
   public StopService() {
-    return stopService(this.pk)
+    return stopService(this.id)
   }
 
   @Action
   public AddBalance(qry: IBalanceAmountRequest) {
-    return addBalance(this.pk, qry)
+    return addBalance(this.id, qry)
   }
 
   @Action
   public async GetCurrentServiceDetails() {
-    const { data } = await getCurrentService(this.pk)
+    const { data } = await getCurrentService(this.id)
     return data
   }
 
   @Action
   public async ClearDevice() {
-    const r = await changeCustomer(this.pk, {
+    const r = await changeCustomer(this.id, {
       device: null,
       dev_port: null
     })
@@ -216,20 +216,20 @@ class Customer extends VuexModule implements ICustomer {
 
   @Action
   public SetServiceGroupAccessory(services: number[]) {
-    return setServiceGroupAccessory(this.pk, this.group, services)
+    return setServiceGroupAccessory(this.id, this.group, services)
   }
 
   @Action
   public MakePeriodicPay(req: IPeriodicPayForIdRequest) {
-    return makePeriodicPay4Customer(this.pk, req)
+    return makePeriodicPay4Customer(this.id, req)
   }
 
   @Action
   public SetMarkers(markerNames?: string[]) {
     if (markerNames) {
-      return setCustomerMarkers(this.pk, markerNames)
+      return setCustomerMarkers(this.id, markerNames)
     } else {
-      return setCustomerMarkers(this.pk, this.marker_icons)
+      return setCustomerMarkers(this.id, this.marker_icons)
     }
   }
 }

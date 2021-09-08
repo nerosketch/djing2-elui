@@ -35,7 +35,7 @@
           switch-port-toggle-button(
             v-if="row.isdb && row.snmp_num > 0"
             :port="row"
-            :portId="row.pk"
+            :portId="row.id"
           )
           el-button(v-else icon='el-icon-close' circle disabled)
       el-table-column(
@@ -145,7 +145,7 @@ import VidsView from './switch/vlan/vids-view.vue'
 import PortMacList from './switch/port-mac-list.vue'
 
 interface IFinPort {
-  pk?: number
+  id?: number
   num: number
   descr?: string
   user_count?: number
@@ -203,7 +203,7 @@ export default class extends Vue {
       try {
         const { data } = await getPorts(this.device.id)
         this.allPorts = data.map(p => ({
-          pk: p.pk,
+          id: p.id,
           num: p.num,
           descr: p.descr,
           user_count: p.user_count,
@@ -274,16 +274,16 @@ export default class extends Vue {
   }
 
   private openPortView(port: IPort) {
-    this.currPortId = port.pk
+    this.currPortId = port.id
     this.portViewDialog = true
   }
 
   private delPort(port: IPort) {
     this.$confirm(`Удалить порт "${port.descr}"?`).then(async() => {
-      await PortModule.DelPort(port.pk)
-      const ind = this.allPorts.findIndex(el => el.pk === port.pk)
+      await PortModule.DelPort(port.id)
+      const ind = this.allPorts.findIndex(el => el.id === port.id)
       if (ind > -1) {
-        delete this.allPorts[ind].pk
+        delete this.allPorts[ind].id
         delete this.allPorts[ind].descr
         delete this.allPorts[ind].user_count
         this.allPorts[ind].isdb = false
@@ -293,7 +293,7 @@ export default class extends Vue {
   }
 
   private openPortEdit(port: IPort) {
-    this.currPortId = port.pk
+    this.currPortId = port.id
     this.portFormDialog = true
   }
 
@@ -313,7 +313,7 @@ export default class extends Vue {
     this.portFormDialog = false
     const ind = this.allPorts.findIndex(el => el.num === port.num)
     if (ind > -1) {
-      this.allPorts[ind].pk = port.pk
+      this.allPorts[ind].id = port.id
       this.allPorts[ind].descr = port.descr
       this.allPorts[ind].isdb = true
     }
@@ -335,13 +335,13 @@ export default class extends Vue {
   }
 
   private openVidsDialog(port: IPort) {
-    this.currPortId = port.pk
+    this.currPortId = port.id
     this.initialNum = port.num
     this.vidsDialog = true
   }
 
   private openMacsDialog(port: IPort) {
-    this.currPortId = port.pk
+    this.currPortId = port.id
     this.macsDialog = true
   }
 }

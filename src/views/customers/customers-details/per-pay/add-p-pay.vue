@@ -8,9 +8,9 @@
       el-select(v-model="pserviceId")
         el-option(
           v-for="srv in pservices"
-          :key="srv.pk"
+          :key="srv.id"
           :label="srv.name"
-          :value="srv.pk"
+          :value="srv.id"
         )
     el-form-item(
       label="Дата следующего платежа"

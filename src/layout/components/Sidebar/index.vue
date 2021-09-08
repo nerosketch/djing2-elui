@@ -67,7 +67,7 @@ export default class extends Vue {
       if (hightPriorityTaskEventData.author) {
         profiles.push(hightPriorityTaskEventData.author)
       }
-      if (profiles.includes(this.$store.state.currentuserprofile.pk)) {
+      if (profiles.includes(this.$store.state.currentuserprofile.id)) {
         this.$eventHub.$emit('dilim')
         this.$message.info({
           message: msg.text || 'Изменения в высокоприоритетной задаче, в которой вы учавствуете',

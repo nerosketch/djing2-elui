@@ -45,7 +45,7 @@ export default class extends Vue {
   }
 
   get customerId() {
-    return CustomerModule.pk
+    return CustomerModule.id
   }
 
   private uploadReq(req: HttpRequestOptions) {

@@ -41,9 +41,9 @@
       el-select(v-model="frmMod.group")
         el-option(
           v-for="g in groups"
-          :key="g.pk"
+          :key="g.id"
           :label="g.title"
-          :value="g.pk"
+          :value="g.id"
         )
     el-form-item(
       label="Родит. устройство"
@@ -182,7 +182,7 @@ export default class extends mixins(FormMixin) {
       const { data } = await getGroups({
         page: 1,
         page_size: 0,
-        fields: 'pk,title'
+        fields: 'id,title'
       }) as any
       this.groups = data
     } catch (err) {

@@ -2,7 +2,7 @@
   div
     el-checkbox(
       v-for="grp in groups"
-      :key="grp.pk"
+      :key="grp.id"
       :label="grp.title"
       v-model="grp.state"
     )
@@ -39,7 +39,7 @@ export default class extends Vue {
     const { data } = await getGroups({
       page: 1,
       page_size: 0,
-      fields: 'pk,title'
+      fields: 'id,title'
     }) as any
     if (data.length < 1) {
       this.loading = false
@@ -49,7 +49,7 @@ export default class extends Vue {
     try {
       const checkedGroups = await getResponsibilityGroups(this.profileUname)
       this.groups = data.map((grp: IGroup) => Object.assign({
-        state: checkedGroups.data.includes(grp.pk)
+        state: checkedGroups.data.includes(grp.id)
       }, grp))
     } catch (err) {
       this.$message.error(err)
@@ -65,7 +65,7 @@ export default class extends Vue {
   async saveResp() {
     this.loading = true
     const filtered = this.groups.filter(v => v.state)
-    const res = filtered.map(v => v.pk)
+    const res = filtered.map(v => v.id)
     await setResponsibilityGroups(this.profileUname, res)
     this.$message.success('Ответственность за группы сохранена')
     this.loading = false

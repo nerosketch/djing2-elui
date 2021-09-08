@@ -13,7 +13,7 @@ export default class extends Vue {
       const { data } = await getActiveProfiles({
         page: 1,
         page_size: 0,
-        fields: 'pk,full_name,username'
+        fields: 'id,full_name,username'
       })
       this.potentialRecipients = data
     } catch (err) {

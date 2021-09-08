@@ -66,7 +66,7 @@ export enum IDevPortState {
   DOWN = 'down'
 }
 export interface IPort {
-  pk: number
+  id: number
   device: number
   num: number
   descr: string
@@ -80,7 +80,7 @@ export interface IDevTogglePortRequest {
 }
 
 export interface IDevGroup {
-  pk: number
+  id: number
   title: string
   device_count: number
 }

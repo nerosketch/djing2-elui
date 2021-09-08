@@ -48,7 +48,7 @@ export default class extends Vue {
   private async onSubmit() {
     this.loading = true
     for (const st of this.streets) {
-      CustomerStreetModule.SET_PK(st.pk)
+      CustomerStreetModule.SET_PK(st.id)
       await CustomerStreetModule.PatchStreet(st)
     }
     this.loading = false
@@ -59,7 +59,7 @@ export default class extends Vue {
   private delStreet(street: ICustomerStreet) {
     this.$confirm(`Удалить улицу "${street.name}?"`).then(async() => {
       this.loading = true
-      await CustomerStreetModule.DelStreet(street.pk)
+      await CustomerStreetModule.DelStreet(street.id)
       this.loading = false
       this.$message.success(`Улица "${street.name} удалена`)
       this.$emit('done')

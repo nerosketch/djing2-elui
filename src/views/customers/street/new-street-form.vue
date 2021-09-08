@@ -18,9 +18,9 @@
       el-select(v-model="frmMod.group")
         el-option(
           v-for="grp in groups"
-          :key="grp.pk"
+          :key="grp.id"
           :label="grp.title"
-          :value="grp.pk"
+          :value="grp.id"
         )
     el-form-item
       el-button(

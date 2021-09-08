@@ -29,7 +29,7 @@ div
     :close-on-click-modal="false"
   )
     tel-form(
-      :customer="$store.state.customer.pk"
+      :customer="$store.state.customer.id"
       v-on:done="telsFormDone"
     )
 </template>

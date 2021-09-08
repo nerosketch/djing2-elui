@@ -2,7 +2,7 @@
 import { IDRFListResponse, IDRFAxiosResponsePromise } from '@/api/types'
 
 export interface IUserProfile {
-  pk: number
+  id: number
   username: string
   fio: string
   birth_day: string

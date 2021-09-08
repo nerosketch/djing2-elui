@@ -21,9 +21,9 @@
       el-select(v-model="frmMod.recipients" multiple)
         el-option(
           v-for="rec in potentialRecipients"
-          :key="rec.pk"
+          :key="rec.id"
           :label="rec.full_name || rec.username"
-          :value="rec.pk"
+          :value="rec.id"
         )
     el-form-item(
       label="Характер поломки"

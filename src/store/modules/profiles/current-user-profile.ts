@@ -12,7 +12,7 @@ import { DEFAULT_USER_AVA, IUserProfile } from '@/api/profiles/types'
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
 class CurrentUserProfile extends VuexModule implements IUserProfile {
-  public pk = 0
+  public id = 0
   public token = getToken() || ''
   public username = ''
   public fio = ''
@@ -36,7 +36,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
 
   @Mutation
   public SET_ALL_CURRENT_PROFILE(data: IUserProfile) {
-    this.pk = data.pk
+    this.id = data.id
     this.username = data.username
     this.fio = data.fio
     this.birth_day = data.birth_day
@@ -54,7 +54,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
 
   @Mutation
   public RESET_ALL_CURRENT_PROFILE() {
-    this.pk = 0
+    this.id = 0
     this.token = ''
     this.username = ''
     this.fio = ''

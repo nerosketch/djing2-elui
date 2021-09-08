@@ -10,7 +10,7 @@ import { AxiosPromise } from 'axios'
 
 // ICustomer
 export interface ICustomer {
-  pk: number
+  id: number
   username: string
   telephone: string
   fio: string
@@ -48,7 +48,7 @@ export type ICustomerAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomer>
 export type ICustomerListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerList>
 
 export interface ICustomerOnPort {
-  pk: number
+  id: number
   telephone: string
   group: number
   dev_port: number
@@ -70,7 +70,7 @@ export type ICustomerGroupAxoisResponsePromise = IDRFAxiosResponsePromise<ICusto
 export type ICustomerGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerGroupList>
 
 export interface IServiceUser {
-  pk: number
+  id: number
   group_id: number
   username: string
   fio: string
@@ -95,7 +95,7 @@ export interface ICustomerFrm {
 
 // ICustomerRawPassword
 export interface ICustomerRawPassword {
-  pk: number
+  id: number
   passw_text: number
 }
 
@@ -124,7 +124,7 @@ export type ICustomerLogListAxiosResponsePromise = IDRFAxiosResponsePromise<ICus
 
 // ICustomerStreet
 export interface ICustomerStreet {
-  pk: number
+  id: number
   name: string
   group: number
 }
@@ -134,7 +134,7 @@ export type ICustomerStreetListAxiosResponsePromise = IDRFAxiosResponsePromise<I
 
 // ICustomerService
 export interface ICustomerService {
-  pk: number
+  id: number
   service: IService
   start_time: string
   deadline: string

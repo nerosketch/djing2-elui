@@ -66,9 +66,9 @@
         template(v-if="groupsListLoaded")
           el-option(
             v-for="g in groupsList"
-            :key="g.pk"
+            :key="g.id"
             :label="g.title"
-            :value="g.pk"
+            :value="g.id"
           )
 
     el-button(

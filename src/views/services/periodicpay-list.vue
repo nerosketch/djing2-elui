@@ -105,18 +105,18 @@ export default class extends Vue {
 
   private async delPerPay(pay: IPeriodicPay) {
     if (confirm(`Действительно удалить квитанцию "${pay.name}"?`)) {
-      await PeriodicPayModule.DelPeriodicPay(pay.pk)
+      await PeriodicPayModule.DelPeriodicPay(pay.id)
       this.$refs.table.GetTableData()
     }
   }
 
   get isNew() {
-    return PeriodicPayModule.pk === 0
+    return PeriodicPayModule.id === 0
   }
 
   private loadPeriodics(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,name,when_add,amount,sites'
+      params['fields'] = 'id,name,when_add,amount,sites'
     }
     return getPeriodicPays(params)
   }

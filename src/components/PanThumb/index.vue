@@ -47,7 +47,7 @@ export default class extends Vue {
   }
 
   private isIam() {
-    return this.$store.state.userprofile.pk === CurrentUserProfileModule.pk
+    return this.$store.state.userprofile.id === CurrentUserProfileModule.id
   }
 }
 </script>

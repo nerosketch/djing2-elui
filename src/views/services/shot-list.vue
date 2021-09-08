@@ -99,14 +99,14 @@ export default class extends Vue {
 
   private async delShot(shot: IOneShotPay) {
     if (confirm(`Действительно удалить платёж "${shot.name}"?`)) {
-      await OneShotPayModule.DelOneShotPay(shot.pk)
+      await OneShotPayModule.DelOneShotPay(shot.id)
       this.$refs.table.GetTableData()
     }
   }
 
   private loadShots(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,name,cost,sites'
+      params['fields'] = 'id,name,cost,sites'
     }
     return getOneShotPays(params)
   }
@@ -117,7 +117,7 @@ export default class extends Vue {
   }
 
   get isNew(): boolean {
-    return OneShotPayModule.pk === 0
+    return OneShotPayModule.id === 0
   }
 
   private serviceSitesSave(selectedSiteIds: number[]) {

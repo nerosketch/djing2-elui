@@ -13,16 +13,16 @@
           :selectable="$perms.is_superuser"
           @selection-change="handleSelectionChange"
         )
-          template(v-slot:pk="{row}")
+          template(v-slot:id="{row}")
             el-button(
               v-if="$perms.is_superuser"
               icon='el-icon-lock'
               @click="openPermsDialog(row)"
             )
-            span(v-else) {{ row.pk }}
+            span(v-else) {{ row.id }}
 
           template(v-slot:username="{row}")
-            router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}")
+            router-link(:to="{name: 'customerDetails', params:{uid: row.id }}")
               el-link(type="primary") {{ row.username }}
 
           template(v-slot:telephone="{row}")
@@ -210,7 +210,7 @@ export default class extends Vue {
 
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'pk',
+      prop: 'id',
       label: 'ID',
       'min-width': 67
     },
@@ -296,7 +296,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         group: this.groupId,
-        fields: 'pk,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,marker_icons'
+        fields: 'id,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,marker_icons'
       })
       if (street) {
         newParams.street = Number(street)
@@ -311,7 +311,7 @@ export default class extends Vue {
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
     this.$message.success('Абонент добавлен')
-    this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.pk.toString() } })
+    this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
   private onStreetClick(item: ICustomerStreet) {
@@ -319,8 +319,8 @@ export default class extends Vue {
     const qstreet = qr.street
     delete qr.street
 
-    if (item.pk != qstreet) {
-      qr.street = item.pk
+    if (item.id != qstreet) {
+      qr.street = item.id
     }
     this.$router.push({ path: this.$route.path, query: qr })
     document.title = `Абоненты ул. ${item.name}`
@@ -337,7 +337,7 @@ export default class extends Vue {
 
   get routerQueryStreetIndexGetter(): number | undefined {
     let strId = this.routerQueryStreetGetter as any
-    return this.streets.findIndex(str => str.pk == strId)
+    return this.streets.findIndex(str => str.id == strId)
   }
 
   private addStreetDone(newStreet: ICustomerStreet) {
@@ -359,7 +359,7 @@ export default class extends Vue {
 
   // Breadcrumbs
   private async setCrumbs() {
-    if (this.$store.state.group.pk !== this.groupId) {
+    if (this.$store.state.group.id !== this.groupId) {
       await GroupModule.GetGroup(this.groupId)
     }
     BreadcrumbsModule.SetCrumbs([
@@ -386,7 +386,7 @@ export default class extends Vue {
   }
 
   get customerIdGetter() {
-    return CustomerModule.pk
+    return CustomerModule.id
   }
 
   private async changeCustomerObjectPerms(info: IObjectGroupPermsResultStruct) {
@@ -406,7 +406,7 @@ export default class extends Vue {
   }
 
   private handleSelectionChange(customers: ICustomer[]) {
-    this.selectedCustomers = customers.map(c => c.pk)
+    this.selectedCustomers = customers.map(c => c.id)
   }
   get isSomeoneSelected() {
     return this.selectedCustomers.length > 0

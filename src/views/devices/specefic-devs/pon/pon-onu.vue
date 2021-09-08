@@ -24,7 +24,7 @@
           | {{ device.iface_name }}
         .text.item.list-item
           b Прикреплённые абоненты: 
-          router-link(v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.pk }}")
+          router-link(v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.id }}")
             el-link(type="primary") {{ ab.full_name }}
         el-button-group
           delete-from-olt-btn(:devId="device.id" v-on:done="getDetails")

@@ -2,7 +2,7 @@
   div
     el-checkbox(
       v-for="srv in selected"
-      :key="srv.pk"
+      :key="srv.id"
       :label="srv.title"
       v-model="srv.state"
     )
@@ -21,7 +21,7 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { getServices } from '@/api/services/req'
 
 interface SelectedState {
-  pk: number
+  id: number
   state: boolean
   title: string
 }
@@ -57,14 +57,14 @@ export default class extends Vue {
   private async loadSelectedService(groupId: number) {
     const { data } = await getServices({
       groups: groupId,
-      fields: 'pk',
+      fields: 'id',
       page: 1,
       page_size: 9999999
     })
-    const selectedIds = (data as IServiceList).results.map(s => s.pk)
+    const selectedIds = (data as IServiceList).results.map(s => s.id)
     this.selected = this.services.map(s => ({
-      pk: s.pk,
-      state: selectedIds.includes(s.pk),
+      id: s.id,
+      state: selectedIds.includes(s.id),
       title: s.title
     }))
   }
@@ -77,7 +77,7 @@ export default class extends Vue {
 
   async saveAccessory() {
     let selectedState = this.selected.filter(s => s.state)
-    let res = selectedState.map(s => s.pk)
+    let res = selectedState.map(s => s.id)
     await CustomerModule.SetServiceGroupAccessory(res)
     this.$message.success('Группы привязаны')
     this.$emit('done')

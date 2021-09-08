@@ -29,9 +29,9 @@
       el-select(v-model="frmMod.groups" multiple)
         el-option(
           v-for="g in groups"
-          :key="g.pk"
+          :key="g.id"
           :label="g.title"
-          :value="g.pk"
+          :value="g.id"
         )
     el-form-item(
       label="Шлюз"
@@ -187,7 +187,7 @@ export default class extends mixins(FormMixin, VlanMixin) {
       const { data } = await getGroups({
         page: 1,
         page_size: 0,
-        fields: 'pk,title'
+        fields: 'id,title'
       }) as any
       this.groups = data
     } catch (err) {

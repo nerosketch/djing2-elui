@@ -36,7 +36,7 @@ export default class extends Vue {
   }
 
   private handleSelect(c: ICustomer) {
-    this.$emit('input', c.pk)
+    this.$emit('input', c.id)
   }
 
   created() {

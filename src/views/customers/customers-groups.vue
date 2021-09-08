@@ -7,7 +7,7 @@
       widthStorageNamePrefix='customerGroups'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{name: 'customersList', params:{ groupId: row.pk }}")
+        router-link(:to="{name: 'customersList', params:{ groupId: row.id }}")
           el-link(type="primary") {{ row.title }}
 
       template(v-slot:usercount="{row}") {{ row.usercount }}
@@ -43,7 +43,7 @@ export default class extends Vue {
 
   private getGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,title,usercount'
+      params['fields'] = 'id,title,usercount'
     }
     return getCustomerGroups(params)
   }

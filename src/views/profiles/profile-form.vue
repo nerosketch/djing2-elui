@@ -74,7 +74,7 @@
       :close-on-click-modal="false"
     )
       password-form(
-        :profileId="$store.state.userprofile.pk"
+        :profileId="$store.state.userprofile.id"
         v-on:done="passwordDone"
         v-on:cancel="passwordCancel"
       )
@@ -130,7 +130,7 @@ export default class extends Vue {
   }
 
   private get isNew() {
-    return UserProfileModule.pk === 0
+    return UserProfileModule.id === 0
   }
 
   @Watch('$store.state.userprofile', { deep: true })

@@ -21,7 +21,7 @@
         customer-docs
     el-col.vert_space(:sm='24' :md='12')
       customer-comment-list(
-        :customerId="$store.state.customer.pk"
+        :customerId="$store.state.customer.id"
       )
     el-col.vert_space(:sm='24' :md='12')
       customer-dynamic-fields

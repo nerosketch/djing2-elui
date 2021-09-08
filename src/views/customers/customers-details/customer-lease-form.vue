@@ -146,7 +146,7 @@ export default class extends Vue {
     this.frmMod = {
       ip_address: '',
       pool: 0,
-      customer: CustomerModule.pk,
+      customer: CustomerModule.id,
       mac_address: '',
     }
     if (this.pools.length === 0) {

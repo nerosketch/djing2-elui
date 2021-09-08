@@ -5,27 +5,27 @@ import { getStreet, addStreet, changeStreet, delStreet } from '@/api/customers/r
 
 @Module({ dynamic: true, store, name: 'street' })
 class CustomerStreet extends VuexModule implements ICustomerStreet {
-  pk = 0
-  name = ''
-  group = 0
+  public id = 0
+  public name = ''
+  public group = 0
 
   @Mutation
   private RESET_ALL_STREET() {
-    this.pk = 0
+    this.id = 0
     this.name = ''
     this.group = 0
   }
 
   @Mutation
   private SET_ALL_STREET(street: ICustomerStreet) {
-    this.pk = street.pk
+    this.id = street.id
     this.name = street.name
     this.group = street.group
   }
 
   @Mutation
-  public SET_PK(pk: number) {
-    this.pk = pk
+  public SET_PK(id: number) {
+    this.id = id
   }
 
   @Action
@@ -44,7 +44,7 @@ class CustomerStreet extends VuexModule implements ICustomerStreet {
 
   @Action
   public async PatchStreet(newData: object) {
-    const r = await changeStreet(this.pk, newData)
+    const r = await changeStreet(this.id, newData)
     this.SET_ALL_STREET(r.data)
     return r
   }

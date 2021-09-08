@@ -12,7 +12,7 @@ import {
 
 @Module({ dynamic: true, store, name: 'userprofile' })
 class UserProfile extends VuexModule implements IUserProfile {
-  pk = 0
+  id = 0
   token = ''
   username = ''
   fio = ''
@@ -32,7 +32,7 @@ class UserProfile extends VuexModule implements IUserProfile {
 
   @Mutation
   public SET_ALL_PROFILE(data: IUserProfile) {
-    this.pk = data.pk
+    this.id = data.id
     this.username = data.username
     this.fio = data.fio
     this.birth_day = data.birth_day
@@ -52,7 +52,7 @@ class UserProfile extends VuexModule implements IUserProfile {
 
   @Mutation
   public RESET_ALL_PROFILE() {
-    this.pk = 0
+    this.id = 0
     this.username = ''
     this.fio = ''
     this.birth_day = ''

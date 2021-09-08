@@ -59,12 +59,12 @@ export default class extends Vue {
 
   private get devComm() {
     return {
-      pk: CustomerModule.device,
+      id: CustomerModule.device,
       comment: CustomerModule.device_comment
     }
   }
 
-  @Watch('$store.state.customer.pk')
+  @Watch('$store.state.customer.id')
   private onChangedId() {
     this.frmMod = {
       device: CustomerModule.device,

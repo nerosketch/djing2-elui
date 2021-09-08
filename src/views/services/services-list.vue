@@ -27,7 +27,7 @@ div
 
     template(v-slot:usercount="{row}")
       el-button(
-        @click="openCustomerServiceListDialog(row.pk)"
+        @click="openCustomerServiceListDialog(row.id)"
       ) {{ row.usercount }}
 
     el-button-group
@@ -184,7 +184,7 @@ export default class extends Vue {
 
   private async delSrv(srv: IService) {
     if (confirm(`Действительно удалить услугу "${srv.title}"?`)) {
-      await ServiceModule.DelService(srv.pk)
+      await ServiceModule.DelService(srv.id)
       this.$message.success('Услуга удалена')
       this.$refs.table.GetTableData()
     }
@@ -192,7 +192,7 @@ export default class extends Vue {
 
   private loadServices(params?: IDRFRequestListParametersService) {
     if (params) {
-      params.fields = 'pk,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
+      params.fields = 'id,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
     }
     return getServices(params)
   }
@@ -207,7 +207,7 @@ export default class extends Vue {
   }
 
   get srvIdGetter() {
-    return ServiceModule.pk
+    return ServiceModule.id
   }
 
   private openPermsDialog(s: IService) {

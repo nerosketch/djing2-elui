@@ -79,7 +79,7 @@ export default class extends Vue {
     let r
     if (params) {
       const newParams = Object.assign({
-        customer: CustomerModule.pk,
+        customer: CustomerModule.id,
         fields: 'cost,date,author_name,from_balance,to_balance,comment'
       }, params)
       r = await getCustomerPayLog(newParams)

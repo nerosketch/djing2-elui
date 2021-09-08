@@ -42,7 +42,7 @@ export default class extends Vue {
   ]
 
   private getAllLog(params?: IDRFRequestListParameters) {
-    return getAuthLog(params, this.$store.state.userprofile.pk)
+    return getAuthLog(params, this.$store.state.userprofile.id)
   }
 }
 </script>

@@ -13,7 +13,7 @@
       prop='fio'
     )
       template(v-slot:default="{row}")
-        router-link(:to="{name: 'customerDetails', params:{uid: row.pk }}")
+        router-link(:to="{name: 'customerDetails', params:{uid: row.id }}")
           el-link(type="primary") {{ row.fio }}
 </template>
 

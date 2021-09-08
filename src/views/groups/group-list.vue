@@ -132,19 +132,19 @@ export default class extends Vue {
   }
 
   get groupIdGetter() {
-    return GroupModule.pk
+    return GroupModule.id
   }
 
   private loadGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,title,sites'
+      params['fields'] = 'id,title,sites'
     }
     return getGroups(params)
   }
 
   private delGroup(group: IGroup) {
     this.$confirm(`Действительно удалить группу "${group.title}"?`).then(async() => {
-      await GroupModule.DelGroup(group.pk)
+      await GroupModule.DelGroup(group.id)
       this.$message.success(`Группа "${group.title}" удалена`)
       this.$refs.grouptable.GetTableData()
     })

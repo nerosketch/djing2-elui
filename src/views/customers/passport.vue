@@ -88,7 +88,7 @@ export default class extends Vue {
       if (valid) {
         this.loading = true
         try {
-          let { data } = await setPassportInfo(CustomerModule.pk, this.frmMod)
+          let { data } = await setPassportInfo(CustomerModule.id, this.frmMod)
           this.$emit('done', data)
         } catch (err) {
           this.$message.error(err)
@@ -104,7 +104,7 @@ export default class extends Vue {
   private async loadPasspInfo() {
     this.loading = true
     try {
-      const { data } = await getPassportInfo(CustomerModule.pk)
+      const { data } = await getPassportInfo(CustomerModule.id)
       this.frmMod = data
     } catch (err) {
       this.$message.error(err)

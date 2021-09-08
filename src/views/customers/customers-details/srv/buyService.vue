@@ -6,9 +6,9 @@
       el-select(v-model="frmMod.service_id")
         el-option(
           v-for="srv in services"
-          :key="srv.pk"
+          :key="srv.id"
           :label="srv.title"
-          :value="srv.pk"
+          :value="srv.id"
         )
     el-form-item(label="Дата завершения")
       el-date-picker(
@@ -55,7 +55,7 @@ export default class extends Vue {
   @Watch('frmMod.service_id')
   private onServiceIdChanged(v: number) {
     for (const srv of this.services) {
-      if (srv.pk === v) {
+      if (srv.id === v) {
         this.frmMod.deadline = srv.planned_deadline
         return
       }
@@ -66,7 +66,7 @@ export default class extends Vue {
     if (this.selectedServiceId > 0) {
       this.frmMod.service_id = this.selectedServiceId
     } else if (this.services.length > 0) {
-      this.frmMod.service_id = this.services[0].pk
+      this.frmMod.service_id = this.services[0].id
     }
   }
 

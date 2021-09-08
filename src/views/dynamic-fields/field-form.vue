@@ -29,7 +29,7 @@
           v-for="(grp, i) in groups"
           :key="i"
           :label="grp.title"
-          :value="grp.pk"
+          :value="grp.id"
         )
     el-form-item(
       label="Системный тэг"
