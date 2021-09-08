@@ -25,6 +25,7 @@
           el-input(v-model="frmData.firstName")
         el-form-item(
           label="Отчество"
+          prop="lastName"
         )
           el-input(v-model="frmData.lastName")
 
@@ -35,7 +36,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { regexpVal } from '@/utils/validate'
 
 const nameValidator = regexpVal(/^[A-Za-zА-Яа-яЁё-]{1,250}$/i)
-const errText = 'Может содержать только буквы, цифры, и знак _'
+const errText = 'Может содержать только буквы и знак _'
 
 @Component({
   name: 'CustomerFormFio'
@@ -59,10 +60,9 @@ export default class extends Vue {
       { required: true, message: 'Имя обязательно', trigger: 'blur' },
       { validator: nameValidator, trigger: 'change', message: errText }
     ],
-    /* lastName: [
-      { required: true, message: 'Отчество обязательно', trigger: 'blur' },
+    lastName: [
       { validator: nameValidator, trigger: 'change', message: errText }
-    ], */
+    ],
     surname: [
       { required: true, message: 'Фамилия обязательна', trigger: 'blur' },
       { validator: nameValidator, trigger: 'change', message: errText }
