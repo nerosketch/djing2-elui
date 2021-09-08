@@ -135,6 +135,18 @@ export const constantRoutes: RouteConfig [] = [
   sormRoutes,
   dfRoutes,
   {
+    path: '/afk',
+    component: Layout,
+    meta: { hidden: true },
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "afklist" */ '@/views/customers/afk-list.vue'),
+        meta: { hidden: true },
+      }
+    ]
+  },
+  {
     path: '*',
     redirect: '/404',
     meta: { hidden: true }

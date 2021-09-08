@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="getGroups"
-      :heightDiff='89'
+      :heightDiff='118'
       widthStorageNamePrefix='customerGroups'
     )
       template(v-slot:title="{row}")
@@ -11,6 +11,11 @@
           el-link(type="primary") {{ row.title }}
 
       template(v-slot:usercount="{row}") {{ row.usercount }}
+
+      el-button(
+        icon='el-icon-d-caret'
+        @click="goToAfkList"
+      ) Фильтр afk
 </template>
 
 <script lang="ts">
@@ -61,5 +66,9 @@ export default class extends Vue {
     ] as any[])
   }
   // End Breadcrumbs
+
+  private goToAfkList() {
+    this.$router.push('/afk')
+  }
 }
 </script>

@@ -237,3 +237,11 @@ export interface IBuyPayloadType {
   service_id: number,
   deadline?: string
 }
+
+export interface ICustomerAfkItem {
+  customer_id: number
+  last_date: string
+  customer_uname: string
+  customer_fio: string
+}
+export type ICustomerAfkItemListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerAfkItem[]>
