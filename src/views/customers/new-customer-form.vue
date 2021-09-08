@@ -6,16 +6,14 @@
     :model="frmMod"
     v-loading="loading"
   )
+    customer-form-fio(
+      v-model="frmMod.fio"
+    )
     el-form-item(
       label="Логин"
       prop='username'
     )
       el-input(v-model="frmMod.username")
-    el-form-item(
-      label="ФИО"
-      prop='fio'
-    )
-      el-input(v-model="frmMod.fio")
     el-form-item(
       label="Телефон"
       prop='telephone'
@@ -85,11 +83,13 @@ import { ICustomerGroup, ICustomerStreet, ICustomerFrm } from '@/api/customers/t
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import { getCustomerGroups } from '@/api/customers/req'
 import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
+import CustomerFormFio from './customer-form-fio.vue'
 
 @Component({
   name: 'NewCustomerForm',
   components: {
-    GwsSelectfield
+    GwsSelectfield,
+    CustomerFormFio
   }
 })
 export default class extends Vue {

@@ -6,7 +6,7 @@
           label="ФИО"
           style="margin-bottom: 0"
         )
-          b {{ fioGetter }}
+          b {{ origValue }}
       el-form(
         status-icon
         :rules='frmRules'
@@ -46,6 +46,8 @@ export default class extends Vue {
 
   private collapse = []
 
+  private origValue = this.value
+
   private frmData = {
     firstName: '',
     lastName: '',
@@ -67,11 +69,17 @@ export default class extends Vue {
     ]
   }
 
-  private get fioGetter() {
+  /*private get fioGetter() {
     const fm = this.frmData
     const r = `${fm.surname} ${fm.firstName} ${fm.lastName}`
     this.$emit('input', r)
     return r
+  }*/
+
+  @Watch('frmData', { deep: true })
+  private onChangeFio(frmData: any) {
+    const r = `${frmData.surname} ${frmData.firstName} ${frmData.lastName}`
+    this.$emit('input', r)
   }
 
   @Watch('value')
