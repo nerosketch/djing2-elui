@@ -76,6 +76,11 @@ export default class extends Vue {
     return r
   }*/
 
+  @Watch('$store.state.customer.fio')
+  private onchfio(fio: string) {
+    this.origValue = fio
+  }
+
   @Watch('frmData', { deep: true })
   private onChangeFio(frmData: any) {
     const r = `${frmData.surname} ${frmData.firstName} ${frmData.lastName}`

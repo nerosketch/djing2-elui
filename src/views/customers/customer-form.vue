@@ -254,18 +254,6 @@ export default class extends mixins(FormMixin) {
         try {
           const newDat = await CustomerModule.PatchCustomer(this.frmMod)
           this.$emit('done', newDat)
-          this.frmInitial = Object.assign({}, {
-            username: newDat.username,
-            telephone: newDat.telephone,
-            fio: newDat.fio,
-            group: newDat.group,
-            street: newDat.street,
-            house: newDat.house,
-            is_active: newDat.is_active,
-            is_dynamic_ip: newDat.is_dynamic_ip,
-            gateway: newDat.gateway,
-            description: newDat.description
-          })
           this.$message.success('Абонент сохранён')
         } catch (err) {
           this.$message.error(err)
