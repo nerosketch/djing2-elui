@@ -72,6 +72,14 @@ export default class extends Vue {
       label: 'Группы'
     },
     {
+      prop: 'system_tag_name',
+      label: 'Системный тэг'
+    },
+    {
+      prop: 'user_tag',
+      label: 'Пользовательский тэг'
+    },
+    {
       prop: 'btn',
       label: '—',
       'min-width': 90,

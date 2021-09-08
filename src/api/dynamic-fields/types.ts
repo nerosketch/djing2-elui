@@ -8,6 +8,9 @@ export interface IDynamicField {
   title: string
   field_type: number
   field_type_name: string
+  system_tag: number
+  system_tag_name: string
+  user_tag: string
   groups: number[]
 }
 export type IDynamicFieldList = IDynamicField[]
@@ -29,3 +32,7 @@ export interface IFieldChoiceType {
   label: string
 }
 export type IFieldChoiceTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IFieldChoiceType[]>
+
+export interface IDynamicFieldSystemTag extends IFieldChoiceType {
+}
+export type IDynamicFieldSystemTagListAxiosResponsePromise = IDRFAxiosResponsePromise<IDynamicFieldSystemTag[]>

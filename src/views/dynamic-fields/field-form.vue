@@ -1,6 +1,9 @@
 <template lang="pug">
   el-form(
-    label-width="100px"
+    ref='form'
+    label-width="110px"
+    status-icon
+    :rules='frmRules'
     :model='frmMod'
     v-loading='isLoading'
   )
@@ -28,6 +31,17 @@
           :label="grp.title"
           :value="grp.pk"
         )
+    el-form-item(
+      label="Системный тэг"
+    )
+      system-tags-input(
+        v-model="frmMod.system_tag"
+      )
+    el-form-item(
+      label="Пользов. тэг"
+      prop="user_tag"
+    )
+      el-input(v-model="frmMod.user_tag")
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -44,9 +58,16 @@ import { getGroups } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
 import { IDynamicField, IFieldChoiceType } from '@/api/dynamic-fields/types'
 import { getFieldTypeChoices } from '@/api/dynamic-fields/req'
+import SystemTagsInput from './system-tags-input.vue'
+import { regexpVal } from '@/utils/validate'
+
+export const _userTagsValidator = regexpVal(/^(\w+\,?)+$/s)
 
 @Component({
-  name: 'FieldForm'
+  name: 'FieldForm',
+  components: {
+    SystemTagsInput
+  }
 })
 export default class extends Vue {
   private isLoading = false
@@ -55,6 +76,8 @@ export default class extends Vue {
     id: 0,
     title: '',
     field_type: 0,
+    system_tag: 0,
+    user_tag: '',
     groups: [] as number[]
   }
 
@@ -63,6 +86,8 @@ export default class extends Vue {
     this.frmMod.id = field.id
     this.frmMod.title = field.title
     this.frmMod.field_type = field.field_type
+    this.frmMod.system_tag = field.system_tag
+    this.frmMod.user_tag = field.user_tag
     this.frmMod.groups = field.groups
   }
 
@@ -102,6 +127,16 @@ export default class extends Vue {
     } finally {
       this.isLoading = false
     }
+  }
+
+  private frmRules = {
+    user_tag: [
+      {
+        validator: _userTagsValidator,
+        trigger: 'change',
+        message: 'Тэги должны содержать только буквы, цифры и знак подчёркивания (как [a-zA-Z0-9_]). И могут быть разделены запятой.'
+      }
+    ]
   }
 
   created() {

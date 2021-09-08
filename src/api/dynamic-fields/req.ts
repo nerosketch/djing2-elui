@@ -7,6 +7,8 @@ import {
   IDynamicFieldAxoisResponsePromise,
   IDynamicFieldList,
   IDynamicFieldListAxiosResponsePromise,
+  IDynamicFieldSystemTag,
+  IDynamicFieldSystemTagListAxiosResponsePromise,
   IFieldChoiceType,
   IFieldChoiceTypeListAxiosResponsePromise
 } from './types'
@@ -29,3 +31,6 @@ export const patchField = (id: number, info: object): IDynamicFieldAxoisResponse
 
 export const getFieldTypeChoices = (): IFieldChoiceTypeListAxiosResponsePromise =>
   request.get<IFieldChoiceType[]>('/dynamicfields/get_type_choices/')
+
+export const getFieldSystemTags = (): IDynamicFieldSystemTagListAxiosResponsePromise =>
+  request.get<IDynamicFieldSystemTag[]>('/dynamicfields/get_system_tags/')

@@ -10,6 +10,9 @@ class DynamicField extends VuexModule implements IDynamicField {
   public title = ''
   public field_type = 0
   public field_type_name = ''
+  public system_tag = 0
+  public system_tag_name = ''
+  public user_tag = ''
   public groups: number[] = []
 
   @Mutation
@@ -18,6 +21,9 @@ class DynamicField extends VuexModule implements IDynamicField {
     this.title = data.title
     this.field_type = data.field_type
     this.field_type_name = data.field_type_name
+    this.system_tag = data.system_tag
+    this.system_tag_name = data.system_tag_name
+    this.user_tag = data.user_tag
     this.groups = data.groups
     return this
   }
@@ -28,6 +34,9 @@ class DynamicField extends VuexModule implements IDynamicField {
     this.title = ''
     this.field_type = 0
     this.field_type_name = ''
+    this.system_tag = 0
+    this.system_tag_name = ''
+    this.user_tag = ''
     this.groups = []
     return this
   }
