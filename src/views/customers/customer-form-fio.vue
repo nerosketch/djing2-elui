@@ -34,7 +34,7 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { regexpVal } from '@/utils/validate'
 
-const nameValidator = regexpVal(/^[\dA-Za-zА-Яа-яЁё_]{1,250}$/i)
+const nameValidator = regexpVal(/^[A-Za-zА-Яа-яЁё-]{1,250}$/i)
 const errText = 'Может содержать только буквы, цифры, и знак _'
 
 @Component({
