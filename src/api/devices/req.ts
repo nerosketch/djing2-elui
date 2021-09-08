@@ -22,7 +22,7 @@ import {
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
   IDevVlanSimpleInfoAxiosResponsePromise, IDevVlanSimpleInfo,
   IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise,
-  IDevTogglePortRequest
+  IDevTogglePortRequest,
 } from './types'
 
 const baseDevUrl = '/devices/all/'
@@ -120,9 +120,6 @@ export const scanMacAddressPort = (portId: number): IDevMacPortListAxiosResponse
 
 export const scanPortVlans = (portId: number): IDevVlanListAxiosResponsePromise =>
   request.get<IDevVlan[]>(`${basePortUrl}${portId}/scan_vlan/`)
-
-// export const vlanConfigApply = (portId: number, conf: IPortVlanConfig) =>
-//   request.post(`${basePortUrl}${portId}/`, conf)
 
 // IDevGroup
 export const getDevGroups = (params?: IDRFRequestListParameters): IDevGroupListAxiosResponsePromise =>

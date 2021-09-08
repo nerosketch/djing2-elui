@@ -1,10 +1,14 @@
 <template lang="pug">
   .app-container
     el-date-picker(
-      v-model="reportParams.from_date"
-      type='date'
-      placeholder="Дата отсчёта"
+      v-model="reportParams.time_range"
+      type='daterange'
+      start-placeholder="Дата начала"
+      end-placeholder="Конечная дата"
+      align="right"
+      unlink-panels
       value-format="yyyy-MM-dd"
+      :picker-options="pickerOptions"
     )
     el-select(
       v-model="reportParams.pay_gw"
@@ -66,6 +70,11 @@ import { getPayGateways, getPayReport } from '@/api/fin/req'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import save2file from '@/utils/save2file'
 
+function formatDate(time: Date) {
+  console.log(time)
+  return `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()}`
+}
+
 @Component({
   name: 'FinReport'
 })
@@ -80,15 +89,21 @@ export default class extends Vue {
   private async loadReport() {
     this.loading = true
     try {
-    const { data } = await getPayReport(this.reportParams)
-    this.tableData = data
+      const rp = this.reportParams
+      const { data } = await getPayReport({
+        from_time: rp.time_range[0],
+        to_time: rp.time_range[1],
+        pay_gw: rp.pay_gw,
+        group_by: rp.group_by
+      })
+      this.tableData = data
     } finally {
       this.loading = false
     }
   }
 
-  private reportParams: IPayReportParams = {
-    from_date: '2021-05-22',
+  private reportParams = {
+    time_range: ['2021-05-22', formatDate(new Date())],
     pay_gw: 0,
     group_by: 3,
   }
@@ -98,6 +113,34 @@ export default class extends Vue {
     if (this.isAllowRequest) {
       this.loadReport()
     }
+  }
+
+  private pickerOptions = {
+    shortcuts: [{
+      text: 'Последняя неделя',
+      onClick(picker: Vue) {
+        const end = new Date();
+        const start = new Date();
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+        picker.$emit('pick', [start, end]);
+      }
+    }, {
+      text: 'Последний месяц',
+      onClick(picker: Vue) {
+        const end = new Date();
+        const start = new Date();
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+        picker.$emit('pick', [start, end]);
+      }
+    }, {
+      text: 'Последние 3 месяца',
+      onClick(picker: Vue) {
+        const end = new Date();
+        const start = new Date();
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+        picker.$emit('pick', [start, end]);
+      }
+    }]
   }
 
   // Breadcrumbs
@@ -126,7 +169,7 @@ export default class extends Vue {
 
   private get isAllowRequest() {
     const rp = this.reportParams
-    return rp.group_by > 0 && Boolean(rp.from_date)
+    return rp.group_by > 0 && rp.time_range.length > 0
   }
 
   private async loadPayGateways() {
@@ -147,7 +190,7 @@ export default class extends Vue {
     const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
     dat.unshift(['Дата', 'Сумма', 'Колич. платежей'])
     const sdat = dat.join('\n')
-    save2file(sdat, 'text/csv', `fin_report_${this.reportParams.from_date}.csv`)
+    save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
   }
 }
 </script>

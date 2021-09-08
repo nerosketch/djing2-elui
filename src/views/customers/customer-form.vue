@@ -296,7 +296,7 @@ export default class extends mixins(FormMixin) {
     try {
       const { data } = await TaskModule.GetNewTaskInitial({
         groupId: this.$store.state.customer.group,
-        customerId: CustomerModule.pk
+        customerId: this.$store.state.customer.pk
       })
       if (data.status > 0) {
         // Task with this customer does not exists, ok

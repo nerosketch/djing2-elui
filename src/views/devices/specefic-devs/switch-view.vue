@@ -33,7 +33,7 @@
       )
         template(v-slot:default="{row}")
           switch-port-toggle-button(
-            v-if="row.isdb && row.snmp_number > 0"
+            v-if="row.isdb && row.snmp_num > 0"
             :port="row"
             :portId="row.pk"
           )
@@ -117,6 +117,8 @@
     )
       vids-view(
         :portId="currPortId"
+        :portNum="initialNum"
+        @applydone="vidsDialog=false"
       )
     el-dialog(
       :visible.sync="macsDialog"
@@ -147,7 +149,7 @@ interface IFinPort {
   num: number
   descr?: string
   user_count?: number
-  snmp_number?: number
+  snmp_num?: number
   name?: string
   status?: boolean
   speed?: number
@@ -220,7 +222,7 @@ export default class extends Vue {
         const pInd = this.allPorts.findIndex(fport => fport.num === p.num)
         if (pInd > -1) {
           this.allPorts[pInd].num = p.num
-          this.allPorts[pInd].snmp_number = p.snmp_number
+          this.allPorts[pInd].snmp_num = p.snmp_num
           this.allPorts[pInd].name = p.name
           this.allPorts[pInd].status = p.status
           this.allPorts[pInd].speed = p.speed
@@ -228,7 +230,7 @@ export default class extends Vue {
         } else {
           this.allPorts.push({
             num: p.num,
-            snmp_number: p.snmp_number,
+            snmp_num: p.snmp_num,
             name: p.name,
             status: p.status,
             speed: p.speed,
@@ -334,6 +336,7 @@ export default class extends Vue {
 
   private openVidsDialog(port: IPort) {
     this.currPortId = port.pk
+    this.initialNum = port.num
     this.vidsDialog = true
   }
 

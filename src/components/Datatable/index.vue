@@ -24,7 +24,7 @@
             :key="col.prop"
             :sortable="col.sortable ? 'custom' : false"
             :align="col.align"
-            :width="getColumnWidth(col)"
+            :width="col.colWidth"
             v-bind="col"
           )
             template(v-slot:default="{row}")
@@ -69,6 +69,7 @@ export interface IDataTableColumn {
 
 export interface ILocalDataTableColumn extends IDataTableColumn {
   visible: boolean
+  colWidth: number
 }
 
 export class DataTableColumn implements IDataTableColumn {
@@ -85,10 +86,7 @@ interface getTableDataParam {
 
 function loadFieldVisibility(pref: string, col: IDataTableColumn): boolean {
   const store = localStorage.getItem(`${pref}_visible_${col.prop}`)
-  if (store === null || store === '1') {
-    return true
-  }
-  return false
+  return store === null || store === '1'
 }
 
 @Component({
@@ -230,7 +228,8 @@ export default class <T> extends Vue {
 
   created() {
     this.localCols = this.columns.map(col => Object.assign(col, {
-      visible: loadFieldVisibility(this.widthStorageNamePrefix, col)
+      visible: loadFieldVisibility(this.widthStorageNamePrefix, col),
+      colWidth: Number(localStorage.getItem(`${this.widthStorageNamePrefix}_${col.prop}`))
     }))
 
     this.GetTableData()
@@ -260,10 +259,6 @@ export default class <T> extends Vue {
 
   private onFieldWidthChange(newWidth: number, oldWidth: number, column: any) {
     localStorage.setItem(`${this.widthStorageNamePrefix}_${column.property}`, String(newWidth))
-  }
-
-  private getColumnWidth(column: IDataTableColumn): string | null {
-    return localStorage.getItem(`${this.widthStorageNamePrefix}_${column.prop}`)
   }
 }
 </script>

@@ -217,7 +217,7 @@ class Device extends VuexModule implements IDeviceInterace {
     ] as any
   }
 
-  public get isOnuRegistered(): boolean {
+  public get isOnuRegistered() {
     return Boolean(this.snmp_extra)
   }
 

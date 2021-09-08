@@ -50,6 +50,7 @@ import {
   IPeriodicPayForIdList,
   IBuyPayloadType
 } from './types'
+import { IDynamicContentFieldList, IDynamicContentFieldListAxiosResponsePromise } from '../dynamic-fields/types'
 
 // ICustomer
 const custApiUrl = '/customers/'
@@ -227,3 +228,13 @@ export const getAssignedPeriodicPays = (account: number): IPeriodicPayForIdListA
 
 export const delAssignedPeriodicPay = (pid: number) =>
   request.delete(`${CustomerPPayUrl}${pid}/`)
+
+
+//IDynamicContentField
+export const getCombinedContentFields = (customerId: number): IDynamicContentFieldListAxiosResponsePromise =>
+request.get<IDynamicContentFieldList>('/customers/dynamic-fields/combine/', {params: {
+  customer: customerId
+}})
+
+export const changeContentFields = (info: IDynamicContentFieldList): IDynamicContentFieldListAxiosResponsePromise =>
+request.put<IDynamicContentFieldList>('/customers/dynamic-fields/update_all/', info)

@@ -89,7 +89,7 @@ export type IDevGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevGro
 
 export interface IScannedPort {
   num: number
-  snmp_number: number
+  snmp_num: number
   name: string
   status: boolean
   mac_addr: string
@@ -169,6 +169,15 @@ export type IDevVlanSimpleInfoAxiosResponsePromise = AxiosPromise<IDevVlanSimple
 export interface IDeviceOnuConfigTemplate {
   configTypeCode: string
   vlanConfig: IDevVlanSimpleInfo[]
+}
+
+export enum IDeviceSwitchPortConfigChoicesEnum {
+  TRUNK = 'trunk',
+  ACCESS = 'access'
+}
+
+export interface IDeviceSwitchPortConfigTemplate extends IDevVlanSimpleInfo {
+  config_mode: IDeviceSwitchPortConfigChoicesEnum
 }
 
 export interface IDevMacPort {
