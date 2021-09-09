@@ -69,11 +69,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getPayGateways, getPayReport } from '@/api/fin/req'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import save2file from '@/utils/save2file'
-
-function formatDate(time: Date) {
-  console.log(time)
-  return `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()}`
-}
+import { formatDate } from '@/utils/date-format'
 
 @Component({
   name: 'FinReport'

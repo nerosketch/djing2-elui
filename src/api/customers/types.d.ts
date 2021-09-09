@@ -246,3 +246,8 @@ export interface ICustomerAfkItem {
   customer_fio: string
 }
 export type ICustomerAfkItemListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerAfkItem[]>
+
+export interface ICustomerAfkItemParams {
+  date_limit: string | null
+  out_limit: number
+}

@@ -1,5 +1,20 @@
 <template lang="pug">
 .app-container
+  span Дата отсчёта: 
+  el-date-picker(
+    v-model="reqParams.date_limit"
+    type="datetime"
+    value-format="yyyy-MM-dd HH:mm"
+    format="d.MM.yyyy HH:mm"
+    placeholder="Дата отсчёта"
+  )
+  span  Лимит вывода: 
+  el-input(
+    placeholder="Лимит вывода"
+    :style="{width: '150px'}"
+    type="number"
+    v-model="reqParams.out_limit"
+  )
   datatable(
     :columns="tableColumns"
     :getData="loadAfk"
@@ -13,13 +28,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { ICustomerAfkItem } from '@/api/customers/types'
+import { ICustomerAfkItem, ICustomerAfkItemParams } from '@/api/customers/types'
 import { getCustomersAfk } from '@/api/customers/req'
- 
+
 class DataTableComp extends DataTable<ICustomerAfkItem> {}
 
 @Component({
@@ -31,6 +46,16 @@ class DataTableComp extends DataTable<ICustomerAfkItem> {}
 export default class extends Vue {
   public readonly $refs!: {
     afktbl: DataTableComp
+  }
+
+  private reqParams: ICustomerAfkItemParams = {
+    date_limit: null,
+    out_limit: 50
+  }
+
+  @Watch('reqParams', { deep: true })
+  private onChangeparams() {
+    this.$refs.afktbl.GetTableData()
   }
 
   private tableColumns: IDataTableColumn[] = [
@@ -53,7 +78,7 @@ export default class extends Vue {
   ]
 
   private loadAfk(params?: IDRFRequestListParameters) {
-    return getCustomersAfk()
+    return getCustomersAfk(this.reqParams)
   }
 
   // Breadcrumbs

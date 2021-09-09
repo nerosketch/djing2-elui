@@ -50,7 +50,8 @@ import {
   IPeriodicPayForIdList,
   IBuyPayloadType,
   ICustomerAfkItemListAxiosResponsePromise,
-  ICustomerAfkItem
+  ICustomerAfkItem,
+  ICustomerAfkItemParams
 } from './types'
 import { IDynamicContentFieldList, IDynamicContentFieldListAxiosResponsePromise } from '../dynamic-fields/types'
 
@@ -122,8 +123,8 @@ export const generateCustomerPassword = (): AxiosPromise<string> =>
 export const setCustomerMarkers = (id: number, flags: string[]) =>
   request.post(`${custApiUrl}${id}/set_markers/`, flags)
 
-export const getCustomersAfk = (): ICustomerAfkItemListAxiosResponsePromise =>
-  request.get<ICustomerAfkItem[]>(`${custApiUrl}get_afk/`)
+export const getCustomersAfk = (params: ICustomerAfkItemParams): ICustomerAfkItemListAxiosResponsePromise =>
+  request.get<ICustomerAfkItem[]>(`${custApiUrl}get_afk/`, { params })
 
 // ICustomerGroup
 export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>
