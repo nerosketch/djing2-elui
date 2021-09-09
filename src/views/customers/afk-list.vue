@@ -7,7 +7,8 @@
     ref='afktbl'
   )
     template(v-slot:customer_uname="{row}")
-      router-link(:to="{name: 'customerDetails', params:{uid: row.customer_id }}") {{ row.customer_uname }}
+      router-link(:to="{name: 'customerDetails', params:{uid: row.customer_id }}")
+        el-link(type="primary") {{ row.customer_uname }}
 
 </template>
 
@@ -18,7 +19,7 @@ import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { ICustomerAfkItem } from '@/api/customers/types'
 import { getCustomersAfk } from '@/api/customers/req'
-
+ 
 class DataTableComp extends DataTable<ICustomerAfkItem> {}
 
 @Component({
@@ -44,6 +45,10 @@ export default class extends Vue {
     {
       prop: 'last_date',
       label: 'дата',
+    },
+    {
+      prop: 'timediff',
+      label: 'Продолжительность'
     }
   ]
 

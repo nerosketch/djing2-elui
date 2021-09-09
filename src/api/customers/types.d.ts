@@ -239,6 +239,7 @@ export interface IBuyPayloadType {
 }
 
 export interface ICustomerAfkItem {
+  timediff: string
   customer_id: number
   last_date: string
   customer_uname: string
