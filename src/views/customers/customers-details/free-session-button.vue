@@ -24,7 +24,7 @@ export default class extends Vue {
     try {
       const { data } = await sessionRequestFree(this.sessionId)
       if (data) {
-        this.$message.success('ok')
+        this.$message.success(data)
       } else {
         this.$message.error('failed')
       }
