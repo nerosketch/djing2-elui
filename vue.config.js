@@ -1,5 +1,6 @@
 const path = require('path')
 const name = 'Djing2 ui'
+const description = 'Админка Djing2'
 
 module.exports = {
   publicPath: '/',
@@ -29,6 +30,7 @@ module.exports = {
     // https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
     config.plugin('html').tap(args => {
       args[0].title = name
+      args[0].description = description
       return args
     })
 
