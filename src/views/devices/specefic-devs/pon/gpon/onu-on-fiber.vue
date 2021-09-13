@@ -17,11 +17,11 @@ span
       min-width="90"
       prop='onu_port'
     )
-    el-table-column(
-      label="Сигнал"
-      min-width="90"
-      prop='onu_signal'
-    )
+    //- el-table-column(
+    //-   label="Сигнал"
+    //-   min-width="90"
+    //-   prop='onu_signal'
+    //- )
     el-table-column(
       label="Серийник"
       min-width="90"
@@ -77,8 +77,8 @@ export default class extends Vue {
     this.loadFibers()
   }
 
-  private onuRowColor(r: ITableRowClassName) {
-    switch (r.row.onu_state) {
+  private onuRowColor({ row }: ITableRowClassName) {
+    switch (row.onu_state) {
       case 'ok':
         return ''
       case 'down':
