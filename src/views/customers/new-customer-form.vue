@@ -126,6 +126,9 @@ export default class extends Vue {
     ],
     telephone: [
       { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
+    ],
+    birth_day: [
+      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' },
     ]
   }
 

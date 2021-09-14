@@ -1,7 +1,7 @@
 <template lang="pug">
   el-form(
     ref='customerfrm'
-    :label-width="$store.getters.isMobileView ? undefined : '115px'"
+    :label-width="$store.getters.isMobileView ? undefined : '125px'"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -37,6 +37,7 @@
       el-input(v-model="frmMod.house" :maxlength='12')
     el-form-item(
       label="День рождения"
+      prop='birth_day'
     )
       el-date-picker(
         v-model="frmMod.birth_day"
@@ -185,6 +186,9 @@ export default class extends mixins(FormMixin) {
     ],
     telephone: [
       { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
+    ],
+    birth_day: [
+      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' },
     ]
   }
 
