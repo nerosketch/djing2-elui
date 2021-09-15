@@ -24,20 +24,22 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { ICustomerStreet } from '@/api/customers/types'
-import { CustomerStreetModule } from '@/store/modules/customers/street'
+import { StreetModule } from '@/store/modules/addresses/street'
+import { IStreetModel } from '@/api/addresses/types'
+
 
 @Component({
   name: 'EditStreets'
 })
 export default class extends Vue {
-  private loading = false
-  private streets: ICustomerStreet[] = []
   @Prop({ default: () => ([]) }) private extStreets!: []
-  @Prop({ default: 0 }) private groupId!: number
+  @Prop({ default: 0 }) private localityId!: number
+
+  private loading = false
+  private streets: IStreetModel[] = []
 
   @Watch('extStreets')
-  private extStrChan(strs: ICustomerStreet[]) {
+  private extStrChan(strs: IStreetModel[]) {
     this.streets = strs.map(x => Object.assign({}, x))
   }
 
@@ -48,18 +50,18 @@ export default class extends Vue {
   private async onSubmit() {
     this.loading = true
     for (const st of this.streets) {
-      CustomerStreetModule.SET_PK(st.id)
-      await CustomerStreetModule.PatchStreet(st)
+      StreetModule.SET_PK(st.id)
+      await StreetModule.PatchStreet(st)
     }
     this.loading = false
     this.$message.success('Улицы изменены')
     this.$emit('done')
   }
 
-  private delStreet(street: ICustomerStreet) {
+  private delStreet(street: IStreetModel) {
     this.$confirm(`Удалить улицу "${street.name}?"`).then(async() => {
       this.loading = true
-      await CustomerStreetModule.DelStreet(street.id)
+      await StreetModule.DelStreet(street.id)
       this.loading = false
       this.$message.success(`Улица "${street.name} удалена`)
       this.$emit('done')

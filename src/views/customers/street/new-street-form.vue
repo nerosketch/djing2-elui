@@ -12,38 +12,32 @@
     )
       el-input(v-model="frmMod.name" maxlength='64')
     el-form-item(
-      label="Группа"
-      prop='group'
+      label="Населённый пункт"
     )
-      el-select(v-model="frmMod.group")
-        el-option(
-          v-for="grp in groups"
-          :key="grp.id"
-          :label="grp.title"
-          :value="grp.id"
-        )
+      locality-choice(v-model="frmMod.locality")
     el-form-item
       el-button(
         type="success" @click="onSubmit"
         :loading="loading"
-        :disabled="!$perms.customers.add_customerstreet"
+        :disabled="!$perms.addresses.add_streetmodel"
       ) Добавить
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { CustomerStreetModule } from '@/store/modules/customers/street'
-import { IGroup } from '@/api/groups/types'
-import { getGroups } from '@/api/groups/req'
+import { StreetModule } from '@/store/modules/addresses/street'
+import LocalityChoice from '@/components/Locality/locality-choice.vue'
 
 @Component({
-  name: 'NewStreetForm'
+  name: 'NewStreetForm',
+  components: {
+    LocalityChoice
+  }
 })
 export default class extends Vue {
-  @Prop({ default: 0 }) private groupId!: number
+  @Prop({ default: 0 }) private localityId!: number
   private loading = false
-  private groups: IGroup[] = []
 
   private frmRules = {
     name: [
@@ -53,36 +47,23 @@ export default class extends Vue {
 
   private frmMod = {
     name: '',
-    group: this.groupId
+    locality: this.localityId
   }
 
   private onSubmit() {
     (this.$refs['form'] as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        const newDat = await CustomerStreetModule.AddStreet(this.frmMod)
-        this.loading = false
-        this.$emit('done', newDat)
+        try {
+          const newDat = await StreetModule.AddStreet(this.frmMod)
+          this.$emit('done', newDat)
+        } finally {
+          this.loading = false
+        }
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
     })
-  }
-
-  private async loadGroups() {
-    this.loading = true
-    try {
-      const { data } = await getGroups() as any
-      this.groups = data
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.loading = false
-    }
-  }
-
-  created() {
-    this.loadGroups()
   }
 }
 </script>
