@@ -9,8 +9,8 @@ import {
   IObjectGroupPermsResultStruct
 } from '@/api/types'
 import {
-  ICustomerGroupList,
-  ICustomerGroupListAxiosResponsePromise,
+  ICustomerLocalityList,
+  ICustomerLocalityListAxiosResponsePromise,
   ICustomer, ICustomerList,
   ICustomerAxoisResponsePromise,
   ICustomerListAxiosResponsePromise,
@@ -21,10 +21,6 @@ import {
   IAdditionalTelephoneList,
   IAdditionalTelephoneAxoisResponsePromise,
   IAdditionalTelephoneListAxiosResponsePromise,
-  ICustomerStreet,
-  ICustomerStreetList,
-  ICustomerStreetAxoisResponsePromise,
-  ICustomerStreetListAxiosResponsePromise,
   IDRFRequestListParametersInvoice,
   IInvoice4Payment,
   IInvoice4PaymentAxoisResponsePromise,
@@ -126,9 +122,9 @@ export const setCustomerMarkers = (id: number, flags: string[]) =>
 export const getCustomersAfk = (params: ICustomerAfkItemParams): ICustomerAfkItemListAxiosResponsePromise =>
   request.get<ICustomerAfkItem[]>(`${custApiUrl}get_afk/`, { params })
 
-// ICustomerGroup
-export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>
-  request.get<ICustomerGroupList>(`${custApiUrl}groups/`, { params })
+// ICustomerLocality
+export const getCustomerLocations = (params?: IDRFRequestListParameters): ICustomerLocalityListAxiosResponsePromise =>
+  request.get<ICustomerLocalityList>(`${custApiUrl}locations/`, { params })
 
 // IAdditionalTelephone
 const telBaseUrl = '/customers/additional-telephone/'
@@ -146,24 +142,6 @@ export const changeTelephone = (id: number, newData: object): IAdditionalTelepho
 
 export const delTelephone = (id: number) =>
   request.delete(`${telBaseUrl}${id}/`)
-
-// ICustomerStreet
-const streetBaseUrl = '/customers/streets/'
-
-export const getStreets = (params?: IDRFRequestListParametersCustomer): ICustomerStreetListAxiosResponsePromise =>
-  request.get<ICustomerStreetList>(streetBaseUrl, { params })
-
-export const getStreet = (id: number): ICustomerStreetAxoisResponsePromise =>
-  request.get<ICustomerStreet>(`${streetBaseUrl}${id}/`)
-
-export const addStreet = (street: object): ICustomerStreetAxoisResponsePromise =>
-  request.post<ICustomerStreet>(streetBaseUrl, street)
-
-export const changeStreet = (id: number, newData: object): ICustomerStreetAxoisResponsePromise =>
-  request.patch<ICustomerStreet>(`${streetBaseUrl}${id}/`, newData)
-
-export const delStreet = (id: number) =>
-  request.delete(`${streetBaseUrl}${id}/`)
 
 // IInvoice4Payment
 const invBaseUrl = '/customers/invoices/'

@@ -2,12 +2,12 @@
   .app-container
     datatable(
       :columns="tableColumns"
-      :getData="getGroups"
+      :getData="getLocations"
       :heightDiff='118'
-      widthStorageNamePrefix='customerGroups'
+      widthStorageNamePrefix='customerLocations'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{name: 'customersList', params:{ groupId: row.id }}")
+        router-link(:to="{name: 'customersList', params:{ localityId: row.id }}")
           el-link(type="primary") {{ row.title }}
 
       template(v-slot:usercount="{row}") {{ row.usercount }}
@@ -21,12 +21,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
-import { getCustomerGroups } from '@/api/customers/req'
-import { ICustomerGroup } from '@/api/customers/types'
+import { getCustomerLocations } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { ICustomerLocality } from '@/api/customers/types'
 
-class DataTableComp extends DataTable<ICustomerGroup> {}
+class DataTableComp extends DataTable<ICustomerLocality> {}
 
 @Component({
   name: 'CustomerGroupList',
@@ -46,11 +46,11 @@ export default class extends Vue {
     }
   ]
 
-  private getGroups(params?: IDRFRequestListParameters) {
+  private getLocations(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'id,title,usercount'
     }
-    return getCustomerGroups(params)
+    return getCustomerLocations(params)
   }
 
   // Breadcrumbs
@@ -60,7 +60,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Группы абонентов'
+          title: 'Населённые пункты'
         }
       }
     ] as any[])

@@ -21,7 +21,6 @@
       el-input(v-model="frmMod.telephone")
     el-form-item(
       label="Группа"
-      prop='group'
     )
       el-select(v-model="frmMod.group")
         el-option(
@@ -31,18 +30,15 @@
           :value="grp.id"
         )
     el-form-item(
-      label="Шлюз доступа"
-      prop='gateway'
+      label="Локация"
     )
-      gws-selectfield(v-model="frmMod.gateway")
+      locality-choice(v-model="frmMod.locality")
     el-form-item(
       label="Комментарий"
-      prop='description'
     )
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize)
     el-form-item(
       label="Улица"
-      prop='street'
     )
       el-select(v-model="frmMod.street")
         el-option(
@@ -53,7 +49,6 @@
         )
     el-form-item(
       label="Дом"
-      prop='house'
     )
       el-input(v-model="frmMod.house" :maxlength='12')
     el-form-item(
@@ -79,40 +74,42 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { ICustomerGroup, ICustomerStreet, ICustomerFrm } from '@/api/customers/types'
+import { ICustomerFrm, ICustomer } from '@/api/customers/types'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
-import { getCustomerGroups } from '@/api/customers/req'
-import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import CustomerFormFio from './customer-form-fio.vue'
+import { IStreetModel } from '@/api/addresses/types'
+import LocalityChoice from '@/components/Locality/locality-choice.vue'
+import { getGroups } from '@/api/groups/req'
+import { IGroup } from '@/api/groups/types'
 
 @Component({
   name: 'NewCustomerForm',
   components: {
-    GwsSelectfield,
-    CustomerFormFio
+    CustomerFormFio,
+    LocalityChoice
   }
 })
 export default class extends Vue {
   private loading = false
-  private groups: ICustomerGroup[] = []
+  private groups: IGroup[] = []
 
   @Prop({ default: () => ([]) })
-  private customerStreets!: ICustomerStreet[]
+  private customerStreets!: IStreetModel[]
 
   @Prop({ default: 0 })
-  private selectedGroup!: number
+  private selectedLocality!: number
 
   private frmMod: ICustomerFrm = {
     username: '',
     telephone: '',
     fio: '',
     birth_day: null,
-    group: this.selectedGroup,
+    group: 0,
+    locality: this.selectedLocality,
     street: null,
     house: '',
     is_active: false,
     is_dynamic_ip: false,
-    gateway: 0,
     description: ''
   }
 
@@ -120,9 +117,6 @@ export default class extends Vue {
     username: [
       { required: true, message: 'Логин абонента обязателен', trigger: 'blur' },
       { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
-    ],
-    fio: [
-      { required: true, message: 'ФИО абонента надо бы указать', trigger: 'blur' }
     ],
     telephone: [
       { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
@@ -132,24 +126,25 @@ export default class extends Vue {
     ]
   }
 
-  @Watch('$store.state.customer.id')
+  @Watch('$store.state.customer', { deep: true })
   private onChangedId() {
+    const frm = this.$store.state.customer as ICustomer
     this.frmMod = {
-      username: CustomerModule.username,
-      telephone: CustomerModule.telephone,
-      fio: CustomerModule.fio,
-      birth_day: CustomerModule.birth_day,
-      group: CustomerModule.group || this.selectedGroup,
-      street: CustomerModule.street,
-      house: CustomerModule.house,
-      is_active: CustomerModule.is_active,
-      is_dynamic_ip: CustomerModule.is_dynamic_ip,
-      gateway: CustomerModule.gateway,
-      description: CustomerModule.description
+      username: frm.username,
+      telephone: frm.telephone,
+      fio: frm.fio,
+      birth_day: frm.birth_day,
+      group: frm.group || 0,
+      locality: frm.locality || this.selectedLocality || 0,
+      street: frm.street,
+      house: frm.house,
+      is_active: frm.is_active,
+      is_dynamic_ip: frm.is_dynamic_ip,
+      description: frm.description
     }
   }
 
-  async created() {
+  created() {
     this.loadGroups()
     CustomerModule.InitDefaults().then(initialForm => {
       this.frmMod.username = initialForm.username
@@ -159,7 +154,7 @@ export default class extends Vue {
   private async loadGroups() {
     this.loading = true
     try {
-      const { data } = await getCustomerGroups() as any
+      const { data } = await getGroups() as any
       this.groups = data
     } catch (err) {
       this.$message.error(err)

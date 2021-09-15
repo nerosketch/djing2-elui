@@ -62,9 +62,13 @@
           :value="grp.id"
         )
     el-form-item(
-      label="Шлюз доступа"
+      label="Локация"
     )
-      gws-selectfield(v-model="frmMod.gateway")
+      locality-choice(v-model="frmMod.locality")
+    //- el-form-item(
+    //-   label="Шлюз доступа"
+    //- )
+    //-   gws-selectfield(v-model="frmMod.gateway")
     el-form-item(
       label="Памятка"
     )
@@ -144,35 +148,39 @@ import { Component, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
-import { ICustomerStreet, ICustomerGroup, ICustomerFrm } from '@/api/customers/types'
-import { getStreets, getCustomerGroups } from '@/api/customers/req'
+import { ICustomerFrm, ICustomer } from '@/api/customers/types'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
 import CustomerPassword from './customer-password.vue'
-import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
+// import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
 import TelsInput from './tels/tels-input.vue'
 import CustomerFormFio from './customer-form-fio.vue'
+import { IStreetModel } from '@/api/addresses/types'
+import { getStreets } from '@/api/addresses/req'
+import LocalityChoice from '@/components/Locality/locality-choice.vue'
+import { getGroups } from '@/api/groups/req'
+import { IGroup } from '@/api/groups/types'
 
 @Component({
   name: 'customer-form',
   components: {
     TaskForm,
-    GwsSelectfield,
     Passport,
     CustomerPassword,
     TelsInput,
     CustomerFormFio,
+    LocalityChoice,
   }
 })
 export default class extends mixins(FormMixin) {
   private isLoading = false
   private isStreetLoading = false
   private isGroupLoading = false
-  private customerStreets: ICustomerStreet[] = []
-  private groups: ICustomerGroup[] = []
+  private customerStreets: IStreetModel[] = []
+  private groups: IGroup[] = []
   private openPasportDlg = false
   private openPasswordDlg = false
   private taskFormDialog = false
@@ -202,18 +210,20 @@ export default class extends mixins(FormMixin) {
 
   @Watch('$store.state.customer', { deep: true })
   private onChangedId() {
+    const frm = this.$store.state.customer as ICustomer
     this.frmMod = {
-      username: CustomerModule.username,
-      telephone: CustomerModule.telephone,
-      fio: CustomerModule.fio,
-      birth_day: CustomerModule.birth_day,
-      group: CustomerModule.group,
-      street: CustomerModule.street === 0 ? null : CustomerModule.street,
-      house: CustomerModule.house,
-      is_active: CustomerModule.is_active,
-      is_dynamic_ip: CustomerModule.is_dynamic_ip,
-      gateway: CustomerModule.gateway,
-      description: CustomerModule.description
+      username: frm.username,
+      telephone: frm.telephone,
+      fio: frm.fio,
+      birth_day: frm.birth_day,
+      group: frm.group,
+      locality: frm.locality,
+      street: frm.street === 0 ? null : frm.street,
+      house: frm.house,
+      is_active: frm.is_active,
+      is_dynamic_ip: frm.is_dynamic_ip,
+      // gateway: frm.gateway,
+      description: frm.description
     }
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm
   }
@@ -229,7 +239,7 @@ export default class extends mixins(FormMixin) {
       const { data } = await getStreets({
         page: 1,
         page_size: 0,
-        group: this.$store.state.customer.group
+        locality: this.$store.state.customer.group
       }) as any
       this.customerStreets = data
     } catch (err) {
@@ -242,7 +252,7 @@ export default class extends mixins(FormMixin) {
   private async loadGroups() {
     this.isGroupLoading = true
     try {
-      const { data } = await getCustomerGroups() as any
+      const { data } = await getGroups() as any
       this.groups = data
     } catch (err) {
       this.$message.error(err)
@@ -273,10 +283,10 @@ export default class extends mixins(FormMixin) {
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
       try {
-        const currGroup = this.$store.state.customer.group
+        const currLoc = this.$store.state.customer.locality
         await CustomerModule.DelCustomer()
         this.$message.success('Учётка удалена')
-        this.$router.push({ name: 'customersList', params: { groupId: currGroup.toString() } })
+        this.$router.push({ name: 'customersList', params: { localityId: currLoc.toString() } })
       } catch (err) {
         this.$message.error(err)
       }

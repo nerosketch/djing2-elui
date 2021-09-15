@@ -7,18 +7,17 @@ const customerRoutes: RouteConfig = {
   children: [
     {
       path: '',
-      component: () => import(/* webpackChunkName: "customer-groups" */ '@/views/customers/customers-groups.vue'),
-      name: 'customersGroupList',
+      component: () => import(/* webpackChunkName: "customer-locations" */ '@/views/customers/customer-locations.vue'),
       meta: {
         title: 'Абоненты',
         icon: 'el-icon-user-solid'
       }
     },
     {
-      path: 'g:groupId/',
+      path: 'g:localityId/',
       name: 'customersList',
       component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customers-list.vue'),
-      props: ({ params }) => ({ groupId: Number(params.groupId || 0) }),
+      props: ({ params }) => ({ localityId: Number(params.localityId || 0) }),
       meta: { hidden: true }
     },
     {

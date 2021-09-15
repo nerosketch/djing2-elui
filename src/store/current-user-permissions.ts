@@ -26,11 +26,6 @@ export class CurrentPermissions extends VuexModule {
     delete_customer: false,
     view_customer: false,
 
-    add_customerstreet: false,
-    change_customerstreet: false,
-    delete_customerstreet: false,
-    view_customerstreet: false,
-
     can_buy_service: false,
     can_add_balance: false,
     can_ping: false,
@@ -170,6 +165,13 @@ export class CurrentPermissions extends VuexModule {
     view_periodicpay: false,
     change_periodicpay: false,
     delete_periodicpay: false
+  }
+
+  public addresses = {
+    add_streetmodel: false,
+    view_streetmodel: false,
+    change_streetmodel: false,
+    delete_streetmodel: false
   }
 
   @Mutation

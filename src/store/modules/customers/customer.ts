@@ -28,6 +28,8 @@ class Customer extends VuexModule implements ICustomer {
   create_date = ''
   group = 0
   group_title = ''
+  locality = 0
+  locality_title = ''
   balance = 0.0
   description = ''
   street = 0
@@ -68,6 +70,8 @@ class Customer extends VuexModule implements ICustomer {
     this.create_date = data.create_date
     this.group = data.group
     this.group_title = data.group_title!
+    this.locality = data.locality
+    this.locality_title = data.locality_title
     this.balance = data.balance
     this.description = data.description
     this.street = data.street
@@ -105,6 +109,8 @@ class Customer extends VuexModule implements ICustomer {
     this.create_date = ''
     this.group = 0
     this.group_title = ''
+    this.locality = 0
+    this.locality_title = ''
     this.balance = 0.0
     this.description = ''
     this.street = 0

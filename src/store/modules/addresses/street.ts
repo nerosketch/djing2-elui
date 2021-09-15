@@ -1,26 +1,26 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { ICustomerStreet } from '@/api/customers/types'
-import { getStreet, addStreet, changeStreet, delStreet } from '@/api/customers/req'
+import { IStreetModel } from '@/api/addresses/types'
+import { addStreet, changeStreet, delStreet, getStreet } from '@/api/addresses/req'
 
 @Module({ dynamic: true, store, name: 'street' })
-class CustomerStreet extends VuexModule implements ICustomerStreet {
+class Street extends VuexModule implements IStreetModel {
   public id = 0
   public name = ''
-  public group = 0
+  public locality = 0
 
   @Mutation
   private RESET_ALL_STREET() {
     this.id = 0
     this.name = ''
-    this.group = 0
+    this.locality = 0
   }
 
   @Mutation
-  private SET_ALL_STREET(street: ICustomerStreet) {
+  private SET_ALL_STREET(street: IStreetModel) {
     this.id = street.id
     this.name = street.name
-    this.group = street.group
+    this.locality = street.locality
   }
 
   @Mutation
@@ -56,4 +56,4 @@ class CustomerStreet extends VuexModule implements ICustomerStreet {
   }
 }
 
-export const CustomerStreetModule = getModule(CustomerStreet)
+export const StreetModule = getModule(Street)

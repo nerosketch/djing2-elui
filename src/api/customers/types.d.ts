@@ -4,9 +4,9 @@ import {
   IDRFListResponse,
   IDRFRequestListParameters
 } from '@/api/types'
-import { IGroup } from '@/api/groups/types'
 import { IService } from '@/api/services/types'
 import { AxiosPromise } from 'axios'
+import { ILocalityModel } from '../addresses/types'
 
 // ICustomer
 export interface ICustomer {
@@ -18,6 +18,8 @@ export interface ICustomer {
   create_date: string
   group: number
   group_title?: string
+  locality: number
+  locality_title: string
   balance: number
   description: string
   street: number
@@ -58,16 +60,16 @@ export type ICustomerOnPortAxoisPromise = AxiosPromise<ICustomerOnPort>
 export type ICustomersOnPortAxoisPromise = AxiosPromise<ICustomerOnPort[]>
 
 export interface IDRFRequestListParametersCustomer extends IDRFRequestListParameters {
-  group: number
+  locality: number
   street?: number
 }
 
-export interface ICustomerGroup extends IGroup {
+export interface ICustomerLocality extends ILocalityModel {
   usercount: number
 }
-export type ICustomerGroupList = IDRFListResponse<ICustomerGroup>
-export type ICustomerGroupAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerGroup>
-export type ICustomerGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerGroupList>
+export type ICustomerLocalityList = IDRFListResponse<ICustomerLocality>
+export type ICustomerLocalityAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLocality>
+export type ICustomerLocalityListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLocalityList>
 
 export interface IServiceUser {
   id: number
@@ -85,11 +87,12 @@ export interface ICustomerFrm {
   fio: string
   birth_day: string | null
   group: number
+  locality: number
   street: number | null
   house: string
   is_active: boolean
   is_dynamic_ip: boolean
-  gateway: number
+  // gateway: number
   description: string
 }
 
@@ -121,16 +124,6 @@ export interface ICustomerLog {
 }
 export type ICustomerLogList = IDRFListResponse<ICustomerLog>
 export type ICustomerLogListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLogList>
-
-// ICustomerStreet
-export interface ICustomerStreet {
-  id: number
-  name: string
-  group: number
-}
-export type ICustomerStreetList = IDRFListResponse<ICustomerStreet>
-export type ICustomerStreetAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerStreet>
-export type ICustomerStreetListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerStreetList>
 
 // ICustomerService
 export interface ICustomerService {

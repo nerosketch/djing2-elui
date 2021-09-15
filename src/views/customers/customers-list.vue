@@ -72,12 +72,12 @@
               el-button(
                 type='success' icon='el-icon-plus'
                 @click="addStreetDialog=true"
-                :disabled="!$perms.customers.add_customerstreet"
+                :disabled="!$perms.addresses.add_streetmodel"
               ) Доб.
               el-button(
                 type='primary' icon='el-icon-edit'
                 @click="editStreetsDialog=true"
-                :disabled="!$perms.customers.change_customerstreet"
+                :disabled="!$perms.addresses.change_streetmodel"
               ) Изм.
 
     el-dialog(
@@ -87,7 +87,7 @@
       :close-on-click-modal="false"
     )
       new-customer-form(
-        :selectedGroup='groupId'
+        :selectedLocality='localityId'
         :customerStreets='streets'
         v-on:done="addFrmDone"
       )
@@ -98,7 +98,7 @@
     )
       new-street-form(
         v-on:done="addStreetDone"
-        :groupId="groupId"
+        :localityId="localityId"
       )
     el-dialog(
       :visible.sync="editStreetsDialog"
@@ -107,7 +107,7 @@
       :close-on-click-modal="false"
     )
       edit-streets(
-        :groupId="groupId"
+        :localityId="localityId"
         :extStreets="streets"
         v-on:done="editStreetDone"
       )
@@ -156,11 +156,9 @@ import {
 import {
   ICustomer,
   IDRFRequestListParametersCustomer,
-  ICustomerStreet
 } from '@/api/customers/types'
 import {
   getCustomers,
-  getStreets,
   setCustomerObjectsPerms,
   getCustomerObjectsPerms,
   getCustomerSelectedObjectPerms
@@ -171,9 +169,11 @@ import List from '@/components/List/index.vue'
 import NewStreetForm from './street/new-street-form.vue'
 import EditStreets from './street/edit-streets.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { GroupModule } from '@/store/modules/groups'
 import PingProfile from './ping-profile.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
+import { getStreets } from '@/api/addresses/req'
+import { IStreetModel } from '@/api/addresses/types'
+import { LocalityModule } from '@/store/modules/addresses/locality'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -194,7 +194,7 @@ interface ITableRowClassName {
   }
 })
 export default class extends Vue {
-  @Prop({ default: 0 }) private groupId!: number
+  @Prop({ default: 0 }) private localityId!: number
   private addCustomerDialog = false
   private addStreetDialog = false
   private editStreetsDialog = false
@@ -255,11 +255,6 @@ export default class extends Vue {
       'min-width': 100
     },
     {
-      prop: 'gateway_title',
-      label: 'Шлюз',
-      'min-width': 170
-    },
-    {
       prop: 'marker_icons',
       label: 'Маркер'
     },
@@ -270,7 +265,7 @@ export default class extends Vue {
     }
   ]
 
-  private streets: ICustomerStreet[] = []
+  private streets: IStreetModel[] = []
 
   private streetsLoading = false
 
@@ -280,8 +275,8 @@ export default class extends Vue {
       const { data } = await getStreets({
         page: 1,
         page_size: 0,
-        group: this.groupId
-      }) as any
+        locality: this.localityId
+      } as any) as any
       this.streets = data
     } catch (err) {
       this.$message.error(err)
@@ -295,8 +290,8 @@ export default class extends Vue {
     let r
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
-        group: this.groupId,
-        fields: 'id,username,fio,street_name,house,telephone,current_service__service__title,balance,gateway_title,is_active,lease_count,marker_icons'
+        locality: this.localityId,
+        fields: 'id,username,fio,street_name,house,telephone,current_service__service__title,balance,is_active,lease_count,marker_icons'
       })
       if (street) {
         newParams.street = Number(street)
@@ -314,7 +309,7 @@ export default class extends Vue {
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
-  private onStreetClick(item: ICustomerStreet) {
+  private onStreetClick(item: IStreetModel) {
     let qr = Object.assign({}, this.$route.query) as Record<string, any>
     const qstreet = qr.street
     delete qr.street
@@ -340,7 +335,7 @@ export default class extends Vue {
     return this.streets.findIndex(str => str.id == strId)
   }
 
-  private addStreetDone(newStreet: ICustomerStreet) {
+  private addStreetDone(newStreet: IStreetModel) {
     this.$message.success(`Улица ${newStreet.name} добавлена.`)
     this.addStreetDialog = false
     this.loadStreets()
@@ -359,8 +354,8 @@ export default class extends Vue {
 
   // Breadcrumbs
   private async setCrumbs() {
-    if (this.$store.state.group.id !== this.groupId) {
-      await GroupModule.GetGroup(this.groupId)
+    if (this.$store.state.locality.id !== this.localityId) {
+      await LocalityModule.GetLocality(this.localityId)
     }
     BreadcrumbsModule.SetCrumbs([
       {
@@ -374,7 +369,7 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: this.$store.state.group.title
+          title: this.$store.state.locality.title
         }
       }
     ] as any[])

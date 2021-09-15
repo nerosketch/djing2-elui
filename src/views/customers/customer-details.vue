@@ -71,7 +71,7 @@ export default class extends Vue {
   private async loadCustomer() {
     this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
-    this.setCrumbs(this.$store.state.customer.group)
+    this.setCrumbs(this.$store.state.customer.locality)
     this.loaded = true
     document.title = this.$store.state.customer.full_name || 'Абонент'
   }
@@ -83,8 +83,8 @@ export default class extends Vue {
     }
   }
 
-  private async setCrumbs(grpId: number) {
-    if (grpId === 0) return
+  private async setCrumbs(localityId: number) {
+    if (localityId === 0) return
     await BreadcrumbsModule.SetCrumbs([
       {
         path: '/customers/',
@@ -94,10 +94,10 @@ export default class extends Vue {
         }
       },
       {
-        path: { name: 'customersList', params: { groupId: grpId } },
+        path: { name: 'customersList', params: { localityId: localityId } },
         meta: {
           hidden: true,
-          title: this.$store.state.customer.group_title || '-'
+          title: this.$store.state.customer.locality_title || '-'
         }
       },
       {
