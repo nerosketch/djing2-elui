@@ -9,13 +9,13 @@ class Locality extends VuexModule implements ILocalityModel {
   public title = ''
 
   @Mutation
-  private RESET_ALL_LOCALITY() {
+  public RESET_ALL_LOCALITY() {
     this.id = 0
     this.title = ''
   }
 
   @Mutation
-  private SET_ALL_LOCALITY(locality: ILocalityModel) {
+  public SET_ALL_LOCALITY(locality: ILocalityModel) {
     this.id = locality.id
     this.title = locality.title
   }

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { IDRFRequestListParametersCustomer } from "../customers/types"
+import { IDRFRequestListParameters } from '@/api/types'
 import {
   ILocalityModel,
   ILocalityModelAxoisResponsePromise,
@@ -13,7 +13,7 @@ import {
 
 
 // ILocalityModel
-export const getLocalities = (params?: IDRFRequestListParametersCustomer): ILocalityModelListAxiosResponsePromise =>
+export const getLocalities = (params?: IDRFRequestListParameters): ILocalityModelListAxiosResponsePromise =>
   request.get<ILocalityModelList>('/addrs/', { params })
 
 export const getLocality = (id: number): ILocalityModelAxoisResponsePromise =>
@@ -29,7 +29,7 @@ export const changeLocality = (id: number, info: object): ILocalityModelAxoisRes
   request.patch<ILocalityModel>(`/addrs/${id}/`, info)
 
 // IStreetModel
-export const getStreets = (params?: IDRFRequestListParametersCustomer): IStreetModelListAxiosResponsePromise =>
+export const getStreets = (params?: IDRFRequestListParameters): IStreetModelListAxiosResponsePromise =>
   request.get<IStreetModelList>('/addrs/street/', { params })
 
 export const getStreet = (id: number): IStreetModelAxoisResponsePromise =>

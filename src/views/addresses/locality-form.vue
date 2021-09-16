@@ -23,23 +23,23 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { GroupModule } from '@/store/modules/groups/index'
 import { Form } from 'element-ui'
+import { LocalityModule } from '@/store/modules/addresses/locality'
 
 @Component({
-  name: 'GroupForm'
+  name: 'LocalityForm'
 })
 export default class extends Vue {
   private isLoading = false
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название группы надо указать', trigger: 'blur' }
+      { required: true, message: 'Название надо указать', trigger: 'blur' }
     ]
   }
 
-  @Watch('$store.state.group.title')
-  private onChangeGroup(title: string) {
+  @Watch('$store.state.locality.title')
+  private onChangeLoc(title: string) {
     this.frmMod.title = title
   }
 
@@ -47,11 +47,11 @@ export default class extends Vue {
     title: ''
   }
   get isNew() {
-    return GroupModule.id === 0
+    return this.$store.state.locality.id === 0
   }
 
   created() {
-    this.onChangeGroup(this.$store.state.group.title)
+    this.onChangeLoc(this.$store.state.locality.title)
   }
 
   private onSubmit() {
@@ -60,9 +60,9 @@ export default class extends Vue {
         this.isLoading = true
         let newDat
         if (this.isNew) {
-          newDat = await GroupModule.AddGroup(this.frmMod)
+          newDat = await LocalityModule.AddLocality(this.frmMod)
         } else {
-          newDat = await GroupModule.PatchGroup(this.frmMod)
+          newDat = await LocalityModule.PatchLocality(this.frmMod)
         }
         this.isLoading = false
         this.$emit('done', newDat)
