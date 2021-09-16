@@ -10,22 +10,22 @@
           el-link(style="float: right" icon='el-icon-edit' @click="openDevForm")
         .text.item.list-item IP адрес: {{ device.ip_address || '-' }}
         .text.item.list-item
-          b Мак: 
-          | {{ device.mac_addr }}
+          b Мак:
+          |  {{ device.mac_addr }}
         .text.item.list-item
-          b Описание: 
-          | {{ device.comment }}
+          b Описание:
+          |  {{ device.comment }}
         .text.item.list-item
-          b Родительское устройство: 
+          b Родительское устройство:
           router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
-            el-link(type="primary") {{ device.parent_dev_name }}
+            el-link(type="primary")  {{ device.parent_dev_name }}
         .text.item.list-item(v-if="device.iface_name")
-          b Интерфейс: 
-          | {{ device.iface_name }}
+          b Интерфейс:
+          |  {{ device.iface_name }}
         .text.item.list-item
-          b Прикреплённые абоненты: 
+          b Прикреплённые абоненты:
           router-link(v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.id }}")
-            el-link(type="primary") {{ ab.full_name }}
+            el-link(type="primary")  {{ ab.full_name }}
         el-button-group
           delete-from-olt-btn(:devId="device.id" v-on:done="getDetails")
           el-button(
@@ -51,13 +51,13 @@
             i.icon-big(:class="iconStatusClass")
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
-              b Уровень сигнала: 
+              b Уровень сигнала:
               | {{ onuDetails.signal }}
             .text.item.list-item
-              b Мак адрес с OLT: 
+              b Мак адрес с OLT:
               | {{ macFromOlt }}
             .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
-              b {{ inf[0] }}: 
+              b {{ inf[0] }}:
               | {{ inf[1] }}
         el-row(v-else)
           el-col Нет информации об ONU. (Поле "Доп. инфо для snmp" в форме редактирования устройства). Возможно, onu не зарегистрирована.
@@ -136,7 +136,7 @@ export default class extends Vue {
       await DeviceModule.DelDevice(this.device.id)
       this.$message.success('Удалена')
       if (this.device.group) {
-        this.$router.push({ name: 'devicesList', params: { groupId: this.device.group.toString() } })
+        this.$router.push({ name: 'devicesList', params: { localityId: this.device.locality.toString() } })
       } else {
         this.$router.push('/devices')
       }

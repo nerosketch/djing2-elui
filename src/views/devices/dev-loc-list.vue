@@ -2,37 +2,33 @@
   .app-container
     datatable(
       :columns="tableColumns"
-      :getData="loadDevGroups"
+      :getData="loadDevLocalities"
       :heightDiff='96'
-      widthStorageNamePrefix='devGroups'
-      ref='table'
+      widthStorageNamePrefix='devLocalities'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{name: 'devicesList', params:{ groupId: row.id }}") {{ row.title }}
+        router-link(:to="{name: 'devicesList', params:{ localityId: row.id }}") {{ row.title }}
 
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
-import { getDevGroups } from '@/api/devices/req'
-import { IDevGroup } from '@/api/devices/types'
+import { getDevLocalities } from '@/api/devices/req'
+import { IDevLocality } from '@/api/devices/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { RouteRecord } from 'vue-router'
 
-class DataTableComp extends DataTable<IDevGroup> {}
+class DataTableComp extends DataTable<IDevLocality> {}
 
 @Component({
-  name: 'DevGroupList',
+  name: 'DevLocList',
   components: {
     'datatable': DataTableComp
   }
 })
 export default class extends Vue {
-  public readonly $refs!: {
-    table: DataTableComp
-  }
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
@@ -46,11 +42,11 @@ export default class extends Vue {
     }
   ]
 
-  private loadDevGroups(params?: IDRFRequestListParameters) {
+  private loadDevLocalities(params?: IDRFRequestListParameters) {
     if (params) {
       params['fields'] = 'id,title,device_count'
     }
-    return getDevGroups(params)
+    return getDevLocalities(params)
   }
 
   // Breadcrumbs

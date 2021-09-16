@@ -43,6 +43,10 @@ export interface IDevice {
   code: string
   sites?: number[]
   create_time: string
+  locality: number
+  locality_title: string
+  street: number
+  street_name: string
   place: string
 }
 export interface IDeviceInterace extends IDevice {
@@ -54,7 +58,7 @@ export interface IDeviceInterace extends IDevice {
 }
 
 export interface IDRFRequestListParametersDevGroup extends IDRFRequestListParameters {
-  group: number
+  locality: number
 }
 
 export type IDeviceList = IDRFListResponse<IDevice>
@@ -79,13 +83,13 @@ export interface IDevTogglePortRequest {
   port_snmp_num: number
 }
 
-export interface IDevGroup {
+export interface IDevLocality {
   id: number
   title: string
   device_count: number
 }
-export type IDevGroupList = IDRFListResponse<IDevGroup>
-export type IDevGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevGroupList>
+export type IDevLocalityList = IDRFListResponse<IDevLocality>
+export type IDevLocalityListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevLocalityList>
 
 export interface IScannedPort {
   num: number

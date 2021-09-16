@@ -56,6 +56,17 @@
         format="d.MM.yyyy HH:mm"
       )
     el-form-item(
+      label="Локация"
+    )
+      locality-choice(v-model="frmMod.locality")
+    el-form-item(
+      label="Улица"
+    )
+      locality-street-choice(
+        :localityId='localityId || $store.state.devicemodule.locality'
+        v-model='frmMod.street'
+      )
+    el-form-item(
       label="Адрес установки"
     )
       el-input(v-model="frmMod.place")
@@ -77,7 +88,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
@@ -85,15 +96,21 @@ import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import FormMixin from '@/utils/forms'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
+import LocalityStreetChoice from '@/components/Locality/street-choice.vue'
+import LocalityChoice from '@/components/Locality/locality-choice.vue'
 
 @Component({
   name: 'DevForm',
   components: {
     DeviceAutocompleteField,
-    GroupsChoice
+    GroupsChoice,
+    LocalityStreetChoice,
+    LocalityChoice,
   }
 })
 export default class extends mixins(FormMixin) {
+  @Prop({ default: null }) private localityId!: number | null
+
   private loading = DeviceModule.loadProgress
 
   private frmRules = {
@@ -130,6 +147,8 @@ export default class extends mixins(FormMixin) {
       parent_dev: DeviceModule.parent_dev,
       snmp_extra: DeviceModule.snmp_extra,
       create_time: DeviceModule.create_time,
+      locality: this.localityId || DeviceModule.locality,
+      street: DeviceModule.street,
       place: DeviceModule.place
     }
   }

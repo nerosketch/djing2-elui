@@ -23,8 +23,8 @@ import PonBdcomOlt from './pon/pon-bdcom-olt.vue'
 import SwitchView from './switch-view.vue'
 import PonOnu from './pon/pon-onu.vue'
 import OltZte from './pon/gpon/olt-zte.vue'
-import { GroupModule } from '@/store/modules/groups'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { LocalityModule } from '@/store/modules/addresses/locality'
 
 @Component({
   name: 'DeviceView',
@@ -65,8 +65,8 @@ export default class extends Vue {
     this.getDevice().then(dev => {
       if (dev) {
         document.title = dev.comment || dev.ip_address
+        this.onLocCh(dev.locality)
       }
-      this.onGrpCh(DeviceModule.group)
     })
     document.addEventListener('keydown', this.onKeyPress)
   }
@@ -81,10 +81,10 @@ export default class extends Vue {
   }
 
   // Breadcrumbs
-  @Watch('$store.state.devicemodule.group')
-  private async onGrpCh(grpId: number) {
-    if (grpId > 0) {
-      await GroupModule.GetGroup(grpId)
+  @Watch('$store.state.devicemodule.locality')
+  private async onLocCh(locId: number) {
+    if (locId > 0) {
+      await LocalityModule.GetLocality(locId)
       await BreadcrumbsModule.SetCrumbs([
         {
           path: '/devices',
@@ -94,10 +94,10 @@ export default class extends Vue {
           }
         },
         {
-          path: { name: 'devicesList', params: { groupId: grpId } },
+          path: { name: 'devicesList', params: { localityId: locId } },
           meta: {
             hidden: true,
-            title: this.grpName
+            title: this.$store.state.locality.title
           }
         },
         {
@@ -109,9 +109,6 @@ export default class extends Vue {
         }
       ] as any[])
     }
-  }
-  get grpName() {
-    return GroupModule.title
   }
   // End Breadcrumbs
 }

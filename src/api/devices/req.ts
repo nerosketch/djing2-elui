@@ -11,7 +11,7 @@ import {
   IDevice, IDeviceList, IDeviceAxoisResponsePromise,
   IDeviceListAxiosResponsePromise,
   IPort, IPortAxoisResponsePromise,
-  IDevGroupList, IDevGroupListAxiosResponsePromise,
+  IDevLocalityList, IDevLocalityListAxiosResponsePromise,
   IDRFRequestListParametersDevGroup,
   IDevMacPort, IDevMacPortListAxiosResponsePromise,
   IDevVlan, IDevVlanListAxiosResponsePromise,
@@ -122,8 +122,8 @@ export const scanPortVlans = (portId: number): IDevVlanListAxiosResponsePromise 
   request.get<IDevVlan[]>(`${basePortUrl}${portId}/scan_vlan/`)
 
 // IDevGroup
-export const getDevGroups = (params?: IDRFRequestListParameters): IDevGroupListAxiosResponsePromise =>
-  request.get<IDevGroupList>('/devices/groups/', { params })
+export const getDevLocalities = (params?: IDRFRequestListParameters): IDevLocalityListAxiosResponsePromise =>
+  request.get<IDevLocalityList>('/devices/localities/', { params })
 
 export const getDevObjectsPerms = (devId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
   request.get<IObjectGroupPermsInitial>(`${baseDevUrl}${devId}/get_object_perms/`)

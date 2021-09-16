@@ -63,6 +63,7 @@
       dev-form(
         v-if="dialogVisible"
         v-on:done="frmDone"
+        :localityId="localityId"
       )
     el-dialog(
       title="Добавить устройство"
@@ -73,7 +74,7 @@
         v-if="dialogNewDev"
         v-on:done="frmNewDevDone"
         v-on:err="dialogNewDev=false"
-        :initialGroup="groupId"
+        :initialLocality="localityId"
       )
     el-dialog(
       title="Кто имеет права на устройство"
@@ -111,6 +112,7 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { GroupModule } from '@/store/modules/groups'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
+import { LocalityModule } from '@/store/modules/addresses/locality'
 
 class DataTableComp extends DataTable<IDevice> {}
 
@@ -126,7 +128,7 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
-  @Prop({ default: 0 }) private groupId!: number
+  @Prop({ default: 0 }) private localityId!: number
   private dialogVisible = false
   private dialogNewDev = false
   private permsDialog = false
@@ -191,7 +193,7 @@ export default class extends Vue {
     return getDevices({
       page: params.page,
       page_size: params.page_size,
-      group: this.groupId,
+      locality: this.localityId,
       ordering: params.ordering,
       fields: 'id,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group,create_time,place'
     })
@@ -221,31 +223,33 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = `Оборудование - ${this.grpName}`
-    this.onGrpCh(this.groupId)
+    document.title = `Оборудование - ${this.locName}`
+    this.onGrpLoc(this.localityId)
   }
-  @Watch('groupId')
-  private async onGrpCh(grpId: number) {
-    await GroupModule.GetGroup(grpId)
-    await BreadcrumbsModule.SetCrumbs([
-      {
-        path: '/devices',
-        meta: {
-          hidden: true,
-          title: 'Оборудование'
+  @Watch('localityId')
+  private async onGrpLoc(locId: number) {
+    if (locId > 0) {
+      await LocalityModule.GetLocality(locId)
+      await BreadcrumbsModule.SetCrumbs([
+        {
+          path: '/devices',
+          meta: {
+            hidden: true,
+            title: 'Оборудование'
+          }
+        },
+        {
+          path: '',
+          meta: {
+            hidden: true,
+            title: this.locName
+          }
         }
-      },
-      {
-        path: '',
-        meta: {
-          hidden: true,
-          title: this.grpName
-        }
-      }
-    ] as any[])
+      ] as any[])
+    }
   }
-  get grpName() {
-    return GroupModule.title
+  get locName() {
+    return LocalityModule.title
   }
   // End Breadcrumbs
 
