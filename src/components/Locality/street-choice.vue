@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="localValue" :loading='loading' :disabled="streets.length == 0")
+  el-select(v-model="localValue" :loading='loading' :disabled="streets.length == 0" clearable)
     el-option(
       v-for="(s, i) in streets"
       :key="i"

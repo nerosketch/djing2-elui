@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="localValue" :loading='loading' :disabled="groups.length == 0")
+  el-select(v-model="localValue" :loading='loading' :disabled="groups.length == 0" clearable)
     el-option(
       v-for="(g, i) in groups"
       :key="i"

@@ -187,8 +187,8 @@ export default class extends Vue {
   private sitesProgress = 0
   private editFieldsVisible = false
   private filterForm = {
-    group: 0,
-    street: 0
+    group: Number(this.$route.query.group),
+    street: Number(this.$route.query.street)
   }
 
   private tableColumns: IDataTableColumn[] = [
@@ -249,7 +249,8 @@ export default class extends Vue {
   ]
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
-    const street = this.routerQueryStreetGetter
+    const street = this.$route.query.street
+    const group = this.$route.query.group
     let r
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
@@ -258,6 +259,9 @@ export default class extends Vue {
       })
       if (street) {
         newParams.street = Number(street)
+      }
+      if (group) {
+        newParams.group = Number(group)
       }
       r = await getCustomers(newParams)
     } else {
@@ -284,11 +288,25 @@ export default class extends Vue {
     this.$router.push({ path: this.$route.path, query: qr })
   }
 
-  get routerQueryStreetGetter(): string | undefined {
-    return this.$route.query.street as string | undefined
+  @Watch('filterForm.group')
+  private onGroupChange(groupId: number) {
+    let qr = Object.assign({}, this.$route.query) as Record<string, any>
+    const qgroup = qr.group
+    delete qr.group
+
+    if (groupId != qgroup) {
+      qr['group'] = groupId
+    }
+    this.$router.push({ path: this.$route.path, query: qr })
   }
-  @Watch('routerQueryStreetGetter')
-  private onChRt() {
+
+  @Watch('$route.query.street')
+  private onChStreet() {
+    this.$refs.tbl.GetTableData()
+  }
+
+  @Watch('$route.query.group')
+  private onChGroup() {
     this.$refs.tbl.GetTableData()
   }
 
