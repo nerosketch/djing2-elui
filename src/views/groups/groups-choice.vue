@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="localValue" :loading='loading' :disabled="groups.length == 0" clearable)
+  el-select(v-model="localValue" :loading='loading' :disabled="groups.length == 0" clearable :multiple="multiple")
     el-option(
       v-for="(g, i) in groups"
       :key="i"
@@ -18,6 +18,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private value!: number
+  @Prop({ default: false }) private multiple!: boolean
   
   private groups: IGroup[] = []
   private localValue = this.value

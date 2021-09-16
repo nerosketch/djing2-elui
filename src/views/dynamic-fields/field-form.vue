@@ -24,13 +24,7 @@
     el-form-item(
       label="Группы"
     )
-      el-select(v-model="frmMod.groups" multiple)
-        el-option(
-          v-for="(grp, i) in groups"
-          :key="i"
-          :label="grp.title"
-          :value="grp.id"
-        )
+      groups-choice(v-model="frmMod.groups" multiple)
     el-form-item(
       label="Системный тэг"
     )
@@ -54,12 +48,11 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import {DynamicFieldModule} from '@/store/modules/dynamicfields/dynamic-field'
-import { getGroups } from '@/api/groups/req'
-import { IGroup } from '@/api/groups/types'
 import { IDynamicField, IFieldChoiceType } from '@/api/dynamic-fields/types'
 import { getFieldTypeChoices } from '@/api/dynamic-fields/req'
 import SystemTagsInput from './system-tags-input.vue'
 import { regexpVal } from '@/utils/validate'
+
 
 export const _userTagsValidator = regexpVal(/^(\w+\,?)+$/s)
 
@@ -91,23 +84,11 @@ export default class extends Vue {
     this.frmMod.groups = field.groups
   }
 
-  private groups: IGroup[] = []
-
   private fieldTypeChoices: IFieldChoiceType[] = []
 
   private async loadFieldTypeChoices() {
     const { data } = await getFieldTypeChoices()
     this.fieldTypeChoices = data
-  }
-
-  private async loadGroups() {
-    this.isLoading = true
-    try {
-      const { data } = await getGroups()
-      this.groups = data as IGroup[]
-    } finally {
-      this.isLoading = false
-    }
   }
 
   private get isNew() {
@@ -140,7 +121,6 @@ export default class extends Vue {
   }
 
   created() {
-    this.loadGroups()
     this.loadFieldTypeChoices()
     this.onChangedField(this.$store.state.dynamicfield)
   }

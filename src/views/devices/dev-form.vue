@@ -38,13 +38,7 @@
     el-form-item(
       label="Группа"
     )
-      el-select(v-model="frmMod.group")
-        el-option(
-          v-for="g in groups"
-          :key="g.id"
-          :label="g.title"
-          :value="g.id"
-        )
+      groups-choice(v-model="frmMod.group")
     el-form-item(
       label="Родит. устройство"
     )
@@ -88,20 +82,19 @@ import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
-import { IGroup } from '@/api/groups/types'
-import { getGroups } from '@/api/groups/req'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import FormMixin from '@/utils/forms'
+import GroupsChoice from '@/view/groups/groups-choice.vue'
 
 @Component({
   name: 'DevForm',
   components: {
-    DeviceAutocompleteField
+    DeviceAutocompleteField,
+    GroupsChoice
   }
 })
 export default class extends mixins(FormMixin) {
   private loading = DeviceModule.loadProgress
-  private groups: IGroup[] = []
 
   private frmRules = {
     ip_address: [
@@ -170,24 +163,10 @@ export default class extends mixins(FormMixin) {
   }
 
   created() {
-    this.loadGroups()
     DeviceModule.getDeviceTypeNames().then(d => {
       this.deviceTypeNames = d
     })
     this.frmInitial = Object.assign({}, this.frmMod)
-  }
-
-  private async loadGroups() {
-    try {
-      const { data } = await getGroups({
-        page: 1,
-        page_size: 0,
-        fields: 'id,title'
-      }) as any
-      this.groups = data
-    } catch (err) {
-      this.$message.error(err)
-    }
   }
 }
 </script>

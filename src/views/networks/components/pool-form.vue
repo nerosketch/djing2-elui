@@ -24,15 +24,8 @@
       el-input(v-model="frmMod.ip_end")
     el-form-item(
       label="Группы"
-      prop='groups'
     )
-      el-select(v-model="frmMod.groups" multiple)
-        el-option(
-          v-for="g in groups"
-          :key="g.id"
-          :label="g.title"
-          :value="g.id"
-        )
+      groups-choice(v-model="frmMod.groups" multiple)
     el-form-item(
       label="Шлюз"
       prop='gateway'
@@ -40,7 +33,6 @@
       el-input(v-model="frmMod.gateway")
     el-form-item(
       label="Vlan"
-      prop="vlan_if"
     )
       el-select(v-model="frmMod.vlan_if" v-loading='vlanLoading')
         el-option(
@@ -51,7 +43,6 @@
         )
     el-form-item(
       label='Тип сети'
-      prop='kind'
     )
       el-select(v-model="frmMod.kind")
         el-option(
@@ -62,7 +53,6 @@
         )
     el-form-item(
       label='Динамический'
-      prop='is_dynamic'
     )
       el-checkbox(v-model="frmMod.is_dynamic") {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
     el-form-item(
@@ -85,18 +75,19 @@ import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { ipAddrValidator, ipAddrMaskValidator } from '@/utils/validate'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
-import { IGroup } from '@/api/groups/types'
-import { getGroups } from '@/api/groups/req'
 import FormMixin from '@/utils/forms'
 import VlanMixin from './vlan-mixin'
 import { INetworkIpPool } from '@/api/networks/types'
+import GroupsChoice from '@/view/groups/groups-choice.vue'
 
 @Component({
-  name: 'pool-form'
+  name: 'pool-form',
+  components: {
+    GroupsChoice
+  }
 })
 export default class extends mixins(FormMixin, VlanMixin) {
   private isLoading = false
-  private groups: IGroup[] = []
 
   private frmRules = {
     network: [
@@ -153,7 +144,6 @@ export default class extends mixins(FormMixin, VlanMixin) {
   }
 
   created() {
-    this.loadGroups()
     this.frmInitial = Object.assign({}, this.frmMod)
     this.loadVlans(undefined, 'id,title,vid')
   }
@@ -179,22 +169,6 @@ export default class extends mixins(FormMixin, VlanMixin) {
         this.$message.error('Исправь ошибки в форме')
       }
     })
-  }
-
-  private async loadGroups() {
-    this.isLoading = true
-    try {
-      const { data } = await getGroups({
-        page: 1,
-        page_size: 0,
-        fields: 'id,title'
-      }) as any
-      this.groups = data
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.isLoading = false
-    }
   }
 }
 </script>
