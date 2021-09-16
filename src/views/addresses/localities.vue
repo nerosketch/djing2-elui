@@ -9,6 +9,10 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
+            icon='el-icon-c-scale-to-original'
+            @click="openStreetEditor(row)"
+          )
+          el-button(
             icon="el-icon-edit"
             @click="openEdit(row)"
             :disabled="!$perms.addresses.change_localitymodel"
@@ -32,6 +36,17 @@
       locality-form(
         v-on:done="frmDone"
       )
+
+    el-dialog(
+      :title="changeStreetTitle"
+      :visible.sync="streetDialogVisible"
+      :close-on-click-modal="false"
+    )
+      street-editor(
+        :localityId="$store.state.locality.id"
+        @done="streetDialogVisible=false"
+      )
+
 </template>
 
 <script lang="ts">
@@ -42,6 +57,7 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { LocalityModule } from '@/store/modules/addresses/locality'
 import { Component, Vue } from 'vue-property-decorator'
 import LocalityForm from './locality-form.vue'
+import StreetEditor from './street-editor.vue'
 
 class DataTableComp extends DataTable<ILocalityModel> {}
 
@@ -50,6 +66,7 @@ class DataTableComp extends DataTable<ILocalityModel> {}
   components: {
     'datatable': DataTableComp,
     LocalityForm,
+    StreetEditor,
   }
 })
 export default class extends Vue {
@@ -57,6 +74,7 @@ export default class extends Vue {
     loctable: DataTableComp
   }
   private dialogVisible = false
+  private streetDialogVisible = false
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -106,6 +124,15 @@ export default class extends Vue {
       this.$message.success(`Населённый пункт "${loc.title}" удалён`)
       this.$refs.loctable.GetTableData()
     })
+  }
+
+  private async openStreetEditor(loc: ILocalityModel) {
+    await LocalityModule.SET_ALL_LOCALITY(loc)
+    this.streetDialogVisible = true
+  }
+
+  private get changeStreetTitle() {
+    return `Изменить улицы для "${ this.$store.state.locality.title }"`
   }
 }
 </script>

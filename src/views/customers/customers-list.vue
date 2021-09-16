@@ -63,29 +63,6 @@
               @click="editFieldsVisible=true"
             ) Поля
 
-      //- el-col(:lg='4' :md='6')
-        list(
-          title="Улицы"
-          :items="streets"
-          :loading='streetsLoading'
-          itemText="name"
-          v-on:itemClick="onStreetChange"
-          :isClickable='true'
-          :initialSelectedNum="routerQueryStreetIndexGetter"
-        )
-          template(v-slot:footer)
-            el-button-group
-              el-button(
-                type='success' icon='el-icon-plus'
-                @click="addStreetDialog=true"
-                :disabled="!$perms.addresses.add_streetmodel"
-              ) Доб.
-              el-button(
-                type='primary' icon='el-icon-edit'
-                @click="editStreetsDialog=true"
-                :disabled="!$perms.addresses.change_streetmodel"
-              ) Изм.
-
     el-dialog(
       title='Добавить абонента'
       :visible.sync='addCustomerDialog'
@@ -132,7 +109,6 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-// import { scrollTo } from '@/utils/scroll-to'
 import {
   IDRFRequestListParameters,
   IObjectGroupPermsInitialAxiosResponsePromise,
@@ -175,8 +151,6 @@ interface ITableRowClassName {
 export default class extends Vue {
   @Prop({ default: 0 }) private localityId!: number
   private addCustomerDialog = false
-  // private addStreetDialog = false
-  // private editStreetsDialog = false
   private permsDialog = false
   public readonly $refs!: {
     tbl: DataTableComp

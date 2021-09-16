@@ -171,7 +171,12 @@ export class CurrentPermissions extends VuexModule {
     add_streetmodel: false,
     view_streetmodel: false,
     change_streetmodel: false,
-    delete_streetmodel: false
+    delete_streetmodel: false,
+
+    add_localitymodel: false,
+    view_localitymodel: false,
+    change_localitymodel: false,
+    delete_localitymodel: false,
   }
 
   @Mutation
