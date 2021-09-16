@@ -10,6 +10,8 @@ import {
   IMessengerSubscriber,
   IBotTypesAxiosPromise,
   IBotType,
+  IMessengerOptionsAxoisResponsePromise,
+  IMessengerOptions,
 } from '@/api/messenger/types'
 import { IDRFRequestListParameters } from '@/api/types'
 
@@ -51,3 +53,9 @@ export const patchMessengerSubscriber = (mId: number, newDat: object): IMessenge
 
 export const deleteMessengerSubscriber = (mId: number) =>
   request.delete(`/messenger/subscriber/${mId}/`)
+
+export const getOptions = (): IMessengerOptionsAxoisResponsePromise =>
+  request.get<IMessengerOptions>('/messenger/options/')
+
+export const setOptions = (options: string[]): IMessengerOptionsAxoisResponsePromise =>
+  request.put<IMessengerOptions>('/messenger/options/')

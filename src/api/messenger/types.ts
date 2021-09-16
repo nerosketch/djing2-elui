@@ -29,3 +29,9 @@ export interface IMessengerSubscriber {
 export type IMessengerSubscriberList = IDRFListResponse<IMessengerSubscriber>
 export type IMessengerSubscriberAxoisResponsePromise = IDRFAxiosResponsePromise<IMessengerSubscriber>
 export type IMessengerSubscriberListAxiosResponsePromise = IDRFAxiosResponsePromise<IMessengerSubscriberList>
+
+export interface IMessengerOptions {
+  profile: number
+  notification_flags: string[]
+}
+export type IMessengerOptionsAxoisResponsePromise = IDRFAxiosResponsePromise<IMessengerOptions>

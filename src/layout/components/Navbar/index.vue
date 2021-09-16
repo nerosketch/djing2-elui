@@ -39,7 +39,7 @@
             router-link(to="/sites" v-if="$perms.is_superuser")
               el-dropdown-item Домены
             router-link(to='/messenger')
-              el-dropdown-item Мессенжеры
+              el-dropdown-item Мессенджеры
             el-dropdown-item(divided)
               span(
                 style="display:block;"
