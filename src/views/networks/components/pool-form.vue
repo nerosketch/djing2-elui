@@ -78,7 +78,7 @@ import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
 import FormMixin from '@/utils/forms'
 import VlanMixin from './vlan-mixin'
 import { INetworkIpPool } from '@/api/networks/types'
-import GroupsChoice from '@/view/groups/groups-choice.vue'
+import GroupsChoice from '@/views/groups/groups-choice.vue'
 
 @Component({
   name: 'pool-form',
