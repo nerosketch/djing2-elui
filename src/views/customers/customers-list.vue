@@ -187,8 +187,8 @@ export default class extends Vue {
   private sitesProgress = 0
   private editFieldsVisible = false
   private filterForm = {
-    group: Number(this.$route.query.group),
-    street: Number(this.$route.query.street)
+    group: Number(this.$route.query.group) || null,
+    street: Number(this.$route.query.street) || null
   }
 
   private tableColumns: IDataTableColumn[] = [
@@ -238,6 +238,10 @@ export default class extends Vue {
       'min-width': 100
     },
     {
+      prop: 'group_title',
+      label: 'Группа',
+    },
+    {
       prop: 'marker_icons',
       label: 'Маркер'
     },
@@ -255,7 +259,7 @@ export default class extends Vue {
     if (params) {
       let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         locality: this.localityId,
-        fields: 'id,username,fio,street_name,house,telephone,current_service__service__title,balance,is_active,lease_count,marker_icons'
+        fields: 'id,username,fio,street_name,house,telephone,current_service__service__title,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (street) {
         newParams.street = Number(street)
