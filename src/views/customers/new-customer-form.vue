@@ -22,13 +22,7 @@
     el-form-item(
       label="Группа"
     )
-      el-select(v-model="frmMod.group")
-        el-option(
-          v-for="grp in groups"
-          :key="grp.id"
-          :label="grp.title"
-          :value="grp.id"
-        )
+      groups-choice(v-model="frmMod.group")
     el-form-item(
       label="Локация"
     )
@@ -37,16 +31,6 @@
       label="Комментарий"
     )
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize)
-    el-form-item(
-      label="Улица"
-    )
-      el-select(v-model="frmMod.street")
-        el-option(
-          v-for="cs in customerStreets"
-          :key="cs.id"
-          :label="cs.name"
-          :value="cs.id"
-        )
     el-form-item(
       label="Дом"
     )
@@ -77,24 +61,19 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerFrm, ICustomer } from '@/api/customers/types'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import CustomerFormFio from './customer-form-fio.vue'
-import { IStreetModel } from '@/api/addresses/types'
 import LocalityChoice from '@/components/Locality/locality-choice.vue'
-import { getGroups } from '@/api/groups/req'
-import { IGroup } from '@/api/groups/types'
+import GroupsChoice from '@/views/groups/groups-choice.vue'
 
 @Component({
   name: 'NewCustomerForm',
   components: {
     CustomerFormFio,
-    LocalityChoice
+    LocalityChoice,
+    GroupsChoice,
   }
 })
 export default class extends Vue {
   private loading = false
-  private groups: IGroup[] = []
-
-  @Prop({ default: () => ([]) })
-  private customerStreets!: IStreetModel[]
 
   @Prop({ default: 0 })
   private selectedLocality!: number
@@ -145,22 +124,9 @@ export default class extends Vue {
   }
 
   created() {
-    this.loadGroups()
     CustomerModule.InitDefaults().then(initialForm => {
       this.frmMod.username = initialForm.username
     })
-  }
-
-  private async loadGroups() {
-    this.loading = true
-    try {
-      const { data } = await getGroups() as any
-      this.groups = data
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.loading = false
-    }
   }
 
   private onSubmit() {

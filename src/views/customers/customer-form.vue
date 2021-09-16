@@ -22,15 +22,11 @@
       tels-input(v-model="frmMod.telephone")
     el-form-item(
       label="Улица"
-      v-loading="isStreetLoading"
     )
-      el-select(v-model="frmMod.street")
-        el-option(
-          v-for="cs in customerStreets"
-          :key="cs.id"
-          :label="cs.name"
-          :value="cs.id"
-        )
+      locality-street-choice(
+        :localityId='$store.state.customer.locality'
+        v-model='frmMod.street'
+      )
     el-form-item(
       label="Дом"
     )
@@ -52,15 +48,8 @@
       el-checkbox(v-model="frmMod.is_dynamic_ip") - Динамические настройки по dhcp: {{ frmMod.is_dynamic_ip ? 'Да' : 'Нет' }}
     el-form-item(
       label="Группа"
-      v-loading="isGroupLoading"
     )
-      el-select(v-model="frmMod.group" :disabled="groups.length == 0")
-        el-option(
-          v-for="grp in groups"
-          :key="grp.id"
-          :label="grp.title"
-          :value="grp.id"
-        )
+      groups-choice(v-model="frmMod.group")
     el-form-item(
       label="Локация"
     )
@@ -158,11 +147,9 @@ import CustomerPassword from './customer-password.vue'
 import FormMixin from '@/utils/forms'
 import TelsInput from './tels/tels-input.vue'
 import CustomerFormFio from './customer-form-fio.vue'
-import { IStreetModel } from '@/api/addresses/types'
-import { getStreets } from '@/api/addresses/req'
 import LocalityChoice from '@/components/Locality/locality-choice.vue'
-import { getGroups } from '@/api/groups/req'
-import { IGroup } from '@/api/groups/types'
+import GroupsChoice from '@/views/groups/groups-choice.vue'
+import LocalityStreetChoice from '@/components/Locality/street-choice.vue'
 
 @Component({
   name: 'customer-form',
@@ -173,14 +160,12 @@ import { IGroup } from '@/api/groups/types'
     TelsInput,
     CustomerFormFio,
     LocalityChoice,
+    GroupsChoice,
+    LocalityStreetChoice,
   }
 })
 export default class extends mixins(FormMixin) {
   private isLoading = false
-  private isStreetLoading = false
-  private isGroupLoading = false
-  private customerStreets: IStreetModel[] = []
-  private groups: IGroup[] = []
   private openPasportDlg = false
   private openPasswordDlg = false
   private taskFormDialog = false
@@ -203,8 +188,6 @@ export default class extends mixins(FormMixin) {
   private frmMod: ICustomerFrm = {} as ICustomerFrm
 
   created() {
-    this.loadGroups()
-    this.loadStreets()
     this.onChangedId()
   }
 
@@ -226,39 +209,6 @@ export default class extends mixins(FormMixin) {
       description: frm.description
     }
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm
-  }
-
-  @Watch('$store.state.customer.group')
-  private onChangedGroup() {
-    this.loadStreets()
-  }
-
-  private async loadStreets() {
-    this.isStreetLoading = true
-    try {
-      const { data } = await getStreets({
-        page: 1,
-        page_size: 0,
-        locality: this.$store.state.customer.group
-      }) as any
-      this.customerStreets = data
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.isStreetLoading = false
-    }
-  }
-
-  private async loadGroups() {
-    this.isGroupLoading = true
-    try {
-      const { data } = await getGroups() as any
-      this.groups = data
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.isGroupLoading = false
-    }
   }
 
   private onSubmit() {

@@ -1,12 +1,18 @@
 <template lang="pug">
   .app-container
     el-row(:gutter="10")
-      el-col(:lg='20' :md='18')
+      el-col(:col='24')
+        customer-list-filters(
+          :localityId="localityId"
+          :street.sync="filterForm.street"
+          :group.sync="filterForm.group"
+        )
+      el-col(:lg='24' :md='20')
         datatable(
           :columns="tableColumns"
           :getData="getAllCustomers"
           :tableRowClassName="rowColor"
-          :heightDiff="118"
+          :heightDiff="165"
           :editFieldsVisible.sync="editFieldsVisible"
           widthStorageNamePrefix='customers'
           ref='tbl'
@@ -57,13 +63,13 @@
               @click="editFieldsVisible=true"
             ) Поля
 
-      el-col(:lg='4' :md='6')
+      //- el-col(:lg='4' :md='6')
         list(
           title="Улицы"
           :items="streets"
           :loading='streetsLoading'
           itemText="name"
-          v-on:itemClick="onStreetClick"
+          v-on:itemClick="onStreetChange"
           :isClickable='true'
           :initialSelectedNum="routerQueryStreetIndexGetter"
         )
@@ -88,28 +94,7 @@
     )
       new-customer-form(
         :selectedLocality='localityId'
-        :customerStreets='streets'
         v-on:done="addFrmDone"
-      )
-    el-dialog(
-      :visible.sync="addStreetDialog"
-      title="Добавить улицу"
-      :close-on-click-modal="false"
-    )
-      new-street-form(
-        v-on:done="addStreetDone"
-        :localityId="localityId"
-      )
-    el-dialog(
-      :visible.sync="editStreetsDialog"
-      title="Редактировать улицы"
-      :close-on-press-escape="false"
-      :close-on-click-modal="false"
-    )
-      edit-streets(
-        :localityId="localityId"
-        :extStreets="streets"
-        v-on:done="editStreetDone"
       )
     el-dialog(
       title="Кто имеет права на абонента"
@@ -147,7 +132,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { scrollTo } from '@/utils/scroll-to'
+// import { scrollTo } from '@/utils/scroll-to'
 import {
   IDRFRequestListParameters,
   IObjectGroupPermsInitialAxiosResponsePromise,
@@ -165,15 +150,11 @@ import {
 } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import NewCustomerForm from './new-customer-form.vue'
-import List from '@/components/List/index.vue'
-import NewStreetForm from './street/new-street-form.vue'
-import EditStreets from './street/edit-streets.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import PingProfile from './ping-profile.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { getStreets } from '@/api/addresses/req'
-import { IStreetModel } from '@/api/addresses/types'
 import { LocalityModule } from '@/store/modules/addresses/locality'
+import CustomerListFilters from './customer-list-filters.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -187,17 +168,15 @@ interface ITableRowClassName {
   components: {
     'datatable': DataTableComp,
     NewCustomerForm,
-    List,
-    NewStreetForm,
-    EditStreets,
-    PingProfile
+    PingProfile,
+    CustomerListFilters,
   }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private localityId!: number
   private addCustomerDialog = false
-  private addStreetDialog = false
-  private editStreetsDialog = false
+  // private addStreetDialog = false
+  // private editStreetsDialog = false
   private permsDialog = false
   public readonly $refs!: {
     tbl: DataTableComp
@@ -207,6 +186,10 @@ export default class extends Vue {
   private sitesDlgProgress = false
   private sitesProgress = 0
   private editFieldsVisible = false
+  private filterForm = {
+    group: 0,
+    street: 0
+  }
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -265,26 +248,6 @@ export default class extends Vue {
     }
   ]
 
-  private streets: IStreetModel[] = []
-
-  private streetsLoading = false
-
-  private async loadStreets() {
-    this.streetsLoading = true
-    try {
-      const { data } = await getStreets({
-        page: 1,
-        page_size: 0,
-        locality: this.localityId
-      } as any) as any
-      this.streets = data
-    } catch (err) {
-      this.$message.error(err)
-    } finally {
-      this.streetsLoading = false
-    }
-  }
-
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     const street = this.routerQueryStreetGetter
     let r
@@ -309,17 +272,16 @@ export default class extends Vue {
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
-  private onStreetClick(item: IStreetModel) {
+  @Watch('filterForm.street')
+  private onStreetChange(streetId: number) {
     let qr = Object.assign({}, this.$route.query) as Record<string, any>
     const qstreet = qr.street
     delete qr.street
 
-    if (item.id != qstreet) {
-      qr.street = item.id
+    if (streetId != qstreet) {
+      qr['street'] = streetId
     }
     this.$router.push({ path: this.$route.path, query: qr })
-    document.title = `Абоненты ул. ${item.name}`
-    scrollTo(0, 600)
   }
 
   get routerQueryStreetGetter(): string | undefined {
@@ -330,25 +292,8 @@ export default class extends Vue {
     this.$refs.tbl.GetTableData()
   }
 
-  get routerQueryStreetIndexGetter(): number | undefined {
-    let strId = this.routerQueryStreetGetter as any
-    return this.streets.findIndex(str => str.id == strId)
-  }
-
-  private addStreetDone(newStreet: IStreetModel) {
-    this.$message.success(`Улица ${newStreet.name} добавлена.`)
-    this.addStreetDialog = false
-    this.loadStreets()
-  }
-
-  private editStreetDone() {
-    this.editStreetsDialog = false
-    this.loadStreets()
-  }
-
   created() {
     document.title = 'Список абонентов'
-    this.loadStreets()
     this.setCrumbs()
   }
 
