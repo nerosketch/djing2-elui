@@ -103,7 +103,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.create_time = data.create_time
     this.locality = data.locality
     this.locality_title = data.locality_title
-    this.street = data.status
+    this.street = data.street
     this.street_name = data.street_name
     this.place = data.place
     return this

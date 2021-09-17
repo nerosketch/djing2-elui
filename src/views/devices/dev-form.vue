@@ -63,7 +63,7 @@
       label="Улица"
     )
       locality-street-choice(
-        :localityId='localityId || $store.state.devicemodule.locality'
+        :localityId='frmMod.locality'
         v-model='frmMod.street'
       )
     el-form-item(
@@ -136,20 +136,21 @@ export default class extends mixins(FormMixin) {
   }
 
   get devFrmData() {
+    const m = this.$store.state.devicemodule
     return {
-      ip_address: DeviceModule.ip_address,
-      mac_addr: DeviceModule.mac_addr,
-      comment: DeviceModule.comment,
-      dev_type: DeviceModule.dev_type,
-      group: DeviceModule.group,
-      is_noticeable: DeviceModule.is_noticeable,
-      man_passw: DeviceModule.man_passw,
-      parent_dev: DeviceModule.parent_dev,
-      snmp_extra: DeviceModule.snmp_extra,
-      create_time: DeviceModule.create_time,
-      locality: this.localityId || DeviceModule.locality,
-      street: DeviceModule.street,
-      place: DeviceModule.place
+      ip_address: m.ip_address,
+      mac_addr: m.mac_addr,
+      comment: m.comment,
+      dev_type: m.dev_type,
+      group: m.group,
+      is_noticeable: m.is_noticeable,
+      man_passw: m.man_passw,
+      parent_dev: m.parent_dev,
+      snmp_extra: m.snmp_extra,
+      create_time: m.create_time,
+      locality: this.localityId || m.locality,
+      street: m.street > 0 ? m.street : null,
+      place: m.place
     }
   }
 

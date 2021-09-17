@@ -1,5 +1,10 @@
 <template lang="pug">
-  el-select(v-model="localValue" :loading='loading' :disabled="streets.length == 0" clearable)
+  el-select(
+    v-model="localValue"
+    :loading='loading'
+    :disabled="streets.length == 0"
+    clearable
+  )
     el-option(
       v-for="(s, i) in streets"
       :key="i"
@@ -19,7 +24,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 export default class extends Vue {
   @Prop({ default: 0 }) private localityId!: number
   @Prop({ default: 0 }) private value!: number
-  
+
   private streets: IStreetModel[] = []
   private localValue = this.value
 
@@ -34,10 +39,18 @@ export default class extends Vue {
         locality: this.localityId
       } as any) as any
       this.streets = data
+      this.checkIfValInStreets(this.localValue)
     } catch (err) {
       this.$message.error(err)
     } finally {
       this.loading = false
+    }
+  }
+
+  private checkIfValInStreets(val: number) {
+    const s = this.streets.find(s => s.locality === val)
+    if (!s) {
+      this.localValue = 0
     }
   }
 
