@@ -19,7 +19,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 export default class extends Vue {
   @Prop({ default: 0 }) private value!: number
   @Prop({ default: false }) private multiple!: boolean
-  
+
   private groups: IGroup[] = []
   private localValue = this.value
 
@@ -28,7 +28,11 @@ export default class extends Vue {
   private async loadGroups() {
     this.loading = true
     try {
-      const { data } = await getGroups() as any
+      const { data } = await getGroups({
+        page: 1,
+        page_size: 0,
+        fields: 'id,title'
+      }) as any
       this.groups = data
     } catch (err) {
       this.$message.error(err)
@@ -40,6 +44,11 @@ export default class extends Vue {
   @Watch('localValue')
   private onChLocVal(v: number) {
     this.$emit('input', v)
+  }
+
+  @Watch('value')
+  private onChVal(v: number) {
+    this.localValue = this.value
   }
 
   created() {

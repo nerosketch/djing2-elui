@@ -39,7 +39,7 @@ export default class extends Vue {
         locality: this.localityId
       } as any) as any
       this.streets = data
-      this.checkIfValInStreets(this.localValue)
+      this.checkIfValInStreets(this.value)
     } catch (err) {
       this.$message.error(err)
     } finally {
@@ -47,16 +47,23 @@ export default class extends Vue {
     }
   }
 
-  private checkIfValInStreets(val: number) {
-    const s = this.streets.find(s => s.locality === val)
-    if (!s) {
-      this.localValue = 0
+  private checkIfValInStreets(currentStreetId: number) {
+    if (currentStreetId > 0) {
+      const s = this.streets.find(s => s.id === currentStreetId)
+      if (!s) {
+        this.localValue = 0
+      }
     }
   }
 
   @Watch('localValue')
   private onChLocVal(v: number) {
     this.$emit('input', v)
+  }
+
+  @Watch('value')
+  private onChVal(v: number) {
+    this.localValue = this.value
   }
 
   created() {

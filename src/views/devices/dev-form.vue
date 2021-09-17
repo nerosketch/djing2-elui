@@ -56,7 +56,7 @@
         format="d.MM.yyyy HH:mm"
       )
     el-form-item(
-      label="Локация"
+      label="Населённый пункт"
     )
       locality-choice(v-model="frmMod.locality")
     el-form-item(
