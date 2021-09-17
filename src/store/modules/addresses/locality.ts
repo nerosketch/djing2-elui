@@ -7,17 +7,20 @@ import { addLocality, changeLocality, delLocality, getLocality } from '@/api/add
 class Locality extends VuexModule implements ILocalityModel {
   public id = 0
   public title = ''
+  public sites: number[] = []
 
   @Mutation
   public RESET_ALL_LOCALITY() {
     this.id = 0
     this.title = ''
+    this.sites = []
   }
 
   @Mutation
   public SET_ALL_LOCALITY(locality: ILocalityModel) {
     this.id = locality.id
     this.title = locality.title
+    this.sites = locality.sites
   }
 
   @Mutation

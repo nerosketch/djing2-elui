@@ -9,6 +9,10 @@
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
+            v-if="$perms.is_superuser"
+            @click="openSitesDlg(row)"
+          ) C
+          el-button(
             icon='el-icon-c-scale-to-original'
             @click="openStreetEditor(row)"
           )
@@ -47,6 +51,17 @@
         @done="streetDialogVisible=false"
       )
 
+    el-dialog(
+      title="Принадлежность сайтам"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false"
+    )
+      sites-attach(
+        v-on:save="localitySitesSave"
+        :selectedSiteIds="$store.state.locality.sites"
+      )
+
+
 </template>
 
 <script lang="ts">
@@ -75,6 +90,7 @@ export default class extends Vue {
   }
   private dialogVisible = false
   private streetDialogVisible = false
+  private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -92,6 +108,9 @@ export default class extends Vue {
   ]
 
   private loadLocalities(params?: IDRFRequestListParameters) {
+    if (params) {
+      params['fields'] = 'id,title'
+    }
     return getLocalities(params)
   }
 
@@ -133,6 +152,21 @@ export default class extends Vue {
 
   private get changeStreetTitle() {
     return `Изменить улицы для "${ this.$store.state.locality.title }"`
+  }
+
+  private async openSitesDlg(loc: ILocalityModel) {
+    await LocalityModule.GetLocality(loc.id)
+    this.sitesDlg = true
+  }
+
+  private localitySitesSave(selectedSiteIds: number[]) {
+    LocalityModule.PatchLocality({
+      sites: selectedSiteIds
+    }).then(() => {
+      this.$refs.loctable.GetTableData()
+      this.$message.success('Принадлежность населённого пункта сайтам сохранена')
+    })
+    this.sitesDlg = false
   }
 }
 </script>

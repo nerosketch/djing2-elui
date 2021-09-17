@@ -7,6 +7,7 @@ import {
 export interface ILocalityModel {
   id: number
   title: string
+  sites: number[]
 }
 export type ILocalityModelList = IDRFListResponse<ILocalityModel>
 export type ILocalityModelAxoisResponsePromise = IDRFAxiosResponsePromise<ILocalityModel>
