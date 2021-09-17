@@ -165,7 +165,7 @@ export default class extends Vue {
     },
     {
       prop: 'place',
-      label: 'Адрес установки'
+      label: '№ дома'
     },
     {
       prop: 'create_time',

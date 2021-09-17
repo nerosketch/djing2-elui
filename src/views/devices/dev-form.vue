@@ -67,7 +67,7 @@
         v-model='frmMod.street'
       )
     el-form-item(
-      label="Адрес установки"
+      label="№ дома"
     )
       el-input(v-model="frmMod.place")
     el-form-item(
