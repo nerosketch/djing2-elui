@@ -57,5 +57,5 @@ export const deleteMessengerSubscriber = (mId: number) =>
 export const getOptions = (): IMessengerOptionsAxoisResponsePromise =>
   request.get<IMessengerOptions>('/messenger/options/')
 
-export const setOptions = (options: string[]): IMessengerOptionsAxoisResponsePromise =>
-  request.put<IMessengerOptions>('/messenger/options/')
+export const setOptions = (options: IMessengerOptions): IMessengerOptionsAxoisResponsePromise =>
+  request.put<IMessengerOptions>('/messenger/options/', options)

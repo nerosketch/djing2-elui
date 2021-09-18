@@ -24,7 +24,7 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { RouteRecord } from 'vue-router'
 import MessengerTypeList from './type-list.vue'
-import MessengerOptions from './options.vue'
+import MessengerOptions from './options/index.vue'
 
 @Component({
   name: 'MessengerIndex',
