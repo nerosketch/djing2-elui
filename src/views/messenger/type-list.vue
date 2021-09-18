@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-table.app-container(
+  el-table(
     v-loading='messengerTypesLoading'
     :data="messengerBotTypes"
     border fit
@@ -7,10 +7,9 @@
     el-table-column(
       label="Тип бота"
       prop='text'
-    ) 
+    )
       template(v-slot:default="{row}")
         router-link(:to="{ name: 'messengerList', params: { messengerTypeName: row.text } }") {{ row.text }}
-
 
 </template>
 
@@ -33,7 +32,7 @@ export default class extends mixins(BotTypesMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Мессенджеры'
+          title: 'Мессенжеры'
         }
       }
     ] as RouteRecord[])

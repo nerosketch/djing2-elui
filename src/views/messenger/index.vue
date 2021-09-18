@@ -6,7 +6,7 @@
   )
     el-tab-pane(
       label='Мессенджеры'
-      name='profiles'
+      name='messengers'
     )
       keep-alive
         messenger-type-list
@@ -34,7 +34,7 @@ import MessengerOptions from './options/index.vue'
   }
 })
 export default class extends Vue {
-  private activeName = 'profiles'
+  private activeName = 'messengers'
 
   created() {
     BreadcrumbsModule.SetCrumbs([
