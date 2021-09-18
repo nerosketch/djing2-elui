@@ -8,7 +8,8 @@ const messengerRoutes: RouteConfig = {
   children: [
     {
       path: '',
-      component: () => import(/* webpackChunkName: "messengerindex" */ '@/views/messenger/index.vue'),
+      name: 'messengerTypeList',
+      component: () => import(/* webpackChunkName: "messengertypelist" */ '@/views/messenger/type-list.vue'),
       meta: { hidden: true }
     },
     {
