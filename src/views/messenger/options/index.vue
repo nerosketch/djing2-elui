@@ -12,6 +12,13 @@ el-row(:gutter="5" v-loading="loading")
       msg-option-opts(
         :variousOpts="opts.various_options"
       )
+  el-col.mt5(:span='24')
+    el-button(
+      icon='el-ison-save'
+      type='success'
+      @click="saveOpts"
+      :diabled="!opts"
+    ) Сохранить
 </template>
 
 <script lang="ts">
@@ -20,6 +27,7 @@ import { getOptions } from '@/api/messenger/req'
 import MsgOptionChannels from './channels.vue'
 import MsgOptionOpts from './notify-ops.vue'
 import { IMessengerOptions } from '@/api/messenger/types'
+import { MessengerOptionsModule } from '@/store/modules/messenger/options'
 
 @Component({
   name: 'MessengerOptions',
@@ -39,6 +47,14 @@ export default class extends Vue {
       this.opts = data
     } finally {
       this.loading = false
+    }
+  }
+
+  private saveOpts() {
+    if (this.opts) {
+      MessengerOptionsModule.SetOptions(this.opts).then(() => {
+        this.$message.success('Сохранено')
+      })
     }
   }
 

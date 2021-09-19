@@ -37,6 +37,12 @@ export default class extends Vue {
   private activeName = 'messengers'
 
   created() {
+    // Init the default selected tab
+    const tab = this.$route.query.tab as string
+    if (tab) {
+      this.activeName = tab
+    }
+
     BreadcrumbsModule.SetCrumbs([
       {
         path: '/',

@@ -1,24 +1,24 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { IMessengerOptions } from '@/api/messenger/types'
+import { IMessengerOptions, IOpt } from '@/api/messenger/types'
 import { getOptions, setOptions } from '@/api/messenger/req'
 
 @Module({ dynamic: true, store, name: 'messengeroptions' })
 class MessengerOptions extends VuexModule implements IMessengerOptions {
-  public profile = 0
-  public notification_flags: string[] = []
+  public notification_flags: IOpt[] = []
+  public various_options: IOpt[] = []
 
   @Mutation
   public SET_ALL_MOPTS(data: IMessengerOptions) {
-    this.profile = data.profile
     this.notification_flags = data.notification_flags || []
+    this.various_options = data.various_options || []
     return this
   }
 
   @Mutation
   public RESET_ALL_MOPTS() {
-    this.profile = 0
     this.notification_flags = []
+    this.various_options = []
     return this
   }
 
@@ -30,7 +30,7 @@ class MessengerOptions extends VuexModule implements IMessengerOptions {
   }
 
   @Action
-  public async SetOptions(newData: string[]) {
+  public async SetOptions(newData: IMessengerOptions) {
     const { data } = await setOptions(newData)
     this.SET_ALL_MOPTS(data)
   }
