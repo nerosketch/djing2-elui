@@ -9,7 +9,7 @@ export interface IFiasRecursiveAddress {
   ao_level_name: string
   ao_type: number
   ao_type_name: string
-  groups: number[]
+  locality: number
 }
 export type IFiasRecursiveAddressList = IDRFListResponse<IFiasRecursiveAddress>
 export type IFiasRecursiveAddressAxoisResponsePromise = IDRFAxiosResponsePromise<IFiasRecursiveAddress>

@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import { AxiosResponse, AxiosPromise } from 'axios'
 
-export interface IDRFListResponse<T> {
+export type IDRFListResponse<T> = {
   count: number
   next: string | null
   previous: string | null
   results: T[]
-}
+} | T[]
 
 export interface IDRFRequestListParameters {
   page: number

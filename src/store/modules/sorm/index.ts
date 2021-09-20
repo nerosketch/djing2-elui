@@ -15,7 +15,7 @@ class FiasRecursiveAddress extends VuexModule implements IFiasRecursiveAddress {
   ao_level_name = ''
   ao_type = 0
   ao_type_name = ''
-  groups: number[] = []
+  locality: number = 0
 
   @Mutation
   public SET_ALL_RECURSIVE_ADDRESS(data: IFiasRecursiveAddress) {
@@ -26,7 +26,7 @@ class FiasRecursiveAddress extends VuexModule implements IFiasRecursiveAddress {
     this.ao_level_name = data.ao_level_name
     this.ao_type = data.ao_type
     this.ao_type_name = data.ao_type_name
-    this.groups = data.groups
+    this.locality = data.locality
   }
 
   @Mutation
@@ -38,7 +38,7 @@ class FiasRecursiveAddress extends VuexModule implements IFiasRecursiveAddress {
     this.ao_level_name = ''
     this.ao_type = 0
     this.ao_type_name = ''
-    this.groups = []
+    this.locality = 0
   }
 
   @Action

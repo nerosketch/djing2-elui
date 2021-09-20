@@ -56,19 +56,18 @@
           )
 
     el-form-item(
-      label="Группы"
+      label="Населённый пункт"
     )
       el-select(
-        v-model="frmMod.groups"
-        :diabled="!groupsListLoaded"
-        multiple
+        v-model="frmMod.locality"
+        :diabled="!locListLoaded"
       )
-        template(v-if="groupsListLoaded")
+        template(v-if="locListLoaded")
           el-option(
-            v-for="g in groupsList"
-            :key="g.id"
-            :label="g.title"
-            :value="g.id"
+            v-for="l in localities"
+            :key="l.id"
+            :label="l.title"
+            :value="l.id"
           )
 
     el-button(
@@ -90,8 +89,8 @@
 </template>
 
 <script lang="ts">
-import { getGroups } from '@/api/groups/req'
-import { IGroup } from '@/api/groups/types'
+import { getLocalities } from '@/api/addresses/req'
+import { ILocalityModel } from '@/api/addresses/types'
 import { getAddrLevels, getAddrTypes } from '@/api/sorm/req'
 import { IAddrLevelItem, IAddrTypeItem, IFiasRecursiveAddress } from '@/api/sorm/types'
 import { FiasRecursiveAddressModule } from '@/store/modules/sorm'
@@ -112,8 +111,8 @@ export default class extends Vue {
     return this.addrTypes.length > 0
   }
 
-  get groupsListLoaded() {
-    return this.groupsList.length > 0
+  get locListLoaded() {
+    return this.localities.length > 0
   }
 
   private frmMod: {
@@ -121,18 +120,18 @@ export default class extends Vue {
     ao_level?: number,
     ao_type?: number,
     parent_ao?: number,
-    groups: number[]
+    locality: number
   } = {
     title: '',
     ao_level: undefined,
     ao_type: undefined,
     parent_ao: undefined,
-    groups: []
+    locality: 0
   }
 
   private addrLevels: IAddrLevelItem[] = []
   private addrTypes: IAddrTypeItem[] = []
-  private groupsList: IGroup[] = []
+  private localities: ILocalityModel[] = []
 
   private frmRules = {
     title: [
@@ -152,7 +151,7 @@ export default class extends Vue {
 
   created() {
     this.getAddrLevels()
-    this.loadAllGroups()
+    this.loadAllLocalities()
     this.getAddrTypes()
     if (!this.isNew) {
       this.onAddrChanged()
@@ -204,19 +203,20 @@ export default class extends Vue {
     }
   }
 
-  private async loadAllGroups() {
-    const { data } = await getGroups()
-    this.groupsList = data as IGroup[]
+  private async loadAllLocalities() {
+    const { data } = await getLocalities()
+    this.localities = data as ILocalityModel[]
     return data
   }
 
   @Watch('$store.state.fiasaddrs.id')
   private onAddrChanged() {
-    this.frmMod.title = FiasRecursiveAddressModule.title
-    this.frmMod.ao_level = FiasRecursiveAddressModule.ao_level || undefined
-    this.frmMod.ao_type = FiasRecursiveAddressModule.ao_type || undefined
-    this.frmMod.parent_ao = FiasRecursiveAddressModule.parent_ao || undefined
-    this.frmMod.groups = FiasRecursiveAddressModule.groups
+    const s = this.$store.state.fiasaddrs
+    this.frmMod.title = s.title
+    this.frmMod.ao_level = s.ao_level || undefined
+    this.frmMod.ao_type = s.ao_type || undefined
+    this.frmMod.parent_ao = s.parent_ao || undefined
+    this.frmMod.locality = s.locality
   }
 }
 </script>

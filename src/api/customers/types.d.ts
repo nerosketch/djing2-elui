@@ -224,7 +224,7 @@ export interface IPeriodicPayForId {
 }
 export type IPeriodicPayForIdList = IDRFListResponse<IPeriodicPayForId>
 // export type IPeriodicPayForIdAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForId>
-export type IPeriodicPayForIdListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForIdList> | IDRFAxiosResponsePromise<IPeriodicPayForId[]>
+export type IPeriodicPayForIdListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForIdList>
 
 export interface IBuyPayloadType {
   service_id: number,
