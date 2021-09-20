@@ -175,7 +175,7 @@ export default class extends Vue {
     })
   }
 
-  private localTimer?: number
+  private localTimer?: NodeJS.Timeout
 
   created() {
     DeviceModule.getDeviceTypeNames().then(d => {
