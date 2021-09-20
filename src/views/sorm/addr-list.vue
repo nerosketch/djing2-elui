@@ -77,6 +77,10 @@ export default class extends Vue {
       'min-width': 250
     },
     {
+      prop: 'locality_title',
+      label: 'Населённый пункт'
+    },
+    {
       prop: 'parent_ao_name',
       label: 'Родительский объект'
     },
@@ -90,7 +94,7 @@ export default class extends Vue {
 
   private async loadAddrs(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,title,ao_level_name,ao_type_name,parent_ao,groups,parent_ao_name'
+      params.fields = 'id,title,ao_level_name,ao_type_name,parent_ao,locality,locality_title,parent_ao_name'
     }
     const r = await getAddrs(params)
     this.loadedDataList = r.data.results
