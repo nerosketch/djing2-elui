@@ -64,7 +64,7 @@
       label="Улица"
     )
       locality-street-choice(
-        :localityId='$store.state.devicemodule.locality'
+        :localityId='frmMod.locality'
         v-model='frmMod.street'
       )
     el-form-item(
@@ -175,7 +175,7 @@ export default class extends Vue {
     })
   }
 
-  private localTimer?: NodeJS.Timeout
+  private localTimer?: number
 
   created() {
     DeviceModule.getDeviceTypeNames().then(d => {

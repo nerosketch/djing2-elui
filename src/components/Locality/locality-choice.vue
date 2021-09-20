@@ -27,7 +27,11 @@ export default class extends Vue {
   private async loadLocalities() {
     this.loading = true
     try {
-      const { data } = await getLocalities() as any
+      const { data } = await getLocalities({
+        fields: 'id,title',
+        page: 1,
+        page_size: 0
+      }) as any
       this.localities = data
     } finally {
       this.loading = false

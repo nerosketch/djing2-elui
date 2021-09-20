@@ -33,11 +33,15 @@ export default class extends Vue {
   private async loadStreets() {
     this.loading = true
     try {
-      const { data } = await getStreets({
-        page: 1,
-        page_size: 0,
-        locality: this.localityId
-      } as any) as any
+      let params
+      if (this.localityId > 0) {
+        params = {
+          page: 1,
+          page_size: 0,
+          locality: this.localityId
+        }
+      }
+      const { data } = await getStreets(params as any) as any
       this.streets = data
       this.checkIfValInStreets(this.value)
     } catch (err) {
@@ -63,7 +67,7 @@ export default class extends Vue {
 
   @Watch('value')
   private onChVal(v: number) {
-    this.localValue = this.value
+    this.localValue = v
   }
 
   created() {
