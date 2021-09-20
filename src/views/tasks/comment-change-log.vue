@@ -4,8 +4,8 @@
     show-icon
     :closable='false'
   )
-    b {{ log.who_name }}: 
-    small ({{ log.when }}) 
+    b {{ log.who_name }}:
+    small ({{ log.when }})
     | {{ log.human_representation }}.
 </template>
 

@@ -119,7 +119,7 @@ export const patchUserGroup = (id: number, info: object): IUserGroupAxoisRespons
   request.patch<IUserGroup>(`/profiles/perms/groups/${id}/`, info)
 
 export const addUserGroup = (info: object): IUserGroupAxoisResponsePromise =>
-  request.post<IUserGroup>(`/profiles/perms/groups/`, info)
+  request.post<IUserGroup>('/profiles/perms/groups/', info)
 
 export const delUserGroup = (id: number) =>
   request.delete<IUserGroup>(`/profiles/perms/groups/${id}/`)

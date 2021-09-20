@@ -22,7 +22,7 @@ import GroupsChoice from '@/views/groups/groups-choice.vue'
   name: 'CustomerListFilters',
   components: {
     LocalityStreetChoice,
-    GroupsChoice,
+    GroupsChoice
   }
 })
 export default class extends Vue {
@@ -42,6 +42,5 @@ export default class extends Vue {
   private onChGroupVal(v: number) {
     this.$emit('update:group', v)
   }
-
 }
 </script>

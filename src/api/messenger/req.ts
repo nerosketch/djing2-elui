@@ -9,7 +9,7 @@ import {
   IMessengerSubscriberAxoisResponsePromise,
   IMessengerSubscriber,
   IBotTypesAxiosPromise,
-  IBotType,
+  IBotType
 } from '@/api/messenger/types'
 import { IDRFRequestListParameters } from '@/api/types'
 

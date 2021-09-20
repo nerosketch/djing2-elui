@@ -42,12 +42,13 @@ class DataTableComp extends DataTable<ICustomerIpLease> {}
 
 @Component({
   name: 'LeaseList',
-  components: { 'datatable': DataTableComp, LeaseForm }
+  components: { datatable: DataTableComp, LeaseForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'ip_address',
@@ -83,6 +84,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private dialogVisible = false
 
   private async openEdit(lease: ICustomerIpLease) {
@@ -100,7 +102,7 @@ export default class extends Vue {
 
   private loadLeases(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,ip_address,lease_time,last_update,mac_address,is_dynamic'
+      params.fields = 'id,ip_address,lease_time,last_update,mac_address,is_dynamic'
     }
     return getCustomerIpLeases(params)
   }

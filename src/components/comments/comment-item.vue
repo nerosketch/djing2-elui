@@ -5,7 +5,7 @@ el-card(
 )
   template(v-slot:header)
     .clearfix
-      span {{ comment.author_name }} 
+      span {{ comment.author_name }}
       small {{ comment.date_create }}
       el-button.comment_del_btn(
         type="text" icon='el-icon-close'

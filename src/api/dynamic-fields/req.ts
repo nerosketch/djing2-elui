@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import {
-  IDRFRequestListParameters,
+  IDRFRequestListParameters
 } from '@/api/types'
 import {
   IDynamicField,

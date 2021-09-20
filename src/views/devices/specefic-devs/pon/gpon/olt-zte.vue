@@ -147,6 +147,7 @@ export default class extends Vue {
     }
     return 0
   }
+
   @Watch('devPk')
   private onChDev() {
     this.scanZteDetails()
@@ -165,7 +166,7 @@ export default class extends Vue {
 
   private async scanZteDetails() {
     if (this.device) {
-      let { data } = await scanPonDetails(this.devPk)
+      const { data } = await scanPonDetails(this.devPk)
       this.details = `Имя ${data.name}. В сети ${data.uptime}. Версия прошивки ${data.fver}.`
     }
   }

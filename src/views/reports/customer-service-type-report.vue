@@ -24,9 +24,9 @@ export default class extends Vue {
     this.repLoading = true
     try {
       const { data } = await customerServiceTypeReportRequest()
-      let admName = 'С административными услугами'
-      let zeroName = 'С бесплатными услугами'
-      let chartData = [{
+      const admName = 'С административными услугами'
+      const zeroName = 'С бесплатными услугами'
+      const chartData = [{
         value: data.admin_count,
         name: admName
       }, {
@@ -37,7 +37,7 @@ export default class extends Vue {
         name: i.service_descr
       })))
 
-      let otherLabels = data.calc_type_counts.map(i => i.service_descr)
+      const otherLabels = data.calc_type_counts.map(i => i.service_descr)
       this.customerServiceTypeReport = {
         labels: [
           admName,

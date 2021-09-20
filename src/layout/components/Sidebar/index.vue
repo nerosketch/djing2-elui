@@ -62,8 +62,8 @@ export default class extends Vue {
 
   private onUpdateTask(msg: IWsMessage) {
     if (msg.data) {
-      let hightPriorityTaskEventData = msg.data as IHightPriorityTaskEventData
-      let profiles = hightPriorityTaskEventData.recipients
+      const hightPriorityTaskEventData = msg.data as IHightPriorityTaskEventData
+      const profiles = hightPriorityTaskEventData.recipients
       if (hightPriorityTaskEventData.author) {
         profiles.push(hightPriorityTaskEventData.author)
       }

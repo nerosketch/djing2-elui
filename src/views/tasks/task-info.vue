@@ -7,25 +7,25 @@
     div Исполнители:
       ul
         li(v-for="rec in taskRecipients" :key='rec.id') {{ rec.full_name || rec.username }}
-    b Приоритет: 
+    b Приоритет:
     span {{ $store.state.task.priority_name }}
     br
-    b Задача действительна до 
+    b Задача действительна до
     span {{ $store.state.task.task_out_date }}
     br
-    b Дата создания: 
+    b Дата создания:
     span {{ $store.state.task.time_of_create }}
     br
-    b Времени осталось: 
+    b Времени осталось:
     span {{ $store.state.task.task_time_diff }}
     br
-    b Характер поломки: 
+    b Характер поломки:
     span {{ $store.state.task.mode_str }}
     br
-    b Состояние: 
+    b Состояние:
     span {{ $store.state.task.state_str }}
     br
-    b Абонент: 
+    b Абонент:
     router-link(:to="taskCustomerLink")
       el-link(type="primary") {{ $store.state.task.customer_full_name }}
     el-divider
@@ -45,6 +45,7 @@ import TaskDocs from './task-docs.vue'
 export default class extends Vue {
   @Prop({ default: [] })
   private recipients!: IUserProfile[]
+
   @Prop({ default: 0 })
   private taskId!: number
 

@@ -30,7 +30,7 @@ class DataTableComp extends DataTable<ICustomerLocality> {}
 
 @Component({
   name: 'CustomerGroupList',
-  components: { 'datatable': DataTableComp }
+  components: { datatable: DataTableComp }
 })
 export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
@@ -48,7 +48,7 @@ export default class extends Vue {
 
   private getLocations(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,usercount'
+      params.fields = 'id,title,usercount'
     }
     return getCustomerLocations(params)
   }

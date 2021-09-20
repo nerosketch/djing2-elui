@@ -238,7 +238,7 @@ class Device extends VuexModule implements IDeviceInterace {
     if (!devId || devId === 0) {
       devId = this.id
     }
-    let { data } = await fixOnu(devId)
+    const { data } = await fixOnu(devId)
     this.SET_ALL_DEV(data.device)
     return data
   }

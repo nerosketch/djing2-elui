@@ -64,7 +64,7 @@ class DataTableComp extends DataTable<IUserGroup> {}
 @Component({
   name: 'GroupList',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     UserGroupForm,
     UserGroupPerms
   }
@@ -73,6 +73,7 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+
   private ugFormDialog = false
   private dialogTitle = ''
   private ugpDialog = false
@@ -100,7 +101,7 @@ export default class extends Vue {
 
   private loadUserGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,name,permcount,usercount,permissions'
+      params.fields = 'id,name,permcount,usercount,permissions'
     }
     return getUserGroups(params)
   }

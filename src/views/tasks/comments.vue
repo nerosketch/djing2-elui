@@ -19,8 +19,7 @@ comment-list(
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IExtraCommentCombinedWithTaskStateChangeLog } from '@/api/tasks/types'
-import { getCommentsWithLogs, addComment } from '@/api/tasks/req'
-import { delComment } from '@/api/tasks/req'
+import { getCommentsWithLogs, addComment, delComment } from '@/api/tasks/req'
 import CommentChangeLog from './comment-change-log.vue'
 import CommentItem from '@/components/comments/comment-item.vue'
 import CommentList from '@/components/comments/list.vue'

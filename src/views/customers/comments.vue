@@ -7,10 +7,9 @@ comment-list(
 </template>
 
 <script lang="ts">
-import { createCustomerComment, getCustomerComments } from '@/api/customer_comments/req'
+import { createCustomerComment, getCustomerComments, deleteCustomerComment } from '@/api/customer_comments/req'
 import { ICustomerComment } from '@/api/customer_comments/type'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { deleteCustomerComment } from '@/api/customer_comments/req'
 
 import CommentList from '@/components/comments/list.vue'
 

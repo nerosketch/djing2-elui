@@ -1,6 +1,6 @@
 <template lang="pug">
 .app-container
-  span Дата отсчёта: 
+  span Дата отсчёта:
   el-date-picker(
     v-model="reqParams.date_limit"
     type="datetime"
@@ -8,7 +8,7 @@
     format="d.MM.yyyy HH:mm"
     placeholder="Дата отсчёта"
   )
-  span  Лимит вывода: 
+  span  Лимит вывода:
   el-input(
     placeholder="Лимит вывода"
     :style="{width: '150px'}"
@@ -40,7 +40,7 @@ class DataTableComp extends DataTable<ICustomerAfkItem> {}
 @Component({
   name: 'AfkList',
   components: {
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
@@ -61,15 +61,15 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_uname',
-      label: 'логин',
+      label: 'логин'
     },
     {
       prop: 'customer_fio',
-      label: 'ФИО',
+      label: 'ФИО'
     },
     {
       prop: 'last_date',
-      label: 'дата',
+      label: 'дата'
     },
     {
       prop: 'timediff',

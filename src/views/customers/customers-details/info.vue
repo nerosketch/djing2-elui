@@ -47,7 +47,7 @@ import CustomerDynamicFields from '@/views/customers/dynamic-fields.vue'
     CustomerDocs,
     Markers,
     CustomerCommentList,
-    CustomerDynamicFields,
+    CustomerDynamicFields
   }
 })
 export default class extends Vue {}

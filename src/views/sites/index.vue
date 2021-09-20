@@ -42,7 +42,7 @@ class DataTableComp extends DataTable<ISite> {}
 @Component({
   name: 'SiteIndex',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     SiteForm
   }
 })
@@ -50,6 +50,7 @@ export default class extends Vue {
   public readonly $refs!: {
     sitestable: DataTableComp
   }
+
   private dialogVisible = false
 
   private tableColumns: IDataTableColumn[] = [
@@ -88,7 +89,7 @@ export default class extends Vue {
 
   private loadSites(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,name,domain'
+      params.fields = 'id,name,domain'
     }
     return getSites(params)
   }
@@ -97,6 +98,7 @@ export default class extends Vue {
     SiteModule.SET_ALL_SITE(site)
     this.dialogVisible = true
   }
+
   private openNew() {
     SiteModule.RESET_ALL_SITE()
     this.dialogVisible = true

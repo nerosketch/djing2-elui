@@ -101,7 +101,7 @@ export default class extends Vue {
   private reportParams = {
     time_range: ['2021-05-22', formatDate(new Date())],
     pay_gw: 0,
-    group_by: 3,
+    group_by: 3
   }
 
   @Watch('reportParams', { deep: true })
@@ -115,26 +115,26 @@ export default class extends Vue {
     shortcuts: [{
       text: 'Последняя неделя',
       onClick(picker: Vue) {
-        const end = new Date();
-        const start = new Date();
-        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-        picker.$emit('pick', [start, end]);
+        const end = new Date()
+        const start = new Date()
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+        picker.$emit('pick', [start, end])
       }
     }, {
       text: 'Последний месяц',
       onClick(picker: Vue) {
-        const end = new Date();
-        const start = new Date();
-        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-        picker.$emit('pick', [start, end]);
+        const end = new Date()
+        const start = new Date()
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+        picker.$emit('pick', [start, end])
       }
     }, {
       text: 'Последние 3 месяца',
       onClick(picker: Vue) {
-        const end = new Date();
-        const start = new Date();
-        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-        picker.$emit('pick', [start, end]);
+        const end = new Date()
+        const start = new Date()
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+        picker.$emit('pick', [start, end])
       }
     }]
   }

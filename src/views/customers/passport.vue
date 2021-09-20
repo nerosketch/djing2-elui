@@ -84,11 +84,11 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['pspfrm'] as Form).validate(async valid => {
+    (this.$refs.pspfrm as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         try {
-          let { data } = await setPassportInfo(CustomerModule.id, this.frmMod)
+          const { data } = await setPassportInfo(CustomerModule.id, this.frmMod)
           this.$emit('done', data)
         } catch (err) {
           this.$message.error(err)

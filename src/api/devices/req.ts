@@ -22,7 +22,7 @@ import {
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
   IDevVlanSimpleInfoAxiosResponsePromise, IDevVlanSimpleInfo,
   IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise,
-  IDevTogglePortRequest,
+  IDevTogglePortRequest
 } from './types'
 
 const baseDevUrl = '/devices/all/'
@@ -35,11 +35,13 @@ export const getDevice = (devId: number): IDeviceAxoisResponsePromise =>
   request.get<IDevice>(`${baseDevUrl}${devId}/`)
 
 export const findDevices = (devtext: string): IDeviceListAxiosResponsePromise =>
-  request.get<IDeviceList>(baseDevUrl, { params: {
-    search: devtext,
-    page_size: 30,
-    fields: 'id,comment'
-  } })
+  request.get<IDeviceList>(baseDevUrl, {
+    params: {
+      search: devtext,
+      page_size: 30,
+      fields: 'id,comment'
+    }
+  })
 
 export const addDevice = (newDev: object): IDeviceAxoisResponsePromise =>
   request.post<IDevice>(baseDevUrl, newDev)

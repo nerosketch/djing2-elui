@@ -176,7 +176,7 @@ export class CurrentPermissions extends VuexModule {
     add_localitymodel: false,
     view_localitymodel: false,
     change_localitymodel: false,
-    delete_localitymodel: false,
+    delete_localitymodel: false
   }
 
   @Mutation
@@ -187,13 +187,13 @@ export class CurrentPermissions extends VuexModule {
   @Mutation
   public SET_CURRENT_PERM(perms: string[]) {
     if (!this.__ob__) return
-    for (let s of perms) {
-      let chunks = s.split('.')
+    for (const s of perms) {
+      const chunks = s.split('.')
       if (chunks.length === 2) {
-        let k = chunks[0]
-        let sect = this.__ob__.value[k]
+        const k = chunks[0]
+        const sect = this.__ob__.value[k]
         if (sect) {
-          let v = chunks[1] as string | undefined
+          const v = chunks[1] as string | undefined
           if (v) {
             sect[v] = true
           }

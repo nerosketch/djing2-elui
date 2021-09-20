@@ -121,13 +121,14 @@ class DataTableComp extends DataTable<IDevice> {}
   components: {
     DevForm,
     NewDevForm,
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   @Prop({ default: 0 }) private localityId!: number
   private dialogVisible = false
   private dialogNewDev = false
@@ -215,10 +216,12 @@ export default class extends Vue {
   private frmNewDevDone(newDev: IDevice) {
     this.dialogNewDev = false
     this.$message.success('Новое устройство сохранено')
-    this.$router.push({ name: 'device-view',
+    this.$router.push({
+      name: 'device-view',
       params: {
         devId: newDev.id.toString()
-      } })
+      }
+    })
   }
 
   // Breadcrumbs
@@ -226,6 +229,7 @@ export default class extends Vue {
     document.title = `Оборудование - ${this.locName}`
     this.onGrpLoc(this.localityId)
   }
+
   @Watch('localityId')
   private async onGrpLoc(locId: number) {
     if (locId > 0) {
@@ -248,6 +252,7 @@ export default class extends Vue {
       ] as any[])
     }
   }
+
   get locName() {
     return LocalityModule.title
   }
@@ -261,9 +266,11 @@ export default class extends Vue {
     await setDevObjectsPerms(this.deviceIdGetter, info)
     this.permsDialog = false
   }
+
   private getDeviceObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
     return getDevObjectsPerms(this.deviceIdGetter)
   }
+
   private openPermsDialog(d: IDevice) {
     DeviceModule.GetDevice(d.id)
     this.permsDialog = true
@@ -282,6 +289,7 @@ export default class extends Vue {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(dev: IDevice) {
     DeviceModule.GetDevice(dev.id)
     this.sitesDlg = true

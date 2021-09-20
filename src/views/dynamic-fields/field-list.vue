@@ -21,7 +21,7 @@
       icon='el-icon-plus'
       @click='openNew'
     ) Добавить поля
-  
+
   el-dialog(
     title="Поле"
     :visible.sync="fieldFormVisible"
@@ -48,13 +48,14 @@ class DataTableComp extends DataTable<IDynamicField> {}
   name: 'FieldList',
   components: {
     FieldForm,
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
   public readonly $refs!: {
     fieldtable: DataTableComp
   }
+
   private fieldFormVisible = false
 
   private tableColumns: IDataTableColumn[] = [

@@ -99,7 +99,7 @@ export default class extends Vue {
       return null
     }
     if (this.item.children) {
-      for (let child of this.item.children) {
+      for (const child of this.item.children) {
         if (!child.meta || !child.meta.hidden) {
           return child
         }
@@ -111,7 +111,7 @@ export default class extends Vue {
   }
 
   get childCalc() {
-    let c = this.theOnlyOneChild
+    const c = this.theOnlyOneChild
     if (c && c.meta && c.meta.calc) {
       return c.meta.calc()
     }

@@ -6,7 +6,6 @@ import {
   changeAddr, addAddr
 } from '@/api/sorm/req'
 
-
 @Module({ dynamic: true, store, name: 'fiasaddrs' })
 class FiasRecursiveAddress extends VuexModule implements IFiasRecursiveAddress {
   id = 0

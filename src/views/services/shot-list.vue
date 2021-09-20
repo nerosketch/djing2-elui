@@ -58,12 +58,13 @@ class DataTableComp extends DataTable<IOneShotPay> {}
 
 @Component({
   name: 'ShotList',
-  components: { 'datatable': DataTableComp, ShotForm }
+  components: { datatable: DataTableComp, ShotForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
@@ -83,6 +84,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private shots: IOneShotPay[] = []
   private dialogVisible = false
   private sitesDlg = false
@@ -106,7 +108,7 @@ export default class extends Vue {
 
   private loadShots(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,name,cost,sites'
+      params.fields = 'id,name,cost,sites'
     }
     return getOneShotPays(params)
   }
@@ -129,6 +131,7 @@ export default class extends Vue {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(srv: IOneShotPay) {
     OneShotPayModule.SET_ALL_OSPAY(srv)
     this.sitesDlg = true

@@ -27,7 +27,7 @@ export default class extends Vue {
       return
     }
     this.pingLoading = true
-    let { data } = await pingAllIps(this.customer.id)
+    const { data } = await pingAllIps(this.customer.id)
     if (data.status) {
       this.$message.success(data.text)
       this.btnType = 'success'

@@ -7,7 +7,7 @@
         messenger-form(v-if='isReady')
     el-col.mt5(:lg='12' :sm='24')
       div
-        b Текущий webhook url: 
+        b Текущий webhook url:
         span {{ $store.state.messenger.current_webhook }}
       el-button-group
         el-button(
@@ -22,7 +22,6 @@
 
 <script lang="ts">
 import { messengerSendWebHook, messengerStopWebHook } from '@/api/messenger/req'
-import { RouteRecord } from 'vue-router'
 import { IMessenger } from '@/api/messenger/types'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { MessengerModule } from '@/store/modules/messenger/base-messenger'
@@ -52,7 +51,7 @@ export default class extends Vue {
 
   private async loadMsg() {
     this.isReady = false
-    try{
+    try {
       const msg = await MessengerModule.GetMessenger({
         mId: this.mId,
         typeName: this.messengerTypeName
@@ -107,7 +106,7 @@ export default class extends Vue {
           title: msg.title
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
 }
 </script>

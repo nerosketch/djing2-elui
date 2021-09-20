@@ -84,13 +84,14 @@ class DataTableComp extends DataTable<IGroup> {}
   name: 'GroupList',
   components: {
     GroupForm,
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
   public readonly $refs!: {
     grouptable: DataTableComp
   }
+
   private dialogVisible = false
   private permsDialog = false
   private sitesDlg = false
@@ -118,6 +119,7 @@ export default class extends Vue {
     await GroupModule.SET_ALL_MGROUP(group)
     this.dialogVisible = true
   }
+
   private async openNew() {
     await GroupModule.RESET_ALL_MGROUP()
     this.dialogVisible = true
@@ -137,7 +139,7 @@ export default class extends Vue {
 
   private loadGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,sites'
+      params.fields = 'id,title,sites'
     }
     return getGroups(params)
   }
@@ -179,9 +181,11 @@ export default class extends Vue {
     await setGroupObjectsPerms(this.groupIdGetter, info)
     this.permsDialog = false
   }
+
   private getGroupObjectPermsFunc4Grp() {
     return getGroupObjectsPerms(this.groupIdGetter)
   }
+
   private groupGetSelectedObjectPerms(grpId: number, profileGroupId: number) {
     return getGroupSelectedObjectPerms(grpId, profileGroupId)
   }
@@ -195,6 +199,7 @@ export default class extends Vue {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(grp: IGroup) {
     GroupModule.SET_ALL_MGROUP(grp)
     this.sitesDlg = true

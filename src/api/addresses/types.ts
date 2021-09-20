@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import {
   IDRFAxiosResponsePromise,
-  IDRFListResponse,
+  IDRFListResponse
 } from '@/api/types'
 
 export interface ILocalityModel {
@@ -12,7 +12,6 @@ export interface ILocalityModel {
 export type ILocalityModelList = IDRFListResponse<ILocalityModel>
 export type ILocalityModelAxoisResponsePromise = IDRFAxiosResponsePromise<ILocalityModel>
 export type ILocalityModelListAxiosResponsePromise = IDRFAxiosResponsePromise<ILocalityModelList>
-
 
 // IStreetModel
 export interface IStreetModel {

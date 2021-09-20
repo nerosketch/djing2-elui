@@ -33,7 +33,7 @@ export default class extends Vue {
         console.log('WS соеденение закрыто, причина: ' + eventclose.reason)
       }
       this.wsInstance.onmessage = (msg: MessageEvent) => {
-        let newData = JSON.parse(msg.data)
+        const newData = JSON.parse(msg.data)
         // console.log('Сообщение:', msg)
         if (msg.type === 'message') {
           this.onMsg(newData)

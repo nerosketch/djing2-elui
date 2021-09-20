@@ -130,7 +130,7 @@ export default class extends mixins(VlanMixin) {
   }
 
   private get isAcceptVlanSelectedConfig() {
-    let selectedConf = this.configTypeCodes.find(val => val.code === this.currentConfig.configTypeCode)
+    const selectedConf = this.configTypeCodes.find(val => val.code === this.currentConfig.configTypeCode)
     if (selectedConf) {
       return selectedConf.accept_vlan || false
     }

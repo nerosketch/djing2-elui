@@ -47,12 +47,11 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import {DynamicFieldModule} from '@/store/modules/dynamicfields/dynamic-field'
+import { DynamicFieldModule } from '@/store/modules/dynamicfields/dynamic-field'
 import { IDynamicField, IFieldChoiceType } from '@/api/dynamic-fields/types'
 import { getFieldTypeChoices } from '@/api/dynamic-fields/req'
 import SystemTagsInput from './system-tags-input.vue'
 import { regexpVal } from '@/utils/validate'
-
 
 export const _userTagsValidator = regexpVal(/^(\w+\,?)+$/s)
 

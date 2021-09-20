@@ -15,7 +15,6 @@ export type IFiasRecursiveAddressList = IDRFListResponse<IFiasRecursiveAddress>
 export type IFiasRecursiveAddressAxoisResponsePromise = IDRFAxiosResponsePromise<IFiasRecursiveAddress>
 export type IFiasRecursiveAddressListAxiosResponsePromise = IDRFAxiosResponsePromise<IFiasRecursiveAddressList>
 
-
 export type IAddrLevelItem = [number, string]
 export type IAddrLevelItemsIDRFAxiosResponsePromise = IDRFAxiosResponsePromise<IAddrLevelItem[]>
 export type IAddrTypeItem = [number, string]

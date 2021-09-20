@@ -18,9 +18,13 @@ import { getDevices } from '@/api/devices/req'
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private value!: number
-  @Prop({ default: 0 }) private groupId!: number
-  @Prop({ default: () => ({id: null, comment: 'Не выбрано' }) }) private initialDevice!: IDevice
+
+  @Prop({ default: 0 }) private localityId!: number
+
+  @Prop({ default: () => ({ id: null, comment: 'Не выбрано' }) }) private initialDevice!: IDevice
+
   private devices: IDevice[] = []
+
   private selectedDeviceId = 0
 
   @Watch('selectedDeviceId')
@@ -56,7 +60,7 @@ export default class extends Vue {
       const { data } = await getDevices({
         page: 1,
         page_size: 0,
-        group: this.groupId,
+        locality: this.localityId,
         fields: 'id,comment,ip_address'
       }) as any
       this.devices = data

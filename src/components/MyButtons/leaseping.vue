@@ -38,7 +38,7 @@ export default class extends Vue {
       } catch (err) {
         this.$message.error(err)
       }
-      let tv = setTimeout(() => {
+      const tv = setTimeout(() => {
         this.btnText = 'Ping'
         this.defType = ''
         this.defIcon = 'el-icon-mouse'

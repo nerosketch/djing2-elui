@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {
-  IDRFAxiosResponsePromise,
+  IDRFAxiosResponsePromise
 } from '@/api/types'
 
 export interface ICustomerComment {

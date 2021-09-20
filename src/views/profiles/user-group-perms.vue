@@ -34,7 +34,7 @@ export default class extends mixins(PermMngMixin) {
 
   private async savePerms() {
     this.saveLoading = true
-    let updatedGroup = await UserGroupModule.PatchUserGroup({
+    const updatedGroup = await UserGroupModule.PatchUserGroup({
       permissions: this.assignedPerms
     })
     this.saveLoading = false

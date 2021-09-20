@@ -161,7 +161,7 @@ import LocalityStreetChoice from '@/components/Locality/street-choice.vue'
     CustomerFormFio,
     LocalityChoice,
     GroupsChoice,
-    LocalityStreetChoice,
+    LocalityStreetChoice
   }
 })
 export default class extends mixins(FormMixin) {
@@ -181,7 +181,7 @@ export default class extends mixins(FormMixin) {
       { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
     ],
     birth_day: [
-      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' },
+      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' }
     ]
   }
 
@@ -212,7 +212,7 @@ export default class extends mixins(FormMixin) {
   }
 
   private onSubmit() {
-    (this.$refs['customerfrm'] as Form).validate(async valid => {
+    (this.$refs.customerfrm as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
         try {

@@ -82,6 +82,7 @@ export default class extends Vue {
     new_passw: '',
     retype_passw: ''
   }
+
   private frmErr = {
     old_passw: '',
     new_passw: '',
@@ -96,7 +97,7 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         try {
@@ -108,9 +109,9 @@ export default class extends Vue {
         } catch (err) {
           if (typeof err === 'object' && err.hasOwnProperty('response')) {
             const d = err.response.data
-            this.frmErr.old_passw = d['old_passw']
-            this.frmErr.new_passw = d['new_passw']
-            this.frmErr.retype_passw = d['retype_passw']
+            this.frmErr.old_passw = d.old_passw
+            this.frmErr.new_passw = d.new_passw
+            this.frmErr.retype_passw = d.retype_passw
           }
         } finally {
           this.loading = false

@@ -92,11 +92,11 @@ export default class extends Vue {
     ip_address: '',
     pool: 0,
     customer: 0,
-    mac_address: '',
+    mac_address: ''
   }
 
   private onSubmit() {
-    (this.$refs['frm'] as Form).validate(async valid => {
+    (this.$refs.frm as Form).validate(async valid => {
       if (valid) {
         this.frmLoading = true
         try {
@@ -147,7 +147,7 @@ export default class extends Vue {
       ip_address: '',
       pool: 0,
       customer: CustomerModule.id,
-      mac_address: '',
+      mac_address: ''
     }
     if (this.pools.length === 0) {
       this.loadPools()

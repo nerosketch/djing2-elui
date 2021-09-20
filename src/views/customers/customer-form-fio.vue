@@ -52,7 +52,7 @@ export default class extends Vue {
   private frmData = {
     firstName: '',
     lastName: '',
-    surname: '',
+    surname: ''
   }
 
   private frmRules = {
@@ -69,12 +69,12 @@ export default class extends Vue {
     ]
   }
 
-  /*private get fioGetter() {
+  /* private get fioGetter() {
     const fm = this.frmData
     const r = `${fm.surname} ${fm.firstName} ${fm.lastName}`
     this.$emit('input', r)
     return r
-  }*/
+  } */
 
   @Watch('$store.state.customer.fio')
   private onchfio(fio: string) {

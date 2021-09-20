@@ -40,9 +40,11 @@ export default class extends Vue {
     if (!this.$perms.tasks.delete_taskdocumentattachment) return
     TaskAttachmentModule.DelAttachment(file.id)
   }
+
   private handlePreview(file: IFileItem) {
     window.open(file.url, '_blank')
   }
+
   private beforeRemove(file: IFileItem) {
     if (!this.$perms.tasks.delete_taskdocumentattachment) return false
     return this.$confirm(`Удалить "${file.name}"?`)

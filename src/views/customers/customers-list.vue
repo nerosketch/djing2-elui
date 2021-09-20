@@ -116,7 +116,7 @@ import {
 } from '@/api/types'
 import {
   ICustomer,
-  IDRFRequestListParametersCustomer,
+  IDRFRequestListParametersCustomer
 } from '@/api/customers/types'
 import {
   getCustomers,
@@ -142,10 +142,10 @@ interface ITableRowClassName {
 @Component({
   name: 'CustomersList',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     NewCustomerForm,
     PingProfile,
-    CustomerListFilters,
+    CustomerListFilters
   }
 })
 export default class extends Vue {
@@ -155,6 +155,7 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+
   private selectedCustomers: number[] = []
   private sitesDlg = false
   private sitesDlgProgress = false
@@ -213,7 +214,7 @@ export default class extends Vue {
     },
     {
       prop: 'group_title',
-      label: 'Группа',
+      label: 'Группа'
     },
     {
       prop: 'marker_icons',
@@ -231,7 +232,7 @@ export default class extends Vue {
     const group = this.$route.query.group
     let r
     if (params) {
-      let newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
+      const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         locality: this.localityId,
         fields: 'id,username,fio,street_name,house,telephone,current_service__service__title,balance,group_title,is_active,lease_count,marker_icons'
       })
@@ -256,24 +257,24 @@ export default class extends Vue {
 
   @Watch('filterForm.street')
   private onStreetChange(streetId: number) {
-    let qr = Object.assign({}, this.$route.query) as Record<string, any>
+    const qr = Object.assign({}, this.$route.query) as Record<string, any>
     const qstreet = qr.street
     delete qr.street
 
     if (streetId != qstreet) {
-      qr['street'] = streetId
+      qr.street = streetId
     }
     this.$router.push({ path: this.$route.path, query: qr })
   }
 
   @Watch('filterForm.group')
   private onGroupChange(groupId: number) {
-    let qr = Object.assign({}, this.$route.query) as Record<string, any>
+    const qr = Object.assign({}, this.$route.query) as Record<string, any>
     const qgroup = qr.group
     delete qr.group
 
     if (groupId != qgroup) {
-      qr['group'] = groupId
+      qr.group = groupId
     }
     this.$router.push({ path: this.$route.path, query: qr })
   }
@@ -329,9 +330,11 @@ export default class extends Vue {
     await setCustomerObjectsPerms(this.customerIdGetter, info)
     this.permsDialog = false
   }
+
   private getCustomerObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
     return getCustomerObjectsPerms(this.customerIdGetter)
   }
+
   private openPermsDialog(c: ICustomer) {
     CustomerModule.SET_ALL_CUSTOMER(c)
     this.permsDialog = true
@@ -344,6 +347,7 @@ export default class extends Vue {
   private handleSelectionChange(customers: ICustomer[]) {
     this.selectedCustomers = customers.map(c => c.id)
   }
+
   get isSomeoneSelected() {
     return this.selectedCustomers.length > 0
   }

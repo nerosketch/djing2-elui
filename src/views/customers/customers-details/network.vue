@@ -157,7 +157,7 @@ export default class extends Vue {
   }
 
   private onSignalUpdateLeases({ data }: IWsMessage) {
-    if (data['customer_id'] === this.$store.state.customer.id) {
+    if (data.customer_id === this.$store.state.customer.id) {
       this.loadLeases()
     }
   }

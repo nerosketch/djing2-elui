@@ -46,7 +46,6 @@ import { IDRFRequestListParameters } from '@/api/types'
 import MessengerForm from './messenger-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 import { IMessenger } from '@/api/messenger/types'
 import { MessengerModule } from '@/store/modules/messenger/base-messenger'
 import { getMessengers } from '@/api/messenger/req'
@@ -57,7 +56,7 @@ class DataTableComp extends DataTable<IMessenger> {}
   name: 'MessengerList',
   components: {
     MessengerForm,
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
@@ -106,7 +105,7 @@ export default class extends Vue {
 
   private async loadMessengers(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,description,bot_type_name,global_link'
+      params.fields = 'id,title,description,bot_type_name,global_link'
     }
     try {
       const r = await getMessengers(this.messengerTypeName, params)
@@ -131,10 +130,13 @@ export default class extends Vue {
   }
 
   private go2Messenger(m: IMessenger) {
-    this.$router.push({ name: 'messengerDetails', params: {
-      mId: m.id.toString(),
-      messengerTypeName: this.messengerTypeName
-    }})
+    this.$router.push({
+      name: 'messengerDetails',
+      params: {
+        mId: m.id.toString(),
+        messengerTypeName: this.messengerTypeName
+      }
+    })
   }
 
   // Breadcrumbs
@@ -154,7 +156,7 @@ export default class extends Vue {
           title: this.messengerTypeName
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 }

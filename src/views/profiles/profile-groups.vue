@@ -9,7 +9,7 @@
       )
 
     span(v-else)
-      i.el-icon-loading 
+      i.el-icon-loading
       | Загрузка...
     el-divider
     el-button(
@@ -39,7 +39,7 @@ export default class extends Vue {
   private loading = false
 
   private async loadGroups() {
-    let p = {
+    const p = {
       page: 1,
       page_size: 0,
       fields: 'id,name'
@@ -60,8 +60,8 @@ export default class extends Vue {
   }
 
   private async saveGroups() {
-    let grps = this.groups.filter(g => g.checked)
-    let grpids = grps.map(g => g.id)
+    const grps = this.groups.filter(g => g.checked)
+    const grpids = grps.map(g => g.id)
     this.loading = true
     try {
       const r = await UserProfileModule.PatchProfile({

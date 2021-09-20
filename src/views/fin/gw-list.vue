@@ -63,13 +63,14 @@ class DataTableComp extends DataTable<IPayAllTimeGateway> {}
   name: 'GwList',
   components: {
     PayGwForm,
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private dialogTitle = 'Платёжный шлюз'
   private dialogVisible = false
   private sitesDlg = false
@@ -109,7 +110,7 @@ export default class extends Vue {
 
   private loadPayGws(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,service_id,slug,secret,pay_count,sites'
+      params.fields = 'id,title,service_id,slug,secret,pay_count,sites'
     }
     return getPayGateways(params)
   }
@@ -119,17 +120,20 @@ export default class extends Vue {
     this.dialogTitle = 'Изменить платёжный шлюз'
     this.dialogVisible = true
   }
+
   private delPayGw(gw: IPayAllTimeGateway) {
     this.$confirm('Удалить платёжный шлюз?').then(async() => {
       await PayAllTimeGatewayModule.DelPayGroup(gw.id)
       this.$refs.table.GetTableData()
     })
   }
+
   private openNew() {
     PayAllTimeGatewayModule.RESET_ALL_PAYGW()
     this.dialogTitle = 'Создать платёжный шлюз'
     this.dialogVisible = true
   }
+
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.GetTableData()
@@ -159,6 +163,7 @@ export default class extends Vue {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(grp: IPayAllTimeGateway) {
     PayAllTimeGatewayModule.SET_ALL_PAYGW(grp)
     this.sitesDlg = true

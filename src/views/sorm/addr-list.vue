@@ -47,7 +47,7 @@ class DataTableComp extends DataTable<IFiasRecursiveAddress> {}
 @Component({
   name: 'AddrList',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     AddrForm
   }
 })
@@ -90,7 +90,7 @@ export default class extends Vue {
 
   private async loadAddrs(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,ao_level_name,ao_type_name,parent_ao,groups,parent_ao_name'
+      params.fields = 'id,title,ao_level_name,ao_type_name,parent_ao,groups,parent_ao_name'
     }
     const r = await getAddrs(params)
     this.loadedDataList = r.data.results

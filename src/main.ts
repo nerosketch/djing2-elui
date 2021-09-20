@@ -22,8 +22,8 @@ locale.use(lang)
 
 Vue.use(ElementUI, { size: 'mini' })
 
-Vue.component('object-perms', ObjectPerms)
-Vue.component('sites-attach', SitesAttach)
+Vue.component('ObjectPerms', ObjectPerms)
+Vue.component('SitesAttach', SitesAttach)
 
 Vue.config.productionTip = false
 

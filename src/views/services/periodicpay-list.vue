@@ -59,12 +59,13 @@ class DataTableComp extends DataTable<IPeriodicPay> {}
 
 @Component({
   name: 'PeriodicPayList',
-  components: { 'datatable': DataTableComp, PeriodicpayForm }
+  components: { datatable: DataTableComp, PeriodicpayForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
@@ -89,6 +90,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private pays: IPeriodicPay[] = []
   private dialogVisible = false
   private sitesDlg = false
@@ -116,7 +118,7 @@ export default class extends Vue {
 
   private loadPeriodics(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,name,when_add,amount,sites'
+      params.fields = 'id,name,when_add,amount,sites'
     }
     return getPeriodicPays(params)
   }
@@ -135,6 +137,7 @@ export default class extends Vue {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(srv: IPeriodicPay) {
     PeriodicPayModule.SET_ALL_PPAY(srv)
     this.sitesDlg = true

@@ -34,12 +34,13 @@ class DataTableComp extends DataTable<ICustomerLog> {}
 
 @Component({
   name: 'Finance',
-  components: { AddCash, 'datatable': DataTableComp }
+  components: { AddCash, datatable: DataTableComp }
 })
 export default class extends Vue {
   public readonly $refs!: {
     fintbl: DataTableComp
   }
+
   private addCashDialog = false
 
   private tableColumns: IDataTableColumn[] = [

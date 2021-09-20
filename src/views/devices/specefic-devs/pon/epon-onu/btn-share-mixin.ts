@@ -9,10 +9,10 @@ export default class extends Vue {
   protected loading = false
 
   protected setResState(text: string, bState: string, timeout = 3000) {
-    let initTxt = this.btnText
+    const initTxt = this.btnText
     this.btnText = text
     this.btnType = bState
-    let tm = setTimeout(() => {
+    const tm = setTimeout(() => {
       this.btnText = initTxt
       this.btnType = ''
       clearTimeout(tm)

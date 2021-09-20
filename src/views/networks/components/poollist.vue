@@ -67,12 +67,13 @@ class DataTableComp extends DataTable<INetworkIpPool> {}
 
 @Component({
   name: 'PoolList',
-  components: { 'datatable': DataTableComp, PoolForm }
+  components: { datatable: DataTableComp, PoolForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'network',
@@ -131,6 +132,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private pools: INetworkIpPool[] = []
   private dialogVisible = false
   private sitesDlg = false
@@ -143,10 +145,12 @@ export default class extends Vue {
     }
     return `${w} подсеть`
   }
+
   private async openEdit(pool: INetworkIpPool) {
     await NetworkIpPoolModule.SET_ALL_POOL(pool)
     this.dialogVisible = true
   }
+
   private async openNew() {
     await NetworkIpPoolModule.RESET_ALL_POOL()
     this.dialogVisible = true
@@ -162,7 +166,7 @@ export default class extends Vue {
 
   private async loadPools(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count,sites,vid,vlan_if,kind'
+      params.fields = 'id,network,description,ip_start,ip_end,gateway,is_dynamic,groups,usage_count,sites,vid,vlan_if,kind'
     }
     return getNetworkIpPools(params)
   }
@@ -182,6 +186,7 @@ export default class extends Vue {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(net: INetworkIpPool) {
     NetworkIpPoolModule.SET_ALL_POOL(net)
     this.sitesDlg = true

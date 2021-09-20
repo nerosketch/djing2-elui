@@ -72,13 +72,14 @@ export default class extends Vue {
   private onDevPort() {
     this.loadPort()
   }
+
   @Watch('initialNum')
   private onInNumCh(initialNum: number) {
     this.frmMod.num = initialNum
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         let newPort

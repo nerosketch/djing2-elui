@@ -53,7 +53,7 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['perfrm'] as Form).validate(async valid => {
+    (this.$refs.perfrm as Form).validate(async valid => {
       if (valid) {
         try {
           this.isLoading = true

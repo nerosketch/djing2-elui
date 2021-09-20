@@ -180,7 +180,7 @@ export const getAttachment = (id: number): ICustomerAttachementAxoisResponseProm
   request.get<ICustomerAttachement>(`${CustomerAttachmUrl}${id}/`)
 
 export const addAttachment = (newAtt: any): ICustomerAttachementAxoisResponsePromise => {
-  let formData = new FormData()
+  const formData = new FormData()
   formData.append('doc_file', newAtt.doc_file)
   formData.append('title', newAtt.title)
   formData.append('customer', newAtt.customer)
@@ -213,12 +213,13 @@ export const getAssignedPeriodicPays = (account: number): IPeriodicPayForIdListA
 export const delAssignedPeriodicPay = (pid: number) =>
   request.delete(`${CustomerPPayUrl}${pid}/`)
 
-
-//IDynamicContentField
+// IDynamicContentField
 export const getCombinedContentFields = (customerId: number): IDynamicContentFieldListAxiosResponsePromise =>
-request.get<IDynamicContentFieldList>('/customers/dynamic-fields/combine/', {params: {
-  customer: customerId
-}})
+  request.get<IDynamicContentFieldList>('/customers/dynamic-fields/combine/', {
+    params: {
+      customer: customerId
+    }
+  })
 
 export const changeContentFields = (info: IDynamicContentFieldList): IDynamicContentFieldListAxiosResponsePromise =>
-request.put<IDynamicContentFieldList>('/customers/dynamic-fields/update_all/', info)
+  request.put<IDynamicContentFieldList>('/customers/dynamic-fields/update_all/', info)

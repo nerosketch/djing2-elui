@@ -139,7 +139,7 @@ export default class extends mixins(FormMixin) {
   }
 
   private onSubmit() {
-    (this.$refs['srvfrm'] as Form).validate(async valid => {
+    (this.$refs.srvfrm as Form).validate(async valid => {
       if (valid) {
         try {
           this.isLoading = true

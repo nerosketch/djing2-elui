@@ -27,7 +27,7 @@ class DataTableComp extends DataTable<IUserSession> {}
 
 @Component({
   name: 'SessionList',
-  components: { 'datatable': DataTableComp }
+  components: { datatable: DataTableComp }
 })
 export default class extends Vue {
   @Prop({ default: null }) private uid!: number | null
@@ -35,6 +35,7 @@ export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'assign_time',

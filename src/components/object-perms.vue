@@ -79,8 +79,8 @@ export default class extends Vue {
   }
 
   private async onSubmit() {
-    let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
-    let res: IObjectGroupPermsResultStruct = {
+    const selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
+    const res: IObjectGroupPermsResultStruct = {
       groupId: this.selectedProfileGroup,
       selectedPerms: selectedPerms.map(p => p.id)
     }
@@ -120,7 +120,7 @@ export default class extends Vue {
         this.oGroupsLoading = true
         const { data } = await this.getSelectedObjectPerms(this.objId, selectedGroupId)
         // data := selected perms
-        for (let ap of this.initialGroupPerms.availablePerms) {
+        for (const ap of this.initialGroupPerms.availablePerms) {
           this.$set(ap, 'checked', data.includes(ap.id))
         }
       } catch (err) {

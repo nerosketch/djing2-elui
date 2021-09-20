@@ -3,7 +3,7 @@ div(v-loading='loading')
   line-chart(
     :chartData="chartDat"
   )
-  span Временной срез: 
+  span Временной срез:
   el-date-picker(
     v-model="timerange"
     type="datetimerange"

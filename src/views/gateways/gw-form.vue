@@ -124,6 +124,7 @@ export default class extends mixins(FormMixin) {
     enabled: GatewayModule.enabled,
     place: GatewayModule.place
   }
+
   get isNew() {
     return GatewayModule.id === 0
   }
@@ -134,7 +135,7 @@ export default class extends mixins(FormMixin) {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
         try {

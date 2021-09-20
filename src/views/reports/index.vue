@@ -8,7 +8,7 @@
     )
       el-card
         template(v-slot:header)
-          .clearfix Частота использования характеров задач 
+          .clearfix Частота использования характеров задач
         task-mode-report-pie-chart(
           v-if="$perms.tasks.can_view_task_mode_report"
         )

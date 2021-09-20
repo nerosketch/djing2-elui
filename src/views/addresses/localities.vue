@@ -61,7 +61,6 @@
         :selectedSiteIds="$store.state.locality.sites"
       )
 
-
 </template>
 
 <script lang="ts">
@@ -79,15 +78,16 @@ class DataTableComp extends DataTable<ILocalityModel> {}
 @Component({
   name: 'Localities',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     LocalityForm,
-    StreetEditor,
+    StreetEditor
   }
 })
 export default class extends Vue {
   public readonly $refs!: {
     loctable: DataTableComp
   }
+
   private dialogVisible = false
   private streetDialogVisible = false
   private sitesDlg = false
@@ -109,7 +109,7 @@ export default class extends Vue {
 
   private loadLocalities(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title'
+      params.fields = 'id,title'
     }
     return getLocalities(params)
   }
@@ -132,6 +132,7 @@ export default class extends Vue {
     await LocalityModule.SET_ALL_LOCALITY(loc)
     this.dialogVisible = true
   }
+
   private async openNew() {
     await LocalityModule.RESET_ALL_LOCALITY()
     this.dialogVisible = true
@@ -151,7 +152,7 @@ export default class extends Vue {
   }
 
   private get changeStreetTitle() {
-    return `Изменить улицы для "${ this.$store.state.locality.title }"`
+    return `Изменить улицы для "${this.$store.state.locality.title}"`
   }
 
   private async openSitesDlg(loc: ILocalityModel) {

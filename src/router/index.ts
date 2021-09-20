@@ -142,7 +142,7 @@ export const constantRoutes: RouteConfig [] = [
       {
         path: '',
         component: () => import(/* webpackChunkName: "afklist" */ '@/views/customers/afk-list.vue'),
-        meta: { hidden: true },
+        meta: { hidden: true }
       }
     ]
   },

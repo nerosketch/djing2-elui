@@ -72,12 +72,13 @@ class DataTableComp extends DataTable<IVlanIf> {}
 
 @Component({
   name: 'VlanList',
-  components: { 'datatable': DataTableComp, VlanForm }
+  components: { datatable: DataTableComp, VlanForm }
 })
 export default class extends mixins(VlanMixin) {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
@@ -104,6 +105,7 @@ export default class extends mixins(VlanMixin) {
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private dialogVisible = false
   private sitesDlg = false
   private editFieldsVisible = false
@@ -115,10 +117,12 @@ export default class extends mixins(VlanMixin) {
     }
     return `${w} vlan`
   }
+
   private async openEdit(vlan: IVlanIf) {
     await VlanIfModule.SET_ALL_VLAN(vlan)
     this.dialogVisible = true
   }
+
   private async openNew() {
     await VlanIfModule.RESET_ALL_VLAN()
     this.dialogVisible = true
@@ -160,6 +164,7 @@ export default class extends mixins(VlanMixin) {
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(vlan: IVlanIf) {
     VlanIfModule.SET_ALL_VLAN(vlan)
     this.sitesDlg = true

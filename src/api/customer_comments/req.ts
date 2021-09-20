@@ -8,9 +8,11 @@ import {
 
 // ICustomerComment
 export const getCustomerComments = (customer: number): ICustomerCommentListAxiosResponsePromise =>
-  request.get<ICustomerCommentList>('/customer_comments/', { params: {
-    customer
-  }})
+  request.get<ICustomerCommentList>('/customer_comments/', {
+    params: {
+      customer
+    }
+  })
 
 export const createCustomerComment = (newObject: object): ICustomerCommentAxiosResponse =>
   request.post<ICustomerComment>('/customer_comments/', newObject)

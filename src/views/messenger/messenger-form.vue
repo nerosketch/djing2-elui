@@ -65,9 +65,11 @@ export default class extends mixins(BotTypesMixin) {
     title: [
       { required: true, message: 'Название для мессенджера надо указать', trigger: 'blur' }
     ],
-    token: this.isNew ? [
-      { required: true, message: 'Токен для мессенджера надо указать', trigger: 'blur' }
-    ] : [],
+    token: this.isNew
+      ? [
+          { required: true, message: 'Токен для мессенджера надо указать', trigger: 'blur' }
+        ]
+      : [],
     bot_type: [
       { validator: positiveNumberValueAvailable, trigger: 'change', message: tx },
       { required: true, message: tx, trigger: 'blur' }
@@ -92,15 +94,14 @@ export default class extends mixins(BotTypesMixin) {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
         try {
           let newDat
           if (this.isNew) {
-            const botTypes = this.messengerBotTypes.filter( m => (m.val === this.frmMod.bot_type))
-            if (botTypes.length > 0)
-            {
+            const botTypes = this.messengerBotTypes.filter(m => (m.val === this.frmMod.bot_type))
+            if (botTypes.length > 0) {
               newDat = await MessengerModule.AddMessenger({
                 m: this.frmMod,
                 typeName: botTypes[0].text
@@ -131,7 +132,7 @@ export default class extends mixins(BotTypesMixin) {
     this.frmMod.description = m.description
     this.frmMod.bot_type = m.bot_type
   }
-  
+
   private get isNew() {
     return this.$store.state.messenger.id === 0
   }

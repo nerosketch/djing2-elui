@@ -35,6 +35,7 @@ export default class extends mixins(ResizeMixin) {
   private onValsCh() {
     this.initChart()
   }
+
   @Watch('labels')
   private onLabelsCh() {
     this.initChart()

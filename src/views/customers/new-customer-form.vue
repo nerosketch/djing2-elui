@@ -69,7 +69,7 @@ import GroupsChoice from '@/views/groups/groups-choice.vue'
   components: {
     CustomerFormFio,
     LocalityChoice,
-    GroupsChoice,
+    GroupsChoice
   }
 })
 export default class extends Vue {
@@ -101,7 +101,7 @@ export default class extends Vue {
       { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
     ],
     birth_day: [
-      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' },
+      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' }
     ]
   }
 
@@ -130,7 +130,7 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['frm'] as Form).validate(async valid => {
+    (this.$refs.frm as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         try {

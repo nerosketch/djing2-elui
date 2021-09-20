@@ -66,7 +66,7 @@ interface ITableRowClassName {
 @Component({
   name: 'ProfileList',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     ProfileForm
   }
 })
@@ -74,6 +74,7 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+
   private profileFormDialog = false
 
   private defAvaConst = DEFAULT_USER_AVA
@@ -114,7 +115,7 @@ export default class extends Vue {
 
   private getAllProfiles(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'avatar,username,fio,telephone,email,is_active,is_superuser'
+      params.fields = 'avatar,username,fio,telephone,email,is_active,is_superuser'
     }
     return getProfiles(params)
   }

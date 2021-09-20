@@ -118,6 +118,7 @@ export default class <T> extends Vue {
     previous: null,
     results: []
   }
+
   private tableData: T[] = []
   private page = 1
   private intLoading = false
@@ -175,7 +176,7 @@ export default class <T> extends Vue {
       page_size: 60,
       ordering: this.$route.query.ordering as string | undefined
     })
-    let response = await this.getData(allParams)
+    const response = await this.getData(allParams)
     this.responseData = response.data
     if (response.data.next === null) {
       this.endPage = true
@@ -200,8 +201,8 @@ export default class <T> extends Vue {
   }
 
   private onChangeOrderingField(orderField?: string) {
-    let qr = this.$route.query as Record<string, any>
-    let newQuery = Object.assign({}, qr)
+    const qr = this.$route.query as Record<string, any>
+    const newQuery = Object.assign({}, qr)
     if (orderField == qr.ordering) {
       delete newQuery.ordering
     } else {
@@ -236,6 +237,7 @@ export default class <T> extends Vue {
     window.addEventListener('resize', this.onWinResize)
     this.onWinResize()
   }
+
   beforeDestroy() {
     window.removeEventListener('resize', this.onWinResize)
   }

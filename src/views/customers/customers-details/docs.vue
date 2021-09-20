@@ -37,9 +37,11 @@ export default class extends Vue {
   private handleRemove(file: IFileItem) {
     CustomerAttachementModule.DelCustomerAttachment(file.id)
   }
+
   private handlePreview(file: IFileItem) {
     window.open(file.url, '_blank')
   }
+
   private beforeRemove(file: IFileItem) {
     return this.$confirm(`Удалить "${file.name}"?`)
   }

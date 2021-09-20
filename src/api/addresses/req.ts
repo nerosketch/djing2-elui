@@ -9,8 +9,7 @@ import {
   IStreetModelAxoisResponsePromise,
   IStreetModelList,
   IStreetModelListAxiosResponsePromise
-} from "./types"
-
+} from './types'
 
 // ILocalityModel
 export const getLocalities = (params?: IDRFRequestListParameters): ILocalityModelListAxiosResponsePromise =>

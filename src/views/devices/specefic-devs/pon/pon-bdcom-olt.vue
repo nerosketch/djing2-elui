@@ -111,7 +111,7 @@ export default class extends Vue {
 
   private async fetchItems() {
     if (this.device) {
-      let { data } = await scanOnuList(this.device.id, (c: ProgressEvent) => {
+      const { data } = await scanOnuList(this.device.id, (c: ProgressEvent) => {
         this.loadPercent = Math.floor((100 * c.loaded) / c.total)
       })
       let newData
@@ -122,7 +122,7 @@ export default class extends Vue {
       }
       for (const line of newData) {
         try {
-          //let onu = JSON.parse(line) as IScannedONU
+          // let onu = JSON.parse(line) as IScannedONU
           const fibIndex = this.fibers.findIndex((fb: IDevFiber) => fb.fb_id === line.fiberid)
           if (fibIndex !== undefined) {
             this.fibers[fibIndex].onuList.push(line)
@@ -162,11 +162,14 @@ export default class extends Vue {
   private frmDone(newOnu: IDevice) {
     this.dialogVisible = false
     this.$message.success('Новая onu сохранена')
-    this.$router.push({ name: 'device-view',
+    this.$router.push({
+      name: 'device-view',
       params: {
         devId: newOnu.id.toString()
-      } })
+      }
+    })
   }
+
   private frmErr() {
     this.dialogVisible = false
   }

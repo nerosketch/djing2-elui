@@ -29,7 +29,7 @@ class DataTableComp extends DataTable<ITask> {}
 @Component({
   name: 'CustomerTaskHistory',
   components: {
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {

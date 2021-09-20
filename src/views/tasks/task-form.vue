@@ -141,11 +141,13 @@ export default class extends mixins(FormMixin, TaskMixin) {
     // { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
     { nm: 'другое', v: ITaskType.OTHER }
   ]
+
   private taskPriorities = [
     { nm: 'Низкий', v: ITaskPriority.LOW },
     { nm: 'Средний', v: ITaskPriority.AWARAGE },
     { nm: 'Высший', v: ITaskPriority.HIGHER }
   ]
+
   private taskStates = [
     { nm: 'Новая', v: ITaskState.NEW },
     { nm: 'Провалена', v: ITaskState.CONFUSED },
@@ -182,8 +184,8 @@ export default class extends mixins(FormMixin, TaskMixin) {
   }
 
   get initialDate() {
-    let nowDate = new Date()
-    let newDate = new Date(nowDate.setDate(nowDate.getDate() + 3))
+    const nowDate = new Date()
+    const newDate = new Date(nowDate.setDate(nowDate.getDate() + 3))
     return `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`
   }
 
@@ -220,7 +222,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         if (this.isNewTask) {
@@ -241,6 +243,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
       }
     })
   }
+
   private onDel() {
     if (this.isNewTask) return
     this.$confirm('Задача сейчас будет удалена, внимательно').then(async() => {
@@ -251,6 +254,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
       })
     })
   }
+
   private async onFinish() {
     if (this.isNewTask) return
     await TaskModule.FinishTask()

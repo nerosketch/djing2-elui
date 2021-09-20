@@ -18,14 +18,13 @@ import { getDevLocalities } from '@/api/devices/req'
 import { IDevLocality } from '@/api/devices/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 
 class DataTableComp extends DataTable<IDevLocality> {}
 
 @Component({
   name: 'DevLocList',
   components: {
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
@@ -44,7 +43,7 @@ export default class extends Vue {
 
   private loadDevLocalities(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,device_count'
+      params.fields = 'id,title,device_count'
     }
     return getDevLocalities(params)
   }
@@ -59,7 +58,7 @@ export default class extends Vue {
           title: 'Оборудование'
         }
       }
-    ] as RouteRecord[])
+    ] as any[])
   }
   // End Breadcrumbs
 }

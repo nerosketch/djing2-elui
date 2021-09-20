@@ -306,9 +306,11 @@ export default class extends Vue {
   private editPortDone(port: IPort) {
     this.addEditPortDone(port, false)
   }
+
   private addPortDone(port: IPort) {
     this.addEditPortDone(port, true)
   }
+
   private addEditPortDone(port: IPort, isAdd: boolean) {
     this.portFormDialog = false
     const ind = this.allPorts.findIndex(el => el.num === port.num)

@@ -24,9 +24,9 @@ export default class extends Vue {
     this.repLoading = true
     try {
       const { data } = await taskModeReportRequest()
-      let an = data.annotation
-      let labels = an.map(i => i.mode)
-      let chartData = an.map(i => ({ value: i.task_count, name: i.mode }))
+      const an = data.annotation
+      const labels = an.map(i => i.mode)
+      const chartData = an.map(i => ({ value: i.task_count, name: i.mode }))
 
       this.taskModeReport = {
         labels: labels,

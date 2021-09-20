@@ -43,24 +43,28 @@ export default class extends Vue {
   private frmRules = {
     cost: [
       { required: true, message: 'Укажи сколько денег надо положить на счёт', trigger: 'blur' },
-      { validator: (rule: any, value: number, callback: Function) => {
-        if (value >= 15000) {
-          callback(new Error(rule.message))
-        } else {
-          callback()
-        }
+      {
+        validator: (rule: any, value: number, callback: Function) => {
+          if (value >= 15000) {
+            callback(new Error(rule.message))
+          } else {
+            callback()
+          }
+        },
+        trigger: 'change',
+        message: 'Нельзя пополнять больше чем на 15000'
       },
-      trigger: 'change',
-      message: 'Нельзя пополнять больше чем на 15000' },
-      { validator: (rule: any, value: number, callback: Function) => {
-        if (value <= (-15000)) {
-          callback(new Error(rule.message))
-        } else {
-          callback()
-        }
-      },
-      trigger: 'change',
-      message: 'Нельзя снимать больше чем 15000' }
+      {
+        validator: (rule: any, value: number, callback: Function) => {
+          if (value <= (-15000)) {
+            callback(new Error(rule.message))
+          } else {
+            callback()
+          }
+        },
+        trigger: 'change',
+        message: 'Нельзя снимать больше чем 15000'
+      }
     ]
   }
 

@@ -21,7 +21,7 @@ export default class extends Vue {
   }
 
   protected selectReadonly() {
-    let roPerms = this.allPerms.filter(el => el.codename.startsWith('view_'))
+    const roPerms = this.allPerms.filter(el => el.codename.startsWith('view_'))
     if (roPerms.length > 0) {
       this.leftChecked = roPerms.map(p => p.id)
     } else {

@@ -73,6 +73,7 @@ export default class extends Vue {
     username: '',
     password: ''
   }
+
   private loginRules = {
     username: [
       { required: true, message: 'Логин не может быть пустым', trigger: 'blur' },
@@ -84,6 +85,7 @@ export default class extends Vue {
       { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
     ]
   }
+
   private passwordType = 'password'
   private loading = false
   // private showDialog = false

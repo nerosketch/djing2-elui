@@ -16,7 +16,7 @@ export const getGuestSessionList = (params?: IDRFRequestListParameters): IUserSe
   request.get<IUserSessionList>(`${surl}guest_list/`, { params })
 
 // export const getSession = (id: number): IUserSessionAxoisResponsePromise =>
-  // request.get<IUserSession>(`${surl}${id}/`)
+// request.get<IUserSession>(`${surl}${id}/`)
 
 export const getSessionByLease = (leaseId: number): IUserSessionAxoisResponsePromise =>
   request.get<IUserSession>(`${surl}get_by_lease/${leaseId}/`)
@@ -26,4 +26,3 @@ export const delSession = (id: number) =>
 
 export const sessionRequestFree = (sessionId: number) =>
   request.post(`${surl}${sessionId}/free_session_request/`)
-

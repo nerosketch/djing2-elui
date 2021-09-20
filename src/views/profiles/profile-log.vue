@@ -20,7 +20,7 @@ class DataTableComp extends DataTable<IUserProfileLog> {}
 @Component({
   name: 'ProfileLog',
   components: {
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {

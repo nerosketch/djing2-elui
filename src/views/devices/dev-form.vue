@@ -105,7 +105,7 @@ import LocalityChoice from '@/components/Locality/locality-choice.vue'
     DeviceAutocompleteField,
     GroupsChoice,
     LocalityStreetChoice,
-    LocalityChoice,
+    LocalityChoice
   }
 })
 export default class extends mixins(FormMixin) {
@@ -166,7 +166,7 @@ export default class extends mixins(FormMixin) {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         try {

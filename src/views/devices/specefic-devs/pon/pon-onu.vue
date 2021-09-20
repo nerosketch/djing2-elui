@@ -112,12 +112,15 @@ export default class extends Vue {
       'el-icon-question': this.isStatusUnknown
     }
   }
+
   get isStatusSuccess() {
     return this.onuDetails !== null && this.onuDetails.status === IOnuDetailsStatus.UP
   }
+
   get isStatusError() {
     return this.onuDetails !== null && this.onuDetails.status === IOnuDetailsStatus.DOWN
   }
+
   get isStatusUnknown() {
     return !this.onuDetails || this.onuDetails.status === IOnuDetailsStatus.UNKNOWN
   }

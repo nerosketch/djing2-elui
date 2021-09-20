@@ -46,7 +46,7 @@ export default class extends Vue {
 
   @Watch('activeName')
   private onActiveNameChange(value: string) {
-    let allurl = `${this.$route.path}?tab=${value}`
+    const allurl = `${this.$route.path}?tab=${value}`
     if (this.$route.fullPath !== allurl) {
       this.$router.push(allurl)
     }

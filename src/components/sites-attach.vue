@@ -56,8 +56,8 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    let selectedSites = this.sitesList.filter(s => s.checked)
-    let siteIds = selectedSites.map(s => s.id)
+    const selectedSites = this.sitesList.filter(s => s.checked)
+    const siteIds = selectedSites.map(s => s.id)
     this.$emit('save', siteIds)
   }
 }

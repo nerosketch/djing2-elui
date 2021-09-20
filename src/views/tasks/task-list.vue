@@ -54,13 +54,15 @@ class DataTableComp extends DataTable<ITask> {}
 
 @Component({
   name: 'TaskList',
-  components: { 'datatable': DataTableComp, TaskForm }
+  components: { datatable: DataTableComp, TaskForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+
   private formDialog = false
+
   private editFieldsVisible = false
 
   @Prop({ default: '' })
@@ -131,7 +133,7 @@ export default class extends Vue {
 
   private loadTasks(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
+      params.fields = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
     }
     return getTasks(params, this.tabUrl)
   }

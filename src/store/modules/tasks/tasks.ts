@@ -89,10 +89,12 @@ class Task extends VuexModule implements ITask {
   private SET_RECIPIENTS(recs: number[]) {
     this.recipients = recs
   }
+
   @Mutation
   public SET_CUSTOMER(uid: number) {
     this.customer = uid
   }
+
   @Mutation
   public SET_CUSTOMER_FULLNAME(fname: string) {
     this.customer_full_name = fname
@@ -138,10 +140,12 @@ class Task extends VuexModule implements ITask {
   public async FinishTask() {
     await finishTask(this.id)
   }
+
   @Action
   public async FailTask() {
     await failTask(this.id)
   }
+
   @Action
   public async RemindTask() {
     await remindTask(this.id)

@@ -153,7 +153,7 @@ export default class PushNotificationsClass {
     const rawData = window.atob(base64)
     const outputArray = new Uint8Array(rawData.length)
 
-    for (var i = 0; i < rawData.length; ++i) {
+    for (let i = 0; i < rawData.length; ++i) {
       outputArray[i] = rawData.charCodeAt(i)
     }
     return outputArray
@@ -206,7 +206,8 @@ export default class PushNotificationsClass {
       browser = rt[0].toLowerCase()
     }
 
-    const data = { status_type: statusType,
+    const data = {
+      status_type: statusType,
       subscription: subscription.toJSON(),
       browser: browser,
       group: 'group_name'
