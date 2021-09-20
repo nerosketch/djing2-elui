@@ -182,3 +182,8 @@ ul {
 .el-collapse-item__header {
   height: 37px;
 }
+
+/* Dropdown */
+.el-select-dropdown__wrap {
+  max-height: 85vh;
+}
