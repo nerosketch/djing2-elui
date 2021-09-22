@@ -124,7 +124,7 @@ export const getCustomersAfk = (params: ICustomerAfkItemParams): ICustomerAfkIte
 
 // ICustomerLocality
 export const getCustomerLocations = (params?: IDRFRequestListParameters): ICustomerLocalityListAxiosResponsePromise =>
-  request.get<ICustomerLocalityList>(`${custApiUrl}locations/`, { params })
+  request.get<ICustomerLocalityList>(`${custApiUrl}addresses/`, { params })
 
 // IAdditionalTelephone
 const telBaseUrl = '/customers/additional-telephone/'

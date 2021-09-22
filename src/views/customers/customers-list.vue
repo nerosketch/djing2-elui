@@ -185,8 +185,8 @@ export default class extends Vue {
       sortable: true
     },
     {
-      prop: 'street_name',
-      label: 'Улица',
+      prop: 'address_title',
+      label: 'Адрес',
       'min-width': 110
     },
     {
@@ -234,7 +234,7 @@ export default class extends Vue {
     if (params) {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         locality: this.localityId,
-        fields: 'id,username,fio,street_name,house,telephone,current_service__service__title,balance,group_title,is_active,lease_count,marker_icons'
+        fields: 'id,username,fio,address_name,house,telephone,current_service__service__title,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (street) {
         newParams.street = Number(street)

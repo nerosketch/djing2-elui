@@ -77,8 +77,8 @@ export default class extends Vue {
       'min-width': 250
     },
     {
-      prop: 'locality_title',
-      label: 'Населённый пункт'
+      prop: 'address_title',
+      label: 'Адрес'
     },
     {
       prop: 'parent_ao_name',

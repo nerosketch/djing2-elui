@@ -18,12 +18,10 @@ export interface ICustomer {
   create_date: string
   group: number
   group_title?: string
-  locality: number
-  locality_title: string
+  address: number
+  address_title: string
   balance: number
   description: string
-  street: number
-  street_name?: string
   house: string
   is_active: boolean
   gateway: number

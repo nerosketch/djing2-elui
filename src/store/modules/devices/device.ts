@@ -41,10 +41,8 @@ class Device extends VuexModule implements IDeviceInterace {
   code = ''
   sites?: number[] = []
   create_time = ''
-  locality = 0
-  locality_title = ''
-  street = 0
-  street_name = ''
+  address = 0
+  address_title = ''
   place = ''
 
   loadProgress = false
@@ -73,10 +71,8 @@ class Device extends VuexModule implements IDeviceInterace {
     this.code = ''
     this.sites = []
     this.create_time = ''
-    this.locality = 0
-    this.locality_title = ''
-    this.street = 0
-    this.street_name = ''
+    this.address = 0
+    this.address_title = ''
     this.place = ''
     return this
   }
@@ -101,10 +97,8 @@ class Device extends VuexModule implements IDeviceInterace {
     this.code = data.code
     this.sites = data.sites
     this.create_time = data.create_time
-    this.locality = data.locality
-    this.locality_title = data.locality_title
-    this.street = data.street
-    this.street_name = data.street_name
+    this.address = data.address
+    this.address_title = data.address_title
     this.place = data.place
     return this
   }

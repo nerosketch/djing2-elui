@@ -43,10 +43,8 @@ export interface IDevice {
   code: string
   sites?: number[]
   create_time: string
-  locality: number
-  locality_title: string
-  street: number
-  street_name: string
+  address: number
+  address_title: string
   place: string
 }
 export interface IDeviceInterace extends IDevice {
