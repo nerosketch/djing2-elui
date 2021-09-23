@@ -9,8 +9,8 @@ import {
   IObjectGroupPermsResultStruct
 } from '@/api/types'
 import {
-  ICustomerLocalityList,
-  ICustomerLocalityListAxiosResponsePromise,
+  ICustomerAddressList,
+  ICustomerAddressListAxiosResponsePromise,
   ICustomer, ICustomerList,
   ICustomerAxoisResponsePromise,
   ICustomerListAxiosResponsePromise,
@@ -122,9 +122,9 @@ export const setCustomerMarkers = (id: number, flags: string[]) =>
 export const getCustomersAfk = (params: ICustomerAfkItemParams): ICustomerAfkItemListAxiosResponsePromise =>
   request.get<ICustomerAfkItem[]>(`${custApiUrl}get_afk/`, { params })
 
-// ICustomerLocality
-export const getCustomerLocations = (params?: IDRFRequestListParameters): ICustomerLocalityListAxiosResponsePromise =>
-  request.get<ICustomerLocalityList>(`${custApiUrl}addresses/`, { params })
+// ICustomerAddress
+export const getCustomerLocations = (params?: IDRFRequestListParameters): ICustomerAddressListAxiosResponsePromise =>
+  request.get<ICustomerAddressList>(`${custApiUrl}addresses/`, { params })
 
 // IAdditionalTelephone
 const telBaseUrl = '/customers/additional-telephone/'

@@ -24,9 +24,9 @@ import { IDRFRequestListParameters } from '@/api/types'
 import { getCustomerLocations } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { ICustomerLocality } from '@/api/customers/types'
+import { ICustomerAddress } from '@/api/customers/types'
 
-class DataTableComp extends DataTable<ICustomerLocality> {}
+class DataTableComp extends DataTable<ICustomerAddress> {}
 
 @Component({
   name: 'CustomerGroupList',

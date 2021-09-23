@@ -333,7 +333,7 @@ export default class extends Vue {
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
     this.$message.success('Успешно сохранено')
-    this.$router.push({ name: 'devicesList', params: { localityId: device.locality.toString() } })
+    this.$router.push({ name: 'devicesList', params: { localityId: device.address.toString() } })
   }
 
   private openVidsDialog(port: IPort) {

@@ -24,10 +24,10 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { LocalityModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/locality'
 
 @Component({
-  name: 'LocalityForm'
+  name: 'AddressForm'
 })
 export default class extends Vue {
   private isLoading = false
@@ -38,7 +38,7 @@ export default class extends Vue {
     ]
   }
 
-  @Watch('$store.state.locality.title')
+  @Watch('$store.state.address.title')
   private onChangeLoc(title: string) {
     this.frmMod.title = title
   }
@@ -48,11 +48,11 @@ export default class extends Vue {
   }
 
   get isNew() {
-    return this.$store.state.locality.id === 0
+    return this.$store.state.address.id === 0
   }
 
   created() {
-    this.onChangeLoc(this.$store.state.locality.title)
+    this.onChangeLoc(this.$store.state.address.title)
   }
 
   private onSubmit() {
@@ -61,9 +61,9 @@ export default class extends Vue {
         this.isLoading = true
         let newDat
         if (this.isNew) {
-          newDat = await LocalityModule.AddLocality(this.frmMod)
+          newDat = await AddressModule.AddAddress(this.frmMod)
         } else {
-          newDat = await LocalityModule.PatchLocality(this.frmMod)
+          newDat = await AddressModule.PatchAddress(this.frmMod)
         }
         this.isLoading = false
         this.$emit('done', newDat)

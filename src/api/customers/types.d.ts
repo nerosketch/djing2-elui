@@ -6,7 +6,7 @@ import {
 } from '@/api/types'
 import { IService } from '@/api/services/types'
 import { AxiosPromise } from 'axios'
-import { ILocalityModel } from '../addresses/types'
+import { IAddressModel } from '../addresses/types'
 
 // ICustomer
 export interface ICustomer {
@@ -58,17 +58,16 @@ export type ICustomerOnPortAxoisPromise = AxiosPromise<ICustomerOnPort>
 export type ICustomersOnPortAxoisPromise = AxiosPromise<ICustomerOnPort[]>
 
 export interface IDRFRequestListParametersCustomer extends IDRFRequestListParameters {
-  locality: number
-  street?: number
+  address: number
   group?: number
 }
 
-export interface ICustomerLocality extends ILocalityModel {
+export interface ICustomerAddress extends IAddressModel {
   usercount: number
 }
-export type ICustomerLocalityList = IDRFListResponse<ICustomerLocality>
-export type ICustomerLocalityAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLocality>
-export type ICustomerLocalityListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLocalityList>
+export type ICustomerAddressList = IDRFListResponse<ICustomerAddress>
+export type ICustomerAddressAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerAddress>
+export type ICustomerAddressListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerAddressList>
 
 export interface IServiceUser {
   id: number
@@ -86,8 +85,7 @@ export interface ICustomerFrm {
   fio: string
   birth_day: string | null
   group: number
-  locality: number
-  street: number | null
+  address: number
   house: string
   is_active: boolean
   is_dynamic_ip: boolean

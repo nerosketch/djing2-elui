@@ -57,16 +57,9 @@
         format="d.MM.yyyy HH:mm"
       )
     el-form-item(
-      label="Локация"
+      label="Адрес"
     )
-      locality-choice(v-model="frmMod.locality")
-    el-form-item(
-      label="Улица"
-    )
-      locality-street-choice(
-        :localityId='frmMod.locality'
-        v-model='frmMod.street'
-      )
+      address-choice(v-model="frmMod.locality")
     el-form-item(
       label="№ дома"
     )
@@ -94,16 +87,14 @@ import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import dateCounter from '@/utils/date-counter'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
-import LocalityStreetChoice from '@/components/Locality/street-choice.vue'
-import LocalityChoice from '@/components/Locality/locality-choice.vue'
+import AddressChoice from '@/components/Address/address-choice.vue'
 
 @Component({
   name: 'NewDevForm',
   components: {
     DeviceAutocompleteField,
     GroupsChoice,
-    LocalityStreetChoice,
-    LocalityChoice
+    AddressChoice
   }
 })
 export default class extends Vue {
@@ -112,7 +103,7 @@ export default class extends Vue {
   @Prop({ default: '' }) private initialComment!: string
   @Prop({ default: 0 }) private initialDevType!: number
   @Prop({ default: 0 }) private initialGroup!: number
-  @Prop({ default: 0 }) private initialLocality!: number
+  @Prop({ default: 0 }) private initialAddress!: number
   @Prop({ default: false }) private initialIsNotic!: boolean
   @Prop({ default: 'ertNjuWr' }) private initialManPassw!: string
   @Prop({ default: '' }) private initialSnmpSxtra!: string
@@ -150,8 +141,7 @@ export default class extends Vue {
     parent_dev: this.initialParentDev,
     snmp_extra: this.initialSnmpSxtra,
     create_time: '',
-    locality: this.initialLocality,
-    street: 0,
+    locality: this.initialAddress,
     place: ''
   }
 

@@ -16,7 +16,7 @@
     "drawflow": "0.0.48",
     "echarts": "^5.0.2",
     "el-table-infinite-scroll": "^1.0.10",
-    "element-ui": "^2.15.1",
+    "element-ui": "^2.15.6",
     "js-cookie": "^2.2.1",
     "leaflet": "^1.7.1",
     "normalize.css": "^8.0.1",

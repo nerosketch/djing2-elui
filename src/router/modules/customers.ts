@@ -14,14 +14,14 @@ const customerRoutes: RouteConfig = {
       }
     },
     {
-      path: 'g:localityId/',
+      path: 'a:localityId/',
       name: 'customersList',
       component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customers-list.vue'),
       props: ({ params }) => ({ localityId: Number(params.localityId || 0) }),
       meta: { hidden: true }
     },
     {
-      path: 'c:uid/',
+      path: ':uid/',
       name: 'customerDetails',
       component: () => import(/* webpackChunkName: "customerdetails" */ '@/views/customers/customer-details.vue'),
       props: ({ params }) => ({ uid: Number(params.uid || 0) }),

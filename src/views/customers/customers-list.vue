@@ -4,7 +4,6 @@
       el-col(:col='24')
         customer-list-filters(
           :localityId="localityId"
-          :street.sync="filterForm.street"
           :group.sync="filterForm.group"
         )
       el-col(:lg='24' :md='20')
@@ -70,7 +69,7 @@
       :close-on-click-modal="false"
     )
       new-customer-form(
-        :selectedLocality='localityId'
+        :selectedAddress='localityId'
         v-on:done="addFrmDone"
       )
     el-dialog(
@@ -129,7 +128,7 @@ import NewCustomerForm from './new-customer-form.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import PingProfile from './ping-profile.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { LocalityModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/locality'
 import CustomerListFilters from './customer-list-filters.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
@@ -163,7 +162,6 @@ export default class extends Vue {
   private editFieldsVisible = false
   private filterForm = {
     group: Number(this.$route.query.group) || null,
-    street: Number(this.$route.query.street) || null
   }
 
   private tableColumns: IDataTableColumn[] = [
@@ -183,11 +181,6 @@ export default class extends Vue {
       label: 'ФИО',
       'min-width': 300,
       sortable: true
-    },
-    {
-      prop: 'address_title',
-      label: 'Адрес',
-      'min-width': 110
     },
     {
       prop: 'house',
@@ -228,17 +221,13 @@ export default class extends Vue {
   ]
 
   private async getAllCustomers(params?: IDRFRequestListParameters) {
-    const street = this.$route.query.street
     const group = this.$route.query.group
     let r
     if (params) {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
-        locality: this.localityId,
-        fields: 'id,username,fio,address_name,house,telephone,current_service__service__title,balance,group_title,is_active,lease_count,marker_icons'
+        address: this.localityId,
+        fields: 'id,username,fio,house,telephone,current_service__service__title,balance,group_title,is_active,lease_count,marker_icons'
       })
-      if (street) {
-        newParams.street = Number(street)
-      }
       if (group) {
         newParams.group = Number(group)
       }
@@ -255,18 +244,6 @@ export default class extends Vue {
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
-  @Watch('filterForm.street')
-  private onStreetChange(streetId: number) {
-    const qr = Object.assign({}, this.$route.query) as Record<string, any>
-    const qstreet = qr.street
-    delete qr.street
-
-    if (streetId != qstreet) {
-      qr.street = streetId
-    }
-    this.$router.push({ path: this.$route.path, query: qr })
-  }
-
   @Watch('filterForm.group')
   private onGroupChange(groupId: number) {
     const qr = Object.assign({}, this.$route.query) as Record<string, any>
@@ -277,11 +254,6 @@ export default class extends Vue {
       qr.group = groupId
     }
     this.$router.push({ path: this.$route.path, query: qr })
-  }
-
-  @Watch('$route.query.street')
-  private onChStreet() {
-    this.$refs.tbl.GetTableData()
   }
 
   @Watch('$route.query.group')
@@ -296,8 +268,8 @@ export default class extends Vue {
 
   // Breadcrumbs
   private async setCrumbs() {
-    if (this.$store.state.locality.id !== this.localityId) {
-      await LocalityModule.GetLocality(this.localityId)
+    if (this.$store.state.address.id !== this.localityId) {
+      await AddressModule.GetAddress(this.localityId)
     }
     BreadcrumbsModule.SetCrumbs([
       {
@@ -311,7 +283,7 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: this.$store.state.locality.title
+          title: this.$store.state.address.title
         }
       }
     ] as any[])

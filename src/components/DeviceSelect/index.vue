@@ -60,7 +60,7 @@ export default class extends Vue {
       const { data } = await getDevices({
         page: 1,
         page_size: 0,
-        locality: this.localityId,
+        address: this.localityId,
         fields: 'id,comment,ip_address'
       }) as any
       this.devices = data

@@ -1,9 +1,9 @@
 <template lang="pug">
   .app-container
     span Баланс:
-    small {{ $store.state.customer.balance }}.
-    span Создан:
-    small {{ $store.state.customer.create_date }}
+    small  {{ $store.state.customer.balance }}.
+    span  Создан:
+    small  {{ $store.state.customer.create_date }}
     el-tabs.border-card
       el-tab-pane(label="Инфо" lazy)
         keep-alive
@@ -97,7 +97,7 @@ export default class extends Vue {
         path: { name: 'customersList', params: { localityId: localityId } },
         meta: {
           hidden: true,
-          title: this.$store.state.customer.locality_title || '-'
+          title: this.$store.state.customer.address_title || '-'
         }
       },
       {

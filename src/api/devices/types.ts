@@ -56,7 +56,7 @@ export interface IDeviceInterace extends IDevice {
 }
 
 export interface IDRFRequestListParametersDevGroup extends IDRFRequestListParameters {
-  locality: number
+  address: number
 }
 
 export type IDeviceList = IDRFListResponse<IDevice>
@@ -81,13 +81,13 @@ export interface IDevTogglePortRequest {
   port_snmp_num: number
 }
 
-export interface IDevLocality {
+export interface IDevAddress {
   id: number
   title: string
   device_count: number
 }
-export type IDevLocalityList = IDRFListResponse<IDevLocality>
-export type IDevLocalityListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevLocalityList>
+export type IDevAddressList = IDRFListResponse<IDevAddress>
+export type IDevAddressListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevAddressList>
 
 export interface IScannedPort {
   num: number

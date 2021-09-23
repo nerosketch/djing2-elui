@@ -10,24 +10,24 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { ILocalityModel } from '@/api/addresses/types'
-import { getLocalities } from '@/api/addresses/req'
+import { IAddressModel } from '@/api/addresses/types'
+import { getAddresses } from '@/api/addresses/req'
 
 @Component({
-  name: 'LocalityChoice'
+  name: 'AddressChoice'
 })
 export default class extends Vue {
-  private localities: ILocalityModel[] = []
+  private localities: IAddressModel[] = []
   @Prop({ required: true })
   private value!: number
 
   private localValue = this.value
   private loading = false
 
-  private async loadLocalities() {
+  private async loadAddresses() {
     this.loading = true
     try {
-      const { data } = await getLocalities({
+      const { data } = await getAddresses({
         fields: 'id,title',
         page: 1,
         page_size: 0
@@ -39,7 +39,7 @@ export default class extends Vue {
   }
 
   created() {
-    this.loadLocalities()
+    this.loadAddresses()
   }
 
   @Watch('localValue')

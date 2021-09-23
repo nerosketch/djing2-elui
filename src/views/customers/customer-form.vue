@@ -21,13 +21,6 @@
     )
       tels-input(v-model="frmMod.telephone")
     el-form-item(
-      label="Улица"
-    )
-      locality-street-choice(
-        :localityId='$store.state.customer.locality'
-        v-model='frmMod.street'
-      )
-    el-form-item(
       label="Дом"
     )
       el-input(v-model="frmMod.house" :maxlength='12')
@@ -51,9 +44,9 @@
     )
       groups-choice(v-model="frmMod.group")
     el-form-item(
-      label="Локация"
+      label="Адрес"
     )
-      locality-choice(v-model="frmMod.locality")
+      address-choice(v-model="frmMod.locality")
     //- el-form-item(
     //-   label="Шлюз доступа"
     //- )
@@ -147,9 +140,8 @@ import CustomerPassword from './customer-password.vue'
 import FormMixin from '@/utils/forms'
 import TelsInput from './tels/tels-input.vue'
 import CustomerFormFio from './customer-form-fio.vue'
-import LocalityChoice from '@/components/Locality/locality-choice.vue'
+import AddressChoice from '@/components/Address/address-choice.vue'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
-import LocalityStreetChoice from '@/components/Locality/street-choice.vue'
 
 @Component({
   name: 'customer-form',
@@ -159,9 +151,8 @@ import LocalityStreetChoice from '@/components/Locality/street-choice.vue'
     CustomerPassword,
     TelsInput,
     CustomerFormFio,
-    LocalityChoice,
+    AddressChoice,
     GroupsChoice,
-    LocalityStreetChoice
   }
 })
 export default class extends mixins(FormMixin) {
@@ -200,8 +191,7 @@ export default class extends mixins(FormMixin) {
       fio: frm.fio,
       birth_day: frm.birth_day,
       group: frm.group,
-      locality: frm.locality,
-      street: frm.street === 0 ? null : frm.street,
+      address: frm.address,
       house: frm.house,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
@@ -233,7 +223,7 @@ export default class extends mixins(FormMixin) {
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
       try {
-        const currLoc = this.$store.state.customer.locality
+        const currLoc = this.$store.state.customer.address
         await CustomerModule.DelCustomer()
         this.$message.success('Учётка удалена')
         this.$router.push({ name: 'customersList', params: { localityId: currLoc.toString() } })

@@ -1,44 +1,24 @@
 import request from '@/utils/request'
 import { IDRFRequestListParameters } from '@/api/types'
 import {
-  ILocalityModel,
-  ILocalityModelAxoisResponsePromise,
-  ILocalityModelList,
-  ILocalityModelListAxiosResponsePromise,
-  IStreetModel,
-  IStreetModelAxoisResponsePromise,
-  IStreetModelList,
-  IStreetModelListAxiosResponsePromise
+  IAddressModel,
+  IAddressModelAxoisResponsePromise,
+  IAddressModelList,
+  IAddressModelListAxiosResponsePromise,
 } from './types'
 
-// ILocalityModel
-export const getLocalities = (params?: IDRFRequestListParameters): ILocalityModelListAxiosResponsePromise =>
-  request.get<ILocalityModelList>('/addrs/', { params })
+// IAddressModel
+export const getAddresses = (params?: IDRFRequestListParameters): IAddressModelListAxiosResponsePromise =>
+  request.get<IAddressModelList>('/addrs/', { params })
 
-export const getLocality = (id: number): ILocalityModelAxoisResponsePromise =>
-  request.get<ILocalityModel>(`/addrs/${id}/`)
+export const getAddress = (id: number): IAddressModelAxoisResponsePromise =>
+  request.get<IAddressModel>(`/addrs/${id}/`)
 
-export const addLocality = (info: object): ILocalityModelAxoisResponsePromise =>
-  request.post<ILocalityModel>('/addrs/', info)
+export const addAddress = (info: object): IAddressModelAxoisResponsePromise =>
+  request.post<IAddressModel>('/addrs/', info)
 
-export const delLocality = (id: number) =>
+export const delAddress = (id: number) =>
   request.delete(`/addrs/${id}/`)
 
-export const changeLocality = (id: number, info: object): ILocalityModelAxoisResponsePromise =>
-  request.patch<ILocalityModel>(`/addrs/${id}/`, info)
-
-// IStreetModel
-export const getStreets = (params?: IDRFRequestListParameters): IStreetModelListAxiosResponsePromise =>
-  request.get<IStreetModelList>('/addrs/street/', { params })
-
-export const getStreet = (id: number): IStreetModelAxoisResponsePromise =>
-  request.get<IStreetModel>(`/addrs/street/${id}/`)
-
-export const addStreet = (info: object): IStreetModelAxoisResponsePromise =>
-  request.post<IStreetModel>('/addrs/street/', info)
-
-export const delStreet = (id: number) =>
-  request.delete(`/addrs/street/${id}/`)
-
-export const changeStreet = (id: number, info: object): IStreetModelAxoisResponsePromise =>
-  request.patch<IStreetModel>(`/addrs/street/${id}/`, info)
+export const changeAddress = (id: number, info: object): IAddressModelAxoisResponsePromise =>
+  request.patch<IAddressModel>(`/addrs/${id}/`, info)

@@ -89,8 +89,8 @@
 </template>
 
 <script lang="ts">
-import { getLocalities } from '@/api/addresses/req'
-import { ILocalityModel } from '@/api/addresses/types'
+import { getAddresses } from '@/api/addresses/req'
+import { IAddressModel } from '@/api/addresses/types'
 import { getAddrLevels, getAddrTypes } from '@/api/sorm/req'
 import { IAddrLevelItem, IAddrTypeItem, IFiasRecursiveAddress } from '@/api/sorm/types'
 import { FiasRecursiveAddressModule } from '@/store/modules/sorm'
@@ -131,7 +131,7 @@ export default class extends Vue {
 
   private addrLevels: IAddrLevelItem[] = []
   private addrTypes: IAddrTypeItem[] = []
-  private localities: ILocalityModel[] = []
+  private localities: IAddressModel[] = []
 
   private frmRules = {
     title: [
@@ -151,7 +151,7 @@ export default class extends Vue {
 
   created() {
     this.getAddrLevels()
-    this.loadAllLocalities()
+    this.loadAllAddresses()
     this.getAddrTypes()
     if (!this.isNew) {
       this.onAddrChanged()
@@ -203,9 +203,9 @@ export default class extends Vue {
     }
   }
 
-  private async loadAllLocalities() {
-    const { data } = await getLocalities()
-    this.localities = data as ILocalityModel[]
+  private async loadAllAddresses() {
+    const { data } = await getAddresses()
+    this.localities = data as IAddressModel[]
     return data
   }
 

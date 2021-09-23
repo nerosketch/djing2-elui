@@ -74,7 +74,7 @@
         v-if="dialogNewDev"
         v-on:done="frmNewDevDone"
         v-on:err="dialogNewDev=false"
-        :initialLocality="localityId"
+        :initialAddress="localityId"
       )
     el-dialog(
       title="Кто имеет права на устройство"
@@ -86,7 +86,7 @@
         v-on:save="changeDeviceObjectPerms"
         :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
         :getSelectedObjectPerms="deviceGetSelectedObjectPerms"
-        :objId="deviceIdGetter"
+        :objId="$store.state.address.title"
       )
 
     el-dialog(
@@ -110,9 +110,8 @@ import DevForm from './dev-form.vue'
 import NewDevForm from './new-dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { GroupModule } from '@/store/modules/groups'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
-import { LocalityModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/locality'
 
 class DataTableComp extends DataTable<IDevice> {}
 
@@ -191,13 +190,11 @@ export default class extends Vue {
   }
 
   private loadDevs(params: IDRFRequestListParametersDevGroup) {
-    return getDevices({
-      page: params.page,
-      page_size: params.page_size,
-      locality: this.localityId,
-      ordering: params.ordering,
+    const newPrms = Object.assign(params, {
+      address: this.localityId,
       fields: 'id,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group,create_time,place'
     })
+    return getDevices(newPrms)
   }
 
   private async delDevice(dev: IDevice) {
@@ -226,14 +223,14 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = `Оборудование - ${this.locName}`
+    document.title = `Оборудование - ${this.$store.state.address.title}`
     this.onGrpLoc(this.localityId)
   }
 
   @Watch('localityId')
   private async onGrpLoc(locId: number) {
     if (locId > 0) {
-      await LocalityModule.GetLocality(locId)
+      await AddressModule.GetAddress(locId)
       await BreadcrumbsModule.SetCrumbs([
         {
           path: '/devices',
@@ -246,29 +243,22 @@ export default class extends Vue {
           path: '',
           meta: {
             hidden: true,
-            title: this.locName
+            title: this.$store.state.address.title
           }
         }
       ] as any[])
     }
   }
 
-  get locName() {
-    return LocalityModule.title
-  }
   // End Breadcrumbs
 
-  get deviceIdGetter() {
-    return DeviceModule.id
-  }
-
   private async changeDeviceObjectPerms(info: IObjectGroupPermsResultStruct) {
-    await setDevObjectsPerms(this.deviceIdGetter, info)
+    await setDevObjectsPerms(this.$store.state.address.title, info)
     this.permsDialog = false
   }
 
   private getDeviceObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getDevObjectsPerms(this.deviceIdGetter)
+    return getDevObjectsPerms(this.$store.state.address.title)
   }
 
   private openPermsDialog(d: IDevice) {

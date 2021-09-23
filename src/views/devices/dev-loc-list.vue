@@ -2,9 +2,9 @@
   .app-container
     datatable(
       :columns="tableColumns"
-      :getData="loadDevLocalities"
+      :getData="loadDevAddresses"
       :heightDiff='96'
-      widthStorageNamePrefix='devLocalities'
+      widthStorageNamePrefix='devAddresses'
     )
       template(v-slot:title="{row}")
         router-link(:to="{name: 'devicesList', params:{ localityId: row.id }}") {{ row.title }}
@@ -14,12 +14,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
-import { getDevLocalities } from '@/api/devices/req'
-import { IDevLocality } from '@/api/devices/types'
+import { getDevAddresses } from '@/api/devices/req'
+import { IDevAddress } from '@/api/devices/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
-class DataTableComp extends DataTable<IDevLocality> {}
+class DataTableComp extends DataTable<IDevAddress> {}
 
 @Component({
   name: 'DevLocList',
@@ -41,11 +41,11 @@ export default class extends Vue {
     }
   ]
 
-  private loadDevLocalities(params?: IDRFRequestListParameters) {
+  private loadDevAddresses(params?: IDRFRequestListParameters) {
     if (params) {
       params.fields = 'id,title,device_count'
     }
-    return getDevLocalities(params)
+    return getDevAddresses(params)
   }
 
   // Breadcrumbs

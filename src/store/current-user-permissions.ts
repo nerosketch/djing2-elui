@@ -168,15 +168,10 @@ export class CurrentPermissions extends VuexModule {
   }
 
   public addresses = {
-    add_streetmodel: false,
-    view_streetmodel: false,
-    change_streetmodel: false,
-    delete_streetmodel: false,
-
-    add_localitymodel: false,
-    view_localitymodel: false,
-    change_localitymodel: false,
-    delete_localitymodel: false
+    add_addressmodel: false,
+    view_addressmodel: false,
+    change_addressmodel: false,
+    delete_addressmodel: false
   }
 
   @Mutation

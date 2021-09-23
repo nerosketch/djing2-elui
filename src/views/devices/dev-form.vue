@@ -56,16 +56,9 @@
         format="d.MM.yyyy HH:mm"
       )
     el-form-item(
-      label="Населённый пункт"
+      label="Адрес"
     )
-      locality-choice(v-model="frmMod.locality")
-    el-form-item(
-      label="Улица"
-    )
-      locality-street-choice(
-        :localityId='frmMod.locality'
-        v-model='frmMod.street'
-      )
+      address-choice(v-model="frmMod.locality")
     el-form-item(
       label="№ дома"
     )
@@ -96,16 +89,14 @@ import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import FormMixin from '@/utils/forms'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
-import LocalityStreetChoice from '@/components/Locality/street-choice.vue'
-import LocalityChoice from '@/components/Locality/locality-choice.vue'
+import AddressChoice from '@/components/Address/address-choice.vue'
 
 @Component({
   name: 'DevForm',
   components: {
     DeviceAutocompleteField,
     GroupsChoice,
-    LocalityStreetChoice,
-    LocalityChoice
+    AddressChoice
   }
 })
 export default class extends mixins(FormMixin) {
@@ -148,8 +139,7 @@ export default class extends mixins(FormMixin) {
       parent_dev: m.parent_dev,
       snmp_extra: m.snmp_extra,
       create_time: m.create_time,
-      locality: this.localityId || m.locality,
-      street: m.street > 0 ? m.street : null,
+      address: this.localityId || m.locality,
       place: m.place
     }
   }

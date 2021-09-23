@@ -1,59 +1,56 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { ILocalityModel } from '@/api/addresses/types'
-import { addLocality, changeLocality, delLocality, getLocality } from '@/api/addresses/req'
+import { IAddressModel } from '@/api/addresses/types'
+import { addAddress, changeAddress, delAddress, getAddress } from '@/api/addresses/req'
 
-@Module({ dynamic: true, store, name: 'locality' })
-class Locality extends VuexModule implements ILocalityModel {
+@Module({ dynamic: true, store, name: 'address' })
+class Address extends VuexModule implements IAddressModel {
   public id = 0
   public title = ''
-  public sites: number[] = []
 
   @Mutation
-  public RESET_ALL_LOCALITY() {
+  public RESET_ALL_ADDR() {
     this.id = 0
     this.title = ''
-    this.sites = []
   }
 
   @Mutation
-  public SET_ALL_LOCALITY(locality: ILocalityModel) {
+  public SET_ALL_ADDR(locality: IAddressModel) {
     this.id = locality.id
     this.title = locality.title
-    this.sites = locality.sites
   }
 
   @Mutation
-  public SET_PK(id: number) {
+  public SET_ADDR_PK(id: number) {
     this.id = id
   }
 
   @Action
-  public async GetLocality(id: number) {
-    const r = await getLocality(id)
-    this.SET_ALL_LOCALITY(r.data)
+  public async GetAddress(id: number) {
+    const r = await getAddress(id)
+    this.SET_ALL_ADDR(r.data)
     return r
   }
 
   @Action
-  public async AddLocality(newData: object) {
-    const { data } = await addLocality(newData)
-    this.SET_ALL_LOCALITY(data)
+  public async AddAddress(newData: object) {
+    const { data } = await addAddress(newData)
+    this.SET_ALL_ADDR(data)
     return data
   }
 
   @Action
-  public async PatchLocality(newData: object) {
-    const r = await changeLocality(this.id, newData)
-    this.SET_ALL_LOCALITY(r.data)
+  public async PatchAddress(newData: object) {
+    const r = await changeAddress(this.id, newData)
+    this.SET_ALL_ADDR(r.data)
     return r
   }
 
   @Action
-  public async DelLocality(id: number) {
-    await delLocality(id)
-    this.RESET_ALL_LOCALITY()
+  public async DelAddress(id: number) {
+    await delAddress(id)
+    this.RESET_ALL_ADDR()
   }
 }
 
-export const LocalityModule = getModule(Locality)
+export const AddressModule = getModule(Address)

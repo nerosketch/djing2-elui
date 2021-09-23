@@ -24,9 +24,9 @@
     )
       groups-choice(v-model="frmMod.group")
     el-form-item(
-      label="Локация"
+      label="Адрес"
     )
-      locality-choice(v-model="frmMod.locality")
+      address-choice(v-model="frmMod.locality")
     el-form-item(
       label="Комментарий"
     )
@@ -61,14 +61,14 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerFrm, ICustomer } from '@/api/customers/types'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import CustomerFormFio from './customer-form-fio.vue'
-import LocalityChoice from '@/components/Locality/locality-choice.vue'
+import AddressChoice from '@/components/Address/address-choice.vue'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
 
 @Component({
   name: 'NewCustomerForm',
   components: {
     CustomerFormFio,
-    LocalityChoice,
+    AddressChoice,
     GroupsChoice
   }
 })
@@ -76,7 +76,7 @@ export default class extends Vue {
   private loading = false
 
   @Prop({ default: 0 })
-  private selectedLocality!: number
+  private selectedAddress!: number
 
   private frmMod: ICustomerFrm = {
     username: '',
@@ -84,8 +84,7 @@ export default class extends Vue {
     fio: '',
     birth_day: null,
     group: 0,
-    locality: this.selectedLocality,
-    street: null,
+    address: this.selectedAddress,
     house: '',
     is_active: false,
     is_dynamic_ip: false,
@@ -114,8 +113,7 @@ export default class extends Vue {
       fio: frm.fio,
       birth_day: frm.birth_day,
       group: frm.group || 0,
-      locality: frm.locality || this.selectedLocality || 0,
-      street: frm.street,
+      address: frm.address || this.selectedAddress || 0,
       house: frm.house,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,

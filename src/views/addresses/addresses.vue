@@ -2,7 +2,7 @@
   .app-container
     datatable(
       :columns="tableColumns"
-      :getData="loadLocalities"
+      :getData="loadAddresses"
       widthStorageNamePrefix='localities'
       ref='loctable'
     )
@@ -23,7 +23,7 @@
           )
           el-button(
             type="danger" icon="el-icon-delete"
-            @click="delLocality(row)"
+            @click="delAddress(row)"
             :disabled="!$perms.addresses.delete_localitymodel"
           )
       el-button(
@@ -47,7 +47,7 @@
       :close-on-click-modal="false"
     )
       street-editor(
-        :localityId="$store.state.locality.id"
+        :localityId="$store.state.address.id"
         @done="streetDialogVisible=false"
       )
 
@@ -58,28 +58,28 @@
     )
       sites-attach(
         v-on:save="localitySitesSave"
-        :selectedSiteIds="$store.state.locality.sites"
+        :selectedSiteIds="$store.state.address.sites"
       )
 
 </template>
 
 <script lang="ts">
-import { getLocalities } from '@/api/addresses/req'
-import { ILocalityModel } from '@/api/addresses/types'
+import { getAddresses } from '@/api/addresses/req'
+import { IAddressModel } from '@/api/addresses/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
-import { LocalityModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/locality'
 import { Component, Vue } from 'vue-property-decorator'
-import LocalityForm from './locality-form.vue'
+import AddressForm from './locality-form.vue'
 import StreetEditor from './street-editor.vue'
 
-class DataTableComp extends DataTable<ILocalityModel> {}
+class DataTableComp extends DataTable<IAddressModel> {}
 
 @Component({
-  name: 'Localities',
+  name: 'Addresses',
   components: {
     datatable: DataTableComp,
-    LocalityForm,
+    AddressForm,
     StreetEditor
   }
 })
@@ -107,16 +107,16 @@ export default class extends Vue {
     }
   ]
 
-  private loadLocalities(params?: IDRFRequestListParameters) {
+  private loadAddresses(params?: IDRFRequestListParameters) {
     if (params) {
       params.fields = 'id,title'
     }
-    return getLocalities(params)
+    return getAddresses(params)
   }
 
   get dialogTitle() {
     let t = 'Изменить'
-    if (this.$store.state.locality.id === 0) {
+    if (this.$store.state.address.id === 0) {
       t = 'Создать'
     }
     return `${t} населённый пункт`
@@ -128,40 +128,40 @@ export default class extends Vue {
     this.$refs.loctable.GetTableData()
   }
 
-  private async openEdit(loc: ILocalityModel) {
-    await LocalityModule.SET_ALL_LOCALITY(loc)
+  private async openEdit(loc: IAddressModel) {
+    await AddressModule.SET_ALL_ADDR(loc)
     this.dialogVisible = true
   }
 
   private async openNew() {
-    await LocalityModule.RESET_ALL_LOCALITY()
+    await AddressModule.RESET_ALL_ADDR()
     this.dialogVisible = true
   }
 
-  private delLocality(loc: ILocalityModel) {
+  private delAddress(loc: IAddressModel) {
     this.$confirm(`Действительно удалить населённый пункт "${loc.title}"?`).then(async() => {
-      await LocalityModule.DelLocality(loc.id)
+      await AddressModule.DelAddress(loc.id)
       this.$message.success(`Населённый пункт "${loc.title}" удалён`)
       this.$refs.loctable.GetTableData()
     })
   }
 
-  private async openStreetEditor(loc: ILocalityModel) {
-    await LocalityModule.SET_ALL_LOCALITY(loc)
+  private async openStreetEditor(loc: IAddressModel) {
+    await AddressModule.SET_ALL_ADDR(loc)
     this.streetDialogVisible = true
   }
 
   private get changeStreetTitle() {
-    return `Изменить улицы для "${this.$store.state.locality.title}"`
+    return `Изменить улицы для "${this.$store.state.address.title}"`
   }
 
-  private async openSitesDlg(loc: ILocalityModel) {
-    await LocalityModule.GetLocality(loc.id)
+  private async openSitesDlg(loc: IAddressModel) {
+    await AddressModule.GetAddress(loc.id)
     this.sitesDlg = true
   }
 
   private localitySitesSave(selectedSiteIds: number[]) {
-    LocalityModule.PatchLocality({
+    AddressModule.PatchAddress({
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.loctable.GetTableData()

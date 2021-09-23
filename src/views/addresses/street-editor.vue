@@ -32,9 +32,7 @@
 </template>
 
 <script lang="ts">
-import { changeStreet, getStreets, addStreet } from '@/api/addresses/req'
-import { IStreetModel } from '@/api/addresses/types'
-import { StreetModule } from '@/store/modules/addresses/street'
+import { AddressModule } from '@/store/modules/addresses/locality'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
@@ -74,7 +72,7 @@ export default class extends Vue {
   private delStreet(street: IStreetModel) {
     this.$confirm(`Удалить улицу "${street.name}?"`).then(async() => {
       this.streetsLoading = true
-      await StreetModule.DelStreet(street.id)
+      await AddressModule.DelAddress(street.id)
       this.streetsLoading = false
       this.$message.success(`Улица "${street.name} удалена`)
       this.streets = this.streets.filter(s => s.id !== street.id)

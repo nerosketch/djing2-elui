@@ -24,7 +24,7 @@ import SwitchView from './switch-view.vue'
 import PonOnu from './pon/pon-onu.vue'
 import OltZte from './pon/gpon/olt-zte.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { LocalityModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/locality'
 
 @Component({
   name: 'DeviceView',
@@ -65,7 +65,7 @@ export default class extends Vue {
     this.getDevice().then(dev => {
       if (dev) {
         document.title = dev.comment || dev.ip_address
-        this.onLocCh(dev.locality)
+        this.onLocCh(dev.address)
       }
     })
     document.addEventListener('keydown', this.onKeyPress)
@@ -81,10 +81,10 @@ export default class extends Vue {
   }
 
   // Breadcrumbs
-  @Watch('$store.state.devicemodule.locality')
-  private async onLocCh(locId: number) {
-    if (locId > 0) {
-      await LocalityModule.GetLocality(locId)
+  @Watch('$store.state.devicemodule.address')
+  private async onLocCh(addrId: number) {
+    if (addrId > 0) {
+      await AddressModule.GetAddress(addrId)
       await BreadcrumbsModule.SetCrumbs([
         {
           path: '/devices',
@@ -94,10 +94,10 @@ export default class extends Vue {
           }
         },
         {
-          path: { name: 'devicesList', params: { localityId: locId } },
+          path: { name: 'devicesList', params: { localityId: addrId } },
           meta: {
             hidden: true,
-            title: this.$store.state.locality.title
+            title: this.$store.state.address.title
           }
         },
         {
