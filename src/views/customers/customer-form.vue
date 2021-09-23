@@ -46,7 +46,7 @@
     el-form-item(
       label="Адрес"
     )
-      address-choice(v-model="frmMod.locality")
+      address-choice(v-model="frmMod.address")
     //- el-form-item(
     //-   label="Шлюз доступа"
     //- )
@@ -226,7 +226,7 @@ export default class extends mixins(FormMixin) {
         const currLoc = this.$store.state.customer.address
         await CustomerModule.DelCustomer()
         this.$message.success('Учётка удалена')
-        this.$router.push({ name: 'customersList', params: { localityId: currLoc.toString() } })
+        this.$router.push({ name: 'customersList', params: { addrId: currLoc.toString() } })
       } catch (err) {
         this.$message.error(err)
       }

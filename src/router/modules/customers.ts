@@ -14,10 +14,10 @@ const customerRoutes: RouteConfig = {
       }
     },
     {
-      path: 'a:localityId/',
+      path: 'a:addrId/',
       name: 'customersList',
       component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customers-list.vue'),
-      props: ({ params }) => ({ localityId: Number(params.localityId || 0) }),
+      props: ({ params }) => ({ addrId: Number(params.addrId || 0) }),
       meta: { hidden: true }
     },
     {

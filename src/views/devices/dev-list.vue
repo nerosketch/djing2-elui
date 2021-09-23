@@ -63,7 +63,7 @@
       dev-form(
         v-if="dialogVisible"
         v-on:done="frmDone"
-        :localityId="localityId"
+        :addrId="addrId"
       )
     el-dialog(
       title="Добавить устройство"
@@ -74,7 +74,7 @@
         v-if="dialogNewDev"
         v-on:done="frmNewDevDone"
         v-on:err="dialogNewDev=false"
-        :initialAddress="localityId"
+        :initialAddress="addrId"
       )
     el-dialog(
       title="Кто имеет права на устройство"
@@ -128,7 +128,7 @@ export default class extends Vue {
     table: DataTableComp
   }
 
-  @Prop({ default: 0 }) private localityId!: number
+  @Prop({ default: 0 }) private addrId!: number
   private dialogVisible = false
   private dialogNewDev = false
   private permsDialog = false
@@ -191,7 +191,7 @@ export default class extends Vue {
 
   private loadDevs(params: IDRFRequestListParametersDevGroup) {
     const newPrms = Object.assign(params, {
-      address: this.localityId,
+      address: this.addrId,
       fields: 'id,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group,create_time,place'
     })
     return getDevices(newPrms)
@@ -224,10 +224,10 @@ export default class extends Vue {
   // Breadcrumbs
   created() {
     document.title = `Оборудование - ${this.$store.state.address.title}`
-    this.onGrpLoc(this.localityId)
+    this.onGrpLoc(this.addrId)
   }
 
-  @Watch('localityId')
+  @Watch('addrId')
   private async onGrpLoc(locId: number) {
     if (locId > 0) {
       await AddressModule.GetAddress(locId)

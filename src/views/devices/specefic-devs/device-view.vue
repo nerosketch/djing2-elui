@@ -94,7 +94,7 @@ export default class extends Vue {
           }
         },
         {
-          path: { name: 'devicesList', params: { localityId: addrId } },
+          path: { name: 'devicesList', params: { addrId: addrId } },
           meta: {
             hidden: true,
             title: this.$store.state.address.title

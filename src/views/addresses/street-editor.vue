@@ -3,35 +3,38 @@
     v-loading='streetsLoading'
     label-width="0"
   )
+    p addrId: {{ addrId }}
     el-form-item(
       v-for="(str, i) in streets"
       :key="i"
     )
-      el-input(v-model="str.name" maxlength='64')
+      el-input(v-model="str.title" maxlength='64')
         template(v-slot:append)
           el-button(
             v-if="str.id > 0"
             type='danger' icon='el-icon-close'
             @click="delStreet(str)"
-            :disabled="!$perms.addresses.delete_streetmodel"
+            :disabled="!$perms.addresses.delete_addressmodel"
           )
     el-form-item
       el-button-group
         el-button(
           icon='el-icon-upload'
           type="primary" @click="onSubmit"
-          :disabled="!$perms.addresses.change_streetmodel"
+          :disabled="!$perms.addresses.change_addressmodel"
         ) Сохранить
         el-button(
           icon='el-icon-plus'
           type='success'
           @click='addStreet'
-          :disabled="!$perms.addresses.add_streetmodel"
+          :disabled="!$perms.addresses.add_addressmodel"
         ) Добавить
 
 </template>
 
 <script lang="ts">
+import { addAddress, changeAddress, getAddresses } from '@/api/addresses/req'
+import { IAddressEnumTypes, IAddressModel } from '@/api/addresses/types'
 import { AddressModule } from '@/store/modules/addresses/address'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
@@ -39,20 +42,21 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
   name: 'StreetEditor'
 })
 export default class extends Vue {
-  @Prop({ required: true }) private localityId!: number
+  @Prop({ required: true }) private addrId!: number
 
   private streetsLoading = false
 
-  private streets: IStreetModel[] = []
+  private streets: IAddressModel[] = []
 
   private async loadStreets() {
     this.streetsLoading = true
     try {
-      const { data } = await getStreets({
+      const { data } = await getAddresses({
         page: 1,
         page_size: 0,
-        locality: this.localityId,
-        fields: 'id,name'
+        parent_addr: this.addrId,
+        address_type: IAddressEnumTypes.STREET,
+        fields: 'id,title'
       } as any) as any
       this.streets = data
     } finally {
@@ -64,17 +68,17 @@ export default class extends Vue {
     this.loadStreets()
   }
 
-  @Watch('localityId')
+  @Watch('addrId')
   private onChLocId() {
     this.loadStreets()
   }
 
-  private delStreet(street: IStreetModel) {
-    this.$confirm(`Удалить улицу "${street.name}?"`).then(async() => {
+  private delStreet(street: IAddressModel) {
+    this.$confirm(`Удалить улицу "${street.title}?"`).then(async() => {
       this.streetsLoading = true
       await AddressModule.DelAddress(street.id)
       this.streetsLoading = false
-      this.$message.success(`Улица "${street.name} удалена`)
+      this.$message.success(`Улица "${street.title} удалена`)
       this.streets = this.streets.filter(s => s.id !== street.id)
     })
   }
@@ -83,9 +87,9 @@ export default class extends Vue {
     this.streetsLoading = true
     for (const st of this.streets) {
       if (st.id > 0) {
-        changeStreet(st.id, st)
+        changeAddress(st.id, st)
       } else {
-        addStreet(st)
+        addAddress(st)
       }
     }
     this.streetsLoading = false
@@ -96,8 +100,9 @@ export default class extends Vue {
   private addStreet() {
     this.streets.push({
       id: 0,
-      name: '',
-      locality: this.localityId
+      title: '',
+      address_type: IAddressEnumTypes.STREET,
+      parent_addr: this.addrId
     })
   }
 }

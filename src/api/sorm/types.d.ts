@@ -1,15 +1,17 @@
 /* eslint-disable camelcase */
 import { IDRFAxiosResponsePromise, IDRFListResponse } from '@/api/types'
+import { IAddressEnumTypes } from '../addresses/types'
 
 export interface IFiasRecursiveAddress {
   id: number
-  parent_ao: number
   title: string
-  ao_level: number
-  ao_level_name: string
-  ao_type: number
-  ao_type_name: string
-  locality: number
+  parent_addr: number
+  address_type: IAddressEnumTypes
+  address_type_name: string
+  fias_address_level: number
+  fias_address_level_name: string
+  fias_address_type: number
+  fias_address_type_name: string
 }
 export type IFiasRecursiveAddressList = IDRFListResponse<IFiasRecursiveAddress>
 export type IFiasRecursiveAddressAxoisResponsePromise = IDRFAxiosResponsePromise<IFiasRecursiveAddress>

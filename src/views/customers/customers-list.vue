@@ -3,7 +3,7 @@
     el-row(:gutter="10")
       el-col(:col='24')
         customer-list-filters(
-          :localityId="localityId"
+          :addrId="addrId"
           :group.sync="filterForm.group"
         )
       el-col(:lg='24' :md='20')
@@ -69,7 +69,7 @@
       :close-on-click-modal="false"
     )
       new-customer-form(
-        :selectedAddress='localityId'
+        :selectedAddress='addrId'
         v-on:done="addFrmDone"
       )
     el-dialog(
@@ -148,7 +148,7 @@ interface ITableRowClassName {
   }
 })
 export default class extends Vue {
-  @Prop({ default: 0 }) private localityId!: number
+  @Prop({ default: 0 }) private addrId!: number
   private addCustomerDialog = false
   private permsDialog = false
   public readonly $refs!: {
@@ -225,7 +225,7 @@ export default class extends Vue {
     let r
     if (params) {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
-        address: this.localityId,
+        address: this.addrId,
         fields: 'id,username,fio,house,telephone,current_service__service__title,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (group) {
@@ -268,8 +268,8 @@ export default class extends Vue {
 
   // Breadcrumbs
   private async setCrumbs() {
-    if (this.$store.state.address.id !== this.localityId) {
-      await AddressModule.GetAddress(this.localityId)
+    if (this.$store.state.address.id !== this.addrId) {
+      await AddressModule.GetAddress(this.addrId)
     }
     BreadcrumbsModule.SetCrumbs([
       {

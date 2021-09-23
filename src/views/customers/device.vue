@@ -13,7 +13,7 @@ el-form(
       el-col(:span='16')
         device-select(
           v-model="frmMod.device"
-          :localityId="$store.state.customer.locality"
+          :addrId="$store.state.customer.address"
           :initialDevice="devComm"
         )
     el-row

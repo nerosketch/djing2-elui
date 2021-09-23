@@ -7,7 +7,7 @@
       widthStorageNamePrefix='customerLocations'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{name: 'customersList', params:{ localityId: row.id }}")
+        router-link(:to="{name: 'customersList', params:{ addrId: row.id }}")
           el-link(type="primary") {{ row.title }}
 
       template(v-slot:usercount="{row}") {{ row.usercount }}

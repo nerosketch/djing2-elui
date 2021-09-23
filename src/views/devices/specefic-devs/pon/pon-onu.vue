@@ -139,7 +139,7 @@ export default class extends Vue {
       await DeviceModule.DelDevice(this.device.id)
       this.$message.success('Удалена')
       if (this.device.group) {
-        this.$router.push({ name: 'devicesList', params: { localityId: this.device.address.toString() } })
+        this.$router.push({ name: 'devicesList', params: { addrId: this.device.address.toString() } })
       } else {
         this.$router.push('/devices')
       }

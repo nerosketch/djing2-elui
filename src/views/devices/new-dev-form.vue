@@ -59,7 +59,7 @@
     el-form-item(
       label="Адрес"
     )
-      address-choice(v-model="frmMod.locality")
+      address-choice(v-model="frmMod.address")
     el-form-item(
       label="№ дома"
     )
@@ -141,7 +141,7 @@ export default class extends Vue {
     parent_dev: this.initialParentDev,
     snmp_extra: this.initialSnmpSxtra,
     create_time: '',
-    locality: this.initialAddress,
+    address: this.initialAddress,
     place: ''
   }
 

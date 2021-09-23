@@ -26,7 +26,7 @@
     el-form-item(
       label="Адрес"
     )
-      address-choice(v-model="frmMod.locality")
+      address-choice(v-model="frmMod.address")
     el-form-item(
       label="Комментарий"
     )

@@ -14,9 +14,9 @@
       el-input(v-model="frmMod.title")
     el-form-item(
       label="Уровень адресного объекта"
-      prop='ao_level'
+      prop='fias_address_level'
     )
-      el-select(v-model="frmMod.ao_level")
+      el-select(v-model="frmMod.fias_address_level")
         el-option(
           v-for="al in addrLevels"
           :key="al[0]"
@@ -25,10 +25,10 @@
         )
     el-form-item(
       label="Тип адресного объекта"
-      prop='ao_type'
+      prop='fias_address_type'
     )
       el-select(
-        v-model="frmMod.ao_type"
+        v-model="frmMod.fias_address_type"
         :disabled="!addrTypesLoaded"
         :loading='typesLoading'
       )
@@ -56,15 +56,15 @@
           )
 
     el-form-item(
-      label="Населённый пункт"
+      label="Адресный объект"
     )
       el-select(
-        v-model="frmMod.locality"
+        v-model="frmMod.address"
         :diabled="!locListLoaded"
       )
         template(v-if="locListLoaded")
           el-option(
-            v-for="l in localities"
+            v-for="l in addrs"
             :key="l.id"
             :label="l.title"
             :value="l.id"
@@ -90,7 +90,7 @@
 
 <script lang="ts">
 import { getAddresses } from '@/api/addresses/req'
-import { IAddressModel } from '@/api/addresses/types'
+import { IAddressEnumTypes, IAddressModel } from '@/api/addresses/types'
 import { getAddrLevels, getAddrTypes } from '@/api/sorm/req'
 import { IAddrLevelItem, IAddrTypeItem, IFiasRecursiveAddress } from '@/api/sorm/types'
 import { FiasRecursiveAddressModule } from '@/store/modules/sorm'
@@ -112,26 +112,26 @@ export default class extends Vue {
   }
 
   get locListLoaded() {
-    return this.localities.length > 0
+    return this.addrs.length > 0
   }
 
   private frmMod: {
     title: string,
-    ao_level?: number,
-    ao_type?: number,
-    parent_ao?: number,
-    locality: number
+    parent_addr: number | null,
+    fias_address_level: number | null,
+    fias_address_type: number | null,
+    address_type: IAddressEnumTypes,
   } = {
     title: '',
-    ao_level: undefined,
-    ao_type: undefined,
-    parent_ao: undefined,
-    locality: 0
+    parent_addr: null,
+    fias_address_level: null,
+    fias_address_type: null,
+    address_type: IAddressEnumTypes.UNKNOWN
   }
 
   private addrLevels: IAddrLevelItem[] = []
   private addrTypes: IAddrTypeItem[] = []
-  private localities: IAddressModel[] = []
+  private addrs: IAddressModel[] = []
 
   private frmRules = {
     title: [
@@ -205,7 +205,7 @@ export default class extends Vue {
 
   private async loadAllAddresses() {
     const { data } = await getAddresses()
-    this.localities = data as IAddressModel[]
+    this.addrs = data as IAddressModel[]
     return data
   }
 
@@ -213,10 +213,10 @@ export default class extends Vue {
   private onAddrChanged() {
     const s = this.$store.state.fiasaddrs
     this.frmMod.title = s.title
-    this.frmMod.ao_level = s.ao_level || undefined
-    this.frmMod.ao_type = s.ao_type || undefined
-    this.frmMod.parent_ao = s.parent_ao || undefined
-    this.frmMod.locality = s.locality
+    this.frmMod.parent_addr = s.parent_addr
+    this.frmMod.fias_address_level = s.fias_address_level
+    this.frmMod.fias_address_type = s.fias_address_type
+    this.frmMod.address_type = s.address_type
   }
 }
 </script>

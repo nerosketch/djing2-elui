@@ -17,7 +17,7 @@ import GroupsChoice from '@/views/groups/groups-choice.vue'
   }
 })
 export default class extends Vue {
-  @Prop({ default: 0 }) private localityId!: number
+  @Prop({ default: 0 }) private addrId!: number
   @Prop({ required: true }) private group!: number
 
   private groupVal = this.group

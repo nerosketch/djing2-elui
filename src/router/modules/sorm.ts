@@ -13,7 +13,7 @@ const sormRoutes: RouteConfig = {
       path: '/sorm',
       component: () => import(/* webpackChunkName: "sorm" */ '@/views/sorm/addr-list.vue'),
       meta: {
-        title: 'Адресные объекты',
+        title: 'Адреса СОРМ',
         icon: 'el-icon-location'
       }
     },
@@ -21,7 +21,7 @@ const sormRoutes: RouteConfig = {
       path: '/addrs',
       component: () => import(/* webpackChunkName: "localities" */ '@/views/addresses/addresses.vue'),
       meta: {
-        title: 'Населённые пункты',
+        title: 'Адресные объекты',
         icon: 'el-icon-s-home'
       }
     }

@@ -1,10 +1,10 @@
 <template lang="pug">
   el-select(v-model="localValue" :loading='loading')
     el-option(
-      v-for="loc in addrs"
-      :key="loc.id"
-      :label="loc.title"
-      :value="loc.id"
+      v-for="addr in addrs"
+      :key="addr.id"
+      :label="addr.title"
+      :value="addr.id"
     )
 </template>
 
@@ -25,14 +25,14 @@ export default class extends Vue {
 
   private addrs: IAddressModel[] = this.availableAddresses
 
-  private localValue = this.value
+  private localValue = this.value || null
   private loading = false
 
   private async loadAddresses() {
     this.loading = true
     try {
       const { data } = await getAddresses({
-        fields: 'id,title',
+        fields: 'id,title,parent_addr,address_type',
         page: 1,
         page_size: 0
       }) as any
@@ -43,7 +43,7 @@ export default class extends Vue {
   }
 
   created() {
-    if (this.availableAddresses.length === 0) {
+    if (this.availableAddresses.length < 1) {
       this.loadAddresses()
     }
   }
@@ -51,6 +51,11 @@ export default class extends Vue {
   @Watch('availableAddresses')
   private onChAvAddrs(addrs: IAddressModel[]) {
     this.addrs = addrs
+  }
+
+  @Watch('value')
+  private onChVal(v: number) {
+    this.localValue = v
   }
 
   @Watch('localValue')

@@ -58,7 +58,7 @@
     el-form-item(
       label="Адрес"
     )
-      address-choice(v-model="frmMod.locality")
+      address-choice(v-model="frmMod.address")
     el-form-item(
       label="№ дома"
     )
@@ -100,7 +100,7 @@ import AddressChoice from '@/components/Address/address-choice.vue'
   }
 })
 export default class extends mixins(FormMixin) {
-  @Prop({ default: null }) private localityId!: number | null
+  @Prop({ default: null }) private addrId!: number | null
 
   private loading = DeviceModule.loadProgress
 
@@ -139,7 +139,7 @@ export default class extends mixins(FormMixin) {
       parent_dev: m.parent_dev,
       snmp_extra: m.snmp_extra,
       create_time: m.create_time,
-      address: this.localityId || m.locality,
+      address: this.addrId || m.address,
       place: m.place
     }
   }

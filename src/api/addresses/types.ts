@@ -4,9 +4,17 @@ import {
   IDRFListResponse
 } from '@/api/types'
 
+export enum IAddressEnumTypes {
+  UNKNOWN = 0,
+  LOCALITY = 4,
+  STREET = 8
+}
+
 export interface IAddressModel {
   id: number
   title: string
+  address_type: IAddressEnumTypes
+  parent_addr?: number
 }
 export type IAddressModelList = IDRFListResponse<IAddressModel>
 export type IAddressModelAxoisResponsePromise = IDRFAxiosResponsePromise<IAddressModel>

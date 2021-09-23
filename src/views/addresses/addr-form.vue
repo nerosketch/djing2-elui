@@ -19,6 +19,7 @@
       )
     el-form-item(
       label="Тип адресного объекта"
+      prop='address_type'
     )
       address-type-choice(
         v-model="frmMod.address_type"
@@ -33,11 +34,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { AddressModule } from '@/store/modules/addresses/address'
 import AddressChoice from '@/components/Address/address-choice.vue'
 import AddressTypeChoice from '@/components/Address/type-choice.vue'
+import { IAddressModel } from '@/api/addresses/types'
+import { positiveNumberValueAvailable } from '@/utils/validate'
 
 @Component({
   name: 'AddressForm',
@@ -52,17 +55,26 @@ export default class extends Vue {
   private frmRules = {
     title: [
       { required: true, message: 'Название надо указать', trigger: 'blur' }
+    ],
+    address_type: [
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип' }
     ]
   }
 
-  @Watch('$store.state.address.title')
-  private onChangeLoc(title: string) {
-    this.frmMod.title = title
+  @Watch('$store.state.address', { deep: true })
+  private onChangeLoc(addr: IAddressModel) {
+    this.frmMod.title = addr.title
+    this.frmMod.parent_addr = addr.parent_addr || null
+    this.frmMod.address_type = addr.address_type
   }
 
-  private frmMod = {
+  private frmMod: {
+    title: string,
+    parent_addr: number | null,
+    address_type: number
+  } = {
     title: '',
-    parent_addr: 0,
+    parent_addr: null,
     address_type: 0
   }
 
@@ -71,7 +83,7 @@ export default class extends Vue {
   }
 
   created() {
-    this.onChangeLoc(this.$store.state.address.title)
+    this.onChangeLoc(this.$store.state.address)
   }
 
   private onSubmit() {

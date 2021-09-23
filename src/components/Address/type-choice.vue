@@ -22,7 +22,7 @@ export default class extends Vue {
 
   private addrTypes: IAddressType[] = []
 
-  private localValue = this.value
+  private localValue = this.value || 0
   private loading = false
 
   private async loadAddrTypes() {
@@ -42,6 +42,11 @@ export default class extends Vue {
   @Watch('localValue')
   private onChLocVal(val: number) {
     this.$emit('input', val)
+  }
+
+  @Watch('value')
+  private onChVal(v: number) {
+    this.localValue = v
   }
 }
 </script>

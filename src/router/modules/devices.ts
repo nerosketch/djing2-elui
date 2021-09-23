@@ -14,10 +14,10 @@ const deviceRoutes: RouteConfig = {
       }
     },
     {
-      path: 'location:localityId',
+      path: 'location:addrId',
       component: () => import(/* webpackChunkName: "devices" */ '@/views/devices/dev-list.vue'),
       name: 'devicesList',
-      props: ({ params }) => ({ localityId: Number(params.localityId || 0) }),
+      props: ({ params }) => ({ addrId: Number(params.addrId || 0) }),
       meta: {
         hidden: true
       }

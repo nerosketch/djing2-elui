@@ -1,23 +1,29 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@/store'
-import { IAddressModel } from '@/api/addresses/types'
+import { IAddressEnumTypes, IAddressModel } from '@/api/addresses/types'
 import { addAddress, changeAddress, delAddress, getAddress } from '@/api/addresses/req'
 
 @Module({ dynamic: true, store, name: 'address' })
 class Address extends VuexModule implements IAddressModel {
   public id = 0
   public title = ''
+  public address_type = IAddressEnumTypes.UNKNOWN
+  public parent_addr?: number = 0
 
   @Mutation
   public RESET_ALL_ADDR() {
     this.id = 0
     this.title = ''
+    this.address_type = IAddressEnumTypes.UNKNOWN
+    delete this.parent_addr
   }
 
   @Mutation
-  public SET_ALL_ADDR(locality: IAddressModel) {
-    this.id = locality.id
-    this.title = locality.title
+  public SET_ALL_ADDR(addr: IAddressModel) {
+    this.id = addr.id
+    this.title = addr.title
+    this.address_type = addr.address_type
+    this.parent_addr = addr.parent_addr
   }
 
   @Mutation

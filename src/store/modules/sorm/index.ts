@@ -9,36 +9,38 @@ import {
 @Module({ dynamic: true, store, name: 'fiasaddrs' })
 class FiasRecursiveAddress extends VuexModule implements IFiasRecursiveAddress {
   id = 0
-  parent_ao = 0
+  parent_addr = 0
+  address_type = 0
+  address_type_name = ''
+  fias_address_level = 0
+  fias_address_level_name = ''
+  fias_address_type = 0
+  fias_address_type_name = ''
   title = ''
-  ao_level = 0
-  ao_level_name = ''
-  ao_type = 0
-  ao_type_name = ''
-  locality: number = 0
 
   @Mutation
   public SET_ALL_RECURSIVE_ADDRESS(data: IFiasRecursiveAddress) {
     this.id = data.id
-    this.parent_ao = data.parent_ao
+    this.parent_addr = data.parent_addr
     this.title = data.title
-    this.ao_level = data.ao_level
-    this.ao_level_name = data.ao_level_name
-    this.ao_type = data.ao_type
-    this.ao_type_name = data.ao_type_name
-    this.locality = data.locality
+    this.address_type = data.address_type
+    this.address_type_name = data.address_type_name
+    this.fias_address_level_name = data.fias_address_level_name
+    this.fias_address_type = data.fias_address_type
+    this.fias_address_type_name = data.fias_address_type_name
   }
 
   @Mutation
   public RESET_ALL_RECURSIVE_ADDRESS() {
     this.id = 0
-    this.parent_ao = 0
+    this.parent_addr = 0
+    this.address_type = 0
+    this.address_type_name = ''
+    this.fias_address_level = 0
+    this.fias_address_level_name = ''
+    this.fias_address_type_name = ''
+    this.fias_address_type = 0
     this.title = ''
-    this.ao_level = 0
-    this.ao_level_name = ''
-    this.ao_type = 0
-    this.ao_type_name = ''
-    this.locality = 0
   }
 
   @Action

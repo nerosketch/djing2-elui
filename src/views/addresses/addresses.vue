@@ -43,7 +43,7 @@
       :close-on-click-modal="false"
     )
       street-editor(
-        :localityId="$store.state.address.id"
+        :addrId="$store.state.address.id"
         @done="streetDialogVisible=false"
       )
 
@@ -92,7 +92,7 @@ export default class extends Vue {
 
   private loadAddresses(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,title'
+      params.fields = 'id,title,address_type,parent_addr'
     }
     return getAddresses(params)
   }

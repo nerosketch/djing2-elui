@@ -19,7 +19,7 @@ import { getDevices } from '@/api/devices/req'
 export default class extends Vue {
   @Prop({ default: 0 }) private value!: number
 
-  @Prop({ default: 0 }) private localityId!: number
+  @Prop({ default: 0 }) private addrId!: number
 
   @Prop({ default: () => ({ id: null, comment: 'Не выбрано' }) }) private initialDevice!: IDevice
 
@@ -60,7 +60,7 @@ export default class extends Vue {
       const { data } = await getDevices({
         page: 1,
         page_size: 0,
-        address: this.localityId,
+        address: this.addrId,
         fields: 'id,comment,ip_address'
       }) as any
       this.devices = data

@@ -7,7 +7,7 @@
       widthStorageNamePrefix='devAddresses'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{name: 'devicesList', params:{ localityId: row.id }}") {{ row.title }}
+        router-link(:to="{name: 'devicesList', params:{ addrId: row.id }}") {{ row.title }}
 
 </template>
 
