@@ -160,7 +160,7 @@ export default class extends Vue {
     this.$confirm(`Действительно удалить пул "${pool.network}"?`).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
       this.$message.success('Подсеть удалена')
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     })
   }
 
@@ -174,14 +174,14 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Подсеть сохранена')
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   private netpoolSitesSave(selectedSiteIds: number[]) {
     NetworkIpPoolModule.PatchPool({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
       this.$message.success('Принадлежность подсети сайтам сохранена')
     })
     this.sitesDlg = false

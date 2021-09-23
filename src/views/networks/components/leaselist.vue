@@ -96,7 +96,7 @@ export default class extends Vue {
     this.$confirm(`Действительно удалить сессию "${lease.ip_address}"?`).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
       this.$message.success('Сессия удалена')
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     })
   }
 
@@ -110,7 +110,7 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Сессия изменена')
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
     // this.loadLeases()
   }
 }

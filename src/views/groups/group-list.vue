@@ -148,14 +148,14 @@ export default class extends Vue {
     this.$confirm(`Действительно удалить группу "${group.title}"?`).then(async() => {
       await GroupModule.DelGroup(group.id)
       this.$message.success(`Группа "${group.title}" удалена`)
-      this.$refs.grouptable.GetTableData()
+      this.$refs.grouptable.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$message.success('Группа сохранена')
-    this.$refs.grouptable.GetTableData()
+    this.$refs.grouptable.LoadTableData()
   }
 
   // Breadcrumbs
@@ -194,7 +194,7 @@ export default class extends Vue {
     GroupModule.PatchGroup({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.grouptable.GetTableData()
+      this.$refs.grouptable.LoadTableData()
       this.$message.success('Принадлежность группы сайтам сохранена')
     })
     this.sitesDlg = false

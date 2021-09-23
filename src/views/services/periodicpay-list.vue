@@ -108,7 +108,7 @@ export default class extends Vue {
   private async delPerPay(pay: IPeriodicPay) {
     if (confirm(`Действительно удалить квитанцию "${pay.name}"?`)) {
       await PeriodicPayModule.DelPeriodicPay(pay.id)
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     }
   }
 
@@ -125,14 +125,14 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   private serviceSitesSave(selectedSiteIds: number[]) {
     PeriodicPayModule.PatchPeriodicPay({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
       this.$message.success('Принадлежность услуги сайтам сохранена')
     })
     this.sitesDlg = false

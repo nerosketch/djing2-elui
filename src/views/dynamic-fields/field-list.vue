@@ -96,7 +96,7 @@ export default class extends Vue {
     this.$confirm(`Удалить поле "${field.title}"?`).then(async() => {
       await DynamicFieldModule.DeleteField(field.id)
       this.$message.success(`Поле "${field.title}" удалено`)
-      this.$refs.fieldtable.GetTableData()
+      this.$refs.fieldtable.LoadTableData()
     })
   }
 
@@ -108,7 +108,7 @@ export default class extends Vue {
   private formDone(field: IDynamicField) {
     this.fieldFormVisible = false
     this.$message.success('Сохранено')
-    this.$refs.fieldtable.GetTableData()
+    this.$refs.fieldtable.LoadTableData()
   }
 
   private async openNew() {

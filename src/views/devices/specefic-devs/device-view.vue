@@ -24,7 +24,7 @@ import SwitchView from './switch-view.vue'
 import PonOnu from './pon/pon-onu.vue'
 import OltZte from './pon/gpon/olt-zte.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { AddressModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/address'
 
 @Component({
   name: 'DeviceView',

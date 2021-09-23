@@ -111,7 +111,7 @@ import NewDevForm from './new-dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
-import { AddressModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/address'
 
 class DataTableComp extends DataTable<IDevice> {}
 
@@ -201,13 +201,13 @@ export default class extends Vue {
     this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
       await DeviceModule.DelDevice(dev.id)
       this.$message.success('Удалено')
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   private frmNewDevDone(newDev: IDevice) {
@@ -274,7 +274,7 @@ export default class extends Vue {
     DeviceModule.PatchDevice({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
       this.$message.success('Принадлежность оборудования сайтам сохранена')
     })
     this.sitesDlg = false

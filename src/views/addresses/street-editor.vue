@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { AddressModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/address'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({

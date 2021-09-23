@@ -124,7 +124,7 @@ export default class extends Vue {
   private delPayGw(gw: IPayAllTimeGateway) {
     this.$confirm('Удалить платёжный шлюз?').then(async() => {
       await PayAllTimeGatewayModule.DelPayGroup(gw.id)
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     })
   }
 
@@ -136,7 +136,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
     this.$message.success('Платёжный шлюз добавлен')
   }
 
@@ -158,7 +158,7 @@ export default class extends Vue {
     PayAllTimeGatewayModule.PatchPayGw({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
       this.$message.success('Принадлежность платёжного шлюза сайтам сохранена')
     })
     this.sitesDlg = false

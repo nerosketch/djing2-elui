@@ -55,7 +55,7 @@ export default class extends Vue {
 
   @Watch('reqParams', { deep: true })
   private onChangeparams() {
-    this.$refs.afktbl.GetTableData()
+    this.$refs.afktbl.LoadTableData()
   }
 
   private tableColumns: IDataTableColumn[] = [

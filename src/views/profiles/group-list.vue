@@ -122,13 +122,13 @@ export default class extends Vue {
     this.$confirm('Удалить группу абонентов?').then(async() => {
       await delUserGroup(grp.id)
       this.$message.success('Группа уалена')
-      this.$refs.tbl.GetTableData()
+      this.$refs.tbl.LoadTableData()
     })
   }
 
   private frmDone() {
     this.ugFormDialog = false
-    this.$refs.tbl.GetTableData()
+    this.$refs.tbl.LoadTableData()
   }
 
   private async editGroupPerms(grp: IUserGroup) {
@@ -138,7 +138,7 @@ export default class extends Vue {
 
   private editPermsDone() {
     this.ugpDialog = false
-    this.$refs.tbl.GetTableData()
+    this.$refs.tbl.LoadTableData()
   }
 
   // Breadcrumbs

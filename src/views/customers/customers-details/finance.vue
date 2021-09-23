@@ -92,7 +92,7 @@ export default class extends Vue {
 
   private addCashDone(cost: number) {
     this.addCashDialog = false
-    this.$refs.fintbl.GetTableData()
+    this.$refs.fintbl.LoadTableData()
     this.$message.success(`Счёт пополнен на ${cost}`)
   }
 }

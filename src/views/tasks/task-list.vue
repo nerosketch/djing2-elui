@@ -70,7 +70,7 @@ export default class extends Vue {
 
   @Watch('tabUrl')
   private onTabTypeChanged() {
-    this.$refs.tbl.GetTableData()
+    this.$refs.tbl.LoadTableData()
   }
 
   private tableRowClassName(r: any) {

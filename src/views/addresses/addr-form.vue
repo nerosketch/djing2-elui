@@ -1,7 +1,6 @@
 <template lang="pug">
   el-form(
     ref='form'
-    label-width="100px"
     status-icon
     :rules='frmRules'
     :model='frmMod'
@@ -12,6 +11,18 @@
       prop='title'
     )
       el-input(v-model="frmMod.title")
+    el-form-item(
+      label="Родительский адресный оьъект"
+    )
+      address-choice(
+        v-model="frmMod.parent_addr"
+      )
+    el-form-item(
+      label="Тип адресного объекта"
+    )
+      address-type-choice(
+        v-model="frmMod.address_type"
+      )
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -22,12 +33,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { AddressModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/address'
+import AddressChoice from '@/components/Address/address-choice.vue'
+import AddressTypeChoice from '@/components/Address/type-choice.vue'
 
 @Component({
-  name: 'AddressForm'
+  name: 'AddressForm',
+  components: {
+    AddressChoice,
+    AddressTypeChoice,
+  }
 })
 export default class extends Vue {
   private isLoading = false
@@ -44,7 +61,9 @@ export default class extends Vue {
   }
 
   private frmMod = {
-    title: ''
+    title: '',
+    parent_addr: 0,
+    address_type: 0
   }
 
   get isNew() {

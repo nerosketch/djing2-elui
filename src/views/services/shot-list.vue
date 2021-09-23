@@ -102,7 +102,7 @@ export default class extends Vue {
   private async delShot(shot: IOneShotPay) {
     if (confirm(`Действительно удалить платёж "${shot.name}"?`)) {
       await OneShotPayModule.DelOneShotPay(shot.id)
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     }
   }
 
@@ -115,7 +115,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   get isNew(): boolean {
@@ -126,7 +126,7 @@ export default class extends Vue {
     OneShotPayModule.PatchOneShotPay({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
       this.$message.success('Принадлежность вида платежей сайтам сохранена')
     })
     this.sitesDlg = false

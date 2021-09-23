@@ -186,7 +186,7 @@ export default class extends Vue {
     if (confirm(`Действительно удалить услугу "${srv.title}"?`)) {
       await ServiceModule.DelService(srv.id)
       this.$message.success('Услуга удалена')
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     }
   }
 
@@ -199,7 +199,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   get isNew(): boolean {
@@ -251,7 +251,7 @@ export default class extends Vue {
     ServiceModule.PatchService({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
       this.$message.success('Принадлежность услуги сайтам сохранена')
     })
     this.sitesDlg = false

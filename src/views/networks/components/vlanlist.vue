@@ -132,13 +132,13 @@ export default class extends mixins(VlanMixin) {
     this.$confirm(`Действительно удалить влан "${vlan.title}"?`).then(async() => {
       await VlanIfModule.DelVlan(vlan.id)
       this.$message.success('Vlan удалён')
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   // Breadcrumbs
@@ -159,7 +159,7 @@ export default class extends mixins(VlanMixin) {
     VlanIfModule.PatchVlan({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
       this.$message.success('Принадлежность vlan сайтам сохранена')
     })
     this.sitesDlg = false

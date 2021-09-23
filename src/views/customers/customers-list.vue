@@ -128,7 +128,7 @@ import NewCustomerForm from './new-customer-form.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import PingProfile from './ping-profile.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
-import { AddressModule } from '@/store/modules/addresses/locality'
+import { AddressModule } from '@/store/modules/addresses/address'
 import CustomerListFilters from './customer-list-filters.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
@@ -258,7 +258,7 @@ export default class extends Vue {
 
   @Watch('$route.query.group')
   private onChGroup() {
-    this.$refs.tbl.GetTableData()
+    this.$refs.tbl.LoadTableData()
   }
 
   created() {

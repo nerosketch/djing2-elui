@@ -99,7 +99,7 @@ export default class extends Vue {
   private shutdownSesion(ses: IUserSession) {
     this.$confirm('Завершить сессию?').then(async() => {
       await delSession(ses.id)
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     }).catch(err => {
       this.$message.error(err)
     })

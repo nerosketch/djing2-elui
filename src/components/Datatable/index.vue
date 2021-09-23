@@ -155,7 +155,7 @@ export default class <T> extends Vue {
     return this.responseData.next === null
   }
 
-  public async GetTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
+  public async LoadTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     this.page = 1
     this.endPage = false
     if (this.intLoading) return
@@ -167,6 +167,10 @@ export default class <T> extends Vue {
     } finally {
       this.intLoading = false
     }
+  }
+
+  public get TableDataGetter() {
+    return this.tableData
   }
 
   private async loadRemoteData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
@@ -197,7 +201,7 @@ export default class <T> extends Vue {
     } else {
       this.onChangeOrderingField(undefined)
     }
-    this.GetTableData()
+    this.LoadTableData()
   }
 
   private onChangeOrderingField(orderField?: string) {
@@ -233,7 +237,7 @@ export default class <T> extends Vue {
       colWidth: Number(localStorage.getItem(`${this.widthStorageNamePrefix}_${col.prop}`))
     }))
 
-    this.GetTableData()
+    this.LoadTableData()
     window.addEventListener('resize', this.onWinResize)
     this.onWinResize()
   }

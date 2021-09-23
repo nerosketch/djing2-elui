@@ -120,13 +120,13 @@ export default class extends Vue {
     this.$confirm(`Ты действительно хочешь удалить чат бот "${m.title}"?`).then(async() => {
       await MessengerModule.DelMessenger(m.id)
       this.$message.success(`Чат бот "${m.title}" удалён`)
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   private go2Messenger(m: IMessenger) {

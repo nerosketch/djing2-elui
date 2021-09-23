@@ -113,13 +113,13 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.addrtable.GetTableData()
+    this.$refs.addrtable.LoadTableData()
   }
 
   private delIt(addr: IFiasRecursiveAddress) {
     this.$confirm('Все дочерние объекты потеряют родителя.', 'Удалить адресный объект?').then(async() => {
       await FiasRecursiveAddressModule.DelAddress(addr.id)
-      this.$refs.addrtable.GetTableData()
+      this.$refs.addrtable.LoadTableData()
       this.$message.success('Адресный объект успешно удалён.')
     })
   }

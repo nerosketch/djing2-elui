@@ -1,7 +1,7 @@
 <template lang="pug">
   el-select(v-model="localValue" :loading='loading')
     el-option(
-      v-for="loc in localities"
+      v-for="loc in addrs"
       :key="loc.id"
       :label="loc.title"
       :value="loc.id"
@@ -17,9 +17,13 @@ import { getAddresses } from '@/api/addresses/req'
   name: 'AddressChoice'
 })
 export default class extends Vue {
-  private localities: IAddressModel[] = []
+  @Prop({ default: () => ([]) })
+  private availableAddresses!: IAddressModel[]
+
   @Prop({ required: true })
   private value!: number
+
+  private addrs: IAddressModel[] = this.availableAddresses
 
   private localValue = this.value
   private loading = false
@@ -32,14 +36,21 @@ export default class extends Vue {
         page: 1,
         page_size: 0
       }) as any
-      this.localities = data
+      this.addrs = data
     } finally {
       this.loading = false
     }
   }
 
   created() {
-    this.loadAddresses()
+    if (this.availableAddresses.length === 0) {
+      this.loadAddresses()
+    }
+  }
+
+  @Watch('availableAddresses')
+  private onChAvAddrs(addrs: IAddressModel[]) {
+    this.addrs = addrs
   }
 
   @Watch('localValue')

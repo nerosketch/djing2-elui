@@ -5,6 +5,8 @@ import {
   IAddressModelAxoisResponsePromise,
   IAddressModelList,
   IAddressModelListAxiosResponsePromise,
+  IAddressType,
+  IAddressTypeListAxiosResponsePromise,
 } from './types'
 
 // IAddressModel
@@ -22,3 +24,6 @@ export const delAddress = (id: number) =>
 
 export const changeAddress = (id: number, info: object): IAddressModelAxoisResponsePromise =>
   request.patch<IAddressModel>(`/addrs/${id}/`, info)
+
+export const getAddrTypes = (): IAddressTypeListAxiosResponsePromise =>
+  request.get<IAddressType[]>('/addrs/get_addr_types/')
