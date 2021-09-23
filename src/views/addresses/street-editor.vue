@@ -3,7 +3,6 @@
     v-loading='streetsLoading'
     label-width="0"
   )
-    p addrId: {{ addrId }}
     el-form-item(
       v-for="(str, i) in streets"
       :key="i"
@@ -11,7 +10,6 @@
       el-input(v-model="str.title" maxlength='64')
         template(v-slot:append)
           el-button(
-            v-if="str.id > 0"
             type='danger' icon='el-icon-close'
             @click="delStreet(str)"
             :disabled="!$perms.addresses.delete_addressmodel"
@@ -74,13 +72,20 @@ export default class extends Vue {
   }
 
   private delStreet(street: IAddressModel) {
-    this.$confirm(`Удалить улицу "${street.title}?"`).then(async() => {
-      this.streetsLoading = true
-      await AddressModule.DelAddress(street.id)
-      this.streetsLoading = false
-      this.$message.success(`Улица "${street.title} удалена`)
-      this.streets = this.streets.filter(s => s.id !== street.id)
-    })
+    if (street.id > 0) {
+      this.$confirm(`Удалить улицу "${street.title}?"`).then(async() => {
+        this.streetsLoading = true
+        await AddressModule.DelAddress(street.id)
+        this.streetsLoading = false
+        this.$message.success(`Улица "${street.title} удалена`)
+        this.streets = this.streets.filter(s => s.id !== street.id)
+      })
+    } else {
+      const st = this.streets.findIndex(s => s === street)
+      if (st > -1) {
+        this.streets.splice(st, 1)
+      }
+    }
   }
 
   private async onSubmit() {

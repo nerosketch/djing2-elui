@@ -1,63 +1,74 @@
 <template lang="pug">
-  .app-container
-    datatable(
-      :columns="tableColumns"
-      :getData="loadAddresses"
-      widthStorageNamePrefix='addrs'
-      ref='addrtbl'
-    )
-      template(v-slot:oper="{row}")
-        el-button-group
-          el-button(
-            icon='el-icon-c-scale-to-original'
-            @click="openStreetEditor(row)"
-          )
-          el-button(
-            icon="el-icon-edit"
-            @click="openEdit(row)"
-            :disabled="!$perms.addresses.change_addressmodel"
-          )
-          el-button(
-            type="danger" icon="el-icon-delete"
-            @click="delAddress(row)"
-            :disabled="!$perms.addresses.delete_addressmodel"
-          )
-      el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-        :disabled="!$perms.addresses.add_addressmodel"
-      ) Добавить адресный объект
-
-    el-dialog(
-      :title="dialogTitle"
-      :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-    )
-      address-form(
-        v-on:done="frmDone"
+.app-container
+  el-row(:gutter="10")
+    el-col.col_vert_space
+      span Тип: &nbsp;
+      address-type-choice(
+        v-model="filterAddressTypeValue"
+        :style="{ width: '200px' }"
       )
-
-    el-dialog(
-      :title="changeStreetTitle"
-      :visible.sync="streetDialogVisible"
-      :close-on-click-modal="false"
-    )
-      street-editor(
-        :addrId="$store.state.address.id"
-        @done="streetDialogVisible=false"
+    el-col
+      datatable(
+        :columns="tableColumns"
+        :getData="loadAddresses"
+        widthStorageNamePrefix='addrs'
+        :heightDiff='148'
+        ref='addrtbl'
       )
+        template(v-slot:oper="{row}")
+          el-button-group
+            el-button(
+              v-show="row.address_type === 4"
+              icon='el-icon-c-scale-to-original'
+              @click="openStreetEditor(row)"
+            )
+            el-button(
+              icon="el-icon-edit"
+              @click="openEdit(row)"
+              :disabled="!$perms.addresses.change_addressmodel"
+            )
+            el-button(
+              type="danger" icon="el-icon-delete"
+              @click="delAddress(row)"
+              :disabled="!$perms.addresses.delete_addressmodel"
+            )
+        el-button(
+          icon='el-icon-plus'
+          @click='openNew'
+          :disabled="!$perms.addresses.add_addressmodel"
+        ) Добавить адресный объект
+
+  el-dialog(
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
+  )
+    address-form(
+      v-on:done="frmDone"
+    )
+
+  el-dialog(
+    :title="changeStreetTitle"
+    :visible.sync="streetDialogVisible"
+    :close-on-click-modal="false"
+  )
+    street-editor(
+      :addrId="$store.state.address.id"
+      @done="streetDialogVisible=false"
+    )
 
 </template>
 
 <script lang="ts">
 import { getAddresses } from '@/api/addresses/req'
-import { IAddressModel } from '@/api/addresses/types'
+import { IAddressEnumTypes, IAddressModel } from '@/api/addresses/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { AddressModule } from '@/store/modules/addresses/address'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import AddressForm from './addr-form.vue'
 import StreetEditor from './street-editor.vue'
+import AddressTypeChoice from '@/components/Address/type-choice.vue'
 
 class DataTableComp extends DataTable<IAddressModel> {}
 
@@ -66,7 +77,8 @@ class DataTableComp extends DataTable<IAddressModel> {}
   components: {
     datatable: DataTableComp,
     AddressForm,
-    StreetEditor
+    StreetEditor,
+    AddressTypeChoice,
   }
 })
 export default class extends Vue {
@@ -90,9 +102,14 @@ export default class extends Vue {
     }
   ]
 
+  private filterAddressTypeValue = IAddressEnumTypes.LOCALITY
+
   private loadAddresses(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,title,address_type,parent_addr'
+      params = Object.assign(params, {
+        fields: 'id,title,address_type,parent_addr',
+        address_type: this.filterAddressTypeValue || null
+      })
     }
     return getAddresses(params)
   }
@@ -136,6 +153,11 @@ export default class extends Vue {
 
   private get changeStreetTitle() {
     return `Изменить улицы для "${this.$store.state.address.title}"`
+  }
+
+  @Watch('filterAddressTypeValue')
+  private onChAddrTypeFilter() {
+    this.$refs.addrtbl.LoadTableData()
   }
 }
 </script>
