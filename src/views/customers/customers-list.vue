@@ -5,6 +5,7 @@
         customer-list-filters(
           :addrId="addrId"
           :group.sync="filterForm.group"
+          :street.sync="filterForm.streetId"
         )
       el-col(:lg='24' :md='20')
         datatable(
@@ -162,6 +163,7 @@ export default class extends Vue {
   private editFieldsVisible = false
   private filterForm = {
     group: Number(this.$route.query.group) || null,
+    street: Number(this.$route.query.street) || null
   }
 
   private tableColumns: IDataTableColumn[] = [
@@ -194,7 +196,7 @@ export default class extends Vue {
       'min-width': 140
     },
     {
-      prop: 'current_service__service__title',
+      prop: 'current_service_title',
       label: 'Услуга',
       'min-width': 240,
       sortable: true
@@ -226,7 +228,7 @@ export default class extends Vue {
     if (params) {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         address: this.addrId,
-        fields: 'id,username,fio,house,telephone,current_service__service__title,balance,group_title,is_active,lease_count,marker_icons'
+        fields: 'id,username,fio,house,telephone,current_service_title,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (group) {
         newParams.group = Number(group)
@@ -256,8 +258,20 @@ export default class extends Vue {
     this.$router.push({ path: this.$route.path, query: qr })
   }
 
-  @Watch('$route.query.group')
-  private onChGroup() {
+  @Watch('filterForm.street')
+  private onStreetChange(streetId: number) {
+    const qr = Object.assign({}, this.$route.query) as Record<string, any>
+    const qstreet = qr.street
+    delete qr.street
+
+    if (streetId != qstreet) {
+      qr.street = streetId
+    }
+    this.$router.push({ path: this.$route.path, query: qr })
+  }
+
+  @Watch('$route.query', { deep: true })
+  private onChQuery() {
     this.$refs.tbl.LoadTableData()
   }
 

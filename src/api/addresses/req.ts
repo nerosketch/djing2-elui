@@ -27,3 +27,6 @@ export const changeAddress = (id: number, info: object): IAddressModelAxoisRespo
 
 export const getAddrTypes = (): IAddressTypeListAxiosResponsePromise =>
   request.get<IAddressType[]>('/addrs/get_addr_types/')
+
+export const getStreets = (parent_addr?: number): IAddressModelListAxiosResponsePromise =>
+  request.get<IAddressModelList>('/addrs/get_streets/', { params: { parent_addr }})

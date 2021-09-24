@@ -25,7 +25,7 @@ export interface ICustomer {
   house: string
   is_active: boolean
   gateway: number
-  gateway_title?: string
+  // gateway_title?: string
   auto_renewal_service: boolean
   device: number
   device_comment?: string
@@ -33,7 +33,7 @@ export interface ICustomer {
   last_connected_service: number | null
   last_connected_service_title: string
   current_service: number | null
-  current_service__service__title?: string | null
+  current_service_title?: string | null
   service_id: number | null
   is_dynamic_ip: boolean
   full_name?: string

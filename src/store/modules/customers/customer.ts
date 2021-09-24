@@ -43,7 +43,7 @@ class Customer extends VuexModule implements ICustomer {
   last_connected_service = 0
   last_connected_service_title = ''
   current_service = 0
-  current_service__service__title = ''
+  current_service_title = ''
   service_id = 0
   is_dynamic_ip = false
   full_name = ''
@@ -75,7 +75,7 @@ class Customer extends VuexModule implements ICustomer {
     this.house = data.house
     this.is_active = data.is_active
     this.gateway = data.gateway
-    this.gateway_title = data.gateway_title!
+    // this.gateway_title = data.gateway_title!
     this.auto_renewal_service = data.auto_renewal_service
     this.device = data.device!
     this.device_comment = data.device_comment!
@@ -83,7 +83,7 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = data.last_connected_service!
     this.last_connected_service_title = data.last_connected_service_title
     this.current_service = data.current_service!
-    this.current_service__service__title = data.current_service__service__title!
+    this.current_service_title = data.current_service_title!
     this.service_id = data.service_id!
     this.is_dynamic_ip = data.is_dynamic_ip
     this.full_name = data.full_name!
@@ -112,7 +112,7 @@ class Customer extends VuexModule implements ICustomer {
     this.house = ''
     this.is_active = false
     this.gateway = 0
-    this.gateway_title = ''
+    // this.gateway_title = ''
     this.auto_renewal_service = false
     this.device = 0
     this.device_comment = ''
@@ -120,7 +120,7 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = 0!
     this.last_connected_service_title = ''
     this.current_service = 0!
-    this.current_service__service__title = ''!
+    this.current_service_title = ''!
     this.service_id = 0
     this.is_dynamic_ip = false
     this.full_name = ''
