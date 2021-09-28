@@ -63,6 +63,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style>
-</style>

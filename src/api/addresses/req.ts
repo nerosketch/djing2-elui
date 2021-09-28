@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { IDRFRequestListParameters } from '@/api/types'
+import { IDRFAxiosResponsePromise, IDRFRequestListParameters } from '@/api/types'
 import {
   IAddressModel,
   IAddressModelAxoisResponsePromise,
@@ -7,6 +7,10 @@ import {
   IAddressModelListAxiosResponsePromise,
   IAddressType,
   IAddressTypeListAxiosResponsePromise,
+  IAddrLevelItem,
+  IAddrLevelItemsIDRFAxiosResponsePromise,
+  IAddrTypeItem,
+  IAddrTypeItemsIDRFAxiosResponsePromise,
 } from './types'
 
 
@@ -36,3 +40,12 @@ export const getAddrTypes = (): IAddressTypeListAxiosResponsePromise =>
 
 export const getStreets = (parent_addr?: number): IAddressModelListAxiosResponsePromise =>
   request.get<IAddressModelList>('/addrs/get_streets/', { params: { parent_addr }})
+
+export const getAddrParent = (id: number): IDRFAxiosResponsePromise<IAddressModel | null> =>
+  request.get<IAddressModel | null>(`/addrs/${id}/get_parent/`)
+
+export const getAddrLevels = (): IAddrLevelItemsIDRFAxiosResponsePromise =>
+  request.get<IAddrLevelItem[]>('/addrs/get_ao_levels/')
+
+export const getFiasAddrTypes = (level?: number): IAddrTypeItemsIDRFAxiosResponsePromise =>
+  request.get<IAddrTypeItem[]>('/addrs/get_ao_types/', { params: { level } })

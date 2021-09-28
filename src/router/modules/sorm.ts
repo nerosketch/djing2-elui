@@ -10,14 +10,6 @@ const sormRoutes: RouteConfig = {
   },
   children: [
     {
-      path: '/sorm',
-      component: () => import(/* webpackChunkName: "sorm" */ '@/views/sorm/addr-list.vue'),
-      meta: {
-        title: 'Адреса СОРМ',
-        icon: 'el-icon-location'
-      }
-    },
-    {
       path: '/addrs',
       component: () => import(/* webpackChunkName: "localities" */ '@/views/addresses/addresses.vue'),
       meta: {

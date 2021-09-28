@@ -64,6 +64,7 @@ export interface IDataTableColumn {
   prop: string
   label: string
   align?: DataTableColumnAlign
+  width?: number
   'min-width'?: number
 }
 
@@ -234,7 +235,7 @@ export default class <T> extends Vue {
   created() {
     this.localCols = this.columns.map(col => Object.assign(col, {
       visible: loadFieldVisibility(this.widthStorageNamePrefix, col),
-      colWidth: Number(localStorage.getItem(`${this.widthStorageNamePrefix}_${col.prop}`))
+      colWidth: Number(localStorage.getItem(`${this.widthStorageNamePrefix}_${col.prop}`) || col.width)
     }))
 
     this.LoadTableData()

@@ -6,6 +6,7 @@
     :model='frmMod'
     v-loading='isLoading'
   )
+    p frmMod: {{ frmMod }}
     el-form-item(
       label="Название"
       prop='title'
@@ -24,6 +25,19 @@
       address-type-choice(
         v-model="frmMod.address_type"
       )
+    el-form-item(
+      label="Уровень ФИАС"
+      prop='address_type'
+    )
+      fias-level-choice(v-model="frmMod.fias_address_level")
+    el-form-item(
+      label="Тип адреса ФИАС"
+      prop='address_type'
+    )
+      fias-type-choice(
+        v-model="frmMod.fias_address_type"
+        :level="frmMod.fias_address_level"
+      )
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -41,12 +55,16 @@ import AddressChoice from '@/components/Address/address-choice.vue'
 import AddressTypeChoice from '@/components/Address/type-choice.vue'
 import { IAddressModel } from '@/api/addresses/types'
 import { positiveNumberValueAvailable } from '@/utils/validate'
+import FiasLevelChoice from '@/components/Address/fias-level-choice.vue'
+import FiasTypeChoice from '@/components/Address/fias-type-choice.vue'
 
 @Component({
   name: 'AddressForm',
   components: {
     AddressChoice,
     AddressTypeChoice,
+    FiasLevelChoice,
+    FiasTypeChoice,
   }
 })
 export default class extends Vue {
@@ -71,11 +89,15 @@ export default class extends Vue {
   private frmMod: {
     title: string,
     parent_addr: number | null,
-    address_type: number
+    address_type: number,
+    fias_address_level: number | null,
+    fias_address_type: number | null
   } = {
     title: '',
     parent_addr: null,
-    address_type: 0
+    address_type: 0,
+    fias_address_level: null,
+    fias_address_type: null
   }
 
   get isNew() {

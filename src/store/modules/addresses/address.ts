@@ -8,16 +8,26 @@ class Address extends VuexModule implements IAddressModel {
   public id = 0
   public title = ''
   public address_type = IAddressEnumTypes.UNKNOWN
+  public address_type_name = ''
   public parent_addr?: number = 0
   public parent_addr_title?: string = ''
+  public fias_address_level = 0
+  public fias_address_level_name = ''
+  public fias_address_type = 0
+  public fias_address_type_name = ''
 
   @Mutation
   public RESET_ALL_ADDR() {
     this.id = 0
     this.title = ''
     this.address_type = IAddressEnumTypes.UNKNOWN
+    this.address_type_name = ''
     delete this.parent_addr
     delete this.parent_addr_title
+    this.fias_address_level = 0
+    this.fias_address_level_name = ''
+    this.fias_address_type = 0
+    this.fias_address_type_name = ''
   }
 
   @Mutation
@@ -25,8 +35,13 @@ class Address extends VuexModule implements IAddressModel {
     this.id = addr.id
     this.title = addr.title
     this.address_type = addr.address_type
+    this.address_type_name = addr.address_type_name
     this.parent_addr = addr.parent_addr
     this.parent_addr_title = addr.parent_addr_title
+    this.fias_address_level = addr.fias_address_level
+    this.fias_address_level_name = addr.fias_address_level_name
+    this.fias_address_type = addr.fias_address_type
+    this.fias_address_type_name = ''
   }
 
   @Mutation

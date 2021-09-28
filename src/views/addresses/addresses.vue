@@ -96,12 +96,23 @@ export default class extends Vue {
     },
     {
       prop: 'parent_addr_title',
-      label: 'Родительский адрес'
+      label: 'Родительский адрес',
+      'min-width': 80,
+    },
+    {
+      prop: 'fias_address_level_name',
+      label: 'Уровень ФИАС',
+      'min-width': 65,
+    },
+    {
+      prop: 'fias_address_type_name',
+      label: 'Тип адреса ФИАС',
+      'min-width': 70,
     },
     {
       prop: 'oper',
       label: 'Кнопки',
-      'min-width': 195,
+      width: 195,
       align: DataTableColumnAlign.CENTER
     }
   ]
