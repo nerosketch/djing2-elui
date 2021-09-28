@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 import { AxiosPromise } from 'axios'
 import {
-  IDRFRequestListParameters,
   ISimpleResponseResultAxiosResponsePromise,
   ISimpleResponseResult,
   IObjectGroupPermsInitial,
@@ -9,8 +8,6 @@ import {
   IObjectGroupPermsResultStruct
 } from '@/api/types'
 import {
-  ICustomerAddressList,
-  ICustomerAddressListAxiosResponsePromise,
   ICustomer, ICustomerList,
   ICustomerAxoisResponsePromise,
   ICustomerListAxiosResponsePromise,
@@ -121,10 +118,6 @@ export const setCustomerMarkers = (id: number, flags: string[]) =>
 
 export const getCustomersAfk = (params: ICustomerAfkItemParams): ICustomerAfkItemListAxiosResponsePromise =>
   request.get<ICustomerAfkItem[]>(`${custApiUrl}get_afk/`, { params })
-
-// ICustomerAddress
-export const getCustomerLocations = (params?: IDRFRequestListParameters): ICustomerAddressListAxiosResponsePromise =>
-  request.get<ICustomerAddressList>(`${custApiUrl}addresses/`, { params })
 
 // IAdditionalTelephone
 const telBaseUrl = '/customers/additional-telephone/'

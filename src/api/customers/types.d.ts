@@ -62,13 +62,6 @@ export interface IDRFRequestListParametersCustomer extends IDRFRequestListParame
   group?: number
 }
 
-export interface ICustomerAddress extends IAddressModel {
-  usercount: number
-}
-export type ICustomerAddressList = IDRFListResponse<ICustomerAddress>
-export type ICustomerAddressAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerAddress>
-export type ICustomerAddressListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerAddressList>
-
 export interface IServiceUser {
   id: number
   group_id: number

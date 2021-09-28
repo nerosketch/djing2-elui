@@ -10,8 +10,6 @@
         router-link(:to="{name: 'customersList', params:{ addrId: row.id }}")
           el-link(type="primary") {{ row.title }}
 
-      template(v-slot:usercount="{row}") {{ row.usercount }}
-
       el-button(
         icon='el-icon-d-caret'
         @click="goToAfkList"
@@ -20,13 +18,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { IDRFRequestListParameters } from '@/api/types'
-import { getCustomerLocations } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { ICustomerAddress } from '@/api/customers/types'
+import { getAddresses, IDRFRequestListAddrsParameters } from '@/api/addresses/req'
+import { IAddressEnumTypes, IAddressModel } from '@/api/addresses/types'
 
-class DataTableComp extends DataTable<ICustomerAddress> {}
+class DataTableComp extends DataTable<IAddressModel> {}
 
 @Component({
   name: 'CustomerGroupList',
@@ -38,19 +35,17 @@ export default class extends Vue {
       prop: 'title',
       label: 'Название',
       'min-width': 250
-    },
-    {
-      prop: 'usercount',
-      label: 'Абонентов',
-      'min-width': 140
     }
   ]
 
-  private getLocations(params?: IDRFRequestListParameters) {
+  private getLocations(params?: IDRFRequestListAddrsParameters) {
     if (params) {
-      params.fields = 'id,title,usercount'
+      params = Object.assign(params, {
+        fields: 'id,title',
+        address_type: IAddressEnumTypes.LOCALITY
+      })
     }
-    return getCustomerLocations(params)
+    return getAddresses(params)
   }
 
   // Breadcrumbs

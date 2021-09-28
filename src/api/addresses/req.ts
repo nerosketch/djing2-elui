@@ -14,7 +14,7 @@ import {
 } from './types'
 
 
-interface IDRFRequestListAddrsParameters extends IDRFRequestListParameters {
+export interface IDRFRequestListAddrsParameters extends IDRFRequestListParameters {
   address_type?: number
   parent_addr?: number
 }
