@@ -2,7 +2,6 @@
   .app-container
     el-row(:gutter="10")
       el-col(:col='24')
-        p filterForm: {{ filterForm }}
         customer-list-filters(
           :addrId="addrId"
           :group.sync="filterForm.group"
@@ -233,6 +232,10 @@ export default class extends Vue {
       })
       if (group) {
         newParams.group = Number(group)
+      }
+      const street = this.$route.query.street
+      if (street) {
+        newParams.street = Number(street)
       }
       r = await getCustomers(newParams)
     } else {
