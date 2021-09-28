@@ -81,14 +81,6 @@ export interface IDevTogglePortRequest {
   port_snmp_num: number
 }
 
-export interface IDevAddress {
-  id: number
-  title: string
-  device_count: number
-}
-export type IDevAddressList = IDRFListResponse<IDevAddress>
-export type IDevAddressListAxiosResponsePromise = IDRFAxiosResponsePromise<IDevAddressList>
-
 export interface IScannedPort {
   num: number
   snmp_num: number

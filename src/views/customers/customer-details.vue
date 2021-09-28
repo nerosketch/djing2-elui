@@ -93,13 +93,13 @@ export default class extends Vue {
           title: 'Группы абонентов'
         }
       },
-      {
+      /* {
         path: { name: 'customersList', params: { addrId: addrId } },
         meta: {
           hidden: true,
           title: this.$store.state.customer.address_title || '-'
         }
-      },
+      },*/
       {
         path: '',
         meta: {

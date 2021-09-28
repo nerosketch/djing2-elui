@@ -5,11 +5,9 @@ el-form(
   :label-width="$store.getters.isMobileView ? undefined : '100px'"
 )
   el-card(shadow="never")
-    template(v-slot:header)
-      .clearfix Устройство
+    template(v-slot:header) Оборудование
     el-row
-      el-col(:span='8')
-        b Устройство
+      el-col(:span='8') Устройство
       el-col(:span='16')
         device-select(
           v-model="frmMod.device"
@@ -17,8 +15,7 @@ el-form(
           :initialDevice="devComm"
         )
     el-row
-      el-col(:span='8')
-        b Порт
+      el-col(:span='8') Порт
       el-col(:span='16')
         selected-dev-port(v-model='frmMod.dev_port' :deviceId='frmMod.device')
     el-row

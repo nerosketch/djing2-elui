@@ -14,12 +14,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IDRFRequestListParameters } from '@/api/types'
-import { getDevAddresses } from '@/api/devices/req'
-import { IDevAddress } from '@/api/devices/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { IAddressEnumTypes, IAddressModel } from '@/api/addresses/types'
+import { getAddresses } from '@/api/addresses/req'
 
-class DataTableComp extends DataTable<IDevAddress> {}
+class DataTableComp extends DataTable<IAddressModel> {}
 
 @Component({
   name: 'DevLocList',
@@ -34,18 +34,17 @@ export default class extends Vue {
       label: 'Название',
       sortable: true,
       'min-width': 250
-    },
-    {
-      prop: 'device_count',
-      label: 'Устройств'
     }
   ]
 
   private loadDevAddresses(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,title,device_count'
+      params = Object.assign(params, {
+        fields: 'id,title',
+        address_type: IAddressEnumTypes.LOCALITY
+      })
     }
-    return getDevAddresses(params)
+    return getAddresses(params)
   }
 
   // Breadcrumbs
