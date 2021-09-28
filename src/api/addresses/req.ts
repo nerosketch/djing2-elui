@@ -9,8 +9,14 @@ import {
   IAddressTypeListAxiosResponsePromise,
 } from './types'
 
+
+interface IDRFRequestListAddrsParameters extends IDRFRequestListParameters {
+  address_type?: number
+  parent_addr?: number
+}
+
 // IAddressModel
-export const getAddresses = (params?: IDRFRequestListParameters): IAddressModelListAxiosResponsePromise =>
+export const getAddresses = (params?: IDRFRequestListAddrsParameters): IAddressModelListAxiosResponsePromise =>
   request.get<IAddressModelList>('/addrs/', { params })
 
 export const getAddress = (id: number): IAddressModelAxoisResponsePromise =>

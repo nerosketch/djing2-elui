@@ -95,6 +95,10 @@ export default class extends Vue {
       label: 'Название',
     },
     {
+      prop: 'parent_addr_title',
+      label: 'Родительский адрес'
+    },
+    {
       prop: 'oper',
       label: 'Кнопки',
       'min-width': 195,
@@ -107,7 +111,7 @@ export default class extends Vue {
   private loadAddresses(params?: IDRFRequestListParameters) {
     if (params) {
       params = Object.assign(params, {
-        fields: 'id,title,address_type,parent_addr',
+        fields: 'id,title,address_type,parent_addr,parent_addr_title',
         address_type: this.filterAddressTypeValue || null
       })
     }

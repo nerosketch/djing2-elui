@@ -15,6 +15,7 @@ export interface IAddressModel {
   title: string
   address_type: IAddressEnumTypes
   parent_addr?: number
+  parent_addr_title?: string
 }
 export type IAddressModelList = IDRFListResponse<IAddressModel>
 export type IAddressModelAxoisResponsePromise = IDRFAxiosResponsePromise<IAddressModel>

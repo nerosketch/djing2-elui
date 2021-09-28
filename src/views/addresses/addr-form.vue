@@ -12,7 +12,7 @@
     )
       el-input(v-model="frmMod.title")
     el-form-item(
-      label="Родительский адресный оьъект"
+      label="Родительский адресный объект"
     )
       address-choice(
         v-model="frmMod.parent_addr"

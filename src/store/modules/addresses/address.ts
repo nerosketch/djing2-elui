@@ -9,6 +9,7 @@ class Address extends VuexModule implements IAddressModel {
   public title = ''
   public address_type = IAddressEnumTypes.UNKNOWN
   public parent_addr?: number = 0
+  public parent_addr_title?: string = ''
 
   @Mutation
   public RESET_ALL_ADDR() {
@@ -16,6 +17,7 @@ class Address extends VuexModule implements IAddressModel {
     this.title = ''
     this.address_type = IAddressEnumTypes.UNKNOWN
     delete this.parent_addr
+    delete this.parent_addr_title
   }
 
   @Mutation
@@ -24,6 +26,7 @@ class Address extends VuexModule implements IAddressModel {
     this.title = addr.title
     this.address_type = addr.address_type
     this.parent_addr = addr.parent_addr
+    this.parent_addr_title = addr.parent_addr_title
   }
 
   @Mutation
