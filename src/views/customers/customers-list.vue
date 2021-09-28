@@ -2,10 +2,11 @@
   .app-container
     el-row(:gutter="10")
       el-col(:col='24')
+        p filterForm: {{ filterForm }}
         customer-list-filters(
           :addrId="addrId"
           :group.sync="filterForm.group"
-          :street.sync="filterForm.streetId"
+          :street.sync="filterForm.street"
         )
       el-col(:lg='24' :md='20')
         datatable(
@@ -247,25 +248,33 @@ export default class extends Vue {
   }
 
   @Watch('filterForm.group')
-  private onGroupChange(groupId: number) {
+  private onGroupChange(groupId: number | null) {
     const qr = Object.assign({}, this.$route.query) as Record<string, any>
     const qgroup = qr.group
     delete qr.group
 
     if (groupId != qgroup) {
-      qr.group = groupId
+      if (groupId && groupId > 0) {
+        qr.group = groupId
+      } else {
+        delete qr.group
+      }
     }
     this.$router.push({ path: this.$route.path, query: qr })
   }
 
   @Watch('filterForm.street')
-  private onStreetChange(streetId: number) {
+  private onStreetChange(streetId: number | null) {
     const qr = Object.assign({}, this.$route.query) as Record<string, any>
     const qstreet = qr.street
     delete qr.street
 
     if (streetId != qstreet) {
-      qr.street = streetId
+      if (streetId && streetId > 0) {
+        qr.street = streetId
+      } else {
+        delete qr.street
+      }
     }
     this.$router.push({ path: this.$route.path, query: qr })
   }

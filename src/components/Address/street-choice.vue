@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="localValue" :loading='loading')
+  el-select(v-model="localValue" :loading='loading' clearable)
     el-option(
       v-for="str in streets"
       :key="str.id"
@@ -25,7 +25,7 @@ export default class extends Vue {
 
   private streets: IAddressModel[] = []
 
-  private localValue = this.value || 0
+  private localValue = this.value || null
   private loading = false
 
   private async loadAddrStreets() {
@@ -33,7 +33,6 @@ export default class extends Vue {
     try {
       const { data } = await getStreets(this.addrId) as any
       this.streets = data
-      this.localValue = data[0].id
     } finally {
       this.loading = false
     }
@@ -44,7 +43,7 @@ export default class extends Vue {
   }
 
   @Watch('localValue')
-  private onChLocVal(val: number) {
+  private onChLocVal(val: number | null) {
     this.$emit('input', val)
   }
 
