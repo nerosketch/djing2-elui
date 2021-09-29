@@ -3,48 +3,48 @@
     v-model="inpName"
     :fetch-suggestions="querySearch"
     :loading="loading"
-    placeholder="Начни вводить название или ip оборудования"
+    placeholder="Начни вводить адрес"
     trigger-on-focus
     @select="handleSelect"
-    value-key="comment"
+    value-key="title"
   )
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { IDevice } from '@/api/devices/types'
-import { findDevices } from '@/api/devices/req'
+import { fetchAddrAutocomplete } from '@/api/addresses/req'
+import { IAddressModel } from '@/api/addresses/types'
 import { FetchSuggestionsCallback } from 'element-ui/types/autocomplete'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
-  name: 'DeviceAutocompleteField'
+  name: 'AddrFieldInput'
 })
 export default class extends Vue {
-  private loading = false
-  private inpName = ''
-
   @Prop({ default: '' })
-  private defaultName!: string
+  private defaultAddrText!: string
+
+  private loading = false
+  private inpAddrText = ''
 
   private async querySearch(queryString: string, cb: FetchSuggestionsCallback) {
     if (this.loading) return
     this.loading = true
-    const { data } = await findDevices(queryString)
-    cb(data.results)
+    const { data } = await fetchAddrAutocomplete(queryString)
+    cb(data)
     this.loading = false
   }
 
-  private handleSelect(d: IDevice) {
+  private handleSelect(d: IAddressModel) {
     this.$emit('input', d.id)
   }
 
-  @Watch('defaultName')
+  @Watch('defaultAddrText')
   private onChangedDefaultName(name: string) {
-    this.inpName = name
+    this.inpAddrText = name
   }
 
   mounted() {
-    this.onChangedDefaultName(this.defaultName)
+    this.onChangedDefaultName(this.defaultAddrText)
   }
 }
 </script>

@@ -25,6 +25,7 @@ export interface IAddressModel {
 export type IAddressModelList = IDRFListResponse<IAddressModel>
 export type IAddressModelAxoisResponsePromise = IDRFAxiosResponsePromise<IAddressModel>
 export type IAddressModelListAxiosResponsePromise = IDRFAxiosResponsePromise<IAddressModelList>
+export type IAddressModelPlainListAxiosResponsePromise = IDRFAxiosResponsePromise<IAddressModel[]>
 
 export interface IAddressType {
   value: number
