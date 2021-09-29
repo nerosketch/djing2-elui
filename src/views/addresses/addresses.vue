@@ -78,7 +78,7 @@ class DataTableComp extends DataTable<IAddressModel> {}
     datatable: DataTableComp,
     AddressForm,
     StreetEditor,
-    AddressTypeChoice,
+    AddressTypeChoice
   }
 })
 export default class extends Vue {
@@ -92,22 +92,22 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: 'Название'
     },
     {
       prop: 'parent_addr_title',
       label: 'Родительский адрес',
-      'min-width': 80,
+      'min-width': 80
     },
     {
       prop: 'fias_address_level_name',
       label: 'Уровень ФИАС',
-      'min-width': 65,
+      'min-width': 65
     },
     {
       prop: 'fias_address_type_name',
       label: 'Тип адреса ФИАС',
-      'min-width': 70,
+      'min-width': 70
     },
     {
       prop: 'oper',

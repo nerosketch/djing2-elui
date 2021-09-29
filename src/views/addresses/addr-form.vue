@@ -72,7 +72,7 @@ import FiasTypeChoice from '@/components/Address/fias-type-choice.vue'
     AddressChoice,
     AddressTypeChoice,
     FiasLevelChoice,
-    FiasTypeChoice,
+    FiasTypeChoice
   }
 })
 export default class extends Vue {

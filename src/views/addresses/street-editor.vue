@@ -107,7 +107,9 @@ export default class extends Vue {
       id: 0,
       title: '',
       address_type: IAddressEnumTypes.STREET,
-      parent_addr: this.addrId
+      parent_addr: this.addrId,
+      fias_address_level: 0,
+      fias_address_type: 0
     })
   }
 }

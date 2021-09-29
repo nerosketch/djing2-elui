@@ -14,13 +14,13 @@ export interface IAddressModel {
   id: number
   title: string
   address_type: IAddressEnumTypes
-  address_type_name: string
+  address_type_name?: string
   parent_addr?: number
   parent_addr_title?: string
   fias_address_level: number
-  fias_address_level_name: string
+  fias_address_level_name?: string
   fias_address_type: number
-  fias_address_type_name: string
+  fias_address_type_name?: string
 }
 export type IAddressModelList = IDRFListResponse<IAddressModel>
 export type IAddressModelAxoisResponsePromise = IDRFAxiosResponsePromise<IAddressModel>

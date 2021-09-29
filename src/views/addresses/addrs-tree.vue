@@ -59,7 +59,7 @@ export default class extends Vue {
       parent_addr: parent || 0,
       fields: 'id,title,parent_addr'
     })
-    return data as IAddressModel[]
+    return data as unknown as IAddressModel[]
   }
 }
 </script>
