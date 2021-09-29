@@ -6,12 +6,24 @@
     :model='frmMod'
     v-loading='isLoading'
   )
-    p frmMod: {{ frmMod }}
     el-form-item(
       label="Название"
       prop='title'
     )
       el-input(v-model="frmMod.title")
+    el-form-item(
+      label="Уровень ФИАС"
+      prop='fias_address_level'
+    )
+      fias-level-choice(v-model="frmMod.fias_address_level")
+    el-form-item(
+      label="Тип адреса ФИАС"
+      prop='fias_address_level'
+    )
+      fias-type-choice(
+        v-model="frmMod.fias_address_type"
+        :level="frmMod.fias_address_level"
+      )
     el-form-item(
       label="Родительский адресный объект"
     )
@@ -25,19 +37,6 @@
       address-type-choice(
         v-model="frmMod.address_type"
       )
-    el-form-item(
-      label="Уровень ФИАС"
-      prop='address_type'
-    )
-      fias-level-choice(v-model="frmMod.fias_address_level")
-    el-form-item(
-      label="Тип адреса ФИАС"
-      prop='address_type'
-    )
-      fias-type-choice(
-        v-model="frmMod.fias_address_type"
-        :level="frmMod.fias_address_level"
-      )
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -45,6 +44,15 @@
         @click="onSubmit"
         :loading="isLoading"
       ) Сохранить
+
+      el-divider(direction="vertical")
+
+      el-link(
+        href="https://github.com/hflabs/socrbase/blob/master/socrbase.csv"
+        target="_blank"
+        type="info"
+        icon="el-icon-thumb"
+      ) Справочник адресных объектов
 </template>
 
 <script lang="ts">
@@ -76,6 +84,12 @@ export default class extends Vue {
     ],
     address_type: [
       { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип' }
+    ],
+    fias_address_level: [
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать уровень' }
+    ],
+    fias_address_type: [
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип ФИАС' }
     ]
   }
 
