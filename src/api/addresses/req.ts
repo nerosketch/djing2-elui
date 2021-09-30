@@ -48,8 +48,11 @@ export const getAddrParent = (id: number): IDRFAxiosResponsePromise<IAddressMode
 export const getAddrLevels = (): IAddrLevelItemsIDRFAxiosResponsePromise =>
   request.get<IAddrLevelItem[]>('/addrs/get_ao_levels/')
 
-export const getFiasAddrTypes = (level?: number): IAddrTypeItemsIDRFAxiosResponsePromise =>
+export const getFiasAddrTypes = (level: number): IAddrTypeItemsIDRFAxiosResponsePromise =>
   request.get<IAddrTypeItem[]>('/addrs/get_ao_types/', { params: { level } })
+
+export const filterByFiasLevel = (level: number, fields?: string): IAddressModelPlainListAxiosResponsePromise =>
+  request.get<IAddressModel[]>('/addrs/filter_by_fias_level/', { params: { level, fields } })
 
 // export const fetchAddrAutocomplete = (findStr: string): IAddressModelPlainListAxiosResponsePromise =>
   // request.get<IAddressModel[]>('/addrs/autocomplete/', {params: { search: findStr }})

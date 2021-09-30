@@ -6,6 +6,7 @@ div
 
   el-dialog(
     title="Адрес"
+    top='1%'
     :visible.sync="addrVisible"
     :close-on-press-escape="false"
     :close-on-click-modal="false"
@@ -14,10 +15,8 @@ div
 </template>
 
 <script lang="ts">
-// import { fetchAddrAutocomplete } from '@/api/addresses/req'
 import { IAddressModel } from '@/api/addresses/types'
-// import { FetchSuggestionsCallback } from 'element-ui/types/autocomplete'
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import AddrSelectForm from './addr-select-form.vue'
 
 @Component({

@@ -69,6 +69,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import AddressForm from './addr-form.vue'
 import StreetEditor from './street-editor.vue'
 import AddressTypeChoice from '@/components/Address/type-choice.vue'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 class DataTableComp extends DataTable<IAddressModel> {}
 
@@ -122,7 +123,7 @@ export default class extends Vue {
   private loadAddresses(params?: IDRFRequestListParameters) {
     if (params) {
       params = Object.assign(params, {
-        fields: 'id,title,address_type,parent_addr,parent_addr_title',
+        fields: 'id,title,address_type,parent_addr,parent_addr_title,fias_address_level_name,fias_address_type_name',
         address_type: this.filterAddressTypeValue || null
       })
     }
@@ -174,5 +175,18 @@ export default class extends Vue {
   private onChAddrTypeFilter() {
     this.$refs.addrtbl.LoadTableData()
   }
+
+  // Breadcrumbs
+  created() {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        meta: {
+          hidden: true,
+          title: 'Адреса'
+        }
+      }
+    ] as any[])
+  }
+  // End Breadcrumbs
 }
 </script>

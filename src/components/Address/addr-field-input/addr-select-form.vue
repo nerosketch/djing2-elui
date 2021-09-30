@@ -7,14 +7,17 @@
     v-loading='isLoading'
   )
     el-form-item(
+      label="Временный level"
+    )
+      el-input(type="number" v-model="tmpLevelNum")
+    el-form-item(
       v-for="level in fiasLevels"
       :label="level.name"
     )
-      el-select(v-model="level.value")
-        el-option(label="Opt1" value="1")
-        el-option(label="Opt2" value="2")
-        el-option(label="Opt3" value="3")
-        el-option(label="Opt4" value="4")
+      var-level-addr-choice(
+        :level="tmpLevelNum"
+        v-model="frmMod.asd"
+      )
 
 </template>
 
@@ -22,12 +25,18 @@
 import { getAddrLevels } from '@/api/addresses/req'
 import { IAddrLevelItem } from '@/api/addresses/types'
 import { Component, Vue } from 'vue-property-decorator'
+import VarLevelAddrChoice from './var-level-addr-choice.vue'
 
 @Component({
-  name: 'AddrSelectForm'
+  name: 'AddrSelectForm',
+  components: {
+    VarLevelAddrChoice
+  }
 })
 export default class extends Vue {
   private isLoading = false
+
+  private tmpLevelNum = 0
 
   private fiasLevels: IAddrLevelItem[] = []
 

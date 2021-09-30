@@ -120,7 +120,6 @@ export default class extends Vue {
   created() {
     BreadcrumbsModule.SetCrumbs([
       {
-        path: '/',
         meta: {
           hidden: true,
           title: 'Формы'
