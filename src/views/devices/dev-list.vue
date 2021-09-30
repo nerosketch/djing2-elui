@@ -59,6 +59,7 @@
       title="Железка"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
+      top="1%"
     )
       dev-form(
         v-if="dialogVisible"
@@ -69,6 +70,7 @@
       title="Добавить устройство"
       :visible.sync="dialogNewDev"
       :close-on-click-modal="false"
+      top="1%"
     )
       new-dev-form(
         v-if="dialogNewDev"

@@ -171,7 +171,7 @@ export default class extends Vue {
     DeviceModule.getDeviceTypeNames().then(d => {
       this.deviceTypeNames = d
     })
-    this.localTimer = dateCounter(this.frmMod, 'create_time')
+    this.localTimer = dateCounter(this.frmMod, 'create_time', 'YYYY-MM-DD HH:mm')
   }
 
   beforeDestroy() {

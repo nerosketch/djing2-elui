@@ -52,7 +52,9 @@ export default class extends Vue {
     ['icon_smile', false],
     ['icon_dollar', false],
     ['icon_service', false],
-    ['icon_mrk', false]
+    ['icon_mrk', false],
+    ['icon_red_tel', false],
+    ['icon_green_tel', false]
   ]
 
   private saveMarkers() {

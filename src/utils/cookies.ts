@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 function getNight() {
   const now = new Date()
-  now.setDate(now.getDate() + 1)
+  now.setDate(now.getDate() + 7)
   now.setHours(3, 0, 0, 0)
   return now
 }
