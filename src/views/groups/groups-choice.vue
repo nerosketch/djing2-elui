@@ -47,7 +47,7 @@ export default class extends Vue {
   }
 
   @Watch('value')
-  private onChVal(v: number) {
+  private onChVal() {
     this.localValue = this.value
   }
 

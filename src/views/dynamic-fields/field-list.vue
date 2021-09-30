@@ -105,7 +105,7 @@ export default class extends Vue {
     DynamicFieldModule.SET_ALL_DYFIELD(field)
   }
 
-  private formDone(field: IDynamicField) {
+  private formDone() {
     this.fieldFormVisible = false
     this.$message.success('Сохранено')
     this.$refs.fieldtable.LoadTableData()

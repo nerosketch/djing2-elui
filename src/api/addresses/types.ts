@@ -33,7 +33,15 @@ export interface IAddressType {
 }
 export type IAddressTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IAddressType[]>
 
-export type IAddrLevelItem = [number, string]
+export interface IAddrLevelItem {
+  value: number
+  name: string
+}
 export type IAddrLevelItemsIDRFAxiosResponsePromise = IDRFAxiosResponsePromise<IAddrLevelItem[]>
-export type IAddrTypeItem = [number, string]
+
+export interface IAddrTypeItem {
+  addr_id: number
+  addr_short_name: string
+  addr_name: string
+}
 export type IAddrTypeItemsIDRFAxiosResponsePromise = IDRFAxiosResponsePromise<IAddrTypeItem[]>

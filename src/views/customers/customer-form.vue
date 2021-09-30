@@ -35,18 +35,18 @@
         format="d.MM.yyyy"
       )
     el-form-item(
+      label="Группа"
+    )
+      groups-choice(v-model="frmMod.group")
+    el-form-item(
       label="Опции"
     )
       el-checkbox(v-model="frmMod.is_active") - Активный: {{ frmMod.is_active ? 'Да' : 'Нет' }}
       el-checkbox(v-model="frmMod.is_dynamic_ip") - Динамические настройки по dhcp: {{ frmMod.is_dynamic_ip ? 'Да' : 'Нет' }}
     el-form-item(
-      label="Группа"
-    )
-      groups-choice(v-model="frmMod.group")
-    el-form-item(
       label="Адрес"
     )
-      address-choice(v-model="frmMod.address")
+      addr-field-input(v-model="frmMod.address")
     //- el-form-item(
     //-   label="Шлюз доступа"
     //- )
@@ -54,7 +54,7 @@
     el-form-item(
       label="Памятка"
     )
-      el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize)
+      el-input(v-model="frmMod.description" type="textarea" rows="5" cols="40")
     el-form-item
       el-button-group
         el-button(
@@ -140,8 +140,8 @@ import CustomerPassword from './customer-password.vue'
 import FormMixin from '@/utils/forms'
 import TelsInput from './tels/tels-input.vue'
 import CustomerFormFio from './customer-form-fio.vue'
-import AddressChoice from '@/components/Address/address-choice.vue'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
+import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 
 @Component({
   name: 'customer-form',
@@ -151,7 +151,7 @@ import GroupsChoice from '@/views/groups/groups-choice.vue'
     CustomerPassword,
     TelsInput,
     CustomerFormFio,
-    AddressChoice,
+    AddrFieldInput,
     GroupsChoice,
   }
 })

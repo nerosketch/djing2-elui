@@ -3,8 +3,8 @@
     el-option(
       v-for="(type, i) in fiasTypes"
       :key="i"
-      :label="type[1]"
-      :value="type[0]"
+      :label="type.addr_name"
+      :value="type.addr_id"
     )
 </template>
 
@@ -25,7 +25,7 @@ export default class extends Vue {
 
   private fiasTypes: IAddrTypeItem[] = []
 
-  private localValue = this.value || 0
+  private localValue = this.value || null
   private loading = false
 
   private async loadAddrTypes() {
@@ -36,10 +36,6 @@ export default class extends Vue {
     } finally {
       this.loading = false
     }
-  }
-
-  created() {
-    this.loadAddrTypes()
   }
 
   @Watch('localValue')

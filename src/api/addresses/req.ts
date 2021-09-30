@@ -51,5 +51,5 @@ export const getAddrLevels = (): IAddrLevelItemsIDRFAxiosResponsePromise =>
 export const getFiasAddrTypes = (level?: number): IAddrTypeItemsIDRFAxiosResponsePromise =>
   request.get<IAddrTypeItem[]>('/addrs/get_ao_types/', { params: { level } })
 
-export const fetchAddrAutocomplete = (findStr: string): IAddressModelPlainListAxiosResponsePromise =>
-  request.get<IAddressModel[]>('/addrs/autocomplete/', {params: { search: findStr }})
+// export const fetchAddrAutocomplete = (findStr: string): IAddressModelPlainListAxiosResponsePromise =>
+  // request.get<IAddressModel[]>('/addrs/autocomplete/', {params: { search: findStr }})

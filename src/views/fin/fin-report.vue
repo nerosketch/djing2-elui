@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { IPayAllTimeGateway, IPayReport, IPayReportParams } from '@/api/fin/types'
+import { IPayAllTimeGateway, IPayReport } from '@/api/fin/types'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getPayGateways, getPayReport } from '@/api/fin/req'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'

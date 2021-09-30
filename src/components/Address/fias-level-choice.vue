@@ -3,8 +3,8 @@
     el-option(
       v-for="(level, i) in fiasLevels"
       :key="i"
-      :label="level[1]"
-      :value="level[0]"
+      :label="level.name"
+      :value="level.value"
     )
 </template>
 

@@ -53,7 +53,7 @@ import { getFieldTypeChoices } from '@/api/dynamic-fields/req'
 import SystemTagsInput from './system-tags-input.vue'
 import { regexpVal } from '@/utils/validate'
 
-export const _userTagsValidator = regexpVal(/^(\w+\,?)+$/s)
+export const _userTagsValidator = regexpVal(/^(\w+,?)+$/s)
 
 @Component({
   name: 'FieldForm',
