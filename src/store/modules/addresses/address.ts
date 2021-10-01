@@ -41,7 +41,7 @@ class Address extends VuexModule implements IAddressModel {
     this.fias_address_level = addr.fias_address_level
     this.fias_address_level_name = addr.fias_address_level_name!
     this.fias_address_type = addr.fias_address_type
-    this.fias_address_type_name = ''
+    this.fias_address_type_name = addr.fias_address_type_name!
   }
 
   @Mutation

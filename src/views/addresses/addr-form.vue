@@ -98,6 +98,8 @@ export default class extends Vue {
     this.frmMod.title = addr.title
     this.frmMod.parent_addr = addr.parent_addr || null
     this.frmMod.address_type = addr.address_type
+    this.frmMod.fias_address_level = addr.fias_address_level
+    this.frmMod.fias_address_type = addr.fias_address_type
   }
 
   private frmMod: {

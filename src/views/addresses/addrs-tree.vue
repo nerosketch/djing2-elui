@@ -4,6 +4,8 @@
     :props="props"
     :load="loadNode"
     :expand-on-click-node="false"
+    node-key="id"
+    ref="etree"
     lazy
   )
     span.custom-tree-node(slot-scope="{ node, data }")
@@ -34,9 +36,10 @@ import { getAddresses } from '@/api/addresses/req'
 import { IAddressModel } from '@/api/addresses/types'
 import { AddressModule } from '@/store/modules/addresses/address'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { TreeNode } from 'element-ui/types/tree'
+import { ElTree, TreeNode } from 'element-ui/types/tree'
 import { Component, Vue } from 'vue-property-decorator'
 import AddressForm from './addr-form.vue'
+
 
 type AddrTreeNode = TreeNode<number, IAddressModel>
 
@@ -47,6 +50,10 @@ type AddrTreeNode = TreeNode<number, IAddressModel>
   }
 })
 export default class extends Vue {
+  public readonly $refs!: {
+    etree: ElTree<number, IAddressModel>
+  }
+
   private props = {
     label: 'title',
     // children: 'children',
@@ -60,27 +67,29 @@ export default class extends Vue {
       const r = await this.loadAddresses()
       return resolve(r)
     }
-    if (node.level > 1) return resolve([]);
+    if (node.level > 1) return resolve([])
 
     const r = await this.loadAddresses(node.data.id)
     resolve(r)
   }
 
-  private async openEdit(loc: IAddressModel) {
-    await AddressModule.SET_ALL_ADDR(loc)
+  private async openEdit(loc: AddrTreeNode) {
+    await AddressModule.SET_ALL_ADDR(loc.data)
     this.dialogVisible = true
   }
 
   private async addNode(node: AddrTreeNode) {
     await AddressModule.RESET_ALL_ADDR()
-    await AddressModule.SET_ADDR_PARENT(node.id)
+    await AddressModule.SET_ADDR_PARENT(node.data.id)
     this.dialogVisible = true
   }
 
-  private frmDone() {
+  private frmDone(addr: IAddressModel) {
     this.dialogVisible = false
     this.$message.success('адресный объект сохранён')
-    // this.$refs.addrtbl.LoadTableData()
+    if (addr.parent_addr) {
+      this.$refs.etree.append(addr, addr.parent_addr)
+    }
   }
 
   private async loadAddresses(parent?: number): Promise<IAddressModel[]> {
@@ -88,7 +97,7 @@ export default class extends Vue {
       page: 1,
       page_size: 0,
       parent_addr: parent || 0,
-      fields: 'id,title,parent_addr'
+      // fields: 'id,title,parent_addr'
     })
     return data as unknown as IAddressModel[]
   }
