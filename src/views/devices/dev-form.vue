@@ -85,11 +85,12 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { mixins } from 'vue-class-component'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
-import { DeviceModule, IDeviceTypeName } from '@/store/modules/devices/device'
+import { DeviceModule } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import FormMixin from '@/utils/forms'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
 import AddressChoice from '@/components/Address/address-choice.vue'
+import { IDeviceTypeName } from '@/api/devices/types'
 
 @Component({
   name: 'DevForm',

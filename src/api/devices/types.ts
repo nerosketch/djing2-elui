@@ -101,6 +101,12 @@ export interface IUnitUnregistered {
 }
 export type IUnitUnregisteredListAxiosPromise = AxiosPromise<IUnitUnregistered[]>
 
+export interface IDeviceTypeName {
+  nm: string,
+  v: number
+}
+export type IDeviceTypeNameListAxiosPromise = AxiosPromise<IDeviceTypeName[]>
+
 export interface IDevVlan {
   vid: number
   title: string
