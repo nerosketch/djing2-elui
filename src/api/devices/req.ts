@@ -23,6 +23,8 @@ import {
   IDevVlanSimpleInfoAxiosResponsePromise, IDevVlanSimpleInfo,
   IDeviceOnuConfigTemplate, IFixOnuSimpleResponseResultAxiosResponsePromise,
   IDevTogglePortRequest,
+  IDeviceTypeNameListAxiosPromise,
+  IDeviceTypeName,
 } from './types'
 
 const baseDevUrl = '/devices/all/'
@@ -93,6 +95,9 @@ export const scanOnuList = (devId: number, onProgress: (c: ProgressEvent) => voi
 
 export const scanUnitsUnregistered = (devId: number): IUnitUnregisteredListAxiosPromise =>
   request.get<IUnitUnregistered[]>(`${baseDevPonUrl}${devId}/scan_units_unregistered/`)
+
+export const getDeviceTypes = (): IDeviceTypeNameListAxiosPromise =>
+  request.get<IDeviceTypeName[]>(`${baseDevUrl}device_types/`)
 
 // IPort
 const basePortUrl = '/devices/ports/'
