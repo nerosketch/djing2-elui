@@ -9,7 +9,7 @@ import profileRoutes from './modules/profiles'
 import finRoutes from './modules/fin'
 import messengerRoutes from './modules/messenger'
 import sitesRoutes from './modules/sites'
-import sormRoutes from './modules/sorm'
+import addrRoutes from './modules/addrs'
 import dfRoutes from './modules/dynamicfields'
 
 Vue.use(Router)
@@ -132,7 +132,7 @@ export const constantRoutes: RouteConfig [] = [
   finRoutes,
   messengerRoutes,
   sitesRoutes,
-  sormRoutes,
+  addrRoutes,
   dfRoutes,
   {
     path: '/afk',

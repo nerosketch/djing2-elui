@@ -49,6 +49,11 @@ class Address extends VuexModule implements IAddressModel {
     this.id = id
   }
 
+  @Mutation
+  public SET_ADDR_PARENT(id: number) {
+    this.parent_addr = id
+  }
+
   @Action
   public async GetAddress(id: number) {
     const r = await getAddress(id)

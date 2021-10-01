@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="localValue" :loading='loading')
+  el-select(v-model="localValue" :loading='loading' clearable)
     el-option(
       v-for="addr in addrs"
       :key="addr.id"

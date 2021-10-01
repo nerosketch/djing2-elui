@@ -1,7 +1,7 @@
 import { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
-const sormRoutes: RouteConfig = {
+const addrRoutes: RouteConfig = {
   path: '',
   component: Layout,
   meta: {
@@ -11,7 +11,7 @@ const sormRoutes: RouteConfig = {
   children: [
     {
       path: '/addrs',
-      component: () => import(/* webpackChunkName: "localities" */ '@/views/addresses/addresses.vue'),
+      component: () => import(/* webpackChunkName: "localities" */ '@/views/addresses/addrs-tree.vue'),
       meta: {
         title: 'Адресные объекты',
         icon: 'el-icon-s-home'
@@ -20,4 +20,4 @@ const sormRoutes: RouteConfig = {
   ]
 }
 
-export default sormRoutes
+export default addrRoutes
