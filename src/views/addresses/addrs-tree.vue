@@ -7,6 +7,16 @@
     node-key="id"
     ref="etree"
     lazy
+    draggable
+    :allow-drag="allowDrag"
+    :allow-drop="allowDrop"
+    @node-drag-start="handleDragStart"
+    @node-drag-enter="handleDragEnter"
+    @node-drag-leave="handleDragLeave"
+    @node-drag-over="handleDragOver"
+
+    @node-drag-end="handleDragEnd"
+    @node-drop="handleDrop"
   )
     span.custom-tree-node(slot-scope="{ node, data }")
       span {{ node.label }}
@@ -42,6 +52,7 @@ import AddressForm from './addr-form.vue'
 
 
 type AddrTreeNode = TreeNode<number, IAddressModel>
+type TreeDropType = 'none' | 'before' | 'after' | 'inner'
 
 @Component({
   name: 'AddrsTree',
@@ -122,6 +133,32 @@ export default class extends Vue {
     ] as any[])
   }
   // End Breadcrumbs
+
+  private allowDrag(node: AddrTreeNode) {
+    return true
+  }
+
+  private allowDrop(node: AddrTreeNode) {
+    return true
+  }
+  private handleDragStart(node: AddrTreeNode, ev: any) {
+    console.log('handleDragStart:', node, typeof ev)
+  }
+  handleDragEnter(node: AddrTreeNode, dropNode: AddrTreeNode, ev: any) {
+    console.log('tree drag enter: ', dropNode)
+  }
+  handleDragLeave(node: AddrTreeNode, dropNode: AddrTreeNode, ev: any) {
+    console.log('tree drag leave: ', dropNode.label)
+  }
+  handleDragOver(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, ev: any) {
+    console.log('tree drag over: ', dropNode.label)
+  }
+  handleDragEnd(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType, ev: any) {
+    console.log('tree drag end: ', dropNode && dropNode.label, dropType, typeof dropType, typeof ev)
+  }
+  handleDrop(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType, ev: any) {
+    console.log('tree drop: ', dropNode.label, dropType, typeof dropType, typeof ev)
+  }
 }
 </script>
 
