@@ -25,12 +25,6 @@
         :level="frmMod.fias_address_level"
       )
     el-form-item(
-      label="Родительский адресный объект"
-    )
-      address-choice(
-        v-model="frmMod.parent_addr"
-      )
-    el-form-item(
       label="Тип адресного объекта"
       prop='address_type'
     )
@@ -59,7 +53,6 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { AddressModule } from '@/store/modules/addresses/address'
-import AddressChoice from '@/components/Address/address-choice.vue'
 import AddressTypeChoice from '@/components/Address/type-choice.vue'
 import { IAddressModel } from '@/api/addresses/types'
 import { positiveNumberValueAvailable } from '@/utils/validate'
@@ -69,7 +62,6 @@ import FiasTypeChoice from '@/components/Address/fias-type-choice.vue'
 @Component({
   name: 'AddressForm',
   components: {
-    AddressChoice,
     AddressTypeChoice,
     FiasLevelChoice,
     FiasTypeChoice
@@ -96,7 +88,6 @@ export default class extends Vue {
   @Watch('$store.state.address', { deep: true })
   private onChangeLoc(addr: IAddressModel) {
     this.frmMod.title = addr.title
-    this.frmMod.parent_addr = addr.parent_addr || null
     this.frmMod.address_type = addr.address_type
     this.frmMod.fias_address_level = addr.fias_address_level
     this.frmMod.fias_address_type = addr.fias_address_type
@@ -104,13 +95,11 @@ export default class extends Vue {
 
   private frmMod: {
     title: string,
-    parent_addr: number | null,
     address_type: number,
     fias_address_level: number | null,
     fias_address_type: number | null
   } = {
     title: '',
-    parent_addr: null,
     address_type: 0,
     fias_address_level: null,
     fias_address_type: null

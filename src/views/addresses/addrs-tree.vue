@@ -8,7 +8,6 @@
     ref="etree"
     lazy
     draggable
-    :allow-drag="allowDrag"
     :allow-drop="allowDrop"
     @node-drag-start="handleDragStart"
     @node-drag-enter="handleDragEnter"
@@ -31,6 +30,11 @@
           icon="el-icon-edit"
           @click="openEdit(node)"
         )
+  el-button(
+    icon='el-icon-plus'
+    type='success'
+    @click="addAbsoluteNode"
+  ) Добавить
   el-dialog(
     :title="dialogTitle"
     :visible.sync="dialogVisible"
@@ -94,11 +98,19 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
+  private async addAbsoluteNode() {
+    await AddressModule.RESET_ALL_ADDR()
+    this.dialogVisible = true
+  }
+
   private frmDone(addr: IAddressModel) {
     this.dialogVisible = false
     this.$message.success('Адресный объект сохранён')
     if (addr.parent_addr) {
       this.$refs.etree.append(addr, addr.parent_addr)
+    } else {
+      const data = this.$refs.etree.store._getAllNodes()
+      this.$refs.etree.insertAfter(addr, data[0].data.id)
     }
   }
 
