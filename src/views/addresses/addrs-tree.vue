@@ -42,14 +42,13 @@
 </template>
 
 <script lang="ts">
-import { getAddresses } from '@/api/addresses/req'
+import { changeAddress, getAddresses } from '@/api/addresses/req'
 import { IAddressModel } from '@/api/addresses/types'
 import { AddressModule } from '@/store/modules/addresses/address'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { ElTree, TreeNode } from 'element-ui/types/tree'
 import { Component, Vue } from 'vue-property-decorator'
 import AddressForm from './addr-form.vue'
-
 
 type AddrTreeNode = TreeNode<number, IAddressModel>
 type TreeDropType = 'none' | 'before' | 'after' | 'inner'
@@ -74,11 +73,11 @@ export default class extends Vue {
   private dialogVisible = false
 
   private async loadNode(node: AddrTreeNode, resolve: Function) {
+    // console.log('node', node, 'resolve', resolve)
     if (node.level === 0) {
       const r = await this.loadAddresses()
       return resolve(r)
     }
-    if (node.level > 1) return resolve([])
 
     const r = await this.loadAddresses(node.data.id)
     resolve(r)
@@ -97,7 +96,7 @@ export default class extends Vue {
 
   private frmDone(addr: IAddressModel) {
     this.dialogVisible = false
-    this.$message.success('адресный объект сохранён')
+    this.$message.success('Адресный объект сохранён')
     if (addr.parent_addr) {
       this.$refs.etree.append(addr, addr.parent_addr)
     }
@@ -134,30 +133,35 @@ export default class extends Vue {
   }
   // End Breadcrumbs
 
-  private allowDrag(node: AddrTreeNode) {
+  /*private allowDrag(node: AddrTreeNode) {
     return true
-  }
+  }*/
 
-  private allowDrop(node: AddrTreeNode) {
-    return true
+  private allowDrop(node: AddrTreeNode, dropNode: AddrTreeNode, type: TreeDropType) {
+    return type === 'inner'
   }
-  private handleDragStart(node: AddrTreeNode, ev: any) {
-    console.log('handleDragStart:', node, typeof ev)
+  private handleDragStart(node: AddrTreeNode) {
+    console.log('handleDragStart:', node)
   }
-  handleDragEnter(node: AddrTreeNode, dropNode: AddrTreeNode, ev: any) {
+  handleDragEnter(node: AddrTreeNode, dropNode: AddrTreeNode) {
     console.log('tree drag enter: ', dropNode)
   }
-  handleDragLeave(node: AddrTreeNode, dropNode: AddrTreeNode, ev: any) {
+  handleDragLeave(node: AddrTreeNode, dropNode: AddrTreeNode) {
     console.log('tree drag leave: ', dropNode.label)
   }
-  handleDragOver(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, ev: any) {
+  handleDragOver(draggingNode: AddrTreeNode, dropNode: AddrTreeNode) {
     console.log('tree drag over: ', dropNode.label)
   }
-  handleDragEnd(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType, ev: any) {
-    console.log('tree drag end: ', dropNode && dropNode.label, dropType, typeof dropType, typeof ev)
+  handleDragEnd(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType) {
+    console.log('tree drag end: ', dropNode && dropNode.label, dropType, typeof dropType)
   }
-  handleDrop(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType, ev: any) {
-    console.log('tree drop: ', dropNode.label, dropType, typeof dropType, typeof ev)
+  handleDrop(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType) {
+    // console.log('tree drop: ', dropNode.label, draggingNode, dropNode, dropType)
+    if (dropType === 'inner') {
+      changeAddress(draggingNode.data.id, {
+        parent_addr: dropNode.data.id
+      })
+    }
   }
 }
 </script>
