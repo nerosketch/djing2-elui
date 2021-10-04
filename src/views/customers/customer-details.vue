@@ -90,7 +90,7 @@ export default class extends Vue {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: 'Группы абонентов'
+          title: 'Населённые пункты'
         }
       },
       /* {
