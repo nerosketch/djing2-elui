@@ -9,12 +9,6 @@
     lazy
     draggable
     :allow-drop="allowDrop"
-    @node-drag-start="handleDragStart"
-    @node-drag-enter="handleDragEnter"
-    @node-drag-leave="handleDragLeave"
-    @node-drag-over="handleDragOver"
-
-    @node-drag-end="handleDragEnd"
     @node-drop="handleDrop"
   )
     span.custom-tree-node(slot-scope="{ node, data }")
@@ -69,7 +63,7 @@ export default class extends Vue {
   }
 
   private props = {
-    label: 'title',
+    label: (a: IAddressModel) => `${a.fias_address_type_name} ${a.title}`,
     // children: 'children',
     // isLeaf: 'leaf'
   }
@@ -77,7 +71,6 @@ export default class extends Vue {
   private dialogVisible = false
 
   private async loadNode(node: AddrTreeNode, resolve: Function) {
-    // console.log('node', node, 'resolve', resolve)
     if (node.level === 0) {
       const r = await this.loadAddresses()
       return resolve(r)
@@ -108,9 +101,6 @@ export default class extends Vue {
     this.$message.success('Адресный объект сохранён')
     if (addr.parent_addr) {
       this.$refs.etree.append(addr, addr.parent_addr)
-    } else {
-      const data = this.$refs.etree.store._getAllNodes()
-      this.$refs.etree.insertAfter(addr, data[0].data.id)
     }
   }
 
@@ -152,23 +142,7 @@ export default class extends Vue {
   private allowDrop(node: AddrTreeNode, dropNode: AddrTreeNode, type: TreeDropType) {
     return type === 'inner'
   }
-  private handleDragStart(node: AddrTreeNode) {
-    console.log('handleDragStart:', node)
-  }
-  handleDragEnter(node: AddrTreeNode, dropNode: AddrTreeNode) {
-    console.log('tree drag enter: ', dropNode)
-  }
-  handleDragLeave(node: AddrTreeNode, dropNode: AddrTreeNode) {
-    console.log('tree drag leave: ', dropNode.label)
-  }
-  handleDragOver(draggingNode: AddrTreeNode, dropNode: AddrTreeNode) {
-    console.log('tree drag over: ', dropNode.label)
-  }
-  handleDragEnd(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType) {
-    console.log('tree drag end: ', dropNode && dropNode.label, dropType, typeof dropType)
-  }
   handleDrop(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType) {
-    // console.log('tree drop: ', dropNode.label, draggingNode, dropNode, dropType)
     if (dropType === 'inner') {
       changeAddress(draggingNode.data.id, {
         parent_addr: dropNode.data.id
