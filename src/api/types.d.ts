@@ -82,3 +82,5 @@ export interface PieChartReport {
   labels: string[]
   data: PieChartData[]
 }
+
+export type StringAxiosResponsePromise = IDRFAxiosResponsePromise<string>

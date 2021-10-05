@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { IDRFAxiosResponsePromise, IDRFRequestListParameters } from '@/api/types'
+import { IDRFAxiosResponsePromise, IDRFRequestListParameters, StringAxiosResponsePromise } from '@/api/types'
 import {
   IAddressModel,
   IAddressModelAxoisResponsePromise,
@@ -56,3 +56,6 @@ export const filterByFiasLevel = (level: number, fields?: string): IAddressModel
 
 // export const fetchAddrAutocomplete = (findStr: string): IAddressModelPlainListAxiosResponsePromise =>
   // request.get<IAddressModel[]>('/addrs/autocomplete/', {params: { search: findStr }})
+
+export const getAddrFullTitle = (addrId: number): StringAxiosResponsePromise =>
+  request.get<string>(`/addrs/${addrId}/get_full_title/`)

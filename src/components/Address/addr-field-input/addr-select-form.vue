@@ -12,7 +12,7 @@ div
   el-button(
     icon='el-icon-circle-check'
     type='primary'
-    :disabled="isSaveIsActive"
+    :disabled="!isSaveIsActive"
     @click="saveSelected"
   ) Ok
 
@@ -32,8 +32,8 @@ export default class extends Vue {
   @Prop({ required: true })
   private value!: number
 
+  private origVal = this.value || 0
   private localValue = this.value || 0
-
 
   private props = {
     label: (a: IAddressModel) => `${a.fias_address_type_name} ${a.title}`,
@@ -64,7 +64,7 @@ export default class extends Vue {
   }
 
   private get isSaveIsActive() {
-    return Boolean(this.localValue)
+    return Boolean(this.localValue) && this.origVal !== this.localValue
   }
 
   private nodeClick(addr: IAddressModel) {
