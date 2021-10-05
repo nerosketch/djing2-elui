@@ -41,14 +41,13 @@
 
 <script lang="ts">
 import { changeAddress, getAddresses } from '@/api/addresses/req'
-import { IAddressModel } from '@/api/addresses/types'
+import { AddrTreeNode, IAddressModel } from '@/api/addresses/types'
 import { AddressModule } from '@/store/modules/addresses/address'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { ElTree, TreeNode } from 'element-ui/types/tree'
+import { ElTree } from 'element-ui/types/tree'
 import { Component, Vue } from 'vue-property-decorator'
 import AddressForm from './addr-form.vue'
 
-type AddrTreeNode = TreeNode<number, IAddressModel>
 type TreeDropType = 'none' | 'before' | 'after' | 'inner'
 
 @Component({
@@ -64,8 +63,6 @@ export default class extends Vue {
 
   private props = {
     label: (a: IAddressModel) => `${a.fias_address_type_name} ${a.title}`,
-    // children: 'children',
-    // isLeaf: 'leaf'
   }
 
   private dialogVisible = false
@@ -135,14 +132,11 @@ export default class extends Vue {
   }
   // End Breadcrumbs
 
-  /*private allowDrag(node: AddrTreeNode) {
-    return true
-  }*/
-
   private allowDrop(node: AddrTreeNode, dropNode: AddrTreeNode, type: TreeDropType) {
     return type === 'inner'
   }
-  handleDrop(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType) {
+
+  private handleDrop(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType) {
     if (dropType === 'inner') {
       changeAddress(draggingNode.data.id, {
         parent_addr: dropNode.data.id

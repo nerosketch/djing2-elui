@@ -7,6 +7,7 @@
     :model='frmMod'
     v-loading='isLoading'
   )
+    p frmMod: {{ frmMod }}
     customer-form-fio(
       v-model="frmMod.fio"
     )

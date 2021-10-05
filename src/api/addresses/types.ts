@@ -3,6 +3,7 @@ import {
   IDRFAxiosResponsePromise,
   IDRFListResponse
 } from '@/api/types'
+import { TreeNode } from 'element-ui/types/tree'
 
 export enum IAddressEnumTypes {
   UNKNOWN = 0,
@@ -45,3 +46,5 @@ export interface IAddrTypeItem {
   addr_name: string
 }
 export type IAddrTypeItemsIDRFAxiosResponsePromise = IDRFAxiosResponsePromise<IAddrTypeItem[]>
+
+export type AddrTreeNode = TreeNode<number, IAddressModel>
