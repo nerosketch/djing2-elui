@@ -24,10 +24,6 @@
     )
       groups-choice(v-model="frmMod.group")
     el-form-item(
-      label="Адрес"
-    )
-      address-choice(v-model="frmMod.address")
-    el-form-item(
       label="Комментарий"
     )
       el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize)
@@ -61,14 +57,12 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerFrm, ICustomer } from '@/api/customers/types'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import CustomerFormFio from './customer-form-fio.vue'
-import AddressChoice from '@/components/Address/address-choice.vue'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
 
 @Component({
   name: 'NewCustomerForm',
   components: {
     CustomerFormFio,
-    AddressChoice,
     GroupsChoice
   }
 })

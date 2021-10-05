@@ -57,10 +57,6 @@
         format="d.MM.yyyy HH:mm"
       )
     el-form-item(
-      label="Адрес"
-    )
-      address-choice(v-model="frmMod.address")
-    el-form-item(
       label="№ дома"
     )
       el-input(v-model="frmMod.place")
@@ -87,7 +83,6 @@ import { DeviceModule } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import dateCounter from '@/utils/date-counter'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
-import AddressChoice from '@/components/Address/address-choice.vue'
 import { IDeviceTypeName } from '@/api/devices/types'
 
 @Component({
@@ -95,7 +90,6 @@ import { IDeviceTypeName } from '@/api/devices/types'
   components: {
     DeviceAutocompleteField,
     GroupsChoice,
-    AddressChoice
   }
 })
 export default class extends Vue {

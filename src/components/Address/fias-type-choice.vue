@@ -29,6 +29,7 @@ export default class extends Vue {
   private loading = false
 
   private async loadAddrTypes() {
+    if (!this.level) return
     this.loading = true
     try {
       const { data } = await getFiasAddrTypes(this.level)

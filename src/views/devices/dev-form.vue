@@ -58,7 +58,7 @@
     el-form-item(
       label="Адрес"
     )
-      address-choice(v-model="frmMod.address")
+      addr-field-input(v-model="frmMod.address")
     el-form-item(
       label="№ дома"
     )
@@ -89,15 +89,15 @@ import { DeviceModule } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import FormMixin from '@/utils/forms'
 import GroupsChoice from '@/views/groups/groups-choice.vue'
-import AddressChoice from '@/components/Address/address-choice.vue'
 import { IDeviceTypeName } from '@/api/devices/types'
+import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 
 @Component({
   name: 'DevForm',
   components: {
     DeviceAutocompleteField,
     GroupsChoice,
-    AddressChoice
+    AddrFieldInput
   }
 })
 export default class extends mixins(FormMixin) {

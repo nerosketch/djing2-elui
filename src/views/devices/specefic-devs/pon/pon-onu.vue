@@ -18,14 +18,14 @@
         .text.item.list-item
           b Родительское устройство:
           router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
-            el-link(type="primary")  {{ device.parent_dev_name }}
+            el-link(type="primary") &nbsp;{{ device.parent_dev_name }}
         .text.item.list-item(v-if="device.iface_name")
           b Интерфейс:
           |  {{ device.iface_name }}
         .text.item.list-item
           b Прикреплённые абоненты:
           router-link(v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.id }}")
-            el-link(type="primary")  {{ ab.full_name }}
+            el-link(type="primary") &nbsp;{{ ab.full_name }}
         el-button-group
           delete-from-olt-btn(:devId="device.id" v-on:done="getDetails")
           el-button(
@@ -52,13 +52,13 @@
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
               b Уровень сигнала:
-              | {{ onuDetails.signal }}
+              |  {{ onuDetails.signal }}
             .text.item.list-item
               b Мак адрес с OLT:
-              | {{ macFromOlt }}
+              |  {{ macFromOlt }}
             .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
               b {{ inf[0] }}:
-              | {{ inf[1] }}
+              |  {{ inf[1] }}
         el-row(v-else)
           el-col Нет информации об ONU. (Поле "Доп. инфо для snmp" в форме редактирования устройства). Возможно, onu не зарегистрирована.
         fix-onu-btn(v-if="$store.getters.isOnuRegistered && macsNotEqual")
