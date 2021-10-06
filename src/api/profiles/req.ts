@@ -72,7 +72,7 @@ export const getResponsibilityGroups = (uname: string): IDRFAxiosResponsePromise
 export const setResponsibilityGroups = (uname: string, groups: number[]) =>
   request.put(`${baseAccUrl}${uname}/set_responsibility_groups/`, { groups })
 
-export const setProfilePassword = (uname: string, newPassw: IPasswordUpdateForm) =>
+export const setProfilePassword = (uname: string, newPassw: IPasswordUpdateForm): IDRFAxiosResponsePromise<string> =>
   request.put(`${baseAccUrl}${uname}/change_password/`, newPassw)
 
 export const changeAvatar = (uname: string, ava: HTMLImageElement): IUserProfileAxoisResponsePromise => {
