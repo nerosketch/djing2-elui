@@ -70,9 +70,9 @@ class Address extends VuexModule implements IAddressModel {
 
   @Action
   public async PatchAddress(newData: object) {
-    const r = await changeAddress(this.id, newData)
-    this.SET_ALL_ADDR(r.data)
-    return r
+    const { data } = await changeAddress(this.id, newData)
+    this.SET_ALL_ADDR(data)
+    return data
   }
 
   @Action

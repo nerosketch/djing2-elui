@@ -161,9 +161,9 @@ export default class extends mixins(FormMixin) {
       if (valid) {
         this.loading = true
         try {
-          const newDat = await DeviceModule.PatchDevice(this.frmMod)
+          const { data } = await DeviceModule.PatchDevice(this.frmMod)
           this.frmInitial = Object.assign({}, this.devFrmData)
-          this.$emit('done', newDat.data)
+          this.$emit('done', data)
         } finally {
           this.loading = false
         }

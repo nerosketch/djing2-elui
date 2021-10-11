@@ -18,7 +18,7 @@
       fias-level-choice(v-model="frmMod.fias_address_level")
     el-form-item(
       label="Тип адреса ФИАС"
-      prop='fias_address_level'
+      prop='fias_address_type'
     )
       fias-type-choice(
         v-model="frmMod.fias_address_type"
@@ -120,14 +120,14 @@ export default class extends Vue {
     (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        let newDat
         if (this.isNew) {
-          newDat = await AddressModule.AddAddress(this.frmMod)
+          const addr = await AddressModule.AddAddress(this.frmMod)
+          this.$emit('added', addr)
         } else {
-          newDat = await AddressModule.PatchAddress(this.frmMod)
+          const addr = await AddressModule.PatchAddress(this.frmMod)
+          this.$emit('changed', addr)
         }
         this.isLoading = false
-        this.$emit('done', newDat)
       } else {
         this.$message.error('Исправь ошибки в форме')
       }

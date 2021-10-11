@@ -4,7 +4,7 @@
       v-for="(type, i) in fiasTypes"
       :key="i"
       :label="type.addr_name"
-      :value="type.addr_id"
+      :value="type.addr_code"
     )
 </template>
 

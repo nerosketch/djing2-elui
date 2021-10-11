@@ -41,7 +41,7 @@ export interface IAddrLevelItem {
 export type IAddrLevelItemsIDRFAxiosResponsePromise = IDRFAxiosResponsePromise<IAddrLevelItem[]>
 
 export interface IAddrTypeItem {
-  addr_id: number
+  addr_code: number
   addr_short_name: string
   addr_name: string
 }

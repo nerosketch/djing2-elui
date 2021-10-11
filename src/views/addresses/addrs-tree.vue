@@ -35,7 +35,8 @@
     :close-on-click-modal="false"
   )
     address-form(
-      v-on:done="frmDone"
+      @added="frmAddDone"
+      @changed="frmChangeDone"
     )
 </template>
 
@@ -67,6 +68,8 @@ export default class extends Vue {
 
   private dialogVisible = false
 
+  private tmpAddrTreeNode: AddrTreeNode | null = null
+
   private async loadNode(node: AddrTreeNode, resolve: Function) {
     if (node.level === 0) {
       const r = await this.loadAddresses()
@@ -79,6 +82,7 @@ export default class extends Vue {
 
   private async openEdit(loc: AddrTreeNode) {
     await AddressModule.SET_ALL_ADDR(loc.data)
+    this.tmpAddrTreeNode = loc
     this.dialogVisible = true
   }
 
@@ -93,11 +97,22 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private frmDone(addr: IAddressModel) {
+  private frmAddDone(addr: IAddressModel) {
     this.dialogVisible = false
-    this.$message.success('Адресный объект сохранён')
+    this.$message.success('Адресный объект добавлен')
+
     if (addr.parent_addr) {
       this.$refs.etree.append(addr, addr.parent_addr)
+    }
+  }
+
+  private frmChangeDone(addr: IAddressModel) {
+    this.dialogVisible = false
+    this.$message.success('Адресный объект изменён')
+
+    if (this.tmpAddrTreeNode) {
+      this.tmpAddrTreeNode.data = addr
+      this.tmpAddrTreeNode = null
     }
   }
 
