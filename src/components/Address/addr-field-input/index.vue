@@ -8,8 +8,7 @@ div
     title="Адрес"
     top='1%'
     :visible.sync="addrVisible"
-    :close-on-press-escape="false"
-    :close-on-click-modal="false"
+    append-to-body
   )
     addr-select-form(
       v-model="localValue"
