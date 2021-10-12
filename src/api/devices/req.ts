@@ -5,7 +5,8 @@ import {
   ISimpleResponseResultAxiosResponsePromise,
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise,
-  IObjectGroupPermsResultStruct
+  IObjectGroupPermsResultStruct,
+  ISimpleResponseResult
 } from '@/api/types'
 import {
   IDevice, IDeviceList, IDeviceAxoisResponsePromise,
@@ -69,8 +70,8 @@ export const removeFromOlt = (devId: number): ISimpleResponseResultAxiosResponse
 export const getDeviceConfigChoices = (devId: number): IOnuConfigOptionsAxiosResponsePromise =>
   request.get<IOnuConfigOptions>(`${baseDevPonUrl}${devId}/get_onu_config_options/`)
 
-export const applyDeviceOnuConfig = (devId: number, devConfig: IDeviceOnuConfigTemplate) =>
-  request.post(`${baseDevPonUrl}${devId}/apply_device_onu_config_template/`, devConfig)
+export const applyDeviceOnuConfig = (devId: number, devConfig: IDeviceOnuConfigTemplate): ISimpleResponseResultAxiosResponsePromise =>
+  request.post<ISimpleResponseResult>(`${baseDevPonUrl}${devId}/apply_device_onu_config_template/`, devConfig)
 
 export const fixOnu = (devId: number): IFixOnuSimpleResponseResultAxiosResponsePromise =>
   request.get(`${baseDevPonUrl}${devId}/fix_onu/`)

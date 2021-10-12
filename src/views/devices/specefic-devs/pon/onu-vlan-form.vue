@@ -82,17 +82,25 @@ export default class extends mixins(VlanMixin) {
     if (this.$store.state.devicemodule.id > 0) {
       this.vlanLoading = true
       try {
-        await applyDeviceOnuConfig(this.$store.state.devicemodule.id, this.currentConfig)
-        this.vlanLoading = false
-        this.$message.success({
-          message: 'ONU успешно зарегистрирована',
-          duration: 15000,
-          showClose: true
-        })
+        const { data } = await applyDeviceOnuConfig(this.$store.state.devicemodule.id, this.currentConfig)
+        if (data.status == 1) {
+          this.$message.success({
+            message: 'ONU успешно зарегистрирована',
+            duration: 15000,
+            showClose: true
+          })
+        } else {
+          this.$message.error({
+            message: data.text,
+            duration: 15000,
+            showClose: true
+          })
+        }
         DeviceModule.GetDevice(this.$store.state.devicemodule.id)
       } catch (err) {
-        this.vlanLoading = false
         this.$message.error(err)
+      } finally {
+        this.vlanLoading = false
       }
     } else {
       this.$message.error('Id оборудования не передан')
