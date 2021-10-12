@@ -23,6 +23,44 @@ export enum IDeviceTypeEnum {
   HuaweiS5300_10P_LI_ACInterface = 12
 }
 
+export interface IDevice {
+  id: number
+  ip_address: string
+  mac_addr: string
+  comment: string
+  iface_name?: string
+  dev_type: IDeviceTypeEnum
+  dev_type_str?: string
+  man_passw: string
+  group: number
+  parent_dev: number
+  parent_dev_name?: string
+  snmp_extra: string
+  extra_data: object
+  vlans: number[]
+  status: number
+  is_noticeable: boolean
+  code: string
+  sites?: number[]
+  create_time: string
+  place: string
+}
+export interface IDeviceInterface extends IDevice {
+  ScanAllDevVlans(devId: number): Promise<IDevVlan[]>
+  ScanAllDevMac(devId: number, vid: number): Promise<IDevMacPort[]>
+  ScanOltFibers(devId: number): Promise<IDevFiber[]>
+  ScanPorts(devId: number): Promise<ISimpleScanPortsResponseResult>
+  ScanUnitsUnregistered(devId: number): Promise<IUnitUnregistered[]>
+}
+
+export interface IDRFRequestListParametersDevGroup extends IDRFRequestListParameters {
+  group: number
+}
+
+export type IDeviceList = IDRFListResponse<IDevice>
+export type IDeviceAxoisResponsePromise = IDRFAxiosResponsePromise<IDevice>
+export type IDeviceListAxiosResponsePromise = IDRFAxiosResponsePromise<IDeviceList>
+
 export enum IDevPortState {
   UP = 'up',
   DOWN = 'down'
@@ -50,7 +88,10 @@ export interface IScannedPort {
   speed: number
   uptime: string
 }
-export type IScannedPortListAxiosPromise = AxiosPromise<IScannedPort[]>
+export interface ISimpleScanPortsResponseResult extends ISimpleResponseResult {
+  ports: IScannedPort[]
+}
+export type IScannedPortAxiosPromise = AxiosPromise<ISimpleScanPortsResponseResult>
 
 export interface IScannedONU {
   number: number
@@ -203,10 +244,6 @@ export interface IDeviceInterace extends IDevice {
 export interface IDRFRequestListParametersDevGroup extends IDRFRequestListParameters {
   address: number
 }
-
-export type IDeviceList = IDRFListResponse<IDevice>
-export type IDeviceAxoisResponsePromise = IDRFAxiosResponsePromise<IDevice>
-export type IDeviceListAxiosResponsePromise = IDRFAxiosResponsePromise<IDeviceList>
 
 export interface IFixOnuSimpleResponseResult extends ISimpleResponseResult {
   device: IDevice

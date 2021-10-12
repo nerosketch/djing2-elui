@@ -106,7 +106,7 @@ export default class extends Vue {
           title: msg.title
         }
       }
-    ] as any[])
+    ] as any)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import {
-  IDevice, IDeviceInterace,
+  IDevice, IDeviceInterface,
 } from '@/api/devices/types'
 import {
   getDevice, delDevice,
@@ -17,7 +17,7 @@ import {
 import store from '@/store'
 
 @Module({ dynamic: true, store, name: 'devicemodule' })
-class Device extends VuexModule implements IDeviceInterace {
+class Device extends VuexModule implements IDeviceInterface {
   id = 0
   ip_address = ''
   mac_addr = ''

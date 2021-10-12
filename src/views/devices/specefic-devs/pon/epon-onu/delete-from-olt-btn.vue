@@ -36,8 +36,9 @@ export default class extends mixins(BtnShareMixin) {
           this.setResState(data.text, 'danger')
         }
       } catch (err) {
-        this.loading = false
         this.$message.error(err)
+      } finally {
+        this.loading = false
       }
     } else {
       this.setResState('В кнопку не передано устройство', 'danger')

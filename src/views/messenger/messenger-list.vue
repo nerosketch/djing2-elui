@@ -156,7 +156,7 @@ export default class extends Vue {
           title: this.messengerTypeName
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

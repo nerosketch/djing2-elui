@@ -30,23 +30,23 @@ export default class extends Vue {
   }
 
   private async tryToFixOnu() {
+    this.fixLoading = true
     try {
-      this.fixLoading = true
       const r = await DeviceModule.FixOnu()
       this.setBtnStatus(r.text, r.status)
       this.$emit('done')
     } catch (err) {
       this.$message.error(err)
+    } finally {
+      this.fixLoading = false
     }
-    this.fixLoading = false
   }
 
   private setBtnStatus(text: string, status: number) {
     this.buttonStatus = status === 1 ? 1 : -1
-    const origText = this.buttonText
     this.buttonText = text
-    const tm = setTimeout(() => {
-      this.buttonText = origText
+    let tm = setTimeout(() => {
+      this.buttonText = 'Исправить'
       this.buttonStatus = 0
       clearTimeout(tm)
     }, 15000)

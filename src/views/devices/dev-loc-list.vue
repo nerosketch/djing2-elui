@@ -57,7 +57,7 @@ export default class extends Vue {
           title: 'Оборудование'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

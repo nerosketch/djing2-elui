@@ -27,16 +27,19 @@ export default class extends Vue {
       return
     }
     this.pingLoading = true
-    const { data } = await pingAllIps(this.customer.id)
-    if (data.status) {
-      this.$message.success(data.text)
-      this.btnType = 'success'
-    } else {
-      this.$message.error(data.text)
-      this.btnType = 'danger'
+    try {
+      const { data } = await pingAllIps(this.customer.id)
+      if (data.status) {
+        this.$message.success(data.text)
+        this.btnType = 'success'
+      } else {
+        this.$message.error(data.text)
+        this.btnType = 'danger'
+      }
+      this.btnText = data.text
+    } finally {
+      this.pingLoading = false
     }
-    this.btnText = data.text
-    this.pingLoading = false
   }
 
   get pingDisabled() {

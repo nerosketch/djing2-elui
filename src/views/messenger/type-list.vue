@@ -34,7 +34,7 @@ export default class extends mixins(BotTypesMixin) {
           title: 'Мессенджеры'
         }
       }
-    ] as any[])
+    ] as any)
   }
 }
 </script>
