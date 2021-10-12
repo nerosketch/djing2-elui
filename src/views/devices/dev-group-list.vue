@@ -19,7 +19,6 @@ import { getDevGroups } from '@/api/devices/req'
 import { IDevGroup } from '@/api/devices/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 
 class DataTableComp extends DataTable<IDevGroup> {}
 
@@ -63,7 +62,7 @@ export default class extends Vue {
           title: 'Оборудование'
         }
       }
-    ] as RouteRecord[])
+    ] as any)
   }
   // End Breadcrumbs
 }

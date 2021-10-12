@@ -45,11 +45,11 @@ export interface IDevice {
   create_time: string
   place: string
 }
-export interface IDeviceInterace extends IDevice {
+export interface IDeviceInterface extends IDevice {
   ScanAllDevVlans(devId: number): Promise<IDevVlan[]>
   ScanAllDevMac(devId: number, vid: number): Promise<IDevMacPort[]>
   ScanOltFibers(devId: number): Promise<IDevFiber[]>
-  ScanPorts(devId: number): Promise<IScannedPort[]>
+  ScanPorts(devId: number): Promise<ISimpleScanPortsResponseResult>
   ScanUnitsUnregistered(devId: number): Promise<IUnitUnregistered[]>
 }
 

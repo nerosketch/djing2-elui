@@ -46,7 +46,6 @@ import { IDRFRequestListParameters } from '@/api/types'
 import MessengerForm from './messenger-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { RouteRecord } from 'vue-router'
 import { IMessenger } from '@/api/messenger/types'
 import { MessengerModule } from '@/store/modules/messenger/base-messenger'
 import { getMessengers } from '@/api/messenger/req'
@@ -154,7 +153,7 @@ export default class extends Vue {
           title: this.messengerTypeName
         }
       }
-    ] as RouteRecord[])
+    ] as any)
   }
   // End Breadcrumbs
 }
