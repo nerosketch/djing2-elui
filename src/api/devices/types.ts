@@ -96,7 +96,10 @@ export interface IScannedPort {
   speed: number
   uptime: string
 }
-export type IScannedPortListAxiosPromise = AxiosPromise<IScannedPort[]>
+export interface ISimpleScanPortsResponseResult extends ISimpleResponseResult {
+  ports: IScannedPort[]
+}
+export type IScannedPortAxiosPromise = AxiosPromise<ISimpleScanPortsResponseResult>
 
 export interface IScannedONU {
   number: number

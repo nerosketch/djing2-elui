@@ -17,7 +17,6 @@ import {
   IDevMacPort, IDevMacPortListAxiosResponsePromise,
   IDevVlan, IDevVlanListAxiosResponsePromise,
   IDevFiber, IDevFiberListAxiosResponsePromise,
-  IScannedPort, IScannedPortListAxiosPromise,
   IUnitUnregistered, IUnitUnregisteredListAxiosPromise,
   IScannedZTEONUListAxiosPromise, IScannedZTEONU,
   IOnuConfigOptions, IOnuConfigOptionsAxiosResponsePromise,
@@ -26,6 +25,8 @@ import {
   IDevTogglePortRequest,
   IDeviceTypeNameListAxiosPromise,
   IDeviceTypeName,
+  IScannedPortAxiosPromise,
+  ISimpleScanPortsResponseResult,
 } from './types'
 
 const baseDevUrl = '/devices/all/'
@@ -88,8 +89,8 @@ export const scanFiberOnuList = (devId: number, fiberNum: number): IScannedZTEON
 export const scanPonDetails = (devId: number) =>
   request.get(`${baseDevPonUrl}${devId}/scan_pon_details/`)
 
-export const scanPorts = (devId: number): IScannedPortListAxiosPromise =>
-  request.get<IScannedPort[]>(`${baseDevUrl}${devId}/scan_ports/`)
+export const scanPorts = (devId: number): IScannedPortAxiosPromise =>
+  request.get<ISimpleScanPortsResponseResult>(`${baseDevUrl}${devId}/scan_ports/`)
 
 export const scanOnuList = (devId: number, onProgress: (c: ProgressEvent) => void): AxiosPromise<string> =>
   request.get(`${baseDevPonUrl}${devId}/scan_onu_list/`, { onDownloadProgress: onProgress })

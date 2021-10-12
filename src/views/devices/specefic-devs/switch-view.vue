@@ -217,27 +217,35 @@ export default class extends Vue {
 
   private async scanPorts() {
     if (this.device !== null) {
-      const { data } = await scanPorts(this.device.id)
-      for (const p of data) {
-        const pInd = this.allPorts.findIndex(fport => fport.num === p.num)
-        if (pInd > -1) {
-          this.allPorts[pInd].num = p.num
-          this.allPorts[pInd].snmp_num = p.snmp_num
-          this.allPorts[pInd].name = p.name
-          this.allPorts[pInd].status = p.status
-          this.allPorts[pInd].speed = p.speed
-          this.allPorts[pInd].uptime = p.uptime
+      try {
+        const { data } = await scanPorts(this.device.id)
+        if (data.status == 1) {
+          for (const p of data.ports) {
+            const pInd = this.allPorts.findIndex(fport => fport.num === p.num)
+            if (pInd > -1) {
+              this.allPorts[pInd].num = p.num
+              this.allPorts[pInd].snmp_num = p.snmp_num
+              this.allPorts[pInd].name = p.name
+              this.allPorts[pInd].status = p.status
+              this.allPorts[pInd].speed = p.speed
+              this.allPorts[pInd].uptime = p.uptime
+            } else {
+              this.allPorts.push({
+                num: p.num,
+                snmp_num: p.snmp_num,
+                name: p.name,
+                status: p.status,
+                speed: p.speed,
+                uptime: p.uptime,
+                isdb: false
+              } as IFinPort)
+            }
+          }
         } else {
-          this.allPorts.push({
-            num: p.num,
-            snmp_num: p.snmp_num,
-            name: p.name,
-            status: p.status,
-            speed: p.speed,
-            uptime: p.uptime,
-            isdb: false
-          } as IFinPort)
+          this.$message.error(data.text)
         }
+      } catch (err) {
+        this.$message.error(err)
       }
     }
   }
