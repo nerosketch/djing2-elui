@@ -1,24 +1,14 @@
 /* eslint-disable camelcase */
 import { IDRFListResponse, IDRFAxiosResponsePromise } from '@/api/types'
+import { IBaseAccount } from '../base_account'
 
-export interface IUserProfile {
-  id: number
-  username: string
-  fio: string
-  birth_day: string
-  is_active: boolean
-  is_admin: boolean
-  telephone: string
+export interface IUserProfile extends IBaseAccount {
   avatar: string
   email: string
+  fio: string
   full_name?: string
-  last_login?: string
-  is_superuser?: boolean
-  token: string
   user_permissions: number[]
-  groups: number[]
   access_level: number
-  sites?: number[]
 }
 export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>

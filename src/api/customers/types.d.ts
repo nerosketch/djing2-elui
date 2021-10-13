@@ -4,18 +4,12 @@ import {
   IDRFListResponse,
   IDRFRequestListParameters
 } from '@/api/types'
+import { IBaseAccount } from '@/api/base_account'
 import { IService } from '@/api/services/types'
 import { AxiosPromise } from 'axios'
-import { IAddressModel } from '../addresses/types'
 
 // ICustomer
-export interface ICustomer {
-  id: number
-  username: string
-  telephone: string
-  fio: string
-  birth_day: string
-  create_date: string
+export interface ICustomer extends IBaseAccount{
   group: number
   group_title?: string
   address: number
@@ -23,7 +17,6 @@ export interface ICustomer {
   balance: number
   description: string
   house: string
-  is_active: boolean
   gateway: number
   // gateway_title?: string
   auto_renewal_service: boolean
