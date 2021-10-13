@@ -64,7 +64,7 @@ class Customer extends VuexModule implements ICustomer {
     this.username = data.username
     this.telephone = data.telephone
     this.fio = data.fio
-    this.birth_day = data.birth_day
+    this.birth_day = data.birth_day!
     this.create_date = data.create_date
     this.group = data.group
     this.group_title = data.group_title!
