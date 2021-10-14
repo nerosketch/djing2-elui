@@ -13,6 +13,13 @@ const customerLegalRoutes: RouteConfig = {
         icon: 'el-icon-user'
       }
     },
+    {
+      path: 'l:uid/',
+      name: 'customerLegalDetail',
+      component: () => import(/* webpackChunkName: "customerlegaldetail" */ '@/views/customers_legal/details/legal-details.vue'),
+      props: ({ params }) => ({ uid: Number(params.uid || 0) }),
+      meta: { hidden: true }
+    }
   ]
 }
 
