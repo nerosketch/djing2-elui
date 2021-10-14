@@ -6,6 +6,7 @@ el-form(
   :model="frmMod"
   v-loading='loading'
 )
+  p frmMod: {{ frmMod }}
   el-form-item(
     label="Номер договора"
     prop='username'
@@ -21,23 +22,24 @@ el-form(
       v-model="frmMod.title"
     )
   el-form-item(
+    label="Фио директора"
+    prop='fio'
+  )
+    el-input(v-model='frmMod.fio')
+  el-form-item(
     label="Группа"
   )
     groups-choice(
       v-model='frmMod.group'
     )
   el-form-item(
-    label="Филиалы"
-  )
-    branches-choice(
-      v-model="frmMod.branches"
-    )
-  el-form-item(
     label="Юридический адрес"
+    prop='address'
   )
     addr-field-input(v-model="frmMod.address")
   el-form-item(
     label="ИНН"
+    prop='tax_number'
   )
     el-input(
       v-model="frmMod.tax_number"
@@ -85,22 +87,19 @@ el-form(
 </template>
 
 <script lang="ts">
-import { latinValidator } from '@/utils/validate'
+import { latinValidator, positiveNumberValueAvailable } from '@/utils/validate'
 import { Form } from 'element-ui'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
-import BranchesChoice from '@/components/CustomerLegal/branches-choice.vue'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 import dateCounter from '@/utils/date-counter'
 import { ICustomerLegal } from '@/api/customers_legal/types'
-import branchesChoiceVue from '@/components/CustomerLegal/branches-choice.vue'
 
 @Component({
   name: 'LegalForm',
   components: {
     GroupsChoice,
-    BranchesChoice,
     AddrFieldInput
   }
 })
@@ -113,32 +112,36 @@ export default class extends Vue {
 
   private frmMod: {
     title: string,
+    fio: string,
     description: string,
     group: number | null,
-    branches: number[],
     address: number,
     tax_number: string,
     post_index: string,
     actual_start_time: string,
-    actual_end_time: string
+    actual_end_time: string | null
   } = {
     title: '',
+    fio: '',
     description: '',
     group: null,
-    branches: [],
     address: 0,
     tax_number: '',
     post_index: '',
     actual_start_time: '',
-    actual_end_time: '',
+    actual_end_time: null,
   }
 
   @Watch('$store.state.customerlegal', { deep: true })
   private onUpdateStore(profile: ICustomerLegal) {
+    this.fillFrmMod(profile)
+  }
+
+  private fillFrmMod(profile: ICustomerLegal) {
     this.frmMod.title = profile.title
+    this.frmMod.fio = profile.fio
     this.frmMod.description = profile.description
     this.frmMod.group = profile.group || null
-    this.frmMod.branches = profile.branches!
     this.frmMod.address = profile.address
     this.frmMod.tax_number = profile.tax_number
     this.frmMod.post_index = profile.post_index
@@ -151,6 +154,18 @@ export default class extends Vue {
       { required: true, message: 'Номер договора обязателен', trigger: 'blur' },
       { validator: latinValidator, trigger: 'change', message: 'Номер договора может содержать латинские символы и цифры' }
     ],
+    title: [
+      { required: true, message: 'Название нужно указать', trigger: 'blur' },
+    ],
+    fio: [
+      { required: true, message: 'Фио директора обязательно', trigger: 'blur' },
+    ],
+    tax_number: [
+      { required: true, message: 'ИНН нужно заполнить', trigger: 'blur' },
+    ],
+    address: [
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно указать юридический адрес' }
+    ]
   }
 
   private get isNew() {
@@ -181,6 +196,8 @@ export default class extends Vue {
   private localTimer?: NodeJS.Timeout
 
   created() {
+    this.fillFrmMod(this.$store.state.customerlegal)
+
     if (!this.frmMod.actual_start_time) {
       this.localTimer = dateCounter(this.frmMod, 'actual_start_time', 'YYYY-MM-DD HH:mm:ss')
     }

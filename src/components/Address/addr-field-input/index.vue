@@ -30,6 +30,9 @@ export default class extends Vue {
   @Prop({ default: '' })
   private defaultAddrText!: string
 
+  @Prop({ default: '[Не выбран]'})
+  private emptyLabel!: string
+
   @Prop({ required: true })
   private value!: number
 
@@ -39,7 +42,7 @@ export default class extends Vue {
   private inpAddrText = ''
 
   private addrVisible = false
-  private fullTitleFromServer = ''
+  private fullTitleFromServer = this.emptyLabel
 
   private dialogActivate() {
     this.addrVisible = true
@@ -51,7 +54,7 @@ export default class extends Vue {
 
   private async fetchFullName(addrId: number) {
     const { data } = await getAddrFullTitle(addrId)
-    this.fullTitleFromServer = data || "Полный адрес"
+    this.fullTitleFromServer = data || this.emptyLabel
   }
 
   @Watch('localValue')

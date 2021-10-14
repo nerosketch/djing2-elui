@@ -7,7 +7,7 @@
     widthStorageNamePrefix='legalcustomers'
     ref='table'
   )
-    template(v-slot:oper="{row}")
+    template(v-slot:btn="{row}")
       //- el-button(
       //-   v-if="$perms.is_superuser"
       //-   @click="openSitesDlg(row)"
@@ -126,17 +126,25 @@ export default class extends Vue {
   }
 
   private async openEdit(account: ICustomerLegal) {
-    await CustomerLegalModule.SET_ALL_CUSTOMER_LEGAL(account)
     this.dialogVisible = true
+    await CustomerLegalModule.SET_ALL_CUSTOMER_LEGAL(account)
   }
 
   private async openNew() {
-    await CustomerLegalModule.RESET_CUSTOMER_LEGAL()
     this.dialogVisible = true
+    await CustomerLegalModule.RESET_CUSTOMER_LEGAL()
   }
 
-  private frmAddDone(acc: ICustomerLegal) {}
-  private frmUpdateDone(acc: ICustomerLegal) {}
+  private frmAddDone(acc: ICustomerLegal) {
+    this.dialogVisible = false
+    this.$message.success(`Учётная запись "${acc.title}" успешно создана`)
+    this.$refs.table.LoadTableData()
+  }
+
+  private frmUpdateDone(acc: ICustomerLegal) {
+    this.dialogVisible = false
+    this.$message.success(`Учётная запись "${acc.title}" успешно обновлена`)
+  }
 
   private async changeLegalObjectPerms(info: IObjectGroupPermsResultStruct) {
     // await setCustomerObjectsPerms(this.customerIdGetter, info)
