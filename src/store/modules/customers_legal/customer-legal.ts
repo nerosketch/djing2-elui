@@ -1,9 +1,18 @@
 /* eslint-disable camelcase */
 import { Module, Mutation, getModule, Action } from 'vuex-module-decorators'
 import store from '@/store'
-import { BaseProfileVuexModule, RESET_ALL_BASE_PROFILE, SET_ALL_BASE_PROFILE } from '@/store/modules/profiles/base-profile'
+import {
+  BaseProfileVuexModule,
+  RESET_ALL_BASE_PROFILE,
+  SET_ALL_BASE_PROFILE
+} from '@/store/modules/profiles/base-profile'
 import { ICustomerLegal } from '@/api/customers_legal/types'
-import { addCustomerLegal, delCustomerLegal, getCustomerLegal, patchCustomerLegal } from '@/api/customers_legal/req'
+import {
+  addCustomerLegal,
+  delCustomerLegal,
+  getCustomerLegal,
+  patchCustomerLegal
+} from '@/api/customers_legal/req'
 
 @Module({ dynamic: true, store, name: 'customerlegal' })
 class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
@@ -16,7 +25,7 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
   tax_number = ''
   post_index = ''
   actual_start_time = ''
-  actual_end_time = ''
+  actual_end_time: string | null = null
 
   @Mutation
   public SET_ALL_CUSTOMER_LEGAL(customer: ICustomerLegal) {
@@ -45,7 +54,7 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
     this.tax_number = ''
     this.post_index = ''
     this.actual_start_time = ''
-    this.actual_end_time = ''
+    this.actual_end_time = null
   }
 
   @Action

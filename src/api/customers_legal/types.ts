@@ -15,7 +15,7 @@ export interface ICustomerLegal extends IBaseAccount {
   tax_number: string
   post_index: string
   actual_start_time: string
-  actual_end_time: string
+  actual_end_time: string | null
   title: string
   description: string
 }
