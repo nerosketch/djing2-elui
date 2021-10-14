@@ -77,22 +77,24 @@ el-form(
   el-form-item
     el-button(
       icon='el-icon-upload'
-      type="primary"
+      :type="isNew ? 'success' : 'primary'"
       @click="onSubmit"
       :disabled="!$perms.customers_legal.add_customerlegalmodel"
-    ) Сохранить
+    ) {{ isNew ? 'Добавить' : 'Сохранить' }}
 
 </template>
 
 <script lang="ts">
 import { latinValidator } from '@/utils/validate'
 import { Form } from 'element-ui'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import BranchesChoice from '@/components/CustomerLegal/branches-choice.vue'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 import dateCounter from '@/utils/date-counter'
+import { ICustomerLegal } from '@/api/customers_legal/types'
+import branchesChoiceVue from '@/components/CustomerLegal/branches-choice.vue'
 
 @Component({
   name: 'LegalForm',
@@ -109,7 +111,17 @@ export default class extends Vue {
 
   private loading = false
 
-  private frmMod = {
+  private frmMod: {
+    title: string,
+    description: string,
+    group: number | null,
+    branches: number[],
+    address: number,
+    tax_number: string,
+    post_index: string,
+    actual_start_time: string,
+    actual_end_time: string
+  } = {
     title: '',
     description: '',
     group: null,
@@ -119,6 +131,19 @@ export default class extends Vue {
     post_index: '',
     actual_start_time: '',
     actual_end_time: '',
+  }
+
+  @Watch('$store.state.customerlegal', { deep: true })
+  private onUpdateStore(profile: ICustomerLegal) {
+    this.frmMod.title = profile.title
+    this.frmMod.description = profile.description
+    this.frmMod.group = profile.group || null
+    this.frmMod.branches = profile.branches!
+    this.frmMod.address = profile.address
+    this.frmMod.tax_number = profile.tax_number
+    this.frmMod.post_index = profile.post_index
+    this.frmMod.actual_start_time = profile.actual_start_time
+    this.frmMod.actual_end_time = profile.actual_end_time
   }
 
   private frmRules = {
