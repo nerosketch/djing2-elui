@@ -5,7 +5,6 @@ import { IBaseAccount } from '../base_account'
 export interface IUserProfile extends IBaseAccount {
   avatar: string
   email: string
-  fio: string
   full_name?: string
   user_permissions: number[]
   access_level: number

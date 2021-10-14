@@ -17,15 +17,10 @@ import {
   setCustomerMarkers
 } from '@/api/customers/req'
 import store from '@/store'
+import BaseProfileVuexModule from '@/store/modules/profiles/base-profile'
 
 @Module({ dynamic: true, store, name: 'customer' })
-class Customer extends VuexModule implements ICustomer {
-  id = 0
-  username = ''
-  telephone = ''
-  fio = ''
-  birth_day = ''
-  create_date = ''
+class Customer extends BaseProfileVuexModule implements ICustomer {
   group = 0
   group_title = ''
   address = 0
@@ -33,9 +28,8 @@ class Customer extends VuexModule implements ICustomer {
   balance = 0.0
   description = ''
   house = ''
-  is_active = false
   gateway = 0
-  gateway_title = ''
+  // gateway_title = ''
   auto_renewal_service = false
   device = 0
   device_comment = ''
@@ -49,7 +43,6 @@ class Customer extends VuexModule implements ICustomer {
   full_name = ''
   raw_password = ''
   lease_count = 0
-  sites: number[] = []
   traf_octs = 0
   marker_icons: string[] = []
 
@@ -60,12 +53,7 @@ class Customer extends VuexModule implements ICustomer {
 
   @Mutation
   public SET_ALL_CUSTOMER(data: ICustomer) {
-    this.id = data.id
-    this.username = data.username
-    this.telephone = data.telephone
-    this.fio = data.fio
-    this.birth_day = data.birth_day!
-    this.create_date = data.create_date
+    this.SET_ALL_BASE_PROFILE(data)
     this.group = data.group
     this.group_title = data.group_title!
     this.address = data.address
@@ -73,7 +61,6 @@ class Customer extends VuexModule implements ICustomer {
     this.balance = data.balance
     this.description = data.description
     this.house = data.house
-    this.is_active = data.is_active
     this.gateway = data.gateway
     // this.gateway_title = data.gateway_title!
     this.auto_renewal_service = data.auto_renewal_service
@@ -90,19 +77,13 @@ class Customer extends VuexModule implements ICustomer {
     this.raw_password = data.raw_password!
     this.lease_count = data.lease_count
     this.traf_octs = data.traf_octs!
-    this.sites = data.sites
     this.marker_icons = data.marker_icons
     return this
   }
 
   @Mutation
   public RESET_ALL_CUSTOMER() {
-    this.id = 0
-    this.username = ''
-    this.telephone = ''
-    this.fio = ''
-    this.birth_day = ''
-    this.create_date = ''
+    this.RESET_ALL_BASE_PROFILE()
     this.group = 0
     this.group_title = ''
     this.address = 0
@@ -110,7 +91,6 @@ class Customer extends VuexModule implements ICustomer {
     this.balance = 0.0
     this.description = ''
     this.house = ''
-    this.is_active = false
     this.gateway = 0
     // this.gateway_title = ''
     this.auto_renewal_service = false
@@ -126,7 +106,6 @@ class Customer extends VuexModule implements ICustomer {
     this.full_name = ''
     this.raw_password = ''
     this.lease_count = 0
-    this.sites = []
     this.traf_octs = 0
     this.marker_icons = []
     return this
