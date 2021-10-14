@@ -110,6 +110,7 @@ export default class extends Vue {
   private loading = false
 
   private frmMod: {
+    username: string,
     title: string,
     fio: string,
     description: string,
@@ -120,6 +121,7 @@ export default class extends Vue {
     actual_start_time: string,
     actual_end_time: string | null
   } = {
+    username: '',
     title: '',
     fio: '',
     description: '',
@@ -137,6 +139,7 @@ export default class extends Vue {
   }
 
   private fillFrmMod(profile: ICustomerLegal) {
+    this.frmMod.username = profile.username
     this.frmMod.title = profile.title
     this.frmMod.fio = profile.fio
     this.frmMod.description = profile.description
