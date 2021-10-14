@@ -4,8 +4,9 @@ div
   template(v-else)
     div(v-if="customers.length > 0")
       div(v-for="(cst, i) in customers" :key="i")
-        router-link(:to="{name: 'customerDetails', params:{uid: cst.id }}")
-          el-link(type='primary') {{ cst.full_name }}
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{name: 'customerDetails', params:{uid: cst.id }}"
+        ) {{ cst.full_name }}
     h4(v-else) Абоненты на порту не найдены
 </template>
 

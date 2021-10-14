@@ -14,8 +14,9 @@
             )
               div
                 i.el-icon-s-custom
-                router-link(:to="{ name: 'customerDetails', params: {uid: c.id } }")
-                  el-link(type="primary") {{ c.username }}
+                router-link.el-link.el-link--primary.is-underline(
+                  :to="{ name: 'customerDetails', params: {uid: c.id } }"
+                ) {{ c.username }}
               span {{ c.fio }}, {{ c.group_title }}.
               br
               i {{ c.telephone }}
@@ -37,8 +38,9 @@
             )
               div
                 i.el-icon-cpu
-                router-link(:to="{name: 'device-view', params: { devId: d.id.toString()}}")
-                  el-link(type="primary") {{ d.ip_address }} {{ d.mac_addr}} {{ d.dev_type_str }}
+                router-link.el-link.el-link--primary.is-underline(
+                  :to="{name: 'device-view', params: { devId: d.id.toString()}}"
+                ) {{ d.ip_address }} {{ d.mac_addr}} {{ d.dev_type_str }}
               p {{ d.comment }}
           el-card(
             v-else

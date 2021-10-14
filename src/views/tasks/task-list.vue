@@ -10,8 +10,9 @@ div
     ref='tbl'
   )
     template(v-slot:customer_full_name="{row}")
-      router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }")
-        el-link(type="primary") {{ row.customer_full_name }}
+      router-link.el-link.el-link--primary.is-underline(
+        :to="{ name: 'customerDetails', params: {uid: row.customer } }"
+      ) {{ row.customer_full_name }}
 
     template(v-slot:id="{row}")
       router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")

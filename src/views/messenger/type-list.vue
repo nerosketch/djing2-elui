@@ -9,7 +9,9 @@
       prop='text'
     )
       template(v-slot:default="{row}")
-        router-link(:to="{ name: 'messengerList', params: { messengerTypeName: row.text } }") {{ row.text }}
+        router-link(
+          :to="{ name: 'messengerList', params: { messengerTypeName: row.text } }"
+        ) {{ row.text }}
 
 </template>
 

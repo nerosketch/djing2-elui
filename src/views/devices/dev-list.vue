@@ -9,11 +9,10 @@
       ref='table'
     )
       template(v-slot:comment="{row}")
-        router-link(
+        router-link.el-link.el-link--primary.is-underline(
           v-if="$perms.devices.view_device"
           :to="{name: 'device-view', params: { devId: row.id }}"
-        )
-          el-link(type="primary") {{ row.comment }}
+        ) {{ row.comment }}
         span(v-else) {{ row.comment }}
 
       template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}

@@ -7,8 +7,9 @@
       widthStorageNamePrefix='customerLocations'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{name: 'customersList', params:{ addrId: row.id }}")
-          el-link(type="primary") {{ row.title }}
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{name: 'customersList', params:{ addrId: row.id }}"
+        ) {{ row.title }}
 
       el-button(
         icon='el-icon-d-caret'

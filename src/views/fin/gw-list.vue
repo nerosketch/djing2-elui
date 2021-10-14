@@ -7,8 +7,9 @@
       ref='table'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{ name: 'finReport' }")
-          el-link(type='primary') {{ row.title }}
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{ name: 'finReport' }"
+        ) {{ row.title }}
       template(v-slot:oper="{row}")
         el-button-group
           el-button(

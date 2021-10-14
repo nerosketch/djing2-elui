@@ -22,8 +22,9 @@
     ref='afktbl'
   )
     template(v-slot:customer_uname="{row}")
-      router-link(:to="{name: 'customerDetails', params:{uid: row.customer_id }}")
-        el-link(type="primary") {{ row.customer_uname }}
+      router-link.el-link.el-link--primary.is-underline(
+        :to="{name: 'customerDetails', params:{uid: row.customer_id }}"
+      ) {{ row.customer_uname }}
 
 </template>
 

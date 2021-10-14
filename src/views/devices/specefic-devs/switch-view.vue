@@ -6,8 +6,9 @@
         small {{ ` ${device.ip_address || device.mac_addr} ` }}
         template(v-if="device.parent_dev_name")
           | Родительское устр.:
-          router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
-            el-link(type="primary") {{ device.parent_dev_name }}
+          router-link.el-link.el-link--primary.is-underline(
+            :to="{name: 'device-view', params: { devId: device.parent_dev }}"
+          ) {{ device.parent_dev_name }}
         el-button(
           style="float: right; padding: 7px" circle icon='el-icon-edit' type='primary'
           @click="openDevForm"

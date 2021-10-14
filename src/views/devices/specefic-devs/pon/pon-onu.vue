@@ -17,15 +17,17 @@
           |  {{ device.comment }}
         .text.item.list-item
           b Родительское устройство:
-          router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
-            el-link(type="primary") &nbsp;{{ device.parent_dev_name }}
+          router-link.el-link.el-link--primary.is-underline(
+            :to="{name: 'device-view', params: { devId: device.parent_dev }}"
+          ) &nbsp;{{ device.parent_dev_name }}
         .text.item.list-item(v-if="device.iface_name")
           b Интерфейс:
           |  {{ device.iface_name }}
         .text.item.list-item
           b Прикреплённые абоненты:
-          router-link(v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.id }}")
-            el-link(type="primary") &nbsp;{{ ab.full_name }}
+          router-link.el-link.el-link--primary.is-underline(
+            v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.id }}"
+          ) &nbsp;{{ ab.full_name }}
         el-button-group
           delete-from-olt-btn(:devId="device.id" v-on:done="getDetails")
           el-button(

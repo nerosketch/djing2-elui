@@ -7,7 +7,9 @@
       widthStorageNamePrefix='devAddresses'
     )
       template(v-slot:title="{row}")
-        router-link(:to="{name: 'devicesList', params:{ addrId: row.id }}") {{ row.title }}
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{name: 'devicesList', params:{ addrId: row.id }}"
+        ) {{ row.title }}
 
 </template>
 

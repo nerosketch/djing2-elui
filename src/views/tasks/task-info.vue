@@ -26,8 +26,9 @@
     span {{ $store.state.task.state_str }}
     br
     b Абонент:
-    router-link(:to="taskCustomerLink")
-      el-link(type="primary") {{ $store.state.task.customer_full_name }}
+    router-link.el-link.el-link--primary.is-underline(
+      :to="taskCustomerLink"
+    ) {{ $store.state.task.customer_full_name }}
     el-divider
     task-docs(:taskId="taskId")
 </template>

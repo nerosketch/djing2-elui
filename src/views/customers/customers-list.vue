@@ -28,8 +28,9 @@
             span(v-else) {{ row.id }}
 
           template(v-slot:username="{row}")
-            router-link(:to="{name: 'customerDetails', params:{uid: row.id }}")
-              el-link(type="primary") {{ row.username }}
+            router-link(
+              :to="{name: 'customerDetails', params:{uid: row.id }}"
+            ) {{ row.username }}
 
           template(v-slot:telephone="{row}")
             el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}

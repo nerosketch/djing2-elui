@@ -13,8 +13,9 @@
       prop='fio'
     )
       template(v-slot:default="{row}")
-        router-link(:to="{name: 'customerDetails', params:{uid: row.id }}")
-          el-link(type="primary") {{ row.fio }}
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{name: 'customerDetails', params:{uid: row.id }}"
+        ) {{ row.fio }}
 </template>
 
 <script lang="ts">
