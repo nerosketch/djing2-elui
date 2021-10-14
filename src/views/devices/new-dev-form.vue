@@ -82,7 +82,7 @@ import { ipAddrValidator, macAddrValidator, positiveNumberValueAvailable } from 
 import { DeviceModule } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import dateCounter from '@/utils/date-counter'
-import GroupsChoice from '@/views/groups/groups-choice.vue'
+import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import { IDeviceTypeName } from '@/api/devices/types'
 
 @Component({

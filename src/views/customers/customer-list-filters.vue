@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import AddressStreetChoice from '@/components/Address/street-choice.vue'
-import GroupsChoice from '@/views/groups/groups-choice.vue'
+import GroupsChoice from '@/components/Groups/groups-choice.vue'
 
 @Component({
   name: 'CustomerListFilters',

@@ -88,7 +88,7 @@ import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { DeviceModule } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
 import FormMixin from '@/utils/forms'
-import GroupsChoice from '@/views/groups/groups-choice.vue'
+import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import { IDeviceTypeName } from '@/api/devices/types'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 

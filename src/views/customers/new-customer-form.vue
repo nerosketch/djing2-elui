@@ -66,7 +66,7 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerFrm, ICustomer } from '@/api/customers/types'
 import { latinValidator, telephoneValidator } from '@/utils/validate'
 import CustomerFormFio from './customer-form-fio.vue'
-import GroupsChoice from '@/views/groups/groups-choice.vue'
+import GroupsChoice from '@/components/Groups/groups-choice.vue'
 
 @Component({
   name: 'NewCustomerForm',

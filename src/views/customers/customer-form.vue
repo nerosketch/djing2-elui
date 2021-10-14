@@ -140,7 +140,7 @@ import CustomerPassword from './customer-password.vue'
 import FormMixin from '@/utils/forms'
 import TelsInput from './tels/tels-input.vue'
 import CustomerFormFio from './customer-form-fio.vue'
-import GroupsChoice from '@/views/groups/groups-choice.vue'
+import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 
 @Component({
