@@ -83,7 +83,7 @@
         v-on:save="changeCustomerObjectPerms"
         :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
         :getSelectedObjectPerms="customerGetSelectedObjectPerms"
-        :objId="customerIdGetter"
+        :objId="$store.state.customer.id"
       )
     el-dialog(
       v-if="$perms.is_superuser"
@@ -320,17 +320,13 @@ export default class extends Vue {
     return row.is_active ? '' : 'error-row'
   }
 
-  get customerIdGetter() {
-    return CustomerModule.id
-  }
-
   private async changeCustomerObjectPerms(info: IObjectGroupPermsResultStruct) {
-    await setCustomerObjectsPerms(this.customerIdGetter, info)
+    await setCustomerObjectsPerms(this.$store.state.customer.id, info)
     this.permsDialog = false
   }
 
   private getCustomerObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getCustomerObjectsPerms(this.customerIdGetter)
+    return getCustomerObjectsPerms(this.$store.state.customer.id)
   }
 
   private openPermsDialog(c: ICustomer) {

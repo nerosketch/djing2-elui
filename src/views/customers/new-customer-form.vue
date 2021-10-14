@@ -26,11 +26,20 @@
     el-form-item(
       label="Комментарий"
     )
-      el-input(v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize)
+      el-input(
+        v-model="frmMod.description"
+        type="textarea"
+        rows="4"
+        cols="40"
+        autosize
+      )
     el-form-item(
       label="Дом"
     )
-      el-input(v-model="frmMod.house" :maxlength='12')
+      el-input(
+        v-model="frmMod.house"
+        :maxlength='12'
+      )
     el-form-item(
       label="День рождения"
       prop='birth_day'
@@ -105,7 +114,7 @@ export default class extends Vue {
       username: frm.username,
       telephone: frm.telephone,
       fio: frm.fio,
-      birth_day: frm.birth_day,
+      birth_day: frm.birth_day!,
       group: frm.group || 0,
       address: frm.address || this.selectedAddress || 0,
       house: frm.house,

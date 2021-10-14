@@ -137,7 +137,7 @@ export default class extends Vue {
   private onChProfileId(profile: IUserProfile) {
     this.frmMod.username = profile.username
     this.frmMod.fio = profile.fio
-    this.frmMod.birth_day = profile.birth_day
+    this.frmMod.birth_day = profile.birth_day!
     this.frmMod.is_active = profile.is_active
     this.frmMod.is_superuser = profile.is_superuser || false
     this.frmMod.telephone = profile.telephone

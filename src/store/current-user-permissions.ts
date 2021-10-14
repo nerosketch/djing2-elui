@@ -64,6 +64,13 @@ export class CurrentPermissions extends VuexModule {
     delete_periodicpayforid: false
   }
 
+  public customers_legal = {
+    add_customerlegalmodel: false,
+    view_customerlegalmodel: false,
+    change_customerlegalmodel: false,
+    delete_customerlegalmodel: false
+  }
+
   public networks = {
     view_customeripleasemodel: false,
     add_customeripleasemodel: false,

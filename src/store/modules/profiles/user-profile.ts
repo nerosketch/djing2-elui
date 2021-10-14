@@ -9,7 +9,7 @@ import {
   addProfile,
   setProfilePassword
 } from '@/api/profiles/req'
-import BaseProfileVuexModule from './base-profile'
+import { BaseProfileVuexModule, RESET_ALL_BASE_PROFILE, SET_ALL_BASE_PROFILE } from './base-profile'
 
 @Module({ dynamic: true, store, name: 'userprofile' })
 class UserProfile extends BaseProfileVuexModule implements IUserProfile {
@@ -21,7 +21,7 @@ class UserProfile extends BaseProfileVuexModule implements IUserProfile {
 
   @Mutation
   public SET_ALL_PROFILE(data: IUserProfile) {
-    this.SET_ALL_BASE_PROFILE(data)
+    SET_ALL_BASE_PROFILE(this, data)
     this.avatar = data.avatar
     this.email = data.email
     this.full_name = data.full_name!
@@ -31,7 +31,7 @@ class UserProfile extends BaseProfileVuexModule implements IUserProfile {
 
   @Mutation
   public RESET_ALL_PROFILE() {
-    this.RESET_ALL_BASE_PROFILE()
+    RESET_ALL_BASE_PROFILE(this)
     this.avatar = ''
     this.email = ''
     this.full_name = ''

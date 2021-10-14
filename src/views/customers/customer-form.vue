@@ -189,7 +189,7 @@ export default class extends mixins(FormMixin) {
       username: frm.username,
       telephone: frm.telephone,
       fio: frm.fio,
-      birth_day: frm.birth_day,
+      birth_day: frm.birth_day!,
       group: frm.group,
       address: frm.address,
       house: frm.house,

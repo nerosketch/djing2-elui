@@ -17,7 +17,7 @@ import {
   setCustomerMarkers
 } from '@/api/customers/req'
 import store from '@/store'
-import BaseProfileVuexModule from '@/store/modules/profiles/base-profile'
+import { BaseProfileVuexModule, RESET_ALL_BASE_PROFILE, SET_ALL_BASE_PROFILE } from '@/store/modules/profiles/base-profile'
 
 @Module({ dynamic: true, store, name: 'customer' })
 class Customer extends BaseProfileVuexModule implements ICustomer {
@@ -53,7 +53,7 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
 
   @Mutation
   public SET_ALL_CUSTOMER(data: ICustomer) {
-    this.SET_ALL_BASE_PROFILE(data)
+    SET_ALL_BASE_PROFILE(this, data)
     this.group = data.group
     this.group_title = data.group_title!
     this.address = data.address
@@ -83,7 +83,7 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
 
   @Mutation
   public RESET_ALL_CUSTOMER() {
-    this.RESET_ALL_BASE_PROFILE()
+    RESET_ALL_BASE_PROFILE(this)
     this.group = 0
     this.group_title = ''
     this.address = 0

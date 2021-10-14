@@ -13,7 +13,6 @@ export interface IBaseAccount {
   is_admin: boolean
   is_superuser?: boolean
   telephone: string
-  token: string
   groups: number[]
   sites?: number[]
 }

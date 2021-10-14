@@ -11,6 +11,7 @@ import messengerRoutes from './modules/messenger'
 import sitesRoutes from './modules/sites'
 import addrRoutes from './modules/addrs'
 import dfRoutes from './modules/dynamicfields'
+import customerLegalRoutes from './modules/customers_legal'
 
 Vue.use(Router)
 
@@ -45,6 +46,7 @@ export const constantRoutes: RouteConfig [] = [
   },
   profileRoutes,
   customerRoutes,
+  customerLegalRoutes,
   taskRoutes,
   {
     path: '/groups',
