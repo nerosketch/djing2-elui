@@ -32,7 +32,6 @@ export interface IDeviceInterface extends IDevice {
 }
 
 export type IDeviceList = IDRFListResponse<IDevice>
-export type IDeviceAxoisResponsePromise = IDRFAxiosResponsePromise<IDevice>
 export type IDeviceListAxiosResponsePromise = IDRFAxiosResponsePromise<IDeviceList>
 
 export enum IDevPortState {
@@ -46,7 +45,6 @@ export interface IPort {
   descr: string
   user_count: number
 }
-export type IPortAxoisResponsePromise = IDRFAxiosResponsePromise<IPort>
 
 export interface IDevTogglePortRequest {
   port_state: IDevPortState
@@ -76,7 +74,6 @@ export interface IScannedONU {
   uptime: string
   fiberid: number
 }
-export type IScannedONUListAxiosPromise = AxiosPromise<IScannedONU[]>
 
 export enum IScannedZTEONUState {
   OK = 'ok',
@@ -105,7 +102,6 @@ export interface IOnuDetails {
   mac: string
   info: Array<Array<string>>
 }
-export type IOnuDetailsAxiosPromise = AxiosPromise<IOnuDetails>
 
 export interface IUnitUnregistered {
   mac: string

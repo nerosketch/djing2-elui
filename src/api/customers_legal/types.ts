@@ -22,9 +22,7 @@ export interface ICustomerLegal extends IBaseAccount {
   title: string
   description: string
 }
-export type ICustomerLegalList = IDRFListResponse<ICustomerLegal>
 export type ICustomerLegalAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegal>
-export type ICustomerLegalListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalList>
 
 export interface ICustomerLegalBank {
   id: number
@@ -57,9 +55,6 @@ export interface ICustomerLegalDeliveryAddress {
   legal_customer: number
   address: number
 }
-export type ICustomerLegalDeliveryAddressList = IDRFListResponse<ICustomerLegalDeliveryAddress>
-export type ICustomerLegalDeliveryAddressAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddress>
-export type ICustomerLegalDeliveryAddressListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddressList>
 
 
 export interface ICustomerLegalTelephoneNumber {
@@ -70,7 +65,3 @@ export interface ICustomerLegalTelephoneNumber {
   create_time: string
   last_change_time: string
 }
-export type ICustomerLegalTelephoneNumberList = IDRFListResponse<ICustomerLegalTelephoneNumber>
-export type ICustomerLegalTelephoneNumberAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalTelephoneNumber>
-export type ICustomerLegalTelephoneNumberListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalTelephoneNumber>
-

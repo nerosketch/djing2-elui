@@ -29,7 +29,6 @@ export interface IService {
   sites?: number[]
 }
 export type IServiceList = IDRFListResponse<IService>
-export type IServiceAxoisResponsePromise = IDRFAxiosResponsePromise<IService>
 export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList> | IDRFAxiosResponsePromise<IService[]>
 
 export interface IDRFRequestListParametersService extends IDRFRequestListParameters {
@@ -44,9 +43,6 @@ export interface IPeriodicPay {
   amount: number
   sites?: number[]
 }
-export type IPeriodicPayList = IDRFListResponse<IPeriodicPay>
-export type IPeriodicPayAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPay>
-export type IPeriodicPayListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayList> | IDRFAxiosResponsePromise<IPeriodicPay[]>
 
 // IOneShotPay
 export interface IOneShotPay {
@@ -55,6 +51,3 @@ export interface IOneShotPay {
   cost: number
   sites?: number[]
 }
-export type IOneShotPayPayList = IDRFListResponse<IOneShotPay>
-export type IOneShotPayPayAxoisResponsePromise = IDRFAxiosResponsePromise<IOneShotPay>
-export type IOneShotPayPayListAxiosResponsePromise = IDRFAxiosResponsePromise<IOneShotPayPayList>

@@ -8,9 +8,9 @@ import {
   ISimpleResponseResult
 } from '@/api/types'
 import {
-  IDevice, IDeviceList, IDeviceAxoisResponsePromise,
+  IDevice, IDeviceList,
   IDeviceListAxiosResponsePromise,
-  IPort, IPortAxoisResponsePromise,
+  IPort,
   IDRFRequestListParametersDevGroup,
   IDevMacPort, IDevMacPortListAxiosResponsePromise,
   IDevVlan, IDevVlanListAxiosResponsePromise,
@@ -26,6 +26,13 @@ import {
   IScannedPortAxiosPromise,
   ISimpleScanPortsResponseResult,
 } from './types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
+
 
 const baseDevUrl = '/devices/all/'
 
@@ -33,8 +40,7 @@ const baseDevUrl = '/devices/all/'
 export const getDevices = (params: IDRFRequestListParametersDevGroup): IDeviceListAxiosResponsePromise =>
   request.get<IDeviceList>(baseDevUrl, { params })
 
-export const getDevice = (devId: number): IDeviceAxoisResponsePromise =>
-  request.get<IDevice>(`${baseDevUrl}${devId}/`)
+export const getDevice = getObjectDecorator<IDevice>(baseDevUrl)
 
 export const findDevices = (devtext: string): IDeviceListAxiosResponsePromise =>
   request.get<IDeviceList>(baseDevUrl, {
@@ -45,14 +51,9 @@ export const findDevices = (devtext: string): IDeviceListAxiosResponsePromise =>
     }
   })
 
-export const addDevice = (newDev: object): IDeviceAxoisResponsePromise =>
-  request.post<IDevice>(baseDevUrl, newDev)
-
-export const changeDevice = (devId: number, newData: object): IDeviceAxoisResponsePromise =>
-  request.patch<IDevice>(`${baseDevUrl}${devId}/`, newData)
-
-export const delDevice = (devId: number) =>
-  request.delete(`${baseDevUrl}${devId}/`)
+export const addDevice = addObjectDecorator<IDevice>(baseDevUrl)
+export const changeDevice = patchObjectDecorator<IDevice>(baseDevUrl)
+export const delDevice = delObjectDecorator<IDevice>(baseDevUrl)
 
 export const scanAllDevVlans = (devId: number): IDevVlanListAxiosResponsePromise =>
   request.get<IDevVlan[]>(`${baseDevUrl}${devId}/scan_all_vlan_list/`)
@@ -103,21 +104,12 @@ export const getDeviceTypes = (): IDeviceTypeNameListAxiosPromise =>
 
 // IPort
 const basePortUrl = '/devices/ports/'
-
 export const getPorts = (devId: number, portNum?: number): AxiosPromise<IPort[]> =>
   request.get<IPort[]>(basePortUrl, { params: { device: devId, num: portNum } })
-
-export const getPort = (portId: number): IPortAxoisResponsePromise =>
-  request.get<IPort>(`${basePortUrl}${portId}/`)
-
-export const addPort = (newPort: object): IPortAxoisResponsePromise =>
-  request.post<IPort>(basePortUrl, newPort)
-
-export const changePort = (portId: number, newData: object): IPortAxoisResponsePromise =>
-  request.patch<IPort>(`${basePortUrl}${portId}/`, newData)
-
-export const delPort = (portId: number) =>
-  request.delete(`${basePortUrl}${portId}/`)
+export const getPort = getObjectDecorator<IPort>(basePortUrl)
+export const addPort = addObjectDecorator<IPort>(basePortUrl)
+export const changePort = patchObjectDecorator<IPort>(basePortUrl)
+export const delPort = delObjectDecorator<IPort>(basePortUrl)
 
 export const togglePort = (portId: number, preq: IDevTogglePortRequest) =>
   request.get(`${basePortUrl}${portId}/toggle_port/`, { params: preq })

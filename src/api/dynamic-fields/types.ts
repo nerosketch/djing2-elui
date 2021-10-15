@@ -16,8 +16,6 @@ export interface IDynamicField {
   groups: number[]
 }
 export type IDynamicFieldList = IDynamicField[]
-export type IDynamicFieldAxoisResponsePromise = IDRFAxiosResponsePromise<IDynamicField>
-export type IDynamicFieldListAxiosResponsePromise = IDRFAxiosResponsePromise<IDynamicFieldList>
 
 export interface IDynamicContentField {
   id?: number
@@ -26,7 +24,6 @@ export interface IDynamicContentField {
   title: string
 }
 export type IDynamicContentFieldList = IDynamicContentField[]
-export type IDynamicContentFieldAxoisResponsePromise = IDRFAxiosResponsePromise<IDynamicContentField>
 export type IDynamicContentFieldListAxiosResponsePromise = IDRFAxiosResponsePromise<IDynamicContentFieldList>
 
 export type IDynamicFieldSystemTag = IChoiceItemType

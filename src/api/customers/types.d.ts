@@ -46,7 +46,6 @@ export interface ICustomerOnPort {
   dev_port: number
   full_name: string
 }
-export type ICustomerOnPortAxoisPromise = AxiosPromise<ICustomerOnPort>
 export type ICustomersOnPortAxoisPromise = AxiosPromise<ICustomerOnPort[]>
 
 export interface IDRFRequestListParametersCustomer extends IDRFRequestListParameters {
@@ -62,7 +61,6 @@ export interface IServiceUser {
   fio: string
 }
 export type IServiceUserList = IServiceUser[]
-export type IServiceUserAxoisResponsePromise = IDRFAxiosResponsePromise<IServiceUser>
 export type IServiceUserListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceUserList>
 
 export interface ICustomerFrm {
@@ -93,7 +91,6 @@ export interface IAdditionalTelephone {
   customer: number
 }
 export type IAdditionalTelephoneList = IDRFListResponse<IAdditionalTelephone>
-export type IAdditionalTelephoneAxoisResponsePromise = IDRFAxiosResponsePromise<IAdditionalTelephone>
 export type IAdditionalTelephoneListAxiosResponsePromise = IDRFAxiosResponsePromise<IAdditionalTelephoneList>
 
 // ICustomerLog
@@ -105,8 +102,6 @@ export interface ICustomerLog {
   comment: string
   date: string
 }
-export type ICustomerLogList = IDRFListResponse<ICustomerLog>
-export type ICustomerLogListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLogList>
 
 // ICustomerService
 export interface ICustomerService {
@@ -131,9 +126,6 @@ export interface IInvoice4Payment {
   customer: number
   author: number
 }
-export type IInvoice4PaymentList = IDRFListResponse<IInvoice4Payment>
-export type IInvoice4PaymentAxoisResponsePromise = IDRFAxiosResponsePromise<IInvoice4Payment>
-export type IInvoice4PaymentListAxiosResponsePromise = IDRFAxiosResponsePromise<IInvoice4PaymentList>
 export interface IDRFRequestListParametersInvoice extends IDRFRequestListParameters {
   customer: number
 }
@@ -147,7 +139,6 @@ export interface IPassportInfo {
   date_of_acceptance: string
   division_code: string
 }
-export type IPassportInfoList = IDRFListResponse<IPassportInfo>
 export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
 
 // IBalanceAmountRequest

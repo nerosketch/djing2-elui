@@ -1,31 +1,25 @@
 import request from '@/utils/request'
 import { AxiosPromise } from 'axios'
 import {
-  IGroupListAxiosResponsePromise,
-  IGroupAxoisResponsePromise,
-  IGroup, IGroupList
-} from './types'
-import {
-  IDRFRequestListParameters,
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise,
   IObjectGroupPermsResultStruct
 } from '@/api/types'
+import { IGroup } from './types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  getObjectListDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
 
-export const getGroups = (params?: IDRFRequestListParameters): IGroupListAxiosResponsePromise =>
-  request.get<IGroupList>('/groups/', { params })
-
-export const getGroup = (groupId: number): IGroupAxoisResponsePromise =>
-  request.get<IGroup>(`/groups/${groupId}/`)
-
-export const addGroup = (newGroup: object): IGroupAxoisResponsePromise =>
-  request.post<IGroup>('/groups/', newGroup)
-
-export const changeGroup = (groupId: number, newData: object): IGroupAxoisResponsePromise =>
-  request.patch<IGroup>(`/groups/${groupId}/`, newData)
-
-export const delGroup = (groupId: number) =>
-  request.delete(`/groups/${groupId}/`)
+const grpUrl = '/groups/'
+export const getGroups = getObjectListDecorator<IGroup>(grpUrl)
+export const getGroup = getObjectDecorator<IGroup>(grpUrl)
+export const addGroup = addObjectDecorator<IGroup>(grpUrl)
+export const changeGroup = patchObjectDecorator<IGroup>(grpUrl)
+export const delGroup = delObjectDecorator<IGroup>(grpUrl)
 
 // export const setGroupsPermissionsRecursive = (groupId: number, req: SetPermissionsRecursiveRequest) =>
 //   request.put(`/groups/${groupId}/set_related_perms_recursive/`, req)

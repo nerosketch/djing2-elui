@@ -1,8 +1,11 @@
 import request from '@/utils/request'
-import { IDRFAxiosResponsePromise, IDRFRequestListParameters, StringAxiosResponsePromise } from '@/api/types'
+import {
+  IDRFAxiosResponsePromise,
+  IDRFRequestListParameters,
+  StringAxiosResponsePromise
+} from '@/api/types'
 import {
   IAddressModel,
-  IAddressModelAxoisResponsePromise,
   IAddressModelList,
   IAddressModelListAxiosResponsePromise,
   IAddressModelPlainListAxiosResponsePromise,
@@ -13,6 +16,12 @@ import {
   IAddrTypeItem,
   IAddrTypeItemsIDRFAxiosResponsePromise,
 } from './types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
 
 
 export interface IDRFRequestListAddrsParameters extends IDRFRequestListParameters {
@@ -20,21 +29,15 @@ export interface IDRFRequestListAddrsParameters extends IDRFRequestListParameter
   parent_addr?: number
 }
 
+const addrsUrl = '/addrs/'
 // IAddressModel
 export const getAddresses = (params?: IDRFRequestListAddrsParameters): IAddressModelListAxiosResponsePromise =>
-  request.get<IAddressModelList>('/addrs/', { params })
+  request.get<IAddressModelList>(addrsUrl, { params })
 
-export const getAddress = (id: number): IAddressModelAxoisResponsePromise =>
-  request.get<IAddressModel>(`/addrs/${id}/`)
-
-export const addAddress = (info: object): IAddressModelAxoisResponsePromise =>
-  request.post<IAddressModel>('/addrs/', info)
-
-export const delAddress = (id: number) =>
-  request.delete(`/addrs/${id}/`)
-
-export const changeAddress = (id: number, info: object): IAddressModelAxoisResponsePromise =>
-  request.patch<IAddressModel>(`/addrs/${id}/`, info)
+export const getAddress = getObjectDecorator<IAddressModel>(addrsUrl)
+export const addAddress = addObjectDecorator<IAddressModel>(addrsUrl)
+export const delAddress = delObjectDecorator<IAddressModel>(addrsUrl)
+export const changeAddress = patchObjectDecorator<IAddressModel>(addrsUrl)
 
 export const getAddrTypes = (): IAddressTypeListAxiosResponsePromise =>
   request.get<IAddressType[]>('/addrs/get_addr_types/')

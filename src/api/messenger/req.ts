@@ -4,14 +4,19 @@ import {
   IMessengerList,
   IMessengerAxoisResponsePromise,
   IMessenger,
-  IMessengerSubscriberListAxiosResponsePromise,
-  IMessengerSubscriberList,
-  IMessengerSubscriberAxoisResponsePromise,
   IMessengerSubscriber,
   IBotTypesAxiosPromise,
   IBotType
 } from '@/api/messenger/types'
 import { IDRFRequestListParameters } from '@/api/types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  getObjectListDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
+
 
 export const getMessengerTypes = (): IBotTypesAxiosPromise =>
   request.get<IBotType[]>('/messenger/get_bot_types/')
@@ -37,17 +42,10 @@ export const messengerSendWebHook = (typeName: string, mId: number) =>
 export const messengerStopWebHook = (typeName: string, mId: number) =>
   request.get(`/messenger/${typeName}/${mId}/stop_webhook/`)
 
-export const getMessengerSubscribers = (params?: IDRFRequestListParameters): IMessengerSubscriberListAxiosResponsePromise =>
-  request.get<IMessengerSubscriberList>('/messenger/subscriber/', { params })
-
-export const getMessengerSubscriber = (mId: number): IMessengerSubscriberAxoisResponsePromise =>
-  request.get<IMessengerSubscriber>(`/messenger/subscriber/${mId}/`)
-
-export const addMessengerSubscriber = (newDat: object): IMessengerSubscriberAxoisResponsePromise =>
-  request.post<IMessengerSubscriber>('/messenger/subscriber/', newDat)
-
-export const patchMessengerSubscriber = (mId: number, newDat: object): IMessengerSubscriberAxoisResponsePromise =>
-  request.patch<IMessengerSubscriber>(`/messenger/subscriber/${mId}/`, newDat)
-
-export const deleteMessengerSubscriber = (mId: number) =>
-  request.delete(`/messenger/subscriber/${mId}/`)
+// MessengerSubscriber CRUD
+const messengerSubscriberUrl = '/messenger/subscriber/'
+export const getMessengerSubscribers = getObjectListDecorator<IMessengerSubscriber>(messengerSubscriberUrl)
+export const getMessengerSubscriber = getObjectDecorator<IMessengerSubscriber>(messengerSubscriberUrl)
+export const addMessengerSubscriber = addObjectDecorator<IMessengerSubscriber>(messengerSubscriberUrl)
+export const patchMessengerSubscriber = patchObjectDecorator<IMessengerSubscriber>(messengerSubscriberUrl)
+export const deleteMessengerSubscriber = delObjectDecorator<IMessengerSubscriber>(messengerSubscriberUrl)

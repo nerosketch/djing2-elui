@@ -2,32 +2,28 @@ import request from '@/utils/request'
 import {
   IChoiceItemType,
   IChoiceItemTypeListAxiosResponsePromise,
-  IDRFRequestListParameters
 } from '@/api/types'
 import {
   IDynamicField,
-  IDynamicFieldAxoisResponsePromise,
-  IDynamicFieldList,
-  IDynamicFieldListAxiosResponsePromise,
   IDynamicFieldSystemTag,
   IDynamicFieldSystemTagListAxiosResponsePromise,
 } from './types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  getObjectListDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
+
 
 // IDynamicField
-export const getFields = (params?: IDRFRequestListParameters): IDynamicFieldListAxiosResponsePromise =>
-  request.get<IDynamicFieldList>('/dynamicfields/', { params })
-
-export const getField = (id: number): IDynamicFieldAxoisResponsePromise =>
-  request.get<IDynamicField>(`/dynamicfields/${id}/`)
-
-export const addField = (info: object): IDynamicFieldAxoisResponsePromise =>
-  request.post<IDynamicField>('/dynamicfields/', info)
-
-export const delField = (id: number) =>
-  request.delete(`/dynamicfields/${id}/`)
-
-export const patchField = (id: number, info: object): IDynamicFieldAxoisResponsePromise =>
-  request.patch<IDynamicField>(`/dynamicfields/${id}/`, info)
+const dynamicFieldsUrl = '/dynamicfields/'
+export const getFields = getObjectListDecorator<IDynamicField>(dynamicFieldsUrl)
+export const getField = getObjectDecorator<IDynamicField>(dynamicFieldsUrl)
+export const addField = addObjectDecorator<IDynamicField>(dynamicFieldsUrl)
+export const delField = delObjectDecorator<IDynamicField>(dynamicFieldsUrl)
+export const patchField = patchObjectDecorator<IDynamicField>(dynamicFieldsUrl)
 
 export const getFieldTypeChoices = (): IChoiceItemTypeListAxiosResponsePromise =>
   request.get<IChoiceItemType[]>('/dynamicfields/get_type_choices/')

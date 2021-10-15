@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { IDRFAxiosResponsePromise, IDRFListResponse } from '@/api/types'
+import { IDRFAxiosResponsePromise } from '@/api/types'
 
 export interface IGateway {
   id: number
@@ -18,9 +18,6 @@ export interface IGateway {
   sites?: number[]
 }
 
-export type IGatewayList = IDRFListResponse<IGateway>
-export type IGatewayAxoisResponsePromise = IDRFAxiosResponsePromise<IGateway>
-export type IGatewayListAxiosResponsePromise = IDRFAxiosResponsePromise<IGatewayList>
 
 export interface IGatewayClassChoiceType {
   v: number

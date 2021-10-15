@@ -1,33 +1,27 @@
 import request from '@/utils/request'
 import {
   IPayAllTimeGateway,
-  IPayAllTimeGatewayList,
-  IPayAllTimeGatewayAxoisResponsePromise,
-  IPayAllTimeGatewayListAxiosResponsePromise,
   IAllTimePayLogList,
   IAllTimePayLogListAxiosResponsePromise,
   IPayReportList,
   IPayReport,
   IPayReportParams
 } from './types'
-import { IDRFRequestListParameters } from '@/api/types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  getObjectListDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
+
 
 const pgwUrl = '/fin/'
-
-export const getPayGateways = (params?: IDRFRequestListParameters): IPayAllTimeGatewayListAxiosResponsePromise =>
-  request.get<IPayAllTimeGatewayList>(pgwUrl, { params })
-
-export const getPayGateway = (gwId: number): IPayAllTimeGatewayAxoisResponsePromise =>
-  request.get<IPayAllTimeGateway>(`${pgwUrl}${gwId}/`)
-
-export const addPayGateway = (newPayGw: object): IPayAllTimeGatewayAxoisResponsePromise =>
-  request.post<IPayAllTimeGateway>(pgwUrl, newPayGw)
-
-export const changePayGateway = (gwId: number, newData: object): IPayAllTimeGatewayAxoisResponsePromise =>
-  request.patch<IPayAllTimeGateway>(`${pgwUrl}${gwId}/`, newData)
-
-export const delPayGateway = (gwId: number) =>
-  request.delete(`${pgwUrl}${gwId}/`)
+export const getPayGateways = getObjectListDecorator<IPayAllTimeGateway>(pgwUrl)
+export const getPayGateway = getObjectDecorator<IPayAllTimeGateway>(pgwUrl)
+export const addPayGateway = addObjectDecorator<IPayAllTimeGateway>(pgwUrl)
+export const changePayGateway = patchObjectDecorator<IPayAllTimeGateway>(pgwUrl)
+export const delPayGateway = delObjectDecorator<IPayAllTimeGateway>(pgwUrl)
 
 export const getPayLog = (): IAllTimePayLogListAxiosResponsePromise =>
   request.get<IAllTimePayLogList>(`${pgwUrl}log/`)

@@ -9,9 +9,6 @@ export interface IVlanIf {
   sites?: number[]
 }
 
-export type IVlanIfList = IDRFListResponse<IVlanIf>
-export type IVlanIfAxoisResponsePromise = IDRFAxiosResponsePromise<IVlanIf>
-export type IVlanIfListAxiosResponsePromise = IDRFAxiosResponsePromise<IVlanIfList>
 
 export enum INetworkIpPoolKind {
   NOT_DEFINED = 0,
@@ -50,7 +47,6 @@ export interface ICustomerIpLease {
   is_dynamic: boolean
 }
 export type ICustomerIpLeaseList = IDRFListResponse<ICustomerIpLease>
-export type ICustomerIpLeaseAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLease>
 export type ICustomerIpLeasePlainListResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLease[]>
 export type ICustomerIpLeaseListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLeaseList>
 

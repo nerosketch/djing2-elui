@@ -24,7 +24,6 @@ export interface IAddressModel {
   fias_address_type_name?: string
 }
 export type IAddressModelList = IDRFListResponse<IAddressModel>
-export type IAddressModelAxoisResponsePromise = IDRFAxiosResponsePromise<IAddressModel>
 export type IAddressModelListAxiosResponsePromise = IDRFAxiosResponsePromise<IAddressModelList>
 export type IAddressModelPlainListAxiosResponsePromise = IDRFAxiosResponsePromise<IAddressModel[]>
 

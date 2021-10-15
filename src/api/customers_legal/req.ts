@@ -2,7 +2,6 @@ import request from '@/utils/request'
 import {
   IChoiceItemType,
   IChoiceItemTypeListAxiosResponsePromise,
-  IDRFRequestListParameters,
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise
 } from '@/api/types'
@@ -13,29 +12,27 @@ import {
   ICustomerLegalBankAxoisResponsePromise,
   ICustomerLegalBankList,
   ICustomerLegalBankListAxiosResponsePromise,
-  ICustomerLegalList,
-  ICustomerLegalListAxiosResponsePromise,
   ICustomerLegalPost,
   ICustomerLegalPostAxoisResponsePromise,
   ICustomerLegalPostList,
   ICustomerLegalPostListAxiosResponsePromise
 } from './types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  getObjectListDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
+
 
 // CustomerLegal model
-export const getCustomersLegal = (params?: IDRFRequestListParameters): ICustomerLegalListAxiosResponsePromise =>
-  request.get<ICustomerLegalList>('/legal/', { params })
-
-export const getCustomerLegal = (uid: number): ICustomerLegalAxoisResponsePromise =>
-  request.get<ICustomerLegal>(`/legal/${uid}/`)
-
-export const addCustomerLegal = (info: object): ICustomerLegalAxoisResponsePromise =>
-  request.post<ICustomerLegal>('/legal/', info)
-
-export const patchCustomerLegal = (uid: number, info: object): ICustomerLegalAxoisResponsePromise =>
-  request.patch<ICustomerLegal>(`/legal/${uid}/`, info)
-
-export const delCustomerLegal = (uid: number) =>
-  request.delete(`/legal/${uid}`)
+const baseCustomerLegalUrl = '/legal/'
+export const getCustomersLegal = getObjectListDecorator<ICustomerLegal>(baseCustomerLegalUrl)
+export const getCustomerLegal = getObjectDecorator<ICustomerLegal>(baseCustomerLegalUrl)
+export const addCustomerLegal = addObjectDecorator<ICustomerLegal>(baseCustomerLegalUrl)
+export const patchCustomerLegal = patchObjectDecorator<ICustomerLegal>(baseCustomerLegalUrl)
+export const delCustomerLegal = delObjectDecorator<ICustomerLegal>(baseCustomerLegalUrl)
 
 export const getCustomerLegalObjectsPerms = (customerId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
   request.get<IObjectGroupPermsInitial>(`/legal/${customerId}/get_object_perms/`)
