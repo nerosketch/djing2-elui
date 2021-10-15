@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import {
-  IDRFAxiosResponsePromise
+  IDRFAxiosResponsePromise,
+  IChoiceItemType,
+  IChoiceItemTypeListAxiosResponsePromise
 } from '@/api/types'
 
 export interface IDynamicField {
@@ -27,12 +29,5 @@ export type IDynamicContentFieldList = IDynamicContentField[]
 export type IDynamicContentFieldAxoisResponsePromise = IDRFAxiosResponsePromise<IDynamicContentField>
 export type IDynamicContentFieldListAxiosResponsePromise = IDRFAxiosResponsePromise<IDynamicContentFieldList>
 
-export interface IFieldChoiceType {
-  value: number
-  label: string
-}
-export type IFieldChoiceTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IFieldChoiceType[]>
-
-export interface IDynamicFieldSystemTag extends IFieldChoiceType {
-}
-export type IDynamicFieldSystemTagListAxiosResponsePromise = IDRFAxiosResponsePromise<IDynamicFieldSystemTag[]>
+export type IDynamicFieldSystemTag = IChoiceItemType
+export type IDynamicFieldSystemTagListAxiosResponsePromise = IChoiceItemTypeListAxiosResponsePromise

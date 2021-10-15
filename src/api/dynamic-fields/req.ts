@@ -1,5 +1,7 @@
 import request from '@/utils/request'
 import {
+  IChoiceItemType,
+  IChoiceItemTypeListAxiosResponsePromise,
   IDRFRequestListParameters
 } from '@/api/types'
 import {
@@ -9,8 +11,6 @@ import {
   IDynamicFieldListAxiosResponsePromise,
   IDynamicFieldSystemTag,
   IDynamicFieldSystemTagListAxiosResponsePromise,
-  IFieldChoiceType,
-  IFieldChoiceTypeListAxiosResponsePromise
 } from './types'
 
 // IDynamicField
@@ -29,8 +29,8 @@ export const delField = (id: number) =>
 export const patchField = (id: number, info: object): IDynamicFieldAxoisResponsePromise =>
   request.patch<IDynamicField>(`/dynamicfields/${id}/`, info)
 
-export const getFieldTypeChoices = (): IFieldChoiceTypeListAxiosResponsePromise =>
-  request.get<IFieldChoiceType[]>('/dynamicfields/get_type_choices/')
+export const getFieldTypeChoices = (): IChoiceItemTypeListAxiosResponsePromise =>
+  request.get<IChoiceItemType[]>('/dynamicfields/get_type_choices/')
 
 export const getFieldSystemTags = (): IDynamicFieldSystemTagListAxiosResponsePromise =>
   request.get<IDynamicFieldSystemTag[]>('/dynamicfields/get_system_tags/')

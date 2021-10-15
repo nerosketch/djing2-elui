@@ -1,5 +1,7 @@
 import request from '@/utils/request'
 import {
+  IChoiceItemType,
+  IChoiceItemTypeListAxiosResponsePromise,
   IDRFRequestListParameters,
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise
@@ -29,3 +31,9 @@ export const delCustomerLegal = (uid: number) =>
 
 export const getCustomerLegalObjectsPerms = (customerId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
   request.get<IObjectGroupPermsInitial>(`/legal/${customerId}/get_object_perms/`)
+
+export const getLegalTypes = (): IChoiceItemTypeListAxiosResponsePromise =>
+  request.get<IChoiceItemType[]>('/legal/get_legal_types/')
+
+export const getLegalInitial = (): ICustomerLegalAxoisResponsePromise =>
+  request.get<ICustomerLegal>('/legal/get_initial/')

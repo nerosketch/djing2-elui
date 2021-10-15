@@ -33,10 +33,20 @@ el-form(
       v-model='frmMod.group'
     )
   el-form-item(
+    label="Тип юрлица"
+  )
+    legal-type-choice(
+      v-model="frmMod.legal_type"
+    )
+  el-form-item(
     label="Юридический адрес"
     prop='address'
   )
     addr-field-input(v-model="frmMod.address")
+  el-form-item(
+    label="Почтовый индекс юридического адреса"
+  )
+    el-input(v-model="frmMod.post_index")
   el-form-item(
     label="ИНН"
     prop='tax_number'
@@ -46,9 +56,13 @@ el-form(
       type='number'
     )
   el-form-item(
-    label="Почтовый индекс юридического адреса"
+    label="ОГРН"
+    prop="state_level_reg_number"
   )
-    el-input(v-model="frmMod.post_index")
+    el-input(
+      v-model="frmMod.state_level_reg_number"
+      type='number'
+    )
   el-form-item(
     label="Дата начала действия договора"
   )
@@ -59,15 +73,6 @@ el-form(
       format="d.MM.yyyy HH:mm:ss"
       @change="stopTimer"
     )
-  el-form-item(
-    label="Дата прекращения действия договора"
-  )
-    el-date-picker(
-      v-model="frmMod.actual_end_time"
-      value-format="yyyy-MM-dd"
-      format="d.MM.yyyy"
-    )
-
   el-form-item(
     label='Описание'
   )
@@ -95,12 +100,14 @@ import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 import dateCounter from '@/utils/date-counter'
 import { ICustomerLegal } from '@/api/customers_legal/types'
+import LegalTypeChoice from '@/components/CustomerLegal/legal-type-choice.vue'
 
 @Component({
   name: 'LegalForm',
   components: {
     GroupsChoice,
-    AddrFieldInput
+    AddrFieldInput,
+    LegalTypeChoice
   }
 })
 export default class extends Vue {
@@ -117,10 +124,11 @@ export default class extends Vue {
     description: string,
     group: number | null,
     address: number,
+    legal_type: number,
     tax_number: string,
+    state_level_reg_number: string,
     post_index: string,
     actual_start_time: string,
-    actual_end_time: string | null
   } = {
     username: '',
     title: '',
@@ -128,10 +136,11 @@ export default class extends Vue {
     description: '',
     group: null,
     address: 0,
+    legal_type: 0,
     tax_number: '',
+    state_level_reg_number: '',
     post_index: '',
     actual_start_time: '',
-    actual_end_time: null,
   }
 
   @Watch('$store.state.customerlegal', { deep: true })
@@ -149,7 +158,11 @@ export default class extends Vue {
     this.frmMod.tax_number = profile.tax_number
     this.frmMod.post_index = profile.post_index
     this.frmMod.actual_start_time = profile.actual_start_time
-    this.frmMod.actual_end_time = profile.actual_end_time
+    if (!this.frmMod.actual_start_time) {
+      this.localTimer = dateCounter(this.frmMod, 'actual_start_time', 'YYYY-MM-DD HH:mm:ss')
+    } else {
+      this.stopTimer()
+    }
   }
 
   private frmRules = {
@@ -168,11 +181,14 @@ export default class extends Vue {
     ],
     address: [
       { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно указать юридический адрес' }
+    ],
+    state_level_reg_number: [
+      { required: true, message: 'Обязательно', trigger: 'blur' },
     ]
   }
 
   private get isNew() {
-    return this.$store.state.customerlegal.id === 0
+    return !Boolean(this.$store.state.customerlegal.id)
   }
 
   private onSubmit() {
@@ -200,10 +216,6 @@ export default class extends Vue {
 
   created() {
     this.fillFrmMod(this.$store.state.customerlegal)
-
-    if (!this.frmMod.actual_start_time) {
-      this.localTimer = dateCounter(this.frmMod, 'actual_start_time', 'YYYY-MM-DD HH:mm:ss')
-    }
   }
   private stopTimer() {
     if (this.localTimer) {

@@ -84,3 +84,9 @@ export interface PieChartReport {
 }
 
 export type StringAxiosResponsePromise = IDRFAxiosResponsePromise<string>
+
+export interface IChoiceItemType {
+  value: number
+  label: string
+}
+export type IChoiceItemTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IChoiceItemType[]>

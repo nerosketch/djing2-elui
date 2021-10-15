@@ -130,14 +130,14 @@ export default class extends Vue {
     return getCustomersLegal(params)
   }
 
-  private async openEdit(account: ICustomerLegal) {
+  private openEdit(account: ICustomerLegal) {
     this.dialogVisible = true
-    await CustomerLegalModule.SET_ALL_CUSTOMER_LEGAL(account)
+    CustomerLegalModule.SET_ALL_CUSTOMER_LEGAL(account)
   }
 
-  private async openNew() {
+  private openNew() {
     this.dialogVisible = true
-    await CustomerLegalModule.RESET_CUSTOMER_LEGAL()
+    CustomerLegalModule.GetInitial()
   }
 
   private frmAddDone(acc: ICustomerLegal) {

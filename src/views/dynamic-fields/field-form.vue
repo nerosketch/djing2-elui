@@ -48,10 +48,11 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { DynamicFieldModule } from '@/store/modules/dynamicfields/dynamic-field'
-import { IDynamicField, IFieldChoiceType } from '@/api/dynamic-fields/types'
+import { IDynamicField } from '@/api/dynamic-fields/types'
 import { getFieldTypeChoices } from '@/api/dynamic-fields/req'
 import SystemTagsInput from './system-tags-input.vue'
 import { regexpVal } from '@/utils/validate'
+import { IChoiceItemType } from '@/api/types'
 
 export const _userTagsValidator = regexpVal(/^(\w+,?)+$/s)
 
@@ -83,7 +84,7 @@ export default class extends Vue {
     this.frmMod.groups = field.groups
   }
 
-  private fieldTypeChoices: IFieldChoiceType[] = []
+  private fieldTypeChoices: IChoiceItemType[] = []
 
   private async loadFieldTypeChoices() {
     const { data } = await getFieldTypeChoices()

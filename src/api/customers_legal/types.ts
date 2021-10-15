@@ -12,7 +12,10 @@ export interface ICustomerLegal extends IBaseAccount {
   balance: number
   address: number
 
-  tax_number: string
+  legal_type: number
+
+  tax_number: string              // ИНН
+  state_level_reg_number: string  // ОГРН
   post_index: string
   actual_start_time: string
   actual_end_time: string | null
@@ -26,16 +29,18 @@ export type ICustomerLegalListAxiosResponsePromise = IDRFAxiosResponsePromise<IC
 export interface ICustomerLegalBank {
   id: number
   legal_customer: number
-  title: string
+  title: string                  // Название банка
   post_index: string
-  number: string
+  number: string                 // Номер счёта в банке
+  bank_code: string              // БИК
+  correspondent_account: string  // корреспондентский счёт
+  settlement_account: string     // расчётный счёт
 }
 
 export interface ICustomerLegalPost {
   id: number
   legal_customer: number
   post_index: string
-  office_num: string
   address: number
 }
 
