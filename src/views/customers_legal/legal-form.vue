@@ -2,6 +2,7 @@
 el-form(
   ref='frm'
   status-icon
+  label-width="165px"
   :rules="frmRules"
   :model="frmMod"
   v-loading='loading'

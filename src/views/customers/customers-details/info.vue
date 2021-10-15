@@ -2,8 +2,7 @@
   el-row(:gutter="5")
     el-col.col_vert_space(:sm='24' :md='12')
       el-card(shadow="never")
-        template(v-slot:header)
-          .clearfix Изменение абонента
+        template(v-slot:header) Изменение абонента
         customer-form
     el-col.col_vert_space(:sm='24' :md='12')
       device
