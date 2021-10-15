@@ -36,6 +36,10 @@ export interface ICustomerLegalBank {
   correspondent_account: string  // корреспондентский счёт
   settlement_account: string     // расчётный счёт
 }
+export type ICustomerLegalBankList = IDRFListResponse<ICustomerLegalBank>
+export type ICustomerLegalBankAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalBank>
+export type ICustomerLegalBankListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalBankList>
+
 
 export interface ICustomerLegalPost {
   id: number
@@ -43,12 +47,20 @@ export interface ICustomerLegalPost {
   post_index: string
   address: number
 }
+export type ICustomerLegalPostList = IDRFListResponse<ICustomerLegalPost>
+export type ICustomerLegalPostAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalPost>
+export type ICustomerLegalPostListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalPostList>
+
 
 export interface ICustomerLegalDeliveryAddress {
   id: number
   legal_customer: number
   address: number
 }
+export type ICustomerLegalDeliveryAddressList = IDRFListResponse<ICustomerLegalDeliveryAddress>
+export type ICustomerLegalDeliveryAddressAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddress>
+export type ICustomerLegalDeliveryAddressListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddressList>
+
 
 export interface ICustomerLegalTelephoneNumber {
   id: number
@@ -58,3 +70,7 @@ export interface ICustomerLegalTelephoneNumber {
   create_time: string
   last_change_time: string
 }
+export type ICustomerLegalTelephoneNumberList = IDRFListResponse<ICustomerLegalTelephoneNumber>
+export type ICustomerLegalTelephoneNumberAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalTelephoneNumber>
+export type ICustomerLegalTelephoneNumberListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalTelephoneNumber>
+
