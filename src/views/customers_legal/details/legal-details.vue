@@ -11,6 +11,10 @@
           el-card(shadow='never')
             template(v-slot:header) Изменение данных организации
             legal-form(v-if="ready")
+        el-col.col_vert_space(:sm='24' :md='12')
+          el-card(shadow='never')
+            template(v-slot:header) Банковские реквизиты
+            legal-bank-info
     el-tab-pane(label="Филиалы" lazy)
       h3 филиалы
 </template>
@@ -20,11 +24,13 @@ import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-le
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import LegalForm from '@/views/customers_legal/legal-form.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import LegalBankInfo from './legal-bank-info.vue'
 
 @Component({
   name: 'LegalDetails',
   components: {
-    LegalForm
+    LegalForm,
+    LegalBankInfo
   }
 })
 export default class extends Vue {
