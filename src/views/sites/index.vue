@@ -120,7 +120,7 @@ export default class extends Vue {
           title: 'Сайты'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

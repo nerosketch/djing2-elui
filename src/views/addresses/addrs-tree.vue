@@ -143,7 +143,7 @@ export default class extends Vue {
           title: 'Адреса'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 

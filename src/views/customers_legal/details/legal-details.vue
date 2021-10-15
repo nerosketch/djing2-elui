@@ -78,7 +78,7 @@ export default class extends Vue {
           title: this.$store.state.customerlegal.title || '-'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 

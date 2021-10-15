@@ -243,7 +243,7 @@ export default class extends Vue {
           title: 'Тарифы'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 

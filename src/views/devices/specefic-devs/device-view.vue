@@ -107,7 +107,7 @@ export default class extends Vue {
             title: DeviceModule.comment
           }
         }
-      ] as any[])
+      ] as any)
     }
   }
   // End Breadcrumbs

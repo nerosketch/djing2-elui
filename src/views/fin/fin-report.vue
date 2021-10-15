@@ -159,7 +159,7 @@ export default class extends Vue {
           title: 'Отчёт о поступлениях'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumb
 

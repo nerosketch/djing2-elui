@@ -213,7 +213,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
           title: 'Редактировать'
         }
       }
-    ] as any[])
+    ] as any)
     // End Breadcrumbs
   }
 

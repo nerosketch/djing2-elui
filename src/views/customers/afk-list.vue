@@ -92,7 +92,7 @@ export default class extends Vue {
           title: 'Фильтр afk'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

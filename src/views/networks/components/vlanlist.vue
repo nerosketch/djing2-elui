@@ -151,7 +151,7 @@ export default class extends mixins(VlanMixin) {
           title: 'Сеть'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 

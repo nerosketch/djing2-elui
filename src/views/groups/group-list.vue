@@ -168,7 +168,7 @@ export default class extends Vue {
           title: 'Группы'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 

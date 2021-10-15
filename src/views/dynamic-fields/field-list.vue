@@ -125,7 +125,7 @@ export default class extends Vue {
           title: 'Формы'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

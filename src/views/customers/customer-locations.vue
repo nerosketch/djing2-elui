@@ -59,7 +59,7 @@ export default class extends Vue {
           title: 'Населённые пункты'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 

@@ -151,7 +151,7 @@ export default class extends Vue {
           title: 'Финансы'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 

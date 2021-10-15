@@ -107,7 +107,7 @@ export default class extends mixins(GwsMethods) {
           title: 'Шлюзы'
         }
       }
-    ] as any[])
+    ] as any)
     // End Breadcrumbs
   }
 

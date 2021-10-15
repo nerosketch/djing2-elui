@@ -151,7 +151,7 @@ export default class extends Vue {
           title: 'Учётные записи'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

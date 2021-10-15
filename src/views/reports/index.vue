@@ -67,7 +67,7 @@ export default class extends Vue {
           title: 'Отчёты всякие'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 
