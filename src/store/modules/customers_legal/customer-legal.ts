@@ -35,7 +35,7 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
     SET_ALL_BASE_PROFILE(this, customer)
     this.title = customer.title
     this.description = customer.description
-    this.groups = customer.groups
+    this.group = customer.group
     this.branches = customer.branches
     this.balance = customer.balance
     this.address = customer.address

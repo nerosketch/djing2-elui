@@ -7,6 +7,7 @@ el-form(
   :model="frmMod"
   v-loading='loading'
 )
+  p frmMod: {{ frmMod }}
   el-form-item(
     label="Номер договора"
     prop='username'
@@ -155,7 +156,9 @@ export default class extends Vue {
     this.frmMod.description = profile.description
     this.frmMod.group = profile.group || null
     this.frmMod.address = profile.address
+    this.frmMod.legal_type = profile.legal_type
     this.frmMod.tax_number = profile.tax_number
+    this.frmMod.state_level_reg_number = profile.state_level_reg_number
     this.frmMod.post_index = profile.post_index
     this.frmMod.actual_start_time = profile.actual_start_time
     if (!this.frmMod.actual_start_time) {
