@@ -21,15 +21,19 @@
         type='primary'
         icon='el-icon-upload'
         @click="onSubmit"
-      )
+      ) Созраниь
 </template>
 
 <script lang="ts">
 import { Form } from 'element-ui'
 import { Component, Vue } from 'vue-property-decorator'
+import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 
 @Component({
-  name: 'LegalPostForm'
+  name: 'LegalPostForm',
+  components: {
+    AddrFieldInput
+  }
 })
 export default class extends Vue {
   public readonly $refs!: {
@@ -40,7 +44,7 @@ export default class extends Vue {
 
   private frmMod = {
     post_index: '',
-    address: 0
+    address: null
   }
 
   private frmRules = {}
@@ -50,7 +54,9 @@ export default class extends Vue {
       if (valid) {
         this.loading = true
         try {
-          const { data } = await
+          //const { data } = await
+        } finally {
+          this.loading = false
         }
       } else {
         this.$message.error('Исправь ошибки формы')

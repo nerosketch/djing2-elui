@@ -55,6 +55,9 @@ export interface ICustomerLegalDeliveryAddress {
   legal_customer: number
   address: number
 }
+export type ICustomerLegalDeliveryAddressLegalPostList = IDRFListResponse<ICustomerLegalDeliveryAddress>
+export type ICustomerLegalDeliveryAddressAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddress>
+export type ICustomerLegalDeliveryAddressLegalPostListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddressLegalPostList>
 
 
 export interface ICustomerLegalTelephoneNumber {

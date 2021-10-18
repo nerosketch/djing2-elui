@@ -2,13 +2,8 @@
 import { Module, Mutation, getModule, Action, VuexModule } from 'vuex-module-decorators'
 import store from '@/store'
 import {
-  addCustomerLegal,
   addLegalCustomerPost,
-  delCustomerLegal,
-  getCustomerLegal,
-  getLegalInitial,
   getLegalPosts,
-  patchCustomerLegal,
   patchLegalCustomerPost
 } from '@/api/customers_legal/req'
 import { ICustomerLegalPost } from '@/api/customers_legal/types'

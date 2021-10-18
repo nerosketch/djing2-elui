@@ -26,6 +26,24 @@
       el-input(
         v-form="frmMod.number"
       )
+    el-form-item(
+      label="БИК"
+    )
+      el-input(
+        v-model="frmMod.bank_code"
+      )
+    el-form-item(
+      label="Корреспондентский счёт"
+    )
+      el-input(
+        v-model="frmMod.correspondent_account"
+      )
+    el-form-item(
+      label="Расчётный счёт"
+    )
+      el-input(
+        v-model="frmMod.settlement_account"
+      )
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -45,7 +63,10 @@ export default class extends Vue {
   private frmMod = {
     title: '',
     post_index: '',
-    number: ''
+    number: '',
+    bank_code: '',
+    correspondent_account: '',
+    settlement_account: ''
   }
 
   private frmRules = {

@@ -15,6 +15,15 @@
           el-card(shadow='never')
             template(v-slot:header) Банковские реквизиты
             legal-bank-info
+        el-col.col_vert_space(:sm='24' :md='12')
+          el-card(shadow='never')
+            template(v-slot:header) Почтовый адрес
+            legal-post-form
+        el-col.col_vert_space(:sm='24' :md='12')
+          el-card(shadow='never')
+            template(v-slot:header) Адрес доставки счёта
+            legal-delivery-address-form
+
     el-tab-pane(label="Филиалы" lazy)
       h3 филиалы
 </template>
@@ -25,12 +34,16 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import LegalForm from '@/views/customers_legal/legal-form.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import LegalBankInfo from './legal-bank-info.vue'
+import LegalPostForm from './legal-post-info.vue'
+import LegalDeliveryAddressForm from './legal-delivery-address-form.vue'
 
 @Component({
   name: 'LegalDetails',
   components: {
     LegalForm,
-    LegalBankInfo
+    LegalBankInfo,
+    LegalPostForm,
+    LegalDeliveryAddressForm
   }
 })
 export default class extends Vue {

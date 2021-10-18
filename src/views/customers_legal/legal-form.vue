@@ -7,7 +7,6 @@ el-form(
   :model="frmMod"
   v-loading='loading'
 )
-  p frmMod: {{ frmMod }}
   el-form-item(
     label="Номер договора"
     prop='username'
