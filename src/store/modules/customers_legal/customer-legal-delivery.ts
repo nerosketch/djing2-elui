@@ -2,7 +2,7 @@
 import { Module, Mutation, getModule, Action, VuexModule } from 'vuex-module-decorators'
 import store from '@/store'
 import {
-  getLegalDeliveryAddr,
+  getLegalDeliveryAddrs,
   patchLegalDeliveryAddr,
   addLegalDeliveryAddr
 } from '@/api/customers_legal/req'
@@ -28,11 +28,19 @@ class CustomerLegalDeliveryAddress extends VuexModule implements ICustomerLegalD
     this.address = 0
   }
 
+  @Mutation
+  public SET_LEGAL_DELIVERY_CUSTOMER(uid: number) {
+    this.legal_customer = uid
+  }
+
   @Action
   public async getLegalDeliveryAddr(uid: number) {
-    const { data } = await getLegalDeliveryAddr(uid)
-    this.SET_ALL_LEGAL_DELIVERY(data)
-    return data
+    this.SET_LEGAL_DELIVERY_CUSTOMER(uid)
+    const { data } = await getLegalDeliveryAddrs(uid)
+    if (data.length > 0) {
+      this.SET_ALL_LEGAL_DELIVERY(data[0])
+      return data[0]
+    }
   }
 
   @Action

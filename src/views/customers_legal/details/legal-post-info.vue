@@ -21,13 +21,14 @@
         type='primary'
         icon='el-icon-upload'
         @click="onSubmit"
-      ) Созраниь
+      ) Сохраниь
 </template>
 
 <script lang="ts">
 import { Form } from 'element-ui'
 import { Component, Vue } from 'vue-property-decorator'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
+import { CustomerLegalPostModule } from '@/store/modules/customers_legal/customer-legal-post'
 
 @Component({
   name: 'LegalPostForm',
@@ -54,7 +55,11 @@ export default class extends Vue {
       if (valid) {
         this.loading = true
         try {
-          //const { data } = await
+          if (this.isNew) {
+            await CustomerLegalPostModule.addLegalPost(this.frmMod)
+          } else {
+            await CustomerLegalPostModule.updateLegalPost(this.frmMod)
+          }
         } finally {
           this.loading = false
         }
@@ -62,6 +67,10 @@ export default class extends Vue {
         this.$message.error('Исправь ошибки формы')
       }
     })
+  }
+
+  private get isNew() {
+    return !Boolean(this.$store.state.legalpost.id)
   }
 }
 </script>

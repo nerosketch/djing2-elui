@@ -8,7 +8,7 @@ import {
 } from '@/api/customers_legal/req'
 import { ICustomerLegalPost } from '@/api/customers_legal/types'
 
-@Module({ dynamic: true, store, name: 'customerlegal' })
+@Module({ dynamic: true, store, name: 'legalpost' })
 class CustomerLegalPost extends VuexModule implements ICustomerLegalPost {
   id = 0
   legal_customer = 0
@@ -31,12 +31,18 @@ class CustomerLegalPost extends VuexModule implements ICustomerLegalPost {
     this.address = 0
   }
 
+  @Mutation
+  public SET_LEGAL_POST_CUSTOMER(uid: number) {
+    this.legal_customer = uid
+  }
+
   @Action
-  public async getLegalPost(uid: number) {
-    const { data } = await getLegalPosts(uid)
-    if (data.count > 0) {
-      this.SET_ALL_LEGAL_POST(data.results[0])
-      return data.results[0]
+  public async getLegalPost(customerId: number) {
+    this.SET_LEGAL_POST_CUSTOMER(customerId)
+    const { data } = await getLegalPosts(customerId)
+    if (data.length > 0) {
+      this.SET_ALL_LEGAL_POST(data[0])
+      return data[0]
     }
   }
 

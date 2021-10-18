@@ -53,7 +53,7 @@ export default class extends Vue {
 
   private frmRules = {
     address: [
-      { required: true, message: 'Название банка обязательно', trigger: 'blur' },
+      { required: true, message: 'Адрес обязателен', trigger: 'blur' },
       { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно указать юридический адрес' }
     ]
   }
@@ -63,7 +63,11 @@ export default class extends Vue {
       if (valid) {
         this.loading = true
         try {
-          await CustomerLegalDeliveryAddressModule.addLegalDeliveryAddr(this.frmMod)
+          if (this.isNew) {
+            await CustomerLegalDeliveryAddressModule.addLegalDeliveryAddr(this.frmMod)
+          } else {
+            await CustomerLegalDeliveryAddressModule.updateLegalDeliveryAddr(this.frmMod)
+          }
           this.$message.success('Сохранено')
         } finally {
           this.loading = false
@@ -72,6 +76,10 @@ export default class extends Vue {
         this.$message.error('Исправь ошибки в форме')
       }
     })
+  }
+
+  private get isNew() {
+    return !Boolean(this.$store.state.legaldelivery.id)
   }
 }
 </script>

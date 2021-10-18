@@ -2,6 +2,7 @@ import request from '@/utils/request'
 import {
   IChoiceItemType,
   IChoiceItemTypeListAxiosResponsePromise,
+  IDRFAxiosResponsePromise,
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise
 } from '@/api/types'
@@ -10,16 +11,10 @@ import {
   ICustomerLegalAxoisResponsePromise,
   ICustomerLegalBank,
   ICustomerLegalBankAxoisResponsePromise,
-  ICustomerLegalBankList,
-  ICustomerLegalBankListAxiosResponsePromise,
   ICustomerLegalDeliveryAddress,
   ICustomerLegalDeliveryAddressAxoisResponsePromise,
-  ICustomerLegalDeliveryAddressLegalPostList,
-  ICustomerLegalDeliveryAddressLegalPostListAxiosResponsePromise,
   ICustomerLegalPost,
   ICustomerLegalPostAxoisResponsePromise,
-  ICustomerLegalPostList,
-  ICustomerLegalPostListAxiosResponsePromise
 } from './types'
 import {
   addObjectDecorator,
@@ -49,8 +44,8 @@ export const getLegalInitial = (): ICustomerLegalAxoisResponsePromise =>
 
 
 // CustomerLegalPost
-export const getLegalPosts = (legalCustomerId: number): ICustomerLegalPostListAxiosResponsePromise =>
-  request.get<ICustomerLegalPostList>('/legal/post/', { params: {legal_customer: legalCustomerId}})
+export const getLegalPosts = (legalCustomerId: number): IDRFAxiosResponsePromise<ICustomerLegalPost[]> =>
+  request.get<ICustomerLegalPost[]>('/legal/post/', { params: {legal_customer: legalCustomerId}})
 
 export const addLegalCustomerPost = (legalCustomerId: number, info: object): ICustomerLegalPostAxoisResponsePromise =>
   request.post<ICustomerLegalPost>('/legal/post/', Object.assign(info, {
@@ -62,8 +57,8 @@ export const patchLegalCustomerPost = (postId: number, info: object): ICustomerL
 
 
 // CustomerLegalBank
-export const getLegalBank = (legalCustomerId: number): ICustomerLegalBankListAxiosResponsePromise =>
-  request.get<ICustomerLegalBankList>('/legal/bank/', {params: {legal_custoemr: legalCustomerId}})
+export const getLegalBanks = (legalCustomerId: number): IDRFAxiosResponsePromise<ICustomerLegalBank[]> =>
+  request.get<ICustomerLegalBank[]>('/legal/bank/', {params: {legal_customer: legalCustomerId}})
 
 export const addLegalBank = (legalCustomerId: number, info: object): ICustomerLegalBankAxoisResponsePromise =>
   request.post<ICustomerLegalBank>('/legal/bank/', Object.assign(info, {
@@ -71,13 +66,13 @@ export const addLegalBank = (legalCustomerId: number, info: object): ICustomerLe
   }))
 
 export const patchLegalBank = (bankId: number, info: object): ICustomerLegalBankAxoisResponsePromise =>
-  request.patch<ICustomerLegalBank>(`/legal/bank/${bankId}`, info)
+  request.patch<ICustomerLegalBank>(`/legal/bank/${bankId}/`, info)
 
 
 // LegalCustomerDeliveryAddress
 const legalDeliveryUrl = '/legal/delivery/'
-export const getLegalDeliveryAddrs = (legalCustomerId: number): ICustomerLegalDeliveryAddressLegalPostListAxiosResponsePromise =>
-  request.get<ICustomerLegalDeliveryAddressLegalPostList>(legalDeliveryUrl, { params: {legal_customer: legalCustomerId}})
+export const getLegalDeliveryAddrs = (legalCustomerId: number): IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddress[]> =>
+  request.get<ICustomerLegalDeliveryAddress[]>(legalDeliveryUrl, { params: {legal_customer: legalCustomerId}})
 
 export const getLegalDeliveryAddr = getObjectDecorator<ICustomerLegalDeliveryAddress>(legalDeliveryUrl)
 

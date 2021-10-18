@@ -36,6 +36,9 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import LegalBankInfo from './legal-bank-info.vue'
 import LegalPostForm from './legal-post-info.vue'
 import LegalDeliveryAddressForm from './legal-delivery-address-form.vue'
+import { CustomerLegalBankModule } from '@/store/modules/customers_legal/customer-legal-bank'
+import { CustomerLegalDeliveryAddressModule } from '@/store/modules/customers_legal/customer-legal-delivery'
+import { CustomerLegalPostModule } from '@/store/modules/customers_legal/customer-legal-post'
 
 @Component({
   name: 'LegalDetails',
@@ -64,6 +67,12 @@ export default class extends Vue {
   created() {
     if (this.uid) {
       this.loadLegalCustomer(this.uid)
+
+      // Get legal info
+      CustomerLegalBankModule.getLegalBank(this.uid)
+
+      CustomerLegalDeliveryAddressModule.getLegalDeliveryAddr(this.uid)
+      CustomerLegalPostModule.getLegalPost(this.uid)
     }
 
     this.setCrumbs()
