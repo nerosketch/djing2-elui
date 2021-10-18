@@ -23,10 +23,14 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
   branches: number[] = []
   balance = 0
   address = 0
+  post_index = ''
+  delivery_address = 0
+  delivery_address_post_index = ''
+  post_post_index = ''
+  post_address = 0
   legal_type = 0
   tax_number = ''
   state_level_reg_number = ''
-  post_index = ''
   actual_start_time = ''
   actual_end_time: string | null = null
 
@@ -39,10 +43,14 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
     this.branches = customer.branches
     this.balance = customer.balance
     this.address = customer.address
+    this.post_index = customer.post_index
+    this.delivery_address = customer.delivery_address
+    this.delivery_address_post_index = customer.delivery_address_post_index
+    this.post_post_index = customer.post_post_index
+    this.post_address = customer.post_address
     this.legal_type = customer.legal_type
     this.tax_number = customer.tax_number
     this.state_level_reg_number = customer.state_level_reg_number
-    this.post_index = customer.post_index
     this.actual_start_time = customer.actual_start_time
     this.actual_end_time = customer.actual_end_time
   }
@@ -56,10 +64,14 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
     this.branches = []
     this.balance = 0
     this.address = 0
+    this.post_index = ''
+    this.delivery_address = 0
+    this.delivery_address_post_index = ''
+    this.post_post_index = ''
+    this.post_address = 0
     this.legal_type = 0
     this.tax_number = ''
     this.state_level_reg_number = ''
-    this.post_index = ''
     this.actual_start_time = ''
     this.actual_end_time = null
   }

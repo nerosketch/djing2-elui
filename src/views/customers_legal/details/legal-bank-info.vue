@@ -14,33 +14,29 @@
         v-model="frmMod.title"
       )
     el-form-item(
-      label="Почтовый индекс почтового адреса абонента"
-      prop="post_index"
-    )
-      el-input(
-        v-model="frmMod.post_index"
-      )
-    el-form-item(
       label="Номер банковского счёта"
-      prop="number"
     )
       el-input(
         v-model="frmMod.number"
       )
     el-form-item(
       label="БИК"
+      prop="bank_code"
     )
       el-input(
         v-model="frmMod.bank_code"
+        type='number'
       )
     el-form-item(
       label="Корреспондентский счёт"
+      prop="correspondent_account"
     )
       el-input(
         v-model="frmMod.correspondent_account"
       )
     el-form-item(
       label="Расчётный счёт"
+      prop="settlement_account"
     )
       el-input(
         v-model="frmMod.settlement_account"
@@ -69,10 +65,15 @@ export default class extends Vue {
 
   private loading = false
 
-  private frmMod = {
+  private frmMod: {
+    title: string,
+    number: string | null,
+    bank_code: string,
+    correspondent_account: string,
+    settlement_account: string
+  } = {
     title: '',
-    post_index: '',
-    number: '',
+    number: null,
     bank_code: '',
     correspondent_account: '',
     settlement_account: ''
@@ -82,17 +83,19 @@ export default class extends Vue {
     title: [
       { required: true, message: 'Название банка обязательно', trigger: 'blur' },
     ],
-    post_index: [
+    bank_code: [
       { required: true, message: 'Обязательно', trigger: 'blur' },
     ],
-    number: [
+    correspondent_account: [
+      { required: true, message: 'Обязательно', trigger: 'blur' },
+    ],
+    settlement_account: [
       { required: true, message: 'Обязательно', trigger: 'blur' },
     ]
   }
 
   private fillFrmMod(bank: ICustomerLegalBank) {
     this.frmMod.title = bank.title
-    this.frmMod.post_index = bank.post_index
     this.frmMod.number = bank.number
     this.frmMod.bank_code = bank.bank_code
     this.frmMod.correspondent_account = bank.correspondent_account

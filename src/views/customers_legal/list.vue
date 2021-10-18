@@ -77,6 +77,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getCustomerLegalObjectsPerms, getCustomersLegal } from '@/api/customers_legal/req'
 import LegalForm from './legal-form.vue'
 import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 class DataTableComp extends DataTable<ICustomerLegal> {}
 
@@ -162,6 +163,24 @@ export default class extends Vue {
 
   private CustLegalGetSelectedObjectPerms(customerId: number, profileGroupId: number) {
     // return getCustomerSelectedObjectPerms(customerId, profileGroupId)
+  }
+
+  // Breadcrumbs
+  private async setCrumbs() {
+    await BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/legal/',
+        meta: {
+          hidden: true,
+          title: 'Организации'
+        }
+      },
+    ] as any)
+  }
+  // End Breadcrumbs
+
+  created() {
+    this.setCrumbs()
   }
 }
 </script>

@@ -2,7 +2,6 @@
 el-form(
   ref='frm'
   status-icon
-  label-width="165px"
   :rules="frmRules"
   :model="frmMod"
   v-loading='loading'
@@ -47,6 +46,22 @@ el-form(
     label="Почтовый индекс юридического адреса"
   )
     el-input(v-model="frmMod.post_index")
+  el-form-item(
+    label="Адрес доставки счёта"
+  )
+    addr-field-input(v-model="frmMod.delivery_address")
+  el-form-item(
+    label="Почтовый индекс адреса доставки счёта"
+  )
+    el-input(v-model="frmMod.delivery_address_post_index")
+  el-form-item(
+    label="Почтовый индекс почтового адреса"
+  )
+    el-input(v-model="frmMod.post_post_index")
+  el-form-item(
+    label="Почтовый адрес"
+  )
+    addr-field-input(v-model="frmMod.post_address")
   el-form-item(
     label="ИНН"
     prop='tax_number'
@@ -124,10 +139,14 @@ export default class extends Vue {
     description: string,
     group: number | null,
     address: number,
+    post_index: string,
+    delivery_address: number | null,
+    delivery_address_post_index: string,
+    post_post_index: string,
+    post_address: number | null,
     legal_type: number,
     tax_number: string,
     state_level_reg_number: string,
-    post_index: string,
     actual_start_time: string,
   } = {
     username: '',
@@ -136,10 +155,14 @@ export default class extends Vue {
     description: '',
     group: null,
     address: 0,
+    post_index: '',
+    delivery_address: null,
+    delivery_address_post_index: '',
+    post_post_index: '',
+    post_address: null,
     legal_type: 0,
     tax_number: '',
     state_level_reg_number: '',
-    post_index: '',
     actual_start_time: '',
   }
 
@@ -155,10 +178,14 @@ export default class extends Vue {
     this.frmMod.description = profile.description
     this.frmMod.group = profile.group || null
     this.frmMod.address = profile.address
+    this.frmMod.post_index = profile.post_index
+    this.frmMod.delivery_address = profile.delivery_address
+    this.frmMod.delivery_address_post_index = profile.delivery_address_post_index
+    this.frmMod.post_post_index = profile.post_post_index
+    this.frmMod.post_address = profile.post_address
     this.frmMod.legal_type = profile.legal_type
     this.frmMod.tax_number = profile.tax_number
     this.frmMod.state_level_reg_number = profile.state_level_reg_number
-    this.frmMod.post_index = profile.post_index
     this.frmMod.actual_start_time = profile.actual_start_time
     if (!this.frmMod.actual_start_time) {
       this.localTimer = dateCounter(this.frmMod, 'actual_start_time', 'YYYY-MM-DD HH:mm:ss')

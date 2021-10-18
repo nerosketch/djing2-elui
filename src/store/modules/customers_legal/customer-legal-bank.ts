@@ -13,7 +13,6 @@ class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
   id = 0
   legal_customer = 0
   title = ''
-  post_index = ''
   number = ''
   bank_code = ''
   correspondent_account = ''
@@ -29,7 +28,6 @@ class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
     this.id = bank.id
     this.legal_customer = bank.legal_customer
     this.title = bank.title
-    this.post_index = bank.post_index
     this.number = bank.number
     this.bank_code = bank.bank_code
     this.correspondent_account = bank.correspondent_account
@@ -41,7 +39,6 @@ class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
     this.id = 0
     this.legal_customer = 0
     this.title = ''
-    this.post_index = ''
     this.number = ''
     this.bank_code = ''
     this.correspondent_account = ''

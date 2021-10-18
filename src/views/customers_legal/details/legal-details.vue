@@ -15,38 +15,24 @@
           el-card(shadow='never')
             template(v-slot:header) Банковские реквизиты
             legal-bank-info
-        el-col.col_vert_space(:sm='24' :md='12')
-          el-card(shadow='never')
-            template(v-slot:header) Почтовый адрес
-            legal-post-form
-        el-col.col_vert_space(:sm='24' :md='12')
-          el-card(shadow='never')
-            template(v-slot:header) Адрес доставки счёта
-            legal-delivery-address-form
 
     el-tab-pane(label="Филиалы" lazy)
       h3 филиалы
 </template>
 
 <script lang="ts">
-import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import LegalForm from '@/views/customers_legal/legal-form.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import LegalBankInfo from './legal-bank-info.vue'
-import LegalPostForm from './legal-post-info.vue'
-import LegalDeliveryAddressForm from './legal-delivery-address-form.vue'
+import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 import { CustomerLegalBankModule } from '@/store/modules/customers_legal/customer-legal-bank'
-import { CustomerLegalDeliveryAddressModule } from '@/store/modules/customers_legal/customer-legal-delivery'
-import { CustomerLegalPostModule } from '@/store/modules/customers_legal/customer-legal-post'
 
 @Component({
   name: 'LegalDetails',
   components: {
     LegalForm,
     LegalBankInfo,
-    LegalPostForm,
-    LegalDeliveryAddressForm
   }
 })
 export default class extends Vue {
@@ -68,11 +54,8 @@ export default class extends Vue {
     if (this.uid) {
       this.loadLegalCustomer(this.uid)
 
-      // Get legal info
+      // Get legal bank info
       CustomerLegalBankModule.getLegalBank(this.uid)
-
-      CustomerLegalDeliveryAddressModule.getLegalDeliveryAddr(this.uid)
-      CustomerLegalPostModule.getLegalPost(this.uid)
     }
 
     this.setCrumbs()
