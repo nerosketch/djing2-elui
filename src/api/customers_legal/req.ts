@@ -3,6 +3,7 @@ import {
   IChoiceItemType,
   IChoiceItemTypeListAxiosResponsePromise,
   IDRFAxiosResponsePromise,
+  IDRFRequestListParameters,
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise
 } from '@/api/types'
@@ -19,6 +20,10 @@ import {
   getObjectListDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
+import {
+  ICustomerList,
+  ICustomerListAxiosResponsePromise
+} from '../customers/types'
 
 
 // CustomerLegal model
@@ -37,6 +42,9 @@ export const getLegalTypes = (): IChoiceItemTypeListAxiosResponsePromise =>
 
 export const getLegalInitial = (): ICustomerLegalAxoisResponsePromise =>
   request.get<ICustomerLegal>('/legal/get_initial/')
+
+export const getLegalBranches = (customerLegalId: number, params?: IDRFRequestListParameters) =>
+  request.get(`/legal/${customerLegalId}/get_branches/`, { params })
 
 
 // CustomerLegalBank

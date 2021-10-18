@@ -27,6 +27,7 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import LegalBankInfo from './legal-bank-info.vue'
 import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 import { CustomerLegalBankModule } from '@/store/modules/customers_legal/customer-legal-bank'
+import LegalBranches
 
 @Component({
   name: 'LegalDetails',
