@@ -1,4 +1,5 @@
 <template lang="pug">
+div
   el-table(
     :data="branches"
     v-loading="loading"
@@ -21,22 +22,46 @@
       label="Номер телефона"
       prop="telephone"
     )
+    el-table-column(
+      label="#"
+      width='50'
+    )
+      template(v-slot:default="{row}")
+        el-button(
+          icon="el-icon-close"
+          type='danger'
+          circle
+          @click="delBranch(row)"
+        )
     template(v-slot:append)
       el-button(
         type='success' icon='el-icon-plus',
         @click="addBranch"
       ) Добавить
+  el-dialog(
+    title='Добавить филиал'
+    :visible.sync='branchFormVisible'
+    :close-on-click-modal="false"
+  )
+    add-branch-frm(
+      @done="branchFormDone"
+    )
 
 </template>
 
 <script lang="ts">
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { ICustomer } from '@/api/customers/types'
 import { getLegalBranches } from '@/api/customers_legal/req'
 import { IDRFRequestListParameters } from '@/api/types'
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import AddBranchFrm from './add-branch-frm.vue'
+import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 
 @Component({
-  name: 'LegalBranches'
+  name: 'LegalBranches',
+  components: {
+    AddBranchFrm
+  }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private customerId!: number
@@ -44,6 +69,7 @@ export default class extends Vue {
   private branches: ICustomer[] = []
 
   private loading = false
+  private branchFormVisible = false
 
   private async loadBranches(customerId: number) {
     const params: IDRFRequestListParameters = {
@@ -72,7 +98,25 @@ export default class extends Vue {
   }
 
   private addBranch() {
+    this.branchFormVisible = true
+  }
 
+  private branchFormDone() {
+    this.branchFormVisible = false
+    this.loadBranches(this.customerId)
+  }
+
+  private delBranch(customer: ICustomer) {
+    this.$confirm(`Удалить филиал "${customer.full_name}"?`).then(async () => {
+      const branches = CustomerLegalModule.branches
+      const br = branches.findIndex(b => b === customer.id)
+      if (br > -1) {
+        branches.splice(br, 1)
+        await CustomerLegalModule.updateCustomerLegal({ branches })
+        this.loadBranches(this.customerId)
+        this.$message.success('Филиал отвязан')
+      }
+    })
   }
 }
 </script>

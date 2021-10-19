@@ -61,7 +61,10 @@ export const changeCustomer = patchObjectDecorator<ICustomer>(custApiUrl)
 export const delCustomer = delObjectDecorator<ICustomer>(custApiUrl)
 
 export const findCustomers = (name: string): ICustomerListAxiosResponsePromise =>
-  request.get<ICustomerList>(custApiUrl, { params: { search: name } })
+  request.get<ICustomerList>(custApiUrl, { params: {
+    search: name,
+    fields: 'id,full_name'
+  } })
 
 export const getCustomerFormInitial = (): ICustomerAxoisResponsePromise =>
   request.get<ICustomer>(`${custApiUrl}get_initial/`)
