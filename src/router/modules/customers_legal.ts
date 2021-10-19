@@ -20,13 +20,13 @@ const customerLegalRoutes: RouteConfig = {
       props: ({ params }) => ({ uid: Number(params.uid || 0) }),
       meta: { hidden: true }
     },
-    {
+    /*{
       path: 'f:customerId/',
       name: 'legalBranches',
-      component: () => import(/* webpackChunkname: "customerLegalBranches" */ '@/views/customers_legal/branches/list.vue'),
+      component: () => import(/ * webpackChunkname: "customerLegalBranches" * / '@/views/customers_legal/branches/list.vue'),
       props: ({ params }) => ({ customerId: Number(params.customerId || 0) }),
       meta: { hidden: true }
-    }
+    }*/
   ]
 }
 

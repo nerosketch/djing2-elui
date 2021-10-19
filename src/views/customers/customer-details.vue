@@ -4,22 +4,47 @@
     small  {{ $store.state.customer.balance }}.
     span  Создан:
     small  {{ $store.state.customer.create_date }}
-    el-tabs.border-card
-      el-tab-pane(label="Инфо" lazy)
+    el-tabs.border-card(
+      v-model="activeTabName"
+    )
+      el-tab-pane(
+        label="Инфо"
+        name="info"
+        lazy
+      )
         keep-alive
           info(v-if='loaded')
-      el-tab-pane(label="Тарифы" lazy :disabled="!$perms.customers.view_customerservice")
+      el-tab-pane(
+        label="Тарифы"
+        name="services"
+        :disabled="!$perms.customers.view_customerservice"
+        lazy
+      )
         keep-alive
           services(v-if='loaded')
-      el-tab-pane(label="Финансы" lazy :disabled="!$perms.customers.view_customerlog")
+      el-tab-pane(
+        label="Финансы"
+        name="fin"
+        :disabled="!$perms.customers.view_customerlog"
+        lazy
+      )
         keep-alive
-          finance
-      el-tab-pane(label="История задач" lazy :disabled="!$perms.tasks.view_task")
+          finance(v-if='loaded')
+      el-tab-pane(
+        label="История задач"
+        name="history"
+        :disabled="!$perms.tasks.view_task"
+        lazy
+      )
         keep-alive
-          customer-task-history
-      el-tab-pane(label="История трафика" lazy)
+          customer-task-history(v-if='loaded')
+      el-tab-pane(
+        label="История трафика"
+        name="traf"
+        lazy
+      )
         keep-alive
-          el-card
+          el-card(v-if='loaded')
             template(v-slot:header) История трафика
             traf-report(
               :customerId="uid"
@@ -28,7 +53,9 @@
 
 <script lang="ts">
 /* eslint-disable camelcase */
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
+import TabMixin from '@/utils/tab-mixin'
 import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
 import Finance from './customers-details/finance.vue'
@@ -52,12 +79,15 @@ interface ICustomerUpdateEventData {
     TrafReport
   }
 })
-export default class extends Vue {
+export default class extends mixins(TabMixin) {
   @Prop({ default: 0 }) private uid!: number
 
   private loaded = false
 
   created() {
+    if (!this.activeTabName) {
+      this.activeTabName = 'info'
+    }
     // Subscribe for customer update event from server
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER, this.onCustomerServerUpdate)
 
@@ -71,8 +101,8 @@ export default class extends Vue {
   private async loadCustomer() {
     this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
-    this.setCrumbs(this.$store.state.customer.address)
     this.loaded = true
+    this.setCrumbs(this.$store.state.customer.address)
     document.title = this.$store.state.customer.full_name || 'Абонент'
   }
 

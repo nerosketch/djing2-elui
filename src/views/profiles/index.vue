@@ -1,7 +1,7 @@
 <template lang="pug">
   .tab-container
     el-tabs(
-      v-model="activeName"
+      v-model="activeTabName"
       type="border-card"
     )
       el-tab-pane(
@@ -22,7 +22,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
+import TabMixin from '@/utils/tab-mixin'
 import ProfileList from './profile-list.vue'
 import GroupList from './group-list.vue'
 
@@ -33,22 +35,10 @@ import GroupList from './group-list.vue'
     GroupList
   }
 })
-export default class extends Vue {
-  private activeName = 'profiles'
-
-  @Watch('activeName')
-  private onActiveNameChange(value: string) {
-    const newPath = `${this.$route.path}?tab=${value}`
-    if (newPath !== this.$route.fullPath) {
-      this.$router.push(newPath)
-    }
-  }
-
+export default class extends mixins(TabMixin) {
   created() {
-    // Init the default selected tab
-    const tab = this.$route.query.tab as string
-    if (tab) {
-      this.activeName = tab
+    if (!this.activeTabName) {
+      this.activeTabName = 'profiles'
     }
   }
 }

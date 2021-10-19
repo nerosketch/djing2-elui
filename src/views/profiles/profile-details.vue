@@ -11,24 +11,46 @@
         :xs="24"
       )
         el-card
-          el-tabs(v-model='activeTab')
-            el-tab-pane(label='Изменить' name='account')
+          el-tabs(v-model='activeTabName')
+            el-tab-pane(
+              label='Изменить'
+              name='account'
+            )
               profile-form
-            el-tab-pane(label='Ответственность за группы' name='activity' lazy)
+            el-tab-pane(
+              label='Ответственность за группы'
+              name='activity'
+              lazy
+            )
               group-responsibility(:profileUname='profileUname')
-            el-tab-pane(label="Права на классы действий" v-if="$store.state.currentuserprofile.is_superuser" lazy)
+            el-tab-pane(
+              label="Права на классы действий"
+              v-if="$store.state.currentuserprofile.is_superuser"
+              name="classperms"
+              lazy
+            )
               keep-alive
                 user-class-perms
-            el-tab-pane(label='Лог действий' name='timeline' lazy)
+            el-tab-pane(
+              label='Лог действий'
+              name='timeline'
+              lazy
+            )
               keep-alive
                 profile-log
-            el-tab-pane(label='Лог авторизаций' name='authlog' lazy)
+            el-tab-pane(
+              label='Лог авторизаций'
+              name='authlog'
+              lazy
+            )
               keep-alive
                 profile-auth-log
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
+import TabMixin from '@/utils/tab-mixin'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
 import UserCard from './UserCard.vue'
@@ -48,12 +70,13 @@ import ProfileAuthLog from './profile-auth-log.vue'
     ProfileAuthLog
   }
 })
-export default class extends Vue {
+export default class extends mixins(TabMixin) {
   @Prop({ default: '' }) private profileUname!: string
 
-  private activeTab = 'account'
-
   created() {
+    if (!this.activeTabName) {
+      this.activeTabName = 'account'
+    }
     this.loadProfile(this.profileUname)
   }
 
