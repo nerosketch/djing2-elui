@@ -186,8 +186,8 @@ export default class extends Vue {
       sortable: true
     },
     {
-      prop: 'house',
-      label: 'Квартира',
+      prop: 'address_title',
+      label: 'Полный адрес',
       sortable: true,
       'min-width': 110
     },
@@ -229,7 +229,7 @@ export default class extends Vue {
     if (params) {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         address: this.addrId,
-        fields: 'id,username,fio,house,telephone,current_service_title,balance,group_title,is_active,lease_count,marker_icons'
+        fields: 'id,username,fio,address_title,telephone,current_service_title,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (group) {
         newParams.group = Number(group)
