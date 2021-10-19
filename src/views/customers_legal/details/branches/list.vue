@@ -6,8 +6,27 @@
     border fit
   )
     el-table-column(
-      label="asdasd"
+      label="Номер договора"
+      prop="username"
     )
+      template(v-slot:default="{row}")
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{name: 'customerDetails', params:{uid: row.id }}"
+        ) {{ row.username }}
+    el-table-column(
+      label="Имя физ лица"
+      prop="full_name"
+    )
+    el-table-column(
+      label="Номер телефона"
+      prop="telephone"
+    )
+    template(v-slot:append)
+      el-button(
+        type='success' icon='el-icon-plus',
+        @click="addBranch"
+      ) Добавить
+
 </template>
 
 <script lang="ts">
@@ -30,7 +49,7 @@ export default class extends Vue {
     const params: IDRFRequestListParameters = {
       page: 0,
       page_size: 0,
-      fields: ''
+      fields: 'id,username,full_name,telephone'
     }
     this.loading = true
     try {
@@ -50,6 +69,10 @@ export default class extends Vue {
   @Watch('customerId')
   private onChangeCustomerId(cuid: number) {
     this.loadBranches(cuid)
+  }
+
+  private addBranch() {
+
   }
 }
 </script>

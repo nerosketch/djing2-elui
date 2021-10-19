@@ -26,7 +26,9 @@
       name="branches"
       lazy
     )
-      legal-branches
+      legal-branches(
+        :customerId="uid"
+      )
 </template>
 
 <script lang="ts">
