@@ -199,8 +199,7 @@ export default class extends Vue {
     {
       prop: 'current_service_title',
       label: 'Услуга',
-      'min-width': 240,
-      sortable: true
+      'min-width': 240
     },
     {
       prop: 'balance',
