@@ -1,8 +1,19 @@
 <template lang="pug">
 div
   el-button(
+    v-if="required"
     @click="dialogActivate"
   ) {{ fullTitleFromServer }}
+  el-button-group(v-else)
+    el-button(
+      @click="dialogActivate"
+    ) {{ fullTitleFromServer }}
+    el-button(
+      @click="resetVal"
+      icon="el-icon-close"
+      type='danger'
+      circle
+    )
 
   el-dialog(
     title="Адрес"
@@ -27,16 +38,16 @@ import AddrSelectForm from './addr-select-form.vue'
   components: { AddrSelectForm }
 })
 export default class extends Vue {
-  @Prop({ default: '' })
-  private defaultAddrText!: string
-
   @Prop({ default: '[Не выбран]'})
   private emptyLabel!: string
 
-  @Prop({ required: true })
-  private value!: number
+  @Prop({ default: null })
+  private value!: number | null
 
-  private localValue = this.value || 0
+  @Prop({ default: false })
+  private required!: boolean
+
+  private localValue = this.value
 
   private loading = false
   private inpAddrText = ''
@@ -64,13 +75,17 @@ export default class extends Vue {
   }
 
   @Watch('value')
-  private onChVal(v: number) {
-    this.fetchFullName(v)
+  private onChVal(v: number | null) {
+    if (v && v > 0) {
+      this.fetchFullName(v)
+    } else {
+      this.fullTitleFromServer = this.emptyLabel
+    }
     this.localValue = v
   }
 
   created() {
-    if (this.value > 0) {
+    if (this.value && this.value > 0) {
       this.fetchFullName(this.value)
     }
   }
@@ -78,6 +93,10 @@ export default class extends Vue {
   private addrDone(val: number) {
     this.localValue = val
     this.addrVisible = false
+  }
+
+  private resetVal() {
+    this.localValue = null
   }
 }
 </script>
