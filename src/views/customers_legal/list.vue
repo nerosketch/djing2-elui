@@ -143,13 +143,11 @@ export default class extends Vue {
 
   private frmAddDone(acc: ICustomerLegal) {
     this.dialogVisible = false
-    this.$message.success(`Учётная запись "${acc.title}" успешно создана`)
     this.$refs.table.LoadTableData()
   }
 
   private frmUpdateDone(acc: ICustomerLegal) {
     this.dialogVisible = false
-    this.$message.success(`Учётная запись "${acc.title}" успешно обновлена`)
   }
 
   private async changeLegalObjectPerms(info: IObjectGroupPermsResultStruct) {

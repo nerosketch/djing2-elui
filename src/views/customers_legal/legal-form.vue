@@ -44,6 +44,7 @@ el-form(
     addr-field-input(v-model="frmMod.address")
   el-form-item(
     label="Почтовый индекс юридического адреса"
+    prop="post_index"
   )
     el-input(v-model="frmMod.post_index")
   el-form-item(
@@ -52,10 +53,12 @@ el-form(
     addr-field-input(v-model="frmMod.delivery_address")
   el-form-item(
     label="Почтовый индекс адреса доставки счёта"
+    prop="delivery_address_post_index"
   )
     el-input(v-model="frmMod.delivery_address_post_index")
   el-form-item(
     label="Почтовый индекс почтового адреса"
+    prop="post_post_index"
   )
     el-input(v-model="frmMod.post_post_index")
   el-form-item(
@@ -116,6 +119,8 @@ import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 import dateCounter from '@/utils/date-counter'
 import { ICustomerLegal } from '@/api/customers_legal/types'
 import LegalTypeChoice from '@/components/CustomerLegal/legal-type-choice.vue'
+
+const maxLenValidator = { max: 6, trigger: 'change', message: 'Почтовый индекс содержит не более 6ти символов' }
 
 @Component({
   name: 'LegalForm',
@@ -199,6 +204,15 @@ export default class extends Vue {
       { required: true, message: 'Номер договора обязателен', trigger: 'blur' },
       { validator: latinValidator, trigger: 'change', message: 'Номер договора может содержать латинские символы и цифры' }
     ],
+    post_index: [
+      maxLenValidator
+    ],
+    delivery_address_post_index: [
+      maxLenValidator
+    ],
+    post_post_index: [
+      maxLenValidator
+    ],
     title: [
       { required: true, message: 'Название нужно указать', trigger: 'blur' },
     ],
@@ -227,9 +241,11 @@ export default class extends Vue {
         try {
           if (this.isNew) {
             const newAccount = await CustomerLegalModule.addCustomerLegal(this.frmMod)
+            this.$message.success(`Учётная запись "${newAccount.title}" успешно создана`)
             this.$emit('added', newAccount)
           } else {
             const patchedAccount = await CustomerLegalModule.updateCustomerLegal(this.frmMod)
+            this.$message.success(`Учётная запись "${patchedAccount.title}" успешно обновлена`)
             this.$emit('update', patchedAccount)
           }
         } finally {
