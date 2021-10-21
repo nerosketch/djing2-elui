@@ -20,21 +20,25 @@ div Порт №{{ portNum }}
       label="native"
     )
       template(v-slot:default="{row}")
-        i(:class="{'el-icon-circle-check': row.native, 'el-icon-circle-close': !row.native}")
+        boolean-icon(v-model="row.native")
     el-table-column(
       label="Управление"
     )
       template(v-slot:default="{row}")
-        i(:class="{'el-icon-circle-check': row.is_management, 'el-icon-circle-close': !row.is_management}")
+        boolean-icon(v-model="row.is_management")
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { PortModule } from '@/store/modules/devices/port'
 import { IDevVlan } from '@/api/devices/types'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 @Component({
-  name: 'VidsView'
+  name: 'VidsView',
+  components: {
+    BooleanIcon
+  }
 })
 export default class extends Vue {
   @Prop({ default: 0 }) portId!: number

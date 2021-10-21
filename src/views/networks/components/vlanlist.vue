@@ -9,7 +9,7 @@ div
     ref='table'
   )
     template(v-slot:ismng="{row}")
-      el-checkbox(v-model="row.is_management" disabled) {{ row.is_management ? 'Да' : 'Нет'}}
+      boolean-icon(v-model="row.is_management") &nbsp;{{ row.is_management ? 'Да' : 'Нет'}}
 
     template(v-slot:oper="{row}")
       el-button-group
@@ -67,12 +67,17 @@ import { VlanIfModule } from '@/store/modules/networks/vlan'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import VlanForm from './vlan-form.vue'
 import VlanMixin from './vlan-mixin'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 class DataTableComp extends DataTable<IVlanIf> {}
 
 @Component({
   name: 'VlanList',
-  components: { datatable: DataTableComp, VlanForm }
+  components: {
+    datatable: DataTableComp,
+    VlanForm,
+    BooleanIcon
+  }
 })
 export default class extends mixins(VlanMixin) {
   public readonly $refs!: {

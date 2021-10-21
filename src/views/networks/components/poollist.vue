@@ -9,7 +9,7 @@ div
     ref='table'
   )
     template(v-slot:is_dynamic="{row}")
-      i.el-icon-circle-check(v-if="row.is_dynamic")
+      boolean-icon(v-model="row.is_dynamic")
 
     template(v-slot:oper="{row}")
       el-button-group
@@ -62,12 +62,17 @@ import { INetworkIpPool } from '@/api/networks/types'
 import { getNetworkIpPools } from '@/api/networks/req'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
 import PoolForm from './pool-form.vue'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 class DataTableComp extends DataTable<INetworkIpPool> {}
 
 @Component({
   name: 'PoolList',
-  components: { datatable: DataTableComp, PoolForm }
+  components: {
+    datatable: DataTableComp,
+    PoolForm,
+    BooleanIcon
+  }
 })
 export default class extends Vue {
   public readonly $refs!: {

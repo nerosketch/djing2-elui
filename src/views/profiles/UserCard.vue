@@ -32,13 +32,11 @@ el-card(style='margin-bottom:20px;')
           dt
             b Включён-ли
           dd
-            i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
-            i.el-icon-circle-close(v-else)
+            boolean-icon(v-model="$store.state.userprofile.is_active")
           dt
             b Суперпользователь
           dd
-            i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
-            i.el-icon-circle-close(v-else)
+            boolean-icon(v-model="$store.state.userprofile.is_superuser")
     .user-skills.user-bio-section
       .user-bio-section-body
         .progress-item
@@ -63,11 +61,13 @@ el-card(style='margin-bottom:20px;')
 import { Component, Vue } from 'vue-property-decorator'
 import { DEFAULT_USER_AVA } from '@/api/profiles/types'
 import PanThumb from '@/components/PanThumb/index.vue'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 @Component({
   name: 'UserCard',
   components: {
-    PanThumb
+    PanThumb,
+    BooleanIcon
   }
 })
 export default class extends Vue {

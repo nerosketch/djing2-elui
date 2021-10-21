@@ -33,7 +33,7 @@
         width="50"
       )
         template(v-slot:default="{row}")
-          i.el-icon-circle-check(v-if="row.is_dynamic")
+          boolean-icon(v-model="row.is_dynamic")
       el-table-column(
         label="#"
         align="center"
@@ -80,13 +80,15 @@ import LeasePing from '@/components/MyButtons/leaseping.vue'
 import CustomerLeaseForm from './customer-lease-form.vue'
 import IpSessionDetail from './ip-session-detail.vue'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 @Component({
   name: 'Network',
   components: {
     LeasePing,
     CustomerLeaseForm,
-    IpSessionDetail
+    IpSessionDetail,
+    BooleanIcon
   }
 })
 export default class extends Vue {
