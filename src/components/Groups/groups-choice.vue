@@ -11,6 +11,7 @@
 <script lang="ts">
 import { getGroups } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
+import { IDRFAxiosResponsePromise, IDRFRequestListParameters } from '@/api/types'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
@@ -18,9 +19,14 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 })
 export default class extends Vue {
   @Prop({ default: 0 }) private value!: number
+
   @Prop({ default: false }) private multiple!: boolean
 
+  @Prop({ default: null })
+  private fetchFunction!: (params?: IDRFRequestListParameters) => IDRFAxiosResponsePromise<IGroup[]>
+
   private groups: IGroup[] = []
+
   private localValue = this.value
 
   private loading = false
@@ -28,11 +34,12 @@ export default class extends Vue {
   private async loadGroups() {
     this.loading = true
     try {
-      const { data } = await getGroups({
+      const { data } = await (this.fetchFunction || getGroups)({
         page: 1,
         page_size: 0,
         fields: 'id,title'
       }) as any
+      console.log('Fetched', data)
       this.groups = data
     } catch (err) {
       this.$message.error(err)
@@ -52,6 +59,7 @@ export default class extends Vue {
   }
 
   created() {
+    console.log(this.fetchFunction)
     this.loadGroups()
   }
 }

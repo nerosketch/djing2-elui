@@ -3,7 +3,7 @@
     :class="iconClass"
     :style="iconColor"
   )
-    slot(name='default')
+    slot
 </template>
 
 <script lang="ts">

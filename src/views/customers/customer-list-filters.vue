@@ -10,13 +10,18 @@
     el-form-item(
       label="Группы"
     )
-      groups-choice(v-model="groupVal")
+      groups-choice(
+        v-model="groupVal"
+        :fetchFunction="fetchGroupsWithCustomers"
+      )
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import AddressStreetChoice from '@/components/Address/street-choice.vue'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
+import { getGroupsWithCustomers } from '@/api/addresses/req'
+import { IDRFRequestListParameters } from '@/api/types'
 
 @Component({
   name: 'CustomerListFilters',
@@ -41,6 +46,10 @@ export default class extends Vue {
   @Watch('groupVal')
   private onChGroupVal(v: number) {
     this.$emit('update:group', v)
+  }
+
+  private fetchGroupsWithCustomers(params: IDRFRequestListParameters) {
+    return getGroupsWithCustomers(Object.assign(params, {}))
   }
 }
 </script>
