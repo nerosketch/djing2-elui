@@ -14,6 +14,7 @@
       slot(name="columns")
         el-table-column(
           v-if="selectable"
+          class-name="custom-cell-tbl-style"
           type="selection"
           width="40"
           align="center"
@@ -26,6 +27,7 @@
             :align="col.align"
             :width="col.colWidth"
             v-bind="col"
+            class-name="custom-cell-tbl-style"
           )
             template(v-slot:default="{row}")
               slot(
@@ -269,3 +271,9 @@ export default class <T> extends Vue {
   }
 }
 </script>
+
+<style>
+.custom-cell-tbl-style {
+  direction: rtl;
+}
+</style>
