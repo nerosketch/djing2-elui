@@ -56,11 +56,26 @@ el-form(
     prop="delivery_address_post_index"
   )
     el-input(v-model="frmMod.delivery_address_post_index")
+      el-button(
+        slot='append'
+        @click="copyDeliveryAddrFromLegalAddr"
+        icon="el-icon-document-copy"
+        title="Скопировать адрес из юридического адреса"
+        :disabled="addrCopyDisabled"
+      )
   el-form-item(
     label="Почтовый индекс почтового адреса"
     prop="post_post_index"
   )
     el-input(v-model="frmMod.post_post_index")
+      el-button(
+        slot='append'
+        @click="copyPostAddrFromLegalAddr"
+        icon="el-icon-document-copy"
+        title="Скопировать адрес из юридического адреса"
+        :disabled="addrCopyDisabled"
+      )
+
   el-form-item(
     label="Почтовый адрес"
   )
@@ -271,5 +286,18 @@ export default class extends Vue {
     this.stopTimer()
   }
 
+  private copyDeliveryAddrFromLegalAddr() {
+    if (this.addrCopyDisabled) return
+    this.frmMod.delivery_address = this.frmMod.address
+    this.frmMod.delivery_address_post_index = this.frmMod.post_index
+  }
+  private copyPostAddrFromLegalAddr() {
+    if (this.addrCopyDisabled) return
+    this.frmMod.post_address = this.frmMod.address
+    this.frmMod.post_post_index = this.frmMod.post_index
+  }
+  get addrCopyDisabled() {
+    return !this.frmMod.address || !this.frmMod.post_index
+  }
 }
 </script>
