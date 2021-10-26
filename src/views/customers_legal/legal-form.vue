@@ -33,6 +33,7 @@ el-form(
     )
   el-form-item(
     label="Тип юрлица"
+    prop="legal_type"
   )
     legal-type-choice(
       v-model="frmMod.legal_type"
@@ -63,6 +64,11 @@ el-form(
         title="Скопировать адрес из юридического адреса"
         :disabled="addrCopyDisabled"
       )
+
+  el-form-item(
+    label="Почтовый адрес"
+  )
+    addr-field-input(v-model="frmMod.post_address")
   el-form-item(
     label="Почтовый индекс почтового адреса"
     prop="post_post_index"
@@ -76,10 +82,6 @@ el-form(
         :disabled="addrCopyDisabled"
       )
 
-  el-form-item(
-    label="Почтовый адрес"
-  )
-    addr-field-input(v-model="frmMod.post_address")
   el-form-item(
     label="ИНН"
     prop='tax_number'
@@ -102,7 +104,7 @@ el-form(
     el-date-picker(
       v-model="frmMod.actual_start_time"
       type="datetime"
-      value-format="yyyy-MM-dd HH:mm:ss"
+      value-format="yyyy-MM-dd HH:mm:ss подходящий тип юрлица"
       format="d.MM.yyyy HH:mm:ss"
       @change="stopTimer"
     )
@@ -242,6 +244,10 @@ export default class extends Vue {
     ],
     state_level_reg_number: [
       { required: true, message: 'Обязательно', trigger: 'blur' },
+    ],
+    legal_type: [
+      { required: true, message: 'Тип юрлица обязателен', trigger: 'blur' },
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать из списка значений подходящий тип юрлица' },
     ]
   }
 
