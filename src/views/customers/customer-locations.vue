@@ -9,7 +9,7 @@
       template(v-slot:title="{row}")
         router-link.el-link.el-link--primary.is-underline(
           :to="{name: 'customersList', params:{ addrId: row.id }}"
-        ) {{ row.title }}
+        ) {{ row.fias_address_type_name }} {{ row.title }}
 
       el-button(
         icon='el-icon-d-caret'
@@ -42,7 +42,7 @@ export default class extends Vue {
   private getLocations(params?: IDRFRequestListAddrsParameters) {
     if (params) {
       params = Object.assign(params, {
-        fields: 'id,title',
+        fields: 'id,title,fias_address_type_name',
         address_type: IAddressEnumTypes.LOCALITY
       })
     }
