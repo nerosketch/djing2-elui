@@ -6,7 +6,6 @@
     :model='frmMod'
     v-loading='isLoading'
   )
-    p frmMod: {{ frmMod }}
     el-form-item(
       label="Название"
       prop='title'
