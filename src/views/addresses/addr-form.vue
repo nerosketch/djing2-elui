@@ -6,6 +6,7 @@
     :model='frmMod'
     v-loading='isLoading'
   )
+    p frmMod: {{ frmMod }}
     el-form-item(
       label="Название"
       prop='title'
@@ -120,14 +121,17 @@ export default class extends Vue {
     (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
-        if (this.isNew) {
-          const addr = await AddressModule.AddAddress(this.frmMod)
-          this.$emit('added', addr)
-        } else {
-          const addr = await AddressModule.PatchAddress(this.frmMod)
-          this.$emit('changed', addr)
+        try {
+          if (this.isNew) {
+            const addr = await AddressModule.AddAddress(this.frmMod)
+            this.$emit('added', addr)
+          } else {
+            const addr = await AddressModule.PatchAddress(this.frmMod)
+            this.$emit('changed', addr)
+          }
+        } finally {
+          this.isLoading = false
         }
-        this.isLoading = false
       } else {
         this.$message.error('Исправь ошибки в форме')
       }
