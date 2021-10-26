@@ -98,7 +98,7 @@ export default class extends Vue {
   @Prop({ default: '' }) private initialComment!: string
   @Prop({ default: 0 }) private initialDevType!: number
   @Prop({ default: 0 }) private initialGroup!: number
-  @Prop({ default: 0 }) private initialAddress!: number
+  @Prop({ default: null }) private initialAddress!: number | null
   @Prop({ default: false }) private initialIsNotic!: boolean
   @Prop({ default: 'ertNjuWr' }) private initialManPassw!: string
   @Prop({ default: '' }) private initialSnmpSxtra!: string
