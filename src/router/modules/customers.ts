@@ -14,6 +14,12 @@ const customerRoutes: RouteConfig = {
       }
     },
     {
+      path: 'bums/',
+      name: 'customerBums',
+      component: () => import(/* webpackChunkName: "customerBums" */ '@/views/customers/bums.vue'),
+      meta: { hidden: true }
+    },
+    {
       path: 'a:addrId/',
       name: 'customersList',
       component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customers-list.vue'),
@@ -26,7 +32,7 @@ const customerRoutes: RouteConfig = {
       component: () => import(/* webpackChunkName: "customerdetails" */ '@/views/customers/customer-details.vue'),
       props: ({ params }) => ({ uid: Number(params.uid || 0) }),
       meta: { hidden: true }
-    }
+    },
   ]
 }
 

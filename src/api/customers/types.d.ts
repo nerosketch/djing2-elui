@@ -49,7 +49,7 @@ export interface ICustomerOnPort {
 export type ICustomersOnPortAxoisPromise = AxiosPromise<ICustomerOnPort[]>
 
 export interface IDRFRequestListParametersCustomer extends IDRFRequestListParameters {
-  address: number
+  address: number | null
   street?: number
   group?: number
 }

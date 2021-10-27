@@ -111,6 +111,8 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import {
+  IDRFAxiosResponsePromise,
+  IDRFListResponse,
   IDRFRequestListParameters,
   IObjectGroupPermsInitialAxiosResponsePromise,
   IObjectGroupPermsResultStruct
@@ -150,7 +152,9 @@ interface ITableRowClassName {
   }
 })
 export default class extends Vue {
-  @Prop({ default: 0 }) private addrId!: number
+  @Prop({ default: null }) private addrId!: number | null
+  @Prop({ default: null }) private fetchFunc!: (params?: IDRFRequestListParameters) => IDRFAxiosResponsePromise<IDRFListResponse<ICustomer>> | null
+
   private addCustomerDialog = false
   private permsDialog = false
   public readonly $refs!: {
@@ -225,6 +229,7 @@ export default class extends Vue {
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     const group = this.$route.query.group
     let r
+    const fetchFn = (this.fetchFunc === null ? getCustomers : this.fetchFunc)
     if (params) {
       const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
         address: this.addrId,
@@ -237,9 +242,9 @@ export default class extends Vue {
       if (street) {
         newParams.street = Number(street)
       }
-      r = await getCustomers(newParams)
+      r = await fetchFn(newParams)
     } else {
-      r = await getCustomers()
+      r = await fetchFn()
     }
     return r
   }
@@ -294,7 +299,7 @@ export default class extends Vue {
 
   // Breadcrumbs
   private async setCrumbs() {
-    if (this.$store.state.address.id !== this.addrId) {
+    if (this.addrId && this.$store.state.address.id !== this.addrId) {
       await AddressModule.GetAddress(this.addrId)
     }
     BreadcrumbsModule.SetCrumbs([

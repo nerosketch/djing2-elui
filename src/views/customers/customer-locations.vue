@@ -11,10 +11,15 @@
           :to="{name: 'customersList', params:{ addrId: row.id }}"
         ) {{ row.fias_address_type_name }} {{ row.title }}
 
-      el-button(
-        icon='el-icon-d-caret'
-        @click="goToAfkList"
-      ) Фильтр afk
+      el-button-group
+        el-button(
+          icon='el-icon-d-caret'
+          @click="goToAfkList"
+        ) Фильтр afk
+        el-button(
+          icon="el-icon-user-solid"
+          @click="go2Bums"
+        ) Абоненты без адреса
 </template>
 
 <script lang="ts">
@@ -65,6 +70,9 @@ export default class extends Vue {
 
   private goToAfkList() {
     this.$router.push('/afk')
+  }
+  private go2Bums() {
+    this.$router.push('/customers/bums/')
   }
 }
 </script>

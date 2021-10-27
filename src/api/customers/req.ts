@@ -117,6 +117,8 @@ export const setCustomerMarkers = (id: number, flags: string[]) =>
 export const getCustomersAfk = (params: ICustomerAfkItemParams): ICustomerAfkItemListAxiosResponsePromise =>
   request.get<ICustomerAfkItem[]>(`${custApiUrl}get_afk/`, { params })
 
+export const getCustomersBums = getObjectListDecorator<ICustomer>('/customers/bums/')
+
 // IAdditionalTelephone
 const telBaseUrl = '/customers/additional-telephone/'
 export const getTelephones = (customerId: number): IAdditionalTelephoneListAxiosResponsePromise =>
