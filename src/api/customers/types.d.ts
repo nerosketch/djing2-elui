@@ -18,7 +18,7 @@ export interface ICustomer extends IBaseAccount{
   description: string
   house: string
   gateway: number
-  // gateway_title?: string
+  gateway_title?: string
   auto_renewal_service: boolean
   device: number
   device_comment?: string
@@ -73,7 +73,7 @@ export interface ICustomerFrm {
   house: string
   is_active: boolean
   is_dynamic_ip: boolean
-  // gateway: number
+  gateway: number
   description: string
 }
 

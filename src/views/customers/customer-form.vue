@@ -47,10 +47,10 @@
       label="Адрес"
     )
       addr-field-input(v-model="frmMod.address")
-    //- el-form-item(
-    //-   label="Шлюз доступа"
-    //- )
-    //-   gws-selectfield(v-model="frmMod.gateway")
+    el-form-item(
+      label="Шлюз доступа"
+    )
+      gws-selectfield(v-model="frmMod.gateway")
     el-form-item(
       label="Памятка"
     )
@@ -136,7 +136,7 @@ import TaskForm from '@/views/tasks/task-form.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import Passport from './passport.vue'
 import CustomerPassword from './customer-password.vue'
-// import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
+import GwsSelectfield from '@/views/gateways/gws-selectfield.vue'
 import FormMixin from '@/utils/forms'
 import TelsInput from './tels/tels-input.vue'
 import CustomerFormFio from './customer-form-fio.vue'
@@ -153,6 +153,7 @@ import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
     CustomerFormFio,
     AddrFieldInput,
     GroupsChoice,
+    GwsSelectfield
   }
 })
 export default class extends mixins(FormMixin) {
@@ -195,7 +196,7 @@ export default class extends mixins(FormMixin) {
       house: frm.house,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
-      // gateway: frm.gateway,
+      gateway: frm.gateway,
       description: frm.description
     }
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm

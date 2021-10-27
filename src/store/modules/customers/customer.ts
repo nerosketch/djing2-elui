@@ -29,7 +29,7 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
   description = ''
   house = ''
   gateway = 0
-  // gateway_title = ''
+  gateway_title = ''
   auto_renewal_service = false
   device = 0
   device_comment = ''
@@ -62,7 +62,7 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.description = data.description
     this.house = data.house
     this.gateway = data.gateway
-    // this.gateway_title = data.gateway_title!
+    this.gateway_title = data.gateway_title!
     this.auto_renewal_service = data.auto_renewal_service
     this.device = data.device!
     this.device_comment = data.device_comment!
@@ -92,7 +92,7 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.description = ''
     this.house = ''
     this.gateway = 0
-    // this.gateway_title = ''
+    this.gateway_title = ''
     this.auto_renewal_service = false
     this.device = 0
     this.device_comment = ''
