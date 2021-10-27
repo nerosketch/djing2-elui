@@ -86,9 +86,9 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private async addNode(node: AddrTreeNode) {
-    await AddressModule.RESET_ALL_ADDR()
-    await AddressModule.SET_ADDR_PARENT(node.data.id)
+  private addNode(node: AddrTreeNode) {
+    AddressModule.RESET_ALL_ADDR()
+    AddressModule.SET_ADDR_PARENT(node.data.id)
     this.dialogVisible = true
   }
 
