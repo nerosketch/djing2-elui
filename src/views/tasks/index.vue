@@ -53,10 +53,6 @@ import TabMixin from '@/utils/tab-mixin'
   components: { TaskList }
 })
 export default class extends mixins(TabMixin) {
-  created() {
-    if (!this.activeTabName) {
-      this.activeTabName = 'tnew'
-    }
-  }
+  protected activeTabName = 'tnew'
 }
 </script>

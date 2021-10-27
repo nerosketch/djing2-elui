@@ -44,11 +44,6 @@ import PeriodicPayList from './periodicpay-list.vue'
   }
 })
 export default class extends mixins(TabMixin) {
-
-  created() {
-    if (!this.activeTabName) {
-      this.activeTabName = 'services'
-    }
-  }
+  protected activeTabName = 'services'
 }
 </script>

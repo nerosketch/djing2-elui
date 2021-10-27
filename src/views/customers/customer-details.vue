@@ -83,11 +83,9 @@ export default class extends mixins(TabMixin) {
   @Prop({ default: 0 }) private uid!: number
 
   private loaded = false
+  protected activeTabName = 'info'
 
   created() {
-    if (!this.activeTabName) {
-      this.activeTabName = 'info'
-    }
     // Subscribe for customer update event from server
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER, this.onCustomerServerUpdate)
 

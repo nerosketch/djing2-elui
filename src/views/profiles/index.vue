@@ -36,10 +36,6 @@ import GroupList from './group-list.vue'
   }
 })
 export default class extends mixins(TabMixin) {
-  created() {
-    if (!this.activeTabName) {
-      this.activeTabName = 'profiles'
-    }
-  }
+  protected activeTabName = 'profiles'
 }
 </script>

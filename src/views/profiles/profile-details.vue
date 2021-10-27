@@ -73,10 +73,9 @@ import ProfileAuthLog from './profile-auth-log.vue'
 export default class extends mixins(TabMixin) {
   @Prop({ default: '' }) private profileUname!: string
 
+  protected activeTabName = 'account'
+
   created() {
-    if (!this.activeTabName) {
-      this.activeTabName = 'account'
-    }
     this.loadProfile(this.profileUname)
   }
 

@@ -54,6 +54,7 @@ export default class extends mixins(TabMixin) {
   @Prop({ required: true }) private uid!: number
 
   private ready = false
+  protected activeTabName = 'info'
 
   private async loadLegalCustomer(uid: number) {
     this.ready = false
@@ -66,9 +67,6 @@ export default class extends mixins(TabMixin) {
   }
 
   created() {
-    if (!this.activeTabName) {
-      this.activeTabName = 'info'
-    }
     if (this.uid) {
       this.loadLegalCustomer(this.uid)
 

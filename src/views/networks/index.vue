@@ -53,10 +53,6 @@ import SessionList from './components/session-list.vue'
   }
 })
 export default class extends mixins(TabMixin) {
-  created() {
-    if (!this.activeTabName) {
-      this.activeTabName = 'sessions'
-    }
-  }
+  protected activeTabName = 'sessions'
 }
 </script>
