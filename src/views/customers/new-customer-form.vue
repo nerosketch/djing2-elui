@@ -91,6 +91,7 @@ export default class extends Vue {
     house: '',
     is_active: false,
     is_dynamic_ip: false,
+    gateway: 0,
     description: ''
   }
 
@@ -120,6 +121,7 @@ export default class extends Vue {
       house: frm.house,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
+      gateway: frm.gateway,
       description: frm.description
     }
   }
