@@ -97,7 +97,8 @@ export default class extends Vue {
     {
       prop: 'customer_address',
       label: 'Адрес',
-      'min-width': 300
+      'min-width': 300,
+      cutLeft: true
     },
     {
       prop: 'mode_str',

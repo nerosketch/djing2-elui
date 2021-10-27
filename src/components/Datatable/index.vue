@@ -14,7 +14,6 @@
       slot(name="columns")
         el-table-column(
           v-if="selectable"
-          class-name="custom-cell-tbl-style"
           type="selection"
           width="40"
           align="center"
@@ -26,8 +25,8 @@
             :sortable="col.sortable ? 'custom' : false"
             :align="col.align"
             :width="col.colWidth"
+            :class-name="col.cutLeft ? 'col-cut-left' : undefined"
             v-bind="col"
-            class-name="custom-cell-tbl-style"
           )
             template(v-slot:default="{row}")
               slot(
@@ -68,6 +67,7 @@ export interface IDataTableColumn {
   align?: DataTableColumnAlign
   width?: number
   'min-width'?: number
+  cutLeft?: boolean
 }
 
 export interface ILocalDataTableColumn extends IDataTableColumn {
@@ -273,7 +273,7 @@ export default class <T> extends Vue {
 </script>
 
 <style>
-.custom-cell-tbl-style {
+.col-cut-left {
   direction: rtl;
 }
 </style>

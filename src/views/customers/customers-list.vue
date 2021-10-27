@@ -193,7 +193,8 @@ export default class extends Vue {
       prop: 'address_title',
       label: 'Полный адрес',
       sortable: true,
-      'min-width': 110
+      'min-width': 110,
+      cutLeft: true
     },
     {
       prop: 'telephone',

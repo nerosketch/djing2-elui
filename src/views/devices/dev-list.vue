@@ -17,9 +17,11 @@
 
       template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
 
-      template(v-slot:status="{row}") {{ row.status ? 'Ok' : 'Не ok' }}
+      template(v-slot:status="{row}")
+        boolean-icon(v-model="row.status")
 
-      template(v-slot:is_noticeable="{row}") {{ row.is_noticeable ? 'Да' : 'Не' }}
+      template(v-slot:is_noticeable="{row}")
+        boolean-icon(v-model="row.is_noticeable")
 
       template(v-slot:oper="{row}")
         el-button-group
@@ -113,6 +115,7 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 import { AddressModule } from '@/store/modules/addresses/address'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 class DataTableComp extends DataTable<IDevice> {}
 
@@ -121,7 +124,8 @@ class DataTableComp extends DataTable<IDevice> {}
   components: {
     DevForm,
     NewDevForm,
-    datatable: DataTableComp
+    datatable: DataTableComp,
+    BooleanIcon
   }
 })
 export default class extends Vue {
