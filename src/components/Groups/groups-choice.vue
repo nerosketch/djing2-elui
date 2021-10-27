@@ -39,7 +39,6 @@ export default class extends Vue {
         page_size: 0,
         fields: 'id,title'
       }) as any
-      console.log('Fetched', data)
       this.groups = data
     } catch (err) {
       this.$message.error(err)
@@ -59,7 +58,6 @@ export default class extends Vue {
   }
 
   created() {
-    console.log(this.fetchFunction)
     this.loadGroups()
   }
 }

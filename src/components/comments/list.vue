@@ -37,7 +37,7 @@ import CommentItem from './comment-item.vue'
 })
 export default class extends Vue {
   @Prop({ default: () => ([]) })
-  private comments: IComment[] = []
+  private comments!: IComment[]
 
   @Prop({ default: 'Комментарии' })
   private defaultCardTitle!: string
