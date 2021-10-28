@@ -73,7 +73,7 @@ export default class extends Vue {
     settlement_account: string
   } = {
     title: '',
-    number: null,
+    number: '',
     bank_code: '',
     correspondent_account: '',
     settlement_account: ''
