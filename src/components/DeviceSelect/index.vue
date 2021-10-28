@@ -3,7 +3,7 @@
     el-option(
       v-for="dv in devices"
       :key="dv.id"
-      :label="`${dv.comment} ` + (dv.ip_address ? `(${dv.ip_address})` : '')"
+      :label="dv.comment + (dv.ip_address ? ` (${dv.ip_address})` : '')"
       :value="dv.id"
     )
 </template>
@@ -19,7 +19,7 @@ import { getDevices } from '@/api/devices/req'
 export default class extends Vue {
   @Prop({ default: 0 }) private value!: number
 
-  @Prop({ default: 0 }) private addrId!: number
+  @Prop({ default: null }) private addrId!: number | null
 
   @Prop({ default: () => ({ id: null, comment: 'Не выбрано' }) }) private initialDevice!: IDevice
 

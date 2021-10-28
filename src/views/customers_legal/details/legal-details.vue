@@ -77,6 +77,12 @@ export default class extends mixins(TabMixin) {
     this.setCrumbs()
   }
 
+  @Watch('uid')
+  private onChUid(uid: number) {
+    this.loadLegalCustomer(uid)
+    CustomerLegalBankModule.getLegalBank(uid)
+  }
+
   @Watch('$store.state.customerlegal.title')
   private onChLegalTitle() {
     this.setCrumbs()

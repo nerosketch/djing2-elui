@@ -198,7 +198,8 @@ export default class extends Vue {
     },
     {
       prop: 'house',
-      label: 'Номер дома(уст.)'
+      label: 'Номер дома(уст.)',
+      sortable: true,
     },
     {
       prop: 'telephone',

@@ -212,7 +212,7 @@ export interface IDeviceInterace extends IDevice {
 }
 
 export interface IDRFRequestListParametersDevGroup extends IDRFRequestListParameters {
-  address: number
+  address: number | null
 }
 
 export interface IFixOnuSimpleResponseResult extends ISimpleResponseResult {
