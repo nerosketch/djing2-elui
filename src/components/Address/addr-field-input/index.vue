@@ -11,7 +11,6 @@ div
     el-button(
       @click="resetVal"
       icon="el-icon-close"
-      type='danger'
       circle
     )
 
