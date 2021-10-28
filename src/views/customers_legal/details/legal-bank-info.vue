@@ -102,10 +102,6 @@ export default class extends Vue {
     this.frmMod.settlement_account = bank.settlement_account
   }
 
-  created() {
-    this.fillFrmMod(this.$store.state.legalbank)
-  }
-
   @Watch('$store.state.legalbank', { deep: true })
   private onChangeLegalBankInfo(bank: ICustomerLegalBank) {
     this.fillFrmMod(bank)
