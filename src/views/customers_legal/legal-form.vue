@@ -104,9 +104,8 @@ el-form(
     el-date-picker(
       v-model="frmMod.actual_start_time"
       type="datetime"
-      value-format="yyyy-MM-dd HH:mm:ss подходящий тип юрлица"
-      format="d.MM.yyyy HH:mm:ss"
-      @change="stopTimer"
+      value-format="yyyy-MM-dd HH:mm"
+      format="d.MM.yyyy HH:mm"
     )
   el-form-item(
     label='Описание'
@@ -133,7 +132,6 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
-import dateCounter from '@/utils/date-counter'
 import { ICustomerLegal } from '@/api/customers_legal/types'
 import LegalTypeChoice from '@/components/CustomerLegal/legal-type-choice.vue'
 
@@ -209,11 +207,6 @@ export default class extends Vue {
     this.frmMod.tax_number = profile.tax_number
     this.frmMod.state_level_reg_number = profile.state_level_reg_number
     this.frmMod.actual_start_time = profile.actual_start_time
-    if (!this.frmMod.actual_start_time) {
-      this.localTimer = dateCounter(this.frmMod, 'actual_start_time', 'YYYY-MM-DD HH:mm:ss')
-    } else {
-      this.stopTimer()
-    }
   }
 
   private frmRules = {
@@ -278,18 +271,8 @@ export default class extends Vue {
     })
   }
 
-  private localTimer?: NodeJS.Timeout
-
   created() {
     this.fillFrmMod(this.$store.state.customerlegal)
-  }
-  private stopTimer() {
-    if (this.localTimer) {
-      clearInterval(this.localTimer)
-    }
-  }
-  beforeDestroy() {
-    this.stopTimer()
   }
 
   private copyDeliveryAddrFromLegalAddr() {

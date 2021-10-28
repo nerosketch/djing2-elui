@@ -50,11 +50,8 @@
     el-form-item(
       label="Дата введения в эксплуатацию"
     )
-      el-date-picker(
+      datetime-counter(
         v-model="frmMod.create_time"
-        type="datetime"
-        value-format="yyyy-MM-dd HH:mm"
-        format="d.MM.yyyy HH:mm"
       )
     el-form-item(
       label="№ дома"
@@ -81,15 +78,16 @@ import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator, positiveNumberValueAvailable } from '@/utils/validate'
 import { DeviceModule } from '@/store/modules/devices/device'
 import DeviceAutocompleteField from '@/components/DeviceAutocompleteField/index.vue'
-import dateCounter from '@/utils/date-counter'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import { IDeviceTypeName } from '@/api/devices/types'
+import DatetimeCounter from '@/components/datetime-counter.vue'
 
 @Component({
   name: 'NewDevForm',
   components: {
     DeviceAutocompleteField,
     GroupsChoice,
+    DatetimeCounter
   }
 })
 export default class extends Vue {
@@ -160,19 +158,10 @@ export default class extends Vue {
     })
   }
 
-  private localTimer?: NodeJS.Timeout
-
   created() {
     DeviceModule.getDeviceTypeNames().then(d => {
       this.deviceTypeNames = d
     })
-    this.localTimer = dateCounter(this.frmMod, 'create_time', 'YYYY-MM-DD HH:mm')
-  }
-
-  beforeDestroy() {
-    if (this.localTimer) {
-      clearInterval(this.localTimer)
-    }
   }
 }
 </script>

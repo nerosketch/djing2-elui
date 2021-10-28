@@ -49,11 +49,8 @@
     el-form-item(
       label="Дата введения в эксплуатацию"
     )
-      el-date-picker(
+      datetime-counter(
         v-model="frmMod.create_time"
-        type="datetime"
-        value-format="yyyy-MM-dd HH:mm"
-        format="d.MM.yyyy HH:mm"
       )
     el-form-item(
       label="Адрес"
@@ -91,13 +88,15 @@ import FormMixin from '@/utils/forms'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import { IDeviceTypeName } from '@/api/devices/types'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
+import DatetimeCounter from '@/components/datetime-counter.vue'
 
 @Component({
   name: 'DevForm',
   components: {
     DeviceAutocompleteField,
     GroupsChoice,
-    AddrFieldInput
+    AddrFieldInput,
+    DatetimeCounter
   }
 })
 export default class extends mixins(FormMixin) {
