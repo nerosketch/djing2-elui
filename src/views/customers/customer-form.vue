@@ -23,7 +23,11 @@
     el-form-item(
       label="Дом"
     )
-      el-input(v-model="frmMod.house" :maxlength='12')
+      el-input(
+        v-model="frmMod.house"
+        :maxlength='12'
+        readonly
+      )
     el-form-item(
       label="День рождения"
       prop='birth_day'
@@ -52,7 +56,7 @@
     )
       gws-selectfield(v-model="frmMod.gateway")
     el-form-item(
-      label="Памятка"
+      label="Доп. сведения"
     )
       el-input(v-model="frmMod.description" type="textarea" rows="5" cols="40")
     el-form-item

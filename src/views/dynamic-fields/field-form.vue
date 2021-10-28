@@ -53,13 +53,15 @@ import { getFieldTypeChoices } from '@/api/dynamic-fields/req'
 import SystemTagsInput from './system-tags-input.vue'
 import { regexpVal } from '@/utils/validate'
 import { IChoiceItemType } from '@/api/types'
+import GroupsChoice from '@/components/Groups/groups-choice.vue'
 
 export const _userTagsValidator = regexpVal(/^(\w+,?)+$/s)
 
 @Component({
   name: 'FieldForm',
   components: {
-    SystemTagsInput
+    SystemTagsInput,
+    GroupsChoice
   }
 })
 export default class extends Vue {
