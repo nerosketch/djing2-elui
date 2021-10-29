@@ -8,8 +8,31 @@
           v-for="(f, i) in localContents"
           :key="i"
           :label="f.title"
+          prop='content'
         )
-          el-input(v-model="f.content")
+          p {{ f }}
+          el-input(
+            v-if="f.field_type == 1"
+            v-model="f.content"
+            type="number"
+          )
+          el-input(
+            v-else-if="f.field_type == 2"
+            v-model="f.content"
+            placeholder="example@mail.com"
+            type="email"
+          )
+          el-date-picker(
+            v-else-if="f.field_type == 6"
+            v-model="f.content"
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm"
+            format="d.MM.yyyy HH:mm"
+          )
+          el-input(
+            v-else
+            v-model="f.content"
+          )
       h3(v-else) Нет полей
       el-form-item
         el-button(
