@@ -30,6 +30,9 @@ export default class extends Vue {
 
   @Watch('value')
   private onChValue(v: string | null) {
+    if (v) {
+      this.stopTimer()
+    }
     this.localVal = v
   }
 

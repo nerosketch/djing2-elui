@@ -139,7 +139,7 @@ export default class extends mixins(FormMixin) {
       parent_dev: m.parent_dev,
       snmp_extra: m.snmp_extra,
       create_time: m.create_time,
-      address: this.addrId || m.address,
+      address: m.address,
       place: m.place
     }
   }
