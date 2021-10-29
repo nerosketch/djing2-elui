@@ -38,7 +38,6 @@ export interface ICustomerLegalBank {
   correspondent_account: string  // корреспондентский счёт
   settlement_account: string     // расчётный счёт
 }
-export type ICustomerLegalBankAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalBank>
 
 
 export interface ICustomerLegalPost {

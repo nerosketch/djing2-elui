@@ -47,13 +47,12 @@ class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
 
   @Action
   public async getLegalBank(customerId?: number) {
-    if (customerId) {
-      this.SET_LEGAL_BANK_CUSTOMER(customerId)
-    }
     const { data } = await getLegalBanks(customerId || this.legal_customer)
     if (data.length > 0) {
       this.SET_ALL_LEGAL_BANK(data[0])
       return data[0]
+    } else {
+      this.RESET_LEGAL_BANK()
     }
   }
 
@@ -66,7 +65,7 @@ class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
 
   @Action
   public async addLegalBank(info: object) {
-    const { data } = await addLegalBank(this.legal_customer, info)
+    const { data } = await addLegalBank(info)
     this.SET_ALL_LEGAL_BANK(data)
     return data
   }

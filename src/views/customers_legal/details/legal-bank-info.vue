@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { CustomerLegalBankModule } from '@/store/modules/customers_legal/customer-legal-bank'
 import { ICustomerLegalBank } from '@/api/customers_legal/types'
 import { Form } from 'element-ui'
@@ -59,6 +59,8 @@ import { Form } from 'element-ui'
   name: 'LegalBankInfo'
 })
 export default class extends Vue {
+  @Prop({ required: true }) private uid!: number
+
   public readonly $refs!: {
     frm: Form
   }
@@ -67,12 +69,14 @@ export default class extends Vue {
 
   private frmMod: {
     title: string,
+    legal_customer: number,
     number: string | null,
     bank_code: string,
     correspondent_account: string,
     settlement_account: string
   } = {
     title: '',
+    legal_customer: this.uid,
     number: '',
     bank_code: '',
     correspondent_account: '',
@@ -107,6 +111,19 @@ export default class extends Vue {
     this.fillFrmMod(bank)
   }
 
+  @Watch('uid')
+  private onChUid(uid: number) {
+    this.frmMod.legal_customer = uid
+    CustomerLegalBankModule.getLegalBank(uid)
+  }
+
+  created() {
+    if (this.uid) {
+      this.frmMod.legal_customer = this.uid
+      CustomerLegalBankModule.getLegalBank(this.uid)
+    }
+  }
+
   private onSubmit() {
     this.$refs.frm.validate(async valid => {
       if (valid) {
@@ -128,7 +145,7 @@ export default class extends Vue {
   }
 
   private get isNew() {
-    return !Boolean(this.$store.state.legalbank.id)
+    return !(this.$store.state.legalbank.id > 0)
   }
 }
 </script>

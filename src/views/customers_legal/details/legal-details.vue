@@ -19,7 +19,10 @@
         el-col.col_vert_space(:sm='24' :md='12')
           el-card(shadow='never')
             template(v-slot:header) Банковские реквизиты
-            legal-bank-info
+            legal-bank-info(
+              v-if="ready"
+              :uid="uid"
+            )
 
     el-tab-pane(
       label="Филиалы"
@@ -38,7 +41,6 @@ import LegalForm from '@/views/customers_legal/legal-form.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import LegalBankInfo from './legal-bank-info.vue'
 import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
-import { CustomerLegalBankModule } from '@/store/modules/customers_legal/customer-legal-bank'
 import LegalBranches from './branches/list.vue'
 import TabMixin from '@/utils/tab-mixin'
 
@@ -69,9 +71,6 @@ export default class extends mixins(TabMixin) {
   created() {
     if (this.uid) {
       this.loadLegalCustomer(this.uid)
-
-      // Get legal bank info
-      CustomerLegalBankModule.getLegalBank(this.uid)
     }
 
     this.setCrumbs()
@@ -80,7 +79,6 @@ export default class extends mixins(TabMixin) {
   @Watch('uid')
   private onChUid(uid: number) {
     this.loadLegalCustomer(uid)
-    CustomerLegalBankModule.getLegalBank(uid)
   }
 
   @Watch('$store.state.customerlegal.title')
