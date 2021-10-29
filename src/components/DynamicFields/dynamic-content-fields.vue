@@ -10,7 +10,6 @@
           :label="f.title"
           prop='content'
         )
-          p {{ f }}
           el-input(
             v-if="f.field_type == 1"
             v-model="f.content"
@@ -28,6 +27,10 @@
             type="datetime"
             value-format="yyyy-MM-dd HH:mm"
             format="d.MM.yyyy HH:mm"
+          )
+          el-switch(
+            v-else-if="f.field_type == 7"
+            v-model="f.content"
           )
           el-input(
             v-else
