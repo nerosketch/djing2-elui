@@ -16,6 +16,11 @@ jobs:
 
     env:
       VUE_APP_BASE_API: /api
+      SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+      SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
+      SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+      SERVER_HOST: ${{secrets.SERVER_HOST}}
+      SERVER_USER: ${{secrets.SERVER_USER}}
 
     steps:
         # Чекаутим код
@@ -24,3 +29,12 @@ jobs:
         run: npm install
       - name: Build project
         run: npm run build
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ../private.key
+          sudo chmod 600 ../private.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          scp -r ./dist ${SERVER_USER}@${SERVER_HOST}:
+          ssh -i $SSH_KEY_PATH ${SERVER_USER}@${SERVER_HOST} "sudo /bin/bash /home/${SERVER_USER}/bin/apply_djing_ui.sh"
+        shell: bash
