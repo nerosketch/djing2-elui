@@ -16,4 +16,6 @@ USER node
 
 WORKDIR ${APP_DIR}
 
+COPY . .
+
 CMD npm install && exec npm run serve
