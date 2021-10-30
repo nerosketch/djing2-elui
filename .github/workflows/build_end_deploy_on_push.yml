@@ -17,8 +17,6 @@ jobs:
     env:
       VUE_APP_BASE_API: /api
       SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-      SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
-      SSH_KEY_PATH: ${{ github.workspace }}/private.key
       SERVER_HOST: ${{secrets.SERVER_HOST}}
       SERVER_USER: ${{secrets.SERVER_USER}}
 
@@ -32,12 +30,18 @@ jobs:
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ./private.key
-          sudo chmod 600 ./private.key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SERVER_HOST
+            User $SERVER_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
         shell: bash
       - name: Deploy to server
         run: |
-          scp -r ./dist ${SERVER_USER}@${SERVER_HOST}:
-          ssh -i $SSH_KEY_PATH ${SERVER_USER}@${SERVER_HOST} "sudo /bin/bash /home/${SERVER_USER}/bin/apply_djing_ui.sh"
+          scp -r ./dist staging:
+          ssh staging "sudo /bin/bash ~/bin/apply_djing_ui.sh"
         shell: bash
