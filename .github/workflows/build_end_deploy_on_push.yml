@@ -36,7 +36,7 @@ jobs:
           sudo chmod 600 ./private.key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
         shell: bash
-      -name: Deploy to server
+      - name: Deploy to server
         run: |
           scp -r ./dist ${SERVER_USER}@${SERVER_HOST}:
           ssh -i $SSH_KEY_PATH ${SERVER_USER}@${SERVER_HOST} "sudo /bin/bash /home/${SERVER_USER}/bin/apply_djing_ui.sh"
