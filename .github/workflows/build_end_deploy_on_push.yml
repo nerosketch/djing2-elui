@@ -1,0 +1,26 @@
+name: Run build and deploy on push
+
+on:
+  push:
+    branches:
+      - devel
+      - master
+      - env_config
+jobs:
+  run_tests:
+    runs-on: [ubuntu-latest]
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    env:
+      VUE_APP_BASE_API: /api
+
+    steps:
+        # Чекаутим код
+      - uses: actions/checkout@v2
+      - name: Install deps
+        run: npm install
+      - name: Build project
+        run: npm run build
