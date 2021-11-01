@@ -9,7 +9,7 @@ services:
     stdin_open: true
     tty: true
     environment:
-      - VUE_APP_BASE_API=/api
+      - VUE_APP_BASE_API
       - NODE_ENV
     volumes:
       - .:/home/node/app
