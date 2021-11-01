@@ -3,7 +3,7 @@
     el-option(
       v-for="str in streets"
       :key="str.id"
-      :label="str.title"
+      :label="str.fias_address_type_name ? `${str.fias_address_type_name} ${str.title}` : str.title"
       :value="str.id"
     )
 </template>
