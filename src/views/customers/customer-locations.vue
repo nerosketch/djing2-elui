@@ -9,7 +9,7 @@
       template(v-slot:title="{row}")
         router-link.el-link.el-link--primary.is-underline(
           :to="{name: 'customersList', params:{ addrId: row.id }}"
-        ) {{ row.fias_address_type_name }} {{ row.title }}
+        ) {{ row.title }}
 
       el-button-group
         el-button(
