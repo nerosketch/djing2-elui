@@ -47,7 +47,7 @@ export default class extends Vue {
   private getLocations(params?: IDRFRequestListAddrsParameters) {
     if (params) {
       params = Object.assign(params, {
-        fields: 'id,title,fias_address_type_name',
+        fields: 'id,title',
         address_type: IAddressEnumTypes.LOCALITY
       })
     }
