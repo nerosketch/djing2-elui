@@ -14,12 +14,6 @@
         v-model="frmMod.title"
       )
     el-form-item(
-      label="Номер банковского счёта"
-    )
-      el-input(
-        v-model="frmMod.number"
-      )
-    el-form-item(
       label="БИК"
       prop="bank_code"
     )
@@ -70,14 +64,12 @@ export default class extends Vue {
   private frmMod: {
     title: string,
     legal_customer: number,
-    number: string | null,
     bank_code: string,
     correspondent_account: string,
     settlement_account: string
   } = {
     title: '',
     legal_customer: this.uid,
-    number: '',
     bank_code: '',
     correspondent_account: '',
     settlement_account: ''
@@ -100,7 +92,6 @@ export default class extends Vue {
 
   private fillFrmMod(bank: ICustomerLegalBank) {
     this.frmMod.title = bank.title
-    this.frmMod.number = bank.number
     this.frmMod.bank_code = bank.bank_code
     this.frmMod.correspondent_account = bank.correspondent_account
     this.frmMod.settlement_account = bank.settlement_account

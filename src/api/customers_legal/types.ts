@@ -33,7 +33,6 @@ export interface ICustomerLegalBank {
   id: number
   legal_customer: number
   title: string                  // Название банка
-  number: string                 // Номер счёта в банке
   bank_code: string              // БИК
   correspondent_account: string  // корреспондентский счёт
   settlement_account: string     // расчётный счёт
