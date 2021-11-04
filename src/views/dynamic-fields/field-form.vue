@@ -42,7 +42,7 @@
         type="primary"
         @click="onSubmit"
         :loading="isLoading"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

@@ -18,7 +18,7 @@
       @click="saveGroups"
       :loading="loading"
       :disabled="!$perms.is_superuser"
-    ) Сохранить
+    ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

@@ -40,7 +40,7 @@
         icon="el-icon-upload"
         type='primary'
         @click="onSubmit"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -130,7 +130,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

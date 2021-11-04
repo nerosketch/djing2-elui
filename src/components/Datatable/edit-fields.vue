@@ -13,7 +13,7 @@ div
     icon='el-icon-upload'
     type='primary'
     @click="saveFieldsVisible"
-  ) Сохранить
+  ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

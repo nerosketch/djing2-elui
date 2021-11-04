@@ -2,7 +2,9 @@
   el-form(
     v-loading='loading'
   )
-    el-form-item(label="Услуга")
+    el-form-item(
+      :label="$t('customers.service')"
+    )
       el-select(v-model="frmMod.service_id")
         el-option(
           v-for="srv in services"
@@ -10,7 +12,9 @@
           :label="srv.title"
           :value="srv.id"
         )
-    el-form-item(label="Дата завершения")
+    el-form-item(
+      :label="$t('endDate')"
+    )
       el-date-picker(
         v-model="frmMod.deadline"
         type="datetime"
@@ -22,7 +26,7 @@
         type="success" @click="onSubmit"
         :loading="loading"
         :disabled="!$perms.customers.can_buy_service"
-      ) Купить
+      ) {{ $t('buy') }}
 </template>
 
 <script lang="ts">
@@ -73,7 +77,9 @@ export default class extends Vue {
   private async onSubmit() {
     this.loading = true
     if (this.frmMod.service_id === 0) {
-      this.$message.error('Надо выбрать услугу')
+      this.$message.error(
+        this.$t('customers.chooseServiceNecessary').toString()
+      )
       return
     }
     try {

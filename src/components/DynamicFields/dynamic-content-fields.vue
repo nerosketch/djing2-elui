@@ -41,7 +41,7 @@
         el-button(
           icon='el-icon-upload'
           type="primary" @click="saveData"
-        ) Сохранить
+        ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

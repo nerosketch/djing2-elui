@@ -7,12 +7,12 @@
     v-loading='loading'
   )
     el-form-item(
-      label="IP Адрес"
+      :label="$t('ipAddress')"
       prop='ip_address'
     )
       el-input(v-model="frmMod.ip_address")
     el-form-item(
-      label="MAC Адрес"
+      :label="$t('macAddress')"
       prop='mac_addr'
     )
       el-input(v-model="frmMod.mac_addr")
@@ -74,7 +74,7 @@
         icon='el-icon-upload'
         type="primary" @click="onSubmit" :loading="loading"
         :disabled="isFormUntouched || !$perms.devices.change_device"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -167,7 +167,7 @@ export default class extends mixins(FormMixin) {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

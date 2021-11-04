@@ -14,7 +14,7 @@
           type="primary" @click="onSubmit"
           icon='el-icon-upload'
           :disabled="isEmpty || !$perms.is_superuser"
-        ) Сохранить
+        ) {{ $t('save') }}
         el-button(
           @click="$emit('cancel')"
           icon="el-icon-close"

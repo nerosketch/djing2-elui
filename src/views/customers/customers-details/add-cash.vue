@@ -7,12 +7,12 @@
     :model='frmMod'
   )
     el-form-item(
-      label="Количество денег"
+      :label="$t('customers.sum')"
       prop='cost'
     )
       el-input(v-model="frmMod.cost" type='number' max="15000")
     el-form-item(
-      label="Комментарий"
+      :label="$t('comment')"
       prop='comment'
     )
       el-input(v-model="frmMod.comment" :maxlength='128')
@@ -21,7 +21,7 @@
         icon='el-icon-upload'
         type="primary" @click="onSubmit"
         :loading="loading"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -42,7 +42,7 @@ export default class extends Vue {
 
   private frmRules = {
     cost: [
-      { required: true, message: 'Укажи сколько денег надо положить на счёт', trigger: 'blur' },
+      { required: true, message: this.$t('customers.howMuchAddition').toString(), trigger: 'blur' },
       {
         validator: (rule: any, value: number, callback: Function) => {
           if (value >= 15000) {
@@ -52,7 +52,7 @@ export default class extends Vue {
           }
         },
         trigger: 'change',
-        message: 'Нельзя пополнять больше чем на 15000'
+        message: this.$t('customers.additionMoreThanForbidden').toString() + ' 15000'
       },
       {
         validator: (rule: any, value: number, callback: Function) => {
@@ -63,7 +63,7 @@ export default class extends Vue {
           }
         },
         trigger: 'change',
-        message: 'Нельзя снимать больше чем 15000'
+        message: this.$t('customers.withdrawalMoreThanForbidden').toString() + ' 15000'
       }
     ]
   }
@@ -80,7 +80,9 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(
+          this.$t('fixFormErrs').toString()
+        )
       }
     })
   }

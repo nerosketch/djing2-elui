@@ -37,7 +37,7 @@
         type="primary"
         @click="onSubmit"
         :loading="isLoading"
-      ) Сохранить
+      ) {{ $t('save') }}
 
       el-divider(direction="vertical")
 
@@ -132,7 +132,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

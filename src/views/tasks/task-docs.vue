@@ -10,7 +10,7 @@
     el-button(
       type="primary"
       v-if="$perms.tasks.add_taskdocumentattachment"
-    ) Добавить документ
+    ) {{ $t('addDocument') }}
 </template>
 
 <script lang="ts">

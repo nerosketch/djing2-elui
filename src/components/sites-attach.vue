@@ -16,7 +16,7 @@
       icon='el-icon-upload'
       type="primary" @click="onSubmit"
       :disabled="!$perms.is_superuser"
-    ) Сохранить
+    ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

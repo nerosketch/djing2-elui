@@ -8,12 +8,12 @@
       border fit
     )
       el-table-column(
-        label="IP Адрес"
+        :label="$t('ipAddress')"
         min-width='110'
         prop='ip_address'
       )
       el-table-column(
-        label="MAC Адрес"
+        :label="$t('macAddress')"
         min-width='110'
         prop='mac_address'
       )

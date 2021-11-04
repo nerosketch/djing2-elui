@@ -11,7 +11,7 @@ div
 
     el-button(
       @click="addCashDialog=true"
-    ) Пополнить счёт
+    ) {{ $t('customers.addCash2Account') }}
 
   el-dialog(
     title="Пополнить счёт"

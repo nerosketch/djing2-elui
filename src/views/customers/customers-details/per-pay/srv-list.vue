@@ -6,27 +6,27 @@ div
     border fit
   )
     el-table-column(
-      label="Последний платёж"
+      :label="$t('customers.lastPay')"
       prop='last_pay'
     )
     el-table-column(
-      label="Следующий платёж"
+      :label="$t('customers.nextPay')"
       prop='next_pay'
     )
     el-table-column(
-      label="Название"
+      :label="$t('title')"
       prop='service_name'
     )
     el-table-column(
-      label="Тип расчёта"
+      :label="$t('customers.calcType')"
       prop='service_calc_type'
     )
     el-table-column(
-      label="Цена"
+      :label="$t('customers.cost')"
       prop='service_amount'
     )
     el-table-column(
-      label="Удалить"
+      :label="$t('del')"
     )
       template(v-slot:default="{row}")
         el-button(
@@ -37,10 +37,10 @@ div
   el-button(
     type='primary'
     @click="pSrvDialog=true"
-  ) Добавить периодический платёж
+  ) {{ $t('customers.addPeriodicPay') }}
 
   el-dialog(
-    title="Добавить периодический платёж"
+    :title="$t('customers.addPeriodicPay')"
     :visible.sync="pSrvDialog"
     :close-on-click-modal="false"
   )
@@ -90,10 +90,14 @@ export default class extends Vue {
   }
 
   private delP4IdPay(pay: IPeriodicPayForId) {
-    this.$confirm('Удалить периодическое снятие средств?').then(async() => {
+    this.$confirm(
+      this.$t('customers.areUSure2DelPeriodicPay').toString()
+    ).then(async() => {
       await delAssignedPeriodicPay(pay.id)
       this.loadPIdServices()
-      this.$message.success('Удалено')
+      this.$message.success(
+        this.$t('deleted').toString()
+      )
     })
   }
 }

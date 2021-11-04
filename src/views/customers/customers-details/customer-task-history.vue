@@ -42,27 +42,27 @@ export default class extends Vue {
     },
     {
       prop: 'author_uname',
-      label: 'Автор',
+      label: this.$t('customers.author').toString(),
       'min-width': 100
     },
     {
       prop: 'descr',
-      label: 'Комментарий',
+      label: this.$t('customers.comment').toString(),
       'min-width': 250
     },
     {
       prop: 'state_str',
-      label: 'Состояние',
+      label: this.$t('customers.state').toString(),
       'min-width': 200
     },
     {
       prop: 'mode_str',
-      label: 'Тип',
+      label: this.$t('customers.type').toString(),
       'min-width': 150
     },
     {
       prop: 'time_of_create',
-      label: 'Дата создания',
+      label: this.$t('startDate').toString(),
       'min-width': 200
     }
   ]

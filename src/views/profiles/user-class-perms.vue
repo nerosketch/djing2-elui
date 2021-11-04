@@ -27,7 +27,7 @@ div
     :loading="saveLoading"
     :disabled="isUnTouched || !$perms.is_superuser"
     @click="savePerms"
-  ) Сохранить
+  ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

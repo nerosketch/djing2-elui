@@ -28,7 +28,7 @@
         icon='el-icon-upload'
         :disabled='isEmpty'
         :loading="loading"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

@@ -27,7 +27,7 @@
       type="primary" @click="onSubmit"
       :disabled="!$perms.is_superuser"
       :loading="oGroupsLoading"
-    ) Сохранить
+    ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

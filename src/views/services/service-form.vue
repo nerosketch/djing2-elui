@@ -60,7 +60,7 @@
         @click="onSubmit"
         :loading="isLoading"
         :disabled="isFormUntouched"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -158,7 +158,7 @@ export default class extends mixins(FormMixin) {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

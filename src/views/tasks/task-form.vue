@@ -87,7 +87,7 @@
           @click="onSubmit"
           icon='el-icon-upload'
           :disabled="isFormUntouched"
-        ) Сохранить
+        ) {{ $t('save') }}
         el-button(
           v-if="!isNewTask"
           type="danger"
@@ -239,7 +239,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         }
         this.loading = false
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

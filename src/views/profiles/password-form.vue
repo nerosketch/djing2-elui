@@ -32,7 +32,7 @@
           @click="onSubmit"
           icon="el-icon-download"
           :disabled="isEmpty"
-        ) Сохранить
+        ) {{ $t('save') }}
         el-button(@click="$emit('cancel')" icon="el-icon-close") Отмена
 </template>
 
@@ -117,7 +117,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

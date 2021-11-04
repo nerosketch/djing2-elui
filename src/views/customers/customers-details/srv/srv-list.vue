@@ -7,7 +7,7 @@ div
   )
     el-table-column(
       align="center"
-      label="Заказ."
+      :label="$t('customers.orderShortText')"
       width="60"
     )
       template(v-slot:default="{row}")
@@ -17,28 +17,28 @@ div
           icon='el-icon-shopping-cart-2' circle
         )
     el-table-column(
-      label="Услуга"
+      :label="$t('customers.service')"
       prop='title'
     )
     el-table-column(
-      label="Сумма"
+      :label="$t('customers.sum')"
       prop='cost'
     )
     el-table-column(
-      label="Входящая скорость"
+      :label="$t('customers.inSpeed')"
       prop='speed_in'
     )
     el-table-column(
-      label="Исходящая скорость"
+      :label="$t('customers.outSpeed')"
       prop='speed_out'
     )
   el-button(
     @click="srvAccDialog=true" icon="el-icon-s-tools"
     type="primary"
-  ) Привязать услуги к этой группе
+  ) {{ $t('customers.attachServices2Groups') }}
 
   el-dialog(
-    title="Принадлежность услуг к группам"
+    :title="$t('customers.belongingServices2Groups')"
     :visible.sync="srvAccDialog"
     :close-on-click-modal="false"
   )
@@ -47,7 +47,7 @@ div
       :groupId="$store.state.customer.group"
     )
   el-dialog(
-    title="Купить услугу"
+    :title="$t('customers.buyService')"
     :visible.sync="buyDialog"
     :close-on-click-modal="false"
   )
@@ -110,15 +110,18 @@ export default class extends Vue {
 
   buyOpen(s: IService) {
     if (s.cost > CustomerModule.balance) {
-      this.$confirm('У абонента не достаточно средств для включения услуги, включить её в минус?', {
-        confirmButtonText: 'Да',
-        cancelButtonText: 'Нет, не надо',
+      this.$confirm(
+        this.$t('customers.customerNotEnoughMoneyDoConnectItQuestion').toString(), {
+        confirmButtonText: this.$t('yes').toString(),
+        cancelButtonText: this.$t('no').toString(),
         type: 'warning'
       }).then(() => {
         this.selectedServiceId = s.id
         this.buyDialog = true
       }).catch(() => {
-        this.$message.info('Отмена покупки услуги')
+        this.$message.info(
+          this.$t('customers.buyServiceCancellation').toString()
+        )
       })
     } else {
       this.selectedServiceId = s.id
@@ -128,7 +131,9 @@ export default class extends Vue {
 
   buyDone() {
     this.buyDialog = false
-    this.$message.success('Услуга успешно куплена')
+    this.$message.success(
+      this.$t('customers.buyServiceOk').toString()
+    )
     CustomerModule.UpdateCustomer()
     this.$emit('buydone')
   }

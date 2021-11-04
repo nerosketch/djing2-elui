@@ -3,7 +3,7 @@
     v-loading='loading'
   )
     el-form-item(
-      label="Периодический платёж"
+      :label="$t('customers.periodicPay')"
     )
       el-select(v-model="pserviceId")
         el-option(
@@ -13,7 +13,7 @@
           :value="srv.id"
         )
     el-form-item(
-      label="Дата следующего платежа"
+      :label="$t('customers.dateNextPay')"
     )
       el-date-picker(
         v-model="deadline"
@@ -26,7 +26,7 @@
         type="success" @click="onSubmit"
         :loading="loading"
         :disabled="addDisabledGetter"
-      ) Добавить
+      ) {{ $t('add') }}
 </template>
 
 <script lang="ts">

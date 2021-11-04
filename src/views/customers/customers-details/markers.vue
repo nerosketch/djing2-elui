@@ -11,7 +11,7 @@
       icon='el-icon-download'
       :loading='loading'
       @click='saveMarkers'
-    ) Сохранить
+    ) {{ $t('save') }}
 </template>
 
 <script lang="ts">

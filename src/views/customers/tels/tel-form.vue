@@ -80,7 +80,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

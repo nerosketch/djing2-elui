@@ -10,7 +10,7 @@
   )
     el-button(
       type="primary"
-    ) Добавить документ
+    ) {{ $t('addDocument') }}
 </template>
 
 <script lang="ts">
@@ -43,7 +43,7 @@ export default class extends Vue {
   }
 
   private beforeRemove(file: IFileItem) {
-    return this.$confirm(`Удалить "${file.name}"?`)
+    return this.$confirm(`${this.$t('del')} "${file.name}"?`)
   }
 
   get customerId() {
@@ -79,7 +79,7 @@ export default class extends Vue {
         this.$message.error(err)
       }
     } else {
-      this.$message.error('Не передан id абонента. Это к разработчику')
+      this.$message.error('customerId not passed')
     }
   }
 

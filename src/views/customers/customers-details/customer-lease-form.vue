@@ -8,7 +8,7 @@
     :model='frmMod'
   )
     el-form-item(
-      label="IP Адрес"
+      :label="$t('ipAddress')"
       prop='ip_address'
     )
       el-input(v-model="frmMod.ip_address")
@@ -20,7 +20,7 @@
             :disabled="frmMod.pool === 0"
           )
     el-form-item(
-      label="IP Pool"
+      :label="$t('customers.ipPool')"
       prop='pool'
     )
       el-select(
@@ -37,11 +37,11 @@
           )
         el-option(
           v-else
-          label="Нет пулов"
+          :label="$('customers.poolsNotExists')"
           :value="null"
         )
     el-form-item(
-      label="MAC Адрес"
+      :label="$t('macAddress')"
       prop='mac_address'
     )
       el-input(v-model="frmMod.mac_address")
@@ -51,7 +51,7 @@
         type="primary"
         @click="onSubmit"
         :loading="frmLoading"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -80,11 +80,11 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: 'IP не может быть пустым', trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: 'Не правильный ip' }
+      { required: true, message: this.$t('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('customers.badIp') }
     ],
     mac_address: [
-      { validator: macAddrValidator, trigger: 'change', message: 'Не правильный mac' }
+      { validator: macAddrValidator, trigger: 'change', message: this.$t('customers.badMac') }
     ]
   }
 
@@ -112,7 +112,7 @@ export default class extends Vue {
           this.frmLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }
@@ -125,7 +125,9 @@ export default class extends Vue {
       if (ip) {
         this.frmMod.ip_address = ip
       } else {
-        this.$message.error('Не получилось подобрать ip :(')
+        this.$message.error(
+          this.$t('customers.failedGettingFreeIp').toString()
+        )
       }
     } catch (err) {
       this.$message.error(err)

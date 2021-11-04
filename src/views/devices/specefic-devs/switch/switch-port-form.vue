@@ -22,7 +22,7 @@
         icon='el-icon-upload'
         type="primary" @click="onSubmit" :loading="loading"
         :disabled="!$perms.devices.change_port"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -93,7 +93,7 @@ export default class extends Vue {
           this.$emit('adddone', newPort)
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

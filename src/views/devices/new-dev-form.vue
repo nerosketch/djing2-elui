@@ -7,12 +7,12 @@
     v-loading="loading"
   )
     el-form-item(
-      label="IP Адрес"
+      :label="$t('ipAddress')"
       prop='ip_address'
     )
       el-input(v-model="frmMod.ip_address")
     el-form-item(
-      label="MAC Адрес"
+      :label="$t('macAddress')"
       prop='mac_addr'
     )
       el-input(v-model="frmMod.mac_addr")
@@ -153,7 +153,7 @@ export default class extends Vue {
           this.$emit('err', err)
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

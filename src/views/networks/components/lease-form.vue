@@ -27,7 +27,7 @@
         type='primary'
         @click="onSubmit"
         :loading="isLoading"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -45,7 +45,7 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: 'IP не может быть пустым', trigger: 'blur' },
+      { required: true, message: this.$t('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
       { validator: ipAddrValidator, trigger: 'change', message: 'Пример ip: 192.168.0.23' }
     ],
     mac_address: [
@@ -84,7 +84,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

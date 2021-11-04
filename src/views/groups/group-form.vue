@@ -18,7 +18,7 @@
         type="primary"
         @click="onSubmit"
         :loading="isLoading"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -68,7 +68,7 @@ export default class extends Vue {
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }

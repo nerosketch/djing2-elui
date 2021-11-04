@@ -25,7 +25,7 @@ el-form(
             icon='el-icon-upload'
             type="primary" @click="onSubmit"
             :loading="isLoading"
-          ) Сохранить
+          ) {{ $t('save') }}
           el-button(
             icon="el-icon-view" @click="onGo2Dev"
             :disabled="!frmMod.device"

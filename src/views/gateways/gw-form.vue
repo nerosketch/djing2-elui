@@ -12,7 +12,7 @@
     )
       el-input(v-model="frmMod.title")
     el-form-item(
-      label="IP адрес"
+      :label="$t('ipAddress')"
       prop='ip_address'
     )
       el-input(v-model="frmMod.ip_address")
@@ -64,7 +64,7 @@
         @click="onSubmit"
         :loading="isLoading"
         :disabled="isFormUntouched"
-      ) Сохранить
+      ) {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -152,7 +152,7 @@ export default class extends mixins(FormMixin) {
           this.$emit('err', err)
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$t('fixFormErrs').toString())
       }
     })
   }
