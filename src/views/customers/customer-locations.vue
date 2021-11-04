@@ -15,7 +15,7 @@
         el-button(
           icon='el-icon-d-caret'
           @click="goToAfkList"
-        ) Фильтр afk
+        ) {{ $t('customers.afkFilter') }}
         el-button(
           icon="el-icon-user-solid"
           @click="go2Bums"

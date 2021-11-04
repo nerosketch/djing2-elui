@@ -20,7 +20,7 @@
             v-if="theOnlyOneChild.meta.title"
             slot="title"
           >
-            {{ theOnlyOneChild.meta.title }}
+            {{ translated(theOnlyOneChild.meta.title) }}
             <small
               v-if="childCalc"
               class="calc-place"
@@ -42,7 +42,7 @@
         <span
           v-if="item.meta && item.meta.title"
           slot="title"
-        >{{ item.meta.title }}</span>
+        >{{ translated(item.meta.title) }}</span>
       </template>
       <template v-if="item.children">
         <sidebar-item
@@ -126,6 +126,14 @@ export default class extends Vue {
       return this.basePath
     }
     return path.resolve(this.basePath, routePath)
+  }
+
+  private translated(title: string) {
+    const code = `route.${title}`
+    if (this.$te(code)) {
+      return this.$t(code)
+    }
+    return title
   }
 }
 </script>
