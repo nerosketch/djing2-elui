@@ -9,7 +9,7 @@ const addrRoutes: RouteConfig = {
       path: '/addrs',
       component: () => import(/* webpackChunkName: "localities" */ '@/views/addresses/addrs-tree.vue'),
       meta: {
-        title: 'Адреса',
+        title: 'addresses',
         icon: 'el-icon-s-home'
       }
     }

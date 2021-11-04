@@ -9,7 +9,7 @@ const deviceRoutes: RouteConfig = {
       path: '',
       component: () => import(/* webpackChunkName: "device-locations" */ '@/views/devices/dev-loc-list.vue'),
       meta: {
-        title: 'Оборудование',
+        title: 'devices',
         icon: 'el-icon-coin'
       }
     },
