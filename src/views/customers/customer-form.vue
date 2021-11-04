@@ -103,14 +103,14 @@
         v-on:done="openPasportDlg=false"
       )
     el-dialog(
-      :title='$t('tasks.adding')'
+      :title="$t('tasks.adding')"
       :visible.sync='taskFormDialog'
       :close-on-press-escape="false"
       :close-on-click-modal="false"
     )
       task-form
     el-dialog(
-      :title='$t('customers.passwordLong')'
+      :title="$t('customers.passwordLong')"
       :visible.sync='openPasswordDlg'
       :close-on-press-escape="false"
       :close-on-click-modal="false"
