@@ -44,7 +44,7 @@
         template(v-slot:header) Состояние ONU
           el-link(style="float: right" icon='el-icon-refresh' @click="refreshDev")
         p(type='flex' v-if="$store.getters.isOnuRegistered && macsNotEqual")
-          b Внимание!
+          b {{ $t('attention') }}!
           span  Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить".
             |  Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
             |  Так же можно проверить место на "глазе" olt, может он заполнен.

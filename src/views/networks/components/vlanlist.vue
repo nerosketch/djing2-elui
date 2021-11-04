@@ -33,7 +33,7 @@ div
         icon='el-icon-plus'
         @click='openNew'
         :disabled="!$perms.networks.add_vlanif"
-      ) Добавить
+      ) {{ $t('add') }}
       el-button(
         icon='el-icon-s-operation'
         @click="editFieldsVisible=true"

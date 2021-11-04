@@ -24,7 +24,7 @@ div
       icon='el-icon-plus'
       type='success'
       @click="openNew"
-    ) Добавить
+    ) {{ $t('add') }}
 
   el-dialog(
     :title="(isNew ? 'Создание' : 'Изменение') + ' одноразового платежа'"

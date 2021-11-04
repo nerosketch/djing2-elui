@@ -16,7 +16,7 @@
         icon='el-icon-plus'
         :disabled="!isFilled"
         @click="onSubmit"
-      ) Добавить
+      ) {{ $t('add') }}
 </template>
 
 

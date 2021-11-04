@@ -11,12 +11,12 @@
       v-model="frmMod.fio"
     )
     el-form-item(
-      label="Логин"
+      :label="$t('customers.username')"
       prop='username'
     )
       el-input(v-model="frmMod.username")
     el-form-item(
-      label="Телефон"
+      :label="$t('customers.phone')"
       prop='telephone'
     )
       tels-input(v-model="frmMod.telephone")
@@ -29,7 +29,7 @@
         readonly
       )
     el-form-item(
-      label="День рождения"
+      :label="$t('customers.birthDay')"
       prop='birth_day'
     )
       el-date-picker(
@@ -39,24 +39,26 @@
         format="d.MM.yyyy"
       )
     el-form-item(
-      label="Группа"
+      :label="$t('groups.group')"
     )
       groups-choice(v-model="frmMod.group")
     el-form-item(
-      label="Опции"
+      :label="$t('customers.options')"
     )
-      el-checkbox(v-model="frmMod.is_active") - Активный: {{ frmMod.is_active ? 'Да' : 'Нет' }}
-      el-checkbox(v-model="frmMod.is_dynamic_ip") - Динамические настройки по dhcp: {{ frmMod.is_dynamic_ip ? 'Да' : 'Нет' }}
+      el-checkbox(v-model="frmMod.is_active") - Активный:
+        boolean-icon(v-model="frmMod.is_active")
+      el-checkbox(v-model="frmMod.is_dynamic_ip") - Динамические настройки по dhcp:
+        boolean-icon(v-model="frmMod.is_dynamic_ip")
     el-form-item(
-      label="Адрес"
+      :label="$t('addrs.addr')"
     )
       addr-field-input(v-model="frmMod.address")
     el-form-item(
-      label="Шлюз доступа"
+      :label="$t('customers.gateway')"
     )
       gws-selectfield(v-model="frmMod.gateway")
     el-form-item(
-      label="Доп. сведения"
+      :label="$t('customers.additionalInfo')"
     )
       el-input(v-model="frmMod.description" type="textarea" rows="5" cols="40")
     el-form-item
@@ -71,28 +73,28 @@
           type="success" icon='el-icon-plus'
           @click="openTaskFormDialog"
           :loading="taskFormDialogLoading"
-        ) Добавить задачу
+        ) {{ $t('tasks.add') }}
         el-button(
           @click="openPasportDlg = true" icon='el-icon-paperclip'
           :disabled="!$perms.customers.view_passportinfo"
-        ) Паспорт
+        ) {{ $t('customers.passport') }}
         el-button(
           @click="openPasswordDlg = true"
           icon='el-icon-lock'
-        ) Пароль
+        ) {{ $t('customers.password') }}
         el-button(
           v-if="$perms.is_superuser"
           @click="sitesDlg = true"
           icon='el-icon-lock'
-        ) Сайты
+        ) {{ $t('customers.sites') }}
         el-button(
           type='danger'
           title="Полное удаление учётной записи абонента из билинга"
           icon='el-icon-close'
           @click="delCustomer"
-        ) Удалить уч.
+        ) {{ $t('del') }}
     el-dialog(
-      title="Паспортные данные"
+      :title="$t('customers.passportLong')"
       :visible.sync="openPasportDlg"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
@@ -101,14 +103,14 @@
         v-on:done="openPasportDlg=false"
       )
     el-dialog(
-      title='Создание задачи'
+      :title='$t('tasks.adding')'
       :visible.sync='taskFormDialog'
       :close-on-press-escape="false"
       :close-on-click-modal="false"
     )
       task-form
     el-dialog(
-      title='Пароль абонента'
+      :title='$t('customers.passwordLong')'
       :visible.sync='openPasswordDlg'
       :close-on-press-escape="false"
       :close-on-click-modal="false"
@@ -119,7 +121,7 @@
         v-on:done="openPasswordDlg=false"
       )
     el-dialog(
-      title="Принадлежность сайтам"
+      :title="$t('customers.sitesAccessory')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false"
     )
@@ -146,6 +148,7 @@ import TelsInput from './tels/tels-input.vue'
 import CustomerFormFio from './customer-form-fio.vue'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 @Component({
   name: 'customer-form',
@@ -157,7 +160,8 @@ import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
     CustomerFormFio,
     AddrFieldInput,
     GroupsChoice,
-    GwsSelectfield
+    GwsSelectfield,
+    BooleanIcon
   }
 })
 export default class extends mixins(FormMixin) {
@@ -170,14 +174,26 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     username: [
-      { required: true, message: 'Логин абонента обязателен', trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
+      {
+        required: true,
+        message: this.$t('customers.usernameRequiredValidatorErrText'),
+        trigger: 'blur'
+      },
+      {
+        validator: latinValidator,
+        trigger: 'change',
+        message: this.$t('customers.usernameFilterValidatorErrText')
+      }
     ],
     telephone: [
       { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
     ],
     birth_day: [
-      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$t('customers.birthDayRequiredValidatorErrText'),
+        trigger: 'blur'
+      }
     ]
   }
 
@@ -213,7 +229,9 @@ export default class extends mixins(FormMixin) {
         try {
           const newDat = await CustomerModule.PatchCustomer(this.frmMod)
           this.$emit('done', newDat)
-          this.$message.success('Абонент сохранён')
+          this.$message.success(
+            this.$t('customers.customerSavedOk').toString()
+          )
         } catch (err) {
           this.$message.error(err)
         } finally {
@@ -226,11 +244,16 @@ export default class extends mixins(FormMixin) {
   }
 
   private delCustomer() {
-    this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
+    this.$confirm(
+      this.$t('customers.customerDeletionConfigmation').toString(),
+      this.$t('attention').toString()
+    ).then(async() => {
       try {
         const currLoc = this.$store.state.customer.address
         await CustomerModule.DelCustomer()
-        this.$message.success('Учётка удалена')
+        this.$message.success(
+          this.$t('customers.accountRemovedOk').toString()
+        )
         this.$router.push({ name: 'customersList', params: { addrId: currLoc.toString() } })
       } catch (err) {
         this.$message.error(err)
@@ -276,7 +299,9 @@ export default class extends mixins(FormMixin) {
     CustomerModule.PatchCustomer({
       sites: selectedSiteIds
     }).then(() => {
-      this.$message.success('Принадлежность абонента сайтам сохранена')
+      this.$message.success(
+        this.$t('customers.siteAccessorySavedOk').toString()
+      )
     })
     this.sitesDlg = false
   }

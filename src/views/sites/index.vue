@@ -80,9 +80,11 @@ export default class extends Vue {
   ]
 
   get dialogTitle() {
-    let t = 'Изменить'
+    let t
     if (SiteModule.id === 0) {
-      t = 'Создать'
+      t = this.$t('add').toString()
+    } else {
+      t = this.$t('change').toString()
     }
     return `${t} домен`
   }

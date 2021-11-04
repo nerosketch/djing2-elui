@@ -26,7 +26,7 @@ div
     el-button(
       icon='el-icon-plus'
       @click="addNewUserGroup"
-    ) Добавить
+    ) {{ $t('add') }}
   el-dialog(
     :title="dialogTitle"
     :visible.sync="ugFormDialog"

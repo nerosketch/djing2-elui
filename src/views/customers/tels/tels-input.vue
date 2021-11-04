@@ -18,13 +18,13 @@ div
         circle icon='el-icon-plus'
       )
   el-dialog(
-    title="Дополнительные телефоны"
+    :title="$t('customers.additionalPhones')"
     :visible.sync="openTelsDlg"
     :close-on-click-modal="false"
   )
     additional-tels(ref="additionaltels")
   el-dialog(
-    title="Добавить телефон"
+    :title="$t('customers.addPhone')"
     :visible.sync="openAddTelsDlg"
     :close-on-click-modal="false"
   )

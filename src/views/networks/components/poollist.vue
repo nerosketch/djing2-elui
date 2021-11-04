@@ -29,7 +29,7 @@ div
         icon='el-icon-plus'
         @click='openNew'
         :disabled="!$perms.networks.add_networkippool"
-      ) Добавить
+      ) {{ $t('add') }}
       el-button(
         icon='el-icon-s-operation'
         @click="editFieldsVisible=true"
@@ -144,9 +144,11 @@ export default class extends Vue {
   private editFieldsVisible = false
 
   get dialogTitle() {
-    let w = 'Изменить'
+    let w
     if (NetworkIpPoolModule.id === 0) {
-      w = 'Добавить'
+      w = this.$t('add').toString()
+    } else {
+      w = this.$t('change').toString()
     }
     return `${w} подсеть`
   }

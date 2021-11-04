@@ -19,7 +19,7 @@
         el-button(
           icon="el-icon-user-solid"
           @click="go2Bums"
-        ) Абоненты без адреса
+        ) {{ $t('customers.withoutAddrs') }}
 </template>
 
 <script lang="ts">
@@ -39,7 +39,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$t('title').toString(),
       'min-width': 250
     }
   ]
@@ -61,7 +61,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Населённые пункты'
+          title: this.$t('addrs.addresses')
         }
       }
     ] as any)

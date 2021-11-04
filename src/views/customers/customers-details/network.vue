@@ -1,7 +1,7 @@
 <template lang="pug">
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix Сетевое
+      .clearfix {{ $t('customers.networking') }}
     el-table(
       v-loading='loading'
       :data="leases"
@@ -18,17 +18,17 @@
         prop='mac_address'
       )
       el-table-column(
-        label="Время аренды"
+        :label="$t('customers.leaseTime')"
         min-width='110'
         prop='lease_time'
       )
       el-table-column(
-        label="Последнее обновление"
+        :label="$t('customers.sessionLastUpdate')"
         min-width='110'
         prop='last_update'
       )
       el-table-column(
-        label="Авто"
+        :label="$t('customers.auto')"
         align="center"
         width="50"
       )
@@ -56,10 +56,10 @@
     el-button(
       type='success' icon='el-icon-plus',
       @click="addLease"
-    ) Добавить
+    ) {{ $t('add') }}
 
     el-dialog(
-      :title="(isAddNewLease ? 'Добавить' : 'Изменить') + ' аренду ip'"
+      :title="(isAddNewLease ? $t('add') : $t('change')) + ' ' + $t('customers.minASessionLease')"
       :visible.sync='editDialog'
       :close-on-click-modal="false"
     )
@@ -132,13 +132,15 @@ export default class extends Vue {
   }
 
   public delLease(lease: ICustomerIpLease) {
-    this.$confirm('Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.', {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Нет'
+    this.$confirm(this.$t('customers.areUSure2DelIpLease').toString(), {
+      confirmButtonText: this.$t('yes').toString(),
+      cancelButtonText: this.$t('no').toString()
     }).then(async() => {
       try {
         await CustomerIpLeaseModule.DelLease(lease.id)
-        this.$message.success('Аренда удалена')
+        this.$message.success(
+          this.$t('customers.ipLeaseSuccessfullyRemoved').toString()
+        )
         this.loadLeases()
       } catch (err) {
         this.$message.error(err)

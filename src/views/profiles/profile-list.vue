@@ -36,7 +36,7 @@
         icon='el-icon-plus'
         @click="addNewProfile"
         :disabled="!$perms.is_superuser"
-      ) Добавить
+      ) {{ $t('add') }}
     el-dialog(
       title="Добавить учётку"
       :visible.sync="profileFormDialog"

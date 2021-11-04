@@ -36,7 +36,7 @@ div
         type='success'
         @click="openNew"
         :disabled="!$perms.services.add_service"
-      ) Добавить
+      ) {{ $t('add') }}
       el-button(
         icon='el-icon-s-operation'
         @click="editFieldsVisible=true"

@@ -23,7 +23,7 @@
           type="success"
           icon='el-icon-plus'
           @click="onAddVidToPort"
-        ) Добавить
+        ) {{ $t('add') }}
 
         el-button(
           slot='reference'

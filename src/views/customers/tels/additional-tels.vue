@@ -5,17 +5,17 @@
     border fit
   )
     el-table-column(
-      label="Владелец телефона"
+      :label="$t('customers.phoneOwner')"
       prop="owner_name"
     )
 
     el-table-column(
-      label="Телефон"
+      :label="$t('customers.phone')"
     )
       template(v-slot:default="{row}")
         el-link(:href="`tel:${row.telephone}`") {{ row.telephone }}
     el-table-column(
-      label="Удалить"
+      :label="$t('del')"
       width="75"
       align='center'
     )
@@ -59,9 +59,13 @@ export default class extends Vue {
   }
 
   private delTel(tel: IAdditionalTelephone) {
-    this.$confirm('Удалить дополнительный номер телефона?').then(async() => {
+    this.$confirm(
+      this.$t('customers.areUShure2DelAdditionalPhone').toString()
+    ).then(async() => {
       await AdditionalTelephoneModule.DelTelephone(tel.id)
-      this.$message.success('Успешно удалено')
+      this.$message.success(
+        this.$t('deleted').toString()
+      )
       this.loadTels()
     })
   }

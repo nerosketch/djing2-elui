@@ -7,14 +7,14 @@ div
     widthStorageNamePrefix='customerFin'
     ref='fintbl'
   )
-    template(v-slot:author_name="{row}") {{ row.author_name || 'Система' }}
+    template(v-slot:author_name="{row}") {{ row.author_name || $t('customers.defaultAuthorName') }}
 
     el-button(
       @click="addCashDialog=true"
     ) {{ $t('customers.addCash2Account') }}
 
   el-dialog(
-    title="Пополнить счёт"
+    :title="$t('customers.addCash2Account')"
     :visible.sync="addCashDialog"
     :close-on-click-modal="false"
   )
@@ -46,32 +46,32 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'from_balance',
-      label: 'Было',
+      label: this.$t('customers.was').toString(),
       'min-width': 80
     },
     {
       prop: 'cost',
-      label: 'Сумма',
+      label: this.$t('sum').toString(),
       'min-width': 80
     },
     {
       prop: 'to_balance',
-      label: 'Стало',
+      label: this.$t('customers.become').toString(),
       'min-width': 80
     },
     {
       prop: 'date',
-      label: 'Дата оплаты',
+      label: this.$t('customers.payDate').toString(),
       'min-width': 160
     },
     {
       prop: 'author_name',
-      label: 'Назначил',
+      label: this.$t('customers.payWho').toString(),
       'min-width': 180
     },
     {
       prop: 'comment',
-      label: 'Комментарий',
+      label: this.$t('comment').toString(),
       'min-width': 300
     }
   ]
@@ -93,7 +93,7 @@ export default class extends Vue {
   private addCashDone(cost: number) {
     this.addCashDialog = false
     this.$refs.fintbl.LoadTableData()
-    this.$message.success(`Счёт пополнен на ${cost}`)
+    this.$message.success(`${this.$t('customers.accountHasAmounted')} ${cost}`)
   }
 }
 </script>

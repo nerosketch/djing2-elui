@@ -37,7 +37,7 @@ div
       el-button(
         type='success' icon='el-icon-plus',
         @click="addBranch"
-      ) Добавить
+      ) {{ $t('add') }}
   el-dialog(
     title='Добавить филиал'
     :visible.sync='branchFormVisible'

@@ -25,7 +25,7 @@ div
       type='success'
       @click="openNew"
       :disabled="!$perms.services.add_periodicpay"
-    ) Добавить
+    ) {{ $t('add') }}
 
   el-dialog(
     :title="(isNew ? 'Создание' : 'Изменение') + ' периодического платежа'"

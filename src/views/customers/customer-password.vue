@@ -1,14 +1,14 @@
 <template lang="pug">
   el-form
     el-form-item(
-      label="Пароль"
+      :label="$t('customers.password')"
       prop='password'
     )
       el-input(
         v-model="frmMod.password"
         maxlength="128"
         :type="passwordType"
-        placeholder="пароль"
+        :placeholder="$t('customers.passwordLong')"
       )
         template(v-slot:append)
           el-button(
@@ -57,7 +57,9 @@ export default class extends Vue {
     try {
       this.loading = true
       const { data } = await changeCustomer(this.customerId, this.frmMod)
-      this.$message.success('Пароль успешно обновлён')
+      this.$message.success(
+        this.$t('customers.passwordUpdateOk').toString()
+      )
       this.$emit('done', data)
     } catch (err) {
       this.$message.error(err)

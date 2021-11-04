@@ -2,9 +2,7 @@
   el-row(:gutter='5')
     el-col(:sm='24' :md='12')
       el-card(shadow="never")
-        template(v-slot:header)
-          .clearfix
-            span Услуги для заказа
+        template(v-slot:header) {{ $t('customers.services4Buy') }}
         services-list(
           v-on:buydone="loadCurrentService"
           :isServiceAvailable="isServiceAvailable"
@@ -12,30 +10,29 @@
 
     el-col(:sm='24' :md='12')
       el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
-        template(v-slot:header)
-          .clearfix Текущая услуга абонента
+        template(v-slot:header) {{ $t('customers.currentCustomerService') }}
         template(v-if="!serviceBlockLoad")
           div(v-if="isServiceAvailable")
             h3 {{ currentService.service.title }}
             i {{ currentService.service.descr }}
             dl
               dt
-                b Сумма
-              dd {{ currentService.service.cost }} руб.
+                b {{ $t('customers.sum') }}
+              dd {{ currentService.service.cost }} {{ $t('defaultCurrencySymbol') }}
               dt
-                b Входящая скорость
+                b {{ $t('customers.inSpeed') }}
               dd {{ currentService.service.speed_in }}
               dt
-                b Исходящая скорость
+                b {{ $t('customers.outSpeed') }}
               dd {{ currentService.service.speed_out }}
               dt
-                b Ускорение(burst (не доделан))
+                b {{ $t('customers.burst') }}
               dd {{ currentService.service.speed_burst }}
               dt
-                b Дата начала
+                b {{ $t('customers.serviceStartDate') }}
               dd {{ currentService.start_time }}
               dt
-                b Действует до
+                b {{ $t('customers.serviceWorksUntil') }}
               dd {{ currentService.deadline }}
 
             el-button(
@@ -43,15 +40,14 @@
               icon='el-icon-delete'
               @click="onStopService"
               :disabled="!$perms.customers.can_complete_service"
-            ) Завершить услугу
-          b(v-else) Услуга не подключена
+            ) {{ $t('customers.serviceFinish') }}
+          b(v-else) {{ $t('customers.serviceNotConnected') }}
           last-connected-service
-        h3(v-else) Загрузка ...
+        h3(v-else) {{ $t('loading') }}
 
     el-col(:sm='24' :md='12')
       el-card(shadow="never")
-        template(v-slot:header)
-          .clearfix Назначенные периодические платежи
+        template(v-slot:header) {{ $t('customers.attachedPeriodicPays') }}
 
         periodic-services-list
 
@@ -102,15 +98,17 @@ export default class extends Vue {
   }
 
   onStopService() {
-    this.$confirm('Завершить услугу абонента досрочно?', {
-      confirmButtonText: 'Да',
-      cancelButtonText: 'Нет, не надо',
+    this.$confirm(this.$t('customers.doFinishServiceAheadOfShedule').toString(), {
+      confirmButtonText: this.$t('yes').toString(),
+      cancelButtonText: this.$t('no').toString(),
       type: 'info'
     }).then(async() => {
       await CustomerModule.StopService()
       await CustomerModule.UpdateCustomer()
       await this.loadCurrentService()
-      this.$message.success('Услуга остановлена досрочно')
+      this.$message.success(
+        this.$t('customers.serviceStoppedAheadOfSheduleOk').toString()
+      )
     })
   }
 }

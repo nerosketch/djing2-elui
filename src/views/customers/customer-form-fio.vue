@@ -3,7 +3,7 @@
     el-collapse-item
       template(slot="title")
         el-form-item(
-          label="ФИО"
+          :label="$t('customers.fio')"
           style="margin-bottom: 0"
         )
           b {{ origValue }}
@@ -14,17 +14,17 @@
         :label-width="$store.getters.isMobileView ? undefined : '115px'"
       )
         el-form-item(
-          label="Фамилия"
+          :label="$t('customers.surname')"
           prop="surname"
         )
           el-input(v-model="frmData.surname")
         el-form-item(
-          label="Имя"
+          :label="$t('customers.name')"
           prop="firstName"
         )
           el-input(v-model="frmData.firstName")
         el-form-item(
-          label="Отчество"
+          :label="$t('customers.lastName')"
           prop="lastName"
         )
           el-input(v-model="frmData.lastName")
@@ -33,10 +33,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import i18n from '@/lang'
 import { regexpVal } from '@/utils/validate'
 
 const nameValidator = regexpVal(/^[A-Za-zА-Яа-яЁё-]{1,250}$/i)
-const errText = 'Может содержать только буквы и знак _'
+const errText = i18n.t('customers.formValidatorErrText').toString()
 
 @Component({
   name: 'CustomerFormFio'
@@ -57,14 +58,22 @@ export default class extends Vue {
 
   private frmRules = {
     firstName: [
-      { required: true, message: 'Имя обязательно', trigger: 'blur' },
+      {
+        required: true,
+        message: this.$t('customers.nameRequiredValidatorErrText'),
+        trigger: 'blur'
+      },
       { validator: nameValidator, trigger: 'change', message: errText }
     ],
     lastName: [
       { validator: nameValidator, trigger: 'change', message: errText }
     ],
     surname: [
-      { required: true, message: 'Фамилия обязательна', trigger: 'blur' },
+      {
+        required: true,
+        message: this.$t('customers.surnameRequiredValidatorErrText'),
+        trigger: 'blur'
+      },
       { validator: nameValidator, trigger: 'change', message: errText }
     ]
   }

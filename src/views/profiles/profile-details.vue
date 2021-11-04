@@ -13,7 +13,7 @@
         el-card
           el-tabs(v-model='activeTabName')
             el-tab-pane(
-              label='Изменить'
+              :label="$t('change')"
               name='account'
             )
               profile-form

@@ -2,7 +2,7 @@
 div
   el-alert(
     v-if="$store.state.userprofile.is_superuser"
-    title="Внимание!"
+    :title="$t('attention')"
     description='Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно'
     type="warning"
     effect="dark"

@@ -47,7 +47,7 @@ export default class extends Vue {
     },
     {
       prop: 'descr',
-      label: this.$t('customers.comment').toString(),
+      label: this.$t('comment').toString(),
       'min-width': 250
     },
     {

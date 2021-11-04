@@ -1,14 +1,14 @@
 <template lang="pug">
   el-form(inline)
     el-form-item(
-      label="Улицы"
+      :label="$t('customers.streets')"
     )
       address-street-choice(
         :addrId='addrId'
         v-model='streetVal'
       )
     el-form-item(
-      label="Группы"
+      :label="$t('route.groups')"
     )
       groups-choice(
         v-model="groupVal"

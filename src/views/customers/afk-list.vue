@@ -1,16 +1,16 @@
 <template lang="pug">
 .app-container
-  span Дата отсчёта:
+  span {{ $t('customers.afkReferenceDate') }}:
   el-date-picker(
     v-model="reqParams.date_limit"
     type="datetime"
     value-format="yyyy-MM-dd HH:mm"
     format="d.MM.yyyy HH:mm"
-    placeholder="Дата отсчёта"
+    :placeholder="$t('customers.afkReferenceDate')"
   )
-  span  Лимит вывода:
+  span  {{ $t('customers.afkOutLimit') }}:
   el-input(
-    placeholder="Лимит вывода"
+    :placeholder="$t('customers.afkOutLimit')"
     :style="{width: '150px'}"
     type="number"
     v-model="reqParams.out_limit"
@@ -62,19 +62,19 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_uname',
-      label: 'логин'
+      label: this.$t('customers.username').toString()
     },
     {
       prop: 'customer_fio',
-      label: 'ФИО'
+      label: this.$t('customers.fio').toString()
     },
     {
       prop: 'last_date',
-      label: 'дата'
+      label: this.$t('customers.afkLastDate').toString()
     },
     {
       prop: 'timediff',
-      label: 'Продолжительность'
+      label: this.$t('customers.afkDuration').toString()
     }
   ]
 
@@ -89,7 +89,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Фильтр afk'
+          title: this.$t('customers.afkFilter').toString()
         }
       }
     ] as any)

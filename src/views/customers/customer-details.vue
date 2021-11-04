@@ -1,21 +1,21 @@
 <template lang="pug">
   .app-container
-    span Баланс:
+    span {{ $t('customers.balance') }}:
     small  {{ $store.state.customer.balance }}.
-    span  Создан:
+    span  {{ $t('startDate') }}:
     small  {{ $store.state.customer.create_date }}
     el-tabs.border-card(
       v-model="activeTabName"
     )
       el-tab-pane(
-        label="Инфо"
+        :label="$t('customers.info')"
         name="info"
         lazy
       )
         keep-alive
           info(v-if='loaded')
       el-tab-pane(
-        label="Тарифы"
+        :label="$t('route.services')"
         name="services"
         :disabled="!$perms.customers.view_customerservice"
         lazy
@@ -23,7 +23,7 @@
         keep-alive
           services(v-if='loaded')
       el-tab-pane(
-        label="Финансы"
+        :label="$t('route.finance')"
         name="fin"
         :disabled="!$perms.customers.view_customerlog"
         lazy
@@ -31,7 +31,7 @@
         keep-alive
           finance(v-if='loaded')
       el-tab-pane(
-        label="История задач"
+        :label="$t('customers.taskHistory')"
         name="history"
         :disabled="!$perms.tasks.view_task"
         lazy
@@ -39,13 +39,13 @@
         keep-alive
           customer-task-history(v-if='loaded')
       el-tab-pane(
-        label="История трафика"
+        :label="$t('customers.trafHistory')"
         name="traf"
         lazy
       )
         keep-alive
           el-card(v-if='loaded')
-            template(v-slot:header) История трафика
+            template(v-slot:header) {{ $t('customers.trafHistory') }}
             traf-report(
               :customerId="uid"
             )
@@ -101,7 +101,7 @@ export default class extends mixins(TabMixin) {
     await CustomerModule.GetCustomer(this.uid)
     this.loaded = true
     this.setCrumbs(this.$store.state.customer.address)
-    document.title = this.$store.state.customer.full_name || 'Абонент'
+    document.title = this.$store.state.customer.full_name || this.$t('customers.customer').toString()
   }
 
   private onCustomerServerUpdate(msg: IWsMessage) {
@@ -119,7 +119,7 @@ export default class extends mixins(TabMixin) {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: 'Населённые пункты'
+          title: this.$t('addrs.addresses').toString()
         }
       },
       /* {

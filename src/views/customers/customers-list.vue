@@ -53,19 +53,19 @@
               type='success'
               @click="addCustomerDialog=true"
               :disabled="!$perms.customers.add_customer"
-            ) Добавить абонента
+            ) {{ $t('customers.customerAdd') }}
             el-button(
               icon='el-icon-set-up'
               @click="sitesDlg=true"
               v-if="isSomeoneSelected"
-            ) Сайты
+            ) {{ $t('customers.sites') }}
             el-button(
               icon='el-icon-s-operation'
               @click="editFieldsVisible=true"
-            ) Поля
+            ) {{ $t('route.forms') }}
 
     el-dialog(
-      title='Добавить абонента'
+      :title="$t('customers.customerAdd')"
       :visible.sync='addCustomerDialog'
       top="5vh"
       :close-on-click-modal="false"
@@ -75,7 +75,7 @@
         v-on:done="addFrmDone"
       )
     el-dialog(
-      title="Кто имеет права на абонента"
+      :title="$t('customers.whoHaveRightsOnCustomer')"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false"
@@ -88,7 +88,7 @@
       )
     el-dialog(
       v-if="$perms.is_superuser"
-      title="Принадлежность выбранных абонентов сайтам"
+      :title="$t('customers.customerSitesAccessory')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false"
     )
@@ -179,19 +179,19 @@ export default class extends Vue {
     },
     {
       prop: 'username',
-      label: 'Логин',
+      label: this.$t('customers.username').toString(),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'fio',
-      label: 'ФИО',
+      label: this.$t('customers.fio').toString(),
       'min-width': 300,
       sortable: true
     },
     {
       prop: 'address_title',
-      label: 'Полный адрес',
+      label: this.$t('addrs.full').toString(),
       sortable: true,
       'min-width': 110,
       cutLeft: true
@@ -203,27 +203,27 @@ export default class extends Vue {
     },
     {
       prop: 'telephone',
-      label: 'Телефон',
+      label: this.$t('addrs.phone').toString(),
       'min-width': 140
     },
     {
       prop: 'current_service_title',
-      label: 'Услуга',
+      label: this.$t('customers.service').toString(),
       'min-width': 240
     },
     {
       prop: 'balance',
-      label: 'Баланс',
+      label: this.$t('customers.balance').toString(),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'group_title',
-      label: 'Группа'
+      label: this.$t('groups.group').toString()
     },
     {
       prop: 'marker_icons',
-      label: 'Маркер'
+      label: this.$t('customers.marker').toString()
     },
     {
       prop: 'ping',
@@ -257,7 +257,9 @@ export default class extends Vue {
 
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
-    this.$message.success('Абонент добавлен')
+    this.$message.success(
+      this.$t('customers.customerAddedOk').toString()
+    )
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
@@ -299,7 +301,7 @@ export default class extends Vue {
   }
 
   created() {
-    document.title = 'Список абонентов'
+    document.title = this.$t('customers.customersList').toString()
     this.setCrumbs()
   }
 
@@ -313,7 +315,7 @@ export default class extends Vue {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: 'Населённые пункты'
+          title: this.$t('addrs.addresses').toString()
         }
       },
       {
@@ -370,7 +372,7 @@ export default class extends Vue {
       })
       this.sitesProgress = Math.ceil(i * 100 / ln)
     }
-    this.$message.success('Готово')
+    this.$message.success('Ok')
     this.sitesDlgProgress = false
   }
 }

@@ -63,7 +63,7 @@
     type="success" icon='el-icon-plus'
     @click="onAdd"
     :disabled="!$perms.gateways.add_gateway"
-  ) Добавить
+  ) {{ $t('add') }}
 
   el-dialog(
     :visible.sync="gwFormDialog"

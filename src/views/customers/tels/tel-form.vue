@@ -7,12 +7,12 @@ el-form(
   :model='frmMod'
 )
   el-form-item(
-    label="Номер телефона"
+    :label="$t('customers.phone')"
     prop='telephone'
   )
     el-input(v-model="frmMod.telephone" :maxlength='16')
   el-form-item(
-    label="Владелец телефона"
+    :label="$t('customers.phoneOwner')"
     prop='owner_name'
   )
     el-input(v-model="frmMod.owner_name" :maxlength='127')
@@ -22,7 +22,7 @@ el-form(
       type="primary" @click="onSubmit"
       :loading="loading"
       :disabled="!$perms.customers.add_additionaltelephone"
-    ) {{ isNew ? 'Добавить' : 'Сохранить' }}
+    ) {{ isNew ? $t('add') : $t('save') }}
 </template>
 
 <script lang="ts">
@@ -47,11 +47,19 @@ export default class extends Vue {
 
   private frmRules = {
     owner_name: [
-      { required: true, message: 'Какое имя у контакта?', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$t('customers.contactNameRequired').toString(),
+        trigger: 'blur'
+      }
     ],
     telephone: [
-      { required: true, message: 'Нужен номер телефона', trigger: 'blur' },
-      { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
+      {
+        required: true,
+        message: this.$t('customers.contactPhoneRequired').toString(),
+        trigger: 'blur'
+      },
+      { validator: telephoneValidator, trigger: 'change' }
     ]
   }
 
@@ -68,10 +76,14 @@ export default class extends Vue {
           const dat = Object.assign(this.frmMod, { customer: this.customer })
           if (this.isNew) {
             tel = await AdditionalTelephoneModule.AddTelephone(dat)
-            this.$message.success('Телефон сохранён')
+            this.$message.success(
+              this.$t('customers.contactPhoneSaved').toString()
+            )
           } else {
             tel = await AdditionalTelephoneModule.PatchTelephone(dat)
-            this.$message.success('Телефон изменён')
+            this.$message.success(
+              this.$t('customers.contactPhoneChanged').toString()
+            )
           }
           this.$emit('done', tel)
         } catch (err) {

@@ -69,7 +69,7 @@
         type="success" @click="onSubmit" icon="el-icon-plus"
         :loading="loading"
         :disabled="!$perms.devices.add_device"
-      ) Добавить
+      ) {{ $t('add') }}
 </template>
 
 <script lang="ts">
