@@ -3,7 +3,6 @@ services:
   ui:
     build: .
     stop_grace_period: 1m
-    user: node
     ports:
       - 8080:8080
     stdin_open: true
