@@ -40,6 +40,8 @@
               el-dropdown-item Домены
             router-link(to='/messenger')
               el-dropdown-item Мессенжеры
+            router-link(:to="{name: 'profileDetail', params:{ profileUname: $store.state.currentuserprofile.username }}")
+              el-dropdown-item Настройки
             el-dropdown-item(divided)
               span(
                 style="display:block;"

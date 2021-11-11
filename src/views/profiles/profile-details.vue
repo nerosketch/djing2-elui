@@ -16,7 +16,7 @@
               label='Изменить'
               name='account'
             )
-              profile-form
+              profile-form(v-if="ready")
             el-tab-pane(
               label='Ответственность за группы'
               name='activity'
@@ -29,21 +29,21 @@
               name="classperms"
               lazy
             )
-              keep-alive
+              keep-alive(v-if="ready")
                 user-class-perms
             el-tab-pane(
               label='Лог действий'
               name='timeline'
               lazy
             )
-              keep-alive
+              keep-alive(v-if="ready")
                 profile-log
             el-tab-pane(
               label='Лог авторизаций'
               name='authlog'
               lazy
             )
-              keep-alive
+              keep-alive(v-if="ready")
                 profile-auth-log
 </template>
 
@@ -74,6 +74,7 @@ export default class extends mixins(TabMixin) {
   @Prop({ default: '' }) private profileUname!: string
 
   protected activeTabName = 'account'
+  private ready = false
 
   created() {
     this.loadProfile(this.profileUname)
@@ -88,6 +89,7 @@ export default class extends mixins(TabMixin) {
     if (uname) {
       UserProfileModule.GetProfile(uname).then(profile => {
         document.title = profile.full_name || uname
+        this.ready = true
       }).catch(() => {
         document.title = uname
       })
