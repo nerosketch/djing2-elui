@@ -54,10 +54,6 @@
         v-model="frmMod.create_time"
       )
     el-form-item(
-      label="№ дома"
-    )
-      el-input(v-model="frmMod.place")
-    el-form-item(
       label="Доп. инфо для snmp"
     )
       el-input(v-model="frmMod.snmp_extra")
