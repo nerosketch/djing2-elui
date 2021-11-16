@@ -66,3 +66,6 @@ export const getAddrFullTitle = (addrId: number): StringAxiosResponsePromise =>
 
 export const getGroupsWithCustomers = (params?: IDRFRequestListAddrsParameters): IDRFAxiosResponsePromise<IGroup[]> =>
   request.get<IGroup[]>('/customers/groups_with_customers/', { params })
+
+export const getAddrIdHierarchy = (addrId: number): IDRFAxiosResponsePromise<number[]> =>
+  request.get<number[]>(`/addrs/${addrId}/get_id_hierarchy/`)
