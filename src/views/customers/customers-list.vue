@@ -2,10 +2,11 @@
   .app-container
     el-row(:gutter="10")
       el-col(:col='24')
-        customer-list-filters(
+        list-filters(
           :addrId="addrId"
           :group.sync="filterForm.group"
           :street.sync="filterForm.street"
+          :fetchGroups="fetchGroups"
         )
       el-col(:lg='24' :md='20')
         datatable(
@@ -109,7 +110,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import {
   IDRFAxiosResponsePromise,
   IDRFListResponse,
@@ -119,13 +121,13 @@ import {
 } from '@/api/types'
 import {
   ICustomer,
-  IDRFRequestListParametersCustomer
 } from '@/api/customers/types'
 import {
   getCustomers,
   setCustomerObjectsPerms,
   getCustomerObjectsPerms,
-  getCustomerSelectedObjectPerms
+  getCustomerSelectedObjectPerms,
+  getGroupsWithCustomers
 } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import NewCustomerForm from './new-customer-form.vue'
@@ -133,7 +135,9 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import PingProfile from './ping-profile.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { AddressModule } from '@/store/modules/addresses/address'
-import CustomerListFilters from './customer-list-filters.vue'
+import ListFilters from '@/components/Address/list-filters.vue'
+import TableWithAddrMixin from '@/components/Address/table-w-addr-mixin'
+import { IDRFRequestListFilterParameters } from '@/api/addresses/types'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -148,28 +152,20 @@ interface ITableRowClassName {
     datatable: DataTableComp,
     NewCustomerForm,
     PingProfile,
-    CustomerListFilters
+    ListFilters
   }
 })
-export default class extends Vue {
+export default class extends mixins(TableWithAddrMixin) {
   @Prop({ default: null }) private addrId!: number | null
   @Prop({ default: null }) private fetchFunc!: (params?: IDRFRequestListParameters) => IDRFAxiosResponsePromise<IDRFListResponse<ICustomer>> | null
 
   private addCustomerDialog = false
   private permsDialog = false
-  public readonly $refs!: {
-    tbl: DataTableComp
-  }
-
   private selectedCustomers: number[] = []
   private sitesDlg = false
   private sitesDlgProgress = false
   private sitesProgress = 0
   private editFieldsVisible = false
-  private filterForm = {
-    group: Number(this.$route.query.group) || null,
-    street: Number(this.$route.query.street) || null
-  }
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -237,7 +233,7 @@ export default class extends Vue {
     let r
     const fetchFn = (this.fetchFunc === null ? getCustomers : this.fetchFunc)
     if (params) {
-      const newParams: IDRFRequestListParametersCustomer = Object.assign(params, {
+      const newParams: IDRFRequestListFilterParameters = Object.assign(params, {
         address: this.addrId,
         fields: 'id,username,fio,address_title,telephone,current_service_title,balance,group_title,is_active,lease_count,marker_icons,house'
       })
@@ -259,43 +255,6 @@ export default class extends Vue {
     this.addCustomerDialog = false
     this.$message.success('Абонент добавлен')
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
-  }
-
-  @Watch('filterForm.group')
-  private onGroupChange(groupId: number | null) {
-    const qr = Object.assign({}, this.$route.query) as Record<string, any>
-    const qgroup = qr.group
-    delete qr.group
-
-    if (groupId != qgroup) {
-      if (groupId && groupId > 0) {
-        qr.group = groupId
-      } else {
-        delete qr.group
-      }
-    }
-    this.$router.push({ path: this.$route.path, query: qr })
-  }
-
-  @Watch('filterForm.street')
-  private onStreetChange(streetId: number | null) {
-    const qr = Object.assign({}, this.$route.query) as Record<string, any>
-    const qstreet = qr.street
-    delete qr.street
-
-    if (streetId != qstreet) {
-      if (streetId && streetId > 0) {
-        qr.street = streetId
-      } else {
-        delete qr.street
-      }
-    }
-    this.$router.push({ path: this.$route.path, query: qr })
-  }
-
-  @Watch('$route.query', { deep: true })
-  private onChQuery() {
-    this.$refs.tbl.LoadTableData()
   }
 
   created() {
@@ -372,6 +331,10 @@ export default class extends Vue {
     }
     this.$message.success('Готово')
     this.sitesDlgProgress = false
+  }
+
+  private fetchGroups(params: IDRFRequestListParameters) {
+    return getGroupsWithCustomers(Object.assign(params, {}))
   }
 }
 </script>

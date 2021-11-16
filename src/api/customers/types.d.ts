@@ -48,12 +48,6 @@ export interface ICustomerOnPort {
 }
 export type ICustomersOnPortAxoisPromise = AxiosPromise<ICustomerOnPort[]>
 
-export interface IDRFRequestListParametersCustomer extends IDRFRequestListParameters {
-  address: number | null
-  street?: number
-  group?: number
-}
-
 export interface IServiceUser {
   id: number
   group_id: number
