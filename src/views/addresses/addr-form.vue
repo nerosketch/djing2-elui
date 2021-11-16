@@ -108,15 +108,23 @@ export default class extends Vue {
     )
   }
 
-  /*@Watch('frmMod.fias_address_type')
+  @Watch('frmMod.fias_address_type')
   private onChangeFiasAddrType(fiasAddressType: number) {
     // Пробуем автоматически подставлять типы адреса по типу из фиаса
     if ([803, 902, 903, 907, 910, 911, 913 ].includes(fiasAddressType)) {
       this.frmMod.address_type = IAddressEnumTypes.HOUSE
     } else if (fiasAddressType === 904) {
       this.frmMod.address_type = IAddressEnumTypes.OFFICE_NUM
-    } else if ()
-  }*/
+    } else if ([729, 714, 719, 722, 762, 798, 799].includes(fiasAddressType)) {
+      this.frmMod.address_type = IAddressEnumTypes.STREET
+    } else if ([811, 805, 810].includes(fiasAddressType)) {
+      this.frmMod.address_type = IAddressEnumTypes.BUILDING
+    } else if (fiasAddressType === 806) {
+      this.frmMod.address_type = IAddressEnumTypes.CORPUS
+    } else {
+      this.frmMod.address_type = IAddressEnumTypes.OTHER
+    }
+  }
 
   @Watch('$store.state.address', { deep: true })
   private onChangeLoc(addr: IAddressModel) {
