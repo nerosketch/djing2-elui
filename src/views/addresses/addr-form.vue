@@ -10,7 +10,9 @@
       label="Название"
       prop='title'
     )
-      el-input(v-model="frmMod.title")
+      el-input(
+        v-model="frmMod.title"
+      )
     el-form-item(
       label="Уровень ФИАС"
       prop='fias_address_level'
@@ -54,7 +56,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { AddressModule } from '@/store/modules/addresses/address'
 import AddressTypeChoice from '@/components/Address/type-choice.vue'
-import { IAddressModel } from '@/api/addresses/types'
+import { IAddressEnumTypes, IAddressModel } from '@/api/addresses/types'
 import { positiveNumberValueAvailable } from '@/utils/validate'
 import FiasLevelChoice from '@/components/Address/fias-level-choice.vue'
 import FiasTypeChoice from '@/components/Address/fias-type-choice.vue'
@@ -72,7 +74,8 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название надо указать', trigger: 'blur' }
+      { required: true, message: 'Название надо указать', trigger: 'blur' },
+      { validator: this.titleDynamicValidator, trigger: 'change' }
     ],
     address_type: [
       { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип' }
@@ -84,6 +87,36 @@ export default class extends Vue {
       { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип ФИАС' }
     ]
   }
+
+  private titleDynamicValidator(rule: any, value: number, callback: Function) {
+    // Если должно быть только число, то валидируем как число
+    if (this.isTitleMustBeNumeric) {
+      if (!isNaN(value) && Number(value) > 0) {
+        callback()
+      } else {
+        callback(new Error('Должно содержать только число'))
+      }
+    } else {
+      callback()
+    }
+  }
+
+  private get isTitleMustBeNumeric() {
+    // Должен ли title принимать только числа
+    return [IAddressEnumTypes.HOUSE, IAddressEnumTypes.OFFICE_NUM].includes(
+      this.frmMod.address_type
+    )
+  }
+
+  /*@Watch('frmMod.fias_address_type')
+  private onChangeFiasAddrType(fiasAddressType: number) {
+    // Пробуем автоматически подставлять типы адреса по типу из фиаса
+    if ([803, 902, 903, 907, 910, 911, 913 ].includes(fiasAddressType)) {
+      this.frmMod.address_type = IAddressEnumTypes.HOUSE
+    } else if (fiasAddressType === 904) {
+      this.frmMod.address_type = IAddressEnumTypes.OFFICE_NUM
+    } else if ()
+  }*/
 
   @Watch('$store.state.address', { deep: true })
   private onChangeLoc(addr: IAddressModel) {
