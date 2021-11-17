@@ -7,10 +7,17 @@
     v-loading='isLoading'
   )
     el-form-item(
-      label="Номер договора"
+      label="Название"
+    )
+      el-input(v-model="frmMod.title")
+    el-form-item(
+      label="Номер договора(уникальный)"
       prop="contract_number"
     )
-      el-input(v-model="frmMod.contract_number")
+      el-input(
+        v-model="frmMod.contract_number"
+        placeholder="не должен повторяться"
+      )
         template(#append)
           el-button(
             icon='el-icon-document'
@@ -45,13 +52,27 @@
     )
       el-input(v-model="frmMod.note" type="textarea" rows="5" cols="40")
     el-form-item
-      el-button(
-        type="primary" icon='el-icon-upload'
-        @click="onSubmit"
-        :loading="isLoading"
-        :disabled="isFormUntouched"
-        :type="isNew ? 'success' : 'default'"
-      ) {{ isNew ? 'Добавить' : 'Сохранить' }}
+      el-button-group
+        el-button(
+          type="primary" icon='el-icon-upload'
+          @click="onSubmit"
+          :loading="isLoading"
+          :disabled="isFormUntouched"
+          :type="isNew ? 'success' : 'default'"
+        ) {{ isNew ? 'Добавить' : 'Сохранить' }}
+        el-button(
+          v-if="!isNew"
+          icon="el-icon-document"
+          @click="openDocsDialog"
+        ) Документы
+
+    el-dialog(
+      title="Документы"
+      :visible.sync="docsDialogVisible"
+    )
+      contract-docs(
+        :contract="contract"
+      )
 </template>
 
 <script lang="ts">
@@ -62,18 +83,25 @@ import { ICustomer } from '@/api/customers/types'
 import { ICustomerContract } from './api/types'
 import { Form } from 'element-ui'
 import { addContract, changeContract } from './api/reqs'
+import ContractDocs from './contract-docs.vue'
 
 @Component({
-  name: 'ContractForm'
+  name: 'ContractForm',
+  components: {
+    ContractDocs
+  }
 })
 export default class extends mixins(FormMixin) {
   @Prop({ default: null })
   private contract!: ICustomerContract | null
 
   private isLoading = false
+  private docsDialogVisible = false
+  private currentContractId = 0
 
   private frmMod: ICustomerContract = {
     id: undefined,
+    title: '',
     customer: this.$store.state.customer.id,
     start_service_time: '',
     end_service_time: null,
@@ -84,6 +112,7 @@ export default class extends mixins(FormMixin) {
 
   private fillFrmModFromVar(contract: ICustomerContract) {
     this.frmMod.id = contract.id
+    this.frmMod.title = contract.title
     this.frmMod.customer = contract.customer || this.$store.state.customer.id
     this.frmMod.start_service_time = contract.start_service_time
     this.frmMod.end_service_time = contract.end_service_time || null
@@ -155,6 +184,10 @@ export default class extends mixins(FormMixin) {
 
   private doCopyFromUsername() {
     this.frmMod.contract_number = this.$store.state.customer.username
+  }
+
+  private openDocsDialog() {
+    this.docsDialogVisible = true
   }
 }
 </script>

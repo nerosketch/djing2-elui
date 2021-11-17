@@ -75,11 +75,11 @@ export default class extends Vue {
         for (const el of data) {
           this.addFileListItem(el)
         }
-      } catch (err) {
-        this.$message.error(err)
+      } catch {
+        this.$message.error('Ошибка загрузки документов')
       }
     } else {
-      this.$message.error('Не передан id абонента. Это к разработчику')
+      this.$message.error('Не передан id абонента')
     }
   }
 
