@@ -4,7 +4,7 @@
     :disabled="pingDisabled || !$perms.customers.can_ping"
     @click="pingProfile"
     :loading="pingLoading"
-  ) {{ isCustomerNotHere ? 'Не передан абонент' : btnText }}
+  ) {{ isCustomerNotHere ? $t('customers.notPassed') : btnText }}
 </template>
 
 <script lang="ts">
@@ -23,7 +23,9 @@ export default class extends Vue {
 
   private async pingProfile() {
     if (!this.customer || this.isCustomerNotHere) {
-      this.$message.error('Не передан абонент')
+      this.$message.error(
+        this.$t('customers.notPassed').toString()
+      )
       return
     }
     this.pingLoading = true

@@ -5,9 +5,9 @@ el-form(
   :label-width="$store.getters.isMobileView ? undefined : '100px'"
 )
   el-card(shadow="never")
-    template(v-slot:header) Оборудование
+    template(v-slot:header) {{ $t('route.devices') }}
     el-row
-      el-col(:span='8') Устройство
+      el-col(:span='8') {{ $t('devices.dev' ) }}
       el-col(:span='16')
         device-select(
           v-model="frmMod.device"
@@ -15,7 +15,7 @@ el-form(
           :initialDevice="devComm"
         )
     el-row
-      el-col(:span='8') Порт
+      el-col(:span='8') {{ $t('devices.port') }}
       el-col(:span='16')
         selected-dev-port(v-model='frmMod.dev_port' :deviceId='frmMod.device')
     el-row
@@ -29,11 +29,11 @@ el-form(
           el-button(
             icon="el-icon-view" @click="onGo2Dev"
             :disabled="!frmMod.device"
-          ) Смотреть
+          ) {{ $t('view') }}
           el-button(
             type="danger" icon="el-icon-delete"
             @click="onClearDevice"
-          ) Очистить
+          ) {{ $t('clear') }}
 </template>
 
 <script lang="ts">
@@ -81,7 +81,9 @@ export default class extends Vue {
   }
 
   private onClearDevice() {
-    this.$confirm('Действительно очистить устройство абонента?').then(async() => {
+    this.$confirm(
+      this.$t('customers.clearDevQuestion').toString()
+    ).then(async() => {
       this.isLoading = true
       const { data } = await CustomerModule.ClearDevice()
       this.frmMod.device = data.device

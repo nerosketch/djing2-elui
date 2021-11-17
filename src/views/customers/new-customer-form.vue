@@ -10,21 +10,21 @@
       v-model="frmMod.fio"
     )
     el-form-item(
-      label="Логин"
+      :label="$t('customers.login')"
       prop='username'
     )
       el-input(v-model="frmMod.username")
     el-form-item(
-      label="Телефон"
+      :label="$t('customers.phone')"
       prop='telephone'
     )
       el-input(v-model="frmMod.telephone")
     el-form-item(
-      label="Группа"
+      :label="$t('groups.group')"
     )
       groups-choice(v-model="frmMod.group")
     el-form-item(
-      label="Комментарий"
+      :label="$('comment')"
     )
       el-input(
         v-model="frmMod.description"
@@ -34,7 +34,7 @@
         autosize
       )
     el-form-item(
-      label="День рождения"
+      :label="$('customers.birthDay')"
       prop='birth_day'
     )
       el-date-picker(
@@ -90,14 +90,30 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: 'Логин абонента обязателен', trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
+      {
+        required: true,
+        message: this.$t('customers.loginFieldRequiredMsg'),
+        trigger: 'blur'
+      },
+      {
+        validator: latinValidator,
+        trigger: 'change',
+        message: this.$t('customers.loginValidationMessage')
+      }
     ],
     telephone: [
-      { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
+      {
+        validator: telephoneValidator,
+        trigger: 'change',
+        message: '+[7,8,9,3] и 10,11 цифр'
+      }
     ],
     birth_day: [
-      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$t('customers.birthDayValidationMessage'),
+        trigger: 'blur'
+      }
     ]
   }
 

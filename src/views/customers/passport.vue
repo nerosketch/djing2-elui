@@ -7,27 +7,27 @@
     v-loading='loading'
   )
     el-form-item(
-      label="Серия пас."
+      :label="$t('customers.passportSerial')"
       prop='series'
     )
       el-input(v-model="frmMod.series" type='number')
     el-form-item(
-      label="Номер пас."
+      :label="$t('customers.passportNum')"
       prop='number'
     )
       el-input(v-model="frmMod.number" type='number')
     el-form-item(
-      label="Кем выдан"
+      :label="$('customers.passportDistributor')"
       prop='distributor'
     )
       el-input(v-model="frmMod.distributor" :maxlength='64')
     el-form-item(
-      label="Код подразделения"
+      :label="$('customers.passportDivisionCode')"
       prop='division_code'
     )
       el-input(v-model="frmMod.division_code" :maxlength='64')
     el-form-item(
-      label="Дата выдачи"
+      :label="$('customers.passportDivisionCode')"
       prop='date_of_acceptance'
     )
       el-date-picker(
@@ -68,18 +68,42 @@ export default class extends Vue {
 
   private frmRules = {
     series: [
-      { required: true, message: 'Укажи серию паспорта', trigger: 'blur' },
-      { max: 4, trigger: 'change', message: 'Серия паспорта не должна быть больше 4х символов' }
+      {
+        required: true,
+        message: this.$t('customers.passportSerialRequiredMsg'),
+        trigger: 'blur'
+      },
+      {
+        max: 4,
+        trigger: 'change',
+        message: this.$t('customers.passportSerialValidationMsg'),
+      }
     ],
     number: [
-      { required: true, message: 'Укажи номер паспорта', trigger: 'blur' },
-      { max: 6, trigger: 'change', message: 'Номер паспорта не должен быть больше 6ти символов' }
+      {
+        required: true,
+        message: this.$t('customers.passportNumRequiredMsg'),
+        trigger: 'blur'
+      },
+      {
+        max: 6,
+        trigger: 'change',
+        message: this.$t('customers.passportNumValidatationMsg')
+      }
     ],
     distributor: [
-      { required: true, message: 'Укажи кем выдан паспорт', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$t('customers.passportDistributorRequiredMsg'),
+        trigger: 'blur'
+      }
     ],
     date_of_acceptance: [
-      { required: true, message: 'Надо указать когда он был выдан', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$t('customers.passportDateOfAcceptanceRequiredMsg'),
+        trigger: 'blur'
+      }
     ]
   }
 

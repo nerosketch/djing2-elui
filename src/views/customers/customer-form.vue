@@ -46,9 +46,9 @@
     el-form-item(
       :label="$t('customers.options')"
     )
-      el-checkbox(v-model="frmMod.is_active") - Активный:
+      el-checkbox(v-model="frmMod.is_active") - {{ $t('customers.isActive') }}:
         boolean-icon(v-model="frmMod.is_active")
-      el-checkbox(v-model="frmMod.is_dynamic_ip") - Динамические настройки по dhcp:
+      el-checkbox(v-model="frmMod.is_dynamic_ip") - {{ $t('customers.dhcpDynamic') }}:
         boolean-icon(v-model="frmMod.is_dynamic_ip")
     el-form-item(
       :label="$t('addrs.addr')"
@@ -90,7 +90,7 @@
         ) {{ $t('customers.sites') }}
         el-button(
           type='danger'
-          title="Полное удаление учётной записи абонента из билинга"
+          :title="$t('customers.fullDelTitle')"
           icon='el-icon-close'
           @click="delCustomer"
         ) {{ $t('del') }}
