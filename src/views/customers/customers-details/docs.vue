@@ -75,11 +75,15 @@ export default class extends Vue {
         for (const el of data) {
           this.addFileListItem(el)
         }
-      } catch (err) {
-        this.$message.error(err)
+      } catch {
+        this.$message.error(
+          this.$t('customers.docLoadFailed').toString()
+        )
       }
     } else {
-      this.$message.error('customerId not passed')
+      this.$message.error(
+        this.$t('customers.customerIdNotPassed').toString()
+      )
     }
   }
 

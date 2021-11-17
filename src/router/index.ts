@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router, { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
-import customerRoutes from './modules/customers'
+// import customerRoutes from './modules/customers'
+import customerContractRoutes from './modules/customers_contract'
 import deviceRoutes from './modules/devices'
 import taskRoutes from './modules/tasks'
 import profileRoutes from './modules/profiles'
@@ -45,7 +46,8 @@ export const constantRoutes: RouteConfig [] = [
     }
   },
   profileRoutes,
-  customerRoutes,
+  // customerRoutes,
+  customerContractRoutes,
   customerLegalRoutes,
   taskRoutes,
   {

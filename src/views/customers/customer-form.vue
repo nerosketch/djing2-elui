@@ -255,7 +255,7 @@ export default class extends mixins(FormMixin) {
         this.$message.success(
           this.$t('customers.accountRemovedOk').toString()
         )
-        this.$router.push({ name: 'customersList', params: { addrId: currLoc.toString() } })
+        this.$router.push({ name: 'customerList', params: { addrId: currLoc.toString() } })
       } catch (err) {
         this.$message.error(err)
       }

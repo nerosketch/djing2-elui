@@ -114,21 +114,43 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import {
+  Component,
+  Prop,
+  Watch
+} from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { DeviceModule } from '@/store/modules/devices/device'
-import { IDRFRequestListParametersDevGroup, IDevice } from '@/api/devices/types'
-import { getDevices, setDevObjectsPerms, getDevObjectsPerms, getDeviceSelectedObjectPerms, getGroupsWithDevices } from '@/api/devices/req'
+import {
+  IDRFRequestListParametersDevGroup,
+  IDevice
+} from '@/api/devices/types'
+import {
+  getDevices,
+  setDevObjectsPerms,
+  getDevObjectsPerms,
+  getDeviceSelectedObjectPerms,
+  getGroupsWithDevices
+} from '@/api/devices/req'
 import DevForm from './dev-form.vue'
 import NewDevForm from './new-dev-form.vue'
-import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
+import DataTable, {
+  IDataTableColumn,
+  DataTableColumnAlign
+} from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise, IDRFRequestListParameters } from '@/api/types'
+import {
+  IObjectGroupPermsResultStruct,
+  IObjectGroupPermsInitialAxiosResponsePromise,
+  IDRFRequestListParameters
+} from '@/api/types'
 import { AddressModule } from '@/store/modules/addresses/address'
 import BooleanIcon from '@/components/boolean-icon.vue'
 import ListFilters from '@/components/Address/list-filters.vue'
 import TableWithAddrMixin from '@/components/Address/table-w-addr-mixin'
-import { IDRFRequestListFilterParameters } from '@/api/addresses/types'
+import {
+  IDRFRequestListFilterParameters
+} from '@/api/addresses/types'
 
 class DataTableComp extends DataTable<IDevice> {}
 
@@ -143,7 +165,6 @@ class DataTableComp extends DataTable<IDevice> {}
   }
 })
 export default class extends mixins(TableWithAddrMixin) {
-
   @Prop({ default: 0 }) private addrId!: number
   private dialogVisible = false
   private dialogNewDev = false

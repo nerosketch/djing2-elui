@@ -1,9 +1,10 @@
 <template lang="pug">
   .app-container
-    span {{ $t('customers.balance') }}:
-    small  {{ $store.state.customer.balance }}.
-    span  {{ $t('startDate') }}:
-    small  {{ $store.state.customer.create_date }}
+    slot(name="head")
+      span {{ $t('customers.balance') }}:
+      small  {{ $store.state.customer.balance }}.
+      span  {{ $t('startDate') }}:
+      small  {{ $store.state.customer.create_date }}
     el-tabs.border-card(
       v-model="activeTabName"
     )
@@ -12,43 +13,52 @@
         name="info"
         lazy
       )
-        keep-alive
-          info(v-if='loaded')
+        slot(name="info")
+          keep-alive
+            info(v-if='loaded')
       el-tab-pane(
         :label="$t('route.services')"
         name="services"
         :disabled="!$perms.customers.view_customerservice"
         lazy
       )
-        keep-alive
-          services(v-if='loaded')
+        slot(name="services")
+          keep-alive
+            services(v-if='loaded')
       el-tab-pane(
         :label="$t('route.finance')"
         name="fin"
         :disabled="!$perms.customers.view_customerlog"
         lazy
       )
-        keep-alive
-          finance(v-if='loaded')
+        slot(name="fin")
+          keep-alive
+            finance(v-if='loaded')
       el-tab-pane(
         :label="$t('customers.taskHistory')"
         name="history"
         :disabled="!$perms.tasks.view_task"
         lazy
       )
-        keep-alive
-          customer-task-history(v-if='loaded')
+        slot(name="history")
+          keep-alive
+            customer-task-history(v-if='loaded')
       el-tab-pane(
         :label="$t('customers.trafHistory')"
         name="traf"
         lazy
       )
-        keep-alive
-          el-card(v-if='loaded')
-            template(v-slot:header) {{ $t('customers.trafHistory') }}
-            traf-report(
-              :customerId="uid"
-            )
+        slot(name="traf")
+          keep-alive
+            el-card(v-if='loaded')
+              template(#header) {{ $t('customers.trafHistory') }}
+              traf-report(
+                :customerId="uid"
+              )
+
+      slot(name="additional_tabs")
+
+    slot
 </template>
 
 <script lang="ts">
@@ -123,7 +133,7 @@ export default class extends mixins(TabMixin) {
         }
       },
       /* {
-        path: { name: 'customersList', params: { addrId: addrId } },
+        path: { name: 'customerList', params: { addrId: addrId } },
         meta: {
           hidden: true,
           title: this.$store.state.customer.address_title || '-'

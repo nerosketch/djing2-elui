@@ -1,23 +1,17 @@
 import { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
-const customerRoutes: RouteConfig = {
+const customerContractRoutes: RouteConfig = {
   path: '/customers',
   component: Layout,
   children: [
     {
       path: '',
-      component: () => import(/* webpackChunkName: "customer-locations" */ '@/views/customers/customer-locations.vue'),
+      component: () => import(/* webpackChunkName: "contract-customer-locations" */ '@/views/customers_contract/index.vue'),
       meta: {
-        title: 'customers',
+        title: 'Абоненты',
         icon: 'el-icon-user-solid'
       }
-    },
-    {
-      path: 'bums/',
-      name: 'customerBums',
-      component: () => import(/* webpackChunkName: "customerBums" */ '@/views/customers/bums.vue'),
-      meta: { hidden: true }
     },
     {
       path: 'a:addrId/',
@@ -29,11 +23,11 @@ const customerRoutes: RouteConfig = {
     {
       path: ':uid/',
       name: 'customerDetails',
-      component: () => import(/* webpackChunkName: "customerdetails" */ '@/views/customers/customer-details.vue'),
+      component: () => import(/* webpackChunkName: "contract-customer-details" */ '@/views/customers_contract/customer-details.vue'),
       props: ({ params }) => ({ uid: Number(params.uid || 0) }),
       meta: { hidden: true }
-    },
+    }
   ]
 }
 
-export default customerRoutes
+export default customerContractRoutes

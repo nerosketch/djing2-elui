@@ -143,7 +143,9 @@ export default {
     withoutAddrs: 'Абоненты без адреса',
     whoHaveRightsOnCustomer: 'Кто имеет права на абонента',
     marker: 'Маркер',
-    customersList: 'Список абонентов'
+    customersList: 'Список абонентов',
+    customerIdNotPassed: 'Не передан id абонента',
+    docLoadFailed: 'Ошибка загрузки документов',
   },
   nets: {
     ipMustNotBeEmpty: 'IP не может быть пустым',

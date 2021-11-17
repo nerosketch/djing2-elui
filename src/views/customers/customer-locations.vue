@@ -1,29 +1,32 @@
 <template lang="pug">
   .app-container
     datatable(
-      :columns="tableColumns"
-      :getData="getLocations"
-      :heightDiff='118'
+      :columns="innerTableColumns"
+      :getData="getLocationsFunc || getLocations"
+      :heightDiff='heightDiff'
       widthStorageNamePrefix='customerLocations'
     )
-      template(v-slot:title="{row}")
-        router-link.el-link.el-link--primary.is-underline(
-          :to="{name: 'customersList', params:{ addrId: row.id }}"
-        ) {{ row.title }}
+      template(#title="{row}")
+        slot(name="title" :row="row")
+          router-link.el-link.el-link--primary.is-underline(
+            :to="{name: 'customerList', params:{ addrId: row.id }}"
+          ) {{ row.title }}
 
-      el-button-group
-        el-button(
-          icon='el-icon-d-caret'
-          @click="goToAfkList"
-        ) {{ $t('customers.afkFilter') }}
-        el-button(
-          icon="el-icon-user-solid"
-          @click="go2Bums"
-        ) {{ $t('customers.withoutAddrs') }}
+      slot(name='buttons')
+        el-button-group
+          el-button(
+            icon='el-icon-d-caret'
+            @click="goToAfkList"
+          ) {{ $t('customers.afkFilter') }}
+          el-button(
+            icon="el-icon-user-solid"
+            @click="go2Bums"
+          ) {{ $t('customers.withoutAddrs') }}
+    slot
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { getAddresses, IDRFRequestListAddrsParameters } from '@/api/addresses/req'
@@ -32,11 +35,15 @@ import { IAddressEnumTypes, IAddressModel } from '@/api/addresses/types'
 class DataTableComp extends DataTable<IAddressModel> {}
 
 @Component({
-  name: 'CustomerGroupList',
+  name: 'CustomerLocationList',
   components: { datatable: DataTableComp }
 })
 export default class extends Vue {
-  private tableColumns: IDataTableColumn[] = [
+  @Prop({ default: 118 }) private heightDiff!: number
+  @Prop({ default: null }) private tableColumns!:IDataTableColumn[] | null
+  @Prop({ default: null }) private getLocationsFunc!: (params?: IDRFRequestListAddrsParameters) => void
+
+  private innerTableColumns: IDataTableColumn[] = this.tableColumns || [
     {
       prop: 'title',
       label: this.$t('title').toString(),
@@ -71,6 +78,7 @@ export default class extends Vue {
   private goToAfkList() {
     this.$router.push('/afk')
   }
+
   private go2Bums() {
     this.$router.push('/customers/bums/')
   }

@@ -2,111 +2,126 @@
   .app-container
     el-row(:gutter="10")
       el-col(:col='24')
-        list-filters(
-          :addrId="addrId"
-          :group.sync="filterForm.group"
-          :street.sync="filterForm.street"
-          :fetchGroups="fetchGroups"
-        )
+        slot(name="filters")
+          list-filters(
+            :addrId="addrId"
+            :group.sync="filterForm.group"
+            :street.sync="filterForm.street"
+            :fetchGroups="fetchGroups"
+          )
       el-col(:lg='24' :md='20')
         datatable(
           :columns="tableColumns"
           :getData="getAllCustomers"
           :tableRowClassName="rowColor"
-          :heightDiff="165"
+          :heightDiff="heightDiff"
           :editFieldsVisible.sync="editFieldsVisible"
           widthStorageNamePrefix='customers'
           ref='tbl'
           :selectable="$perms.is_superuser"
           @selection-change="handleSelectionChange"
         )
-          template(v-slot:id="{row}")
-            el-button(
-              v-if="$perms.is_superuser"
-              icon='el-icon-lock'
-              @click="openPermsDialog(row)"
-            )
-            span(v-else) {{ row.id }}
-
-          template(v-slot:username="{row}")
-            router-link(
-              :to="{name: 'customerDetails', params:{uid: row.id }}"
-            ) {{ row.username }}
-
-          template(v-slot:telephone="{row}")
-            el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
-
-          template(v-slot:marker_icons="{row}")
-            template(v-if="row.marker_icons.length > 0")
-              span.m-icon(
-                v-for="(ic, i) in row.marker_icons"
-                :class="`m-${ic}`"
-                :key="i"
+          template(v-if="$perms.is_superuser" #id="{row}")
+            slot(name="id" :row="row")
+              el-button(
+                v-if="$perms.is_superuser"
+                icon='el-icon-lock'
+                @click="openPermsDialog(row)"
               )
-            span(v-else)
 
-          template(v-slot:ping="{row}")
-            ping-profile(:customer="row")
+          template(#username="{row}")
+            slot(name="username" :row="row")
+              router-link(
+                :to="{name: 'customerDetails', params:{uid: row.id }}"
+              ) {{ row.username }}
 
-          el-button-group
-            el-button(
-              icon='el-icon-plus'
-              type='success'
-              @click="addCustomerDialog=true"
-              :disabled="!$perms.customers.add_customer"
-            ) {{ $t('customers.customerAdd') }}
-            el-button(
-              icon='el-icon-set-up'
-              @click="sitesDlg=true"
-              v-if="isSomeoneSelected"
-            ) {{ $t('customers.sites') }}
-            el-button(
-              icon='el-icon-s-operation'
-              @click="editFieldsVisible=true"
-            ) {{ $t('route.forms') }}
+          template(#telephone="{row}")
+            slot(name="telephone" :row="row")
+              el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
 
-    el-dialog(
-      :title="$t('customers.customerAdd')"
-      :visible.sync='addCustomerDialog'
-      top="5vh"
-      :close-on-click-modal="false"
-    )
-      new-customer-form(
-        :selectedAddress='addrId'
-        v-on:done="addFrmDone"
-      )
-    el-dialog(
-      :title="$t('customers.whoHaveRightsOnCustomer')"
-      :visible.sync="permsDialog"
-      top="5vh"
-      :close-on-click-modal="false"
-    )
-      object-perms(
-        v-on:save="changeCustomerObjectPerms"
-        :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
-        :getSelectedObjectPerms="customerGetSelectedObjectPerms"
-        :objId="$store.state.customer.id"
-      )
-    el-dialog(
-      v-if="$perms.is_superuser"
-      :title="$t('customers.customerSitesAccessory')"
-      :visible.sync="sitesDlg"
-      :close-on-click-modal="false"
-    )
-      sites-attach(
-        v-on:save="selectedCustomerSitesSave"
-      )
-      el-dialog(
-        width="40%"
-        :visible.sync="sitesDlgProgress"
-        append-to-body
-        :show-close="false"
-        :close-on-press-escape="false"
-        :close-on-click-modal="false"
-      )
-        el-progress.progress_disable_animations(
-          :percentage="sitesProgress"
+          template(#marker_icons="{row}")
+            slot(name="marker_icons" :row="row")
+              template(v-if="row.marker_icons.length > 0")
+                span.m-icon(
+                  v-for="(ic, i) in row.marker_icons"
+                  :class="`m-${ic}`"
+                  :key="i"
+                )
+              span(v-else)
+
+          template(#ping="{row}")
+            slot(name="ping" :row="row")
+              ping-profile(:customer="row")
+
+          slot(name="buttons")
+            el-button-group
+              el-button(
+                icon='el-icon-plus'
+                type='success'
+                @click="addCustomerDialog=true"
+                :disabled="!$perms.customers.add_customer"
+              ) {{ $t('customers.customerAdd') }}
+              el-button(
+                icon='el-icon-set-up'
+                @click="sitesDlg=true"
+                v-if="isSomeoneSelected"
+              ) {{ $t('customers.sites') }}
+              el-button(
+                icon='el-icon-s-operation'
+                @click="editFieldsVisible=true"
+              ) {{ $t('route.forms') }}
+              slot(name="additional_button")
+
+    slot
+
+    slot(name="dialogs")
+      slot(name="dialog_customer_add")
+        el-dialog(
+          title="$t('customers.customerAdd')"
+          :visible.sync='addCustomerDialog'
+          top="5vh"
+          :close-on-click-modal="false"
         )
+          new-customer-form(
+            :selectedAddress='addrId'
+            v-on:done="addFrmDone"
+          )
+
+      slot(name="dialog_rights")
+        el-dialog(
+          title="$t('customers.whoHaveRightsOnCustomer')"
+          :visible.sync="permsDialog"
+          top="5vh"
+          :close-on-click-modal="false"
+        )
+          object-perms(
+            v-on:save="changeCustomerObjectPerms"
+            :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
+            :getSelectedObjectPerms="customerGetSelectedObjectPerms"
+            :objId="$store.state.customer.id"
+          )
+
+      slot(name="dialog_sites")
+        el-dialog(
+          v-if="$perms.is_superuser"
+          title="$t('customers.customerSitesAccessory')"
+          :visible.sync="sitesDlg"
+          :close-on-click-modal="false"
+        )
+          sites-attach(
+            v-on:save="selectedCustomerSitesSave"
+          )
+          el-dialog(
+            width="40%"
+            :visible.sync="sitesDlgProgress"
+            append-to-body
+            :show-close="false"
+            :close-on-press-escape="false"
+            :close-on-click-modal="false"
+          )
+            el-progress.progress_disable_animations(
+              :percentage="sitesProgress"
+            )
 </template>
 
 <script lang="ts">
@@ -120,7 +135,7 @@ import {
   IObjectGroupPermsResultStruct
 } from '@/api/types'
 import {
-  ICustomer,
+  ICustomer
 } from '@/api/customers/types'
 import {
   getCustomers,
@@ -147,7 +162,7 @@ interface ITableRowClassName {
 }
 
 @Component({
-  name: 'CustomersList',
+  name: 'CustomerList',
   components: {
     datatable: DataTableComp,
     NewCustomerForm,
@@ -158,6 +173,7 @@ interface ITableRowClassName {
 export default class extends mixins(TableWithAddrMixin) {
   @Prop({ default: null }) private addrId!: number | null
   @Prop({ default: null }) private fetchFunc!: (params?: IDRFRequestListParameters) => IDRFAxiosResponsePromise<IDRFListResponse<ICustomer>> | null
+  @Prop({ default: 165 }) private heightDiff!: number
 
   private addCustomerDialog = false
   private permsDialog = false
@@ -195,7 +211,7 @@ export default class extends mixins(TableWithAddrMixin) {
     {
       prop: 'house',
       label: 'Номер дома(уст.)',
-      sortable: true,
+      sortable: true
     },
     {
       prop: 'telephone',

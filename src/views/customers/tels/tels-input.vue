@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   el-input(v-model="myTel")
-    template(v-slot:append)
+    template(#append)
       el-button(
         icon='el-icon-phone'
         circle
