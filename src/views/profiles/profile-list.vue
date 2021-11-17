@@ -13,14 +13,12 @@
 
       template(v-slot:username="{row}")
         router-link(
-          v-if="$perms.is_superuser"
           :to="{name: 'profileDetail', params:{ profileUname: row.username }}"
         )
           el-link(
             type="primary"
             :icon="row.is_superuser ? 'el-icon-warning' : ''"
           ) {{ row.username }}
-        span(v-else) {{ row.username }}
 
       template(v-slot:telephone="{row}")
         el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}

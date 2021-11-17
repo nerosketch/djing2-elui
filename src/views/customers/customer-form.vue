@@ -21,12 +21,13 @@
     )
       tels-input(v-model="frmMod.telephone")
     el-form-item(
-      label="Дом"
+      label="Дом (устар)"
     )
       el-input(
         v-model="frmMod.house"
         :maxlength='12'
         readonly
+        disabled
       )
     el-form-item(
       :label="$t('customers.birthDay')"

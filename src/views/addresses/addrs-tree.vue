@@ -9,7 +9,9 @@
     lazy
     draggable
     :allow-drop="allowDrop"
+    :default-expanded-keys="addrIdHierarchy"
     @node-drop="handleDrop"
+    @node-expand="onNodeExpand"
   )
     span.custom-tree-node(slot-scope="{ node, data }")
       span {{ node.label }}
@@ -41,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { changeAddress, getAddresses } from '@/api/addresses/req'
+import { changeAddress, getAddresses, getAddrIdHierarchy } from '@/api/addresses/req'
 import { AddrTreeNode, IAddressModel } from '@/api/addresses/types'
 import { AddressModule } from '@/store/modules/addresses/address'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -69,6 +71,7 @@ export default class extends Vue {
   private dialogVisible = false
 
   private tmpAddrTreeNode: AddrTreeNode | null = null
+  private addrIdHierarchy: number[] = []
 
   private async loadNode(node: AddrTreeNode, resolve: Function) {
     if (node.level === 0) {
@@ -146,6 +149,8 @@ export default class extends Vue {
         }
       }
     ] as any)
+
+    this.loadAddrHierarchyIfExists()
   }
   // End Breadcrumbs
 
@@ -159,6 +164,24 @@ export default class extends Vue {
         parent_addr: dropNode.data.id
       })
     }
+  }
+
+  private onNodeExpand(openedNode: IAddressModel, node: AddrTreeNode, nodeSelf: AddrTreeNode, ) {
+    const pos = localStorage.getItem('addrTreeLastId')
+    localStorage.setItem('addrTreeLastId', openedNode.id.toString())
+  }
+
+  private loadAddrHierarchyIfExists() {
+    const pos = localStorage.getItem('addrTreeLastId')
+    if (pos) {
+      this.loadAddrIdHierarchy(Number(pos))
+    }
+  }
+
+  private async loadAddrIdHierarchy(addrId: number) {
+    const { data } = await getAddrIdHierarchy(addrId)
+    this.addrIdHierarchy = data
+    return data
   }
 }
 </script>

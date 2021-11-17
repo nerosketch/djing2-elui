@@ -5,7 +5,8 @@ import {
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise,
   IObjectGroupPermsResultStruct,
-  ISimpleResponseResult
+  ISimpleResponseResult,
+  IDRFAxiosResponsePromise
 } from '@/api/types'
 import {
   IDevice, IDeviceList,
@@ -32,6 +33,8 @@ import {
   getObjectDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
+import { IDRFRequestListAddrsParameters } from '@/api/addresses/req'
+import { IGroup } from '@/api/groups/types'
 
 
 const baseDevUrl = '/devices/all/'
@@ -129,3 +132,6 @@ export const setDevObjectsPerms = (devId: number, dat: IObjectGroupPermsResultSt
 
 export const getDeviceSelectedObjectPerms = (devId: number, profileGroupId: number): AxiosPromise<number[]> =>
   request.get(`${baseDevUrl}${devId}/get_selected_object_perms/${profileGroupId}/`)
+
+export const getGroupsWithDevices = (params?: IDRFRequestListAddrsParameters): IDRFAxiosResponsePromise<IGroup[]> =>
+  request.get<IGroup[]>('/devices/groups_with_devices/', { params })

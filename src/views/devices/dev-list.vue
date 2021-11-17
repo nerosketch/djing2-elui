@@ -1,60 +1,69 @@
 <template lang="pug">
   .app-container
-    datatable(
-      :columns="tableColumns"
-      :getData="loadDevs"
-      :heightDiff='118'
-      :editFieldsVisible.sync="editFieldsVisible"
-      widthStorageNamePrefix='devs'
-      ref='table'
-    )
-      template(v-slot:comment="{row}")
-        router-link.el-link.el-link--primary.is-underline(
-          v-if="$perms.devices.view_device"
-          :to="{name: 'device-view', params: { devId: row.id }}"
-        ) {{ row.comment }}
-        span(v-else) {{ row.comment }}
+    el-row(:gutter="10")
+      el-col(:col='24')
+        list-filters(
+          :addrId="addrId"
+          :group.sync="filterForm.group"
+          :street.sync="filterForm.street"
+          :fetchGroups="fetchGroups"
+        )
+      el-col(:lg='24' :md='20')
+        datatable(
+          :columns="tableColumns"
+          :getData="loadDevs"
+          :heightDiff='118'
+          :editFieldsVisible.sync="editFieldsVisible"
+          widthStorageNamePrefix='devs'
+          ref='tbl'
+        )
+          template(v-slot:comment="{row}")
+            router-link.el-link.el-link--primary.is-underline(
+              v-if="$perms.devices.view_device"
+              :to="{name: 'device-view', params: { devId: row.id }}"
+            ) {{ row.comment }}
+            span(v-else) {{ row.comment }}
 
-      template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
+          template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
 
-      template(v-slot:status="{row}")
-        boolean-icon(v-model="row.status")
+          template(v-slot:status="{row}")
+            boolean-icon(v-model="row.status")
 
-      template(v-slot:is_noticeable="{row}")
-        boolean-icon(v-model="row.is_noticeable")
+          template(v-slot:is_noticeable="{row}")
+            boolean-icon(v-model="row.is_noticeable")
 
-      template(v-slot:oper="{row}")
-        el-button-group
-          el-button(
-            v-if="$perms.is_superuser"
-            @click="openSitesDlg(row)"
-          ) C
-          el-button(
-            icon='el-icon-lock'
-            @click="openPermsDialog(row)"
-            v-if="$perms.is_superuser"
-          )
-          el-button(
-            icon="el-icon-edit"
-            @click="openEdit(row)"
-            :disabled="!$perms.devices.change_device"
-          )
-          el-button(
-            type="danger" icon="el-icon-delete"
-            @click="delDevice(row)"
-            :disabled="!$perms.devices.delete_device"
-          )
+          template(v-slot:oper="{row}")
+            el-button-group
+              el-button(
+                v-if="$perms.is_superuser"
+                @click="openSitesDlg(row)"
+              ) C
+              el-button(
+                icon='el-icon-lock'
+                @click="openPermsDialog(row)"
+                v-if="$perms.is_superuser"
+              )
+              el-button(
+                icon="el-icon-edit"
+                @click="openEdit(row)"
+                :disabled="!$perms.devices.change_device"
+              )
+              el-button(
+                type="danger" icon="el-icon-delete"
+                @click="delDevice(row)"
+                :disabled="!$perms.devices.delete_device"
+              )
 
-      el-button-group
-        el-button(
-          icon='el-icon-plus'
-          @click="openNew"
-          :disabled="!$perms.devices.add_device"
-        ) Добавить устройство
-        el-button(
-          icon='el-icon-s-operation'
-          @click="editFieldsVisible=true"
-        ) Поля
+          el-button-group
+            el-button(
+              icon='el-icon-plus'
+              @click="openNew"
+              :disabled="!$perms.devices.add_device"
+            ) Добавить устройство
+            el-button(
+              icon='el-icon-s-operation'
+              @click="editFieldsVisible=true"
+            ) Поля
 
     el-dialog(
       title="Железка"
@@ -105,17 +114,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
 import { DeviceModule } from '@/store/modules/devices/device'
 import { IDRFRequestListParametersDevGroup, IDevice } from '@/api/devices/types'
-import { getDevices, setDevObjectsPerms, getDevObjectsPerms, getDeviceSelectedObjectPerms } from '@/api/devices/req'
+import { getDevices, setDevObjectsPerms, getDevObjectsPerms, getDeviceSelectedObjectPerms, getGroupsWithDevices } from '@/api/devices/req'
 import DevForm from './dev-form.vue'
 import NewDevForm from './new-dev-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
+import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise, IDRFRequestListParameters } from '@/api/types'
 import { AddressModule } from '@/store/modules/addresses/address'
 import BooleanIcon from '@/components/boolean-icon.vue'
+import ListFilters from '@/components/Address/list-filters.vue'
+import TableWithAddrMixin from '@/components/Address/table-w-addr-mixin'
+import { IDRFRequestListFilterParameters } from '@/api/addresses/types'
 
 class DataTableComp extends DataTable<IDevice> {}
 
@@ -125,13 +138,11 @@ class DataTableComp extends DataTable<IDevice> {}
     DevForm,
     NewDevForm,
     datatable: DataTableComp,
-    BooleanIcon
+    BooleanIcon,
+    ListFilters
   }
 })
-export default class extends Vue {
-  public readonly $refs!: {
-    table: DataTableComp
-  }
+export default class extends mixins(TableWithAddrMixin) {
 
   @Prop({ default: 0 }) private addrId!: number
   private dialogVisible = false
@@ -195,10 +206,18 @@ export default class extends Vue {
   }
 
   private loadDevs(params: IDRFRequestListParametersDevGroup) {
-    const newPrms = Object.assign(params, {
+    const newPrms: IDRFRequestListFilterParameters = Object.assign(params, {
       address: this.addrId,
       fields: 'id,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group,create_time,place'
     })
+    const group = this.$route.query.group
+    if (group) {
+      newPrms.group = Number(group)
+    }
+    const street = this.$route.query.street
+    if (street) {
+      newPrms.street = Number(street)
+    }
     return getDevices(newPrms)
   }
 
@@ -206,13 +225,13 @@ export default class extends Vue {
     this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
       await DeviceModule.DelDevice(dev.id)
       this.$message.success('Удалено')
-      this.$refs.table.LoadTableData()
+      this.$refs.tbl.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.LoadTableData()
+    this.$refs.tbl.LoadTableData()
   }
 
   private frmNewDevDone(newDev: IDevice) {
@@ -279,7 +298,7 @@ export default class extends Vue {
     DeviceModule.PatchDevice({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.LoadTableData()
+      this.$refs.tbl.LoadTableData()
       this.$message.success('Принадлежность оборудования сайтам сохранена')
     })
     this.sitesDlg = false
@@ -288,6 +307,10 @@ export default class extends Vue {
   private openSitesDlg(dev: IDevice) {
     DeviceModule.GetDevice(dev.id)
     this.sitesDlg = true
+  }
+
+  private fetchGroups(params: IDRFRequestListParameters) {
+    return getGroupsWithDevices(Object.assign(params, {}))
   }
 }
 </script>

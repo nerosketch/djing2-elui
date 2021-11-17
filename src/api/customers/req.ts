@@ -5,7 +5,8 @@ import {
   ISimpleResponseResult,
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise,
-  IObjectGroupPermsResultStruct
+  IObjectGroupPermsResultStruct,
+  IDRFAxiosResponsePromise
 } from '@/api/types'
 import {
   ICustomer, ICustomerList,
@@ -50,6 +51,8 @@ import {
   getObjectListDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
+import { IGroup } from '@/api/groups/types'
+import { IDRFRequestListAddrsParameters } from '../addresses/req'
 
 
 // ICustomer
@@ -196,3 +199,6 @@ export const getCombinedContentFields = (customerId: number): IDynamicContentFie
 
 export const changeContentFields = (info: IDynamicContentFieldList): IDynamicContentFieldListAxiosResponsePromise =>
   request.put<IDynamicContentFieldList>('/customers/dynamic-fields/update_all/', info)
+
+export const getGroupsWithCustomers = (params?: IDRFRequestListAddrsParameters): IDRFAxiosResponsePromise<IGroup[]> =>
+  request.get<IGroup[]>('/customers/groups_with_customers/', { params })

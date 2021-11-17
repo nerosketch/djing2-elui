@@ -59,7 +59,7 @@
     el-form-item(
       label="№ дома"
     )
-      el-input(v-model="frmMod.place")
+      el-input(v-model="frmMod.place" disabled readonly)
     el-form-item(
       label="Доп. инфо для snmp"
     )

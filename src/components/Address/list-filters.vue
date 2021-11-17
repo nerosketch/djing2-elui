@@ -12,7 +12,7 @@
     )
       groups-choice(
         v-model="groupVal"
-        :fetchFunction="fetchGroupsWithCustomers"
+        :fetchFunction="fetchGroups"
       )
 </template>
 
@@ -20,11 +20,10 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import AddressStreetChoice from '@/components/Address/street-choice.vue'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
-import { getGroupsWithCustomers } from '@/api/addresses/req'
 import { IDRFRequestListParameters } from '@/api/types'
 
 @Component({
-  name: 'CustomerListFilters',
+  name: 'ListFilters',
   components: {
     AddressStreetChoice,
     GroupsChoice
@@ -34,6 +33,8 @@ export default class extends Vue {
   @Prop({ default: 0 }) private addrId!: number
   @Prop({ required: true }) private street!: number
   @Prop({ required: true }) private group!: number
+  @Prop({ required: true })
+  private fetchGroups!: (params: IDRFRequestListParameters) => void
 
   private streetVal = this.street
   private groupVal = this.group
@@ -46,10 +47,6 @@ export default class extends Vue {
   @Watch('groupVal')
   private onChGroupVal(v: number) {
     this.$emit('update:group', v)
-  }
-
-  private fetchGroupsWithCustomers(params: IDRFRequestListParameters) {
-    return getGroupsWithCustomers(Object.assign(params, {}))
   }
 }
 </script>

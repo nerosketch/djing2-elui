@@ -34,13 +34,6 @@
         autosize
       )
     el-form-item(
-      label="Дом"
-    )
-      el-input(
-        v-model="frmMod.house"
-        :maxlength='12'
-      )
-    el-form-item(
       label="День рождения"
       prop='birth_day'
     )

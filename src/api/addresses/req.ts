@@ -22,7 +22,6 @@ import {
   getObjectDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
-import { IGroup } from '@/api/groups/types'
 
 
 export interface IDRFRequestListAddrsParameters extends IDRFRequestListParameters {
@@ -64,5 +63,5 @@ export const filterByFiasLevel = (level: number, fields?: string): IAddressModel
 export const getAddrFullTitle = (addrId: number): StringAxiosResponsePromise =>
   request.get<string>(`/addrs/${addrId}/get_full_title/`)
 
-export const getGroupsWithCustomers = (params?: IDRFRequestListAddrsParameters): IDRFAxiosResponsePromise<IGroup[]> =>
-  request.get<IGroup[]>('/customers/groups_with_customers/', { params })
+export const getAddrIdHierarchy = (addrId: number): IDRFAxiosResponsePromise<number[]> =>
+  request.get<number[]>(`/addrs/${addrId}/get_id_hierarchy/`)

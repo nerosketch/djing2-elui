@@ -1,14 +1,20 @@
 /* eslint-disable camelcase */
 import {
   IDRFAxiosResponsePromise,
-  IDRFListResponse
+  IDRFListResponse,
+  IDRFRequestListParameters
 } from '@/api/types'
 import { TreeNode } from 'element-ui/types/tree'
 
 export enum IAddressEnumTypes {
   UNKNOWN = 0,
   LOCALITY = 4,
-  STREET = 8
+  STREET = 8,
+  HOUSE = 12,
+  OFFICE_NUM = 16,
+  BUILDING = 20,
+  CORPUS = 24,
+  OTHER = 64,
 }
 
 export interface IAddressModel {
@@ -47,3 +53,9 @@ export interface IAddrTypeItem {
 export type IAddrTypeItemsIDRFAxiosResponsePromise = IDRFAxiosResponsePromise<IAddrTypeItem[]>
 
 export type AddrTreeNode = TreeNode<number, IAddressModel>
+
+export interface IDRFRequestListFilterParameters extends IDRFRequestListParameters {
+  address: number | null
+  street?: number
+  group?: number
+}
