@@ -1,9 +1,10 @@
 <template lang="pug">
   .app-container
-    span Баланс:
-    small  {{ $store.state.customer.balance }}.
-    span  Создан:
-    small  {{ $store.state.customer.create_date }}
+    slot(name="head")
+      span Баланс:
+      small  {{ $store.state.customer.balance }}.
+      span  Создан:
+      small  {{ $store.state.customer.create_date }}
     el-tabs.border-card(
       v-model="activeTabName"
     )
@@ -12,43 +13,52 @@
         name="info"
         lazy
       )
-        keep-alive
-          info(v-if='loaded')
+        slot(name="info")
+          keep-alive
+            info(v-if='loaded')
       el-tab-pane(
         label="Тарифы"
         name="services"
         :disabled="!$perms.customers.view_customerservice"
         lazy
       )
-        keep-alive
-          services(v-if='loaded')
+        slot(name="services")
+          keep-alive
+            services(v-if='loaded')
       el-tab-pane(
         label="Финансы"
         name="fin"
         :disabled="!$perms.customers.view_customerlog"
         lazy
       )
-        keep-alive
-          finance(v-if='loaded')
+        slot(name="fin")
+          keep-alive
+            finance(v-if='loaded')
       el-tab-pane(
         label="История задач"
         name="history"
         :disabled="!$perms.tasks.view_task"
         lazy
       )
-        keep-alive
-          customer-task-history(v-if='loaded')
+        slot(name="history")
+          keep-alive
+            customer-task-history(v-if='loaded')
       el-tab-pane(
         label="История трафика"
         name="traf"
         lazy
       )
-        keep-alive
-          el-card(v-if='loaded')
-            template(v-slot:header) История трафика
-            traf-report(
-              :customerId="uid"
-            )
+        slot(name="traf")
+          keep-alive
+            el-card(v-if='loaded')
+              template(v-slot:header) История трафика
+              traf-report(
+                :customerId="uid"
+              )
+
+      slot(name="additional_tabs")
+
+    slot
 </template>
 
 <script lang="ts">
