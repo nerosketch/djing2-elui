@@ -112,10 +112,11 @@ export default class extends Vue {
     if (s.cost > CustomerModule.balance) {
       this.$confirm(
         this.$t('customers.customerNotEnoughMoneyDoConnectItQuestion').toString(), {
-        confirmButtonText: this.$t('yes').toString(),
-        cancelButtonText: this.$t('no').toString(),
-        type: 'warning'
-      }).then(() => {
+          confirmButtonText: this.$t('yes').toString(),
+          cancelButtonText: this.$t('no').toString(),
+          type: 'warning'
+        }
+      ).then(() => {
         this.selectedServiceId = s.id
         this.buyDialog = true
       }).catch(() => {
