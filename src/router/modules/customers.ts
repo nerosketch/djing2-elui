@@ -21,8 +21,8 @@ const customerRoutes: RouteConfig = {
     },
     {
       path: 'a:addrId/',
-      name: 'customersList',
-      component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customers-list.vue'),
+      name: 'customerList',
+      component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customer-list.vue'),
       props: ({ params }) => ({ addrId: Number(params.addrId || 0) }),
       meta: { hidden: true }
     },

@@ -1,19 +1,19 @@
 <template lang="pug">
-  customers-list(
+  customer-list(
     :fetchFunc="fetchBumCustomers"
   )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import CustomersList from '@/views/customers/customers-list.vue'
+import CustomerList from '@/views/customers/customer-list.vue'
 import { getCustomersBums } from '@/api/customers/req'
 import { IDRFRequestListParameters } from '@/api/types'
 
 @Component({
   name: 'Bums',
   components: {
-    CustomersList
+    CustomerList
   }
 })
 export default class extends Vue {

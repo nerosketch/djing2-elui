@@ -6,10 +6,10 @@
       :heightDiff='heightDiff'
       widthStorageNamePrefix='customerLocations'
     )
-      template(v-slot:title="{row}")
+      template(#title="{row}")
         slot(name="title" :row="row")
           router-link.el-link.el-link--primary.is-underline(
-            :to="{name: 'customersList', params:{ addrId: row.id }}"
+            :to="{name: 'customerList', params:{ addrId: row.id }}"
           ) {{ row.title }}
 
       slot(name='buttons')

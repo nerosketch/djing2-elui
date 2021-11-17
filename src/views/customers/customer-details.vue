@@ -51,7 +51,7 @@
         slot(name="traf")
           keep-alive
             el-card(v-if='loaded')
-              template(v-slot:header) История трафика
+              template(#header) История трафика
               traf-report(
                 :customerId="uid"
               )
@@ -133,7 +133,7 @@ export default class extends mixins(TabMixin) {
         }
       },
       /* {
-        path: { name: 'customersList', params: { addrId: addrId } },
+        path: { name: 'customerList', params: { addrId: addrId } },
         meta: {
           hidden: true,
           title: this.$store.state.customer.address_title || '-'

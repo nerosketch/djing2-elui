@@ -232,7 +232,7 @@ export default class extends mixins(FormMixin) {
         const currLoc = this.$store.state.customer.address
         await CustomerModule.DelCustomer()
         this.$message.success('Учётка удалена')
-        this.$router.push({ name: 'customersList', params: { addrId: currLoc.toString() } })
+        this.$router.push({ name: 'customerList', params: { addrId: currLoc.toString() } })
       } catch (err) {
         this.$message.error(err)
       }

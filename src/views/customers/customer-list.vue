@@ -162,7 +162,7 @@ interface ITableRowClassName {
 }
 
 @Component({
-  name: 'CustomersList',
+  name: 'CustomerList',
   components: {
     datatable: DataTableComp,
     NewCustomerForm,
