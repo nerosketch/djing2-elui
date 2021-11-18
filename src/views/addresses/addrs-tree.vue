@@ -14,7 +14,9 @@
     @node-expand="onNodeExpand"
   )
     span.custom-tree-node(slot-scope="{ node, data }")
-      span {{ node.label }}
+      span
+        b {{ node.label.tn }}
+        | &nbsp; {{ node.label.t }}
       span
         el-button(
           type="text"
@@ -65,7 +67,10 @@ export default class extends Vue {
   }
 
   private props = {
-    label: (a: IAddressModel) => `${a.fias_address_type_name} ${a.title}`,
+    label: (a: IAddressModel) => ({
+      tn: a.fias_address_type_name,
+      t: a.title
+    }),
   }
 
   private dialogVisible = false
