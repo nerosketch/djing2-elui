@@ -71,6 +71,7 @@ export default class extends Vue {
       tn: a.fias_address_type_name,
       t: a.title
     }),
+    isLeaf: (a: IAddressModel) => (a.children_count === 0)
   }
 
   private dialogVisible = false
@@ -128,7 +129,7 @@ export default class extends Vue {
     const { data } = await getAddresses({
       page: 1,
       page_size: 0,
-      parent_addr: parent || 0,
+      parent_addr: parent || 0
       // fields: 'id,title,parent_addr'
     })
     return data as unknown as IAddressModel[]
@@ -169,8 +170,7 @@ export default class extends Vue {
     }
   }
 
-  private onNodeExpand(openedNode: IAddressModel, node: AddrTreeNode, nodeSelf: AddrTreeNode, ) {
-    const pos = localStorage.getItem('addrTreeLastId')
+  private onNodeExpand(openedNode: IAddressModel, node: AddrTreeNode, nodeSelf: AddrTreeNode) {
     localStorage.setItem('addrTreeLastId', openedNode.id.toString())
   }
 
