@@ -75,6 +75,7 @@ export default class extends Vue {
   }
 
   private dialogVisible = false
+  private parentTitle: string | null = null
 
   private tmpAddrTreeNode: AddrTreeNode | null = null
   private addrIdHierarchy: number[] = []
@@ -98,6 +99,7 @@ export default class extends Vue {
   private addNode(node: AddrTreeNode) {
     AddressModule.RESET_ALL_ADDR()
     AddressModule.SET_ADDR_PARENT(node.data.id)
+    this.parentTitle = `${node.data.fias_address_type_name} ${node.data.title}`
     this.dialogVisible = true
   }
 
@@ -136,11 +138,13 @@ export default class extends Vue {
   }
 
   get dialogTitle() {
-    let t = 'Изменить'
     if (this.$store.state.address.id === 0) {
-      t = 'Создать'
+      if (this.parentTitle) {
+        return `Создать адресный объект в "${this.parentTitle}"`
+      }
+      return 'Создать адресный объект'
     }
-    return `${t} адресный объект`
+    return 'Изменить адресный объект'
   }
 
   // Breadcrumbs
