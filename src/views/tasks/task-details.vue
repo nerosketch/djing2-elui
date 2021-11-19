@@ -1,14 +1,29 @@
 <template lang="pug">
-  el-row.app-container(:gutter="5")
-    el-col.mt5(:lg="12" :sm='24')
-      el-card(shadow="never")
-        template(v-slot:header)
-          .clearfix Редактировать задачу № {{ taskId }}
-        task-form(v-if='taskReady' :recipients="potentialRecipients")
-    el-col.mt5(:lg='12' :sm='24')
-      task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
-    el-col.mt5(:lg='12' :sm='24')
-      comments(v-if='taskReady')
+.tab-container
+  el-tabs(
+    v-model="activeTabName"
+    type="border-card"
+  )
+    el-tab-pane(
+      label='Детали задачи'
+      name='details'
+    )
+      el-row(:gutter="5")
+        el-col.mt5(:lg="12" :sm='24')
+          el-card(shadow="never")
+            template(v-slot:header)
+              .clearfix Редактировать задачу № {{ taskId }}
+            task-form(v-if='taskReady' :recipients="potentialRecipients")
+        el-col.mt5(:lg='12' :sm='24')
+          task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
+        el-col.mt5(:lg='12' :sm='24')
+          comments(v-if='taskReady')
+
+    //- el-tab-pane(
+    //-   label='Завершение задачи'
+    //-   name='finishing'
+    //- )
+    //-   task-finishing
 </template>
 
 <script lang="ts">
@@ -20,7 +35,12 @@ import TaskForm from './task-form.vue'
 import TaskInfo from './task-info.vue'
 import Comments from './comments.vue'
 import taskMixin from './task-mixin'
-import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
+import {
+  IWsMessage,
+  IWsMessageEventTypeEnum
+} from '@/layout/mixin/ws'
+// import TaskFinishing from './task-finishing/index.vue'
+import TabMixin from '@/utils/tab-mixin'
 
 interface ITaskEventData {
   task_id: number
@@ -28,13 +48,19 @@ interface ITaskEventData {
 
 @Component({
   name: 'TaskDetails',
-  components: { TaskForm, TaskInfo, Comments }
+  components: {
+    TaskForm,
+    TaskInfo,
+    Comments,
+    // TaskFinishing
+  }
 })
-export default class extends mixins(taskMixin) {
+export default class extends mixins(taskMixin, TabMixin) {
   @Prop({ default: 0 })
   private taskId!: number
 
   private taskReady = false
+  protected activeTabName = 'details'
 
   private async loadTask() {
     if (this.taskId === 0) {

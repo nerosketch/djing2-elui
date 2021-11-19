@@ -10,35 +10,40 @@
         lazy
       )
         keep-alive
-          task-list(tabUrl="get_new")
+          slot(name="tasklistnew")
+            task-list(tabUrl="get_new")
       el-tab-pane(
         label='Выполненные задачи'
         name='tfin'
         lazy
       )
         keep-alive
-          task-list(tabUrl="get_finished")
+          slot(name="tasklistfin")
+            task-list(tabUrl="get_finished")
       el-tab-pane(
         label='Проваленные задачи'
         name='tf'
         lazy
       )
         keep-alive
-          task-list(tabUrl="get_failed")
+          slot(name="tasklistfailed")
+            task-list(tabUrl="get_failed")
       el-tab-pane(
         label='Все задачи'
         name='tall'
         lazy
       )
         keep-alive
-          task-list(tabUrl="get_all")
+          slot(name="tasklistall")
+            task-list(tabUrl="get_all")
       el-tab-pane(
         label='Все незавершённые'
         name='tallnew'
         lazy
       )
         keep-alive
-          task-list(tabUrl="get_all_new")
+          slot(name="tasklistallnew")
+            task-list(tabUrl="get_all_new")
 
 </template>
 
