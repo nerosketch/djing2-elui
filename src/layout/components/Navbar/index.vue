@@ -17,6 +17,7 @@
           el-button(
             icon="el-icon-search"
             @click="doSearch"
+            title="Поиск"
           )
 
     .right-menu
