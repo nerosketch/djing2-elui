@@ -2,7 +2,6 @@
   .app-container
     el-card(
       shadow="never"
-      :loading='loading'
     )
       template(v-slot:header)
         .clearfix Поиск по: {{ $store.state.search.searchStr }}
@@ -60,8 +59,6 @@ import { Component, Vue } from 'vue-property-decorator'
   name: 'SearchPlace'
 })
 export default class extends Vue {
-  private loading = false
-
   private defCardStyle = { padding: '10px 13px' }
 }
 </script>
