@@ -228,14 +228,9 @@ export default class extends mixins(FormMixin) {
 
   private delCustomer() {
     this.$confirm('Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.', 'Внимание').then(async() => {
-      try {
-        const currLoc = this.$store.state.customer.address
-        await CustomerModule.DelCustomer()
-        this.$message.success('Учётка удалена')
-        this.$router.push({ name: 'customerList', params: { addrId: currLoc.toString() } })
-      } catch (err) {
-        this.$message.error(err)
-      }
+      await CustomerModule.DelCustomer()
+      this.$message.success('Учётка удалена')
+      this.$router.push({ name: 'customersLink' })
     })
   }
 
