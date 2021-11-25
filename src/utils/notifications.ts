@@ -139,7 +139,7 @@ export default class PushNotificationsClass {
           })
         })
         .catch(err => {
-          console.log('Subscription error:', err)
+          throw Error('Subscription error: ' + err)
         })
     })
   }
