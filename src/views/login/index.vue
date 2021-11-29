@@ -7,9 +7,8 @@
       autocomplete="on"
       label-position="left"
     )
-      .title-container
-        glsl-smog-effect(id="smogblock" :width="518" :height="73")
-        h3.title Войти
+      glsl-smog-effect(id="smogblock" :width="518" :height="231")
+        //- h3.title Войти
 
       el-form-item(prop="username")
         span.svg-container
@@ -43,12 +42,10 @@
         )
           i(:class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'")
 
-      el-button(
+      el-button#loginbtn(
         :loading="loading"
-        type="primary"
-        style="width:100%; margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      ) Войти
+      ) ВОЙТИ
 
 </template>
 
@@ -140,9 +137,7 @@ export default class extends Vue {
             path: this.redirect || '/',
             query: this.otherQuery
           })
-          this.loading = false
-        } catch (err) {
-          this.$message.error(err)
+        } finally {
           this.loading = false
         }
       } else {
@@ -207,7 +202,6 @@ export default class extends Vue {
 .login-container {
   height: 100%;
   width: 100%;
-  overflow: hidden;
   background-color: $loginBg;
 
   .login-form {
@@ -216,10 +210,10 @@ export default class extends Vue {
     max-width: 100%;
     padding: 35px 35px 0;
     margin: 0 auto;
-    overflow: hidden;
     border: 1px #444e5a solid;
     top: 15%;
-    background-color: #354150;
+    background-color: #00000030;
+    box-shadow: 3px 5px 7px 3px rgb(0 0 0 / 22%);
   }
 
   .svg-container {
@@ -230,22 +224,22 @@ export default class extends Vue {
     display: inline-block;
   }
 
-  .title-container {
-    position: relative;
+  // .title-container {
+  //   position: fixed;
 
-    .title {
-      font-size: 26px;
-      color: $lightGray;
-      margin: -52px auto 23px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-  }
+  //   .title {
+  //     font-size: 26px;
+  //     color: $lightGray;
+  //     margin: -52px auto 23px auto;
+  //     text-align: center;
+  //     font-weight: bold;
+  //   }
+  // }
 
   .show-pwd {
     position: absolute;
     right: 10px;
-    top: 7px;
+    top: 10px;
     font-size: 16px;
     color: $darkGray;
     cursor: pointer;
@@ -254,7 +248,17 @@ export default class extends Vue {
 }
 
 #smogblock {
-  position: relative;
+  position: fixed;
   margin: -35px 0 0 -35px;
+  width: 518px;
+  height: 227px;
+}
+#loginbtn {
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+  background-color: #3c4c60e3;
+  border-color: #636f81;
+  color: aliceblue;
 }
 </style>
