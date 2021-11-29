@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
+import { Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import {
   ICustomer, IBalanceAmountRequest,
   IPeriodicPayForIdRequest,
