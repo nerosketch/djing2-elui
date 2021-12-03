@@ -7,7 +7,7 @@
     v-loading='isLoading'
   )
     el-form-item(
-      label="Название"
+      :label="$('title')"
       prop='title'
     )
       el-input(v-model="frmMod.title")
@@ -17,7 +17,7 @@
     )
       el-input(v-model="frmMod.ip_address")
     el-form-item(
-      label="Порт"
+      :label="$('gateways.port')"
     )
       el-input(v-model="frmMod.ip_port" type="number")
     el-form-item(
@@ -85,10 +85,14 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название группы надо указать', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$t('groups.group_required'),
+        trigger: 'blur'
+      }
     ],
     ip_address: [
-      { validator: ipAddrValidator, trigger: 'change', message: 'Не верный формат IPv4 адреса' }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('gateways.wrong_format_ipv4') }
     ],
     auth_login: [
       { validator: latinValidator, trigger: 'change', message: 'Только латиница' }

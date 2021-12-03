@@ -114,8 +114,6 @@ export default class extends Vue {
         try {
           const { data } = await setPassportInfo(CustomerModule.id, this.frmMod)
           this.$emit('done', data)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.loading = false
         }
@@ -130,8 +128,6 @@ export default class extends Vue {
     try {
       const { data } = await getPassportInfo(CustomerModule.id)
       this.frmMod = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

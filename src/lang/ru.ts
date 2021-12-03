@@ -175,6 +175,7 @@ export default {
   },
   groups: {
     minAGroup: 'группу',
+    group_required: 'Название группы надо указать',
     group: 'Группа',
   },
   addrs: {
@@ -204,4 +205,8 @@ export default {
     network: 'Сеть',
     gateways: 'Шлюзы',
   },
+  gateways: {
+    port: 'Порт',
+    wrong_format_ipv4: 'Не верный формат IPv4 адреса',
+  }
 }
