@@ -36,6 +36,10 @@
         value-format="yyyy-MM-d"
         format="d.MM.yyyy"
       )
+    el-form-item(
+      label="Адрес регистрации"
+    )
+      addr-field-input(v-model="frmMod.registration_address")
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -50,9 +54,13 @@ import { Form } from 'element-ui'
 import { IPassportInfo } from '@/api/customers/types'
 import { setPassportInfo, getPassportInfo } from '@/api/customers/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
+import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 
 @Component({
-  name: 'Passport'
+  name: 'Passport',
+  components: {
+    AddrFieldInput
+  }
 })
 export default class extends Vue {
   private loading = false
@@ -63,7 +71,9 @@ export default class extends Vue {
     number: '',
     distributor: '',
     date_of_acceptance: '',
-    division_code: ''
+    division_code: '',
+    registration_address: 0,
+    registration_address_title: ''
   }
 
   private frmRules = {
@@ -90,8 +100,6 @@ export default class extends Vue {
         try {
           const { data } = await setPassportInfo(CustomerModule.id, this.frmMod)
           this.$emit('done', data)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.loading = false
         }
@@ -106,8 +114,6 @@ export default class extends Vue {
     try {
       const { data } = await getPassportInfo(CustomerModule.id)
       this.frmMod = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

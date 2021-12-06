@@ -215,8 +215,6 @@ export default class extends mixins(FormMixin) {
           const newDat = await CustomerModule.PatchCustomer(this.frmMod)
           this.$emit('done', newDat)
           this.$message.success('Абонент сохранён')
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
@@ -261,8 +259,6 @@ export default class extends mixins(FormMixin) {
           this.$message.error('Task id expected from backend')
         }
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.taskFormDialogLoading = false
     }

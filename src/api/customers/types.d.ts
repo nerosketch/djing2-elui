@@ -132,6 +132,8 @@ export interface IPassportInfo {
   distributor: string
   date_of_acceptance: string
   division_code: string
+  registration_address: number
+  registration_address_title: string
 }
 export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
 
