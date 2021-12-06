@@ -8,11 +8,11 @@ on:
       - tiko_feautures
 jobs:
   run_tests:
-    runs-on: [ubuntu-latest]
+    runs-on: [buster]
 
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [10.24.1]
 
     env:
       VUE_APP_BASE_API: /api
