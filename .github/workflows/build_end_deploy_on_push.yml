@@ -24,8 +24,6 @@ jobs:
       - uses: actions/checkout@master
       - name: Build docker container
         run: docker-compose --env-file .env up --build -d
-      - name: ls dir
-        run: ls -lh && pwd
       - name: Install project
         run: docker exec djing2-elui npm install
       - name: Build project
