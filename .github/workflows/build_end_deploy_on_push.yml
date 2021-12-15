@@ -30,19 +30,17 @@ jobs:
         run: docker exec djing2-elui npm run build
       - name: Create SSH key
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          cat >>~/.ssh/config <<END
+          docker exec djing2-elui /bin/bash -c "mkdir -p ~/.ssh/ && echo \"${SSH_PRIVATE_KEY}\" > ~/.ssh/staging.key && chmod 600 ~/.ssh/staging.key"
+          docker exec djing2-elui /bin/bash -c "cat >>~/.ssh/config <<END
           Host staging
-            HostName $SERVER_HOST
-            User $SERVER_USER
+            HostName ${SERVER_HOST}
+            User ${SERVER_USER}
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
-          END
+          END"
         shell: bash
       - name: Deploy to server
         run: |
-          scp -r ./dist staging:
-          ssh staging "sudo /bin/bash ~/bin/apply_djing_ui.sh"
+          docker exec djing2-elui scp -r ./dist staging:
+          docker exec djing2-elui ssh staging "sudo /bin/bash ~/bin/apply_djing_ui.sh"
         shell: bash
