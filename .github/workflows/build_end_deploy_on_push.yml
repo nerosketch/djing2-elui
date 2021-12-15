@@ -24,6 +24,8 @@ jobs:
       - uses: actions/checkout@master
       - name: Build docker container
         run: docker-compose --env-file .env up --build -d
+      - name: Install project
+        run: docker exec djing2-elui npm install
       - name: Build project
         run: docker exec djing2-elui npm run build
       - name: Create SSH key
