@@ -5,14 +5,13 @@ on:
     branches:
       - devel
       - master
-      - tiko_feautures
 jobs:
   run_tests:
-    runs-on: [stretch]
+    runs-on: [ubuntu-latest]
 
-    strategy:
-      matrix:
-        node-version: [10.24.1]
+    # strategy:
+    #   matrix:
+    #     node-version: [10.24.1]
 
     env:
       VUE_APP_BASE_API: /api
@@ -22,11 +21,11 @@ jobs:
 
     steps:
         # Чекаутим код
-      - uses: actions/checkout@v2
-      - name: Install deps
-        run: npm install
+      - uses: actions/checkout@master
+      - name: Build docker container
+        run: docker-compose --env-file .env up --build -d
       - name: Build project
-        run: npm run build
+        run: docker exec djing2-elui npm run build
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh/

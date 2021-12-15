@@ -2,6 +2,7 @@ version: '3.5'
 services:
   ui:
     build: .
+    container_name: djing2-elui
     stop_grace_period: 1m
     ports:
       - 8080:8080
