@@ -8,7 +8,7 @@ on:
       - tiko_feautures
 jobs:
   run_tests:
-    runs-on: [buster]
+    runs-on: [stretch]
 
     strategy:
       matrix:
