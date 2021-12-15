@@ -40,6 +40,9 @@
       label="Адрес регистрации"
     )
       addr-field-input(v-model="frmMod.registration_address")
+        template(#buttons)
+          el-tooltip(effect="dark" content="Совпадает с адресом учётной записи")
+            el-button(@click="copyFromCustomerAddr" icon='el-icon-document-copy')
     el-form-item
       el-button(
         icon='el-icon-upload'
@@ -121,6 +124,10 @@ export default class extends Vue {
 
   mounted() {
     this.loadPasspInfo()
+  }
+
+  private copyFromCustomerAddr() {
+    this.frmMod.registration_address = CustomerModule.address
   }
 }
 </script>

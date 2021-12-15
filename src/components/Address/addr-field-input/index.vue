@@ -8,11 +8,13 @@ div
     el-button(
       @click="dialogActivate"
     ) {{ fullTitleFromServer }}
-    el-button(
-      @click="resetVal"
-      icon="el-icon-close"
-      circle
-    )
+    slot(name='buttons')
+    el-tooltip(effect="dark" content="Очистить")
+      el-button(
+        @click="resetVal"
+        icon="el-icon-close"
+        circle
+      )
 
   el-dialog(
     title="Адрес"
