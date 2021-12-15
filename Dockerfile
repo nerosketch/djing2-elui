@@ -10,6 +10,8 @@ USER node
 ARG APP_DIR=/home/node/app
 ARG NODE_ENV=${NODE_ENV}
 
+RUN chown -R node. ${APP_DIR}
+
 WORKDIR ${APP_DIR}
 
 COPY . .
