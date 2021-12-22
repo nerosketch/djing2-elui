@@ -7,7 +7,7 @@ div
     border fit
   )
     el-table-column(
-      label="Номер договора"
+      :label="$t('customers.contractNum.s')"
       prop="username"
     )
       template(v-slot:default="{row}")

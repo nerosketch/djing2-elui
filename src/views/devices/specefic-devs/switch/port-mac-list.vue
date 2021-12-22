@@ -6,7 +6,7 @@
     border fit
   )
     el-table-column(
-      label="Название"
+      :label="$t('title')"
       min-width='200'
       prop='name'
     )

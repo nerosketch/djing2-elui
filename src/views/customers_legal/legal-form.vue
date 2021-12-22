@@ -7,14 +7,14 @@ el-form(
   v-loading='loading'
 )
   el-form-item(
-    label="Номер договора"
+    :label="$t('customers.contractNum.s')"
     prop='username'
   )
     el-input(
       v-model="frmMod.username"
     )
   el-form-item(
-    label="Название"
+    :label="$t('title')"
     prop='title'
   )
     el-input(
@@ -211,7 +211,7 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: 'Номер договора обязателен', trigger: 'blur' },
+      { required: true, message: this.$t('customers.contractNum.required'), trigger: 'blur' },
       { validator: latinValidator, trigger: 'change', message: 'Номер договора может содержать латинские символы и цифры' }
     ],
     post_index: [

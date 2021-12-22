@@ -8,7 +8,7 @@
     v-loading='isLoading'
   )
     el-form-item(
-      label="Название"
+      :label="$t('title')"
       prop='title'
     )
       el-input(v-model="frmMod.title")

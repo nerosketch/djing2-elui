@@ -10,6 +10,7 @@ export default {
   buy: 'Купить',
   yes: 'Да',
   no: 'Не, не надо',
+  sno: 'Нет',
   comment: 'Комментарий',
   fixFormErrs: 'Исправь ошибки в форме',
   ipAddress: 'IP Адрес',
@@ -168,6 +169,12 @@ export default {
     loginValidationMessage: 'Логин может содержать латинские символы и цифры',
     birthDayValidationMessage: 'Нужно указать дату рождения',
     notPassed: 'Не передан абонент',
+    contractNum: {
+      validation: 'Нужно указать когда начал действовать договор',
+      s: 'Номер договора',
+      required: 'Номер договора обязателен',
+      unique: 'Номер договора(уникальный)',
+    }
   },
   nets: {
     ipMustNotBeEmpty: 'IP не может быть пустым',
@@ -208,5 +215,26 @@ export default {
   gateways: {
     port: 'Порт',
     wrong_format_ipv4: 'Не верный формат IPv4 адреса',
+  },
+  contractDocs: {
+    addDoc: 'Добавить документ',
+    docDeleted: 'Документ удалён',
+    docDelFail: 'Ошибка удаления документа',
+    docLoadFail: 'Ошибка загрузки документов',
+    contractNotPassed: 'Не передан договор',
+    noRepeat: 'не должен повторяться',
+    copyFromLogin: 'Скопировать из логина абонента',
+    dateBegin: 'Дата начала действия договора',
+    dateEnd: 'Дата окончания действия договора',
+    activity: 'Активность',
+    activeContract: 'Действующий договор',
+    additional: 'Доп. сведения',
+    addedMsg: 'Договор добавлен',
+    savedMsg: 'Договор сохранён',
+    customerContract: 'Договор абонента',
+    noContracts: 'Нет договоров',
+    addCustomerContract: 'Добавить договор абоненту',
+    delQuestion: 'Удалить договор с абонентом?',
+    delOk: 'Договор успешно удалён',
   }
 }

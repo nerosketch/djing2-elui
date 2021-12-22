@@ -9,7 +9,7 @@ el-upload(
 )
   el-button(
     type="primary"
-  ) Добавить документ
+  ) {{ $t('contractDocs.addDoc') }}
 </template>
 
 <script lang="ts">
@@ -40,9 +40,13 @@ export default class extends Vue {
   private async handleRemove(file: IFileItem) {
     try {
       await delContractDoc(file.id)
-      this.$message.success('Документ удалён')
+      this.$message.success(
+        this.$t('contractDocs.docDeleted')
+      )
     } catch {
-      this.$message.error('Ошибка удаления документа')
+      this.$message.error(
+        this.$t('contractDocs.docDelFail'
+      )
     }
   }
 
@@ -80,10 +84,14 @@ export default class extends Vue {
           this.addFileListItem(el)
         }
       } catch {
-        this.$message.error('Ошибка загрузки документов')
+        this.$message.error(
+          this.$t('contractDocs.docLoadFail')
+        )
       }
     } else {
-      this.$message.error('Не передан договор')
+      this.$message.error(
+        this.$t('contractDocs.contractNotPassed')
+      )
     }
   }
 
