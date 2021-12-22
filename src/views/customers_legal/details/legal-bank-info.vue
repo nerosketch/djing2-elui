@@ -125,7 +125,7 @@ export default class extends Vue {
           } else {
             await CustomerLegalBankModule.updateLegalBank(this.frmMod)
           }
-          this.$message.success('Сохранено')
+          this.$message.success(this.$t('saved'))
         } finally {
           this.loading = false
         }

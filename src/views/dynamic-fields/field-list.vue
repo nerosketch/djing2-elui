@@ -107,7 +107,7 @@ export default class extends Vue {
 
   private formDone() {
     this.fieldFormVisible = false
-    this.$message.success('Сохранено')
+    this.$message.success(this.$t('saved'))
     this.$refs.fieldtable.LoadTableData()
   }
 

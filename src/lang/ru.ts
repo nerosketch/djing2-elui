@@ -2,6 +2,7 @@ export default {
   add: 'Добавить',
   del: 'Удалить',
   save: 'Сохранить',
+  saved: 'Сохранено',
   change: 'Изменить',
   deleted: 'Успешно удалено',
   title: 'Название',
@@ -175,6 +176,9 @@ export default {
       required: 'Номер договора обязателен',
       unique: 'Номер договора(уникальный)',
     }
+  },
+  customersLegal: {
+    branch: 'Филиал (абонент)',
   },
   nets: {
     ipMustNotBeEmpty: 'IP не может быть пустым',

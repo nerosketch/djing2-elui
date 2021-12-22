@@ -4,7 +4,7 @@
     v-loading="loading"
   )
     el-form-item(
-      label="Филиал (абонент)"
+      :label="$t('customersLegal.branch')"
       prop='customer'
     )
       customer-field(
@@ -47,7 +47,7 @@ export default class extends Vue {
       this.loading = true
       try {
         const customerLegal = await CustomerLegalModule.updateCustomerLegal({ branches })
-        this.$message.success('Сохранено')
+        this.$message.success(this.$t('saved'))
         this.$emit('done', customerLegal)
       } finally {
         this.loading = false
