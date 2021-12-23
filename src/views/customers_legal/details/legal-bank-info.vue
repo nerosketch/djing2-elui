@@ -7,14 +7,14 @@
     v-loading="loading"
   )
     el-form-item(
-      label="Название банка"
+      :label="$t('customersLegal.bank.title')"
       prop="title"
     )
       el-input(
         v-model="frmMod.title"
       )
     el-form-item(
-      label="БИК"
+      :label="$t('customersLegal.bank.bik')"
       prop="bank_code"
     )
       el-input(
@@ -22,14 +22,14 @@
         type='number'
       )
     el-form-item(
-      label="Корреспондентский счёт"
+      :label="$t('customersLegal.bank.cacc')"
       prop="correspondent_account"
     )
       el-input(
         v-model="frmMod.correspondent_account"
       )
     el-form-item(
-      label="Расчётный счёт"
+      :label="$t('customersLegal.bank.pacc')"
       prop="settlement_account"
     )
       el-input(
@@ -77,16 +77,16 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название банка обязательно', trigger: 'blur' },
+      { required: true, message: this.$t('customersLegal.bank.required'), trigger: 'blur' },
     ],
     bank_code: [
-      { required: true, message: 'Обязательно', trigger: 'blur' },
+      { required: true, message: this.$t('customersLegal.bank.required'), trigger: 'blur' },
     ],
     correspondent_account: [
-      { required: true, message: 'Обязательно', trigger: 'blur' },
+      { required: true, message: this.$t('customersLegal.bank.required'), trigger: 'blur' },
     ],
     settlement_account: [
-      { required: true, message: 'Обязательно', trigger: 'blur' },
+      { required: true, message: this.$t('customersLegal.bank.required'), trigger: 'blur' },
     ]
   }
 

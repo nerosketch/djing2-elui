@@ -45,13 +45,13 @@ export default class extends Vue {
       )
     } catch {
       this.$message.error(
-        this.$t('contractDocs.docDelFail'
+        this.$t('contractDocs.docDelFail')
       )
     }
   }
 
   private beforeRemove(file: IFileItem) {
-    return this.$confirm(`Удалить "${file.name}"?`)
+    return this.$confirm(`${this.$t('del')} "${file.name}"?`)
   }
 
   private async uploadReq(req: HttpRequestOptions) {

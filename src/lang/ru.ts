@@ -22,6 +22,7 @@ export default {
   attention: 'Внимание',
   view: 'Смотреть',
   clear: 'Очистить',
+  createDate: 'Создан',
   customers: {
     afkFilter: 'Фильтр afk',
     periodicPay: 'Периодический платёж',
@@ -179,6 +180,23 @@ export default {
   },
   customersLegal: {
     branch: 'Филиал (абонент)',
+    branches: 'Филиалы',
+    branchNotAttached: 'Филиалы не назначены',
+    fname: 'Имя физ лица',
+    tel: 'Номер телефона',
+    addBranch: 'Добавить филиал',
+    delBranch: 'Удалить филиал',
+    branchDeleted: 'Филиал отвязан',
+    bank: {
+      title: 'Название банка',
+      bik: 'БИК',
+      cacc: 'Корреспондентский счёт',
+      pacc: 'Расчётный счёт',
+      titleRequired: 'Название банка обязательно',
+      required: 'Обязательно',
+      requisites: 'Банковские реквизиты',
+    },
+    changeInfo: 'Изменение данных организации',
   },
   nets: {
     ipMustNotBeEmpty: 'IP не может быть пустым',

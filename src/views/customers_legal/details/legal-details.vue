@@ -1,31 +1,31 @@
 <template lang="pug">
 .app-container
-  span Балланс:
+  span {{ $t('customers.balance') }}:
   small &nbsp; {{ $store.state.customerlegal.balance }}.
-  span  Создан:
+  span  {{ $t('createDate') }}:
   small &nbsp; {{ $store.state.customerlegal.create_date }}
   el-tabs.border-card(
     v-model="activeTabName"
   )
     el-tab-pane(
-      label="Инфо"
+      :label="$t('customers.info')"
       name="info"
     )
       el-row(:gutter='5')
         el-col.col_vert_space(:sm='24' :md='12')
           el-card(shadow='never')
-            template(v-slot:header) Изменение данных организации
+            template(v-slot:header) {{ $t('customersLegal.changeInfo') }}
             legal-form(v-if="ready")
         el-col.col_vert_space(:sm='24' :md='12')
           el-card(shadow='never')
-            template(v-slot:header) Банковские реквизиты
+            template(v-slot:header) {{ $t('customersLegal.bank.requisites') }}
             legal-bank-info(
               v-if="ready"
               :uid="uid"
             )
 
     el-tab-pane(
-      label="Филиалы"
+      :label="$t('customersLegal.branches')"
       name="branches"
       lazy
     )
@@ -93,7 +93,7 @@ export default class extends mixins(TabMixin) {
         path: '/legal/',
         meta: {
           hidden: true,
-          title: 'Организации'
+          title: this.$t('route.organizations')
         }
       },
       {

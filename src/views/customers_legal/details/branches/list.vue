@@ -3,7 +3,7 @@ div
   el-table(
     :data="branches"
     v-loading="loading"
-    empty-text="Филиалы не назначены"
+    :empty-text="$t('customersLegal.branchNotAttached')"
     border fit
   )
     el-table-column(
@@ -15,11 +15,11 @@ div
           :to="{name: 'customerDetails', params:{uid: row.id }}"
         ) {{ row.username }}
     el-table-column(
-      label="Имя физ лица"
+      :label="$t('customersLegal.fname')"
       prop="full_name"
     )
     el-table-column(
-      label="Номер телефона"
+      :label="$t('customersLegal.tel')"
       prop="telephone"
     )
     el-table-column(
@@ -39,7 +39,7 @@ div
         @click="addBranch"
       ) {{ $t('add') }}
   el-dialog(
-    title='Добавить филиал'
+    :title="$t('customersLegal.addBranch')"
     :visible.sync='branchFormVisible'
     :close-on-click-modal="false"
   )
@@ -107,14 +107,16 @@ export default class extends Vue {
   }
 
   private delBranch(customer: ICustomer) {
-    this.$confirm(`Удалить филиал "${customer.full_name}"?`).then(async () => {
+    this.$confirm(`${this.$t('customersLegal.delBranch')} "${customer.full_name}"?`).then(async () => {
       const branches = CustomerLegalModule.branches
       const br = branches.findIndex(b => b === customer.id)
       if (br > -1) {
         branches.splice(br, 1)
         await CustomerLegalModule.updateCustomerLegal({ branches })
         this.loadBranches(this.customerId)
-        this.$message.success('Филиал отвязан')
+        this.$message.success(
+          this.$t('customersLegal.branchDeleted')
+        )
       }
     })
   }

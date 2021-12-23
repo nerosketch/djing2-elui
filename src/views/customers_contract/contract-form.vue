@@ -126,7 +126,7 @@ export default class extends mixins(FormMixin) {
       { required: true, message: this.$t('customers.contractNum.required'), trigger: 'blur' },
     ],
     start_service_time: [
-      { required: true, message: $t('customers.contractNum.validation'), trigger: 'blur' },
+      { required: true, message: this.$t('customers.contractNum.validation'), trigger: 'blur' },
     ]
   }
 
