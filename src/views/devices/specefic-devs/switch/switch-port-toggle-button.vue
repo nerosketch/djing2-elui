@@ -1,12 +1,5 @@
-<template lang="pug">
-  el-button(
-    :type="portStateGetter ? 'danger' : 'success'"
-    :icon="portStateGetter ? 'el-icon-remove' : 'el-icon-circle-plus'"
-    :loading="loading"
-    :disabled="isdis || !$perms.devices.can_toggle_ports"
-    @click="togglePort"
-    circle
-  )
+<template>  
+  <el-button :type="portStateGetter ? 'danger' : 'success'" :icon="portStateGetter ? 'el-icon-remove' : 'el-icon-circle-plus'" :loading="loading" :disabled="isdis || !$perms.devices.can_toggle_ports" @click="togglePort" circle></el-button>
 </template>
 
 <script lang="ts">

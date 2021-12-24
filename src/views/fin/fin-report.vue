@@ -1,66 +1,19 @@
-<template lang="pug">
-  .app-container
-    el-date-picker(
-      v-model="reportParams.time_range"
-      type='daterange'
-      start-placeholder="Дата начала"
-      end-placeholder="Конечная дата"
-      align="right"
-      unlink-panels
-      value-format="yyyy-MM-dd"
-      :picker-options="pickerOptions"
-    )
-    el-select(
-      v-model="reportParams.pay_gw"
-      placeholder="Платёжный шлюз"
-      v-loading="gatewaysLoading"
-      :style="{width: '10%'}"
-    )
-      el-option(
-        v-for="gw in payGateways"
-        :key="gw.id"
-        :label="gw.title"
-        :value="gw.id"
-      )
-
-    el-radio(
-      v-model="reportParams.group_by"
-      :label="1"
-    ) Группировать по дню
-    el-radio(
-      v-model="reportParams.group_by"
-      :label="2"
-    ) Группировать по неделе
-    el-radio(
-      v-model="reportParams.group_by"
-      :label="3"
-    ) Группировать по месяцу
-
-    el-button(
-      @click='downloadCsv'
-    ) Скачать csv
-
-    el-table(
-      v-loading="loading"
-      :data="tableData"
-      border fit
-    )
-      el-table-column(
-        label="Дата"
-        min-width='110'
-        prop='pay_date'
-      )
-      el-table-column(
-        label="Сумма"
-        min-width='110'
-        prop='summ'
-      )
-      el-table-column(
-        label="Колич. платежей"
-        min-width='110'
-        prop='pay_count'
-      )
-
+<template>  
+  <div class="app-container">
+    <el-date-picker v-model="reportParams.time_range" type="daterange" start-placeholder="Дата начала" end-placeholder="Конечная дата" align="right" unlink-panels value-format="yyyy-MM-dd" :picker-options="pickerOptions"></el-date-picker>
+    <el-select v-model="reportParams.pay_gw" placeholder="Платёжный шлюз" v-loading="gatewaysLoading" :style="{width: '10%'}">
+      <el-option v-for="gw in payGateways" :key="gw.id" :label="gw.title" :value="gw.id"></el-option>
+    </el-select>
+    <el-radio v-model="reportParams.group_by" :label="1">Группировать по дню</el-radio>
+    <el-radio v-model="reportParams.group_by" :label="2">Группировать по неделе</el-radio>
+    <el-radio v-model="reportParams.group_by" :label="3">Группировать по месяцу</el-radio>
+    <el-button @click="downloadCsv">Скачать csv</el-button>
+    <el-table v-loading="loading" :data="tableData" border fit>
+      <el-table-column label="Дата" min-width="110" prop="pay_date"></el-table-column>
+      <el-table-column label="Сумма" min-width="110" prop="summ"></el-table-column>
+      <el-table-column label="Колич. платежей" min-width="110" prop="pay_count"></el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script lang="ts">

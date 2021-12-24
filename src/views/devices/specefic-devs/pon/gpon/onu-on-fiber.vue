@@ -1,32 +1,9 @@
-<template lang="pug">
-span
-  //- span Температура глаза: { { port.fb_temp }} C&deg; / ток лазера { { port.fb_power }} mA.
-  el-table(
-    :data="onuList"
-    v-loading="lloading"
-    :row-class-name="onuRowColor"
-    border fit
-  )
-    el-table-column(
-      label="Тип"
-      min-width="80"
-      prop='onu_type'
-    )
-    el-table-column(
-      label="Порт"
-      min-width="90"
-      prop='onu_port'
-    )
-    //- el-table-column(
-    //-   label="Сигнал"
-    //-   min-width="90"
-    //-   prop='onu_signal'
-    //- )
-    el-table-column(
-      label="Серийник"
-      min-width="90"
-      prop='onu_sn'
-    )
+<template>  <span>
+    <el-table :data="onuList" v-loading="lloading" :row-class-name="onuRowColor" border fit>
+      <el-table-column label="Тип" min-width="80" prop="onu_type"></el-table-column>
+      <el-table-column label="Порт" min-width="90" prop="onu_port"></el-table-column>
+      <el-table-column label="Серийник" min-width="90" prop="onu_sn"></el-table-column>
+    </el-table></span>
 </template>
 
 <script lang="ts">

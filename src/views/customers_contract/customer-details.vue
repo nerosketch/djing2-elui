@@ -1,45 +1,26 @@
-<template lang="pug">
-  customer-details(
-    :uid='uid'
-  )
-    template(#additional_tabs)
-      el-tab-pane(
-        :label="$t('contractDocs.customerContract')"
-        name="contracts"
-        lazy
-      )
-        template(v-if="contracts.length > 0")
-          el-row(:gutter="15")
-            el-col.col_vert_space(
-              v-for="(c, i) in contracts"
-              :key="i"
-              :sm='24'
-              :md='12'
-              :xl='6'
-            )
-              el-card
-                template(#header) {{ $t('contractDocs.customerContract') }} № {{ c.contract_number }}
-                  el-button.card_del_btn(
-                    v-show="c.id"
-                    type="text" icon='el-icon-close'
-                    @click="delContract(c)"
-                  )
-                contract-form(
-                  :contract="c"
-                )
-        span(v-else) {{ $('contractDocs.noContracts') }} &nbsp;
-        el-button(
-          @click="newContractFormVisible=true"
-        ) {{ $t('add') }}
-
-    el-dialog(
-      :visible.sync="newContractFormVisible"
-      :title="$t('contractDocs.addCustomerContract')"
-    )
-      contract-form(
-        @added="doneAdd"
-        @changed="doneChange"
-      )
+<template>  
+  <customer-details :uid="uid">
+    <template #additional_tabs>
+      <el-tab-pane :label="$t('contractDocs.customerContract')" name="contracts" lazy>
+        <template v-if="contracts.length > 0">
+          <el-row :gutter="15">
+            <el-col class="col_vert_space" v-for="(c, i) in contracts" :key="i" :sm="24" :md="12" :xl="6">
+              <el-card>
+                <template #header>{{ $t('contractDocs.customerContract') }} № {{ c.contract_number }}
+                  <el-button class="card_del_btn" v-show="c.id" type="text" icon="el-icon-close" @click="delContract(c)"></el-button>
+                </template>
+                <contract-form :contract="c"></contract-form>
+              </el-card>
+            </el-col>
+          </el-row>
+        </template><span v-else>{{ $('contractDocs.noContracts') }} &nbsp;</span>
+        <el-button @click="newContractFormVisible=true">{{ $t('add') }}</el-button>
+      </el-tab-pane>
+    </template>
+    <el-dialog :visible.sync="newContractFormVisible" :title="$t('contractDocs.addCustomerContract')">
+      <contract-form @added="doneAdd" @changed="doneChange"></contract-form>
+    </el-dialog>
+  </customer-details>
 </template>
 
 <script lang="ts">

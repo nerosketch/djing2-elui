@@ -1,11 +1,7 @@
-<template lang="pug">
-  el-select(v-model="localValue" :loading='loading')
-    el-option(
-      v-for="(level, i) in fiasLevels"
-      :key="i"
-      :label="level.name"
-      :value="level.value"
-    )
+<template>  
+  <el-select v-model="localValue" :loading="loading">
+    <el-option v-for="(level, i) in fiasLevels" :key="i" :label="level.name" :value="level.value"></el-option>
+  </el-select>
 </template>
 
 <script lang="ts">

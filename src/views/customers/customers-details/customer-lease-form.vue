@@ -1,57 +1,27 @@
-<template lang="pug">
-  el-form(
-    ref='frm'
-    v-loading='frmLoading'
-    :label-width="$store.getters.isMobileView ? undefined : '100px'"
-    status-icon
-    :rules='frmRules'
-    :model='frmMod'
-  )
-    el-form-item(
-      :label="$t('ipAddress')"
-      prop='ip_address'
-    )
-      el-input(v-model="frmMod.ip_address")
-        template(v-slot:append)
-          el-button(
-            icon='el-icon-refresh'
-            @click="getFreeIp"
-            :loading='getFreeIpLoad'
-            :disabled="frmMod.pool === 0"
-          )
-    el-form-item(
-      :label="$t('customers.ipPool')"
-      prop='pool'
-    )
-      el-select(
-        v-model="frmMod.pool"
-        v-loading="poolsLoading"
-        :disabled="pools.length === 0"
-      )
-        template(v-if="pools.length > 0")
-          el-option(
-            v-for="p in pools"
-            :key="p.id"
-            :label="`${p.network} - ${p.description}`"
-            :value="p.id"
-          )
-        el-option(
-          v-else
-          :label="$('customers.poolsNotExists')"
-          :value="null"
-        )
-    el-form-item(
-      :label="$t('macAddress')"
-      prop='mac_address'
-    )
-      el-input(v-model="frmMod.mac_address")
-    el-form-item
-      el-button(
-        icon='el-icon-upload'
-        type="primary"
-        @click="onSubmit"
-        :loading="frmLoading"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="frm" v-loading="frmLoading" :label-width="$store.getters.isMobileView ? undefined : '100px'" status-icon :rules="frmRules" :model="frmMod">
+    <el-form-item :label="$t('ipAddress')" prop="ip_address">
+      <el-input v-model="frmMod.ip_address">
+        <template v-slot:append>
+          <el-button icon="el-icon-refresh" @click="getFreeIp" :loading="getFreeIpLoad" :disabled="frmMod.pool === 0"></el-button>
+        </template>
+      </el-input>
+    </el-form-item>
+    <el-form-item :label="$t('customers.ipPool')" prop="pool">
+      <el-select v-model="frmMod.pool" v-loading="poolsLoading" :disabled="pools.length === 0">
+        <template v-if="pools.length > 0">
+          <el-option v-for="p in pools" :key="p.id" :label="`${p.network} - ${p.description}`" :value="p.id"></el-option>
+        </template>
+        <el-option v-else :label="$('customers.poolsNotExists')" :value="null"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item :label="$t('macAddress')" prop="mac_address">
+      <el-input v-model="frmMod.mac_address"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="frmLoading">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

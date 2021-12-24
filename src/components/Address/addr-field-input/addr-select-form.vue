@@ -1,21 +1,8 @@
-<template lang="pug">
-div
-  el-tree(
-    :props="props"
-    :load="loadNode"
-    :expand-on-click-node="false"
-    node-key="id"
-    lazy
-    v-loading="isLoading"
-    v-on:node-click="nodeClick"
-  )
-  el-button(
-    icon='el-icon-circle-check'
-    type='primary'
-    :disabled="!isSaveIsActive"
-    @click="saveSelected"
-  ) Ok
-
+<template>  
+  <div>
+    <el-tree :props="props" :load="loadNode" :expand-on-click-node="false" node-key="id" lazy v-loading="isLoading" v-on:node-click="nodeClick"></el-tree>
+    <el-button icon="el-icon-circle-check" type="primary" :disabled="!isSaveIsActive" @click="saveSelected">Ok</el-button>
+  </div>
 </template>
 
 <script lang="ts">

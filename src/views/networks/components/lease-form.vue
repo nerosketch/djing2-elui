@@ -1,33 +1,18 @@
-<template lang="pug">
-  el-form(
-    ref='leasefrm'
-    status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label='IP Адрес'
-      prop='ip_address'
-    )
-      el-input(v-model="frmMod.ip_address")
-    el-form-item(
-      label='MAC Адрес'
-      prop='mac_address'
-    )
-      el-input(v-model="frmMod.mac_address")
-    el-form-item(
-      label='Динамический'
-      prop='is_dynamic'
-    )
-      el-checkbox(v-model="frmMod.is_dynamic") {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
-    el-form-item
-      el-button(
-        icon='el-icon-upload'
-        type='primary'
-        @click="onSubmit"
-        :loading="isLoading"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="leasefrm" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
+    <el-form-item label="IP Адрес" prop="ip_address">
+      <el-input v-model="frmMod.ip_address"></el-input>
+    </el-form-item>
+    <el-form-item label="MAC Адрес" prop="mac_address">
+      <el-input v-model="frmMod.mac_address"></el-input>
+    </el-form-item>
+    <el-form-item label="Динамический" prop="is_dynamic">
+      <el-checkbox v-model="frmMod.is_dynamic">{{ frmMod.is_dynamic ? 'Да' : 'Нет' }}</el-checkbox>
+    </el-form-item>
+    <el-form-item>
+      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

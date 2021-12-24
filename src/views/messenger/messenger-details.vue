@@ -1,23 +1,21 @@
-<template lang="pug">
-  el-row.app-container(:gutter="5")
-    el-col.mt5(:lg="12" :sm='24')
-      el-card(shadow="never")
-        template(v-slot:header)
-          .clearfix Подробности бота "{{ $store.state.messenger.title }}"
-        messenger-form(v-if='isReady')
-    el-col.mt5(:lg='12' :sm='24')
-      div
-        b Текущий webhook url:
-        span {{ $store.state.messenger.current_webhook }}
-      el-button-group
-        el-button(
-          @click="setWebhook"
-          :loading='setWebhookLoading'
-        ) Отправить webhook url
-        el-button(
-          @click="stopWebhook"
-          :loading='stopWebhookLoading'
-        ) Остановить webhook
+<template>  
+  <el-row class="app-container" :gutter="5">
+    <el-col class="mt5" :lg="12" :sm="24">
+      <el-card shadow="never">
+        <template v-slot:header>
+          <div class="clearfix">Подробности бота "{{ $store.state.messenger.title }}"</div>
+        </template>
+        <messenger-form v-if="isReady"></messenger-form>
+      </el-card>
+    </el-col>
+    <el-col class="mt5" :lg="12" :sm="24">
+      <div><b>Текущий webhook url:</b><span>{{ $store.state.messenger.current_webhook }}</span></div>
+      <el-button-group>
+        <el-button @click="setWebhook" :loading="setWebhookLoading">Отправить webhook url</el-button>
+        <el-button @click="stopWebhook" :loading="stopWebhookLoading">Остановить webhook</el-button>
+      </el-button-group>
+    </el-col>
+  </el-row>
 </template>
 
 <script lang="ts">

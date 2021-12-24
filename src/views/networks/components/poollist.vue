@@ -1,57 +1,28 @@
-<template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadPools"
-    :heightDiff='188'
-    :editFieldsVisible.sync="editFieldsVisible"
-    widthStorageNamePrefix='pools'
-    ref='table'
-  )
-    template(v-slot:is_dynamic="{row}")
-      boolean-icon(v-model="row.is_dynamic")
-
-    template(v-slot:oper="{row}")
-      el-button-group
-        el-button(
-          v-if="$perms.is_superuser"
-          @click="openSitesDlg(row)"
-        ) C
-        el-button(icon="el-icon-edit" @click="openEdit(row)")
-        el-button(
-          type="danger" icon="el-icon-delete"
-          @click="delPool(row)"
-          :disabled="!$perms.networks.delete_networkippool"
-        )
-
-    el-button-group
-      el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-        :disabled="!$perms.networks.add_networkippool"
-      ) {{ $t('add') }}
-      el-button(
-        icon='el-icon-s-operation'
-        @click="editFieldsVisible=true"
-      ) Поля
-
-  el-dialog(
-    :title="dialogTitle"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-  )
-    pool-form(
-      v-on:done="frmDone"
-    )
-  el-dialog(
-    title="Принадлежность сайтам"
-    :visible.sync="sitesDlg"
-    :close-on-click-modal="false"
-  )
-    sites-attach(
-      :selectedSiteIds="$store.state.netpool.sites"
-      v-on:save="netpoolSitesSave"
-    )
+<template>  
+  <div>
+    <datatable :columns="tableColumns" :getData="loadPools" :heightDiff="188" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="pools" ref="table">
+      <template v-slot:is_dynamic="{row}">
+        <boolean-icon v-model="row.is_dynamic"></boolean-icon>
+      </template>
+      <template v-slot:oper="{row}">
+        <el-button-group>
+          <el-button v-if="$perms.is_superuser" @click="openSitesDlg(row)">C</el-button>
+          <el-button icon="el-icon-edit" @click="openEdit(row)"></el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="delPool(row)" :disabled="!$perms.networks.delete_networkippool"></el-button>
+        </el-button-group>
+      </template>
+      <el-button-group>
+        <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.networks.add_networkippool">{{ $t('add') }}</el-button>
+        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">Поля</el-button>
+      </el-button-group>
+    </datatable>
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
+      <pool-form v-on:done="frmDone"></pool-form>
+    </el-dialog>
+    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+      <sites-attach :selectedSiteIds="$store.state.netpool.sites" v-on:save="netpoolSitesSave"></sites-attach>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">

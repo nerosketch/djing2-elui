@@ -1,11 +1,5 @@
-<template lang="pug">
-  el-button(
-    icon='el-icon-close'
-    :type="btnType"
-    :loading="loading"
-    @click="delFromOltOnu"
-    :disabled="!$perms.devices.can_remove_from_olt"
-  ) {{ btnText }}
+<template>  
+  <el-button icon="el-icon-close" :type="btnType" :loading="loading" @click="delFromOltOnu" :disabled="!$perms.devices.can_remove_from_olt">{{ btnText }}</el-button>
 </template>
 
 <script lang="ts">

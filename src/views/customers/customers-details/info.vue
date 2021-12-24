@@ -1,28 +1,36 @@
-<template lang="pug">
-  el-row(:gutter="5")
-    el-col.col_vert_space(:sm='24' :md='12')
-      el-card(shadow="never")
-        template(v-slot:header) {{ $t('customers.customerChange') }}
-        customer-form
-    el-col.col_vert_space(:sm='24' :md='12')
-      device
-    el-col.col_vert_space(:sm='24' :md='12')
-      network
-    el-col.col_vert_space(:sm='24' :md='12')
-      el-card(shadow="never")
-        template(v-slot:header) {{ $t('customers.flags') }}
-        markers
-    el-col.col_vert_space(:sm='24' :md='12')
-      el-card(shadow="never")
-        template(v-slot:header) {{ $t('customers.docs') }}
-        customer-docs
-    el-col.col_vert_space(:sm='24' :md='12')
-      customer-comment-list(
-        :customerId="$store.state.customer.id"
-      )
-    el-col.col_vert_space(:sm='24' :md='12')
-      customer-dynamic-fields
-
+<template>  
+  <el-row :gutter="5">
+    <el-col class="col_vert_space" :sm="24" :md="12">
+      <el-card shadow="never">
+        <template v-slot:header>{{ $t('customers.customerChange') }}</template>
+        <customer-form></customer-form>
+      </el-card>
+    </el-col>
+    <el-col class="col_vert_space" :sm="24" :md="12">
+      <device></device>
+    </el-col>
+    <el-col class="col_vert_space" :sm="24" :md="12">
+      <network></network>
+    </el-col>
+    <el-col class="col_vert_space" :sm="24" :md="12">
+      <el-card shadow="never">
+        <template v-slot:header>{{ $t('customers.flags') }}</template>
+        <markers></markers>
+      </el-card>
+    </el-col>
+    <el-col class="col_vert_space" :sm="24" :md="12">
+      <el-card shadow="never">
+        <template v-slot:header>{{ $t('customers.docs') }}</template>
+        <customer-docs></customer-docs>
+      </el-card>
+    </el-col>
+    <el-col class="col_vert_space" :sm="24" :md="12">
+      <customer-comment-list :customerId="$store.state.customer.id"></customer-comment-list>
+    </el-col>
+    <el-col class="col_vert_space" :sm="24" :md="12">
+      <customer-dynamic-fields></customer-dynamic-fields>
+    </el-col>
+  </el-row>
 </template>
 
 <script lang="ts">

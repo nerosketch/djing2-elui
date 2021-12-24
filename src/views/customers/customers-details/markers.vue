@@ -1,17 +1,9 @@
-<template lang="pug">
-  div
-    el-checkbox(
-      v-for="(ic, i) in markerData"
-      :key="i"
-      v-model="ic[1]"
-    )
-      span.m-icon(:class="`m-${ic[0]}`")
-    el-divider
-    el-button(
-      icon='el-icon-download'
-      :loading='loading'
-      @click='saveMarkers'
-    ) {{ $t('save') }}
+<template>  
+  <div>
+    <el-checkbox v-for="(ic, i) in markerData" :key="i" v-model="ic[1]"><span class="m-icon" :class="`m-${ic[0]}`"></span></el-checkbox>
+    <el-divider></el-divider>
+    <el-button icon="el-icon-download" :loading="loading" @click="saveMarkers">{{ $t('save') }}</el-button>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,19 +1,13 @@
-<template lang="pug">
-  datatable(
-    :columns="tableColumns"
-    :getData="loadTLog"
-    :heightDiff='167'
-    widthStorageNamePrefix='customerTaskHistory'
-    ref='tlogtbl'
-  )
-    template(v-slot:viewbtn="{row}")
-      router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
-        el-button(
-          :type="row.comment_count > 0 ? 'success' : 'primary'"
-        )
-          template(v-if="row.comment_count > 0") {{ row.comment_count }}
-          i.el-icon-view(v-else)
-
+<template>  
+  <datatable :columns="tableColumns" :getData="loadTLog" :heightDiff="167" widthStorageNamePrefix="customerTaskHistory" ref="tlogtbl">
+    <template v-slot:viewbtn="{row}">
+      <router-link :to="{name: 'taskDetails', params: { taskId: row.id }}">
+        <el-button :type="row.comment_count > 0 ? 'success' : 'primary'">
+          <template v-if="row.comment_count > 0">{{ row.comment_count }}</template><i class="el-icon-view" v-else></i>
+        </el-button>
+      </router-link>
+    </template>
+  </datatable>
 </template>
 
 <script lang="ts">

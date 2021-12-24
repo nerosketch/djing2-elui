@@ -1,48 +1,26 @@
-<template lang="pug">
-  el-form(
-    ref='form'
-    label-width="110px"
-    status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      :label="$t('title')"
-    )
-      el-input(v-model="frmMod.title")
-    el-form-item(
-      label="Тип поля"
-    )
-      el-select(v-model="frmMod.field_type")
-        el-option(
-          v-for="(t, i) in fieldTypeChoices"
-          :key="i"
-          :label="t.label"
-          :value="t.value"
-        )
-    el-form-item(
-      label="Группы"
-    )
-      groups-choice(v-model="frmMod.groups" multiple)
-    el-form-item(
-      label="Системный тэг"
-    )
-      system-tags-input(
-        v-model="frmMod.system_tag"
-      )
-    el-form-item(
-      label="Пользов. тэг"
-      prop="user_tag"
-    )
-      el-input(v-model="frmMod.user_tag")
-    el-form-item
-      el-button(
-        icon='el-icon-upload'
-        type="primary"
-        @click="onSubmit"
-        :loading="isLoading"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="form" label-width="110px" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
+    <el-form-item :label="$t('title')">
+      <el-input v-model="frmMod.title"></el-input>
+    </el-form-item>
+    <el-form-item label="Тип поля">
+      <el-select v-model="frmMod.field_type">
+        <el-option v-for="(t, i) in fieldTypeChoices" :key="i" :label="t.label" :value="t.value"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="Группы">
+      <groups-choice v-model="frmMod.groups" multiple></groups-choice>
+    </el-form-item>
+    <el-form-item label="Системный тэг">
+      <system-tags-input v-model="frmMod.system_tag"></system-tags-input>
+    </el-form-item>
+    <el-form-item label="Пользов. тэг" prop="user_tag">
+      <el-input v-model="frmMod.user_tag"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

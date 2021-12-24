@@ -1,21 +1,11 @@
-<template lang="pug">
-  el-select(v-model='selectedPort')
-    el-option(
-      label='Не выбрано'
-      :value='0'
-    )
-    template(v-if='devPorts && devPorts.length > 0')
-      el-option(
-        v-for="dp in devPorts"
-        :key="dp.id"
-        :label="`${dp.num}: ${dp.descr}`"
-        :value="dp.id"
-      )
-    el-option(
-      v-else
-      label='Порты не загружены'
-      :value='null'
-    )
+<template>  
+  <el-select v-model="selectedPort">
+    <el-option label="Не выбрано" :value="0"></el-option>
+    <template v-if="devPorts && devPorts.length > 0">
+      <el-option v-for="dp in devPorts" :key="dp.id" :label="`${dp.num}: ${dp.descr}`" :value="dp.id"></el-option>
+    </template>
+    <el-option v-else label="Порты не загружены" :value="null"></el-option>
+  </el-select>
 </template>
 
 <script lang="ts">

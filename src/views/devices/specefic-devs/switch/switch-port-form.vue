@@ -1,28 +1,15 @@
-<template lang="pug">
-  el-form(
-    ref='form'
-    label-width="100px"
-    status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='loading'
-  )
-    el-form-item(
-      label="№ порта"
-      prop='num'
-    )
-      el-input(v-model="frmMod.num" type='number')
-    el-form-item(
-      label="Описание"
-      prop='descr'
-    )
-      el-input(v-model="frmMod.descr")
-    el-form-item
-      el-button(
-        icon='el-icon-upload'
-        type="primary" @click="onSubmit" :loading="loading"
-        :disabled="!$perms.devices.change_port"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="form" label-width="100px" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
+    <el-form-item label="№ порта" prop="num">
+      <el-input v-model="frmMod.num" type="number"></el-input>
+    </el-form-item>
+    <el-form-item label="Описание" prop="descr">
+      <el-input v-model="frmMod.descr"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="loading" :disabled="!$perms.devices.change_port">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

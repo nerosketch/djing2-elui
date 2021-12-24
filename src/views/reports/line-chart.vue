@@ -1,7 +1,5 @@
-<template lang="pug">
-  .chart(
-    :style="{height: height, width: width}"
-  )
+<template>  
+  <div class="chart" :style="{height: height, width: width}"></div>
 </template>
 
 <script lang="ts">

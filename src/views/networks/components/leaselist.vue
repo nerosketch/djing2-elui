@@ -1,32 +1,20 @@
-<template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadLeases"
-    :heightDiff='160'
-    widthStorageNamePrefix='leases'
-    ref='table'
-  )
-    template(v-slot:is_dynamic="{row}")
-      el-checkbox(v-model="row.is_dynamic" disabled) {{ row.is_dynamic ? 'Да' : 'Нет' }}
-
-    template(v-slot:oper="{row}")
-      el-button-group
-        el-button(icon="el-icon-edit" @click="openEdit(row)")
-        el-button(
-          type="danger" icon="el-icon-delete"
-          @click="delLease(row)"
-          :disabled="!$perms.networks.delete_customeripleasemodel"
-        )
-
-  el-dialog(
-    title="Изменение Сессии"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-  )
-    lease-form(
-      v-on:done="frmDone"
-    )
+<template>  
+  <div>
+    <datatable :columns="tableColumns" :getData="loadLeases" :heightDiff="160" widthStorageNamePrefix="leases" ref="table">
+      <template v-slot:is_dynamic="{row}">
+        <el-checkbox v-model="row.is_dynamic" disabled>{{ row.is_dynamic ? 'Да' : 'Нет' }}</el-checkbox>
+      </template>
+      <template v-slot:oper="{row}">
+        <el-button-group>
+          <el-button icon="el-icon-edit" @click="openEdit(row)"></el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="delLease(row)" :disabled="!$perms.networks.delete_customeripleasemodel"></el-button>
+        </el-button-group>
+      </template>
+    </datatable>
+    <el-dialog title="Изменение Сессии" :visible.sync="dialogVisible" :close-on-click-modal="false">
+      <lease-form v-on:done="frmDone"></lease-form>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">

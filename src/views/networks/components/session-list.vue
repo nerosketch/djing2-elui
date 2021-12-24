@@ -1,19 +1,12 @@
-<template lang="pug">
-  datatable(
-    :columns="tableColumns"
-    :getData="loadSessions"
-    :heightDiff='160'
-    widthStorageNamePrefix='sessions'
-    ref='table'
-  )
-    template(v-slot:closed="{row}")
-      el-checkbox(v-model="row.closed" disabled) {{ row.closed ? 'Да' : 'Нет' }}
-
-    template(v-slot:oper="{row}")
-      el-button(
-        icon="el-icon-delete-solid"
-        @click="shutdownSesion(row)"
-      )
+<template>  
+  <datatable :columns="tableColumns" :getData="loadSessions" :heightDiff="160" widthStorageNamePrefix="sessions" ref="table">
+    <template v-slot:closed="{row}">
+      <el-checkbox v-model="row.closed" disabled>{{ row.closed ? 'Да' : 'Нет' }}</el-checkbox>
+    </template>
+    <template v-slot:oper="{row}">
+      <el-button icon="el-icon-delete-solid" @click="shutdownSesion(row)"></el-button>
+    </template>
+  </datatable>
 </template>
 
 <script lang="ts">

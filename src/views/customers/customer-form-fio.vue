@@ -1,34 +1,22 @@
-<template lang="pug">
-  el-collapse(v-model="collapse")
-    el-collapse-item
-      template(slot="title")
-        el-form-item(
-          :label="$t('customers.fio')"
-          style="margin-bottom: 0"
-        )
-          b {{ origValue }}
-      el-form(
-        status-icon
-        :rules='frmRules'
-        :model='frmData'
-        :label-width="$store.getters.isMobileView ? undefined : '115px'"
-      )
-        el-form-item(
-          :label="$t('customers.surname')"
-          prop="surname"
-        )
-          el-input(v-model="frmData.surname")
-        el-form-item(
-          :label="$t('customers.name')"
-          prop="firstName"
-        )
-          el-input(v-model="frmData.firstName")
-        el-form-item(
-          :label="$t('customers.lastName')"
-          prop="lastName"
-        )
-          el-input(v-model="frmData.lastName")
-
+<template>  
+  <el-collapse v-model="collapse">
+    <el-collapse-item>
+      <template slot="title">
+        <el-form-item :label="$t('customers.fio')" style="margin-bottom: 0"><b>{{ origValue }}</b></el-form-item>
+      </template>
+      <el-form status-icon :rules="frmRules" :model="frmData" :label-width="$store.getters.isMobileView ? undefined : '115px'">
+        <el-form-item :label="$t('customers.surname')" prop="surname">
+          <el-input v-model="frmData.surname"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('customers.name')" prop="firstName">
+          <el-input v-model="frmData.firstName"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('customers.lastName')" prop="lastName">
+          <el-input v-model="frmData.lastName"></el-input>
+        </el-form-item>
+      </el-form>
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
 <script lang="ts">

@@ -1,19 +1,10 @@
-<template lang="pug">
-comment-list(
-  :comments="comments"
-  @send="onSendComment"
-)
-  template(v-slot:comment_item="{ comment }")
-    comment-item.mt5(
-      v-if="comment.type === 'comment'"
-      :key="comment.id"
-      :comment="comment"
-      @delete="delComment"
-    )
-    comment-change-log.mt5(
-      v-else
-      :log="comment"
-    )
+<template>  
+  <comment-list :comments="comments" @send="onSendComment">
+    <template v-slot:comment_item="{ comment }">
+      <comment-item class="mt5" v-if="comment.type === 'comment'" :key="comment.id" :comment="comment" @delete="delComment"></comment-item>
+      <comment-change-log class="mt5" v-else :log="comment"></comment-change-log>
+    </template>
+  </comment-list>
 </template>
 
 <script lang="ts">

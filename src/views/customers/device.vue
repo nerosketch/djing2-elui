@@ -1,39 +1,30 @@
-<template lang="pug">
-el-form(
-  :model='frmMod'
-  v-loading='isLoading'
-  :label-width="$store.getters.isMobileView ? undefined : '100px'"
-)
-  el-card(shadow="never")
-    template(v-slot:header) {{ $t('route.devices') }}
-    el-row
-      el-col(:span='8') {{ $t('devices.dev' ) }}
-      el-col(:span='16')
-        device-select(
-          v-model="frmMod.device"
-          :addrId="$store.state.customer.address"
-          :initialDevice="devComm"
-        )
-    el-row
-      el-col(:span='8') {{ $t('devices.port') }}
-      el-col(:span='16')
-        selected-dev-port(v-model='frmMod.dev_port' :deviceId='frmMod.device')
-    el-row
-      el-col
-        el-button-group
-          el-button(
-            icon='el-icon-upload'
-            type="primary" @click="onSubmit"
-            :loading="isLoading"
-          ) {{ $t('save') }}
-          el-button(
-            icon="el-icon-view" @click="onGo2Dev"
-            :disabled="!frmMod.device"
-          ) {{ $t('view') }}
-          el-button(
-            type="danger" icon="el-icon-delete"
-            @click="onClearDevice"
-          ) {{ $t('clear') }}
+<template>  
+  <el-form :model="frmMod" v-loading="isLoading" :label-width="$store.getters.isMobileView ? undefined : '100px'">
+    <el-card shadow="never">
+      <template v-slot:header>{{ $t('route.devices') }}</template>
+      <el-row>
+        <el-col :span="8">{{ $t('devices.dev' ) }}</el-col>
+        <el-col :span="16">
+          <device-select v-model="frmMod.device" :addrId="$store.state.customer.address" :initialDevice="devComm"></device-select>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="8">{{ $t('devices.port') }}</el-col>
+        <el-col :span="16">
+          <selected-dev-port v-model="frmMod.dev_port" :deviceId="frmMod.device"></selected-dev-port>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col>
+          <el-button-group>
+            <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
+            <el-button icon="el-icon-view" @click="onGo2Dev" :disabled="!frmMod.device">{{ $t('view') }}</el-button>
+            <el-button type="danger" icon="el-icon-delete" @click="onClearDevice">{{ $t('clear') }}</el-button>
+          </el-button-group>
+        </el-col>
+      </el-row>
+    </el-card>
+  </el-form>
 </template>
 
 <script lang="ts">

@@ -1,106 +1,44 @@
-<template lang="pug">
-  el-form(
-    ref='form'
-    status-icon
-    :rules="frmRules"
-    :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      label="Описание"
-      prop='descr'
-    )
-      el-input(
-        v-model="frmMod.descr"
-        maxlength="128"
-      )
-    el-form-item(
-      label="Исполнители"
-      prop='recipients'
-    )
-      el-select(v-model="frmMod.recipients" multiple)
-        el-option(
-          v-for="rec in potentialRecipients"
-          :key="rec.id"
-          :label="rec.full_name || rec.username"
-          :value="rec.id"
-        )
-    el-form-item(
-      label="Характер поломки"
-      prop='mode'
-    )
-      el-select(v-model="frmMod.mode")
-        el-option(
-          v-for="tt in taskTypes"
-          :key="tt.v"
-          :label="tt.nm"
-          :value="tt.v"
-        )
-    el-form-item(
-      label="Приоритет"
-      prop='priority'
-    )
-      el-select(v-model="frmMod.priority")
-        el-option(
-          v-for="tt in taskPriorities"
-          :key="tt.v"
-          :label="tt.nm"
-          :value="tt.v"
-        )
-    el-form-item(
-      label="Состояние"
-      prop='task_state'
-    )
-      el-select(v-model="frmMod.task_state")
-        el-option(
-          v-for="tt in taskStates"
-          :key="tt.v"
-          :label="tt.nm"
-          :value="tt.v"
-        )
-    el-form-item(
-      label="Абонент"
-      prop='customer'
-    )
-      customer-field(
-        v-model="frmMod.customer"
-        :defaultName="$store.state.task.customer_full_name"
-      )
-    el-form-item(
-      label="Актуальность"
-      prop='out_date'
-    )
-      el-tooltip(
-        content="дата, до которой нужно завершить задачу"
-        placement="right"
-      )
-        el-date-picker(
-          v-model="frmMod.out_date"
-          type="date"
-          value-format="yyyy-MM-dd"
-          format="d.MM.yyyy"
-        )
-    el-form-item
-      el-button-group
-        el-button(
-          type="primary"
-          @click="onSubmit"
-          icon='el-icon-upload'
-          :disabled="isFormUntouched"
-        ) {{ $t('save') }}
-        el-button(
-          v-if="!isNewTask"
-          type="danger"
-          icon="el-icon-delete"
-          @click="onDel"
-          :disabled="!$perms.tasks.delete_task"
-        ) Удалить
-        el-button(
-          v-if="!isNewTask"
-          type="success"
-          @click="onFinish"
-          icon="el-icon-check"
-        ) Завершить
+<template>  
+  <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
+    <el-form-item label="Описание" prop="descr">
+      <el-input v-model="frmMod.descr" maxlength="128"></el-input>
+    </el-form-item>
+    <el-form-item label="Исполнители" prop="recipients">
+      <el-select v-model="frmMod.recipients" multiple>
+        <el-option v-for="rec in potentialRecipients" :key="rec.id" :label="rec.full_name || rec.username" :value="rec.id"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="Характер поломки" prop="mode">
+      <el-select v-model="frmMod.mode">
+        <el-option v-for="tt in taskTypes" :key="tt.v" :label="tt.nm" :value="tt.v"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="Приоритет" prop="priority">
+      <el-select v-model="frmMod.priority">
+        <el-option v-for="tt in taskPriorities" :key="tt.v" :label="tt.nm" :value="tt.v"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="Состояние" prop="task_state">
+      <el-select v-model="frmMod.task_state">
+        <el-option v-for="tt in taskStates" :key="tt.v" :label="tt.nm" :value="tt.v"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="Абонент" prop="customer">
+      <customer-field v-model="frmMod.customer" :defaultName="$store.state.task.customer_full_name"></customer-field>
+    </el-form-item>
+    <el-form-item label="Актуальность" prop="out_date">
+      <el-tooltip content="дата, до которой нужно завершить задачу" placement="right">
+        <el-date-picker v-model="frmMod.out_date" type="date" value-format="yyyy-MM-dd" format="d.MM.yyyy"></el-date-picker>
+      </el-tooltip>
+    </el-form-item>
+    <el-form-item>
+      <el-button-group>
+        <el-button type="primary" @click="onSubmit" icon="el-icon-upload" :disabled="isFormUntouched">{{ $t('save') }}</el-button>
+        <el-button v-if="!isNewTask" type="danger" icon="el-icon-delete" @click="onDel" :disabled="!$perms.tasks.delete_task">Удалить</el-button>
+        <el-button v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check">Завершить</el-button>
+      </el-button-group>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

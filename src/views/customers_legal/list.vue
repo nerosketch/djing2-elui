@@ -1,68 +1,21 @@
-<template lang="pug">
-.app-container
-  datatable(
-    :columns="tableColumns"
-    :getData="loadCustomersLegal"
-    :heightDiff='118'
-    widthStorageNamePrefix='legalcustomers'
-    ref='table'
-  )
-    template(v-slot:btn="{row}")
-      //- el-button(
-      //-   v-if="$perms.is_superuser"
-      //-   @click="openSitesDlg(row)"
-      //- ) C
-      el-button(
-        icon="el-icon-edit"
-        @click="openEdit(row)"
-        :disabled="!$perms.customers_legal.change_customerlegalmodel"
-      )
-
-    template(v-slot:username="{row}")
-      router-link.el-link.el-link--primary.is-underline(
-        :to="{ name: 'customerLegalDetail', params: { uid: row.id } }"
-      ) {{ row.username }}
-
-    el-button(
-      icon='el-icon-plus'
-      @click="openNew"
-      :disabled="!$perms.customers_legal.add_customerlegalmodel"
-    ) Добавить учётную запись
-
-  el-dialog(
-    title="Организация"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-    top="1%"
-  )
-    legal-form(
-      v-if="dialogVisible"
-      v-on:added="frmAddDone"
-      v-on:update="frmUpdateDone"
-    )
-  el-dialog(
-    title="Кто имеет права на учётную запись"
-    :visible.sync="permsDialog"
-    top="5vh"
-    :close-on-click-modal="false"
-  )
-    object-perms(
-      v-on:save="changeLegalObjectPerms"
-      :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp"
-      :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms"
-      :objId="$store.state.customerlegal.title"
-    )
-
-  //- el-dialog(
-  //-   title="Принадлежность учётных записей сайтам"
-  //-   :visible.sync="sitesDlg"
-  //-   :close-on-click-modal="false"
-  //- )
-  //-   sites-attach(
-  //-     :selectedSiteIds="$store.state.devicemodule.sites"
-  //-     v-on:save="devSitesSave"
-  //-   )
-
+<template>  
+  <div class="app-container">
+    <datatable :columns="tableColumns" :getData="loadCustomersLegal" :heightDiff="118" widthStorageNamePrefix="legalcustomers" ref="table">
+      <template v-slot:btn="{row}">
+        <el-button icon="el-icon-edit" @click="openEdit(row)" :disabled="!$perms.customers_legal.change_customerlegalmodel"></el-button>
+      </template>
+      <template v-slot:username="{row}">
+        <router-link class="el-link el-link--primary is-underline" :to="{ name: 'customerLegalDetail', params: { uid: row.id } }">{{ row.username }}</router-link>
+      </template>
+      <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.customers_legal.add_customerlegalmodel">Добавить учётную запись</el-button>
+    </datatable>
+    <el-dialog title="Организация" :visible.sync="dialogVisible" :close-on-click-modal="false" top="1%">
+      <legal-form v-if="dialogVisible" v-on:added="frmAddDone" v-on:update="frmUpdateDone"></legal-form>
+    </el-dialog>
+    <el-dialog title="Кто имеет права на учётную запись" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
+      <object-perms v-on:save="changeLegalObjectPerms" :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp" :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms" :objId="$store.state.customerlegal.title"></object-perms>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">

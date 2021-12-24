@@ -1,9 +1,5 @@
-<template lang="pug">
-  span(
-    :class="iconClass"
-    :style="iconColor"
-  )
-    slot
+<template>  <span :class="iconClass" :style="iconColor">
+    <slot></slot></span>
 </template>
 
 <script lang="ts">

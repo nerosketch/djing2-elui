@@ -1,7 +1,5 @@
-<template lang="pug">
-  customer-list(
-    :fetchFunc="fetchBumCustomers"
-  )
+<template>  
+  <customer-list :fetchFunc="fetchBumCustomers"></customer-list>
 </template>
 
 <script lang="ts">

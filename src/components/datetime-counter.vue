@@ -1,12 +1,5 @@
-<template lang="pug">
-  el-date-picker(
-    v-model="localVal"
-    type="datetime"
-    value-format="yyyy-MM-dd HH:mm:ss"
-    format="d.MM.yyyy HH:mm:ss"
-    @change="stopTimer"
-    @focus="stopTimer"
-  )
+<template>  
+  <el-date-picker v-model="localVal" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" format="d.MM.yyyy HH:mm:ss" @change="stopTimer" @focus="stopTimer"></el-date-picker>
 </template>
 
 <script lang="ts">

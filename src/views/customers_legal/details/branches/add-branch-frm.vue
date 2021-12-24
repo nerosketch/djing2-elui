@@ -1,22 +1,12 @@
-<template lang="pug">
-  el-form(
-    :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      :label="$t('customersLegal.branch')"
-      prop='customer'
-    )
-      customer-field(
-        v-model="frmMod.branch"
-      )
-    el-form-item
-      el-button(
-        type='primary'
-        icon='el-icon-plus'
-        :disabled="!isFilled"
-        @click="onSubmit"
-      ) {{ $t('add') }}
+<template>  
+  <el-form :model="frmMod" v-loading="loading">
+    <el-form-item :label="$t('customersLegal.branch')" prop="customer">
+      <customer-field v-model="frmMod.branch"></customer-field>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" icon="el-icon-plus" :disabled="!isFilled" @click="onSubmit">{{ $t('add') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 

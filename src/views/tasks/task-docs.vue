@@ -1,16 +1,7 @@
-<template lang="pug">
-  el-upload(
-    action=""
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :http-request="uploadReq"
-    :file-list="fileList"
-  )
-    el-button(
-      type="primary"
-      v-if="$perms.tasks.add_taskdocumentattachment"
-    ) {{ $t('addDocument') }}
+<template>  
+  <el-upload action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :http-request="uploadReq" :file-list="fileList">
+    <el-button type="primary" v-if="$perms.tasks.add_taskdocumentattachment">{{ $t('addDocument') }}</el-button>
+  </el-upload>
 </template>
 
 <script lang="ts">

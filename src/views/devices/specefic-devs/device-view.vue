@@ -1,18 +1,12 @@
-<template lang="pug">
-  .app-container
-    template(v-if="ready")
-      pon-onu(
-        :device="device"
-        v-if="[3,6,7].includes(device.dev_type)"
-        v-on:reqrefresh="getDevice"
-      )
-      pon-bdcom-olt(
-        v-else-if="device.dev_type === 2"
-        :device="device"
-      )
-      olt-zte(:device="device" v-else-if="device.dev_type === 5")
-      switch-view(:device="device" v-else)
-
+<template>  
+  <div class="app-container">
+    <template v-if="ready">
+      <pon-onu :device="device" v-if="[3,6,7].includes(device.dev_type)" v-on:reqrefresh="getDevice"></pon-onu>
+      <pon-bdcom-olt v-else-if="device.dev_type === 2" :device="device"></pon-bdcom-olt>
+      <olt-zte :device="device" v-else-if="device.dev_type === 5"></olt-zte>
+      <switch-view :device="device" v-else></switch-view>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">

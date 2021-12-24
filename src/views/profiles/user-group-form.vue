@@ -1,24 +1,15 @@
-<template lang="pug">
-  el-form(
-    :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      :label="$t('title')"
-      prop='name'
-    )
-      el-input(v-model="frmMod.name" maxlength="150")
-    el-form-item
-      el-button-group
-        el-button(
-          type="primary" @click="onSubmit"
-          icon='el-icon-upload'
-          :disabled="isEmpty || !$perms.is_superuser"
-        ) {{ $t('save') }}
-        el-button(
-          @click="$emit('cancel')"
-          icon="el-icon-close"
-        ) Отмена
+<template>  
+  <el-form :model="frmMod" v-loading="loading">
+    <el-form-item :label="$t('title')" prop="name">
+      <el-input v-model="frmMod.name" maxlength="150"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button-group>
+        <el-button type="primary" @click="onSubmit" icon="el-icon-upload" :disabled="isEmpty || !$perms.is_superuser">{{ $t('save') }}</el-button>
+        <el-button @click="$emit('cancel')" icon="el-icon-close">Отмена</el-button>
+      </el-button-group>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

@@ -1,11 +1,7 @@
-<template lang="pug">
-  .app-container
-    datatable(
-      :columns="tableColumns"
-      :getData="getAllLog"
-      :heightDiff='201'
-      widthStorageNamePrefix='profile_log'
-    )
+<template>  
+  <div class="app-container">
+    <datatable :columns="tableColumns" :getData="getAllLog" :heightDiff="201" widthStorageNamePrefix="profile_log"></datatable>
+  </div>
 </template>
 
 <script lang="ts">

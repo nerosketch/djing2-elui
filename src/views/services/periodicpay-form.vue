@@ -1,28 +1,15 @@
-<template lang="pug">
-  el-form(
-    ref='perfrm'
-    status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      :label="$t('title')"
-      prop='name'
-    )
-      el-input(v-model="frmMod.name")
-    el-form-item(
-      label="Стоимость"
-      prop="amount"
-    )
-      el-input(v-model="frmMod.amount")
-    el-form-item
-      el-button(
-        icon='el-icon-upload'
-        type="primary"
-        @click="onSubmit"
-        :loading="isLoading"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="perfrm" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
+    <el-form-item :label="$t('title')" prop="name">
+      <el-input v-model="frmMod.name"></el-input>
+    </el-form-item>
+    <el-form-item label="Стоимость" prop="amount">
+      <el-input v-model="frmMod.amount"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

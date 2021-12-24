@@ -1,33 +1,13 @@
-<template lang="pug">
-div
-  el-alert(
-    v-if="$store.state.userprofile.is_superuser"
-    :title="$t('attention')"
-    description='Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно'
-    type="warning"
-    effect="dark"
-    :closable="false"
-    show-icon
-    center
-  )
-  el-transfer(
-    v-model="assignedPerms"
-    :props="prop"
-    :data="allPerms"
-    :left-default-checked="leftChecked"
-    :titles="['Все права', 'Назначенные права']"
-  )
-    template(v-slot:left-footer)
-      el-button.transfer-footer(
-        @click="selectReadonly"
-      ) Выделить права на чтение
-  el-button(
-    icon='el-icon-upload'
-    type="primary"
-    :loading="saveLoading"
-    :disabled="isUnTouched || !$perms.is_superuser"
-    @click="savePerms"
-  ) {{ $t('save') }}
+<template>  
+  <div>
+    <el-alert v-if="$store.state.userprofile.is_superuser" :title="$t('attention')" description="Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно" type="warning" effect="dark" :closable="false" show-icon center></el-alert>
+    <el-transfer v-model="assignedPerms" :props="prop" :data="allPerms" :left-default-checked="leftChecked" :titles="['Все права', 'Назначенные права']">
+      <template v-slot:left-footer>
+        <el-button class="transfer-footer" @click="selectReadonly">Выделить права на чтение</el-button>
+      </template>
+    </el-transfer>
+    <el-button icon="el-icon-upload" type="primary" :loading="saveLoading" :disabled="isUnTouched || !$perms.is_superuser" @click="savePerms">{{ $t('save') }}</el-button>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,31 +1,13 @@
-<template lang="pug">
-.app-container
-  span {{ $t('customers.afkReferenceDate') }}:
-  el-date-picker(
-    v-model="reqParams.date_limit"
-    type="datetime"
-    value-format="yyyy-MM-dd HH:mm"
-    format="d.MM.yyyy HH:mm"
-    :placeholder="$t('customers.afkReferenceDate')"
-  )
-  span  {{ $t('customers.afkOutLimit') }}:
-  el-input(
-    :placeholder="$t('customers.afkOutLimit')"
-    :style="{width: '150px'}"
-    type="number"
-    v-model="reqParams.out_limit"
-  )
-  datatable(
-    :columns="tableColumns"
-    :getData="loadAfk"
-    widthStorageNamePrefix='usersafk'
-    ref='afktbl'
-  )
-    template(v-slot:customer_uname="{row}")
-      router-link.el-link.el-link--primary.is-underline(
-        :to="{name: 'customerDetails', params:{uid: row.customer_id }}"
-      ) {{ row.customer_uname }}
-
+<template>  
+  <div class="app-container"><span>{{ $t('customers.afkReferenceDate') }}:</span>
+    <el-date-picker v-model="reqParams.date_limit" type="datetime" value-format="yyyy-MM-dd HH:mm" format="d.MM.yyyy HH:mm" :placeholder="$t('customers.afkReferenceDate')"></el-date-picker><span> {{ $t('customers.afkOutLimit') }}:</span>
+    <el-input :placeholder="$t('customers.afkOutLimit')" :style="{width: '150px'}" type="number" v-model="reqParams.out_limit"></el-input>
+    <datatable :columns="tableColumns" :getData="loadAfk" widthStorageNamePrefix="usersafk" ref="afktbl">
+      <template v-slot:customer_uname="{row}">
+        <router-link class="el-link el-link--primary is-underline" :to="{name: 'customerDetails', params:{uid: row.customer_id }}">{{ row.customer_uname }}</router-link>
+      </template>
+    </datatable>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,50 +1,20 @@
-<template lang="pug">
-  el-card(shadow='never' v-if="currentConfig.vlanConfig.length > 0")
-    template(v-slot:header)
-      span Варианты конфигурации на ONU
-
-    span Шаблон конфига для ONU
-    el-select(v-model="currentConfig.configTypeCode" placeholder="Шаблон конфига")
-      el-option(
-        :value='v.code'
-        :label='v.title'
-        v-for="(v, i) in configTypeCodes"
-        :key="i"
-      )
-
-    template(v-if="isAcceptVlanSelectedConfig")
-      el-card(
-        shadow='never'
-        v-for="portVlanConf in currentConfig.vlanConfig"
-        :key="portVlanConf.port"
-      )
-        template(v-slot:header)
-          el-link(
-            style="float: right"
-            icon='el-icon-close'
-            type='danger'
-            @click="delVlanPort(portVlanConf.port)"
-          )
-          | Vlan на порт №{{ portVlanConf.port }}
-
-        generic-vlan-config(
-          :portVlanConf.sync="portVlanConf"
-          :allVlans="vlans"
-        )
-
-    el-card(
-      shadow='never'
-      v-else
-    ) Настройка VLAN не принимается выбранным конфигом
-
-    el-button(
-      type="primary"
-      icon="el-icon-download"
-      @click="onSubmit"
-      :loading="vlanLoading"
-      :disabled="!$perms.devices.can_apply_onu_config || disabled"
-    ) Применить
-
+<template>  
+  <el-card shadow="never" v-if="currentConfig.vlanConfig.length > 0">
+    <template v-slot:header><span>Варианты конфигурации на ONU</span></template><span>Шаблон конфига для ONU</span>
+    <el-select v-model="currentConfig.configTypeCode" placeholder="Шаблон конфига">
+      <el-option :value="v.code" :label="v.title" v-for="(v, i) in configTypeCodes" :key="i"></el-option>
+    </el-select>
+    <template v-if="isAcceptVlanSelectedConfig">
+      <el-card shadow="never" v-for="portVlanConf in currentConfig.vlanConfig" :key="portVlanConf.port">
+        <template v-slot:header>
+          <el-link style="float: right" icon="el-icon-close" type="danger" @click="delVlanPort(portVlanConf.port)"></el-link>Vlan на порт №{{ portVlanConf.port }}
+        </template>
+        <generic-vlan-config :portVlanConf.sync="portVlanConf" :allVlans="vlans"></generic-vlan-config>
+      </el-card>
+    </template>
+    <el-card shadow="never" v-else>Настройка VLAN не принимается выбранным конфигом</el-card>
+    <el-button type="primary" icon="el-icon-download" @click="onSubmit" :loading="vlanLoading" :disabled="!$perms.devices.can_apply_onu_config || disabled">Применить</el-button>
+  </el-card>
 </template>
 
 <script lang="ts">

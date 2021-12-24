@@ -1,60 +1,56 @@
-<template lang="pug">
-el-card(style='margin-bottom:20px;')
-  template(v-slot:header)
-    .clearfix
-      span Инфо
-  .user-profile
-    .box-center
-      pan-thumb(
-        :image='$store.state.userprofile.avatar || defAvaConst'
-        height="100px"
-        width="100px"
-        :hoverable='false'
-      )
-    .box-center
-      .user-name.text-center
-        | {{ $store.state.userprofile.username }}
-      .user-role.text-center.text-muted
-        | {{ $store.state.userprofile.fio }}
-  .user-bio
-    .user-education.user-bio-section
-      .user-bio-section-body
-        dl
-          dt
-            b Телефон
-          dd {{ $store.state.userprofile.telephone }}
-          dt
-            b Логин
-          dd {{ $store.state.userprofile.username }}
-          dt
-            b Имя и отчество
-          dd {{ $store.state.userprofile.fio }}
-          dt
-            b Включён-ли
-          dd
-            boolean-icon(v-model="$store.state.userprofile.is_active")
-          dt
-            b Суперпользователь
-          dd
-            boolean-icon(v-model="$store.state.userprofile.is_superuser")
-    .user-skills.user-bio-section
-      .user-bio-section-body
-        .progress-item
-          span Уровень доступа
-          el-progress(
-            :percentage='$store.state.userprofile.access_level'
-            :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'
-          )
-        .progress-item
-          span Какой-то другой прогресс
-          el-progress(:percentage='45')
-        .progress-item
-          span ещё что-то
-          el-progress(:percentage='4')
-        .progress-item
-          span Что-то завершённое
-          el-progress(:percentage='100' status='success')
-
+<template>  
+  <el-card style="margin-bottom:20px;">
+    <template v-slot:header>
+      <div class="clearfix"><span>Инфо</span></div>
+    </template>
+    <div class="user-profile">
+      <div class="box-center">
+        <pan-thumb :image="$store.state.userprofile.avatar || defAvaConst" height="100px" width="100px" :hoverable="false"></pan-thumb>
+      </div>
+      <div class="box-center">
+        <div class="user-name text-center">{{ $store.state.userprofile.username }}</div>
+        <div class="user-role text-center text-muted">{{ $store.state.userprofile.fio }}</div>
+      </div>
+    </div>
+    <div class="user-bio">
+      <div class="user-education user-bio-section">
+        <div class="user-bio-section-body">
+          <dl>
+            <dt><b>Телефон</b></dt>
+            <dd>{{ $store.state.userprofile.telephone }}</dd>
+            <dt><b>Логин</b></dt>
+            <dd>{{ $store.state.userprofile.username }}</dd>
+            <dt><b>Имя и отчество</b></dt>
+            <dd>{{ $store.state.userprofile.fio }}</dd>
+            <dt><b>Включён-ли</b></dt>
+            <dd>
+              <boolean-icon v-model="$store.state.userprofile.is_active"></boolean-icon>
+            </dd>
+            <dt><b>Суперпользователь</b></dt>
+            <dd>
+              <boolean-icon v-model="$store.state.userprofile.is_superuser"></boolean-icon>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="user-skills user-bio-section">
+        <div class="user-bio-section-body">
+          <div class="progress-item"><span>Уровень доступа</span>
+            <el-progress :percentage="$store.state.userprofile.access_level" :status="$store.state.userprofile.access_level === 100 ? "success" : undefined"></el-progress>
+          </div>
+          <div class="progress-item"><span>Какой-то другой прогресс</span>
+            <el-progress :percentage="45"></el-progress>
+          </div>
+          <div class="progress-item"><span>ещё что-то</span>
+            <el-progress :percentage="4"></el-progress>
+          </div>
+          <div class="progress-item"><span>Что-то завершённое</span>
+            <el-progress :percentage="100" status="success"></el-progress>
+          </div>
+        </div>
+      </div>
+    </div>
+  </el-card>
 </template>
 
 <script lang="ts">

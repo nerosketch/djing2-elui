@@ -1,28 +1,15 @@
-<template lang="pug">
-  el-form(
-    ref='form'
-    label-width="100px"
-    status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      :label="$t('title')"
-      prop='name'
-    )
-      el-input(v-model="frmMod.name")
-    el-form-item(
-      label="Домен"
-      prop='domain'
-    )
-      el-input(v-model="frmMod.domain")
-    el-form-item
-      el-button(
-        type="primary"
-        @click="onSubmit"
-        :loading="isLoading"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="form" label-width="100px" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
+    <el-form-item :label="$t('title')" prop="name">
+      <el-input v-model="frmMod.name"></el-input>
+    </el-form-item>
+    <el-form-item label="Домен" prop="domain">
+      <el-input v-model="frmMod.domain"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

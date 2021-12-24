@@ -1,37 +1,27 @@
-<template lang="pug">
-.app-container
-  span {{ $t('customers.balance') }}:
-  small &nbsp; {{ $store.state.customerlegal.balance }}.
-  span  {{ $t('createDate') }}:
-  small &nbsp; {{ $store.state.customerlegal.create_date }}
-  el-tabs.border-card(
-    v-model="activeTabName"
-  )
-    el-tab-pane(
-      :label="$t('customers.info')"
-      name="info"
-    )
-      el-row(:gutter='5')
-        el-col.col_vert_space(:sm='24' :md='12')
-          el-card(shadow='never')
-            template(v-slot:header) {{ $t('customersLegal.changeInfo') }}
-            legal-form(v-if="ready")
-        el-col.col_vert_space(:sm='24' :md='12')
-          el-card(shadow='never')
-            template(v-slot:header) {{ $t('customersLegal.bank.requisites') }}
-            legal-bank-info(
-              v-if="ready"
-              :uid="uid"
-            )
-
-    el-tab-pane(
-      :label="$t('customersLegal.branches')"
-      name="branches"
-      lazy
-    )
-      legal-branches(
-        :customerId="uid"
-      )
+<template>  
+  <div class="app-container"><span>{{ $t('customers.balance') }}:</span><small>&nbsp; {{ $store.state.customerlegal.balance }}.</small><span> {{ $t('createDate') }}:</span><small>&nbsp; {{ $store.state.customerlegal.create_date }}</small>
+    <el-tabs class="border-card" v-model="activeTabName">
+      <el-tab-pane :label="$t('customers.info')" name="info">
+        <el-row :gutter="5">
+          <el-col class="col_vert_space" :sm="24" :md="12">
+            <el-card shadow="never">
+              <template v-slot:header>{{ $t('customersLegal.changeInfo') }}</template>
+              <legal-form v-if="ready"></legal-form>
+            </el-card>
+          </el-col>
+          <el-col class="col_vert_space" :sm="24" :md="12">
+            <el-card shadow="never">
+              <template v-slot:header>{{ $t('customersLegal.bank.requisites') }}</template>
+              <legal-bank-info v-if="ready" :uid="uid"></legal-bank-info>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-tab-pane>
+      <el-tab-pane :label="$t('customersLegal.branches')" name="branches" lazy>
+        <legal-branches :customerId="uid"></legal-branches>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,19 +1,8 @@
-<template lang="pug">
-  div
-    el-checkbox(
-      v-for="grp in groups"
-      :key="grp.id"
-      :label="grp.title"
-      v-model="grp.state"
-    )
-    br
-    el-button(
-      icon='el-icon-upload'
-      type='primary'
-      @click="saveResp"
-      :loading="loading"
-      :disabled="!$perms.is_superuser"
-    ) {{ $t('save') }}
+<template>  
+  <div>
+    <el-checkbox v-for="grp in groups" :key="grp.id" :label="grp.title" v-model="grp.state"></el-checkbox><br>
+    <el-button icon="el-icon-upload" type="primary" @click="saveResp" :loading="loading" :disabled="!$perms.is_superuser">{{ $t('save') }}</el-button>
+  </div>
 </template>
 
 <script lang="ts">

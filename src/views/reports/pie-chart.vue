@@ -1,9 +1,5 @@
-<template lang="pug">
-  div(
-    :class="className"
-    :style="{height: height, width: width}"
-    v-loading="repLoading"
-  )
+<template>  
+  <div :class="className" :style="{height: height, width: width}" v-loading="repLoading"></div>
 </template>
 
 <script lang="ts">

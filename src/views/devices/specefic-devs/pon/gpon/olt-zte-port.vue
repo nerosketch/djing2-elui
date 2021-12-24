@@ -1,22 +1,16 @@
-<template lang="pug">
-  .port
-    div.content(:class="{'port-available': port.fb_onu_num > 0}")
-      span {{ port.fb_name }}
-      b {{ port.fb_onu_num }}
-      port-svg-icon
-      el-button-group
-        el-button(icon='el-icon-view' @click="onuListDialog=true" :disabled="port.fb_onu_num === 0")
-        el-button(icon='el-icon-lock' disabled)
-    el-dialog(
-      top="5vh"
-      title="Список ONU на глазу"
-      :visible.sync="onuListDialog"
-      :close-on-click-modal="false"
-    )
-      onu-on-fiber(
-        :devId="devId"
-        :fiberAddr="port.fb_id"
-      )
+<template>  
+  <div class="port">
+    <div class="content" :class="{'port-available': port.fb_onu_num > 0}"><span>{{ port.fb_name }}</span><b>{{ port.fb_onu_num }}</b>
+      <port-svg-icon></port-svg-icon>
+      <el-button-group>
+        <el-button icon="el-icon-view" @click="onuListDialog=true" :disabled="port.fb_onu_num === 0"></el-button>
+        <el-button icon="el-icon-lock" disabled></el-button>
+      </el-button-group>
+    </div>
+    <el-dialog top="5vh" title="Список ONU на глазу" :visible.sync="onuListDialog" :close-on-click-modal="false">
+      <onu-on-fiber :devId="devId" :fiberAddr="port.fb_id"></onu-on-fiber>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,102 +1,51 @@
-<template lang="pug">
-  el-form(
-    ref='frm'
-    status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='loading'
-  )
-    el-form-item(
-      label="Логин"
-      prop='username'
-    )
-      el-input(v-model="frmMod.username")
-    el-form-item(
-      label="ФИО"
-      prop='fio'
-    )
-      el-input(v-model="frmMod.fio")
-    el-form-item(
-      label="День рождения"
-      prop='birth_day'
-    )
-      el-date-picker(
-        v-model="frmMod.birth_day"
-        type="date"
-        value-format="yyyy-MM-dd"
-        format="d.MM.yyyy"
-      )
-    el-form-item(
-      label="Включён"
-    )
-      el-switch(v-model="frmMod.is_active")
-      small {{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}
-    el-form-item(
-      label="Суперпользователь"
-    )
-      el-switch(v-model="frmMod.is_superuser")
-      small {{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}
-    el-form-item(
-      label="Номер телефона"
-      prop='telephone'
-    )
-      el-input(v-model="frmMod.telephone")
-    el-form-item(
-      label="ЭПочта"
-      prop='email'
-    )
-      el-input(v-model="frmMod.email")
-    el-form-item(
-      label="Пароль"
-      prop='password'
-      v-if="isNew"
-    )
-      el-input(v-model="frmMod.password" type="password" autocomplete="new-password")
-    el-form-item
-      el-button-group
-        el-button(
-          :type="isNew ? 'success' : 'primary'"
-          @click="onSubmit"
-          icon='el-icon-upload'
-        ) {{ isNew ? 'Добавить' : 'Сохранить' }}
-        template(v-if="!isNew")
-          el-button(@click="openPasswordForm" icon="el-icon-lock") Пароль
-          template(v-if="$perms.is_superuser")
-            el-button(@click="openGroupsForm" icon="el-icon-lock") Группы пользователей
-            el-button(
-              @click="sitesDlg = true"
-              icon='el-icon-lock'
-            ) Сайты
-
-    el-dialog(
-      title="Поменять пароль"
-      :visible.sync="passwordFormDialog"
-      :close-on-click-modal="false"
-    )
-      password-form(
-        :profileId="$store.state.userprofile.id"
-        v-on:done="passwordDone"
-        v-on:cancel="passwordCancel"
-      )
-
-    el-dialog(
-      title="Назначить принадлежность группам пользователей"
-      :visible.sync="userGroupAccessDialog"
-      :close-on-click-modal="false"
-    )
-      profile-groups(
-        v-on:done="userGroupAccessDone"
-      )
-    el-dialog(
-      title="Принадлежность сайтам"
-      :visible.sync="sitesDlg"
-      :close-on-click-modal="false"
-    )
-      sites-attach(
-        :selectedSiteIds="$store.state.userprofile.sites"
-        v-on:save="profileSitesSave"
-      )
-
+<template>  
+  <el-form ref="frm" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
+    <el-form-item label="Логин" prop="username">
+      <el-input v-model="frmMod.username"></el-input>
+    </el-form-item>
+    <el-form-item label="ФИО" prop="fio">
+      <el-input v-model="frmMod.fio"></el-input>
+    </el-form-item>
+    <el-form-item label="День рождения" prop="birth_day">
+      <el-date-picker v-model="frmMod.birth_day" type="date" value-format="yyyy-MM-dd" format="d.MM.yyyy"></el-date-picker>
+    </el-form-item>
+    <el-form-item label="Включён">
+      <el-switch v-model="frmMod.is_active"></el-switch><small>{{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}</small>
+    </el-form-item>
+    <el-form-item label="Суперпользователь">
+      <el-switch v-model="frmMod.is_superuser"></el-switch><small>{{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}</small>
+    </el-form-item>
+    <el-form-item label="Номер телефона" prop="telephone">
+      <el-input v-model="frmMod.telephone"></el-input>
+    </el-form-item>
+    <el-form-item label="ЭПочта" prop="email">
+      <el-input v-model="frmMod.email"></el-input>
+    </el-form-item>
+    <el-form-item label="Пароль" prop="password" v-if="isNew">
+      <el-input v-model="frmMod.password" type="password" autocomplete="new-password"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button-group>
+        <el-button :type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-upload">{{ isNew ? 'Добавить' : 'Сохранить' }}</el-button>
+        <template v-if="!isNew">
+          <el-button @click="openPasswordForm" icon="el-icon-lock">Пароль</el-button>
+          <template v-if="$perms.is_superuser">
+            <el-button @click="openGroupsForm" icon="el-icon-lock">Группы пользователей</el-button>
+            <el-button @click="sitesDlg = true" icon="el-icon-lock">Сайты</el-button>
+          </template>
+        </template>
+      </el-button-group>
+    </el-form-item>
+    <el-dialog title="Поменять пароль" :visible.sync="passwordFormDialog" :close-on-click-modal="false">
+      <password-form :profileId="$store.state.userprofile.id" v-on:done="passwordDone" v-on:cancel="passwordCancel"></password-form>
+    </el-dialog>
+    <el-dialog title="Назначить принадлежность группам пользователей" :visible.sync="userGroupAccessDialog" :close-on-click-modal="false">
+      <profile-groups v-on:done="userGroupAccessDone"></profile-groups>
+    </el-dialog>
+    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+      <sites-attach :selectedSiteIds="$store.state.userprofile.sites" v-on:save="profileSitesSave"></sites-attach>
+    </el-dialog>
+  </el-form>
 </template>
 
 <script lang="ts">

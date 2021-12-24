@@ -1,14 +1,5 @@
-<template lang="pug">
-  el-autocomplete.inline-input.wideautocomplete(
-    v-model="inpName"
-    :fetch-suggestions="querySearch"
-    :loading="loading"
-    placeholder="Начни вводить имя абонента"
-    trigger-on-focus
-    @select="handleSelect"
-    value-key="full_name"
-  )
-
+<template>  
+  <el-autocomplete class="inline-input wideautocomplete" v-model="inpName" :fetch-suggestions="querySearch" :loading="loading" placeholder="Начни вводить имя абонента" trigger-on-focus @select="handleSelect" value-key="full_name"></el-autocomplete>
 </template>
 
 <script lang="ts">

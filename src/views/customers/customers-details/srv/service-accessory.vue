@@ -1,17 +1,9 @@
-<template lang="pug">
-  div
-    el-checkbox(
-      v-for="srv in selected"
-      :key="srv.id"
-      :label="srv.title"
-      v-model="srv.state"
-    )
-    el-divider
-    el-button(
-      icon='el-icon-upload'
-      type='primary'
-      @click="saveAccessory"
-    ) {{ $t('save') }}
+<template>  
+  <div>
+    <el-checkbox v-for="srv in selected" :key="srv.id" :label="srv.title" v-model="srv.state"></el-checkbox>
+    <el-divider></el-divider>
+    <el-button icon="el-icon-upload" type="primary" @click="saveAccessory">{{ $t('save') }}</el-button>
+  </div>
 </template>
 
 <script lang="ts">

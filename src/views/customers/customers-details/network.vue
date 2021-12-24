@@ -1,74 +1,34 @@
-<template lang="pug">
-  el-card(shadow="never")
-    template(v-slot:header)
-      .clearfix {{ $t('customers.networking') }}
-    el-table(
-      v-loading='loading'
-      :data="leases"
-      border fit
-    )
-      el-table-column(
-        :label="$t('ipAddress')"
-        min-width='110'
-        prop='ip_address'
-      )
-      el-table-column(
-        :label="$t('macAddress')"
-        min-width='110'
-        prop='mac_address'
-      )
-      el-table-column(
-        :label="$t('customers.leaseTime')"
-        min-width='110'
-        prop='lease_time'
-      )
-      el-table-column(
-        :label="$t('customers.sessionLastUpdate')"
-        min-width='110'
-        prop='last_update'
-      )
-      el-table-column(
-        :label="$t('customers.auto')"
-        align="center"
-        width="50"
-      )
-        template(v-slot:default="{row}")
-          boolean-icon(v-model="row.is_dynamic")
-      el-table-column(
-        label="#"
-        align="center"
-        width="259"
-      )
-        template(v-slot:default="{row}")
-          el-button-group
-            el-button(
-              type='danger'
-              icon='el-icon-delete'
-              @click="delLease(row)"
-            )
-            el-button(
-              type='primary'
-              icon='el-icon-edit'
-              @click="editLease(row)"
-            )
-            lease-ping(:lease="row")
-            ip-session-detail(:lease="row")
-    el-button(
-      type='success' icon='el-icon-plus',
-      @click="addLease"
-    ) {{ $t('add') }}
-
-    el-dialog(
-      :title="(isAddNewLease ? $t('add') : $t('change')) + ' ' + $t('customers.minASessionLease')"
-      :visible.sync='editDialog'
-      :close-on-click-modal="false"
-    )
-      customer-lease-form(
-        :isAddNewLease="isAddNewLease"
-        v-on:done="leaseFrmDone"
-        v-on:cancel="editDialog=false"
-        ref="customerleaseformref"
-      )
+<template>  
+  <el-card shadow="never">
+    <template v-slot:header>
+      <div class="clearfix">{{ $t('customers.networking') }}</div>
+    </template>
+    <el-table v-loading="loading" :data="leases" border fit>
+      <el-table-column :label="$t('ipAddress')" min-width="110" prop="ip_address"></el-table-column>
+      <el-table-column :label="$t('macAddress')" min-width="110" prop="mac_address"></el-table-column>
+      <el-table-column :label="$t('customers.leaseTime')" min-width="110" prop="lease_time"></el-table-column>
+      <el-table-column :label="$t('customers.sessionLastUpdate')" min-width="110" prop="last_update"></el-table-column>
+      <el-table-column :label="$t('customers.auto')" align="center" width="50">
+        <template v-slot:default="{row}">
+          <boolean-icon v-model="row.is_dynamic"></boolean-icon>
+        </template>
+      </el-table-column>
+      <el-table-column label="#" align="center" width="259">
+        <template v-slot:default="{row}">
+          <el-button-group>
+            <el-button type="danger" icon="el-icon-delete" @click="delLease(row)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" @click="editLease(row)"></el-button>
+            <lease-ping :lease="row"></lease-ping>
+            <ip-session-detail :lease="row"></ip-session-detail>
+          </el-button-group>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-button type="success" icon="el-icon-plus" @click="addLease">{{ $t('add') }}</el-button>
+    <el-dialog :title="(isAddNewLease ? $t('add') : $t('change')) + ' ' + $t('customers.minASessionLease')" :visible.sync="editDialog" :close-on-click-modal="false">
+      <customer-lease-form :isAddNewLease="isAddNewLease" v-on:done="leaseFrmDone" v-on:cancel="editDialog=false" ref="customerleaseformref"></customer-lease-form>
+    </el-dialog>
+  </el-card>
 </template>
 
 <script lang="ts">

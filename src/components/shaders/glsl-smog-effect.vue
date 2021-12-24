@@ -1,10 +1,5 @@
-<template lang="pug">
-  smg(
-    :width="width.toString()"
-    :height="height.toString()"
-    v-bind:u_time="uTime"
-    v-bind:u_resolution="[width, height]"
-  )
+<template>  
+  <smg :width="width.toString()" :height="height.toString()" v-bind:u_time="uTime" v-bind:u_resolution="[width, height]"></smg>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
-<template lang="pug">
-  customer-location-list
+<template>  
+  <customer-location-list></customer-location-list>
 </template>
 
 <script lang="ts">

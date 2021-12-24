@@ -1,54 +1,25 @@
-<template lang="pug">
-  el-row.mt5.mb5
-    el-col(:span="1")
-      el-popover(
-        width='400'
-        trigger="click"
-      )
-        el-select(v-model="addVlanFrmMod.vid")
-          el-option(
-            v-for="v in vlans"
-            :key="v.id"
-            :label="`${v.title} [${v.vid}]`"
-            :value="v.vid"
-          )
-        el-divider
-        el-switch(
-          v-model="addVlanFrmMod.native"
-          active-text="Access"
-          inactive-text="Trunk"
-        )
-        el-divider(direction="vertical")
-        el-button(
-          type="success"
-          icon='el-icon-plus'
-          @click="onAddVidToPort"
-        ) {{ $t('add') }}
-
-        el-button(
-          slot='reference'
-          type="success"
-          icon="el-icon-plus"
-          circle
-        )
-
-    el-col(:span="3" v-for="(v, i) in portVlanConf.vids" :key="i")
-      //- el-tooltip.item(
-      //-   :content="calcVlanTitleByVid(v.vid)"
-      //-   placement="top"
-      //- )
-      el-button-group
-        el-button.btn_miniwidth(
-          :type='v.native ? "info" : "primary"'
-          @click="changeVlanMode(v)"
-        ) {{ v.native ? 'A' : 'T' }}
-        el-button {{ v.vid }}
-        el-button.btn_miniwidth(
-          type='danger'
-          icon='el-icon-close'
-          @click="vlanRemove(v)"
-        )
-
+<template>  
+  <el-row class="mt5 mb5">
+    <el-col :span="1">
+      <el-popover width="400" trigger="click">
+        <el-select v-model="addVlanFrmMod.vid">
+          <el-option v-for="v in vlans" :key="v.id" :label="`${v.title} [${v.vid}]`" :value="v.vid"></el-option>
+        </el-select>
+        <el-divider></el-divider>
+        <el-switch v-model="addVlanFrmMod.native" active-text="Access" inactive-text="Trunk"></el-switch>
+        <el-divider direction="vertical"></el-divider>
+        <el-button type="success" icon="el-icon-plus" @click="onAddVidToPort">{{ $t('add') }}</el-button>
+        <el-button slot="reference" type="success" icon="el-icon-plus" circle></el-button>
+      </el-popover>
+    </el-col>
+    <el-col :span="3" v-for="(v, i) in portVlanConf.vids" :key="i">
+      <el-button-group>
+        <el-button class="btn_miniwidth" :type="v.native ? "info" : "primary"" @click="changeVlanMode(v)">{{ v.native ? 'A' : 'T' }}</el-button>
+        <el-button>{{ v.vid }}</el-button>
+        <el-button class="btn_miniwidth" type="danger" icon="el-icon-close" @click="vlanRemove(v)"></el-button>
+      </el-button-group>
+    </el-col>
+  </el-row>
 </template>
 
 <script lang="ts">

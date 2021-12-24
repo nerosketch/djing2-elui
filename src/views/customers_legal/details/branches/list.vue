@@ -1,52 +1,26 @@
-<template lang="pug">
-div
-  el-table(
-    :data="branches"
-    v-loading="loading"
-    :empty-text="$t('customersLegal.branchNotAttached')"
-    border fit
-  )
-    el-table-column(
-      :label="$t('customers.contractNum.s')"
-      prop="username"
-    )
-      template(v-slot:default="{row}")
-        router-link.el-link.el-link--primary.is-underline(
-          :to="{name: 'customerDetails', params:{uid: row.id }}"
-        ) {{ row.username }}
-    el-table-column(
-      :label="$t('customersLegal.fname')"
-      prop="full_name"
-    )
-    el-table-column(
-      :label="$t('customersLegal.tel')"
-      prop="telephone"
-    )
-    el-table-column(
-      label="#"
-      width='50'
-    )
-      template(v-slot:default="{row}")
-        el-button(
-          icon="el-icon-close"
-          type='danger'
-          circle
-          @click="delBranch(row)"
-        )
-    template(v-slot:append)
-      el-button(
-        type='success' icon='el-icon-plus',
-        @click="addBranch"
-      ) {{ $t('add') }}
-  el-dialog(
-    :title="$t('customersLegal.addBranch')"
-    :visible.sync='branchFormVisible'
-    :close-on-click-modal="false"
-  )
-    add-branch-frm(
-      @done="branchFormDone"
-    )
-
+<template>  
+  <div>
+    <el-table :data="branches" v-loading="loading" :empty-text="$t('customersLegal.branchNotAttached')" border fit>
+      <el-table-column :label="$t('customers.contractNum.s')" prop="username">
+        <template v-slot:default="{row}">
+          <router-link class="el-link el-link--primary is-underline" :to="{name: 'customerDetails', params:{uid: row.id }}">{{ row.username }}</router-link>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('customersLegal.fname')" prop="full_name"></el-table-column>
+      <el-table-column :label="$t('customersLegal.tel')" prop="telephone"></el-table-column>
+      <el-table-column label="#" width="50">
+        <template v-slot:default="{row}">
+          <el-button icon="el-icon-close" type="danger" circle @click="delBranch(row)"></el-button>
+        </template>
+      </el-table-column>
+      <template v-slot:append>
+        <el-button type="success" icon="el-icon-plus" @click="addBranch">{{ $t('add') }}</el-button>
+      </template>
+    </el-table>
+    <el-dialog :title="$t('customersLegal.addBranch')" :visible.sync="branchFormVisible" :close-on-click-modal="false">
+      <add-branch-frm @done="branchFormDone"></add-branch-frm>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">

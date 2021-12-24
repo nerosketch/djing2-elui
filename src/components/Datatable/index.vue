@@ -1,51 +1,24 @@
-<template lang="pug">
-  div
-    el-table(
-      v-loading="intLoading"
-      v-el-table-infinite-scroll="infGetData"
-      :data="tableData"
-      :row-class-name="tableRowClassName"
-      :height="tblHeight"
-      :default-sort="defaultSorting"
-      v-bind="$attrs"
-      border
-      v-on="listeners"
-    )
-      slot(name="columns")
-        el-table-column(
-          v-if="selectable"
-          type="selection"
-          width="40"
-          align="center"
-        )
-        template(v-for="col in localCols")
-          el-table-column(
-            v-if="col.visible"
-            :key="col.prop"
-            :sortable="col.sortable ? 'custom' : false"
-            :align="col.align"
-            :width="col.colWidth"
-            :class-name="col.cutLeft ? 'col-cut-left' : undefined"
-            v-bind="col"
-          )
-            template(v-slot:default="{row}")
-              slot(
-                :name="col.prop"
-                :row="row"
-              ) {{ row[col.prop] }}
-    slot(name="default")
-
-    el-dialog(
-      title="Отображаемые поля таблицы"
-      :visible.sync="editFieldsVisibleloc"
-      :close-on-click-modal="false"
-    )
-      template(v-if="editFieldsVisibleloc")
-        datatable-edit-fields(
-          :columns.sync="localCols"
-          :storePrefix="widthStorageNamePrefix"
-          v-on:done="editFieldsVisibleloc=false"
-        )
+<template>  
+  <div>
+    <el-table v-loading="intLoading" v-el-table-infinite-scroll="infGetData" :data="tableData" :row-class-name="tableRowClassName" :height="tblHeight" :default-sort="defaultSorting" v-bind="$attrs" border v-on="listeners">
+      <slot name="columns">
+        <el-table-column v-if="selectable" type="selection" width="40" align="center"></el-table-column>
+        <template v-for="col in localCols">
+          <el-table-column v-if="col.visible" :key="col.prop" :sortable="col.sortable ? 'custom' : false" :align="col.align" :width="col.colWidth" :class-name="col.cutLeft ? 'col-cut-left' : undefined" v-bind="col">
+            <template v-slot:default="{row}">
+              <slot :name="col.prop" :row="row">{{ row[col.prop] }}</slot>
+            </template>
+          </el-table-column>
+        </template>
+      </slot>
+    </el-table>
+    <slot name="default"></slot>
+    <el-dialog title="Отображаемые поля таблицы" :visible.sync="editFieldsVisibleloc" :close-on-click-modal="false">
+      <template v-if="editFieldsVisibleloc">
+        <datatable-edit-fields :columns.sync="localCols" :storePrefix="widthStorageNamePrefix" v-on:done="editFieldsVisibleloc=false"></datatable-edit-fields>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">

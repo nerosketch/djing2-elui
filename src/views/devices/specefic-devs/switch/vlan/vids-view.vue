@@ -1,31 +1,20 @@
-<template lang="pug">
-div Порт №{{ portNum }}
-  el-table(
-    :data="deviceVlans"
-    v-loading="loading"
-    empty-text="Vlan'ы на порту не найдены"
-    border fit
-  )
-    el-table-column(
-      :label="$t('title')"
-      min-width='200'
-      prop='title'
-    )
-    el-table-column(
-      label="VID"
-      min-width='64'
-      prop='vid'
-    )
-    el-table-column(
-      label="native"
-    )
-      template(v-slot:default="{row}")
-        boolean-icon(v-model="row.native")
-    el-table-column(
-      label="Управление"
-    )
-      template(v-slot:default="{row}")
-        boolean-icon(v-model="row.is_management")
+<template>  
+  <div>Порт №{{ portNum }}
+    <el-table :data="deviceVlans" v-loading="loading" empty-text="Vlan'ы на порту не найдены" border fit>
+      <el-table-column :label="$t('title')" min-width="200" prop="title"></el-table-column>
+      <el-table-column label="VID" min-width="64" prop="vid"></el-table-column>
+      <el-table-column label="native">
+        <template v-slot:default="{row}">
+          <boolean-icon v-model="row.native"></boolean-icon>
+        </template>
+      </el-table-column>
+      <el-table-column label="Управление">
+        <template v-slot:default="{row}">
+          <boolean-icon v-model="row.is_management"></boolean-icon>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script lang="ts">

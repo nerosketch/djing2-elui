@@ -1,13 +1,15 @@
-<template lang="pug">
-div
-  h4(v-if="loading") Загрузка...
-  template(v-else)
-    div(v-if="customers.length > 0")
-      div(v-for="(cst, i) in customers" :key="i")
-        router-link.el-link.el-link--primary.is-underline(
-          :to="{name: 'customerDetails', params:{uid: cst.id }}"
-        ) {{ cst.full_name }}
-    h4(v-else) Абоненты на порту не найдены
+<template>  
+  <div>
+    <h4 v-if="loading">Загрузка...</h4>
+    <template v-else>
+      <div v-if="customers.length > 0">
+        <div v-for="(cst, i) in customers" :key="i">
+          <router-link class="el-link el-link--primary is-underline" :to="{name: 'customerDetails', params:{uid: cst.id }}">{{ cst.full_name }}</router-link>
+        </div>
+      </div>
+      <h4 v-else>Абоненты на порту не найдены</h4>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">

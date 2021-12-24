@@ -1,46 +1,21 @@
-<template lang="pug">
-  el-form(
-    ref='frm'
-    status-icon
-    :rules="frmRules"
-    :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      :label="$t('customersLegal.bank.title')"
-      prop="title"
-    )
-      el-input(
-        v-model="frmMod.title"
-      )
-    el-form-item(
-      :label="$t('customersLegal.bank.bik')"
-      prop="bank_code"
-    )
-      el-input(
-        v-model="frmMod.bank_code"
-        type='number'
-      )
-    el-form-item(
-      :label="$t('customersLegal.bank.cacc')"
-      prop="correspondent_account"
-    )
-      el-input(
-        v-model="frmMod.correspondent_account"
-      )
-    el-form-item(
-      :label="$t('customersLegal.bank.pacc')"
-      prop="settlement_account"
-    )
-      el-input(
-        v-model="frmMod.settlement_account"
-      )
-    el-form-item
-      el-button(
-        icon="el-icon-upload"
-        type='primary'
-        @click="onSubmit"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="frm" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
+    <el-form-item :label="$t('customersLegal.bank.title')" prop="title">
+      <el-input v-model="frmMod.title"></el-input>
+    </el-form-item>
+    <el-form-item :label="$t('customersLegal.bank.bik')" prop="bank_code">
+      <el-input v-model="frmMod.bank_code" type="number"></el-input>
+    </el-form-item>
+    <el-form-item :label="$t('customersLegal.bank.cacc')" prop="correspondent_account">
+      <el-input v-model="frmMod.correspondent_account"></el-input>
+    </el-form-item>
+    <el-form-item :label="$t('customersLegal.bank.pacc')" prop="settlement_account">
+      <el-input v-model="frmMod.settlement_account"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button icon="el-icon-upload" type="primary" @click="onSubmit">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

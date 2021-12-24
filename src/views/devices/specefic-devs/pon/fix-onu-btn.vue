@@ -1,11 +1,5 @@
-<template lang="pug">
-  el-button(
-    :type='statusType'
-    icon='el-icon-magic-stick'
-    @click="tryToFixOnu"
-    :loading="fixLoading"
-    :disabled="!$perms.devices.can_fix_onu"
-  ) {{ buttonText }}
+<template>  
+  <el-button :type="statusType" icon="el-icon-magic-stick" @click="tryToFixOnu" :loading="fixLoading" :disabled="!$perms.devices.can_fix_onu">{{ buttonText }}</el-button>
 </template>
 
 <script lang="ts">

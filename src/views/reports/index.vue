@@ -1,42 +1,35 @@
-<template lang="pug">
-.app-container
-  el-row(:gutter="32")
-    el-col(
-      :xs="24"
-      :sm="24"
-      :lg="8"
-    )
-      el-card
-        template(v-slot:header)
-          .clearfix Частота использования характеров задач
-        task-mode-report-pie-chart(
-          v-if="$perms.tasks.can_view_task_mode_report"
-        )
-        h4(v-else) Недостаточно прав
-    el-col(
-      :xs="24"
-      :sm="24"
-      :lg="8"
-    )
-      el-card
-        template(v-slot:header)
-          .clearfix Распределение использования услуг абонентами
-        customer-service-type-report(
-          v-if="$perms.customers.can_view_service_type_report"
-        )
-        h4(v-else) Недостаточно прав
-    el-col(
-      :xs="24"
-      :sm="24"
-      :lg="8"
-    )
-      el-card
-        template(v-slot:header)
-          .clearfix Активность абонентов
-        customer-activity-report(
-          v-if="$perms.customers.can_view_activity_report"
-        )
-        h4(v-else) Недостаточно прав
+<template>  
+  <div class="app-container">
+    <el-row :gutter="32">
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card>
+          <template v-slot:header>
+            <div class="clearfix">Частота использования характеров задач</div>
+          </template>
+          <task-mode-report-pie-chart v-if="$perms.tasks.can_view_task_mode_report"></task-mode-report-pie-chart>
+          <h4 v-else>Недостаточно прав</h4>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card>
+          <template v-slot:header>
+            <div class="clearfix">Распределение использования услуг абонентами</div>
+          </template>
+          <customer-service-type-report v-if="$perms.customers.can_view_service_type_report"></customer-service-type-report>
+          <h4 v-else>Недостаточно прав</h4>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card>
+          <template v-slot:header>
+            <div class="clearfix">Активность абонентов</div>
+          </template>
+          <customer-activity-report v-if="$perms.customers.can_view_activity_report"></customer-activity-report>
+          <h4 v-else>Недостаточно прав</h4>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script lang="ts">

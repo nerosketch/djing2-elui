@@ -1,52 +1,22 @@
-<template lang="pug">
-div
-  el-table(
-    v-loading='loading'
-    :data='pservices'
-    border fit
-  )
-    el-table-column(
-      :label="$t('customers.lastPay')"
-      prop='last_pay'
-    )
-    el-table-column(
-      :label="$t('customers.nextPay')"
-      prop='next_pay'
-    )
-    el-table-column(
-      :label="$t('title')"
-      prop='service_name'
-    )
-    el-table-column(
-      :label="$t('customers.calcType')"
-      prop='service_calc_type'
-    )
-    el-table-column(
-      :label="$t('customers.cost')"
-      prop='service_amount'
-    )
-    el-table-column(
-      :label="$t('del')"
-    )
-      template(v-slot:default="{row}")
-        el-button(
-          icon='el-icon-close'
-          circle type='danger'
-          @click="delP4IdPay(row)"
-        )
-  el-button(
-    type='primary'
-    @click="pSrvDialog=true"
-  ) {{ $t('customers.addPeriodicPay') }}
-
-  el-dialog(
-    :title="$t('customers.addPeriodicPay')"
-    :visible.sync="pSrvDialog"
-    :close-on-click-modal="false"
-  )
-    add-p-pay(
-      v-on:done="addPPayDone"
-    )
+<template>  
+  <div>
+    <el-table v-loading="loading" :data="pservices" border fit>
+      <el-table-column :label="$t('customers.lastPay')" prop="last_pay"></el-table-column>
+      <el-table-column :label="$t('customers.nextPay')" prop="next_pay"></el-table-column>
+      <el-table-column :label="$t('title')" prop="service_name"></el-table-column>
+      <el-table-column :label="$t('customers.calcType')" prop="service_calc_type"></el-table-column>
+      <el-table-column :label="$t('customers.cost')" prop="service_amount"></el-table-column>
+      <el-table-column :label="$t('del')">
+        <template v-slot:default="{row}">
+          <el-button icon="el-icon-close" circle type="danger" @click="delP4IdPay(row)"></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-button type="primary" @click="pSrvDialog=true">{{ $t('customers.addPeriodicPay') }}</el-button>
+    <el-dialog :title="$t('customers.addPeriodicPay')" :visible.sync="pSrvDialog" :close-on-click-modal="false">
+      <add-p-pay v-on:done="addPPayDone"></add-p-pay>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">

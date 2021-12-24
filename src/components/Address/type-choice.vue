@@ -1,11 +1,7 @@
-<template lang="pug">
-  el-select(v-model="localValue" :loading='loading')
-    el-option(
-      v-for="(at, i) in addrTypes"
-      :key="i"
-      :label="at.label"
-      :value="at.value"
-    )
+<template>  
+  <el-select v-model="localValue" :loading="loading">
+    <el-option v-for="(at, i) in addrTypes" :key="i" :label="at.label" :value="at.value"></el-option>
+  </el-select>
 </template>
 
 <script lang="ts">

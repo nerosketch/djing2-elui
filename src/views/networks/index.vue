@@ -1,37 +1,28 @@
-<template lang="pug">
-  .tab-container
-    el-tabs(
-      v-model="activeTabName"
-      type="border-card"
-    )
-      el-tab-pane(
-        label='Гостевые сессии'
-        name='sessions'
-        lazy
-      )
-        keep-alive
-          session-list
-      el-tab-pane(
-        label='Подсети'
-        name='pools'
-        lazy
-      )
-        keep-alive
-          pool-list
-      el-tab-pane(
-        label='Вланы'
-        name='vlans'
-        lazy
-      )
-        keep-alive
-          vlan-list
-      el-tab-pane(
-        label='Аренды ip'
-        name='leases'
-        lazy
-      )
-        keep-alive
-          lease-list
+<template>  
+  <div class="tab-container">
+    <el-tabs v-model="activeTabName" type="border-card">
+      <el-tab-pane label="Гостевые сессии" name="sessions" lazy>
+        <keep-alive>
+          <session-list></session-list>
+        </keep-alive>
+      </el-tab-pane>
+      <el-tab-pane label="Подсети" name="pools" lazy>
+        <keep-alive>
+          <pool-list></pool-list>
+        </keep-alive>
+      </el-tab-pane>
+      <el-tab-pane label="Вланы" name="vlans" lazy>
+        <keep-alive>
+          <vlan-list></vlan-list>
+        </keep-alive>
+      </el-tab-pane>
+      <el-tab-pane label="Аренды ip" name="leases" lazy>
+        <keep-alive>
+          <lease-list></lease-list>
+        </keep-alive>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script lang="ts">

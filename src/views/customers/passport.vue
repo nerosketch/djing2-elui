@@ -1,47 +1,24 @@
-<template lang="pug">
-  el-form(
-    ref='pspfrm'
-    status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='loading'
-  )
-    el-form-item(
-      :label="$t('customers.passportSerial')"
-      prop='series'
-    )
-      el-input(v-model="frmMod.series" type='number')
-    el-form-item(
-      :label="$t('customers.passportNum')"
-      prop='number'
-    )
-      el-input(v-model="frmMod.number" type='number')
-    el-form-item(
-      :label="$('customers.passportDistributor')"
-      prop='distributor'
-    )
-      el-input(v-model="frmMod.distributor" :maxlength='64')
-    el-form-item(
-      :label="$('customers.passportDivisionCode')"
-      prop='division_code'
-    )
-      el-input(v-model="frmMod.division_code" :maxlength='64')
-    el-form-item(
-      :label="$('customers.passportDivisionCode')"
-      prop='date_of_acceptance'
-    )
-      el-date-picker(
-        v-model="frmMod.date_of_acceptance"
-        type="date"
-        value-format="yyyy-MM-d"
-        format="d.MM.yyyy"
-      )
-    el-form-item
-      el-button(
-        icon='el-icon-upload'
-        type='primary' @click="onSubmit" :loading="loading"
-        :disabled="!$perms.customers.add_passportinfo || !$perms.customers.change_passportinfo"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="pspfrm" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
+    <el-form-item :label="$t('customers.passportSerial')" prop="series">
+      <el-input v-model="frmMod.series" type="number"></el-input>
+    </el-form-item>
+    <el-form-item :label="$t('customers.passportNum')" prop="number">
+      <el-input v-model="frmMod.number" type="number"></el-input>
+    </el-form-item>
+    <el-form-item :label="$('customers.passportDistributor')" prop="distributor">
+      <el-input v-model="frmMod.distributor" :maxlength="64"></el-input>
+    </el-form-item>
+    <el-form-item :label="$('customers.passportDivisionCode')" prop="division_code">
+      <el-input v-model="frmMod.division_code" :maxlength="64"></el-input>
+    </el-form-item>
+    <el-form-item :label="$('customers.passportDivisionCode')" prop="date_of_acceptance">
+      <el-date-picker v-model="frmMod.date_of_acceptance" type="date" value-format="yyyy-MM-d" format="d.MM.yyyy"></el-date-picker>
+    </el-form-item>
+    <el-form-item>
+      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="loading" :disabled="!$perms.customers.add_passportinfo || !$perms.customers.change_passportinfo">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

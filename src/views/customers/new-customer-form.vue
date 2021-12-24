@@ -1,55 +1,25 @@
-<template lang="pug">
-  el-form(
-    ref='frm'
-    status-icon
-    :rules="frmRules"
-    :model="frmMod"
-    v-loading="loading"
-  )
-    customer-form-fio(
-      v-model="frmMod.fio"
-    )
-    el-form-item(
-      :label="$t('customers.login')"
-      prop='username'
-    )
-      el-input(v-model="frmMod.username")
-    el-form-item(
-      :label="$t('customers.phone')"
-      prop='telephone'
-    )
-      el-input(v-model="frmMod.telephone")
-    el-form-item(
-      :label="$t('groups.group')"
-    )
-      groups-choice(v-model="frmMod.group")
-    el-form-item(
-      :label="$('comment')"
-    )
-      el-input(
-        v-model="frmMod.description"
-        type="textarea"
-        rows="4"
-        cols="40"
-        autosize
-      )
-    el-form-item(
-      :label="$('customers.birthDay')"
-      prop='birth_day'
-    )
-      el-date-picker(
-        v-model="frmMod.birth_day"
-        type="date"
-        value-format="yyyy-MM-dd"
-        format="d.MM.yyyy"
-      )
-    el-form-item
-      el-button(
-        icon='el-icon-upload'
-        type="primary"
-        @click="onSubmit"
-        :disabled="!$perms.customers.add_customer"
-      ) {{ $t('save') }}
+<template>  
+  <el-form ref="frm" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
+    <customer-form-fio v-model="frmMod.fio"></customer-form-fio>
+    <el-form-item :label="$t('customers.login')" prop="username">
+      <el-input v-model="frmMod.username"></el-input>
+    </el-form-item>
+    <el-form-item :label="$t('customers.phone')" prop="telephone">
+      <el-input v-model="frmMod.telephone"></el-input>
+    </el-form-item>
+    <el-form-item :label="$t('groups.group')">
+      <groups-choice v-model="frmMod.group"></groups-choice>
+    </el-form-item>
+    <el-form-item :label="$('comment')">
+      <el-input v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize></el-input>
+    </el-form-item>
+    <el-form-item :label="$('customers.birthDay')" prop="birth_day">
+      <el-date-picker v-model="frmMod.birth_day" type="date" value-format="yyyy-MM-dd" format="d.MM.yyyy"></el-date-picker>
+    </el-form-item>
+    <el-form-item>
+      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :disabled="!$perms.customers.add_customer">{{ $t('save') }}</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts">

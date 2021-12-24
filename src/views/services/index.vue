@@ -1,30 +1,23 @@
-<template lang="pug">
-  .tab-container
-    el-tabs(
-      v-model="activeTabName"
-      type="border-card"
-    )
-      el-tab-pane(
-        label='Тарифы'
-        name='services'
-        lazy
-      )
-        keep-alive
-          service-list
-      el-tab-pane(
-        label='Периодические платежи'
-        name='periodicpays'
-        lazy
-      )
-        keep-alive
-          periodic-pay-list
-      el-tab-pane(
-        label='Единоразовые платежи'
-        name='shots'
-        lazy
-      )
-        keep-alive
-          shot-list
+<template>  
+  <div class="tab-container">
+    <el-tabs v-model="activeTabName" type="border-card">
+      <el-tab-pane label="Тарифы" name="services" lazy>
+        <keep-alive>
+          <service-list></service-list>
+        </keep-alive>
+      </el-tab-pane>
+      <el-tab-pane label="Периодические платежи" name="periodicpays" lazy>
+        <keep-alive>
+          <periodic-pay-list></periodic-pay-list>
+        </keep-alive>
+      </el-tab-pane>
+      <el-tab-pane label="Единоразовые платежи" name="shots" lazy>
+        <keep-alive>
+          <shot-list></shot-list>
+        </keep-alive>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script lang="ts">

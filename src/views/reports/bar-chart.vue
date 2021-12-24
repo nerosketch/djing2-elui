@@ -1,9 +1,5 @@
-<template lang="pug">
-  div(
-    :class="className"
-    :style="{height: height, width: width}"
-    v-loading="loading"
-  )
+<template>  
+  <div :class="className" :style="{height: height, width: width}" v-loading="loading"></div>
 </template>
 
 <script lang="ts">

@@ -1,61 +1,28 @@
-<template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadVlans"
-    :heightDiff='188'
-    :editFieldsVisible.sync="editFieldsVisible"
-    widthStorageNamePrefix='vlans'
-    ref='table'
-  )
-    template(v-slot:ismng="{row}")
-      boolean-icon(v-model="row.is_management") &nbsp;{{ row.is_management ? 'Да' : 'Нет'}}
-
-    template(v-slot:oper="{row}")
-      el-button-group
-        el-button(
-          v-if="$perms.is_superuser"
-          @click="openSitesDlg(row)"
-        ) C
-        el-button(
-          icon="el-icon-edit"
-          @click="openEdit(row)"
-          :disabled="!$perms.networks.change_vlanif"
-        )
-        el-button(
-          type="danger" icon="el-icon-delete"
-          @click="delVlan(row)"
-          :disabled="!$perms.networks.delete_vlanif"
-        )
-
-    el-button-group
-      el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-        :disabled="!$perms.networks.add_vlanif"
-      ) {{ $t('add') }}
-      el-button(
-        icon='el-icon-s-operation'
-        @click="editFieldsVisible=true"
-      ) Поля
-
-  el-dialog(
-    :title="dialogTitle"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-  )
-    vlan-form(
-      v-on:done="frmDone"
-    )
-  el-dialog(
-    title="Принадлежность сайтам"
-    :visible.sync="sitesDlg"
-    :close-on-click-modal="false"
-  )
-    sites-attach(
-      :selectedSiteIds="$store.state.vlan.sites"
-      v-on:save="vlanSitesSave"
-    )
+<template>  
+  <div>
+    <datatable :columns="tableColumns" :getData="loadVlans" :heightDiff="188" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="vlans" ref="table">
+      <template v-slot:ismng="{row}">
+        <boolean-icon v-model="row.is_management">&nbsp;{{ row.is_management ? 'Да' : 'Нет'}}</boolean-icon>
+      </template>
+      <template v-slot:oper="{row}">
+        <el-button-group>
+          <el-button v-if="$perms.is_superuser" @click="openSitesDlg(row)">C</el-button>
+          <el-button icon="el-icon-edit" @click="openEdit(row)" :disabled="!$perms.networks.change_vlanif"></el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="delVlan(row)" :disabled="!$perms.networks.delete_vlanif"></el-button>
+        </el-button-group>
+      </template>
+      <el-button-group>
+        <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.networks.add_vlanif">{{ $t('add') }}</el-button>
+        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">Поля</el-button>
+      </el-button-group>
+    </datatable>
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
+      <vlan-form v-on:done="frmDone"></vlan-form>
+    </el-dialog>
+    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+      <sites-attach :selectedSiteIds="$store.state.vlan.sites" v-on:save="vlanSitesSave"></sites-attach>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">
