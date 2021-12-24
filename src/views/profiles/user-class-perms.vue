@@ -1,9 +1,9 @@
-<template>  
+<template>
   <div>
     <el-alert v-if="$store.state.userprofile.is_superuser" :title="$t('attention')" description="Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно" type="warning" effect="dark" :closable="false" show-icon center></el-alert>
     <el-transfer v-model="assignedPerms" :props="prop" :data="allPerms" :left-default-checked="leftChecked" :titles="['Все права', 'Назначенные права']">
       <template v-slot:left-footer>
-        <el-button class="transfer-footer" @click="selectReadonly">Выделить права на чтение</el-button>
+        <el-button class="transfer-footer" @click="selectReadonly">{{ $t('vydelit-prava-na-chtenie') }}</el-button>
       </template>
     </el-transfer>
     <el-button icon="el-icon-upload" type="primary" :loading="saveLoading" :disabled="isUnTouched || !$perms.is_superuser" @click="savePerms">{{ $t('save') }}</el-button>
@@ -28,7 +28,7 @@ export default class extends mixins(PermMngMixin) {
       user_permissions: this.assignedPerms
     })
     this.saveLoading = false
-    this.$message.success('Права для пользователся сохранены')
+    this.$message.success(this.$t('prava-dlya-polzovatelsya-sokhraneny'))
   }
 
   @Watch('$store.state.userprofile.user_permissions')

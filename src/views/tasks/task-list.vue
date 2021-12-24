@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <datatable :columns="tableColumns" :getData="loadTasks" :tableRowClassName="tableRowClassName" :heightDiff="188" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="tasks" ref="tbl">
       <template v-slot:customer_full_name="{row}">
@@ -10,11 +10,11 @@
         </router-link>
       </template>
       <el-button-group>
-        <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.tasks.add_task">Добавить задачу</el-button>
-        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">Поля</el-button>
+        <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.tasks.add_task">{{ $t('dobavit-zadachu') }}</el-button>
+        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">{{ $t('polya-3') }}</el-button>
       </el-button-group>
     </datatable>
-    <el-dialog title="Создание задачи" :visible.sync="formDialog" :close-on-click-modal="false">
+    <el-dialog title="$t('sozdanie-zadachi')" :visible.sync="formDialog" :close-on-click-modal="false">
       <task-form></task-form>
     </el-dialog>
   </div>
@@ -70,38 +70,38 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_full_name',
-      label: 'Имя',
+      label: this.$t('imya-2'),
       'min-width': 250
     },
     {
       prop: 'customer_address',
-      label: 'Адрес',
+      label: this.$t('adres-1'),
       'min-width': 300,
       cutLeft: true
     },
     {
       prop: 'mode_str',
-      label: 'Характер поломки',
+      label: this.$t('kharakter-polomki-1'),
       'min-width': 150
     },
     {
       prop: 'descr',
-      label: 'Описание',
+      label: this.$t('opisanie-13'),
       'min-width': 400
     },
     {
       prop: 'state_str',
-      label: 'Состояние',
+      label: this.$t('sostoyanie-2'),
       'min-width': 100
     },
     {
       prop: 'time_of_create',
-      label: 'Дата создания',
+      label: this.$t('data-sozdaniya-2'),
       'min-width': 170
     },
     {
       prop: 'id',
-      label: 'Смотреть',
+      label: this.$t('smotret'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     }
@@ -126,7 +126,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Задачи'
+          title: this.$t('zadachi-0')
         }
       }
     ] as any)

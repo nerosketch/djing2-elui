@@ -1,48 +1,48 @@
-<template>  
+<template>
   <el-form ref="frm" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
-    <el-form-item label="Логин" prop="username">
+    <el-form-item label="$t('login-2')" prop="username">
       <el-input v-model="frmMod.username"></el-input>
     </el-form-item>
-    <el-form-item label="ФИО" prop="fio">
+    <el-form-item label="$t('fio')" prop="fio">
       <el-input v-model="frmMod.fio"></el-input>
     </el-form-item>
-    <el-form-item label="День рождения" prop="birth_day">
+    <el-form-item label="$t('den-rozhdeniya')" prop="birth_day">
       <el-date-picker v-model="frmMod.birth_day" type="date" value-format="yyyy-MM-dd" format="d.MM.yyyy"></el-date-picker>
     </el-form-item>
-    <el-form-item label="Включён">
+    <el-form-item label="$t('vklyuchyon')">
       <el-switch v-model="frmMod.is_active"></el-switch><small>{{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}</small>
     </el-form-item>
-    <el-form-item label="Суперпользователь">
+    <el-form-item label="$t('superpolzovatel')">
       <el-switch v-model="frmMod.is_superuser"></el-switch><small>{{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}</small>
     </el-form-item>
-    <el-form-item label="Номер телефона" prop="telephone">
+    <el-form-item label="$t('nomer-telefona')" prop="telephone">
       <el-input v-model="frmMod.telephone"></el-input>
     </el-form-item>
-    <el-form-item label="ЭПочта" prop="email">
+    <el-form-item label="$t('epochta')" prop="email">
       <el-input v-model="frmMod.email"></el-input>
     </el-form-item>
-    <el-form-item label="Пароль" prop="password" v-if="isNew">
+    <el-form-item label="$t('parol-0')" prop="password" v-if="isNew">
       <el-input v-model="frmMod.password" type="password" autocomplete="new-password"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button-group>
         <el-button :type="isNew ? 'success' : 'primary'" @click="onSubmit" icon="el-icon-upload">{{ isNew ? 'Добавить' : 'Сохранить' }}</el-button>
         <template v-if="!isNew">
-          <el-button @click="openPasswordForm" icon="el-icon-lock">Пароль</el-button>
+          <el-button @click="openPasswordForm" icon="el-icon-lock">{{ $t('parol-1') }}</el-button>
           <template v-if="$perms.is_superuser">
-            <el-button @click="openGroupsForm" icon="el-icon-lock">Группы пользователей</el-button>
-            <el-button @click="sitesDlg = true" icon="el-icon-lock">Сайты</el-button>
+            <el-button @click="openGroupsForm" icon="el-icon-lock">{{ $t('gruppy-polzovatelei') }}</el-button>
+            <el-button @click="sitesDlg = true" icon="el-icon-lock">{{ $t('saity') }}</el-button>
           </template>
         </template>
       </el-button-group>
     </el-form-item>
-    <el-dialog title="Поменять пароль" :visible.sync="passwordFormDialog" :close-on-click-modal="false">
+    <el-dialog title="$t('pomenyat-parol')" :visible.sync="passwordFormDialog" :close-on-click-modal="false">
       <password-form :profileId="$store.state.userprofile.id" v-on:done="passwordDone" v-on:cancel="passwordCancel"></password-form>
     </el-dialog>
-    <el-dialog title="Назначить принадлежность группам пользователей" :visible.sync="userGroupAccessDialog" :close-on-click-modal="false">
+    <el-dialog title="$t('naznachit-prinadlezhnost-gruppam-polzovatelei')" :visible.sync="userGroupAccessDialog" :close-on-click-modal="false">
       <profile-groups v-on:done="userGroupAccessDone"></profile-groups>
     </el-dialog>
-    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+    <el-dialog title="$t('prinadlezhnost-saitam-3')" :visible.sync="sitesDlg" :close-on-click-modal="false">
       <sites-attach :selectedSiteIds="$store.state.userprofile.sites" v-on:save="profileSitesSave"></sites-attach>
     </el-dialog>
   </el-form>
@@ -95,26 +95,26 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: 'Логин не может быть пустым', trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
+      { required: true, message: this.$t('login-ne-mozhet-byt-pustym-0'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$t('login-mozhet-soderzhat-latinskie-simvoly-i-cifry') }
     ],
     birth_day: [
-      { required: true, message: 'Логин не может быть пустым', trigger: 'blur' }
+      { required: true, message: this.$t('login-ne-mozhet-byt-pustym-1'), trigger: 'blur' }
     ],
     telephone: [
-      { required: true, message: 'Номер телефона обязательно', trigger: 'blur' },
-      { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
+      { required: true, message: this.$t('nomer-telefona-obyazatelno'), trigger: 'blur' },
+      { validator: telephoneValidator, trigger: 'change', message: this.$t('7-8-9-3-i-10-11-cifr-1') }
     ],
     fio: [
-      { required: true, message: 'Нужно знать как зовут владельца учётки', trigger: 'blur' }
+      { required: true, message: this.$t('nuzhno-znat-kak-zovut-vladelca-uchyotki'), trigger: 'blur' }
     ],
     email: [
-      { validator: emailValidator, trigger: 'change', message: 'Не похоже на адрес почты' }
+      { validator: emailValidator, trigger: 'change', message: this.$t('ne-pokhozhe-na-adres-pochty') }
     ],
     password: [
-      { required: true, message: 'Пароль не может быть пустым', trigger: 'blur' },
+      { required: true, message: this.$t('parol-ne-mozhet-byt-pustym-0'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
+      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov-2') }
     ]
   }
 
@@ -126,10 +126,10 @@ export default class extends Vue {
         try {
           if (this.isNew) {
             newDat = await UserProfileModule.AddProfile(this.frmMod)
-            this.$message.success('Учётка добавлена')
+            this.$message.success(this.$t('uchyotka-dobavlena'))
           } else {
             newDat = await UserProfileModule.PatchProfile(this.frmMod)
-            this.$message.success('Учётка сохранена')
+            this.$message.success(this.$t('uchyotka-sokhranena'))
           }
           this.$emit('done', newDat)
         } catch (err) {
@@ -148,7 +148,7 @@ export default class extends Vue {
   }
 
   private passwordDone() {
-    this.$message.success('Пароль успешно изменён')
+    this.$message.success(this.$t('parol-uspeshno-izmenyon'))
     this.passwordFormDialog = false
   }
 
@@ -168,7 +168,7 @@ export default class extends Vue {
     UserProfileModule.PatchProfile({
       sites: selectedSiteIds
     }).then(() => {
-      this.$message.success('Принадлежность учётных записей сайтам сохранена')
+      this.$message.success(this.$t('prinadlezhnost-uchyotnykh-zapisei-saitam-sokhranena'))
     })
     this.sitesDlg = false
   }

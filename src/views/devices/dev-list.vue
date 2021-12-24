@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <el-row :gutter="10">
       <el-col :col="24">
@@ -25,22 +25,22 @@
             </el-button-group>
           </template>
           <el-button-group>
-            <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.devices.add_device">Добавить устройство</el-button>
-            <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">Поля</el-button>
+            <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.devices.add_device">{{ $t('dobavit-ustroistvo') }}</el-button>
+            <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">{{ $t('polya') }}</el-button>
           </el-button-group>
         </datatable>
       </el-col>
     </el-row>
-    <el-dialog title="Железка" :visible.sync="dialogVisible" :close-on-click-modal="false" top="1%">
+    <el-dialog title="$t('zhelezka')" :visible.sync="dialogVisible" :close-on-click-modal="false" top="1%">
       <dev-form v-if="dialogVisible" v-on:done="frmDone" :addrId="addrId"></dev-form>
     </el-dialog>
-    <el-dialog title="Добавить устройство" :visible.sync="dialogNewDev" :close-on-click-modal="false" top="1%">
+    <el-dialog title="$t('dobavit-ustroistvo-0')" :visible.sync="dialogNewDev" :close-on-click-modal="false" top="1%">
       <new-dev-form v-if="dialogNewDev" v-on:done="frmNewDevDone" v-on:err="dialogNewDev=false" :initialAddress="addrId"></new-dev-form>
     </el-dialog>
-    <el-dialog title="Кто имеет права на устройство" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
+    <el-dialog title="$t('kto-imeet-prava-na-ustroistvo')" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
       <object-perms v-on:save="changeDeviceObjectPerms" :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp" :getSelectedObjectPerms="deviceGetSelectedObjectPerms" :objId="$store.state.address.title"></object-perms>
     </el-dialog>
-    <el-dialog title="Принадлежность оборудования сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+    <el-dialog title="$t('prinadlezhnost-oborudovaniya-saitam')" :visible.sync="sitesDlg" :close-on-click-modal="false">
       <sites-attach :selectedSiteIds="$store.state.devicemodule.sites" v-on:save="devSitesSave"></sites-attach>
     </el-dialog>
   </div>
@@ -107,43 +107,43 @@ export default class extends mixins(TableWithAddrMixin) {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'comment',
-      label: 'Коммент',
+      label: this.$t('komment'),
       'min-width': 300
     },
     {
       prop: 'ip_address',
-      label: 'IP Адрес',
+      label: this.$t('ip-adres'),
       'min-width': 120
     },
     {
       prop: 'dev_type_str',
-      label: 'Тип',
+      label: this.$t('tip'),
       'min-width': 150
     },
     {
       prop: 'mac_addr',
-      label: 'MAC Адрес',
+      label: this.$t('mac-adres'),
       'min-width': 150
     },
     {
       prop: 'status',
-      label: 'Состояние'
+      label: this.$t('sostoyanie')
     },
     {
       prop: 'is_noticeable',
-      label: 'Оповещения'
+      label: this.$t('opovesheniya')
     },
     {
       prop: 'place',
-      label: '№ дома'
+      label: this.$t('doma-0')
     },
     {
       prop: 'create_time',
-      label: 'Дата введения в эксплуатацию'
+      label: this.$t('data-vvedeniya-v-ekspluataciyu-0')
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$t('knopki'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -178,7 +178,7 @@ export default class extends mixins(TableWithAddrMixin) {
   private async delDevice(dev: IDevice) {
     this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
       await DeviceModule.DelDevice(dev.id)
-      this.$message.success('Удалено')
+      this.$message.success(this.$t('udaleno'))
       this.$refs.tbl.LoadTableData()
     })
   }
@@ -190,7 +190,7 @@ export default class extends mixins(TableWithAddrMixin) {
 
   private frmNewDevDone(newDev: IDevice) {
     this.dialogNewDev = false
-    this.$message.success('Новое устройство сохранено')
+    this.$message.success(this.$t('novoe-ustroistvo-sokhraneno'))
     this.$router.push({
       name: 'device-view',
       params: {
@@ -214,7 +214,7 @@ export default class extends mixins(TableWithAddrMixin) {
           path: '/devices',
           meta: {
             hidden: true,
-            title: 'Оборудование'
+            title: this.$t('oborudovanie')
           }
         },
         {
@@ -253,7 +253,7 @@ export default class extends mixins(TableWithAddrMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.tbl.LoadTableData()
-      this.$message.success('Принадлежность оборудования сайтам сохранена')
+      this.$message.success(this.$t('prinadlezhnost-oborudovaniya-saitam-sokhranena'))
     })
     this.sitesDlg = false
   }

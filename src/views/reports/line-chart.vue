@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="chart" :style="{height: height, width: width}"></div>
 </template>
 
@@ -76,10 +76,10 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         legend: {
-          data: ['КБайты', 'Пакеты']
+          data: [this.$t('kbaity'), this.$t('pakety')]
         },
         series: [{
-          name: 'КБайты',
+          name: this.$t('kbaity-0'),
           itemStyle: {
             color: '#FF005A',
             lineStyle: {
@@ -94,7 +94,7 @@ export default class extends mixins(ResizeMixin) {
           animationEasing: 'cubicInOut'
         },
         {
-          name: 'Пакеты',
+          name: this.$t('pakety-0'),
           smooth: false,
           type: 'line',
           itemStyle: {

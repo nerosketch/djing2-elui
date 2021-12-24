@@ -1,10 +1,10 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="loadSites" widthStorageNamePrefix="sites" ref="sitestable">
       <template v-slot:oper="{row}">
         <el-button icon="el-icon-edit" @click="openEdit(row)" :disabled="!$perms.is_superuser"></el-button>
       </template>
-      <el-button icon="el-icon-plus" @click="openNew">Добавить домен</el-button>
+      <el-button icon="el-icon-plus" @click="openNew">{{ $t('dobavit-domen') }}</el-button>
     </datatable>
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <site-form v-on:done="frmDone"></site-form>
@@ -46,19 +46,19 @@ export default class extends Vue {
     },
     {
       prop: 'domain',
-      label: 'Домен',
+      label: this.$t('domen'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'name',
-      label: 'Название',
+      label: this.$t('nazvanie-8'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$t('knopki-8'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -71,7 +71,7 @@ export default class extends Vue {
     } else {
       t = this.$t('change').toString()
     }
-    return `${t} домен`
+    return {{ $t('t-domen', [t]) }}
   }
 
   private loadSites(params?: IDRFRequestListParameters) {
@@ -98,13 +98,13 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = 'Сайты'
+    document.title = this.$t('saity-0')
     BreadcrumbsModule.SetCrumbs([
       {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Сайты'
+          title: this.$t('saity-1')
         }
       }
     ] as any)

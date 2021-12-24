@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div :class="className" :style="{height: height, width: width}"></div>
 </template>
 
@@ -56,18 +56,18 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         indicator: [
-          { name: 'Sales', max: 10000 },
-          { name: 'Administration', max: 20000 },
-          { name: 'Information Technology', max: 20000 },
-          { name: 'Customer Support', max: 20000 },
-          { name: 'Development', max: 20000 },
-          { name: 'Marketing', max: 20000 }
+          { name: this.$t('sales'), max: 10000 },
+          { name: this.$t('administration'), max: 20000 },
+          { name: this.$t('information-technology'), max: 20000 },
+          { name: this.$t('customer-support'), max: 20000 },
+          { name: this.$t('development'), max: 20000 },
+          { name: this.$t('marketing'), max: 20000 }
         ]
       },
       legend: {
         left: 'center',
         bottom: '10',
-        data: ['Allocated Budget', 'Expected Spending', 'Actual Spending']
+        data: [this.$t('allocated-budget'), this.$t('expected-spending'), this.$t('actual-spending')]
       },
       series: [{
         type: 'radar',
@@ -82,15 +82,15 @@ export default class extends mixins(ResizeMixin) {
         data: [
           {
             value: [5000, 7000, 12000, 11000, 15000, 14000],
-            name: 'Allocated Budget'
+            name: this.$t('allocated-budget-0')
           },
           {
             value: [4000, 9000, 15000, 15000, 13000, 11000],
-            name: 'Expected Spending'
+            name: this.$t('expected-spending-0')
           },
           {
             value: [5500, 11000, 12000, 15000, 12000, 12000],
-            name: 'Actual Spending'
+            name: this.$t('actual-spending-0')
           }
         ],
         animationDuration: animationDuration

@@ -1,12 +1,12 @@
-<template>  
+<template>
   <div class="tab-container">
     <el-tabs v-model="activeTabName" type="border-card">
-      <el-tab-pane label="Сотрудники" name="profiles" lazy>
+      <el-tab-pane label="$t('sotrudniki')" name="profiles" lazy>
         <keep-alive>
           <profile-list></profile-list>
         </keep-alive>
       </el-tab-pane>
-      <el-tab-pane label="Группы сотрудников" name="profilegroups" lazy v-if="$perms.is_superuser">
+      <el-tab-pane label="$t('gruppy-sotrudnikov')" name="profilegroups" lazy v-if="$perms.is_superuser">
         <keep-alive>
           <group-list></group-list>
         </keep-alive>

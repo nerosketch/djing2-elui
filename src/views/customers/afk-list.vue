@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container"><span>{{ $t('customers.afkReferenceDate') }}:</span>
     <el-date-picker v-model="reqParams.date_limit" type="datetime" value-format="yyyy-MM-dd HH:mm" format="d.MM.yyyy HH:mm" :placeholder="$t('customers.afkReferenceDate')"></el-date-picker><span> {{ $t('customers.afkOutLimit') }}:</span>
     <el-input :placeholder="$t('customers.afkOutLimit')" :style="{width: '150px'}" type="number" v-model="reqParams.out_limit"></el-input>

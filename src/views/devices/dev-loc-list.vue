@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="loadDevAddresses" :heightDiff="96" widthStorageNamePrefix="devAddresses">
       <template v-slot:title="{row}">
@@ -28,7 +28,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$t('nazvanie-0'),
       sortable: true,
       'min-width': 250
     }
@@ -51,7 +51,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Оборудование'
+          title: this.$t('oborudovanie-0')
         }
       }
     ] as any)

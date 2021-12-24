@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <el-form-item :label="$t('title')" prop="title">
       <el-input v-model="frmMod.title"></el-input>
@@ -6,8 +6,8 @@
     <el-form-item label="VID" prop="vid">
       <el-input v-model="frmMod.vid" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Управление" prop="is_management">
-      <el-checkbox v-model="frmMod.is_management">Является-ли вланом управления.<b>{{ frmMod.is_management ? 'Да' : 'Нет' }}</b></el-checkbox>
+    <el-form-item label="$t('upravlenie-0')" prop="is_management">
+      <el-checkbox v-model="frmMod.is_management">{{ $t('yavlyaetsya-li-vlanom-upravleniya') }}<b>{{ frmMod.is_management ? 'Да' : 'Нет' }}</b></el-checkbox>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
@@ -29,10 +29,10 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название vlan надо указать', trigger: 'blur' }
+      { required: true, message: this.$t('nazvanie-vlan-nado-ukazat'), trigger: 'blur' }
     ],
     vid: [
-      { required: true, message: 'Стартовый ip надо указать', trigger: 'blur' },
+      { required: true, message: this.$t('startovyi-ip-nado-ukazat-0'), trigger: 'blur' },
       {
         validator: (rule: any, value: number, callback: Function) => {
           if (value && value > 1 && value < 4095) {
@@ -42,7 +42,7 @@ export default class extends Vue {
           }
         },
         trigger: 'change',
-        message: 'Vlan может быть в пределах 2-4094'
+        message: this.$t('vlan-mozhet-byt-v-predelakh-2-4094')
       }
     ]
   }

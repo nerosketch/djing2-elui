@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="getAllLog" :heightDiff="201" widthStorageNamePrefix="auth_log"></datatable>
   </div>
@@ -23,17 +23,17 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'time',
-      label: 'Время',
+      label: this.$t('vremya'),
       'min-width': 150
     },
     {
       prop: 'remote_ip',
-      label: 'Ip входа',
+      label: this.$t('ip-vkhoda'),
       'min-width': 130
     },
     {
       prop: 'user_agent',
-      label: 'Браузер'
+      label: this.$t('brauzer')
     }
   ]
 

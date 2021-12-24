@@ -1,4 +1,4 @@
-<template>  
+<template>
   <datatable :columns="tableColumns" :getData="loadSessions" :heightDiff="160" widthStorageNamePrefix="sessions" ref="table">
     <template v-slot:closed="{row}">
       <el-checkbox v-model="row.closed" disabled>{{ row.closed ? 'Да' : 'Нет' }}</el-checkbox>
@@ -32,12 +32,12 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'assign_time',
-      label: 'Время старта',
+      label: this.$t('vremya-starta'),
       'min-width': 130
     },
     {
       prop: 'session_duration',
-      label: 'Продолжительность сессии',
+      label: this.$t('prodolzhitelnost-sessii'),
       'min-width': 200
     },
     {
@@ -47,33 +47,33 @@ export default class extends Vue {
     },
     {
       prop: 'ip_lease_mac',
-      label: 'MAC Адрес',
+      label: this.$t('mac-adres-2'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'closed',
-      label: 'Закрыт'
+      label: this.$t('zakryt')
     },
     {
       prop: 'h_input_octets',
-      label: 'Входящих байт'
+      label: this.$t('vkhodyashikh-bait')
     },
     {
       prop: 'h_output_octets',
-      label: 'Исходящих байт'
+      label: this.$t('iskhodyashikh-bait')
     },
     {
       prop: 'h_input_packets',
-      label: 'Входящих пакетов'
+      label: this.$t('vkhodyashikh-paketov')
     },
     {
       prop: 'h_output_packets',
-      label: 'Исходящих пакетов'
+      label: this.$t('iskhodyashikh-paketov')
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: this.$t('oper-1'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -90,7 +90,7 @@ export default class extends Vue {
   }
 
   private shutdownSesion(ses: IUserSession) {
-    this.$confirm('Завершить сессию?').then(async() => {
+    this.$confirm(this.$t('zavershit-sessiyu')).then(async() => {
       await delSession(ses.id)
       this.$refs.table.LoadTableData()
     }).catch(err => {

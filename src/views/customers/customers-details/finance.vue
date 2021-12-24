@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <datatable :columns="tableColumns" :getData="loadLog" :heightDiff="202" widthStorageNamePrefix="customerFin" ref="fintbl">
       <template v-slot:author_name="{row}">{{ row.author_name || $t('customers.defaultAuthorName') }}</template>

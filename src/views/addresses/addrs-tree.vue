@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <el-tree :props="props" :load="loadNode" :expand-on-click-node="false" node-key="id" ref="etree" lazy draggable :allow-drop="allowDrop" :default-expanded-keys="addrIdHierarchy" @node-drop="handleDrop" @node-expand="onNodeExpand"><span class="custom-tree-node" slot-scope="{ node, data }"><span>{{ node.label }}</span><span>
           <el-button type="text" icon="el-icon-plus" @click="addNode(node)"></el-button>
@@ -70,7 +70,7 @@ export default class extends Vue {
 
   private frmAddDone(addr: IAddressModel) {
     this.dialogVisible = false
-    this.$message.success('Адресный объект добавлен')
+    this.$message.success(this.$t('adresnyi-obekt-dobavlen'))
 
     if (addr.parent_addr) {
       this.$refs.etree.append(addr, addr.parent_addr)
@@ -79,7 +79,7 @@ export default class extends Vue {
 
   private frmChangeDone(addr: IAddressModel) {
     this.dialogVisible = false
-    this.$message.success('Адресный объект изменён')
+    this.$message.success(this.$t('adresnyi-obekt-izmenyon'))
 
     if (this.tmpAddrTreeNode) {
       this.tmpAddrTreeNode.data = addr
@@ -113,7 +113,7 @@ export default class extends Vue {
       {
         meta: {
           hidden: true,
-          title: 'Адреса'
+          title: this.$t('adresa')
         }
       }
     ] as any)

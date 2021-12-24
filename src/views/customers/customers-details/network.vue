@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-card shadow="never">
     <template v-slot:header>
       <div class="clearfix">{{ $t('customers.networking') }}</div>

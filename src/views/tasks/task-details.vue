@@ -1,9 +1,9 @@
-<template>  
+<template>
   <el-row class="app-container" :gutter="5">
     <el-col class="mt5" :lg="12" :sm="24">
       <el-card shadow="never">
         <template v-slot:header>
-          <div class="clearfix">Редактировать задачу № {{ taskId }}</div>
+          <div class="clearfix">{{ $t('redaktirovat-zadachu-taskid', [taskId]) }}</div>
         </template>
         <task-form v-if="taskReady" :recipients="potentialRecipients"></task-form>
       </el-card>
@@ -44,11 +44,11 @@ export default class extends mixins(taskMixin) {
 
   private async loadTask() {
     if (this.taskId === 0) {
-      this.$message.error('Не передан ID задачи')
+      this.$message.error(this.$t('ne-peredan-id-zadachi'))
       return
     }
     await TaskModule.GetTask(this.taskId)
-    document.title = `Задача по ${TaskModule.customer_full_name}`
+    document.title = {{ $t('zadacha-po-taskmodule-customer_full_name', [TaskModule.customer_full_name]) }}
   }
 
   async created() {

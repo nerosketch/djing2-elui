@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-form ref="frm" v-loading="frmLoading" :label-width="$store.getters.isMobileView ? undefined : '100px'" status-icon :rules="frmRules" :model="frmMod">
     <el-form-item :label="$t('ipAddress')" prop="ip_address">
       <el-input v-model="frmMod.ip_address">
@@ -12,7 +12,7 @@
         <template v-if="pools.length > 0">
           <el-option v-for="p in pools" :key="p.id" :label="`${p.network} - ${p.description}`" :value="p.id"></el-option>
         </template>
-        <el-option v-else :label="$('customers.poolsNotExists')" :value="null"></el-option>
+        <el-option v-else :label="$t('customers.poolsNotExists')" :value="null"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item :label="$t('macAddress')" prop="mac_address">

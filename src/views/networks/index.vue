@@ -1,22 +1,22 @@
-<template>  
+<template>
   <div class="tab-container">
     <el-tabs v-model="activeTabName" type="border-card">
-      <el-tab-pane label="Гостевые сессии" name="sessions" lazy>
+      <el-tab-pane label="$t('gostevye-sessii')" name="sessions" lazy>
         <keep-alive>
           <session-list></session-list>
         </keep-alive>
       </el-tab-pane>
-      <el-tab-pane label="Подсети" name="pools" lazy>
+      <el-tab-pane label="$t('podseti')" name="pools" lazy>
         <keep-alive>
           <pool-list></pool-list>
         </keep-alive>
       </el-tab-pane>
-      <el-tab-pane label="Вланы" name="vlans" lazy>
+      <el-tab-pane label="$t('vlany-0')" name="vlans" lazy>
         <keep-alive>
           <vlan-list></vlan-list>
         </keep-alive>
       </el-tab-pane>
-      <el-tab-pane label="Аренды ip" name="leases" lazy>
+      <el-tab-pane label="$t('arendy-ip')" name="leases" lazy>
         <keep-alive>
           <lease-list></lease-list>
         </keep-alive>

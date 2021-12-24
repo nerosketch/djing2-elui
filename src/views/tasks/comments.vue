@@ -1,4 +1,4 @@
-<template>  
+<template>
   <comment-list :comments="comments" @send="onSendComment">
     <template v-slot:comment_item="{ comment }">
       <comment-item class="mt5" v-if="comment.type === 'comment'" :key="comment.id" :comment="comment" @delete="delComment"></comment-item>
@@ -46,7 +46,7 @@ export default class extends Vue {
 
   private async delComment(commentId: number) {
     await delComment(commentId)
-    this.$message.success('Комментарий удалён')
+    this.$message.success(this.$t('kommentarii-udalyon'))
     this.loadComments()
   }
 }

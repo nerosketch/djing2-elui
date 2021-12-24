@@ -1,18 +1,18 @@
-<template>  
+<template>
   <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
-    <el-form-item label="Старый пароль" prop="old_passw" :error="frmErr.old_passw" v-if="!this.$perms.is_superuser">
+    <el-form-item label="$t('staryi-parol')" prop="old_passw" :error="frmErr.old_passw" v-if="!this.$perms.is_superuser">
       <el-input v-model="frmMod.old_passw" maxlength="128" type="password"></el-input>
     </el-form-item>
-    <el-form-item label="Новый пароль" prop="new_passw" :error="frmErr.new_passw">
+    <el-form-item label="$t('novyi-parol')" prop="new_passw" :error="frmErr.new_passw">
       <el-input v-model="frmMod.new_passw" maxlength="128" type="password"></el-input>
     </el-form-item>
-    <el-form-item label="Повтори пароль" prop="retype_passw" :error="frmErr.retype_passw">
+    <el-form-item label="$t('povtori-parol')" prop="retype_passw" :error="frmErr.retype_passw">
       <el-input v-model="frmMod.retype_passw" maxlength="128" type="password"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button-group>
         <el-button type="primary" @click="onSubmit" icon="el-icon-download" :disabled="isEmpty">{{ $t('save') }}</el-button>
-        <el-button @click="$emit('cancel')" icon="el-icon-close">Отмена</el-button>
+        <el-button @click="$emit('cancel')" icon="el-icon-close">{{ $t('otmena') }}</el-button>
       </el-button-group>
     </el-form-item>
   </el-form>
@@ -35,17 +35,17 @@ export default class extends Vue {
 
   private frmRules = {
     old_passw: [
-      { required: !this.$perms.is_superuser, message: 'Надо указать старый пароль', trigger: 'blur' },
+      { required: !this.$perms.is_superuser, message: this.$t('nado-ukazat-staryi-parol'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
+      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov-0') }
     ],
     new_passw: [
-      { required: true, message: 'Надо указать новый пароль', trigger: 'blur' },
+      { required: true, message: this.$t('nado-ukazat-novyi-parol'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
+      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov-1') }
     ],
     retype_passw: [
-      { required: true, trigger: 'blur', message: 'Нужно повторить новый пароль' },
+      { required: true, trigger: 'blur', message: this.$t('nuzhno-povtorit-novyi-parol') },
       {
         validator: (rule: any, value: string, callback: Function) => {
           if (value === this.frmMod.new_passw) {
@@ -54,7 +54,7 @@ export default class extends Vue {
             callback(new Error(rule.message))
           }
         },
-        message: 'Пароли должны совпадать'
+        message: this.$t('paroli-dolzhny-sovpadat')
       }
     ]
   }

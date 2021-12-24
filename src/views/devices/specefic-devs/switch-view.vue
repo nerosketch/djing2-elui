@@ -1,39 +1,39 @@
-<template>  
+<template>
   <el-card>
     <template v-slot:header>
       <div class="clearfix"><span>{{ device.comment || 'Коммутатор' }}</span><small>{{ ` ${device.ip_address || device.mac_addr} ` }}</small>
-        <template v-if="device.parent_dev_name">Родительское устр.:
+        <template v-if="device.parent_dev_name">{{ $t('roditelskoe-ustr') }}
           <router-link class="el-link el-link--primary is-underline" :to="{name: 'device-view', params: { devId: device.parent_dev }}">{{ device.parent_dev_name }}</router-link>
         </template>
         <el-button style="float: right; padding: 7px" circle icon="el-icon-edit" type="primary" @click="openDevForm" :disabled="!$perms.devices.change_device"></el-button>
       </div>
     </template>
     <el-table :data="allPorts" :loading="loading" :row-class-name="tableRowClassName" border fit>
-      <el-table-column label="Порт" width="60" align="center">
+      <el-table-column label="$t('port-0')" width="60" align="center">
         <template v-slot:default="{row}"><b>{{ row.num }}</b></template>
       </el-table-column>
-      <el-table-column label="Вкл/Выкл" width="80" align="center">
+      <el-table-column label="$t('vkl-vykl')" width="80" align="center">
         <template v-slot:default="{row}">
           <switch-port-toggle-button v-if="row.isdb && row.snmp_num > 0" :port="row" :portId="row.id"></switch-port-toggle-button>
           <el-button v-else icon="el-icon-close" circle disabled></el-button>
         </template>
       </el-table-column>
-      <el-table-column label="Описание" min-width="267" prop="descr"></el-table-column>
-      <el-table-column label="Абонов" width="70" align="center">
+      <el-table-column label="$t('opisanie-3')" min-width="267" prop="descr"></el-table-column>
+      <el-table-column label="$t('abonov')" width="70" align="center">
         <template v-slot:default="{row}">
           <el-link type="primary" @click="openPortView(row)">{{ row.user_count }}</el-link>
         </template>
       </el-table-column>
-      <el-table-column label="Имя" min-width="235">
+      <el-table-column label="$t('imya-0')" min-width="235">
         <template v-slot:default="{row}">{{ row.name || '-' }}</template>
       </el-table-column>
-      <el-table-column label="Режим" min-width="78">
+      <el-table-column label="$t('rezhim')" min-width="78">
         <template v-slot:default="{row}">{{ row.speed ? portModesHuman(row.speed) : '-' }}</template>
       </el-table-column>
       <el-table-column label="UpTime" min-width="176">
         <template v-slot:default="{row}">{{ row.uptime || '-' }}</template>
       </el-table-column>
-      <el-table-column label="Кнопки" align="center" min-width="194">
+      <el-table-column label="$t('knopki-0')" align="center" min-width="194">
         <template v-slot:default="{row}">
           <el-button-group v-if="row.isdb">
             <el-button icon="el-icon-notebook-2" @click="openMacsDialog(row)"></el-button>
@@ -45,19 +45,19 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog :visible.sync="portViewDialog" title="Абоненты на порту" :close-on-click-modal="false">
+    <el-dialog :visible.sync="portViewDialog" title="$t('abonenty-na-portu')" :close-on-click-modal="false">
       <switch-port-view :device="device" :portId="currPortId"></switch-port-view>
     </el-dialog>
-    <el-dialog :visible.sync="portFormDialog" title="Порт коммутатора" :close-on-click-modal="false">
+    <el-dialog :visible.sync="portFormDialog" title="$t('port-kommutatora')" :close-on-click-modal="false">
       <switch-port-form :deviceId="device.id" :portId="currPortId" :initialNum="initialNum" v-on:editdone="editPortDone" v-on:adddone="addPortDone"></switch-port-form>
     </el-dialog>
-    <el-dialog :visible.sync="devFormDialog" title="Информация устройства" :close-on-click-modal="false">
+    <el-dialog :visible.sync="devFormDialog" title="$t('informaciya-ustroistva')" :close-on-click-modal="false">
       <dev-form v-on:done="devFrmDone"></dev-form>
     </el-dialog>
-    <el-dialog :visible.sync="vidsDialog" title="Vlan'ы" :close-on-click-modal="false">
+    <el-dialog :visible.sync="vidsDialog" title="$t('vlany')" :close-on-click-modal="false">
       <vids-view :portId="currPortId" :portNum="initialNum" @applydone="vidsDialog=false"></vids-view>
     </el-dialog>
-    <el-dialog :visible.sync="macsDialog" title="Таблица MAC адресов порта" :close-on-click-modal="false">
+    <el-dialog :visible.sync="macsDialog" title="$t('tablica-mac-adresov-porta')" :close-on-click-modal="false">
       <port-mac-list :portId="currPortId"></port-mac-list>
     </el-dialog>
   </el-card>
@@ -229,7 +229,7 @@ export default class extends Vue {
         delete this.allPorts[ind].user_count
         this.allPorts[ind].isdb = false
       }
-      this.$message.success('Порт успешно удалён')
+      this.$message.success(this.$t('port-uspeshno-udalyon'))
     })
   }
 
@@ -261,9 +261,9 @@ export default class extends Vue {
       this.allPorts[ind].isdb = true
     }
     if (isAdd) {
-      this.$message.success('Порт успешно сохранён')
+      this.$message.success(this.$t('port-uspeshno-sokhranyon'))
     } else {
-      this.$message.success('Порт успешно изменён')
+      this.$message.success(this.$t('port-uspeshno-izmenyon'))
     }
   }
 
@@ -273,7 +273,7 @@ export default class extends Vue {
 
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
-    this.$message.success('Успешно сохранено')
+    this.$message.success(this.$t('uspeshno-sokhraneno-0'))
     this.$router.push({ name: 'devicesList', params: { addrId: device.address.toString() } })
   }
 

@@ -1,31 +1,31 @@
-<template>  
+<template>
   <div class="app-container">
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <el-card>
           <template v-slot:header>
-            <div class="clearfix">Частота использования характеров задач</div>
+            <div class="clearfix">{{ $t('chastota-ispolzovaniya-kharakterov-zadach') }}</div>
           </template>
           <task-mode-report-pie-chart v-if="$perms.tasks.can_view_task_mode_report"></task-mode-report-pie-chart>
-          <h4 v-else>Недостаточно прав</h4>
+          <h4 v-else>{{ $t('nedostatochno-prav') }}</h4>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <el-card>
           <template v-slot:header>
-            <div class="clearfix">Распределение использования услуг абонентами</div>
+            <div class="clearfix">{{ $t('raspredelenie-ispolzovaniya-uslug-abonentami') }}</div>
           </template>
           <customer-service-type-report v-if="$perms.customers.can_view_service_type_report"></customer-service-type-report>
-          <h4 v-else>Недостаточно прав</h4>
+          <h4 v-else>{{ $t('nedostatochno-prav-0') }}</h4>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <el-card>
           <template v-slot:header>
-            <div class="clearfix">Активность абонентов</div>
+            <div class="clearfix">{{ $t('aktivnost-abonentov') }}</div>
           </template>
           <customer-activity-report v-if="$perms.customers.can_view_activity_report"></customer-activity-report>
-          <h4 v-else>Недостаточно прав</h4>
+          <h4 v-else>{{ $t('nedostatochno-prav-1') }}</h4>
         </el-card>
       </el-col>
     </el-row>
@@ -57,7 +57,7 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: 'Отчёты всякие'
+          title: this.$t('otchyoty-vsyakie')
         }
       }
     ] as any)
@@ -65,7 +65,7 @@ export default class extends Vue {
   // End Breadcrumbs
 
   created() {
-    document.title = 'Отчёты всякие'
+    document.title = this.$t('otchyoty-vsyakie-0')
     this.buildBreadcrumb()
   }
 }

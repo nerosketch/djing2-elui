@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="getAllLog" :heightDiff="201" widthStorageNamePrefix="profile_log"></datatable>
   </div>
@@ -23,17 +23,17 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'action_date',
-      label: 'Дата',
+      label: this.$t('data-1'),
       'min-width': 150
     },
     {
       prop: 'additional_text',
-      label: 'Дополнительное',
+      label: this.$t('dopolnitelnoe'),
       'min-width': 400
     },
     {
       prop: 'do_type_text',
-      label: 'Описание',
+      label: this.$t('opisanie-9'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

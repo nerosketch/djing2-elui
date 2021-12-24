@@ -1,8 +1,8 @@
 <template>  <span>
     <el-table :data="onuList" v-loading="lloading" :row-class-name="onuRowColor" border fit>
-      <el-table-column label="Тип" min-width="80" prop="onu_type"></el-table-column>
-      <el-table-column label="Порт" min-width="90" prop="onu_port"></el-table-column>
-      <el-table-column label="Серийник" min-width="90" prop="onu_sn"></el-table-column>
+      <el-table-column label="$t('tip-0')" min-width="80" prop="onu_type"></el-table-column>
+      <el-table-column label="$t('port')" min-width="90" prop="onu_port"></el-table-column>
+      <el-table-column label="$t('seriinik')" min-width="90" prop="onu_sn"></el-table-column>
     </el-table></span>
 </template>
 
@@ -32,19 +32,17 @@ export default class extends Vue {
 
   private async loadFibers() {
     if (!this.fiberAddr || this.fiberAddr === 0) {
-      this.$message.error('fiberAddr required.')
+      this.$message.error(this.$t('fiberaddr-required'))
       return
     }
     if (this.devId < 1 || !this.devId) {
-      this.$message.error('devId required.')
+      this.$message.error(this.$t('devid-required'))
       return
     }
     this.lloading = true
     try {
       const { data } = await scanFiberOnuList(this.devId, this.fiberAddr)
       this.onuList = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.lloading = false
     }

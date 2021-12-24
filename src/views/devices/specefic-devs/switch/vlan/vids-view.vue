@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>Порт №{{ portNum }}
     <el-table :data="deviceVlans" v-loading="loading" empty-text="Vlan'ы на порту не найдены" border fit>
       <el-table-column :label="$t('title')" min-width="200" prop="title"></el-table-column>
@@ -8,7 +8,7 @@
           <boolean-icon v-model="row.native"></boolean-icon>
         </template>
       </el-table-column>
-      <el-table-column label="Управление">
+      <el-table-column label="$t('upravlenie')">
         <template v-slot:default="{row}">
           <boolean-icon v-model="row.is_management"></boolean-icon>
         </template>
@@ -49,13 +49,11 @@ export default class extends Vue {
       this.loading = true
       try {
         this.deviceVlans = await PortModule.ScanPortVlans(this.portId)
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.loading = false
       }
     } else {
-      this.$message.error('portId parameter is required')
+      this.$message.error(this.$t('portid-parameter-is-required'))
     }
   }
 }

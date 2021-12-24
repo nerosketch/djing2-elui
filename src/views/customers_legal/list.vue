@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="loadCustomersLegal" :heightDiff="118" widthStorageNamePrefix="legalcustomers" ref="table">
       <template v-slot:btn="{row}">
@@ -7,12 +7,12 @@
       <template v-slot:username="{row}">
         <router-link class="el-link el-link--primary is-underline" :to="{ name: 'customerLegalDetail', params: { uid: row.id } }">{{ row.username }}</router-link>
       </template>
-      <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.customers_legal.add_customerlegalmodel">Добавить учётную запись</el-button>
+      <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.customers_legal.add_customerlegalmodel">{{ $t('dobavit-uchyotnuyu-zapis') }}</el-button>
     </datatable>
-    <el-dialog title="Организация" :visible.sync="dialogVisible" :close-on-click-modal="false" top="1%">
+    <el-dialog title="$t('organizaciya')" :visible.sync="dialogVisible" :close-on-click-modal="false" top="1%">
       <legal-form v-if="dialogVisible" v-on:added="frmAddDone" v-on:update="frmUpdateDone"></legal-form>
     </el-dialog>
-    <el-dialog title="Кто имеет права на учётную запись" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
+    <el-dialog title="$t('kto-imeet-prava-na-uchyotnuyu-zapis')" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
       <object-perms v-on:save="changeLegalObjectPerms" :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp" :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms" :objId="$store.state.customerlegal.title"></object-perms>
     </el-dialog>
   </div>
@@ -53,28 +53,28 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'username',
-      label: 'Логин'
+      label: this.$t('login')
     },
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$t('nazvanie'),
       'min-width': 150
     },
     {
       prop: 'balance',
-      label: 'Баланс'
+      label: this.$t('balans')
     },
     {
       prop: 'tax_number',
-      label: 'ИНН'
+      label: this.$t('inn-0')
     },
     {
       prop: 'post_index',
-      label: 'Почтовый индекс'
+      label: this.$t('pochtovyi-indeks')
     },
     {
       prop: 'btn',
-      label: '—',
+      label: this.$t('key'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -123,7 +123,7 @@ export default class extends Vue {
         path: '/legal/',
         meta: {
           hidden: true,
-          title: 'Организации'
+          title: this.$t('organizacii')
         }
       },
     ] as any)

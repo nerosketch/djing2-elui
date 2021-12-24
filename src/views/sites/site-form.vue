@@ -1,9 +1,9 @@
-<template>  
+<template>
   <el-form ref="form" label-width="100px" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <el-form-item :label="$t('title')" prop="name">
       <el-input v-model="frmMod.name"></el-input>
     </el-form-item>
-    <el-form-item label="Домен" prop="domain">
+    <el-form-item label="$t('domen-0')" prop="domain">
       <el-input v-model="frmMod.domain"></el-input>
     </el-form-item>
     <el-form-item>
@@ -25,10 +25,10 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: 'Название домена надо указать', trigger: 'blur' }
+      { required: true, message: this.$t('nazvanie-domena-nado-ukazat'), trigger: 'blur' }
     ],
     domain: [
-      { required: true, message: 'Домен надо указать', trigger: 'blur' }
+      { required: true, message: this.$t('domen-nado-ukazat'), trigger: 'blur' }
     ]
   }
 
@@ -58,10 +58,10 @@ export default class extends Vue {
         let newDat
         if (this.isNew) {
           newDat = await SiteModule.AddSite(this.frmMod)
-          this.$message.success('Домен изменён')
+          this.$message.success(this.$t('domen-izmenyon'))
         } else {
           newDat = await SiteModule.PatchSite(this.frmMod)
-          this.$message.success('Новый домен создан')
+          this.$message.success(this.$t('novyi-domen-sozdan'))
         }
         this.isLoading = false
         this.$emit('done', newDat)

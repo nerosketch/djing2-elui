@@ -1,17 +1,17 @@
-<template>  
+<template>
   <el-form ref="form" label-width="115px" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <el-form-item :label="$t('title')" prop="title">
       <el-input v-model="frmMod.title"></el-input>
     </el-form-item>
-    <el-form-item label="Описание" prop="description">
+    <el-form-item label="$t('opisanie-5')" prop="description">
       <el-input v-model="frmMod.description"></el-input>
     </el-form-item>
-    <el-form-item label="Тип бота" prop="bot_type">
+    <el-form-item label="$t('tip-bota')" prop="bot_type">
       <el-select v-model="frmMod.bot_type" :loading="messengerTypesLoading">
         <el-option v-for="mbt in messengerBotTypes" :key="mbt.val" :value="mbt.val" :label="mbt.text"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Токен" prop="token">
+    <el-form-item label="$t('token')" prop="token">
       <el-input v-model="frmMod.token"></el-input>
     </el-form-item>
     <el-form-item>
@@ -29,7 +29,7 @@ import { IMessenger } from '@/api/messenger/types'
 import { mixins } from 'vue-class-component'
 import BotTypesMixin from './bot_types_mixin'
 
-const tx = 'Нужно знать с каким API будет работать бот'
+const tx = this.$t('nuzhno-znat-s-kakim-api-budet-rabotat-bot')
 
 @Component({
   name: 'MessengerForm'
@@ -39,11 +39,11 @@ export default class extends mixins(BotTypesMixin) {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название для мессенджера надо указать', trigger: 'blur' }
+      { required: true, message: this.$t('nazvanie-dlya-messendzhera-nado-ukazat'), trigger: 'blur' }
     ],
     token: this.isNew
       ? [
-          { required: true, message: 'Токен для мессенджера надо указать', trigger: 'blur' }
+          { required: true, message: this.$t('token-dlya-messendzhera-nado-ukazat'), trigger: 'blur' }
         ]
       : [],
     bot_type: [
@@ -64,7 +64,7 @@ export default class extends mixins(BotTypesMixin) {
 
     if (this.messengerBotTypes.length === 0) {
       this.loadMessengerTypes().then(() => {
-        this.messengerBotTypes.unshift({ val: 0, text: 'не определено' })
+        this.messengerBotTypes.unshift({ val: 0, text: this.$t('ne-opredeleno') })
       })
     }
   }
@@ -82,13 +82,13 @@ export default class extends mixins(BotTypesMixin) {
                 m: this.frmMod,
                 typeName: botTypes[0].text
               })
-              this.$message.success('Чат бот создан')
+              this.$message.success(this.$t('chat-bot-sozdan'))
             } else {
-              this.$message.error('Выбери тип мессенжера')
+              this.$message.error(this.$t('vyberi-tip-messenzhera'))
             }
           } else {
             newDat = await MessengerModule.PatchMessenger(this.frmMod)
-            this.$message.success('Чат бот изменён')
+            this.$message.success(this.$t('chat-bot-izmenyon'))
           }
           this.$emit('done', newDat)
         } catch (err) {

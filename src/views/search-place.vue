@@ -1,8 +1,8 @@
-<template>  
+<template>
   <div class="app-container">
     <el-card shadow="never" :loading="loading">
       <template v-slot:header>
-        <div class="clearfix">Поиск по: {{ searchTextGetter }}</div>
+        <div class="clearfix">{{ $t('poisk-po-searchtextgetter', [searchTextGetter]) }}</div>
       </template>
       <el-row :gutter="5">
         <el-col :sm="24" :md="12">
@@ -10,11 +10,11 @@
             <el-card shadow="hover" :body-style="defCardStyle" v-for="(c, i) in customers" :key="i">
               <div><i class="el-icon-s-custom"></i>
                 <router-link class="el-link el-link--primary is-underline" :to="{ name: 'customerDetails', params: {uid: c.id } }">{{ c.username }}</router-link>
-              </div><span>{{ c.fio }}, {{ c.group_title }}.</span><br><i>{{ c.telephone }}</i><br><small>{{ c.ips }}</small>
+              </div><span>{{ $t('c-fio-c-group_title', [c.fio, c.group_title]) }}</span><br><i>{{ c.telephone }}</i><br><small>{{ c.ips }}</small>
             </el-card>
           </template>
           <el-card v-else shadow="hover" :body-style="defCardStyle">
-            <h3>Абоненты не найдены</h3>
+            <h3>{{ $t('abonenty-ne-naideny') }}</h3>
           </el-card>
         </el-col>
         <el-col :sm="24" :md="12">
@@ -27,7 +27,7 @@
             </el-card>
           </template>
           <el-card v-else shadow="hover" :body-style="defCardStyle">
-            <h3>Оборудование не найдено</h3>
+            <h3>{{ $t('oborudovanie-ne-naideno') }}</h3>
           </el-card>
         </el-col>
       </el-row>
@@ -45,7 +45,7 @@ import { SearchModule } from '@/store/modules/search'
 export default class extends Vue {
   private loading = false
 
-  private defCardStyle = { padding: '10px 13px' }
+  private defCardStyle = { padding: this.$t('10px-13px') }
 
   get searchTextGetter() {
     return SearchModule.searchStr

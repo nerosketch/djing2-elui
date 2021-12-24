@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="loadGroups" widthStorageNamePrefix="groups" ref="grouptable">
       <template v-slot:oper="{row}">
@@ -9,15 +9,15 @@
           <el-button type="danger" icon="el-icon-delete" @click="delGroup(row)" :disabled="!$perms.groupapp.delete_group"></el-button>
         </el-button-group>
       </template>
-      <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.groupapp.add_group">Добавить группу</el-button>
+      <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.groupapp.add_group">{{ $t('dobavit-gruppu') }}</el-button>
     </datatable>
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <group-form v-on:done="frmDone"></group-form>
     </el-dialog>
-    <el-dialog :title="`Кто имеет права на группу абонентов "${GroupTitleGetter}"`" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
+    <el-dialog :title="`${$t('kto-imeet-prava-na-gruppu-abonentov')} ${GroupTitleGetter}`" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
       <object-perms v-on:save="changeGroupObjectPerms" :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp" :getSelectedObjectPerms="groupGetSelectedObjectPerms" :objId="groupIdGetter"></object-perms>
     </el-dialog>
-    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+    <el-dialog title="$t('prinadlezhnost-saitam-0')" :visible.sync="sitesDlg" :close-on-click-modal="false">
       <sites-attach :selectedSiteIds="$store.state.group.sites" v-on:save="groupSitesSave"></sites-attach>
     </el-dialog>
   </div>
@@ -54,13 +54,13 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$t('nazvanie-3'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$t('knopki-2'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -102,16 +102,16 @@ export default class extends Vue {
   }
 
   private delGroup(group: IGroup) {
-    this.$confirm(`Действительно удалить группу "${group.title}"?`).then(async() => {
+    this.$confirm(`${this.$t('deistvitelno-udalit-gruppu')} ${group.title}?`).then(async() => {
       await GroupModule.DelGroup(group.id)
-      this.$message.success(`Группа "${group.title}" удалена`)
+      this.$message.success(`${this.$t('gruppa-udalena')} ${group.title}`)
       this.$refs.grouptable.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success('Группа сохранена')
+    this.$message.success(this.$t('gruppa-sokhranena'))
     this.$refs.grouptable.LoadTableData()
   }
 
@@ -122,7 +122,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Группы'
+          title: this.$t('gruppy-1')
         }
       }
     ] as any)
@@ -152,7 +152,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.grouptable.LoadTableData()
-      this.$message.success('Принадлежность группы сайтам сохранена')
+      this.$message.success(this.$t('prinadlezhnost-gruppy-saitam-sokhranena'))
     })
     this.sitesDlg = false
   }

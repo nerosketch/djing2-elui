@@ -1,4 +1,4 @@
-<template>  
+<template>
   <customer-list :fetchFunc="fetchBumCustomers"></customer-list>
 </template>
 

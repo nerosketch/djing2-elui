@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-form ref="customerfrm" :label-width="$store.getters.isMobileView ? undefined : '125px'" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <customer-form-fio v-model="frmMod.fio"></customer-form-fio>
     <el-form-item :label="$t('customers.username')" prop="username">
@@ -7,7 +7,7 @@
     <el-form-item :label="$t('customers.phone')" prop="telephone">
       <tels-input v-model="frmMod.telephone"></tels-input>
     </el-form-item>
-    <el-form-item label="Дом (устар)">
+    <el-form-item label="$t('dom-ustar')">
       <el-input v-model="frmMod.house" :maxlength="12" readonly disabled></el-input>
     </el-form-item>
     <el-form-item :label="$t('customers.birthDay')" prop="birth_day">
@@ -159,8 +159,6 @@ export default class extends mixins(FormMixin) {
           this.$message.success(
             this.$t('customers.customerSavedOk').toString()
           )
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
@@ -212,11 +210,9 @@ export default class extends mixins(FormMixin) {
             params: { taskId: data.task_id.toString() }
           })
         } else {
-          this.$message.error('Task id expected from backend')
+          this.$message.error(this.$t('task-id-expected-from-backend'))
         }
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.taskFormDialogLoading = false
     }

@@ -1,12 +1,12 @@
-<template>  
+<template>
   <el-form ref="leasefrm" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
-    <el-form-item label="IP Адрес" prop="ip_address">
+    <el-form-item label="$t('ip-adres-1')" prop="ip_address">
       <el-input v-model="frmMod.ip_address"></el-input>
     </el-form-item>
-    <el-form-item label="MAC Адрес" prop="mac_address">
+    <el-form-item label="$t('mac-adres-0')" prop="mac_address">
       <el-input v-model="frmMod.mac_address"></el-input>
     </el-form-item>
-    <el-form-item label="Динамический" prop="is_dynamic">
+    <el-form-item label="$t('dinamicheskii')" prop="is_dynamic">
       <el-checkbox v-model="frmMod.is_dynamic">{{ frmMod.is_dynamic ? 'Да' : 'Нет' }}</el-checkbox>
     </el-form-item>
     <el-form-item>
@@ -31,11 +31,11 @@ export default class extends Vue {
   private frmRules = {
     ip_address: [
       { required: true, message: this.$t('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: 'Пример ip: 192.168.0.23' }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23-1') }
     ],
     mac_address: [
-      { required: true, message: 'MAC не нужно оставлять пустым', trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: 'Пример mac: 0a:0b:cc:dd::ee:ff' }
+      { required: true, message: this.$t('mac-ne-nuzhno-ostavlyat-pustym'), trigger: 'blur' },
+      { validator: macAddrValidator, trigger: 'change', message: this.$t('primer-mac-0a-0b-cc-dd-ee-ff-1') }
     ]
   }
 

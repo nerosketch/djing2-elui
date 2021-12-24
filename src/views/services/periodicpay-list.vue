@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <datatable :columns="tableColumns" :getData="loadPeriodics" :heightDiff="189" widthStorageNamePrefix="perpay" ref="table">
       <template v-slot:oper="{row}">
@@ -10,10 +10,10 @@
       </template>
       <el-button icon="el-icon-plus" type="success" @click="openNew" :disabled="!$perms.services.add_periodicpay">{{ $t('add') }}</el-button>
     </datatable>
-    <el-dialog :title="(isNew ? 'Создание' : 'Изменение') + ' периодического платежа'" :visible.sync="dialogVisible" :close-on-click-modal="false">
+    <el-dialog :title="$t('isnew-sozdanie-izmenenie-periodicheskogo-platezha', [(isNew ? `Создание` : `Изменение`)])" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <periodicpay-form v-on:done="frmDone"></periodicpay-form>
     </el-dialog>
-    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+    <el-dialog title="$t('prinadlezhnost-saitam-4')" :visible.sync="sitesDlg" :close-on-click-modal="false">
       <sites-attach :selectedSiteIds="$store.state.periodicpay.sites" v-on:save="serviceSitesSave"></sites-attach>
     </el-dialog>
   </div>
@@ -42,23 +42,23 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: 'Название платежа',
+      label: this.$t('nazvanie-platezha'),
       'min-width': 200
     },
     {
       prop: 'when_add',
-      label: 'Дата создания',
+      label: this.$t('data-sozdaniya-0'),
       'min-width': 150
     },
     {
       prop: 'amount',
-      label: 'стоимость',
+      label: this.$t('stoimost-0'),
       'min-width': 150,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$t('knopki-5'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -79,7 +79,7 @@ export default class extends Vue {
   }
 
   private async delPerPay(pay: IPeriodicPay) {
-    if (confirm(`Действительно удалить квитанцию "${pay.name}"?`)) {
+    if (confirm({{ $t('deistvitelno-udalit-kvitanciyu-pay-name', [pay.name]) }})) {
       await PeriodicPayModule.DelPeriodicPay(pay.id)
       this.$refs.table.LoadTableData()
     }
@@ -106,7 +106,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success('Принадлежность услуги сайтам сохранена')
+      this.$message.success(this.$t('prinadlezhnost-uslugi-saitam-sokhranena'))
     })
     this.sitesDlg = false
   }

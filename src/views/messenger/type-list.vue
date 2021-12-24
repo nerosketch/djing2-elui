@@ -1,6 +1,6 @@
-<template>  
+<template>
   <el-table class="app-container" v-loading="messengerTypesLoading" :data="messengerBotTypes" border fit>
-    <el-table-column label="Тип бота" prop="text">
+    <el-table-column label="$t('tip-bota-1')" prop="text">
       <template v-slot:default="{row}">
         <router-link :to="{ name: 'messengerList', params: { messengerTypeName: row.text } }">{{ row.text }}</router-link>
       </template>
@@ -26,7 +26,7 @@ export default class extends mixins(BotTypesMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Мессенджеры'
+          title: this.$t('messendzhery-1')
         }
       }
     ] as any)

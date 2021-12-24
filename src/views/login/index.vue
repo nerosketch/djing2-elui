@@ -1,17 +1,17 @@
-<template>  
+<template>
   <div class="login-container">
     <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules" autocomplete="on" label-position="left">
       <div class="title-container">
         <glsl-smog-effect id="smogblock" :width="518" :height="73"></glsl-smog-effect>
-        <h3 class="title">Войти</h3>
+        <h3 class="title">{{ $t('voiti') }}</h3>
       </div>
       <el-form-item prop="username"><span class="svg-container"><i class="el-icon-user-solid"></i></span>
-        <el-input ref="username" v-model="loginForm.username" name="username" type="text" autocomplete="on" placeholder="логин"></el-input>
+        <el-input ref="username" v-model="loginForm.username" name="username" type="text" autocomplete="on" placeholder="$t('login-0')"></el-input>
       </el-form-item>
       <el-form-item prop="password"><span class="svg-container"><i class="el-icon-lock"></i></span>
-        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="пароль" name="password" autocomplete="on" @keyup.enter.native="handleLogin"></el-input><span class="show-pwd" @click="showPwd"><i :class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'"></i></span>
+        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="$t('parol')" name="password" autocomplete="on" @keyup.enter.native="handleLogin"></el-input><span class="show-pwd" @click="showPwd"><i :class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'"></i></span>
       </el-form-item>
-      <el-button :loading="loading" type="primary" style="width:100%; margin-bottom:30px;" @click.native.prevent="handleLogin">Войти</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%; margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('voiti-0') }}</el-button>
     </el-form>
   </div>
 </template>
@@ -40,13 +40,13 @@ export default class extends Vue {
 
   private loginRules = {
     username: [
-      { required: true, message: 'Логин не может быть пустым', trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: 'Нужен логин из латинских символов и цифр' }
+      { required: true, message: this.$t('login-ne-mozhet-byt-pustym'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$t('nuzhen-login-iz-latinskikh-simvolov-i-cifr') }
     ],
     password: [
-      { required: true, message: 'Пароль не может быть пустым', trigger: 'blur' },
+      { required: true, message: this.$t('parol-ne-mozhet-byt-pustym'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
+      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov') }
     ]
   }
 
@@ -76,7 +76,7 @@ export default class extends Vue {
   }
 
   created() {
-    document.title = 'Вход'
+    document.title = this.$t('vkhod')
   }
 
   private showPwd() {
@@ -106,7 +106,6 @@ export default class extends Vue {
           })
           this.loading = false
         } catch (err) {
-          this.$message.error(err)
           this.loading = false
         }
       } else {

@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-row :gutter="5">
     <el-col class="col_vert_space" :sm="24" :md="12">
       <el-card shadow="never">

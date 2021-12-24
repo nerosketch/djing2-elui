@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-form ref="frm" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
     <customer-form-fio v-model="frmMod.fio"></customer-form-fio>
     <el-form-item :label="$t('customers.login')" prop="username">
@@ -10,10 +10,10 @@
     <el-form-item :label="$t('groups.group')">
       <groups-choice v-model="frmMod.group"></groups-choice>
     </el-form-item>
-    <el-form-item :label="$('comment')">
+    <el-form-item :label="$t('comment')">
       <el-input v-model="frmMod.description" type="textarea" rows="4" cols="40" autosize></el-input>
     </el-form-item>
-    <el-form-item :label="$('customers.birthDay')" prop="birth_day">
+    <el-form-item :label="$t('customers.birthDay')" prop="birth_day">
       <el-date-picker v-model="frmMod.birth_day" type="date" value-format="yyyy-MM-dd" format="d.MM.yyyy"></el-date-picker>
     </el-form-item>
     <el-form-item>
@@ -75,7 +75,7 @@ export default class extends Vue {
       {
         validator: telephoneValidator,
         trigger: 'change',
-        message: '+[7,8,9,3] и 10,11 цифр'
+        message: this.$t('7-8-9-3-i-10-11-cifr-0')
       }
     ],
     birth_day: [

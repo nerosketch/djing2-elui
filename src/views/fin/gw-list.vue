@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="loadPayGws" widthStorageNamePrefix="gws" ref="table">
       <template v-slot:title="{row}">
@@ -11,12 +11,12 @@
           <el-button type="danger" icon="el-icon-delete" @click="delPayGw(row)" :disabled="!$perms.fin_app.delete_payalltimegateway"></el-button>
         </el-button-group>
       </template>
-      <el-button icon="el-icon-plus" @click="openNew">Добавить шлюз</el-button>
+      <el-button icon="el-icon-plus" @click="openNew">{{ $t('dobavit-shlyuz') }}</el-button>
     </datatable>
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <pay-gw-form v-on:done="frmDone"></pay-gw-form>
     </el-dialog>
-    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+    <el-dialog title="$t('prinadlezhnost-saitam')" :visible.sync="sitesDlg" :close-on-click-modal="false">
       <sites-attach :selectedSiteIds="$store.state.payalltimegateway.sites" v-on:save="payGwSitesSave"></sites-attach>
     </el-dialog>
   </div>
@@ -46,26 +46,26 @@ export default class extends Vue {
     table: DataTableComp
   }
 
-  private dialogTitle = 'Платёжный шлюз'
+  private dialogTitle = this.$t('platyozhnyi-shlyuz-0')
   private dialogVisible = false
   private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$t('nazvanie-2'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'service_id',
-      label: 'Service ID',
+      label: this.$t('service-id-0'),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'slug',
-      label: 'путь'
+      label: this.$t('put')
     },
     {
       prop: 'secret',
@@ -73,11 +73,11 @@ export default class extends Vue {
     },
     {
       prop: 'pay_count',
-      label: 'Количество платежей'
+      label: this.$t('kolichestvo-platezhei')
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$t('knopki-1'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -92,12 +92,12 @@ export default class extends Vue {
 
   private openEdit(gw: IPayAllTimeGateway) {
     PayAllTimeGatewayModule.SET_ALL_PAYGW(gw)
-    this.dialogTitle = 'Изменить платёжный шлюз'
+    this.dialogTitle = this.$t('izmenit-platyozhnyi-shlyuz')
     this.dialogVisible = true
   }
 
   private delPayGw(gw: IPayAllTimeGateway) {
-    this.$confirm('Удалить платёжный шлюз?').then(async() => {
+    this.$confirm(this.$t('udalit-platyozhnyi-shlyuz')).then(async() => {
       await PayAllTimeGatewayModule.DelPayGroup(gw.id)
       this.$refs.table.LoadTableData()
     })
@@ -105,14 +105,14 @@ export default class extends Vue {
 
   private openNew() {
     PayAllTimeGatewayModule.RESET_ALL_PAYGW()
-    this.dialogTitle = 'Создать платёжный шлюз'
+    this.dialogTitle = this.$t('sozdat-platyozhnyi-shlyuz')
     this.dialogVisible = true
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.LoadTableData()
-    this.$message.success('Платёжный шлюз добавлен')
+    this.$message.success(this.$t('platyozhnyi-shlyuz-dobavlen'))
   }
 
   // Breadcrumbs
@@ -122,7 +122,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Финансы'
+          title: this.$t('finansy-0')
         }
       }
     ] as any)
@@ -134,7 +134,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success('Принадлежность платёжного шлюза сайтам сохранена')
+      this.$message.success(this.$t('prinadlezhnost-platyozhnogo-shlyuza-saitam-sokhranena'))
     })
     this.sitesDlg = false
   }

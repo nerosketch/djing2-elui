@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-button :type="statusType" icon="el-icon-magic-stick" @click="tryToFixOnu" :loading="fixLoading" :disabled="!$perms.devices.can_fix_onu">{{ buttonText }}</el-button>
 </template>
 
@@ -11,7 +11,7 @@ import { DeviceModule } from '@/store/modules/devices/device'
 })
 export default class extends Vue {
   private fixLoading = false
-  private buttonText = 'Исправить'
+  private buttonText = this.$t('ispravit')
   private buttonStatus = 0
 
   get statusType() {
@@ -29,8 +29,6 @@ export default class extends Vue {
       const r = await DeviceModule.FixOnu()
       this.setBtnStatus(r.text, r.status)
       this.$emit('done')
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.fixLoading = false
     }
@@ -40,7 +38,7 @@ export default class extends Vue {
     this.buttonStatus = status === 1 ? 1 : -1
     this.buttonText = text
     let tm = setTimeout(() => {
-      this.buttonText = 'Исправить'
+      this.buttonText = this.$t('ispravit-0')
       this.buttonStatus = 0
       clearTimeout(tm)
     }, 15000)

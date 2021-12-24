@@ -1,9 +1,9 @@
-<template>  
+<template>
   <el-form ref="perfrm" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <el-form-item :label="$t('title')" prop="name">
       <el-input v-model="frmMod.name"></el-input>
     </el-form-item>
-    <el-form-item label="Стоимость" prop="amount">
+    <el-form-item label="$t('stoimost')" prop="amount">
       <el-input v-model="frmMod.amount"></el-input>
     </el-form-item>
     <el-form-item>
@@ -26,11 +26,11 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: 'Название надо указать', trigger: 'blur' }
+      { required: true, message: this.$t('nazvanie-nado-ukazat-0'), trigger: 'blur' }
     ],
     amount: [
-      { required: true, message: 'Цену надо указать', trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: 'Цена должна быть положительной или 0' }
+      { required: true, message: this.$t('cenu-nado-ukazat'), trigger: 'blur' },
+      { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili-0') }
     ]
   }
 

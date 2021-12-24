@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <el-checkbox v-for="grp in groups" :key="grp.id" :label="grp.title" v-model="grp.state"></el-checkbox><br>
     <el-button icon="el-icon-upload" type="primary" @click="saveResp" :loading="loading" :disabled="!$perms.is_superuser">{{ $t('save') }}</el-button>
@@ -32,7 +32,7 @@ export default class extends Vue {
     }) as any
     if (data.length < 1) {
       this.loading = false
-      this.$message.error('Не удалось получить группы')
+      this.$message.error(this.$t('ne-udalos-poluchit-gruppy'))
       return
     }
     try {
@@ -56,7 +56,7 @@ export default class extends Vue {
     const filtered = this.groups.filter(v => v.state)
     const res = filtered.map(v => v.id)
     await setResponsibilityGroups(this.profileUname, res)
-    this.$message.success('Ответственность за группы сохранена')
+    this.$message.success(this.$t('otvetstvennost-za-gruppy-sokhranena'))
     this.loading = false
     this.$emit('done')
   }

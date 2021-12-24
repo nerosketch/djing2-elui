@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-table v-loading="loading" :data="tels" border fit>
     <el-table-column :label="$t('customers.phoneOwner')" prop="owner_name"></el-table-column>
     <el-table-column :label="$t('customers.phone')">
@@ -33,8 +33,6 @@ export default class extends Vue {
     try {
       const { data } = await getTelephones(CustomerModule.id) as any
       this.tels = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

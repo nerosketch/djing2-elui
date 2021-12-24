@@ -1,7 +1,7 @@
-<template>  
+<template>
   <el-table v-loading="loading" :data="customeServiceList" border fit>
-    <el-table-column label="Логин" prop="username"></el-table-column>
-    <el-table-column label="Имя" prop="fio">
+    <el-table-column label="$t('login-5')" prop="username"></el-table-column>
+    <el-table-column label="$t('imya-1')" prop="fio">
       <template v-slot:default="{row}">
         <router-link class="el-link el-link--primary is-underline" :to="{name: 'customerDetails', params:{uid: row.id }}">{{ row.fio }}</router-link>
       </template>

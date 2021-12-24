@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-popover trigger="manual" width="400" v-model="isDisplay">
     <el-card shadow="never" style="font-size: small;" v-loading="detailLoading">
       <template v-slot:header>{{ $t('customers.session') }}

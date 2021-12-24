@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="loadMessengers" widthStorageNamePrefix="messengers" ref="table">
       <template v-slot:title="{row}">
@@ -10,9 +10,9 @@
           <el-button icon="el-icon-view" @click="go2Messenger(row)"></el-button>
         </el-button-group>
       </template>
-      <el-button icon="el-icon-plus" @click="openNew">Добавить Messenger</el-button>
+      <el-button icon="el-icon-plus" @click="openNew">{{ $t('dobavit-messenger') }}</el-button>
     </datatable>
-    <el-dialog title="Создать messenger" :visible.sync="dialogVisible" :close-on-click-modal="false">
+    <el-dialog title="$t('sozdat-messenger')" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <messenger-form v-on:done="frmDone"></messenger-form>
     </el-dialog>
   </div>
@@ -55,22 +55,22 @@ export default class extends Vue {
     },
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$t('nazvanie-4'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'description',
-      label: 'Описание'
+      label: this.$t('opisanie-6')
     },
     {
       prop: 'bot_type_name',
-      label: 'Тип бота',
+      label: this.$t('tip-bota-0'),
       'min-width': 100
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: this.$t('oper'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -95,9 +95,9 @@ export default class extends Vue {
   }
 
   private delMessenger(m: IMessenger) {
-    this.$confirm(`Ты действительно хочешь удалить чат бот "${m.title}"?`).then(async() => {
+    this.$confirm({{ $t('ty-deistvitelno-khochesh-udalit-chat-bot-m-title', [m.title]) }}).then(async() => {
       await MessengerModule.DelMessenger(m.id)
-      this.$message.success(`Чат бот "${m.title}" удалён`)
+      this.$message.success({{ $t('chat-bot-m-title-udalyon', [m.title]) }})
       this.$refs.table.LoadTableData()
     })
   }
@@ -124,7 +124,7 @@ export default class extends Vue {
         path: '/messenger',
         meta: {
           hidden: true,
-          title: 'Мессенджеры'
+          title: this.$t('messendzhery-0')
         }
       },
       {

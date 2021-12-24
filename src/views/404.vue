@@ -28,7 +28,7 @@
           OOPS!
         </div>
         <div class="text-404__info">
-          All rights reserved
+          {{ $t('all-rights-reserved') }}
           <a
             style="color:#20a0ff"
             href="https://wallstreetcn.com"
@@ -39,12 +39,12 @@
           {{ message }}
         </div>
         <div class="text-404__info">
-          Please check that the URL you entered is correct, or click the button below to return to the homepage.
+          {{ $t('please-check-that-the-url-you-entered-is-correct-or-click-the-bu') }}
         </div>
         <a
           href=""
           class="text-404__return-home"
-        >Back to home</a>
+        >{{ $t('back-to-home') }}</a>
       </div>
     </div>
   </div>
@@ -57,7 +57,7 @@ import { Component, Vue } from 'vue-property-decorator'
   name: 'Page404'
 })
 export default class extends Vue {
-  private message = '404 Page Not Found'
+  private message = this.$t('404-page-not-found')
 }
 </script>
 

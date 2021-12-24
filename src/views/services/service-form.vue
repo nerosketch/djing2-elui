@@ -1,27 +1,27 @@
-<template>  
+<template>
   <el-form ref="srvfrm" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <el-form-item :label="$t('title')" prop="title">
       <el-input v-model="frmMod.title"></el-input>
     </el-form-item>
-    <el-form-item label="Описание" prop="descr">
+    <el-form-item label="$t('opisanie-10')" prop="descr">
       <el-input v-model="frmMod.descr"></el-input>
     </el-form-item>
-    <el-form-item label="Вход. скорость" prop="speed_in">
+    <el-form-item label="$t('vkhod-skorost')" prop="speed_in">
       <el-input v-model="frmMod.speed_in" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Исход. скорость" prop="speed_out">
+    <el-form-item label="$t('iskhod-skorost')" prop="speed_out">
       <el-input v-model="frmMod.speed_out" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Ускорение" prop="speed_burst">
+    <el-form-item label="$t('uskorenie')" prop="speed_burst">
       <el-input v-model="frmMod.speed_burst" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Стоимость" prop="cost">
+    <el-form-item label="$t('stoimost-1')" prop="cost">
       <el-input v-model="frmMod.cost" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Административная" prop="is_admin">
-      <el-checkbox v-model="frmMod.is_admin">Является-ли административной услугой.<b>{{ frmMod.is_admin ? 'Да' : 'Нет' }}</b></el-checkbox>
+    <el-form-item label="$t('administrativnaya')" prop="is_admin">
+      <el-checkbox v-model="frmMod.is_admin">{{ $t('yavlyaetsya-li-administrativnoi-uslugoi') }}<b>{{ frmMod.is_admin ? 'Да' : 'Нет' }}</b></el-checkbox>
     </el-form-item>
-    <el-form-item label="Скрипт" prop="calc_type">
+    <el-form-item label="$t('skript')" prop="calc_type">
       <el-select v-model="frmMod.calc_type">
         <el-option v-for="dt in serviceTypeNames" :key="dt.v" :label="dt.nm" :value="dt.v"></el-option>
       </el-select>
@@ -43,7 +43,7 @@ import FormMixin from '@/utils/forms'
 
 const speedRule = {
   validator: positiveNumberValueAvailable,
-  message: 'Скорость должна быть положительной',
+  message: this.$t('skorost-dolzhna-byt-polozhitelnoi'),
   trigger: 'change'
 }
 
@@ -55,30 +55,30 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название надо указать', trigger: 'blur' }
+      { required: true, message: this.$t('nazvanie-nado-ukazat-1'), trigger: 'blur' }
     ],
     descr: [
-      { required: true, message: 'Описание обязательно', trigger: 'blur' }
+      { required: true, message: this.$t('opisanie-obyazatelno'), trigger: 'blur' }
     ],
     speed_in: [
       speedRule,
-      { required: true, message: 'Укажи исходящую скорость', trigger: 'blur' }
+      { required: true, message: this.$t('ukazhi-iskhodyashuyu-skorost'), trigger: 'blur' }
     ],
     speed_out: [
       speedRule,
-      { required: true, message: 'Укажи входящую скорость', trigger: 'blur' }
+      { required: true, message: this.$t('ukazhi-vkhodyashuyu-skorost'), trigger: 'blur' }
     ],
     cost: [
-      { required: true, message: 'Цена должна быть указана', trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: 'Цена должна быть положительной или 0' }
+      { required: true, message: this.$t('cena-dolzhna-byt-ukazana'), trigger: 'blur' },
+      { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili-0-0') }
     ]
   }
 
   private serviceTypeNames = [
-    { nm: 'Базовый расчётный функционал', v: IServiceTypeEnum.BASE },
+    { nm: this.$t('bazovyi-raschyotnyi-funkcional'), v: IServiceTypeEnum.BASE },
     { nm: 'IS', v: IServiceTypeEnum.IS },
-    { nm: '"Вечная" услуга (10 лет)', v: IServiceTypeEnum.LONG },
-    { nm: 'Суточная', v: IServiceTypeEnum.DAILY }
+    { nm: this.$t('vechnaya-usluga-10-let'), v: IServiceTypeEnum.LONG },
+    { nm: this.$t('sutochnaya'), v: IServiceTypeEnum.DAILY }
   ]
 
   private frmMod = {
@@ -115,10 +115,10 @@ export default class extends mixins(FormMixin) {
           let newDat
           if (ServiceModule.id === 0) {
             newDat = await ServiceModule.AddService(this.frmMod)
-            this.$message.success('Услуга создана')
+            this.$message.success(this.$t('usluga-sozdana'))
           } else {
             newDat = await ServiceModule.PatchService(this.frmMod)
-            this.$message.success('Услуга изменена')
+            this.$message.success(this.$t('usluga-izmenena'))
           }
           this.$emit('done', newDat)
         } catch (err) {

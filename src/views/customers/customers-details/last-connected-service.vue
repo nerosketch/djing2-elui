@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div v-loading>
     <p v-if="lastConnectedExists">{{ $t('customers.serviceLastConnected') }} -<b>{{ lastConnectedTitle }}</b></p>
     <p>{{ $t('customers.serviceAutocontinuation') }} -

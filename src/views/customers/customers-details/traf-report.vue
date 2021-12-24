@@ -1,6 +1,6 @@
-<template>  
+<template>
   <div v-loading="loading">
-    <line-chart :chartData="chartDat"></line-chart><span>Временной срез:</span>
+    <line-chart :chartData="chartDat"></line-chart><span>{{ $t('vremennoi-srez') }}</span>
     <el-date-picker v-model="timerange" type="datetimerange" range-separator="-" start-placeholder="Начало среза" end-placeholder="Конец среза"></el-date-picker>
   </div>
 </template>

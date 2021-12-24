@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <datatable :columns="tableColumns" :getData="loadFields" widthStorageNamePrefix="dfl" ref="fieldtable">
       <template v-slot:btn="{row}">
@@ -7,9 +7,9 @@
           <el-button type="danger" icon="el-icon-close" @click="delDynamicField(row)"></el-button>
         </el-button-group>
       </template>
-      <el-button icon="el-icon-plus" @click="openNew">Добавить поля</el-button>
+      <el-button icon="el-icon-plus" @click="openNew">{{ $t('dobavit-polya') }}</el-button>
     </datatable>
-    <el-dialog title="Поле" :visible.sync="fieldFormVisible" :close-on-click-modal="false">
+    <el-dialog title="$t('pole')" :visible.sync="fieldFormVisible" :close-on-click-modal="false">
       <field-form @done="formDone"></field-form>
     </el-dialog>
   </div>
@@ -44,28 +44,28 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$t('nazvanie-1'),
       'min-width': 150
     },
     {
       prop: 'field_type_name',
-      label: 'Тип поля'
+      label: this.$t('tip-polya-0')
     },
     {
       prop: 'groups',
-      label: 'Группы'
+      label: this.$t('gruppy-0')
     },
     {
       prop: 'system_tag_name',
-      label: 'Системный тэг'
+      label: this.$t('sistemnyi-teg-0')
     },
     {
       prop: 'user_tag',
-      label: 'Пользовательский тэг'
+      label: this.$t('polzovatelskii-teg')
     },
     {
       prop: 'btn',
-      label: '—',
+      label: this.$t('key-0'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -76,9 +76,9 @@ export default class extends Vue {
   }
 
   private delDynamicField(field: IDynamicField) {
-    this.$confirm(`Удалить поле "${field.title}"?`).then(async() => {
+    this.$confirm({{ $t('udalit-pole-field-title', [field.title]) }}).then(async() => {
       await DynamicFieldModule.DeleteField(field.id)
-      this.$message.success(`Поле "${field.title}" удалено`)
+      this.$message.success({{ $t('pole-field-title-udaleno', [field.title]) }})
       this.$refs.fieldtable.LoadTableData()
     })
   }
@@ -105,7 +105,7 @@ export default class extends Vue {
       {
         meta: {
           hidden: true,
-          title: 'Формы'
+          title: this.$t('formy')
         }
       }
     ] as any)

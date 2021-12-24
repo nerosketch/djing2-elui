@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div :class="className" :style="{height: height, width: width}" v-loading="loading"></div>
 </template>
 
@@ -75,7 +75,7 @@ export default class extends mixins(ResizeMixin) {
         }
       }],
       series: [{
-        name: 'Количество',
+        name: this.$t('kolichestvo'),
         type: 'bar',
         stack: 'vistors',
         // barWidth: '60%',

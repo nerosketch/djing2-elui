@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <slot name="head"><span>{{ $t('customers.balance') }}:</span><small> {{ $store.state.customer.balance }}.</small><span> {{ $t('startDate') }}:</span><small> {{ $store.state.customer.create_date }}</small></slot>
     <el-tabs class="border-card" v-model="activeTabName">

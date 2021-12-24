@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <datatable :columns="tableColumns" :getData="loadServices" :heightDiff="189" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="services" ref="table">
       <template v-slot:isadm="{row}">
@@ -17,19 +17,19 @@
       </template>
       <el-button-group>
         <el-button icon="el-icon-plus" type="success" @click="openNew" :disabled="!$perms.services.add_service">{{ $t('add') }}</el-button>
-        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">Поля</el-button>
+        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">{{ $t('polya-2') }}</el-button>
       </el-button-group>
     </datatable>
-    <el-dialog :title="(isNew ? 'Создание' : 'Изменение') + ' услуги'" :visible.sync="dialogVisible" :close-on-click-modal="false">
+    <el-dialog :title="$t('isnew-sozdanie-izmenenie-uslugi', [(isNew ? `Создание` : `Изменение`)])" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <service-form v-on:done="frmDone"></service-form>
     </el-dialog>
-    <el-dialog title="Кто имеет права на услугу" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
+    <el-dialog title="$t('kto-imeet-prava-na-uslugu')" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
       <object-perms v-on:save="changeSrvObjectPerms" :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp" :getSelectedObjectPerms="serviceGetSelectedObjectPerms" :objId="srvIdGetter"></object-perms>
     </el-dialog>
-    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+    <el-dialog title="$t('prinadlezhnost-saitam-5')" :visible.sync="sitesDlg" :close-on-click-modal="false">
       <sites-attach :selectedSiteIds="$store.state.service.sites" v-on:save="serviceSitesSave"></sites-attach>
     </el-dialog>
-    <el-dialog title="Пользователи услуги" :visible.sync="customerServiceVisible" top="2vh" :close-on-click-modal="false">
+    <el-dialog title="$t('polzovateli-uslugi')" :visible.sync="customerServiceVisible" top="2vh" :close-on-click-modal="false">
       <customer-service-list :serviceId="currentCustomerServiceId"></customer-service-list>
     </el-dialog>
   </div>
@@ -64,54 +64,54 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$t('nazvanie-7'),
       sortable: true,
       'min-width': 200
     },
     {
       prop: 'descr',
-      label: 'Описание',
+      label: this.$t('opisanie-11'),
       'min-width': 300
     },
     {
       prop: 'speed_in',
-      label: 'Вход.ск.',
+      label: this.$t('vkhod-sk'),
       'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_out',
-      label: 'Исход.ск.',
+      label: this.$t('iskhod-sk'),
       'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_burst',
-      label: 'Бурст',
+      label: this.$t('burst'),
       'min-width': 100
     },
     {
       prop: 'cost',
-      label: 'Цена',
+      label: this.$t('cena'),
       'min-width': 90,
       sortable: true
     },
     {
       prop: 'isadm',
-      label: 'Админ.',
+      label: this.$t('admin'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'usercount',
-      label: 'Кол.польз.',
+      label: this.$t('kol-polz'),
       'min-width': 130,
       sortable: true,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$t('knopki-6'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -136,9 +136,9 @@ export default class extends Vue {
   }
 
   private async delSrv(srv: IService) {
-    if (confirm(`Действительно удалить услугу "${srv.title}"?`)) {
+    if (confirm({{ $t('deistvitelno-udalit-uslugu-srv-title', [srv.title]) }})) {
       await ServiceModule.DelService(srv.id)
-      this.$message.success('Услуга удалена')
+      this.$message.success(this.$t('usluga-udalena'))
       this.$refs.table.LoadTableData()
     }
   }
@@ -193,7 +193,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Тарифы'
+          title: this.$t('tarify-0')
         }
       }
     ] as any)
@@ -205,7 +205,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success('Принадлежность услуги сайтам сохранена')
+      this.$message.success(this.$t('prinadlezhnost-uslugi-saitam-sokhranena-0'))
     })
     this.sitesDlg = false
   }

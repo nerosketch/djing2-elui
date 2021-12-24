@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <datatable :columns="tableColumns" :getData="loadPools" :heightDiff="188" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="pools" ref="table">
       <template v-slot:is_dynamic="{row}">
@@ -13,13 +13,13 @@
       </template>
       <el-button-group>
         <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.networks.add_networkippool">{{ $t('add') }}</el-button>
-        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">Поля</el-button>
+        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">{{ $t('polya-0') }}</el-button>
       </el-button-group>
     </datatable>
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <pool-form v-on:done="frmDone"></pool-form>
     </el-dialog>
-    <el-dialog title="Принадлежность сайтам" :visible.sync="sitesDlg" :close-on-click-modal="false">
+    <el-dialog title="$t('prinadlezhnost-saitam-1')" :visible.sync="sitesDlg" :close-on-click-modal="false">
       <sites-attach :selectedSiteIds="$store.state.netpool.sites" v-on:save="netpoolSitesSave"></sites-attach>
     </el-dialog>
   </div>
@@ -53,45 +53,45 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'network',
-      label: 'Подсеть',
+      label: this.$t('podset-0'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'description',
-      label: 'Описание',
+      label: this.$t('opisanie-8'),
       'min-width': 300
     },
     {
       prop: 'ip_start',
-      label: 'нач. ip',
+      label: this.$t('nach-ip-0'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'ip_end',
-      label: 'кон. ip',
+      label: this.$t('kon-ip-0'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'gateway',
-      label: 'шлюз',
+      label: this.$t('shlyuz-0'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'is_dynamic',
-      label: 'Д',
+      label: this.$t('d'),
       'min-width': 40,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'usage_count',
-      label: 'Выделено',
+      label: this.$t('vydeleno'),
       'min-width': 100,
       align: DataTableColumnAlign.CENTER
     },
@@ -103,7 +103,7 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$t('knopki-3'),
       'min-width': 160,
       align: DataTableColumnAlign.CENTER
     }
@@ -121,7 +121,7 @@ export default class extends Vue {
     } else {
       w = this.$t('change').toString()
     }
-    return `${w} подсеть`
+    return {{ $t('w-podset', [w]) }}
   }
 
   private async openEdit(pool: INetworkIpPool) {
@@ -135,9 +135,9 @@ export default class extends Vue {
   }
 
   private delPool(pool: INetworkIpPool) {
-    this.$confirm(`Действительно удалить пул "${pool.network}"?`).then(async() => {
+    this.$confirm({{ $t('deistvitelno-udalit-pul-pool-network', [pool.network]) }}).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
-      this.$message.success('Подсеть удалена')
+      this.$message.success(this.$t('podset-udalena'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -151,7 +151,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success('Подсеть сохранена')
+    this.$message.success(this.$t('podset-sokhranena'))
     this.$refs.table.LoadTableData()
   }
 
@@ -160,7 +160,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success('Принадлежность подсети сайтам сохранена')
+      this.$message.success(this.$t('prinadlezhnost-podseti-saitam-sokhranena'))
     })
     this.sitesDlg = false
   }

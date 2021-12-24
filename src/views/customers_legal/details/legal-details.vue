@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container"><span>{{ $t('customers.balance') }}:</span><small>&nbsp; {{ $store.state.customerlegal.balance }}.</small><span> {{ $t('createDate') }}:</span><small>&nbsp; {{ $store.state.customerlegal.create_date }}</small>
     <el-tabs class="border-card" v-model="activeTabName">
       <el-tab-pane :label="$t('customers.info')" name="info">

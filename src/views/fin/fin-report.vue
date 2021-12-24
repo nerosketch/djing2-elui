@@ -1,17 +1,17 @@
-<template>  
+<template>
   <div class="app-container">
     <el-date-picker v-model="reportParams.time_range" type="daterange" start-placeholder="Дата начала" end-placeholder="Конечная дата" align="right" unlink-panels value-format="yyyy-MM-dd" :picker-options="pickerOptions"></el-date-picker>
-    <el-select v-model="reportParams.pay_gw" placeholder="Платёжный шлюз" v-loading="gatewaysLoading" :style="{width: '10%'}">
+    <el-select v-model="reportParams.pay_gw" placeholder="$t('platyozhnyi-shlyuz')" v-loading="gatewaysLoading" :style="{width: '10%'}">
       <el-option v-for="gw in payGateways" :key="gw.id" :label="gw.title" :value="gw.id"></el-option>
     </el-select>
-    <el-radio v-model="reportParams.group_by" :label="1">Группировать по дню</el-radio>
-    <el-radio v-model="reportParams.group_by" :label="2">Группировать по неделе</el-radio>
-    <el-radio v-model="reportParams.group_by" :label="3">Группировать по месяцу</el-radio>
-    <el-button @click="downloadCsv">Скачать csv</el-button>
+    <el-radio v-model="reportParams.group_by" :label="1">{{ $t('gruppirovat-po-dnyu') }}</el-radio>
+    <el-radio v-model="reportParams.group_by" :label="2">{{ $t('gruppirovat-po-nedele') }}</el-radio>
+    <el-radio v-model="reportParams.group_by" :label="3">{{ $t('gruppirovat-po-mesyacu') }}</el-radio>
+    <el-button @click="downloadCsv">{{ $t('skachat-csv') }}</el-button>
     <el-table v-loading="loading" :data="tableData" border fit>
-      <el-table-column label="Дата" min-width="110" prop="pay_date"></el-table-column>
-      <el-table-column label="Сумма" min-width="110" prop="summ"></el-table-column>
-      <el-table-column label="Колич. платежей" min-width="110" prop="pay_count"></el-table-column>
+      <el-table-column label="$t('data')" min-width="110" prop="pay_date"></el-table-column>
+      <el-table-column label="$t('summa')" min-width="110" prop="summ"></el-table-column>
+      <el-table-column label="$t('kolich-platezhei')" min-width="110" prop="pay_count"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -66,7 +66,7 @@ export default class extends Vue {
 
   private pickerOptions = {
     shortcuts: [{
-      text: 'Последняя неделя',
+      text: this.$t('poslednyaya-nedelya'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -74,7 +74,7 @@ export default class extends Vue {
         picker.$emit('pick', [start, end])
       }
     }, {
-      text: 'Последний месяц',
+      text: this.$t('poslednii-mesyac'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -82,7 +82,7 @@ export default class extends Vue {
         picker.$emit('pick', [start, end])
       }
     }, {
-      text: 'Последние 3 месяца',
+      text: this.$t('poslednie-3-mesyaca'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -102,14 +102,14 @@ export default class extends Vue {
         path: '/fin',
         meta: {
           hidden: true,
-          title: 'Финансы'
+          title: this.$t('finansy')
         }
       },
       {
         path: '',
         meta: {
           hidden: true,
-          title: 'Отчёт о поступлениях'
+          title: this.$t('otchyot-o-postupleniyakh')
         }
       }
     ] as any)
@@ -126,7 +126,7 @@ export default class extends Vue {
     try {
       const { data } = await getPayGateways() as any
       data.unshift({
-        title: 'Не выбран',
+        title: this.$t('ne-vybran'),
         id: 0
       })
       this.payGateways = data
@@ -137,7 +137,7 @@ export default class extends Vue {
 
   private downloadCsv() {
     const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
-    dat.unshift(['Дата', 'Сумма', 'Колич. платежей'])
+    dat.unshift([this.$t('data-0'), this.$t('summa-0'), this.$t('kolich-platezhei-0')])
     const sdat = dat.join('\n')
     save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
   }

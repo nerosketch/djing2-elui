@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-card>
     <template v-slot:header>
       <div class="clearfix">{{ device.comment || 'BDCOM' }}<small>{{ ` ${device.ip_address || device.mac_addr} ` }}</small>
@@ -15,11 +15,11 @@
             <el-table-column label="#" width="50">
               <template v-slot:default="{row}"><i class="el-icon-success el-alert--success is-light" v-if="row.status"></i><i class="el-icon-error el-alert--error is-light" v-else></i></template>
             </el-table-column>
-            <el-table-column label="SNMP Ном." min-width="97" prop="number"></el-table-column>
-            <el-table-column label="Имя" min-width="93" prop="title"></el-table-column>
-            <el-table-column label="Мак" min-width="123" prop="mac_addr"></el-table-column>
-            <el-table-column label="Ур. сигнала" min-width="92" prop="signal"></el-table-column>
-            <el-table-column label="В сети" min-width="151" prop="uptime"></el-table-column>
+            <el-table-column label="$t('snmp-nom')" min-width="97" prop="number"></el-table-column>
+            <el-table-column label="$t('imya')" min-width="93" prop="title"></el-table-column>
+            <el-table-column label="$t('mak-0')" min-width="123" prop="mac_addr"></el-table-column>
+            <el-table-column label="$t('ur-signala')" min-width="92" prop="signal"></el-table-column>
+            <el-table-column label="$t('v-seti')" min-width="151" prop="uptime"></el-table-column>
             <el-table-column label="#" width="60" align="center">
               <template v-slot:default="{row}">
                 <el-button icon="el-icon-plus" circle @click="openSaveOnu(row)" :disabled="!$perms.devices.add_device"></el-button>
@@ -30,7 +30,7 @@
       </el-col>
     </el-row>
     <el-progress class="progress_disable_animations" v-else :percentage="loadPercent"></el-progress>
-    <el-dialog title="Добавить ONU" :visible.sync="dialogVisible" :close-on-click-modal="false">
+    <el-dialog title="$t('dobavit-onu')" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <new-dev-form v-if="dialogVisible" v-on:done="frmDone" v-on:err="frmErr" :initialMac="currentOnu.mac_addr" :initialDevType="onuType" :initialGroup="device.group" :initialSnmpSxtra="currentOnu.number" :initialParentDev="device.id" :initialParentDevName="`${device.ip_address} ${device.comment}`"></new-dev-form>
     </el-dialog>
   </el-card>
@@ -114,7 +114,7 @@ export default class extends Vue {
 
   private frmDone(newOnu: IDevice) {
     this.dialogVisible = false
-    this.$message.success('Новая onu сохранена')
+    this.$message.success(this.$t('novaya-onu-sokhranena-0'))
     this.$router.push({
       name: 'device-view',
       params: {

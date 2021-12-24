@@ -1,21 +1,21 @@
-<template>  
+<template>
   <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <el-form-item :label="$t('title')" prop="title">
       <el-input v-model="frmMod.title"></el-input>
     </el-form-item>
-    <el-form-item label="Уровень ФИАС" prop="fias_address_level">
+    <el-form-item label="$t('uroven-fias')" prop="fias_address_level">
       <fias-level-choice v-model="frmMod.fias_address_level"></fias-level-choice>
     </el-form-item>
-    <el-form-item label="Тип адреса ФИАС" prop="fias_address_type">
+    <el-form-item label="$t('tip-adresa-fias')" prop="fias_address_type">
       <fias-type-choice v-model="frmMod.fias_address_type" :level="frmMod.fias_address_level"></fias-type-choice>
     </el-form-item>
-    <el-form-item label="Тип адресного объекта" prop="address_type">
+    <el-form-item label="$t('tip-adresnogo-obekta')" prop="address_type">
       <address-type-choice v-model="frmMod.address_type"></address-type-choice>
     </el-form-item>
     <el-form-item>
       <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
       <el-divider direction="vertical"></el-divider>
-      <el-link href="https://github.com/hflabs/socrbase/blob/master/socrbase.csv" target="_blank" type="info" icon="el-icon-thumb">Справочник адресных объектов</el-link>
+      <el-link href="https://github.com/hflabs/socrbase/blob/master/socrbase.csv" target="_blank" type="info" icon="el-icon-thumb">{{ $t('spravochnik-adresnykh-obektov') }}</el-link>
     </el-form-item>
   </el-form>
 </template>
@@ -43,17 +43,17 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название надо указать', trigger: 'blur' },
+      { required: true, message: this.$t('nazvanie-nado-ukazat'), trigger: 'blur' },
       { validator: this.titleDynamicValidator, trigger: 'change' }
     ],
     address_type: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип' }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-vybrat-tip') }
     ],
     fias_address_level: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать уровень' }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-vybrat-uroven') }
     ],
     fias_address_type: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип ФИАС' }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-vybrat-tip-fias') }
     ]
   }
 
@@ -63,7 +63,7 @@ export default class extends Vue {
       if (!isNaN(value) && Number(value) > 0) {
         callback()
       } else {
-        callback(new Error('Должно содержать только число'))
+        callback(new Error(this.$t('dolzhno-soderzhat-tolko-chislo')))
       }
     } else {
       callback()

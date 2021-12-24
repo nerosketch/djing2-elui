@@ -1,32 +1,32 @@
-<template>  
+<template>
   <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
-    <el-form-item label="Описание" prop="descr">
+    <el-form-item label="$t('opisanie-12')" prop="descr">
       <el-input v-model="frmMod.descr" maxlength="128"></el-input>
     </el-form-item>
-    <el-form-item label="Исполнители" prop="recipients">
+    <el-form-item label="$t('ispolniteli')" prop="recipients">
       <el-select v-model="frmMod.recipients" multiple>
         <el-option v-for="rec in potentialRecipients" :key="rec.id" :label="rec.full_name || rec.username" :value="rec.id"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Характер поломки" prop="mode">
+    <el-form-item label="$t('kharakter-polomki')" prop="mode">
       <el-select v-model="frmMod.mode">
         <el-option v-for="tt in taskTypes" :key="tt.v" :label="tt.nm" :value="tt.v"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Приоритет" prop="priority">
+    <el-form-item label="$t('prioritet')" prop="priority">
       <el-select v-model="frmMod.priority">
         <el-option v-for="tt in taskPriorities" :key="tt.v" :label="tt.nm" :value="tt.v"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Состояние" prop="task_state">
+    <el-form-item label="$t('sostoyanie-0')" prop="task_state">
       <el-select v-model="frmMod.task_state">
         <el-option v-for="tt in taskStates" :key="tt.v" :label="tt.nm" :value="tt.v"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Абонент" prop="customer">
+    <el-form-item label="$t('abonent')" prop="customer">
       <customer-field v-model="frmMod.customer" :defaultName="$store.state.task.customer_full_name"></customer-field>
     </el-form-item>
-    <el-form-item label="Актуальность" prop="out_date">
+    <el-form-item label="$t('aktualnost')" prop="out_date">
       <el-tooltip content="дата, до которой нужно завершить задачу" placement="right">
         <el-date-picker v-model="frmMod.out_date" type="date" value-format="yyyy-MM-dd" format="d.MM.yyyy"></el-date-picker>
       </el-tooltip>
@@ -34,8 +34,8 @@
     <el-form-item>
       <el-button-group>
         <el-button type="primary" @click="onSubmit" icon="el-icon-upload" :disabled="isFormUntouched">{{ $t('save') }}</el-button>
-        <el-button v-if="!isNewTask" type="danger" icon="el-icon-delete" @click="onDel" :disabled="!$perms.tasks.delete_task">Удалить</el-button>
-        <el-button v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check">Завершить</el-button>
+        <el-button v-if="!isNewTask" type="danger" icon="el-icon-delete" @click="onDel" :disabled="!$perms.tasks.delete_task">{{ $t('udalit-1') }}</el-button>
+        <el-button v-if="!isNewTask" type="success" @click="onFinish" icon="el-icon-check">{{ $t('zavershit') }}</el-button>
       </el-button-group>
     </el-form-item>
   </el-form>
@@ -65,31 +65,31 @@ export default class extends mixins(FormMixin, TaskMixin) {
   private loading = false
 
   private taskTypes = [
-    { nm: 'Не выбрано', v: ITaskType.NOT_CHOSEN },
-    { nm: 'ip конфликт', v: ITaskType.IP_CONFLICT },
-    { nm: 'жёлтый треугольник', v: ITaskType.YELLOW_TRIANGLE },
-    { nm: 'красный крестик', v: ITaskType.RED_CROSS },
-    { nm: 'слабая скорость', v: ITaskType.WEAK_SPEED },
-    { nm: 'обрыв кабеля', v: ITaskType.CABLE_BREAK },
-    { nm: 'подключение', v: ITaskType.CONNECTION },
-    { nm: 'периодическое пропадание', v: ITaskType.PERIODIC_DISAPPEARANCE },
-    { nm: 'настройка роутера', v: ITaskType.ROUTER_SETUP },
-    { nm: 'настройка onu', v: ITaskType.CONFIGURE_ONU },
-    { nm: 'обжать кабель', v: ITaskType.CRIMP_CABLE },
+    { nm: this.$t('ne-vybrano'), v: ITaskType.NOT_CHOSEN },
+    { nm: this.$t('ip-konflikt'), v: ITaskType.IP_CONFLICT },
+    { nm: this.$t('zhyoltyi-treugolnik'), v: ITaskType.YELLOW_TRIANGLE },
+    { nm: this.$t('krasnyi-krestik'), v: ITaskType.RED_CROSS },
+    { nm: this.$t('slabaya-skorost'), v: ITaskType.WEAK_SPEED },
+    { nm: this.$t('obryv-kabelya'), v: ITaskType.CABLE_BREAK },
+    { nm: this.$t('podklyuchenie'), v: ITaskType.CONNECTION },
+    { nm: this.$t('periodicheskoe-propadanie'), v: ITaskType.PERIODIC_DISAPPEARANCE },
+    { nm: this.$t('nastroika-routera'), v: ITaskType.ROUTER_SETUP },
+    { nm: this.$t('nastroika-onu'), v: ITaskType.CONFIGURE_ONU },
+    { nm: this.$t('obzhat-kabel'), v: ITaskType.CRIMP_CABLE },
     // { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
-    { nm: 'другое', v: ITaskType.OTHER }
+    { nm: this.$t('drugoe'), v: ITaskType.OTHER }
   ]
 
   private taskPriorities = [
-    { nm: 'Низкий', v: ITaskPriority.LOW },
-    { nm: 'Средний', v: ITaskPriority.AWARAGE },
-    { nm: 'Высший', v: ITaskPriority.HIGHER }
+    { nm: this.$t('nizkii'), v: ITaskPriority.LOW },
+    { nm: this.$t('srednii'), v: ITaskPriority.AWARAGE },
+    { nm: this.$t('vysshii'), v: ITaskPriority.HIGHER }
   ]
 
   private taskStates = [
-    { nm: 'Новая', v: ITaskState.NEW },
-    { nm: 'Провалена', v: ITaskState.CONFUSED },
-    { nm: 'Выполнена', v: ITaskState.COMPLETED }
+    { nm: this.$t('novaya'), v: ITaskState.NEW },
+    { nm: this.$t('provalena'), v: ITaskState.CONFUSED },
+    { nm: this.$t('vypolnena'), v: ITaskState.COMPLETED }
   ]
 
   private frmMod = this.fromTaskModule
@@ -114,10 +114,10 @@ export default class extends mixins(FormMixin, TaskMixin) {
 
   private frmRules = {
     recipients: [
-      { required: true, message: 'Надо выбрать хотябы одного исполнителя', trigger: 'blur' }
+      { required: true, message: this.$t('nado-vybrat-khotyaby-odnogo-ispolnitelya'), trigger: 'blur' }
     ],
     customer: [
-      { validator: positiveNumberValueAvailable, trigger: 'blur', message: 'Нужно выбрать абонента' }
+      { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$t('nuzhno-vybrat-abonenta') }
     ]
   }
 
@@ -141,14 +141,14 @@ export default class extends mixins(FormMixin, TaskMixin) {
         path: '/tasks',
         meta: {
           hidden: true,
-          title: 'Задачи'
+          title: this.$t('zadachi')
         }
       },
       {
         path: '',
         meta: {
           hidden: true,
-          title: 'Редактировать'
+          title: this.$t('redaktirovat')
         }
       }
     ] as any)
@@ -165,7 +165,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         this.loading = true
         if (this.isNewTask) {
           const newTask = await TaskModule.AddTask(this.frmMod)
-          this.$message.success('Задача добавлена')
+          this.$message.success(this.$t('zadacha-dobavlena'))
           this.$router.push({
             name: 'taskDetails',
             params: { taskId: newTask.id.toString() }
@@ -173,7 +173,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         } else {
           await TaskModule.PatchTask(this.frmMod)
           this.frmInitial = this.fromTaskModule
-          this.$message.success('Задача сохранена')
+          this.$message.success(this.$t('zadacha-sokhranena'))
         }
         this.loading = false
       } else {
@@ -184,9 +184,9 @@ export default class extends mixins(FormMixin, TaskMixin) {
 
   private onDel() {
     if (this.isNewTask) return
-    this.$confirm('Задача сейчас будет удалена, внимательно').then(async() => {
+    this.$confirm(this.$t('zadacha-seichas-budet-udalena-vnimatelno')).then(async() => {
       await TaskModule.DelTask()
-      this.$message.success('Задача удалена')
+      this.$message.success(this.$t('zadacha-udalena'))
       this.$router.push({
         name: 'taskList'
       })
@@ -196,7 +196,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
   private async onFinish() {
     if (this.isNewTask) return
     await TaskModule.FinishTask()
-    this.$message.success('Задача завершена')
+    this.$message.success(this.$t('zadacha-zavershena'))
     this.$router.push({
       name: 'taskList'
     })

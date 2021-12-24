@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-upload action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :http-request="uploadReq" :file-list="fileList">
     <el-button type="primary" v-if="$perms.tasks.add_taskdocumentattachment">{{ $t('addDocument') }}</el-button>
   </el-upload>
@@ -38,7 +38,7 @@ export default class extends Vue {
 
   private beforeRemove(file: IFileItem) {
     if (!this.$perms.tasks.delete_taskdocumentattachment) return false
-    return this.$confirm(`Удалить "${file.name}"?`)
+    return this.$confirm({{ $t('udalit-file-name', [file.name]) }})
   }
 
   private uploadReq(req: HttpRequestOptions) {

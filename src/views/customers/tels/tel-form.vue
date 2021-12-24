@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-form ref="frm" v-loading="loading" status-icon :rules="frmRules" :model="frmMod">
     <el-form-item :label="$t('customers.phone')" prop="telephone">
       <el-input v-model="frmMod.telephone" :maxlength="16"></el-input>
@@ -73,8 +73,6 @@ export default class extends Vue {
             )
           }
           this.$emit('done', tel)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.loading = false
         }

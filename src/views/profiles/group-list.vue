@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <datatable :columns="tableColumns" :getData="loadUserGroups" :heightDiff="190" widthStorageNamePrefix="upg" ref="tbl">
       <template v-slot:btn="{row}">
@@ -13,7 +13,7 @@
     <el-dialog :title="dialogTitle" :visible.sync="ugFormDialog" :close-on-click-modal="false">
       <user-group-form v-on:done="frmDone" v-on:cancel="ugFormDialog=false"></user-group-form>
     </el-dialog>
-    <el-dialog title="Изменить права для группы" top="5vh" width="80%" :visible.sync="ugpDialog" :close-on-click-modal="false">
+    <el-dialog title="$t('izmenit-prava-dlya-gruppy')" top="5vh" width="80%" :visible.sync="ugpDialog" :close-on-click-modal="false">
       <user-group-perms v-on:done="editPermsDone"></user-group-perms>
     </el-dialog>
   </div>
@@ -51,20 +51,20 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: 'Название',
+      label: this.$t('nazvanie-6'),
       'min-width': 150
     },
     {
       prop: 'permcount',
-      label: 'Кол. прав'
+      label: this.$t('kol-prav')
     },
     {
       prop: 'usercount',
-      label: 'Кол. учёток'
+      label: this.$t('kol-uchyotok')
     },
     {
       prop: 'btn',
-      label: '—',
+      label: this.$t('key-1'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -79,20 +79,20 @@ export default class extends Vue {
 
   private async editNewUserGroup(grp: IUserGroup) {
     await UserGroupModule.SET_ALL_USER_USER_GROUP(grp)
-    this.dialogTitle = 'Изменить группу'
+    this.dialogTitle = this.$t('izmenit-gruppu')
     this.ugFormDialog = true
   }
 
   private async addNewUserGroup() {
     await UserGroupModule.RESET_ALL_USER_USER_GROUP()
-    this.dialogTitle = 'Добавить группу'
+    this.dialogTitle = this.$t('dobavit-gruppu-0')
     this.ugFormDialog = true
   }
 
   private delUserGroup(grp: IUserGroup) {
-    this.$confirm('Удалить группу абонентов?').then(async() => {
+    this.$confirm(this.$t('udalit-gruppu-abonentov')).then(async() => {
       await delUserGroup(grp.id)
-      this.$message.success('Группа уалена')
+      this.$message.success(this.$t('gruppa-ualena'))
       this.$refs.tbl.LoadTableData()
     })
   }
@@ -119,7 +119,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Учётные записи'
+          title: this.$t('uchyotnye-zapisi')
         }
       }
     ] as any)

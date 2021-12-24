@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <el-row :gutter="10">
       <el-col :col="24">
@@ -154,7 +154,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'house',
-      label: 'Номер дома(уст.)',
+      label: this.$t('nomer-doma-ust'),
       sortable: true
     },
     {
@@ -183,7 +183,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'ping',
-      label: 'Ping',
+      label: this.$t('ping'),
       'min-width': 150
     }
   ]

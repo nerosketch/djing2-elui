@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-form ref="form" label-width="100px" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <el-form-item :label="$t('title')" prop="title">
       <el-input v-model="frmMod.title"></el-input>
@@ -22,7 +22,7 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название группы надо указать', trigger: 'blur' }
+      { required: true, message: this.$t('nazvanie-gruppy-nado-ukazat-0'), trigger: 'blur' }
     ]
   }
 

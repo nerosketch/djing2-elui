@@ -1,7 +1,7 @@
-<template>  
+<template>
   <el-card shadow="never" v-if="currentConfig.vlanConfig.length > 0">
-    <template v-slot:header><span>Варианты конфигурации на ONU</span></template><span>Шаблон конфига для ONU</span>
-    <el-select v-model="currentConfig.configTypeCode" placeholder="Шаблон конфига">
+    <template v-slot:header><span>{{ $t('varianty-konfiguracii-na-onu') }}</span></template><span>{{ $t('shablon-konfiga-dlya-onu') }}</span>
+    <el-select v-model="currentConfig.configTypeCode" placeholder="$t('shablon-konfiga')">
       <el-option :value="v.code" :label="v.title" v-for="(v, i) in configTypeCodes" :key="i"></el-option>
     </el-select>
     <template v-if="isAcceptVlanSelectedConfig">
@@ -12,8 +12,8 @@
         <generic-vlan-config :portVlanConf.sync="portVlanConf" :allVlans="vlans"></generic-vlan-config>
       </el-card>
     </template>
-    <el-card shadow="never" v-else>Настройка VLAN не принимается выбранным конфигом</el-card>
-    <el-button type="primary" icon="el-icon-download" @click="onSubmit" :loading="vlanLoading" :disabled="!$perms.devices.can_apply_onu_config || disabled">Применить</el-button>
+    <el-card shadow="never" v-else>{{ $t('nastroika-vlan-ne-prinimaetsya-vybrannym-konfigom') }}</el-card>
+    <el-button type="primary" icon="el-icon-download" @click="onSubmit" :loading="vlanLoading" :disabled="!$perms.devices.can_apply_onu_config || disabled">{{ $t('primenit') }}</el-button>
   </el-card>
 </template>
 
@@ -55,7 +55,7 @@ export default class extends mixins(VlanMixin) {
         const { data } = await applyDeviceOnuConfig(this.$store.state.devicemodule.id, this.currentConfig)
         if (data.status == 1) {
           this.$message.success({
-            message: 'ONU успешно зарегистрирована',
+            message: this.$t('onu-uspeshno-zaregistrirovana'),
             duration: 15000,
             showClose: true
           })
@@ -67,18 +67,16 @@ export default class extends mixins(VlanMixin) {
           })
         }
         DeviceModule.GetDevice(this.$store.state.devicemodule.id)
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.vlanLoading = false
       }
     } else {
-      this.$message.error('Id оборудования не передан')
+      this.$message.error(this.$t('id-oborudovaniya-ne-peredan'))
     }
   }
 
   private delVlanPort(portNum: number) {
-    this.$confirm('Удалить настройки с порта?').then(() => {
+    this.$confirm(this.$t('udalit-nastroiki-s-porta')).then(() => {
       const confInd = this.currentConfig.vlanConfig.findIndex(v => v.port === portNum)
       if (confInd > -1) {
         this.currentConfig.vlanConfig.splice(confInd, 1)

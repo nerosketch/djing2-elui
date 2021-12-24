@@ -1,13 +1,13 @@
-<template>  
+<template>
   <div>
-    <h4 v-if="loading">Загрузка...</h4>
+    <h4 v-if="loading">{{ $t('zagruzka') }}</h4>
     <template v-else>
       <div v-if="customers.length > 0">
         <div v-for="(cst, i) in customers" :key="i">
           <router-link class="el-link el-link--primary is-underline" :to="{name: 'customerDetails', params:{uid: cst.id }}">{{ cst.full_name }}</router-link>
         </div>
       </div>
-      <h4 v-else>Абоненты на порту не найдены</h4>
+      <h4 v-else>{{ $t('abonenty-na-portu-ne-naideny') }}</h4>
     </template>
   </div>
 </template>
@@ -38,13 +38,11 @@ export default class extends Vue {
       try {
         const { data } = await filterDevicePort(this.device.id, this.portId)
         this.customers = data
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.loading = false
       }
     } else {
-      this.$message.error('Parameters required')
+      this.$message.error(this.$t('parameters-required'))
     }
   }
 

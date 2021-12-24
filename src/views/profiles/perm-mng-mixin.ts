@@ -25,7 +25,7 @@ export default class extends Vue {
     if (roPerms.length > 0) {
       this.leftChecked = roPerms.map(p => p.id)
     } else {
-      this.$message.info('Не нашёл права на чтение')
+      this.$message.info(this.$t('ne-nashyol-prava-na-chtenie'))
     }
   }
 

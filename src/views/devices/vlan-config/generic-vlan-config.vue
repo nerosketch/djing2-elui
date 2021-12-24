@@ -1,9 +1,9 @@
-<template>  
+<template>
   <el-row class="mt5 mb5">
     <el-col :span="1">
       <el-popover width="400" trigger="click">
         <el-select v-model="addVlanFrmMod.vid">
-          <el-option v-for="v in vlans" :key="v.id" :label="`${v.title} [${v.vid}]`" :value="v.vid"></el-option>
+          <el-option v-for="v in vlans" :key="v.id" :label="$t('v-title-v-vid', [v.title, v.vid])" :value="v.vid"></el-option>
         </el-select>
         <el-divider></el-divider>
         <el-switch v-model="addVlanFrmMod.native" active-text="Access" inactive-text="Trunk"></el-switch>
@@ -29,7 +29,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 
-const multipleAccessVlanMsg = 'Порт не может содержать больше одного access vlan'
+const multipleAccessVlanMsg = this.$t('port-ne-mozhet-soderzhat-bolshe-odnogo-access-vlan')
 
 @Component({
   name: 'GenericVlanConfig'
@@ -52,7 +52,7 @@ export default class extends mixins(VlanMixin) {
       return
     }
     v.native = !v.native
-    this.$message.success('Изменён режим Trunk/Success')
+    this.$message.success(this.$t('izmenyon-rezhim-trunk-success'))
   }
 
   private vlanRemove(remVlan: IDevVlanSimple) {
@@ -61,7 +61,7 @@ export default class extends mixins(VlanMixin) {
       this.portVlanConf.vids.splice(confIndex, 1)
       this.$message.success(`Влан ${remVlan.vid} удалён с порта №${this.portVlanConf.port}`)
     } else {
-      this.$message.error('Не найден vid=' + remVlan.vid)
+      this.$message.error(this.$t('ne-naiden-vid') + ' ' + remVlan.vid)
     }
   }
 
@@ -77,7 +77,7 @@ export default class extends mixins(VlanMixin) {
   private onAddVidToPort() {
     const obj = this.addVlanFrmMod
     if (this.isVlanExists(obj.vid)) {
-      this.$message.error('Порт должен содержать уникальные vlan')
+      this.$message.error(this.$t('port-dolzhen-soderzhat-unikalnye-vlan'))
       return
     }
     if (obj.native && this.nativeVlanCount > 0) {

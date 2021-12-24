@@ -1,9 +1,9 @@
-<template>  
+<template>
   <el-form ref="form" label-width="100px" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
     <el-form-item label="№ порта" prop="num">
       <el-input v-model="frmMod.num" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Описание" prop="descr">
+    <el-form-item label="$t('opisanie-4')" prop="descr">
       <el-input v-model="frmMod.descr"></el-input>
     </el-form-item>
     <el-form-item>
@@ -28,7 +28,7 @@ export default class extends Vue {
 
   private frmRules = {
     descr: [
-      { required: true, message: 'Нужно как-то назвать порт', trigger: 'blur' }
+      { required: true, message: this.$t('nuzhno-kak-to-nazvat-port'), trigger: 'blur' }
     ]
   }
 

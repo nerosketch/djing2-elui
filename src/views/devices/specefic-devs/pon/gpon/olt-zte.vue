@@ -1,7 +1,7 @@
-<template>  
+<template>
   <el-card>
     <template v-slot:header>
-      <div class="clearfix"><span>zte -</span><small>{{ ` ${device.ip_address || device.mac_addr} ` }}</small><small>{{ details }}</small>
+      <div class="clearfix"><span>{{ $t('zte') }}</span><small>{{ ` ${device.ip_address || device.mac_addr} ` }}</small><small>{{ details }}</small>
         <el-button style="float: right; padding: 7px" circle icon="el-icon-edit" type="primary" @click="openDevForm" :disabled="!$perms.devices.change_device"></el-button>
       </div>
     </template>
@@ -11,20 +11,20 @@
       </el-col>
     </el-row>
     <el-divider></el-divider>
-    <h4>Незарегистрированные юниты</h4>
+    <h4>{{ $t('nezaregistrirovannye-yunity') }}</h4>
     <el-table :data="unregistered" :loading="unrloading" v-if="device !== null" border fit>
-      <el-table-column label="Мак" min-width="150" prop="mac"></el-table-column>
-      <el-table-column label="Версия прошивки" min-width="150" prop="firmware_ver"></el-table-column>
-      <el-table-column label="LOID пароль" min-width="100" prop="loid_passw"></el-table-column>
+      <el-table-column label="$t('mak')" min-width="150" prop="mac"></el-table-column>
+      <el-table-column label="$t('versiya-proshivki')" min-width="150" prop="firmware_ver"></el-table-column>
+      <el-table-column label="$t('loid-parol')" min-width="100" prop="loid_passw"></el-table-column>
       <el-table-column label="LOID" min-width="150" prop="loid"></el-table-column>
       <el-table-column label="sn" min-width="150" prop="sn"></el-table-column>
-      <el-table-column label="Сохранить" min-width="70">
+      <el-table-column label="$t('sokhranit')" min-width="70">
         <template v-slot:default="{row}">
           <el-button icon="el-icon-plus" @click="onSaveOnu(row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="Сохранить ONU" :visible.sync="saveOnuFormDialog" :close-on-click-modal="false">
+    <el-dialog title="$t('sokhranit-onu')" :visible.sync="saveOnuFormDialog" :close-on-click-modal="false">
       <new-dev-form :initialMac="newOnuInitialMac" :initialDevType="gdevType" :initialGroup="device.group" :initialParentDev="devPk" :initialParentDevName="device.comment" v-if="saveOnuFormDialog" v-on:done="frmNewOnuDone" v-on:err="saveOnuFormDialog=false"></new-dev-form>
     </el-dialog>
   </el-card>
@@ -69,8 +69,6 @@ export default class extends Vue {
       try {
         const { data } = await scanOltFibers(this.devPk)
         this.allPorts = data
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.loading = false
       }
@@ -83,8 +81,6 @@ export default class extends Vue {
       try {
         const { data } = await scanUnitsUnregistered(this.devPk)
         this.unregistered = data
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.unrloading = false
       }
@@ -116,7 +112,7 @@ export default class extends Vue {
 
   private frmNewOnuDone(newDev: IDevice) {
     this.saveOnuFormDialog = false
-    this.$message.success('Новая onu сохранена')
+    this.$message.success(this.$t('novaya-onu-sokhranena'))
     this.$router.push({ name: 'device-view', params: { devId: newDev.id.toString() } })
   }
 

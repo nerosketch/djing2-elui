@@ -1,7 +1,7 @@
-<template>  
+<template>
   <el-card style="margin-bottom:20px;">
     <template v-slot:header>
-      <div class="clearfix"><span>Инфо</span></div>
+      <div class="clearfix"><span>{{ $t('info-0') }}</span></div>
     </template>
     <div class="user-profile">
       <div class="box-center">
@@ -16,17 +16,17 @@
       <div class="user-education user-bio-section">
         <div class="user-bio-section-body">
           <dl>
-            <dt><b>Телефон</b></dt>
+            <dt><b>{{ $t('telefon-0') }}</b></dt>
             <dd>{{ $store.state.userprofile.telephone }}</dd>
-            <dt><b>Логин</b></dt>
+            <dt><b>{{ $t('login-4') }}</b></dt>
             <dd>{{ $store.state.userprofile.username }}</dd>
-            <dt><b>Имя и отчество</b></dt>
+            <dt><b>{{ $t('imya-i-otchestvo') }}</b></dt>
             <dd>{{ $store.state.userprofile.fio }}</dd>
-            <dt><b>Включён-ли</b></dt>
+            <dt><b>{{ $t('vklyuchyon-li') }}</b></dt>
             <dd>
               <boolean-icon v-model="$store.state.userprofile.is_active"></boolean-icon>
             </dd>
-            <dt><b>Суперпользователь</b></dt>
+            <dt><b>{{ $t('superpolzovatel-0') }}</b></dt>
             <dd>
               <boolean-icon v-model="$store.state.userprofile.is_superuser"></boolean-icon>
             </dd>
@@ -35,16 +35,16 @@
       </div>
       <div class="user-skills user-bio-section">
         <div class="user-bio-section-body">
-          <div class="progress-item"><span>Уровень доступа</span>
+          <div class="progress-item"><span>{{ $t('uroven-dostupa') }}</span>
             <el-progress :percentage="$store.state.userprofile.access_level" :status="$store.state.userprofile.access_level === 100 ? "success" : undefined"></el-progress>
           </div>
-          <div class="progress-item"><span>Какой-то другой прогресс</span>
+          <div class="progress-item"><span>{{ $t('kakoi-to-drugoi-progress') }}</span>
             <el-progress :percentage="45"></el-progress>
           </div>
-          <div class="progress-item"><span>ещё что-то</span>
+          <div class="progress-item"><span>{{ $t('eshyo-chto-to') }}</span>
             <el-progress :percentage="4"></el-progress>
           </div>
-          <div class="progress-item"><span>Что-то завершённое</span>
+          <div class="progress-item"><span>{{ $t('chto-to-zavershyonnoe') }}</span>
             <el-progress :percentage="100" status="success"></el-progress>
           </div>
         </div>

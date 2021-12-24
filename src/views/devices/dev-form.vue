@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
     <el-form-item :label="$t('ipAddress')" prop="ip_address">
       <el-input v-model="frmMod.ip_address"></el-input>
@@ -6,37 +6,37 @@
     <el-form-item :label="$t('macAddress')" prop="mac_addr">
       <el-input v-model="frmMod.mac_addr"></el-input>
     </el-form-item>
-    <el-form-item label="Описание" prop="comment">
+    <el-form-item label="$t('opisanie-0')" prop="comment">
       <el-input v-model="frmMod.comment"></el-input>
     </el-form-item>
-    <el-form-item label="Тип оборудования">
+    <el-form-item label="$t('tip-oborudovaniya')">
       <el-select v-model="frmMod.dev_type">
         <el-option v-for="dt in deviceTypeNames" :key="dt.v" :label="dt.nm" :value="dt.v"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="SNMP Community">
+    <el-form-item label="$t('snmp-community')">
       <el-input v-model="frmMod.man_passw"></el-input>
     </el-form-item>
-    <el-form-item label="Группа">
+    <el-form-item label="$t('gruppa-0')">
       <groups-choice v-model="frmMod.group"></groups-choice>
     </el-form-item>
-    <el-form-item label="Родит. устройство">
+    <el-form-item label="$t('rodit-ustroistvo')">
       <device-autocomplete-field v-model="frmMod.parent_dev" :defaultName="$store.state.devicemodule.parent_dev_name"></device-autocomplete-field>
     </el-form-item>
-    <el-form-item label="Дата введения в эксплуатацию">
+    <el-form-item label="$t('data-vvedeniya-v-ekspluataciyu')">
       <datetime-counter v-model="frmMod.create_time"></datetime-counter>
     </el-form-item>
-    <el-form-item label="Адрес">
+    <el-form-item label="$t('adres')">
       <addr-field-input v-model="frmMod.address"></addr-field-input>
     </el-form-item>
-    <el-form-item label="№ дома">
+    <el-form-item label="$t('doma')">
       <el-input v-model="frmMod.place" disabled readonly></el-input>
     </el-form-item>
-    <el-form-item label="Доп. инфо для snmp">
+    <el-form-item label="$t('dop-info-dlya-snmp')">
       <el-input v-model="frmMod.snmp_extra"></el-input>
     </el-form-item>
     <el-form-item prop="is_noticeable">
-      <el-checkbox v-model="frmMod.is_noticeable">Оповещать при событиях мониторинга&#58;<b>{{ frmMod.is_noticeable ? 'Да' : 'Нет' }}</b></el-checkbox>
+      <el-checkbox v-model="frmMod.is_noticeable">{{ $t('opoveshat-pri-sobytiyakh-monitoringa') }}&#58;<b>{{ frmMod.is_noticeable ? 'Да' : 'Нет' }}</b></el-checkbox>
     </el-form-item>
     <el-form-item>
       <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="loading" :disabled="isFormUntouched || !$perms.devices.change_device">{{ $t('save') }}</el-button>
@@ -73,14 +73,14 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     ip_address: [
-      { validator: ipAddrValidator, trigger: 'change', message: 'Пример ip: 192.168.0.23' }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23') }
     ],
     mac_addr: [
-      { required: true, message: 'MAC не может быть пустым', trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: 'Пример mac: 0a:0b:cc:dd::ee:ff' }
+      { required: true, message: this.$t('mac-ne-mozhet-byt-pustym'), trigger: 'blur' },
+      { validator: macAddrValidator, trigger: 'change', message: this.$t('primer-mac-0a-0b-cc-dd-ee-ff') }
     ],
     comment: [
-      { required: true, message: 'Укажи устройству какое-то имя', trigger: 'blur' }
+      { required: true, message: this.$t('ukazhi-ustroistvu-kakoe-to-imya'), trigger: 'blur' }
     ]
   }
 

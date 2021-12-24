@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div class="app-container">
     <template v-if="ready">
       <pon-onu :device="device" v-if="[3,6,7].includes(device.dev_type)" v-on:reqrefresh="getDevice"></pon-onu>
@@ -84,7 +84,7 @@ export default class extends Vue {
           path: '/devices',
           meta: {
             hidden: true,
-            title: 'Оборудование'
+            title: this.$t('oborudovanie-1')
           }
         },
         {

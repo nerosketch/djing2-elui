@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <datatable :columns="tableColumns" :getData="loadLeases" :heightDiff="160" widthStorageNamePrefix="leases" ref="table">
       <template v-slot:is_dynamic="{row}">
@@ -11,7 +11,7 @@
         </el-button-group>
       </template>
     </datatable>
-    <el-dialog title="Изменение Сессии" :visible.sync="dialogVisible" :close-on-click-modal="false">
+    <el-dialog title="$t('izmenenie-sessii')" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <lease-form v-on:done="frmDone"></lease-form>
     </el-dialog>
   </div>
@@ -40,34 +40,34 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'ip_address',
-      label: 'IP Адрес',
+      label: this.$t('ip-adres-2'),
       sortable: true,
       'min-width': 130
     },
     {
       prop: 'lease_time',
-      label: 'Время создания аренды',
+      label: this.$t('vremya-sozdaniya-arendy'),
       sortable: true,
       'min-width': 200
     },
     {
       prop: 'last_update',
-      label: 'Время последнего обновления',
+      label: this.$t('vremya-poslednego-obnovleniya'),
       'min-width': 200
     },
     {
       prop: 'mac_address',
-      label: 'MAC Адрес',
+      label: this.$t('mac-adres-1'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'is_dynamic',
-      label: 'Динамический'
+      label: this.$t('dinamicheskii-0')
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: this.$t('oper-0'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -81,9 +81,9 @@ export default class extends Vue {
   }
 
   private async delLease(lease: ICustomerIpLease) {
-    this.$confirm(`Действительно удалить сессию "${lease.ip_address}"?`).then(async() => {
+    this.$confirm({{ $t('deistvitelno-udalit-sessiyu-lease-ip_address', [lease.ip_address]) }}).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
-      this.$message.success('Сессия удалена')
+      this.$message.success(this.$t('sessiya-udalena'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -97,7 +97,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success('Сессия изменена')
+    this.$message.success(this.$t('sessiya-izmenena'))
     this.$refs.table.LoadTableData()
     // this.loadLeases()
   }

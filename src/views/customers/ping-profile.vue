@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-button :type="btnType" :disabled="pingDisabled || !$perms.customers.can_ping" @click="pingProfile" :loading="pingLoading">{{ isCustomerNotHere ? $t('customers.notPassed') : btnText }}</el-button>
 </template>
 
@@ -13,7 +13,7 @@ import { ICustomer } from '@/api/customers/types'
 export default class extends Vue {
   @Prop({ default: null }) private customer!: ICustomer | null
   private pingLoading = false
-  private btnText = 'Ping'
+  private btnText = this.$t('ping-0')
   private btnType = 'primary'
 
   private async pingProfile() {

@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-form ref="frm" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
     <el-form-item :label="$t('title')">
       <el-input v-model="frmMod.title"></el-input>
@@ -129,7 +129,7 @@ export default class extends mixins(FormMixin) {
                 this.$t('contractDocs.savedMsg')
               )
             } else {
-              const tx = 'Logic error on contractForm in onSubmit()'
+              const tx = this.$t('logic-error-on-contractform-in-onsubmit')
               this.$message.error(tx)
               throw new Error(tx)
             }

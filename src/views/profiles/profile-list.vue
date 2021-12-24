@@ -1,4 +1,4 @@
-<template>  
+<template>
   <div>
     <datatable :columns="tableColumns" :getData="getAllProfiles" :tableRowClassName="rowColor" :heightDiff="190" widthStorageNamePrefix="profiles" ref="tbl">
       <template v-slot:avatar="{row}">
@@ -17,7 +17,7 @@
       </template>
       <el-button icon="el-icon-plus" @click="addNewProfile" :disabled="!$perms.is_superuser">{{ $t('add') }}</el-button>
     </datatable>
-    <el-dialog title="Добавить учётку" :visible.sync="profileFormDialog" :close-on-click-modal="false">
+    <el-dialog title="$t('dobavit-uchyotku')" :visible.sync="profileFormDialog" :close-on-click-modal="false">
       <profile-form v-on:done="addProfileDone"></profile-form>
     </el-dialog>
   </div>
@@ -58,32 +58,32 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'avatar',
-      label: 'Фото',
+      label: this.$t('foto'),
       'min-width': 60,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'username',
-      label: 'Логин'
+      label: this.$t('login-3')
     },
     {
       prop: 'fio',
-      label: 'ФИО',
+      label: this.$t('fio-0'),
       'min-width': 250
     },
     {
       prop: 'telephone',
-      label: 'Телефон',
+      label: this.$t('telefon'),
       'min-width': 120
     },
     {
       prop: 'email',
-      label: 'Адрес электронной почты',
+      label: this.$t('adres-elektronnoi-pochty'),
       'min-width': 250
     },
     {
       prop: 'btn',
-      label: '—',
+      label: this.$t('key-2'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -111,9 +111,9 @@ export default class extends Vue {
   }
 
   private delUserProfile(usr: IUserProfile) {
-    this.$confirm('Удалить учётную запись?').then(async() => {
+    this.$confirm(this.$t('udalit-uchyotnuyu-zapis')).then(async() => {
       await delProfile(usr.username)
-      this.$message.success('Учётная запись удалена')
+      this.$message.success(this.$t('uchyotnaya-zapis-udalena'))
     })
   }
 }

@@ -1,38 +1,38 @@
-<template>  
+<template>
   <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
-    <el-form-item :label="$('title')" prop="title">
+    <el-form-item :label="$t('title', [$(`title`)])" prop="title">
       <el-input v-model="frmMod.title"></el-input>
     </el-form-item>
     <el-form-item :label="$t('ipAddress')" prop="ip_address">
       <el-input v-model="frmMod.ip_address"></el-input>
     </el-form-item>
-    <el-form-item :label="$('gateways.port')">
+    <el-form-item :label="$t('gateways-port', [$(`gateways.port`)])">
       <el-input v-model="frmMod.ip_port" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Логин для входа" prop="auth_login">
+    <el-form-item label="$t('login-dlya-vkhoda')" prop="auth_login">
       <el-input v-model="frmMod.auth_login"></el-input>
     </el-form-item>
-    <el-form-item label="Пароль для входа">
+    <el-form-item label="$t('parol-dlya-vkhoda')">
       <el-input v-model="frmMod.auth_passw"></el-input>
     </el-form-item>
-    <el-form-item label="Тип NAS">
+    <el-form-item label="$t('tip-nas')">
       <el-select v-model="frmMod.gw_type">
-        <el-option label="Микротик" :value="0"></el-option>
-        <el-option label="Linux" :value="1"></el-option>
+        <el-option label="$t('mikrotik')" :value="0"></el-option>
+        <el-option label="$t('linux')" :value="1"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="По умолчанию">
+    <el-form-item label="$t('po-umolchaniyu')">
       <el-checkbox v-model="frmMod.is_default"></el-checkbox>
     </el-form-item>
-    <el-form-item label="Включен">
+    <el-form-item label="$t('vklyuchen')">
       <el-checkbox v-model="frmMod.enabled"></el-checkbox>
     </el-form-item>
-    <el-form-item label="Класс шлюза">
+    <el-form-item label="$t('klass-shlyuza')">
       <el-select v-model="frmMod.gw_class">
         <el-option v-for="(gwc, i) in gwClassChoices" :key="i" :value="gwc.v" :label="gwc.t"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Адрес установки">
+    <el-form-item label="$t('adres-ustanovki')">
       <el-input v-model="frmMod.place"></el-input>
     </el-form-item>
     <el-form-item>
@@ -69,7 +69,7 @@ export default class extends mixins(FormMixin) {
       { validator: ipAddrValidator, trigger: 'change', message: this.$t('gateways.wrong_format_ipv4') }
     ],
     auth_login: [
-      { validator: latinValidator, trigger: 'change', message: 'Только латиница' }
+      { validator: latinValidator, trigger: 'change', message: this.$t('tolko-latinica') }
     ]
   }
 

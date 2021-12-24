@@ -1,4 +1,4 @@
-<template>  
+<template>
   <el-alert offset="2" show-icon :closable="false"><b>{{ log.who_name }}:</b><small>({{ log.when }})</small>{{ log.human_representation }}.</el-alert>
 </template>
 
