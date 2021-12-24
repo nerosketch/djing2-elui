@@ -28,7 +28,7 @@
           | {{ $t('dobavit-zadachu') }}
       
         el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-          | {{ $t('polya-3') }}
+          | {{ $t('polya') }}
   
     el-dialog(
       :title="$t('sozdanie-zadachi')"
@@ -87,33 +87,33 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_full_name',
-      label: this.$t('imya-2'),
+      label: this.$t('imya'),
       'min-width': 250
     },
     {
       prop: 'customer_address',
-      label: this.$t('adres-1'),
+      label: this.$t('adres'),
       'min-width': 300,
       cutLeft: true
     },
     {
       prop: 'mode_str',
-      label: this.$t('kharakter-polomki-1'),
+      label: this.$t('kharakter-polomki'),
       'min-width': 150
     },
     {
       prop: 'descr',
-      label: this.$t('opisanie-13'),
+      label: this.$t('opisanie'),
       'min-width': 400
     },
     {
       prop: 'state_str',
-      label: this.$t('sostoyanie-2'),
+      label: this.$t('sostoyanie'),
       'min-width': 100
     },
     {
       prop: 'time_of_create',
-      label: this.$t('data-sozdaniya-2'),
+      label: this.$t('data-sozdaniya'),
       'min-width': 170
     },
     {
@@ -143,7 +143,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('zadachi-0')
+          title: this.$t('route.tasks')
         }
       }
     ] as any)

@@ -33,7 +33,7 @@
       periodicpay-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam-4')"
+      :title="$t('prinadlezhnost-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.periodicpay.sites", v-on:save="serviceSitesSave")
@@ -67,18 +67,18 @@ export default class extends Vue {
     },
     {
       prop: 'when_add',
-      label: this.$t('data-sozdaniya-0'),
+      label: this.$t('data-sozdaniya'),
       'min-width': 150
     },
     {
       prop: 'amount',
-      label: this.$t('stoimost-0'),
+      label: this.$t('stoimost'),
       'min-width': 150,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: this.$t('knopki-5'),
+      label: this.$t('knopki'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

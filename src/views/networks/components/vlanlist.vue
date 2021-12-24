@@ -35,7 +35,7 @@
           | {{ $t('add') }}
       
         el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-          | {{ $t('polya-1') }}
+          | {{ $t('polya') }}
   
     el-dialog(
       :title="dialogTitle"
@@ -44,7 +44,7 @@
       vlan-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam-2')"
+      :title="$t('prinadlezhnost-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.vlan.sites", v-on:save="vlanSitesSave")
@@ -79,7 +79,7 @@ export default class extends mixins(VlanMixin) {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie-5'),
+      label: this.$t('nazvanie'),
       sortable: true,
       'min-width': 150
     },
@@ -97,7 +97,7 @@ export default class extends mixins(VlanMixin) {
     },
     {
       prop: 'oper',
-      label: this.$t('knopki-4'),
+      label: this.$t('knopki'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

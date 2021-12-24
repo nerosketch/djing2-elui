@@ -18,7 +18,7 @@
     el-form-item(:label="$t('kon-ip')", prop="ip_end")
       el-input(v-model="frmMod.ip_end")
   
-    el-form-item(:label="$t('gruppy-2')")
+    el-form-item(:label="$t('gruppy')")
       groups-choice(v-model="frmMod.groups", multiple)
   
     el-form-item(:label="$t('shlyuz')", prop="gateway")
@@ -40,11 +40,11 @@
           :label="k.title"
           :value="k.val")
   
-    el-form-item(:label="$t('dinamicheskii-1')")
+    el-form-item(:label="$t('dinamicheskii')")
       el-checkbox(v-model="frmMod.is_dynamic")
         | {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
   
-    el-form-item(:label="$t('opisanie-7')", prop="description")
+    el-form-item(:label="$t('opisanie')", prop="description")
       el-input(
         v-model="frmMod.description"
         type="textarea"
@@ -90,15 +90,15 @@ export default class extends mixins(FormMixin, VlanMixin) {
     ],
     ip_start: [
       { required: true, message: this.$t('startovyi-ip-nado-ukazat'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23-2') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23') }
     ],
     ip_end: [
       { required: true, message: this.$t('konechnyi-ip-nado-ukazat'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23-3') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23') }
     ],
     gateway: [
       { required: true, message: this.$t('shlyuz-nado-ukazat'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-shlyuza-192-168-0-1') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-shlyuza-192-168-0') }
     ]
   }
 

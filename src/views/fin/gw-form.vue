@@ -49,7 +49,7 @@ export default class extends Vue {
       { max: 64, trigger: 'change' }
     ],
     slug: [
-      { required: true, message: this.$t('service-id-obyazatelno-0'), trigger: 'blur' },
+      { required: true, message: this.$t('service-id-obyazatelno'), trigger: 'blur' },
       { max: 32, message: this.$t('maksimum-32-simvola-dlya-slug'), trigger: 'change' }
     ]
   }

@@ -16,7 +16,7 @@
       )
   
     el-form-item(
-      :label="$t('opisanie-4')"
+      :label="$t('opisanie')"
       prop="descr"
     )
       el-input(v-model="frmMod.descr")

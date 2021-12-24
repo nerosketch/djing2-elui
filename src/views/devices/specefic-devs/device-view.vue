@@ -88,7 +88,7 @@ export default class extends Vue {
           path: '/devices',
           meta: {
             hidden: true,
-            title: this.$t('oborudovanie-1')
+            title: this.$t('oborudovanie')
           }
         },
         {

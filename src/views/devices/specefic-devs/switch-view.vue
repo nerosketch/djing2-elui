@@ -29,7 +29,7 @@
       border
       fit)
       el-table-column(
-        :label="$t('port-0')"
+        :label="$t('port')"
         width="60"
         align="center")
         template(v-slot:default="{row}")
@@ -53,7 +53,7 @@
             disabled)
     
       el-table-column(
-        :label="$t('opisanie-3')"
+        :label="$t('opisanie')"
         min-width="267"
         prop="descr")
     
@@ -66,7 +66,7 @@
             | {{ row.user_count }}
     
       el-table-column(
-        :label="$t('imya-0')"
+        :label="$t('imya')"
         min-width="235"
       )
         template(v-slot:default="{row}")
@@ -84,7 +84,7 @@
           | {{ row.uptime || '-' }}
     
       el-table-column(
-        :label="$t('knopki-0')"
+        :label="$t('knopki')"
         align="center"
         min-width="194")
         template(v-slot:default="{row}")
@@ -364,7 +364,7 @@ export default class extends Vue {
 
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
-    this.$message.success(this.$t('uspeshno-sokhraneno-0'))
+    this.$message.success(this.$t('uspeshno-sokhraneno'))
     this.$router.push({ name: 'devicesList', params: { addrId: device.address.toString() } })
   }
 

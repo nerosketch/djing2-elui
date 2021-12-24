@@ -50,7 +50,7 @@
         :objId="groupIdGetter")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam-0')"
+      :title="$t('prinadlezhnost-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.group.sites", v-on:save="groupSitesSave")
@@ -87,13 +87,13 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie-3'),
+      label: this.$t('nazvanie'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: this.$t('knopki-2'),
+      label: this.$t('knopki'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -155,7 +155,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('gruppy-1')
+          title: this.$t('gruppy')
         }
       }
     ] as any)

@@ -65,12 +65,12 @@ export default class extends Vue {
     old_passw: [
       { required: !this.$perms.is_superuser, message: this.$t('nado-ukazat-staryi-parol'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov-0') }
+      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov') }
     ],
     new_passw: [
       { required: true, message: this.$t('nado-ukazat-novyi-parol'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov-1') }
+      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov') }
     ],
     retype_passw: [
       { required: true, trigger: 'blur', message: this.$t('nuzhno-povtorit-novyi-parol') },

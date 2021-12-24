@@ -34,11 +34,11 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: this.$t('nazvanie-nado-ukazat-0'), trigger: 'blur' }
+      { required: true, message: this.$t('nazvanie-nado-ukazat'), trigger: 'blur' }
     ],
     amount: [
       { required: true, message: this.$t('cenu-nado-ukazat'), trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili-0') }
+      { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili') }
     ]
   }
 

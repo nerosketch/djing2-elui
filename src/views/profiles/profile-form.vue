@@ -5,7 +5,7 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('login-2')", prop="username")
+    el-form-item(:label="$t('login')", prop="username")
       el-input(v-model="frmMod.username")
   
     el-form-item(:label="$t('fio')", prop="fio")
@@ -37,7 +37,7 @@
       el-input(v-model="frmMod.email")
   
     el-form-item(
-      :label="$t('parol-0')"
+      :label="$t('parol')"
       prop="password"
       v-if="isNew")
       el-input(
@@ -55,7 +55,7 @@
       
         template(v-if="!isNew")
           el-button(@click="openPasswordForm", icon="el-icon-lock")
-            | {{ $t('parol-1') }}
+            | {{ $t('parol') }}
         
           template(v-if="$perms.is_superuser")
             el-button(@click="openGroupsForm", icon="el-icon-lock")
@@ -80,7 +80,7 @@
       profile-groups(v-on:done="userGroupAccessDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam-3')"
+      :title="$t('prinadlezhnost-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.userprofile.sites", v-on:save="profileSitesSave")
@@ -133,15 +133,15 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: this.$t('login-ne-mozhet-byt-pustym-0'), trigger: 'blur' },
+      { required: true, message: this.$t('login-ne-mozhet-byt-pustym'), trigger: 'blur' },
       { validator: latinValidator, trigger: 'change', message: this.$t('login-mozhet-soderzhat-latinskie-simvoly-i-cifry') }
     ],
     birth_day: [
-      { required: true, message: this.$t('login-ne-mozhet-byt-pustym-1'), trigger: 'blur' }
+      { required: true, message: this.$t('login-ne-mozhet-byt-pustym'), trigger: 'blur' }
     ],
     telephone: [
       { required: true, message: this.$t('nomer-telefona-obyazatelno'), trigger: 'blur' },
-      { validator: telephoneValidator, trigger: 'change', message: this.$t('7-8-9-3-i-10-11-cifr-1') }
+      { validator: telephoneValidator, trigger: 'change', message: this.$t('telValidation') }
     ],
     fio: [
       { required: true, message: this.$t('nuzhno-znat-kak-zovut-vladelca-uchyotki'), trigger: 'blur' }
@@ -150,9 +150,9 @@ export default class extends Vue {
       { validator: emailValidator, trigger: 'change', message: this.$t('ne-pokhozhe-na-adres-pochty') }
     ],
     password: [
-      { required: true, message: this.$t('parol-ne-mozhet-byt-pustym-0'), trigger: 'blur' },
+      { required: true, message: this.$t('parol-ne-mozhet-byt-pustym'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov-2') }
+      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov') }
     ]
   }
 

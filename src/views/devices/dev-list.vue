@@ -74,7 +74,7 @@
         :addrId="addrId")
   
     el-dialog(
-      :title="$t('dobavit-ustroistvo-0')"
+      :title="$t('dobavit-ustroistvo')"
       :visible.sync="dialogNewDev"
       :close-on-click-modal="false"
       top="1%")
@@ -191,11 +191,11 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'place',
-      label: this.$t('doma-0')
+      label: this.$t('doma')
     },
     {
       prop: 'create_time',
-      label: this.$t('data-vvedeniya-v-ekspluataciyu-0')
+      label: this.$t('data-vvedeniya-v-ekspluataciyu')
     },
     {
       prop: 'oper',

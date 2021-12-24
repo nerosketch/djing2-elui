@@ -7,7 +7,7 @@
       border
       fit)
       el-table-column(
-        :label="$t('tip-0')"
+        :label="$t('tip')"
         min-width="80"
         prop="onu_type")
     

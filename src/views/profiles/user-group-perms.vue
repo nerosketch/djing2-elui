@@ -8,7 +8,7 @@
       :titles="['Все права', 'Назначенные права']")
       template(v-slot:left-footer)
         el-button.transfer-footer(@click="selectReadonly")
-          | {{ $t('vydelit-prava-na-chtenie-0') }}
+          | {{ $t('vydelit-prava-na-chtenie') }}
   
     el-button(
       icon="el-icon-upload"

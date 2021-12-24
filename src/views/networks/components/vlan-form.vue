@@ -11,7 +11,7 @@
     el-form-item(label="VID", prop="vid")
       el-input(v-model="frmMod.vid", type="number")
   
-    el-form-item(:label="$t('upravlenie-0')", prop="is_management")
+    el-form-item(:label="$t('upravlenie')", prop="is_management")
       el-checkbox(v-model="frmMod.is_management")
         | {{ $t('yavlyaetsya-li-vlanom-upravleniya') }}
       
@@ -43,7 +43,7 @@ export default class extends Vue {
       { required: true, message: this.$t('nazvanie-vlan-nado-ukazat'), trigger: 'blur' }
     ],
     vid: [
-      { required: true, message: this.$t('startovyi-ip-nado-ukazat-0'), trigger: 'blur' },
+      { required: true, message: this.$t('startovyi-ip-nado-ukazat'), trigger: 'blur' },
       {
         validator: (rule: any, value: number, callback: Function) => {
           if (value && value > 1 && value < 4095) {

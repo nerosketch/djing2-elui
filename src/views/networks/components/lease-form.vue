@@ -6,13 +6,13 @@
     :model="frmMod"
     v-loading="isLoading")
     el-form-item(
-      :label="$t('ip-adres-1')"
+      :label="$t('ip-adres')"
       prop="ip_address"
     )
       el-input(v-model="frmMod.ip_address")
   
     el-form-item(
-      :label="$t('mac-adres-0')"
+      :label="$t('mac-adres')"
       prop="mac_address"
     )
       el-input(v-model="frmMod.mac_address")
@@ -49,11 +49,11 @@ export default class extends Vue {
   private frmRules = {
     ip_address: [
       { required: true, message: this.$t('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23-1') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23') }
     ],
     mac_address: [
       { required: true, message: this.$t('mac-ne-nuzhno-ostavlyat-pustym'), trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: this.$t('primer-mac-0a-0b-cc-dd-ee-ff-1') }
+      { validator: macAddrValidator, trigger: 'change', message: this.$t('primer-mac-0a-0b-cc-dd-ee-ff') }
     ]
   }
 

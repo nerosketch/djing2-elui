@@ -61,13 +61,13 @@ export default class extends Vue {
     },
     {
       prop: 'name',
-      label: this.$t('nazvanie-8'),
+      label: this.$t('nazvanie'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: this.$t('knopki-8'),
+      label: this.$t('knopki'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -107,13 +107,13 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = this.$t('saity-0')
+    document.title = this.$t('saity')
     BreadcrumbsModule.SetCrumbs([
       {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('saity-1')
+          title: this.$t('saity')
         }
       }
     ] as any)

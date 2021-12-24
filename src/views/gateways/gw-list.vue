@@ -16,42 +16,42 @@
           dl
             dt
               b
-                | {{ $t('ip-adres-0') }}
+                | {{ $t('ip-adres') }}
           
             dd
               | {{ gw.ip_address }}
           
             dt
               b
-                | {{ $t('port-1') }}
+                | {{ $t('port') }}
           
             dd
               | {{ gw.ip_port }}
           
             dt
               b
-                | {{ $t('login-dlya-vkhoda-0') }}
+                | {{ $t('login-dlya-vkhoda') }}
           
             dd
               | {{ gw.auth_login }}
           
             dt
               b
-                | {{ $t('parol-dlya-vkhoda-0') }}
+                | {{ $t('parol-dlya-vkhoda') }}
           
             dd
               | {{ gw.auth_passw }}
           
             dt
               b
-                | {{ $t('tip-nas-0') }}
+                | {{ $t('tip-nas') }}
           
             dd
               | {{ gw.gw_type_str }}
           
             dt
               b
-                | {{ $t('po-umolchaniyu-0') }}
+                | {{ $t('po-umolchaniyu') }}
           
             dd
               i
@@ -59,7 +59,7 @@
           
             dt
               b
-                | {{ $t('vklyuchen-0') }}
+                | {{ $t('vklyuchen') }}
           
             dd
               i
@@ -99,7 +99,7 @@
           
             dt
               b
-                | {{ $t('adres-0') }}
+                | {{ $t('adres') }}
           
             dd
               i
@@ -117,7 +117,7 @@
               icon="el-icon-delete"
               @click="onDel(gw)"
               :disabled="!$perms.gateways.delete_gateway")
-              | {{ $t('udalit-0') }}
+              | {{ $t('udalit') }}
   
     el-button(
       type="success"

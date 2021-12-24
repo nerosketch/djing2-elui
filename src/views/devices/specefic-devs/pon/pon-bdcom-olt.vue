@@ -41,7 +41,7 @@
               prop="title")
           
             el-table-column(
-              :label="$t('mak-0')"
+              :label="$t('mak')"
               min-width="123"
               prop="mac_addr")
           
@@ -162,7 +162,7 @@ export default class extends Vue {
 
   private frmDone(newOnu: IDevice) {
     this.dialogVisible = false
-    this.$message.success(this.$t('novaya-onu-sokhranena-0'))
+    this.$message.success(this.$t('novaya-onu-sokhranena'))
     this.$router.push({
       name: 'device-view',
       params: {

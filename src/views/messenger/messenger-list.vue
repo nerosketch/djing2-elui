@@ -68,17 +68,17 @@ export default class extends Vue {
     },
     {
       prop: 'title',
-      label: this.$t('nazvanie-4'),
+      label: this.$t('nazvanie'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'description',
-      label: this.$t('opisanie-6')
+      label: this.$t('opisanie')
     },
     {
       prop: 'bot_type_name',
-      label: this.$t('tip-bota-0'),
+      label: this.$t('tip-bota'),
       'min-width': 100
     },
     {
@@ -137,7 +137,7 @@ export default class extends Vue {
         path: '/messenger',
         meta: {
           hidden: true,
-          title: this.$t('messendzhery-0')
+          title: this.$t('messendzhery')
         }
       },
       {

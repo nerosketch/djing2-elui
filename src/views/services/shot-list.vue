@@ -32,7 +32,7 @@
       shot-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam-6')"
+      :title="$t('prinadlezhnost-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.oneshotpay.sites", v-on:save="serviceSitesSave")
@@ -61,18 +61,18 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: this.$t('nazvanie-platezha-0'),
+      label: this.$t('nazvanie-platezha'),
       'min-width': 200
     },
     {
       prop: 'cost',
-      label: this.$t('stoimost-3'),
+      label: this.$t('stoimost'),
       'min-width': 150,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: this.$t('knopki-7'),
+      label: this.$t('knopki'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

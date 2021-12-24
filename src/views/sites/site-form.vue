@@ -9,7 +9,7 @@
     el-form-item(:label="$t('title')", prop="name")
       el-input(v-model="frmMod.name")
   
-    el-form-item(:label="$t('domen-0')", prop="domain")
+    el-form-item(:label="$t('domen')", prop="domain")
       el-input(v-model="frmMod.domain")
   
     el-form-item

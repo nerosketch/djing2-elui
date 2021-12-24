@@ -6,12 +6,12 @@
     fit
   )
     el-table-column(
-      :label="$t('login-5')"
+      :label="$t('login')"
       prop="username"
     )
 
     el-table-column(
-      :label="$t('imya-1')"
+      :label="$t('imya')"
       prop="fio"
     )
       template(v-slot:default="{row}")

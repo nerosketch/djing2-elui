@@ -16,7 +16,7 @@
           pool-list
     
       el-tab-pane(
-        :label="$t('vlany-0')"
+        :label="$t('vlany')"
         name="vlans"
         lazy)
         keep-alive

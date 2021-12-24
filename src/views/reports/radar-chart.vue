@@ -82,15 +82,15 @@ export default class extends mixins(ResizeMixin) {
         data: [
           {
             value: [5000, 7000, 12000, 11000, 15000, 14000],
-            name: this.$t('allocated-budget-0')
+            name: this.$t('allocated-budget')
           },
           {
             value: [4000, 9000, 15000, 15000, 13000, 11000],
-            name: this.$t('expected-spending-0')
+            name: this.$t('expected-spending')
           },
           {
             value: [5500, 11000, 12000, 15000, 12000, 12000],
-            name: this.$t('actual-spending-0')
+            name: this.$t('actual-spending')
           }
         ],
         animationDuration: animationDuration

@@ -42,7 +42,7 @@
           | {{ $t('add') }}
       
         el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-          | {{ $t('polya-2') }}
+          | {{ $t('polya') }}
   
     el-dialog(
       :title="$t('isnew-sozdanie-izmenenie-uslugi', [(isNew ? `Создание` : `Изменение`)])"
@@ -62,7 +62,7 @@
         :objId="srvIdGetter")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam-5')"
+      :title="$t('prinadlezhnost-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.service.sites", v-on:save="serviceSitesSave")
@@ -104,13 +104,13 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie-7'),
+      label: this.$t('nazvanie'),
       sortable: true,
       'min-width': 200
     },
     {
       prop: 'descr',
-      label: this.$t('opisanie-11'),
+      label: this.$t('opisanie'),
       'min-width': 300
     },
     {
@@ -151,7 +151,7 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: this.$t('knopki-6'),
+      label: this.$t('knopki'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -233,7 +233,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('tarify-0')
+          title: this.$t('tarify')
         }
       }
     ] as any)
@@ -245,7 +245,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('prinadlezhnost-uslugi-saitam-sokhranena-0'))
+      this.$message.success(this.$t('prinadlezhnost-uslugi-saitam-sokhranena'))
     })
     this.sitesDlg = false
   }

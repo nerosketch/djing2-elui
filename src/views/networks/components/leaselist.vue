@@ -50,7 +50,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'ip_address',
-      label: this.$t('ip-adres-2'),
+      label: this.$t('ip-adres'),
       sortable: true,
       'min-width': 130
     },
@@ -67,17 +67,17 @@ export default class extends Vue {
     },
     {
       prop: 'mac_address',
-      label: this.$t('mac-adres-1'),
+      label: this.$t('mac-adres'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'is_dynamic',
-      label: this.$t('dinamicheskii-0')
+      label: this.$t('dinamicheskii')
     },
     {
       prop: 'oper',
-      label: this.$t('oper-0'),
+      label: this.$t('oper'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

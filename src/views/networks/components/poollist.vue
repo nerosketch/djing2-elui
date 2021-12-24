@@ -31,7 +31,7 @@
           | {{ $t('add') }}
       
         el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-          | {{ $t('polya-0') }}
+          | {{ $t('polya') }}
   
     el-dialog(
       :title="dialogTitle"
@@ -40,7 +40,7 @@
       pool-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam-1')"
+      :title="$t('prinadlezhnost-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.netpool.sites", v-on:save="netpoolSitesSave")
@@ -74,32 +74,32 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'network',
-      label: this.$t('podset-0'),
+      label: this.$t('podset'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'description',
-      label: this.$t('opisanie-8'),
+      label: this.$t('opisanie'),
       'min-width': 300
     },
     {
       prop: 'ip_start',
-      label: this.$t('nach-ip-0'),
+      label: this.$t('nach-ip'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'ip_end',
-      label: this.$t('kon-ip-0'),
+      label: this.$t('kon-ip'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'gateway',
-      label: this.$t('shlyuz-0'),
+      label: this.$t('shlyuz'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
@@ -124,7 +124,7 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: this.$t('knopki-3'),
+      label: this.$t('knopki'),
       'min-width': 160,
       align: DataTableColumnAlign.CENTER
     }

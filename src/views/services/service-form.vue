@@ -8,7 +8,7 @@
     el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(:label="$t('opisanie-10')" prop="descr")
+    el-form-item(:label="$t('opisanie')" prop="descr")
       el-input(v-model="frmMod.descr")
   
     el-form-item(:label="$t('vkhod-skorost')" prop="speed_in")
@@ -20,7 +20,7 @@
     el-form-item(:label="$t('uskorenie')" prop="speed_burst")
       el-input(v-model="frmMod.speed_burst" type="number")
   
-    el-form-item(:label="$t('stoimost-1')" prop="cost")
+    el-form-item(:label="$t('stoimost')" prop="cost")
       el-input(v-model="frmMod.cost" type="number")
   
     el-form-item(:label="$t('administrativnaya')" prop="is_admin")
@@ -69,7 +69,7 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('nazvanie-nado-ukazat-1'), trigger: 'blur' }
+      { required: true, message: this.$t('nazvanie-nado-ukazat'), trigger: 'blur' }
     ],
     descr: [
       { required: true, message: this.$t('opisanie-obyazatelno'), trigger: 'blur' }
@@ -84,7 +84,7 @@ export default class extends mixins(FormMixin) {
     ],
     cost: [
       { required: true, message: this.$t('cena-dolzhna-byt-ukazana'), trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili-0-0') }
+      { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili-0') }
     ]
   }
 

@@ -62,20 +62,20 @@ export default class extends Vue {
     table: DataTableComp
   }
 
-  private dialogTitle = this.$t('platyozhnyi-shlyuz-0')
+  private dialogTitle = this.$t('platyozhnyi-shlyuz')
   private dialogVisible = false
   private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie-2'),
+      label: this.$t('nazvanie'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'service_id',
-      label: this.$t('service-id-0'),
+      label: this.$t('service-id'),
       sortable: true,
       'min-width': 100
     },
@@ -93,7 +93,7 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: this.$t('knopki-1'),
+      label: this.$t('knopki'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -138,7 +138,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('finansy-0')
+          title: this.$t('finansy')
         }
       }
     ] as any)

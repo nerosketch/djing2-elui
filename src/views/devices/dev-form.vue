@@ -11,7 +11,7 @@
     el-form-item(:label="$t('macAddress')", prop="mac_addr")
       el-input(v-model="frmMod.mac_addr")
   
-    el-form-item(:label="$t('opisanie-0')", prop="comment")
+    el-form-item(:label="$t('opisanie')", prop="comment")
       el-input(v-model="frmMod.comment")
   
     el-form-item(:label="$t('tip-oborudovaniya')")
@@ -25,7 +25,7 @@
     el-form-item(:label="$t('snmp-community')")
       el-input(v-model="frmMod.man_passw")
   
-    el-form-item(:label="$t('gruppa-0')")
+    el-form-item(:label="$t('gruppa')")
       groups-choice(v-model="frmMod.group")
   
     el-form-item(:label="$t('rodit-ustroistvo')")

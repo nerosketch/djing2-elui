@@ -67,7 +67,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: this.$t('nazvanie-6'),
+      label: this.$t('nazvanie'),
       'min-width': 150
     },
     {
@@ -80,7 +80,7 @@ export default class extends Vue {
     },
     {
       prop: 'btn',
-      label: this.$t('key-1'),
+      label: this.$t('key'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -101,7 +101,7 @@ export default class extends Vue {
 
   private async addNewUserGroup() {
     await UserGroupModule.RESET_ALL_USER_USER_GROUP()
-    this.dialogTitle = this.$t('dobavit-gruppu-0')
+    this.dialogTitle = this.$t('dobavit-gruppu')
     this.ugFormDialog = true
   }
 

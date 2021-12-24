@@ -9,7 +9,7 @@
   
     span(v-else)
       i.el-icon-loading
-      | {{ $t('zagruzka-0') }}
+      | {{ $t('zagruzka') }}
   
     el-divider
   

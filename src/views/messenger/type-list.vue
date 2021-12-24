@@ -5,7 +5,7 @@
     border
     fit)
     el-table-column(
-      :label="$t('tip-bota-1')"
+      :label="$t('tip-bota')"
       prop="text"
     )
       template(v-slot:default="{row}")
@@ -31,7 +31,7 @@ export default class extends mixins(BotTypesMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('messendzhery-1')
+          title: this.$t('messendzhery')
         }
       }
     ] as any)

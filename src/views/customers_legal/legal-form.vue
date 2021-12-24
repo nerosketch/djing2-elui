@@ -47,7 +47,7 @@
           slot="append"
           @click="copyPostAddrFromLegalAddr"
           icon="el-icon-document-copy"
-          :title="$t('skopirovat-adres-iz-yuridicheskogo-adresa-0')"
+          :title="$t('skopirovat-adres-iz-yuridicheskogo-adresa')"
           :disabled="addrCopyDisabled")
   
     el-form-item(:label="$t('inn')", prop="tax_number")

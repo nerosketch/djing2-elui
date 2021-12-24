@@ -53,20 +53,20 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie-1'),
+      label: this.$t('nazvanie'),
       'min-width': 150
     },
     {
       prop: 'field_type_name',
-      label: this.$t('tip-polya-0')
+      label: this.$t('tip-polya')
     },
     {
       prop: 'groups',
-      label: this.$t('gruppy-0')
+      label: this.$t('gruppy')
     },
     {
       prop: 'system_tag_name',
-      label: this.$t('sistemnyi-teg-0')
+      label: this.$t('sistemnyi-teg')
     },
     {
       prop: 'user_tag',
@@ -74,7 +74,7 @@ export default class extends Vue {
     },
     {
       prop: 'btn',
-      label: this.$t('key-0'),
+      label: this.$t('key'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }

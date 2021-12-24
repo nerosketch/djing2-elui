@@ -27,7 +27,7 @@
           customer-service-type-report(v-if="$perms.customers.can_view_service_type_report")
         
           h4(v-else)
-            | {{ $t('nedostatochno-prav-0') }}
+            | {{ $t('nedostatochno-prav') }}
     
       el-col(
         :xs="24"
@@ -41,7 +41,7 @@
           customer-activity-report(v-if="$perms.customers.can_view_activity_report")
         
           h4(v-else)
-            | {{ $t('nedostatochno-prav-1') }}
+            | {{ $t('nedostatochno-prav') }}
 </template>
 
 <script lang="ts">
@@ -77,7 +77,7 @@ export default class extends Vue {
   // End Breadcrumbs
 
   created() {
-    document.title = this.$t('otchyoty-vsyakie-0')
+    document.title = this.$t('otchyoty-vsyakie')
     this.buildBreadcrumb()
   }
 }

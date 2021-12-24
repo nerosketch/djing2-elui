@@ -20,7 +20,7 @@
           name="username"
           type="text"
           autocomplete="on"
-          :placeholder="$t('login-0')")
+          :placeholder="$t('login')")
     
       el-form-item(prop="password")
         span.svg-container
@@ -42,7 +42,7 @@
       el-button#loginbtn(
         :loading="loading"
         @click.native.prevent="handleLogin"
-      ) {{ $t('voiti-0') }}
+      ) {{ $t('voiti') }}
 
 </template>
 

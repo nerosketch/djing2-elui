@@ -18,7 +18,7 @@ import { ICustomer } from '@/api/customers/types'
 export default class extends Vue {
   @Prop({ default: null }) private customer!: ICustomer | null
   private pingLoading = false
-  private btnText = this.$t('ping-0')
+  private btnText = this.$t('ping')
   private btnType = 'primary'
 
   private async pingProfile() {

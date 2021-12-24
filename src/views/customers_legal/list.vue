@@ -92,7 +92,7 @@ export default class extends Vue {
     },
     {
       prop: 'tax_number',
-      label: this.$t('inn-0')
+      label: this.$t('inn')
     },
     {
       prop: 'post_index',

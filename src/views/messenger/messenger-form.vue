@@ -13,7 +13,7 @@
       el-input(v-model="frmMod.title")
   
     el-form-item(
-      :label="$t('opisanie-5')"
+      :label="$t('opisanie')"
       prop="description"
     )
       el-input(v-model="frmMod.description")

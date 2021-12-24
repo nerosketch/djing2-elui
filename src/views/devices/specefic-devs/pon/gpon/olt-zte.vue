@@ -2,15 +2,12 @@
   el-card
     template(v-slot:header)
       .clearfix
-        span
-          | {{ $t('zte') }}
-      
-        small
-          | {{ ` ${device.ip_address || device.mac_addr} ` }}
-      
-        small
-          | {{ details }}
-      
+        span zte -
+
+        small {{ ` ${device.ip_address || device.mac_addr} ` }}
+
+        small {{ details }}
+
         el-button(
           style="float: right; padding: 7px"
           circle

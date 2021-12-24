@@ -51,7 +51,7 @@ export default class extends Vue {
     },
     {
       prop: 'ip_lease_mac',
-      label: this.$t('mac-adres-2'),
+      label: this.$t('mac-adres'),
       sortable: true,
       'min-width': 150
     },
@@ -77,7 +77,7 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: this.$t('oper-1'),
+      label: this.$t('oper'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

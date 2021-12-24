@@ -21,12 +21,12 @@
       
         .text.item.list-item
           b
-            | {{ $t('mak-1') }}
+            | {{ $t('mak') }}
           | {{ device.mac_addr }}
       
         .text.item.list-item
           b
-            | {{ $t('opisanie-2') }}
+            | {{ $t('opisanie') }}
           | {{ device.comment }}
       
         .text.item.list-item

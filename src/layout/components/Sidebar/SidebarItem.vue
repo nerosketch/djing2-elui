@@ -20,7 +20,7 @@
           span(
             v-if="theOnlyOneChild.meta.title"
             slot="title"
-          ) {{ translated(theOnlyOneChild.meta.title) }}
+          ) {{ translated(theOnlyOneChild.meta.title) }} &nbsp;
             small.calc-place(
               v-if="childCalc"
             ) {{ childCalc }}

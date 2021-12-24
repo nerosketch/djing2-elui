@@ -2,7 +2,7 @@
 el-card(style='margin-bottom:20px;')
   template(v-slot:header)
     .clearfix
-      span {{ $t('info-0') }}
+      span {{ $t('info') }}
   .user-profile
     .box-center
       pan-thumb(
@@ -21,10 +21,10 @@ el-card(style='margin-bottom:20px;')
       .user-bio-section-body
         dl
           dt
-            b {{ $t('telefon-0') }}
+            b {{ $t('telefon') }}
           dd {{ $store.state.userprofile.telephone }}
           dt
-            b {{ $t('login-4') }}
+            b {{ $t('login') }}
           dd {{ $store.state.userprofile.username }}
           dt
             b {{ $t('imya-i-otchestvo') }}
@@ -35,7 +35,7 @@ el-card(style='margin-bottom:20px;')
             i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
             i.el-icon-circle-close(v-else)
           dt
-            b {{ $t('superpolzovatel-0') }}
+            b {{ $t('superpolzovatel') }}
           dd
             i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
             i.el-icon-circle-close(v-else)

@@ -5,7 +5,7 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('opisanie-12')", prop="descr")
+    el-form-item(:label="$t('opisanie')", prop="descr")
       el-input(v-model="frmMod.descr", maxlength="128")
   
     el-form-item(:label="$t('ispolniteli')", prop="recipients")
@@ -32,7 +32,7 @@
           :label="tt.nm"
           :value="tt.v")
   
-    el-form-item(:label="$t('sostoyanie-0')", prop="task_state")
+    el-form-item(:label="$t('sostoyanie')", prop="task_state")
       el-select(v-model="frmMod.task_state")
         el-option(
           v-for="tt in taskStates"
@@ -40,7 +40,10 @@
           :label="tt.nm"
           :value="tt.v")
   
-    el-form-item(:label="$t('abonent')", prop="customer")
+    el-form-item(
+      :label="$t('customer')"
+      prop="customer"
+    )
       customer-field(v-model="frmMod.customer", :defaultName="$store.state.task.customer_full_name")
   
     el-form-item(:label="$t('aktualnost')", prop="out_date")
@@ -66,7 +69,7 @@
           icon="el-icon-delete"
           @click="onDel"
           :disabled="!$perms.tasks.delete_task")
-          | {{ $t('udalit-1') }}
+          | {{ $t('udalit') }}
       
         el-button(
           v-if="!isNewTask"
@@ -176,7 +179,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         path: '/tasks',
         meta: {
           hidden: true,
-          title: this.$t('zadachi')
+          title: this.$t('route.tasks')
         }
       },
       {

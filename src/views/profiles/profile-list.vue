@@ -81,11 +81,11 @@ export default class extends Vue {
     },
     {
       prop: 'username',
-      label: this.$t('login-3')
+      label: this.$t('login')
     },
     {
       prop: 'fio',
-      label: this.$t('fio-0'),
+      label: this.$t('fio'),
       'min-width': 250
     },
     {
@@ -100,7 +100,7 @@ export default class extends Vue {
     },
     {
       prop: 'btn',
-      label: this.$t('key-2'),
+      label: this.$t('key'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }

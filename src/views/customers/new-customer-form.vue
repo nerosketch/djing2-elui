@@ -93,7 +93,7 @@ export default class extends Vue {
       {
         validator: telephoneValidator,
         trigger: 'change',
-        message: this.$t('7-8-9-3-i-10-11-cifr-0')
+        message: this.$t('telValidation')
       }
     ],
     birth_day: [
