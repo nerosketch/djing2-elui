@@ -29,7 +29,7 @@
       border
       fit)
       el-table-column(
-        label="$t('port-0')"
+        :label="$t('port-0')"
         width="60"
         align="center")
         template(v-slot:default="{row}")
@@ -37,7 +37,7 @@
             | {{ row.num }}
     
       el-table-column(
-        label="$t('vkl-vykl')"
+        :label="$t('vkl-vykl')"
         width="80"
         align="center")
         template(v-slot:default="{row}")
@@ -53,23 +53,29 @@
             disabled)
     
       el-table-column(
-        label="$t('opisanie-3')"
+        :label="$t('opisanie-3')"
         min-width="267"
         prop="descr")
     
       el-table-column(
-        label="$t('abonov')"
+        :label="$t('abonov')"
         width="70"
         align="center")
         template(v-slot:default="{row}")
           el-link(type="primary", @click="openPortView(row)")
             | {{ row.user_count }}
     
-      el-table-column(label="$t('imya-0')", min-width="235")
+      el-table-column(
+        :label="$t('imya-0')"
+        min-width="235"
+      )
         template(v-slot:default="{row}")
           | {{ row.name || '-' }}
     
-      el-table-column(label="$t('rezhim')", min-width="78")
+      el-table-column(
+        :label="$t('rezhim')"
+        min-width="78"
+      )
         template(v-slot:default="{row}")
           | {{ row.speed ? portModesHuman(row.speed) : '-' }}
     
@@ -78,7 +84,7 @@
           | {{ row.uptime || '-' }}
     
       el-table-column(
-        label="$t('knopki-0')"
+        :label="$t('knopki-0')"
         align="center"
         min-width="194")
         template(v-slot:default="{row}")
@@ -111,13 +117,13 @@
   
     el-dialog(
       :visible.sync="portViewDialog"
-      title="$t('abonenty-na-portu')"
+      :title="$t('abonenty-na-portu')"
       :close-on-click-modal="false")
       switch-port-view(:device="device", :portId="currPortId")
   
     el-dialog(
       :visible.sync="portFormDialog"
-      title="$t('port-kommutatora')"
+      :title="$t('port-kommutatora')"
       :close-on-click-modal="false")
       switch-port-form(
         :deviceId="device.id"
@@ -128,13 +134,13 @@
   
     el-dialog(
       :visible.sync="devFormDialog"
-      title="$t('informaciya-ustroistva')"
+      :title="$t('informaciya-ustroistva')"
       :close-on-click-modal="false")
       dev-form(v-on:done="devFrmDone")
   
     el-dialog(
       :visible.sync="vidsDialog"
-      title="$t('vlany')"
+      :title="$t('vlany')"
       :close-on-click-modal="false")
       vids-view(
         :portId="currPortId"
@@ -143,7 +149,7 @@
   
     el-dialog(
       :visible.sync="macsDialog"
-      title="$t('tablica-mac-adresov-porta')"
+      :title="$t('tablica-mac-adresov-porta')"
       :close-on-click-modal="false")
       port-mac-list(:portId="currPortId")
 </template>

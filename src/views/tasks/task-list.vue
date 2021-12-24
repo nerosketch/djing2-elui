@@ -31,7 +31,7 @@
           | {{ $t('polya-3') }}
   
     el-dialog(
-      title="$t('sozdanie-zadachi')"
+      :title="$t('sozdanie-zadachi')"
       :visible.sync="formDialog"
       :close-on-click-modal="false")
       task-form

@@ -76,7 +76,7 @@
     slot(name="dialogs")
       slot(name="dialog_customer_add")
         el-dialog(
-          title="$t('customers.customerAdd')"
+          :title="$t('customers.customerAdd')"
           :visible.sync="addCustomerDialog"
           top="5vh"
           :close-on-click-modal="false")
@@ -84,7 +84,7 @@
     
       slot(name="dialog_rights")
         el-dialog(
-          title="$t('customers.whoHaveRightsOnCustomer')"
+          :title="$t('customers.whoHaveRightsOnCustomer')"
           :visible.sync="permsDialog"
           top="5vh"
           :close-on-click-modal="false")
@@ -97,7 +97,7 @@
       slot(name="dialog_sites")
         el-dialog(
           v-if="$perms.is_superuser"
-          title="$t('customers.customerSitesAccessory')"
+          :title="$t('customers.customerSitesAccessory')"
           :visible.sync="sitesDlg"
           :close-on-click-modal="false")
           sites-attach(v-on:save="selectedCustomerSitesSave")
@@ -203,7 +203,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'telephone',
-      label: this.$t('addrs.phone').toString(),
+      label: this.$t('customers.phone').toString(),
       'min-width': 140
     },
     {

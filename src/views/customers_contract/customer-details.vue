@@ -4,7 +4,8 @@
       el-tab-pane(
         :label="$t('contractDocs.customerContract')"
         name="contracts"
-        lazy)
+        lazy
+      )
         template(v-if="contracts.length > 0")
           el-row(:gutter="15")
             el-col.col_vert_space(
@@ -16,23 +17,29 @@
               el-card
                 template(#header)
                   | {{ $t('contractDocs.customerContract') }} № {{ c.contract_number }}
-                
+
                   el-button.card_del_btn(
                     v-show="c.id"
                     type="text"
                     icon="el-icon-close"
                     @click="delContract(c)")
-              
+
                 contract-form(:contract="c")
-      
+
         span(v-else)
-          | {{ $('contractDocs.noContracts') }}
-      
+          | {{ $t('contractDocs.noContracts') }}
+
         el-button(@click="newContractFormVisible=true")
           | {{ $t('add') }}
-  
-    el-dialog(:visible.sync="newContractFormVisible", :title="$t('contractDocs.addCustomerContract')")
-      contract-form(@added="doneAdd", @changed="doneChange")
+
+    el-dialog(
+      :visible.sync="newContractFormVisible"
+      :title="$t('contractDocs.addCustomerContract')"
+    )
+      contract-form(
+        @added="doneAdd"
+        @changed="doneChange"
+      )
 </template>
 
 <script lang="ts">

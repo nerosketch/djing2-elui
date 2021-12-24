@@ -2,35 +2,35 @@
   .tab-container
     el-tabs(v-model="activeTabName", type="border-card")
       el-tab-pane(
-        label="$t('novye-zadachi')"
+        :label="$t('novye-zadachi')"
         name="tnew"
         lazy)
         keep-alive
           task-list(tabUrl="get_new")
     
       el-tab-pane(
-        label="$t('vypolnennye-zadachi')"
+        :label="$t('vypolnennye-zadachi')"
         name="tfin"
         lazy)
         keep-alive
           task-list(tabUrl="get_finished")
     
       el-tab-pane(
-        label="$t('provalennye-zadachi')"
+        :label="$t('provalennye-zadachi')"
         name="tf"
         lazy)
         keep-alive
           task-list(tabUrl="get_failed")
     
       el-tab-pane(
-        label="$t('vse-zadachi')"
+        :label="$t('vse-zadachi')"
         name="tall"
         lazy)
         keep-alive
           task-list(tabUrl="get_all")
     
       el-tab-pane(
-        label="$t('vse-nezavershyonnye')"
+        :label="$t('vse-nezavershyonnye')"
         name="tallnew"
         lazy)
         keep-alive

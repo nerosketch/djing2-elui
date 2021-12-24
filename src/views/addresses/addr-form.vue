@@ -5,16 +5,16 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(:label="$t('title')", prop="title")
+    el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(label="$t('uroven-fias')", prop="fias_address_level")
+    el-form-item(:label="$t('uroven-fias')", prop="fias_address_level")
       fias-level-choice(v-model="frmMod.fias_address_level")
   
-    el-form-item(label="$t('tip-adresa-fias')", prop="fias_address_type")
+    el-form-item(:label="$t('tip-adresa-fias')", prop="fias_address_type")
       fias-type-choice(v-model="frmMod.fias_address_type", :level="frmMod.fias_address_level")
   
-    el-form-item(label="$t('tip-adresnogo-obekta')", prop="address_type")
+    el-form-item(:label="$t('tip-adresnogo-obekta')", prop="address_type")
       address-type-choice(v-model="frmMod.address_type")
   
     el-form-item

@@ -14,7 +14,7 @@
     el-form-item(:label="$t('customers.phone')", prop="telephone")
       tels-input(v-model="frmMod.telephone")
   
-    el-form-item(label="$t('dom-ustar')")
+    el-form-item(:label="$t('dom-ustar')")
       el-input(
         v-model="frmMod.house"
         :maxlength="12"

@@ -31,27 +31,27 @@
                 i.el-icon-error.el-alert--error.is-light(v-else)
           
             el-table-column(
-              label="$t('snmp-nom')"
+              :label="$t('snmp-nom')"
               min-width="97"
               prop="number")
           
             el-table-column(
-              label="$t('imya')"
+              :label="$t('imya')"
               min-width="93"
               prop="title")
           
             el-table-column(
-              label="$t('mak-0')"
+              :label="$t('mak-0')"
               min-width="123"
               prop="mac_addr")
           
             el-table-column(
-              label="$t('ur-signala')"
+              :label="$t('ur-signala')"
               min-width="92"
               prop="signal")
           
             el-table-column(
-              label="$t('v-seti')"
+              :label="$t('v-seti')"
               min-width="151"
               prop="uptime")
           
@@ -69,7 +69,7 @@
     el-progress.progress_disable_animations(v-else, :percentage="loadPercent")
   
     el-dialog(
-      title="$t('dobavit-onu')"
+      :title="$t('dobavit-onu')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       new-dev-form(

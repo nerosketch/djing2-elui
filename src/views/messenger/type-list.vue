@@ -4,7 +4,10 @@
     :data="messengerBotTypes"
     border
     fit)
-    el-table-column(label="$t('tip-bota-1')", prop="text")
+    el-table-column(
+      :label="$t('tip-bota-1')"
+      prop="text"
+    )
       template(v-slot:default="{row}")
         router-link(:to="{ name: 'messengerList', params: { messengerTypeName: row.text } }")
           | {{ row.text }}

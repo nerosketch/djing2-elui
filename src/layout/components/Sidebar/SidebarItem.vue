@@ -1,26 +1,45 @@
 <template lang="pug">
-  div(v-if="!item.meta || !item.meta.hidden", :class="['menu-wrapper', isCollapse ? 'simple-mode' : 'full-mode', {'first-level': isFirstLevel}]")
+  div(
+    v-if="!item.meta || !item.meta.hidden"
+    :class="['menu-wrapper', isCollapse ? 'simple-mode' : 'full-mode', {'first-level': isFirstLevel}]"
+  )
     template(v-if="theOnlyOneChild && !theOnlyOneChild.children")
-      sidebar-item-link(v-if="theOnlyOneChild.meta", :to="resolvePath(theOnlyOneChild.path)")
-        el-menu-item(:index="resolvePath(theOnlyOneChild.path)", :class="{'submenu-title-noDropdown': isFirstLevel}")
-          i(v-if="theOnlyOneChild.meta.icon", :class="theOnlyOneChild.meta.icon")
-        
-          span(v-if="theOnlyOneChild.meta.title", slot="title")
-            | {{ translated(theOnlyOneChild.meta.title) }}
-          
-            small.calc-place(v-if="childCalc")
-              | {{ childCalc }}
-  
+      sidebar-item-link(
+        v-if="theOnlyOneChild.meta"
+        :to="resolvePath(theOnlyOneChild.path)"
+      )
+        el-menu-item(
+          :index="resolvePath(theOnlyOneChild.path)"
+          :class="{'submenu-title-noDropdown': isFirstLevel}"
+        )
+          i(
+            v-if="theOnlyOneChild.meta.icon"
+            :class="theOnlyOneChild.meta.icon"
+          )
+
+          span(
+            v-if="theOnlyOneChild.meta.title"
+            slot="title"
+          ) {{ translated(theOnlyOneChild.meta.title) }}
+            small.calc-place(
+              v-if="childCalc"
+            ) {{ childCalc }}
+
     el-submenu(
       v-else
       :index="resolvePath(item.path)"
-      popper-append-to-body)
+      popper-append-to-body
+    )
       template(slot="title")
-        i(v-if="item.meta && item.meta.icon", :class="item.meta.icon")
-      
-        span(v-if="item.meta && item.meta.title", slot="title")
-          | {{ translated(item.meta.title) }}
-    
+        i(
+          v-if="item.meta && item.meta.icon"
+          :class="item.meta.icon"
+        )
+        span(
+          v-if="item.meta && item.meta.title"
+          slot="title"
+        ) {{ translated(item.meta.title) }}
+
       template(v-if="item.children")
         sidebar-item.nest-menu(
           v-for="child in item.children"

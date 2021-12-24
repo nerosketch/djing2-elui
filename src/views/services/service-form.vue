@@ -5,32 +5,30 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(:label="$t('title')", prop="title")
+    el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(label="$t('opisanie-10')", prop="descr")
+    el-form-item(:label="$t('opisanie-10')" prop="descr")
       el-input(v-model="frmMod.descr")
   
-    el-form-item(label="$t('vkhod-skorost')", prop="speed_in")
-      el-input(v-model="frmMod.speed_in", type="number")
+    el-form-item(:label="$t('vkhod-skorost')" prop="speed_in")
+      el-input(v-model="frmMod.speed_in" type="number")
   
-    el-form-item(label="$t('iskhod-skorost')", prop="speed_out")
-      el-input(v-model="frmMod.speed_out", type="number")
+    el-form-item(:label="$t('iskhod-skorost')" prop="speed_out")
+      el-input(v-model="frmMod.speed_out" type="number")
   
-    el-form-item(label="$t('uskorenie')", prop="speed_burst")
-      el-input(v-model="frmMod.speed_burst", type="number")
+    el-form-item(:label="$t('uskorenie')" prop="speed_burst")
+      el-input(v-model="frmMod.speed_burst" type="number")
   
-    el-form-item(label="$t('stoimost-1')", prop="cost")
-      el-input(v-model="frmMod.cost", type="number")
+    el-form-item(:label="$t('stoimost-1')" prop="cost")
+      el-input(v-model="frmMod.cost" type="number")
   
-    el-form-item(label="$t('administrativnaya')", prop="is_admin")
+    el-form-item(:label="$t('administrativnaya')" prop="is_admin")
       el-checkbox(v-model="frmMod.is_admin")
         | {{ $t('yavlyaetsya-li-administrativnoi-uslugoi') }}
-      
-        b
-          | {{ frmMod.is_admin ? 'Да' : 'Нет' }}
+        b {{ frmMod.is_admin ? 'Да' : 'Нет' }}
   
-    el-form-item(label="$t('skript')", prop="calc_type")
+    el-form-item(:label="$t('skript')", prop="calc_type")
       el-select(v-model="frmMod.calc_type")
         el-option(
           v-for="dt in serviceTypeNames"
@@ -55,10 +53,11 @@ import { positiveValidator, positiveNumberValueAvailable } from '@/utils/validat
 import { IServiceTypeEnum } from '@/api/services/types'
 import { ServiceModule } from '@/store/modules/services/service'
 import FormMixin from '@/utils/forms'
+import i18n from '@/lang'
 
 const speedRule = {
   validator: positiveNumberValueAvailable,
-  message: this.$t('skorost-dolzhna-byt-polozhitelnoi'),
+  message: i18n.t('skorost-dolzhna-byt-polozhitelnoi'),
   trigger: 'change'
 }
 
@@ -136,13 +135,11 @@ export default class extends mixins(FormMixin) {
             this.$message.success(this.$t('usluga-izmenena'))
           }
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$t('fixFormErrs'))
       }
     })
   }

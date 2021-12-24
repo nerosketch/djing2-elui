@@ -8,8 +8,14 @@
     el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
   
-    el-form-item(:label="$t('contractDocs.contractNum.unique')", prop="contract_number")
-      el-input(v-model="frmMod.contract_number", :placeholder="$t('contractDocs.noRepeat')")
+    el-form-item(
+      :label="$t('customers.contractNum.unique')"
+      prop="contract_number"
+    )
+      el-input(
+        v-model="frmMod.contract_number"
+        :placeholder="$t('contractDocs.noRepeat')"
+      )
         template(#append)
           el-button(
             icon="el-icon-document"

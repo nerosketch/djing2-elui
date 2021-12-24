@@ -22,7 +22,7 @@
         template(v-slot:default="{row}")
           boolean-icon(v-model="row.native")
     
-      el-table-column(label="$t('upravlenie')")
+      el-table-column(:label="$t('upravlenie')")
         template(v-slot:default="{row}")
           boolean-icon(v-model="row.is_management")
 </template>

@@ -1,12 +1,15 @@
 <template lang="pug">
   .app-wrapper(:class="classObj")
-    .drawer-bg(v-if="classObj.mobile && sidebar.opened", @click="handleClickOutside")
-  
+    .drawer-bg(
+      v-if="classObj.mobile && sidebar.opened"
+      @click="handleClickOutside"
+    )
+
     sidebar.sidebar-container
-  
+
     .main-container
       navbar
-    
+
       app-main
 </template>
 

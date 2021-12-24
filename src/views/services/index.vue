@@ -1,24 +1,30 @@
 <template lang="pug">
   .tab-container
-    el-tabs(v-model="activeTabName", type="border-card")
+    el-tabs(
+      v-model="activeTabName"
+      type="border-card"
+    )
       el-tab-pane(
-        label="$t('tarify')"
+        :label="$t('tarify')"
         name="services"
-        lazy)
+        lazy
+      )
         keep-alive
           service-list
     
       el-tab-pane(
-        label="$t('periodicheskie-platezhi')"
+        :label="$t('periodicheskie-platezhi')"
         name="periodicpays"
-        lazy)
+        lazy
+      )
         keep-alive
           periodic-pay-list
     
       el-tab-pane(
-        label="$t('edinorazovye-platezhi')"
+        :label="$t('edinorazovye-platezhi')"
         name="shots"
-        lazy)
+        lazy
+      )
         keep-alive
           shot-list
 </template>

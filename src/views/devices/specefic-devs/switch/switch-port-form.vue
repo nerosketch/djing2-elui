@@ -6,10 +6,19 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(label="№ порта", prop="num")
-      el-input(v-model="frmMod.num", type="number")
+    el-form-item(
+      label="№ порта"
+      prop="num"
+    )
+      el-input(
+        v-model="frmMod.num"
+        type="number"
+      )
   
-    el-form-item(label="$t('opisanie-4')", prop="descr")
+    el-form-item(
+      :label="$t('opisanie-4')"
+      prop="descr"
+    )
       el-input(v-model="frmMod.descr")
   
     el-form-item

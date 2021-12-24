@@ -20,7 +20,7 @@
           name="username"
           type="text"
           autocomplete="on"
-          placeholder="$t('login-0')")
+          :placeholder="$t('login-0')")
     
       el-form-item(prop="password")
         span.svg-container
@@ -31,7 +31,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="$t('parol')"
+          :placeholder="$t('parol')"
           name="password"
           autocomplete="on"
           @keyup.enter.native="handleLogin")

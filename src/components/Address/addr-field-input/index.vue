@@ -43,7 +43,7 @@ import AddrSelectForm from './addr-select-form.vue'
   components: { AddrSelectForm }
 })
 export default class extends Vue {
-  @Prop({ default: '[' + this.$t('notChosen') + ']'})
+  @Prop({ default: '[notChosen]'})
   private emptyLabel!: string
 
   @Prop({ default: null })

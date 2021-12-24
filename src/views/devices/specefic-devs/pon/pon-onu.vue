@@ -110,7 +110,7 @@
   
     el-dialog(
       :visible.sync="devFormDialog"
-      title="$t('izmenit-onu')"
+      :title="$t('izmenit-onu')"
       :close-on-click-modal="false")
       dev-form(v-on:done="devFrmDone")
 </template>

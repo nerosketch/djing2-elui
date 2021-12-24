@@ -11,10 +11,10 @@
     el-form-item(:label="$t('macAddress')", prop="mac_addr")
       el-input(v-model="frmMod.mac_addr")
   
-    el-form-item(label="$t('opisanie-0')", prop="comment")
+    el-form-item(:label="$t('opisanie-0')", prop="comment")
       el-input(v-model="frmMod.comment")
   
-    el-form-item(label="$t('tip-oborudovaniya')")
+    el-form-item(:label="$t('tip-oborudovaniya')")
       el-select(v-model="frmMod.dev_type")
         el-option(
           v-for="dt in deviceTypeNames"
@@ -22,28 +22,28 @@
           :label="dt.nm"
           :value="dt.v")
   
-    el-form-item(label="$t('snmp-community')")
+    el-form-item(:label="$t('snmp-community')")
       el-input(v-model="frmMod.man_passw")
   
-    el-form-item(label="$t('gruppa-0')")
+    el-form-item(:label="$t('gruppa-0')")
       groups-choice(v-model="frmMod.group")
   
-    el-form-item(label="$t('rodit-ustroistvo')")
+    el-form-item(:label="$t('rodit-ustroistvo')")
       device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="$store.state.devicemodule.parent_dev_name")
   
-    el-form-item(label="$t('data-vvedeniya-v-ekspluataciyu')")
+    el-form-item(:label="$t('data-vvedeniya-v-ekspluataciyu')")
       datetime-counter(v-model="frmMod.create_time")
   
-    el-form-item(label="$t('adres')")
+    el-form-item(:label="$t('adres')")
       addr-field-input(v-model="frmMod.address")
   
-    el-form-item(label="$t('doma')")
+    el-form-item(:label="$t('doma')")
       el-input(
         v-model="frmMod.place"
         disabled
         readonly)
   
-    el-form-item(label="$t('dop-info-dlya-snmp')")
+    el-form-item(:label="$t('dop-info-dlya-snmp')")
       el-input(v-model="frmMod.snmp_extra")
   
     el-form-item(prop="is_noticeable")

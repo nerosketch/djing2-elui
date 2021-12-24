@@ -34,7 +34,7 @@
         | {{ $t('add') }}
   
     el-dialog(
-      title="$t('dobavit-uchyotku')"
+      :title="$t('dobavit-uchyotku')"
       :visible.sync="profileFormDialog"
       :close-on-click-modal="false")
       profile-form(v-on:done="addProfileDone")

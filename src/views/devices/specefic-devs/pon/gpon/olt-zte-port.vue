@@ -19,7 +19,7 @@
   
     el-dialog(
       top="5vh"
-      title="$t('spisok-onu-na-glazu')"
+      :title="$t('spisok-onu-na-glazu')"
       :visible.sync="onuListDialog"
       :close-on-click-modal="false")
       onu-on-fiber(:devId="devId", :fiberAddr="port.fb_id")

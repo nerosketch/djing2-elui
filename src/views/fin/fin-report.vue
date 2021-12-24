@@ -12,7 +12,7 @@
   
     el-select(
       v-model="reportParams.pay_gw"
-      placeholder="$t('platyozhnyi-shlyuz')"
+      :placeholder="$t('platyozhnyi-shlyuz')"
       v-loading="gatewaysLoading"
       :style="{width: '10%'}")
       el-option(
@@ -39,17 +39,17 @@
       border
       fit)
       el-table-column(
-        label="$t('data')"
+        :label="$t('data')"
         min-width="110"
         prop="pay_date")
     
       el-table-column(
-        label="$t('summa')"
+        :label="$t('summa')"
         min-width="110"
         prop="summ")
     
       el-table-column(
-        label="$t('kolich-platezhei')"
+        :label="$t('kolich-platezhei')"
         min-width="110"
         prop="pay_count")
 </template>

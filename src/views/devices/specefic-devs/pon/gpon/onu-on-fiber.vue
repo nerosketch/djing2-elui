@@ -7,17 +7,17 @@
       border
       fit)
       el-table-column(
-        label="$t('tip-0')"
+        :label="$t('tip-0')"
         min-width="80"
         prop="onu_type")
     
       el-table-column(
-        label="$t('port')"
+        :label="$t('port')"
         min-width="90"
         prop="onu_port")
     
       el-table-column(
-        label="$t('seriinik')"
+        :label="$t('seriinik')"
         min-width="90"
         prop="onu_sn")
 </template>

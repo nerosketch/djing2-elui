@@ -51,7 +51,7 @@
       service-form(v-on:done="frmDone")
   
     el-dialog(
-      title="$t('kto-imeet-prava-na-uslugu')"
+      :title="$t('kto-imeet-prava-na-uslugu')"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")
@@ -62,13 +62,13 @@
         :objId="srvIdGetter")
   
     el-dialog(
-      title="$t('prinadlezhnost-saitam-5')"
+      :title="$t('prinadlezhnost-saitam-5')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.service.sites", v-on:save="serviceSitesSave")
   
     el-dialog(
-      title="$t('polzovateli-uslugi')"
+      :title="$t('polzovateli-uslugi')"
       :visible.sync="customerServiceVisible"
       top="2vh"
       :close-on-click-modal="false")

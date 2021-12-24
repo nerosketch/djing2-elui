@@ -40,7 +40,7 @@
       pool-form(v-on:done="frmDone")
   
     el-dialog(
-      title="$t('prinadlezhnost-saitam-1')"
+      :title="$t('prinadlezhnost-saitam-1')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.netpool.sites", v-on:save="netpoolSitesSave")

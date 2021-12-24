@@ -5,39 +5,39 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(label="$t('login-2')", prop="username")
+    el-form-item(:label="$t('login-2')", prop="username")
       el-input(v-model="frmMod.username")
   
-    el-form-item(label="$t('fio')", prop="fio")
+    el-form-item(:label="$t('fio')", prop="fio")
       el-input(v-model="frmMod.fio")
   
-    el-form-item(label="$t('den-rozhdeniya')", prop="birth_day")
+    el-form-item(:label="$t('den-rozhdeniya')", prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
         format="d.MM.yyyy")
   
-    el-form-item(label="$t('vklyuchyon')")
+    el-form-item(:label="$t('vklyuchyon')")
       el-switch(v-model="frmMod.is_active")
     
       small
         | {{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}
   
-    el-form-item(label="$t('superpolzovatel')")
+    el-form-item(:label="$t('superpolzovatel')")
       el-switch(v-model="frmMod.is_superuser")
     
       small
         | {{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}
   
-    el-form-item(label="$t('nomer-telefona')", prop="telephone")
+    el-form-item(:label="$t('nomer-telefona')", prop="telephone")
       el-input(v-model="frmMod.telephone")
   
-    el-form-item(label="$t('epochta')", prop="email")
+    el-form-item(:label="$t('epochta')", prop="email")
       el-input(v-model="frmMod.email")
   
     el-form-item(
-      label="$t('parol-0')"
+      :label="$t('parol-0')"
       prop="password"
       v-if="isNew")
       el-input(
@@ -65,7 +65,7 @@
               | {{ $t('saity') }}
   
     el-dialog(
-      title="$t('pomenyat-parol')"
+      :title="$t('pomenyat-parol')"
       :visible.sync="passwordFormDialog"
       :close-on-click-modal="false")
       password-form(
@@ -74,13 +74,13 @@
         v-on:cancel="passwordCancel")
   
     el-dialog(
-      title="$t('naznachit-prinadlezhnost-gruppam-polzovatelei')"
+      :title="$t('naznachit-prinadlezhnost-gruppam-polzovatelei')"
       :visible.sync="userGroupAccessDialog"
       :close-on-click-modal="false")
       profile-groups(v-on:done="userGroupAccessDone")
   
     el-dialog(
-      title="$t('prinadlezhnost-saitam-3')"
+      :title="$t('prinadlezhnost-saitam-3')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.userprofile.sites", v-on:save="profileSitesSave")

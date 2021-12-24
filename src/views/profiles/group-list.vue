@@ -27,7 +27,7 @@
       user-group-form(v-on:done="frmDone", v-on:cancel="ugFormDialog=false")
   
     el-dialog(
-      title="$t('izmenit-prava-dlya-gruppy')"
+      :title="$t('izmenit-prava-dlya-gruppy')"
       top="5vh"
       width="80%"
       :visible.sync="ugpDialog"

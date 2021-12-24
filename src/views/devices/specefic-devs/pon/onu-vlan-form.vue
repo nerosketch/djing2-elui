@@ -7,7 +7,10 @@
     span
       | {{ $t('shablon-konfiga-dlya-onu') }}
   
-    el-select(v-model="currentConfig.configTypeCode", placeholder="$t('shablon-konfiga')")
+    el-select(
+      v-model="currentConfig.configTypeCode"
+      :placeholder="$t('shablon-konfiga')"
+    )
       el-option(
         :value="v.code"
         :label="v.title"

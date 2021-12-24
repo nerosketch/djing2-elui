@@ -6,21 +6,36 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(:label="$t('title')", prop="title")
+    el-form-item(
+      :label="$t('title')"
+      prop="title"
+    )
       el-input(v-model="frmMod.title")
   
-    el-form-item(label="$t('opisanie-5')", prop="description")
+    el-form-item(
+      :label="$t('opisanie-5')"
+      prop="description"
+    )
       el-input(v-model="frmMod.description")
   
-    el-form-item(label="$t('tip-bota')", prop="bot_type")
-      el-select(v-model="frmMod.bot_type", :loading="messengerTypesLoading")
+    el-form-item(
+      :label="$t('tip-bota')"
+      prop="bot_type"
+    )
+      el-select(
+        v-model="frmMod.bot_type"
+        :loading="messengerTypesLoading"
+      )
         el-option(
           v-for="mbt in messengerBotTypes"
           :key="mbt.val"
           :value="mbt.val"
           :label="mbt.text")
   
-    el-form-item(label="$t('token')", prop="token")
+    el-form-item(
+      :label="$t('token')"
+      prop="token"
+    )
       el-input(v-model="frmMod.token")
   
     el-form-item

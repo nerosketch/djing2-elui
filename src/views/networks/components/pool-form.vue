@@ -6,22 +6,25 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(label="$t('podset')", prop="network")
+    el-form-item(
+      :label="$t('podset')"
+      prop="network"
+    )
       el-input(v-model="frmMod.network")
   
-    el-form-item(label="$t('nach-ip')", prop="ip_start")
+    el-form-item(:label="$t('nach-ip')", prop="ip_start")
       el-input(v-model="frmMod.ip_start")
   
-    el-form-item(label="$t('kon-ip')", prop="ip_end")
+    el-form-item(:label="$t('kon-ip')", prop="ip_end")
       el-input(v-model="frmMod.ip_end")
   
-    el-form-item(label="$t('gruppy-2')")
+    el-form-item(:label="$t('gruppy-2')")
       groups-choice(v-model="frmMod.groups", multiple)
   
-    el-form-item(label="$t('shlyuz')", prop="gateway")
+    el-form-item(:label="$t('shlyuz')", prop="gateway")
       el-input(v-model="frmMod.gateway")
   
-    el-form-item(label="$t('vlan')")
+    el-form-item(:label="$t('vlan')")
       el-select(v-model="frmMod.vlan_if", v-loading="vlanLoading")
         el-option(
           v-for="v in vlans"
@@ -29,7 +32,7 @@
           :label="$t('v-vid-v-title', [v.vid, v.title])"
           :value="v.id")
   
-    el-form-item(label="$t('tip-seti')")
+    el-form-item(:label="$t('tip-seti')")
       el-select(v-model="frmMod.kind")
         el-option(
           v-for="k in networkPoolKinds"
@@ -37,11 +40,11 @@
           :label="k.title"
           :value="k.val")
   
-    el-form-item(label="$t('dinamicheskii-1')")
+    el-form-item(:label="$t('dinamicheskii-1')")
       el-checkbox(v-model="frmMod.is_dynamic")
         | {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
   
-    el-form-item(label="$t('opisanie-7')", prop="description")
+    el-form-item(:label="$t('opisanie-7')", prop="description")
       el-input(
         v-model="frmMod.description"
         type="textarea"

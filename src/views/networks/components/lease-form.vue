@@ -5,13 +5,22 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(label="$t('ip-adres-1')", prop="ip_address")
+    el-form-item(
+      :label="$t('ip-adres-1')"
+      prop="ip_address"
+    )
       el-input(v-model="frmMod.ip_address")
   
-    el-form-item(label="$t('mac-adres-0')", prop="mac_address")
+    el-form-item(
+      :label="$t('mac-adres-0')"
+      prop="mac_address"
+    )
       el-input(v-model="frmMod.mac_address")
   
-    el-form-item(label="$t('dinamicheskii')", prop="is_dynamic")
+    el-form-item(
+      :label="$t('dinamicheskii')"
+      prop="is_dynamic"
+    )
       el-checkbox(v-model="frmMod.is_dynamic")
         | {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
   

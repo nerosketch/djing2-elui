@@ -21,7 +21,7 @@
             :disabled="!$perms.networks.delete_customeripleasemodel")
   
     el-dialog(
-      title="$t('izmenenie-sessii')"
+      :title="$t('izmenenie-sessii')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       lease-form(v-on:done="frmDone")

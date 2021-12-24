@@ -32,7 +32,7 @@
       pay-gw-form(v-on:done="frmDone")
   
     el-dialog(
-      title="$t('prinadlezhnost-saitam')"
+      :title="$t('prinadlezhnost-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.payalltimegateway.sites", v-on:save="payGwSitesSave")

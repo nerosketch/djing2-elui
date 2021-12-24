@@ -11,13 +11,13 @@
               profile-form(v-if="ready")
           
             el-tab-pane(
-              label="$t('otvetstvennost-za-gruppy')"
+              :label="$t('otvetstvennost-za-gruppy')"
               name="activity"
               lazy)
               group-responsibility(:profileUname="profileUname")
           
             el-tab-pane(
-              label="$t('prava-na-klassy-deistvii')"
+              :label="$t('prava-na-klassy-deistvii')"
               v-if="$store.state.currentuserprofile.is_superuser"
               name="classperms"
               lazy)
@@ -25,14 +25,14 @@
                 user-class-perms
           
             el-tab-pane(
-              label="$t('log-deistvii')"
+              :label="$t('log-deistvii')"
               name="timeline"
               lazy)
               keep-alive(v-if="ready")
                 profile-log
           
             el-tab-pane(
-              label="$t('log-avtorizacii')"
+              :label="$t('log-avtorizacii')"
               name="authlog"
               lazy)
               keep-alive(v-if="ready")

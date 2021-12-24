@@ -32,7 +32,7 @@
       shot-form(v-on:done="frmDone")
   
     el-dialog(
-      title="$t('prinadlezhnost-saitam-6')"
+      :title="$t('prinadlezhnost-saitam-6')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.oneshotpay.sites", v-on:save="serviceSitesSave")

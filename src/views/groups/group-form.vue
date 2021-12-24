@@ -6,7 +6,10 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(:label="$t('title')", prop="title")
+    el-form-item(
+      :label="$t('title')"
+      prop="title"
+    )
       el-input(v-model="frmMod.title")
   
     el-form-item

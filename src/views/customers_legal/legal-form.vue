@@ -11,59 +11,59 @@
     el-form-item(:label="$t('title')", prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(label="$t('fio-direktora')", prop="fio")
+    el-form-item(:label="$t('fio-direktora')", prop="fio")
       el-input(v-model="frmMod.fio")
   
-    el-form-item(label="$t('gruppa')")
+    el-form-item(:label="$t('gruppa')")
       groups-choice(v-model="frmMod.group")
   
-    el-form-item(label="$t('tip-yurlica')", prop="legal_type")
+    el-form-item(:label="$t('tip-yurlica')", prop="legal_type")
       legal-type-choice(v-model="frmMod.legal_type")
   
-    el-form-item(label="$t('yuridicheskii-adres')", prop="address")
+    el-form-item(:label="$t('yuridicheskii-adres')", prop="address")
       addr-field-input(v-model="frmMod.address")
   
-    el-form-item(label="$t('pochtovyi-indeks-yuridicheskogo-adresa')", prop="post_index")
+    el-form-item(:label="$t('pochtovyi-indeks-yuridicheskogo-adresa')", prop="post_index")
       el-input(v-model="frmMod.post_index")
   
-    el-form-item(label="$t('adres-dostavki-schyota')")
+    el-form-item(:label="$t('adres-dostavki-schyota')")
       addr-field-input(v-model="frmMod.delivery_address")
   
-    el-form-item(label="$t('pochtovyi-indeks-adresa-dostavki-schyota')", prop="delivery_address_post_index")
+    el-form-item(:label="$t('pochtovyi-indeks-adresa-dostavki-schyota')", prop="delivery_address_post_index")
       el-input(v-model="frmMod.delivery_address_post_index")
         el-button(
           slot="append"
           @click="copyDeliveryAddrFromLegalAddr"
           icon="el-icon-document-copy"
-          title="$t('skopirovat-adres-iz-yuridicheskogo-adresa')"
+          :title="$t('skopirovat-adres-iz-yuridicheskogo-adresa')"
           :disabled="addrCopyDisabled")
   
-    el-form-item(label="$t('pochtovyi-adres')")
+    el-form-item(:label="$t('pochtovyi-adres')")
       addr-field-input(v-model="frmMod.post_address")
   
-    el-form-item(label="$t('pochtovyi-indeks-pochtovogo-adresa')", prop="post_post_index")
+    el-form-item(:label="$t('pochtovyi-indeks-pochtovogo-adresa')", prop="post_post_index")
       el-input(v-model="frmMod.post_post_index")
         el-button(
           slot="append"
           @click="copyPostAddrFromLegalAddr"
           icon="el-icon-document-copy"
-          title="$t('skopirovat-adres-iz-yuridicheskogo-adresa-0')"
+          :title="$t('skopirovat-adres-iz-yuridicheskogo-adresa-0')"
           :disabled="addrCopyDisabled")
   
-    el-form-item(label="$t('inn')", prop="tax_number")
+    el-form-item(:label="$t('inn')", prop="tax_number")
       el-input(v-model="frmMod.tax_number", type="number")
   
-    el-form-item(label="$t('ogrn')", prop="state_level_reg_number")
+    el-form-item(:label="$t('ogrn')", prop="state_level_reg_number")
       el-input(v-model="frmMod.state_level_reg_number", type="number")
   
-    el-form-item(label="$t('data-nachala-deistviya-dogovora')")
+    el-form-item(:label="$t('data-nachala-deistviya-dogovora')")
       el-date-picker(
         v-model="frmMod.actual_start_time"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm"
         format="d.MM.yyyy HH:mm")
   
-    el-form-item(label="$t('opisanie')")
+    el-form-item(:label="$t('opisanie')")
       el-input(
         type="textarea"
         rows="5"
@@ -87,8 +87,9 @@ import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 import { ICustomerLegal } from '@/api/customers_legal/types'
 import LegalTypeChoice from '@/components/CustomerLegal/legal-type-choice.vue'
+import i18n from '@/lang'
 
-const maxLenValidator = { max: 6, trigger: 'change', message: this.$t('pochtovyi-indeks-soderzhit-ne-bolee-6ti-simvolov') }
+const maxLenValidator = { max: 6, trigger: 'change', message: i18n.t('pochtovyi-indeks-soderzhit-ne-bolee-6ti-simvolov') }
 
 @Component({
   name: 'LegalForm',

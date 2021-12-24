@@ -18,7 +18,7 @@
         | {{ $t('dobavit-polya') }}
   
     el-dialog(
-      title="$t('pole')"
+      :title="$t('pole')"
       :visible.sync="fieldFormVisible"
       :close-on-click-modal="false")
       field-form(@done="formDone")

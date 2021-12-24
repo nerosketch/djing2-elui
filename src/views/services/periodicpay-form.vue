@@ -8,7 +8,7 @@
     el-form-item(:label="$t('title')", prop="name")
       el-input(v-model="frmMod.name")
   
-    el-form-item(label="$t('stoimost')", prop="amount")
+    el-form-item(:label="$t('stoimost')", prop="amount")
       el-input(v-model="frmMod.amount")
   
     el-form-item

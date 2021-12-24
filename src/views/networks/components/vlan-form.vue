@@ -11,7 +11,7 @@
     el-form-item(label="VID", prop="vid")
       el-input(v-model="frmMod.vid", type="number")
   
-    el-form-item(label="$t('upravlenie-0')", prop="is_management")
+    el-form-item(:label="$t('upravlenie-0')", prop="is_management")
       el-checkbox(v-model="frmMod.is_management")
         | {{ $t('yavlyaetsya-li-vlanom-upravleniya') }}
       

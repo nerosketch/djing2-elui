@@ -6,7 +6,7 @@
     :model="frmMod"
     v-loading="loading")
     el-form-item(
-      label="$t('staryi-parol')"
+      :label="$t('staryi-parol')"
       prop="old_passw"
       :error="frmErr.old_passw"
       v-if="!this.$perms.is_superuser")
@@ -16,7 +16,7 @@
         type="password")
   
     el-form-item(
-      label="$t('novyi-parol')"
+      :label="$t('novyi-parol')"
       prop="new_passw"
       :error="frmErr.new_passw")
       el-input(
@@ -25,7 +25,7 @@
         type="password")
   
     el-form-item(
-      label="$t('povtori-parol')"
+      :label="$t('povtori-parol')"
       prop="retype_passw"
       :error="frmErr.retype_passw")
       el-input(

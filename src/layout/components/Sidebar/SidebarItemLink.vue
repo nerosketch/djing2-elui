@@ -3,7 +3,13 @@
     v-if="isExternal(to)"
     :href="to"
     target="_blank"
-    rel="noopener")
+    rel="noopener"
+  )
+    slot
+  router-link(
+    v-else
+    :to="to"
+  )
     slot
 </template>
 

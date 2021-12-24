@@ -3,13 +3,21 @@
     v-loading="loading"
     :data="customeServiceList"
     border
-    fit)
-    el-table-column(label="$t('login-5')", prop="username")
-  
-    el-table-column(label="$t('imya-1')", prop="fio")
+    fit
+  )
+    el-table-column(
+      :label="$t('login-5')"
+      prop="username"
+    )
+
+    el-table-column(
+      :label="$t('imya-1')"
+      prop="fio"
+    )
       template(v-slot:default="{row}")
-        router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: row.id }}")
-          | {{ row.fio }}
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{name: 'customerDetails', params:{uid: row.id }}"
+        ) {{ row.fio }}
 </template>
 
 <script lang="ts">
@@ -39,8 +47,6 @@ export default class extends Vue {
     try {
       const { data } = await getServiceUsers(srvId)
       this.customeServiceList = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

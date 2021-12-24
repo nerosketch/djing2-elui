@@ -31,7 +31,6 @@
           )
             h3 {{ $t('abonenty-ne-naideny') }}
 
-
         el-col(:sm='24' :md='12')
           template(v-if="$store.state.search.devices && $store.state.search.devices.length > 0")
             el-card(

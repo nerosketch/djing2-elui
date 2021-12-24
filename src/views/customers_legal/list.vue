@@ -23,7 +23,7 @@
         | {{ $t('dobavit-uchyotnuyu-zapis') }}
   
     el-dialog(
-      title="$t('organizaciya')"
+      :title="$t('organizaciya')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")
@@ -33,7 +33,7 @@
         v-on:update="frmUpdateDone")
   
     el-dialog(
-      title="$t('kto-imeet-prava-na-uchyotnuyu-zapis')"
+      :title="$t('kto-imeet-prava-na-uchyotnuyu-zapis')"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")

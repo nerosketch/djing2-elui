@@ -128,7 +128,7 @@
   
     el-dialog(
       :visible.sync="gwFormDialog"
-      title="$t('izmenit-shlyuz-dostupa')"
+      :title="$t('izmenit-shlyuz-dostupa')"
       :close-on-click-modal="false")
       gw-form(v-on:done="gwFrmDone", v-on:err="gwFormDialog=false")
 </template>

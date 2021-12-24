@@ -44,7 +44,7 @@
       vlan-form(v-on:done="frmDone")
   
     el-dialog(
-      title="$t('prinadlezhnost-saitam-2')"
+      :title="$t('prinadlezhnost-saitam-2')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.vlan.sites", v-on:save="vlanSitesSave")

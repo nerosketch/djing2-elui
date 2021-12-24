@@ -41,17 +41,17 @@
       border
       fit)
       el-table-column(
-        label="$t('mak')"
+        :label="$t('mak')"
         min-width="150"
         prop="mac")
     
       el-table-column(
-        label="$t('versiya-proshivki')"
+        :label="$t('versiya-proshivki')"
         min-width="150"
         prop="firmware_ver")
     
       el-table-column(
-        label="$t('loid-parol')"
+        :label="$t('loid-parol')"
         min-width="100"
         prop="loid_passw")
     
@@ -65,12 +65,15 @@
         min-width="150"
         prop="sn")
     
-      el-table-column(label="$t('sokhranit')", min-width="70")
+      el-table-column(
+        :label="$t('sokhranit')"
+        min-width="70"
+      )
         template(v-slot:default="{row}")
           el-button(icon="el-icon-plus", @click="onSaveOnu(row)")
   
     el-dialog(
-      title="$t('sokhranit-onu')"
+      :title="$t('sokhranit-onu')"
       :visible.sync="saveOnuFormDialog"
       :close-on-click-modal="false")
       new-dev-form(

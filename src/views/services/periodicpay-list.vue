@@ -33,7 +33,7 @@
       periodicpay-form(v-on:done="frmDone")
   
     el-dialog(
-      title="$t('prinadlezhnost-saitam-4')"
+      :title="$t('prinadlezhnost-saitam-4')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.periodicpay.sites", v-on:save="serviceSitesSave")

@@ -64,7 +64,7 @@
               | {{ $t('polya') }}
   
     el-dialog(
-      title="$t('zhelezka')"
+      :title="$t('zhelezka')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")
@@ -74,7 +74,7 @@
         :addrId="addrId")
   
     el-dialog(
-      title="$t('dobavit-ustroistvo-0')"
+      :title="$t('dobavit-ustroistvo-0')"
       :visible.sync="dialogNewDev"
       :close-on-click-modal="false"
       top="1%")
@@ -85,7 +85,7 @@
         :initialAddress="addrId")
   
     el-dialog(
-      title="$t('kto-imeet-prava-na-ustroistvo')"
+      :title="$t('kto-imeet-prava-na-ustroistvo')"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")
@@ -96,7 +96,7 @@
         :objId="$store.state.address.title")
   
     el-dialog(
-      title="$t('prinadlezhnost-oborudovaniya-saitam')"
+      :title="$t('prinadlezhnost-oborudovaniya-saitam')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.devicemodule.sites", v-on:save="devSitesSave")
@@ -292,7 +292,7 @@ export default class extends mixins(TableWithAddrMixin) {
   }
 
   private getDeviceObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getDevObjectsPerms(this.$store.state.address.title)
+    return getDevObjectsPerms(this.$store.state.address.id)
   }
 
   private openPermsDialog(d: IDevice) {

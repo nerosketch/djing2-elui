@@ -25,7 +25,7 @@
         | {{ $t('dobavit-messenger') }}
   
     el-dialog(
-      title="$t('sozdat-messenger')"
+      :title="$t('sozdat-messenger')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       messenger-form(v-on:done="frmDone")

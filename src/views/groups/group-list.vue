@@ -50,7 +50,7 @@
         :objId="groupIdGetter")
   
     el-dialog(
-      title="$t('prinadlezhnost-saitam-0')"
+      :title="$t('prinadlezhnost-saitam-0')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.group.sites", v-on:save="groupSitesSave")
