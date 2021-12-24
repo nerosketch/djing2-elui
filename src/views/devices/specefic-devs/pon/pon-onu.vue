@@ -34,7 +34,7 @@
             | {{ $t('roditelskoe-ustroistvo') }}
         
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
-            | {{ $t('and-nbsp-device-parent_dev_name', [device.parent_dev_name]) }}
+            | {{ device.parent_dev_name }}
       
         .text.item.list-item(v-if="device.iface_name")
           b
@@ -49,7 +49,7 @@
             v-for="(ab, i) in device.attached_users"
             :key="i"
             :to="{name: 'customerDetails', params:{ uid: ab.id }}")
-            | {{ $t('and-nbsp-ab-full_name', [ab.full_name]) }}
+            | {{ ab.full_name }}
       
         el-button-group
           delete-from-olt-btn(:devId="device.id", v-on:done="getDetails")

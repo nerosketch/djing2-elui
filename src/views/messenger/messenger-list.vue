@@ -110,7 +110,7 @@ export default class extends Vue {
   private delMessenger(m: IMessenger) {
     this.$confirm(this.$t('ty-deistvitelno-khochesh-udalit-chat-bot-m-title', [m.title])).then(async() => {
       await MessengerModule.DelMessenger(m.id)
-      this.$message.success(this.$t('chat-bot-m-title-udalyon', [m.title]))
+      this.$message.success(this.$t('chat-bot-udalyon', [m.title]))
       this.$refs.table.LoadTableData()
     })
   }

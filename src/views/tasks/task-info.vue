@@ -3,7 +3,7 @@
     template(v-slot:header)
       .clearfix {{ $t('detali-zadachi') }}
     p {{ $t('opisanie-store-state-task-descr', [$store.state.task.descr]) }}
-    p {{ $t('avtor-zadachi-store-state-task-author_full_name', [$store.state.task.author_full_name]) }}
+    p {{ $t('avtor-zadachi', [$store.state.task.author_full_name]) }}
     div {{ $t('ispolniteli') }}
       ul
         li(v-for="rec in taskRecipients" :key='rec.id') {{ rec.full_name || rec.username }}

@@ -4,7 +4,7 @@
       shadow="never"
     )
       template(v-slot:header)
-        .clearfix {{ $t('poisk-po-searchtextgetter', [$store.state.search.searchStr]) }}
+        .clearfix {{ $t('searchBy', [$store.state.search.searchStr]) }}
       el-row(:gutter='5')
         el-col(:sm='24' :md='12')
           template(v-if="$store.state.search.accounts && $store.state.search.accounts.length > 0")

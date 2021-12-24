@@ -9,7 +9,7 @@
       ref="table")
       template(v-slot:ismng="{row}")
         boolean-icon(v-model="row.is_management")
-          | {{ $t('and-nbsp-row-is_management-da-net', [row.is_management ? 'Да' : 'Нет']) }}
+          | {{ row.is_management ? 'Да' : 'Нет' }}
     
       template(v-slot:oper="{row}")
         el-button-group
