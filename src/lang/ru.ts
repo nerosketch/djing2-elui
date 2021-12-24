@@ -358,7 +358,6 @@ export default {
   "fio-direktora-obyazatelno": "Фио директора обязательно",
   "formy": "Формы",
   "foto": "Фото",
-  "gateways-port": "{0}",
   "gostevoi": "Гостевой",
   "gostevye-sessii": "Гостевые сессии",
   "greater-than": ">",
