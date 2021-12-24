@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import subprocess
 from transliterate import translit
 from libretranslatepy import LibreTranslateAPI
 
@@ -6,9 +7,6 @@ lt = LibreTranslateAPI("http://localhost:5000/")
 
 
 dct = {
-  "404nf": "404 Page Not Found",
-  "telValidation": "+[7,8,9,3] и 10,11 цифр",
-  "customer": "Абонент",
   "abonenty-na-portu": "Абоненты на порту",
   "abonenty-na-portu-ne-naideny": "Абоненты на порту не найдены",
   "abonenty-ne-naideny": "Абоненты не найдены",
@@ -51,7 +49,6 @@ dct = {
   "chto-to-zavershyonnoe": "Что-то завершённое",
   "comments": "Comments",
   "customer-support": "Customer Support",
-  "d": "Д",
   "data": "Дата",
   "data-nachala-deistviya-dogovora": "Дата начала действия договора",
   "data-sozdaniya": "Дата создания",
@@ -104,7 +101,6 @@ dct = {
   "fio-direktora-obyazatelno": "Фио директора обязательно",
   "formy": "Формы",
   "foto": "Фото",
-  "gateways-port": "{0}",
   "gostevoi": "Гостевой",
   "gostevye-sessii": "Гостевые сессии",
   "greater-than": ">",
@@ -175,7 +171,6 @@ dct = {
   "kto-imeet-prava-na-uchyotnuyu-zapis": "Кто имеет права на учётную запись",
   "kto-imeet-prava-na-uslugu": "Кто имеет права на услугу",
   "kto-imeet-prava-na-ustroistvo": "Кто имеет права на устройство",
-  "less-than": "<",
   "linux": "Linux",
   "log-avtorizacii": "Лог авторизаций",
   "log-deistvii": "Лог действий",
@@ -277,7 +272,6 @@ dct = {
   "otpravit-webhook-url": "Отправить webhook url",
   "otvetstvennost-za-gruppy": "Ответственность за группы",
   "otvetstvennost-za-gruppy-sokhranena": "Ответственность за группы сохранена",
-  "p-network-p-description": "{0} - {1}",
   "pakety": "Пакеты",
   "parameters-required": "Parameters required",
   "parol": "пароль",
@@ -522,6 +516,10 @@ dct = {
   "zhyoltyi-treugolnik": "жёлтый треугольник"
 }
 
+def replace(fromstr, tostr):
+    r = subprocess.run(['./lang/replace.sh', fromstr, tostr], shell=False)
+    print(r)
+
 
 def translate(text):
     r = lt.translate(text, 'ru', 'en')
@@ -537,6 +535,7 @@ def main():
             continue
         translated_val = translate(val)
         print(translated_val)
+        replace(key, translated_val)
 
 
 if __name__ == '__main__':

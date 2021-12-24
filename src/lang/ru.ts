@@ -428,7 +428,6 @@ export default {
   "kto-imeet-prava-na-uchyotnuyu-zapis": "Кто имеет права на учётную запись",
   "kto-imeet-prava-na-uslugu": "Кто имеет права на услугу",
   "kto-imeet-prava-na-ustroistvo": "Кто имеет права на устройство",
-  "less-than": "<",
   "linux": "Linux",
   "log-avtorizacii": "Лог авторизаций",
   "log-deistvii": "Лог действий",
