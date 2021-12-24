@@ -109,7 +109,7 @@ class CurrentUserProfile extends BaseProfileVuexModule implements IUserProfile {
   @Action
   public async PatchPermissions(info: object) {
     const { data } = await changeProfile(this.username, info)
-    this.SET_ALL_CURRENT_PROFILE(data as IUserProfile)
+    this.SET_ALL_CURRENT_PROFILE(data)
     return data
   }
 

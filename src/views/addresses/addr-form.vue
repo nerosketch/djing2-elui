@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { AddressModule } from '@/store/modules/addresses/address'
 import AddressTypeChoice from '@/components/Address/type-choice.vue'

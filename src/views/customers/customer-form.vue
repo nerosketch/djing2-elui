@@ -240,16 +240,12 @@ export default class extends mixins(FormMixin) {
       this.$t('customers.customerDeletionConfigmation').toString(),
       this.$t('attention').toString()
     ).then(async() => {
-      try {
-        const currLoc = this.$store.state.customer.address
-        await CustomerModule.DelCustomer()
-        this.$message.success(
-          this.$t('customers.accountRemovedOk').toString()
-        )
-        this.$router.push({ name: 'customerList', params: { addrId: currLoc.toString() } })
-      } catch (err) {
-        this.$message.error(err)
-      }
+      const currLoc = this.$store.state.customer.address
+      await CustomerModule.DelCustomer()
+      this.$message.success(
+        this.$t('customers.accountRemovedOk').toString()
+      )
+      this.$router.push({ name: 'customerList', params: { addrId: currLoc.toString() } })
     })
   }
 

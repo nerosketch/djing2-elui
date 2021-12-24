@@ -31,7 +31,7 @@ export default {
   },
   mounted() {
     this.timerTime = setInterval(() => {
-      this.uTime += 0.06
+      this.uTime += 0.03
     }, 16)
   },
   beforeDestroy() {

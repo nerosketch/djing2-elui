@@ -1,43 +1,47 @@
 <template lang="pug">
-  .app-container
-    el-tree(
-      :props="props"
-      :load="loadNode"
-      :expand-on-click-node="false"
-      node-key="id"
-      ref="etree"
-      lazy
-      draggable
-      :allow-drop="allowDrop"
-      :default-expanded-keys="addrIdHierarchy"
-      @node-drop="handleDrop"
-      @node-expand="onNodeExpand")
-      span.custom-tree-node(slot-scope="{ node, data }")
-        span
-          | {{ node.label }}
-      
-        span
-          el-button(
-            type="text"
-            icon="el-icon-plus"
-            @click="addNode(node)")
-        
-          el-button(
-            type="text"
-            icon="el-icon-edit"
-            @click="openEdit(node)")
-  
-    el-button(
-      icon="el-icon-plus"
-      type="success"
-      @click="addAbsoluteNode")
-      | {{ $t('add') }}
-  
-    el-dialog(
-      :title="dialogTitle"
-      :visible.sync="dialogVisible"
-      :close-on-click-modal="false")
-      address-form(@added="frmAddDone", @changed="frmChangeDone")
+.app-container
+  el-tree(
+    :props="props"
+    :load="loadNode"
+    :expand-on-click-node="false"
+    node-key="id"
+    ref="etree"
+    lazy
+    draggable
+    :allow-drop="allowDrop"
+    :default-expanded-keys="addrIdHierarchy"
+    @node-drop="handleDrop"
+    @node-expand="onNodeExpand"
+  )
+    span.custom-tree-node(slot-scope="{ node, data }")
+      span
+        b {{ node.label.tn }}
+        | &nbsp; {{ node.label.t }}
+      span
+        el-button(
+          type="text"
+          icon="el-icon-plus"
+          @click="addNode(node)"
+        )
+        el-button(
+          type="text"
+          icon="el-icon-edit"
+          @click="openEdit(node)"
+        )
+  el-button(
+    icon='el-icon-plus'
+    type='success'
+    @click="addAbsoluteNode"
+  ) {{ $t('add') }}
+  el-dialog(
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    :close-on-click-modal="false"
+  )
+    address-form(
+      @added="frmAddDone"
+      @changed="frmChangeDone"
+    )
 </template>
 
 <script lang="ts">
@@ -63,10 +67,15 @@ export default class extends Vue {
   }
 
   private props = {
-    label: (a: IAddressModel) => `${a.fias_address_type_name} ${a.title}`,
+    label: (a: IAddressModel) => ({
+      tn: a.fias_address_type_name,
+      t: a.title
+    }),
+    isLeaf: (a: IAddressModel) => (a.children_count === 0)
   }
 
   private dialogVisible = false
+  private parentTitle: string | null = null
 
   private tmpAddrTreeNode: AddrTreeNode | null = null
   private addrIdHierarchy: number[] = []
@@ -90,6 +99,7 @@ export default class extends Vue {
   private addNode(node: AddrTreeNode) {
     AddressModule.RESET_ALL_ADDR()
     AddressModule.SET_ADDR_PARENT(node.data.id)
+    this.parentTitle = `${node.data.fias_address_type_name} ${node.data.title}`
     this.dialogVisible = true
   }
 
@@ -121,20 +131,20 @@ export default class extends Vue {
     const { data } = await getAddresses({
       page: 1,
       page_size: 0,
-      parent_addr: parent || 0,
+      parent_addr: parent || 0
       // fields: 'id,title,parent_addr'
     })
     return data as unknown as IAddressModel[]
   }
 
   get dialogTitle() {
-    let t
     if (this.$store.state.address.id === 0) {
-      t = this.$t('add').toString()
-    } else {
-      t = this.$t('change').toString()
+      if (this.parentTitle) {
+        return `Создать адресный объект в "${this.parentTitle}"`
+      }
+      return 'Создать адресный объект'
     }
-    return `${t} адресный объект`
+    return 'Изменить адресный объект'
   }
 
   // Breadcrumbs
@@ -164,8 +174,7 @@ export default class extends Vue {
     }
   }
 
-  private onNodeExpand(openedNode: IAddressModel, node: AddrTreeNode, nodeSelf: AddrTreeNode, ) {
-    const pos = localStorage.getItem('addrTreeLastId')
+  private onNodeExpand(openedNode: IAddressModel, node: AddrTreeNode, nodeSelf: AddrTreeNode) {
     localStorage.setItem('addrTreeLastId', openedNode.id.toString())
   }
 
