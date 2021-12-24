@@ -1,5 +1,6 @@
-<template>  <span :class="iconClass" :style="iconColor">
-    <slot></slot></span>
+<template lang="pug">
+  span(:class="iconClass", :style="iconColor")
+    slot
 </template>
 
 <script lang="ts">

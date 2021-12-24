@@ -1,5 +1,8 @@
-<template>  
-  <comment-list :comments="comments" @send="onSendComment" @delete="delComment"></comment-list>
+<template lang="pug">
+  comment-list(
+    :comments="comments"
+    @send="onSendComment"
+    @delete="delComment")
 </template>
 
 <script lang="ts">

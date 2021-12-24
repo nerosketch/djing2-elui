@@ -1,5 +1,8 @@
-<template>
-  <pie-chart :repLoading="repLoading" :chartInputData="customerServiceTypeReport" seriesName="типы задач"></pie-chart>
+<template lang="pug">
+  pie-chart(
+    :repLoading="repLoading"
+    :chartInputData="customerServiceTypeReport"
+    seriesName="типы задач")
 </template>
 
 <script lang="ts">

@@ -1,15 +1,24 @@
-<template>
-  <div class="app-container">
-    <datatable :columns="tableColumns" :getData="loadSites" widthStorageNamePrefix="sites" ref="sitestable">
-      <template v-slot:oper="{row}">
-        <el-button icon="el-icon-edit" @click="openEdit(row)" :disabled="!$perms.is_superuser"></el-button>
-      </template>
-      <el-button icon="el-icon-plus" @click="openNew">{{ $t('dobavit-domen') }}</el-button>
-    </datatable>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <site-form v-on:done="frmDone"></site-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadSites"
+      widthStorageNamePrefix="sites"
+      ref="sitestable")
+      template(v-slot:oper="{row}")
+        el-button(
+          icon="el-icon-edit"
+          @click="openEdit(row)"
+          :disabled="!$perms.is_superuser")
+    
+      el-button(icon="el-icon-plus", @click="openNew")
+        | {{ $t('dobavit-domen') }}
+  
+    el-dialog(
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      site-form(v-on:done="frmDone")
 </template>
 
 <script lang="ts">

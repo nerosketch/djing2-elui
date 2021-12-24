@@ -1,11 +1,13 @@
-<template>
-  <el-table class="app-container" v-loading="messengerTypesLoading" :data="messengerBotTypes" border fit>
-    <el-table-column label="$t('tip-bota-1')" prop="text">
-      <template v-slot:default="{row}">
-        <router-link :to="{ name: 'messengerList', params: { messengerTypeName: row.text } }">{{ row.text }}</router-link>
-      </template>
-    </el-table-column>
-  </el-table>
+<template lang="pug">
+  el-table.app-container(
+    v-loading="messengerTypesLoading"
+    :data="messengerBotTypes"
+    border
+    fit)
+    el-table-column(label="$t('tip-bota-1')", prop="text")
+      template(v-slot:default="{row}")
+        router-link(:to="{ name: 'messengerList', params: { messengerTypeName: row.text } }")
+          | {{ row.text }}
 </template>
 
 <script lang="ts">

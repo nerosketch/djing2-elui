@@ -1,11 +1,13 @@
-<template>
-  <div class="app-container">
-    <datatable :columns="tableColumns" :getData="loadDevAddresses" :heightDiff="96" widthStorageNamePrefix="devAddresses">
-      <template v-slot:title="{row}">
-        <router-link class="el-link el-link--primary is-underline" :to="{name: 'devicesList', params:{ addrId: row.id }}">{{ row.fias_address_type_name }} {{ row.title }}</router-link>
-      </template>
-    </datatable>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadDevAddresses"
+      :heightDiff="96"
+      widthStorageNamePrefix="devAddresses")
+      template(v-slot:title="{row}")
+        router-link.el-link.el-link--primary.is-underline(:to="{name: 'devicesList', params:{ addrId: row.id }}")
+          | {{ row.fias_address_type_name }} {{ row.title }}
 </template>
 
 <script lang="ts">

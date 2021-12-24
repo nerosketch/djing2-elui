@@ -1,7 +1,10 @@
-<template>  
-  <el-select v-model="selectedTag" :loading="loading">
-    <el-option v-for="(t, i) in tags" :key="i" :label="t.label" :value="t.value"></el-option>
-  </el-select>
+<template lang="pug">
+  el-select(v-model="selectedTag", :loading="loading")
+    el-option(
+      v-for="(t, i) in tags"
+      :key="i"
+      :label="t.label"
+      :value="t.value")
 </template>
 
 <script lang="ts">

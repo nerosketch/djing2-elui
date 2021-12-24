@@ -1,26 +1,59 @@
-<template>
-  <div class="app-container">
-    <datatable :columns="tableColumns" :getData="loadGroups" widthStorageNamePrefix="groups" ref="grouptable">
-      <template v-slot:oper="{row}">
-        <el-button-group>
-          <el-button v-if="$perms.is_superuser" @click="openSitesDlg(row)">C</el-button>
-          <el-button icon="el-icon-lock" @click="openPermsDialog(row)" v-if="$perms.is_superuser"></el-button>
-          <el-button icon="el-icon-edit" @click="openEdit(row)" :disabled="!$perms.groupapp.change_group"></el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="delGroup(row)" :disabled="!$perms.groupapp.delete_group"></el-button>
-        </el-button-group>
-      </template>
-      <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.groupapp.add_group">{{ $t('dobavit-gruppu') }}</el-button>
-    </datatable>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <group-form v-on:done="frmDone"></group-form>
-    </el-dialog>
-    <el-dialog :title="`${$t('kto-imeet-prava-na-gruppu-abonentov')} ${GroupTitleGetter}`" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
-      <object-perms v-on:save="changeGroupObjectPerms" :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp" :getSelectedObjectPerms="groupGetSelectedObjectPerms" :objId="groupIdGetter"></object-perms>
-    </el-dialog>
-    <el-dialog title="$t('prinadlezhnost-saitam-0')" :visible.sync="sitesDlg" :close-on-click-modal="false">
-      <sites-attach :selectedSiteIds="$store.state.group.sites" v-on:save="groupSitesSave"></sites-attach>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadGroups"
+      widthStorageNamePrefix="groups"
+      ref="grouptable")
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+            | C
+        
+          el-button(
+            icon="el-icon-lock"
+            @click="openPermsDialog(row)"
+            v-if="$perms.is_superuser")
+        
+          el-button(
+            icon="el-icon-edit"
+            @click="openEdit(row)"
+            :disabled="!$perms.groupapp.change_group")
+        
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delGroup(row)"
+            :disabled="!$perms.groupapp.delete_group")
+    
+      el-button(
+        icon="el-icon-plus"
+        @click="openNew"
+        :disabled="!$perms.groupapp.add_group")
+        | {{ $t('dobavit-gruppu') }}
+  
+    el-dialog(
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      group-form(v-on:done="frmDone")
+  
+    el-dialog(
+      :title="`${$t('kto-imeet-prava-na-gruppu-abonentov')} ${GroupTitleGetter}`"
+      :visible.sync="permsDialog"
+      top="5vh"
+      :close-on-click-modal="false")
+      object-perms(
+        v-on:save="changeGroupObjectPerms"
+        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="groupGetSelectedObjectPerms"
+        :objId="groupIdGetter")
+  
+    el-dialog(
+      title="$t('prinadlezhnost-saitam-0')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.group.sites", v-on:save="groupSitesSave")
 </template>
 
 <script lang="ts">

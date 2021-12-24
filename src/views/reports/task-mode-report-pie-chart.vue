@@ -1,5 +1,8 @@
-<template>  
-  <pie-chart :repLoading="repLoading" :chartInputData="taskModeReport" seriesName="Характеры задач"></pie-chart>
+<template lang="pug">
+  pie-chart(
+    :repLoading="repLoading"
+    :chartInputData="taskModeReport"
+    seriesName="Характеры задач")
 </template>
 
 <script lang="ts">

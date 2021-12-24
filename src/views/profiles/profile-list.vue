@@ -1,26 +1,43 @@
-<template>
-  <div>
-    <datatable :columns="tableColumns" :getData="getAllProfiles" :tableRowClassName="rowColor" :heightDiff="190" widthStorageNamePrefix="profiles" ref="tbl">
-      <template v-slot:avatar="{row}">
-        <el-avatar :src="row.avatar || defAvaConst" shape="square"></el-avatar>
-      </template>
-      <template v-slot:username="{row}">
-        <router-link :to="{name: 'profileDetail', params:{ profileUname: row.username }}">
-          <el-link type="primary" :icon="row.is_superuser ? 'el-icon-warning' : ''">{{ row.username }}</el-link>
-        </router-link>
-      </template>
-      <template v-slot:telephone="{row}">
-        <el-link type="primary" :href="`tel:${row.telephone}`">{{ row.telephone }}</el-link>
-      </template>
-      <template v-slot:btn="{row}">
-        <el-button type="danger" icon="el-icon-close" circle @click="delUserProfile(row)" :disabled="!$perms.is_superuser"></el-button>
-      </template>
-      <el-button icon="el-icon-plus" @click="addNewProfile" :disabled="!$perms.is_superuser">{{ $t('add') }}</el-button>
-    </datatable>
-    <el-dialog title="$t('dobavit-uchyotku')" :visible.sync="profileFormDialog" :close-on-click-modal="false">
-      <profile-form v-on:done="addProfileDone"></profile-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="getAllProfiles"
+      :tableRowClassName="rowColor"
+      :heightDiff="190"
+      widthStorageNamePrefix="profiles"
+      ref="tbl")
+      template(v-slot:avatar="{row}")
+        el-avatar(:src="row.avatar || defAvaConst", shape="square")
+    
+      template(v-slot:username="{row}")
+        router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}")
+          el-link(type="primary", :icon="row.is_superuser ? 'el-icon-warning' : ''")
+            | {{ row.username }}
+    
+      template(v-slot:telephone="{row}")
+        el-link(type="primary", :href="`tel:${row.telephone}`")
+          | {{ row.telephone }}
+    
+      template(v-slot:btn="{row}")
+        el-button(
+          type="danger"
+          icon="el-icon-close"
+          circle
+          @click="delUserProfile(row)"
+          :disabled="!$perms.is_superuser")
+    
+      el-button(
+        icon="el-icon-plus"
+        @click="addNewProfile"
+        :disabled="!$perms.is_superuser")
+        | {{ $t('add') }}
+  
+    el-dialog(
+      title="$t('dobavit-uchyotku')"
+      :visible.sync="profileFormDialog"
+      :close-on-click-modal="false")
+      profile-form(v-on:done="addProfileDone")
 </template>
 
 <script lang="ts">

@@ -1,66 +1,151 @@
-<template>
-  <el-card>
-    <template v-slot:header>
-      <div class="clearfix"><span>{{ device.comment || 'Коммутатор' }}</span><small>{{ ` ${device.ip_address || device.mac_addr} ` }}</small>
-        <template v-if="device.parent_dev_name">{{ $t('roditelskoe-ustr') }}
-          <router-link class="el-link el-link--primary is-underline" :to="{name: 'device-view', params: { devId: device.parent_dev }}">{{ device.parent_dev_name }}</router-link>
-        </template>
-        <el-button style="float: right; padding: 7px" circle icon="el-icon-edit" type="primary" @click="openDevForm" :disabled="!$perms.devices.change_device"></el-button>
-      </div>
-    </template>
-    <el-table :data="allPorts" :loading="loading" :row-class-name="tableRowClassName" border fit>
-      <el-table-column label="$t('port-0')" width="60" align="center">
-        <template v-slot:default="{row}"><b>{{ row.num }}</b></template>
-      </el-table-column>
-      <el-table-column label="$t('vkl-vykl')" width="80" align="center">
-        <template v-slot:default="{row}">
-          <switch-port-toggle-button v-if="row.isdb && row.snmp_num > 0" :port="row" :portId="row.id"></switch-port-toggle-button>
-          <el-button v-else icon="el-icon-close" circle disabled></el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label="$t('opisanie-3')" min-width="267" prop="descr"></el-table-column>
-      <el-table-column label="$t('abonov')" width="70" align="center">
-        <template v-slot:default="{row}">
-          <el-link type="primary" @click="openPortView(row)">{{ row.user_count }}</el-link>
-        </template>
-      </el-table-column>
-      <el-table-column label="$t('imya-0')" min-width="235">
-        <template v-slot:default="{row}">{{ row.name || '-' }}</template>
-      </el-table-column>
-      <el-table-column label="$t('rezhim')" min-width="78">
-        <template v-slot:default="{row}">{{ row.speed ? portModesHuman(row.speed) : '-' }}</template>
-      </el-table-column>
-      <el-table-column label="UpTime" min-width="176">
-        <template v-slot:default="{row}">{{ row.uptime || '-' }}</template>
-      </el-table-column>
-      <el-table-column label="$t('knopki-0')" align="center" min-width="194">
-        <template v-slot:default="{row}">
-          <el-button-group v-if="row.isdb">
-            <el-button icon="el-icon-notebook-2" @click="openMacsDialog(row)"></el-button>
-            <el-button icon="el-icon-view" @click="openVidsDialog(row)" :disabled="!$perms.devices.view_portvlanmembermodel"></el-button>
-            <el-button type="danger" icon="el-icon-delete" @click="delPort(row)" :disabled="!$perms.devices.delete_port"></el-button>
-            <el-button type="primary" icon="el-icon-edit" @click="openPortEdit(row)" :disabled="!$perms.devices.change_port"></el-button>
-          </el-button-group>
-          <el-button v-else icon="el-icon-plus" circle @click="openPortAdd(row)" :disabled="!$perms.devices.add_port"></el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-dialog :visible.sync="portViewDialog" title="$t('abonenty-na-portu')" :close-on-click-modal="false">
-      <switch-port-view :device="device" :portId="currPortId"></switch-port-view>
-    </el-dialog>
-    <el-dialog :visible.sync="portFormDialog" title="$t('port-kommutatora')" :close-on-click-modal="false">
-      <switch-port-form :deviceId="device.id" :portId="currPortId" :initialNum="initialNum" v-on:editdone="editPortDone" v-on:adddone="addPortDone"></switch-port-form>
-    </el-dialog>
-    <el-dialog :visible.sync="devFormDialog" title="$t('informaciya-ustroistva')" :close-on-click-modal="false">
-      <dev-form v-on:done="devFrmDone"></dev-form>
-    </el-dialog>
-    <el-dialog :visible.sync="vidsDialog" title="$t('vlany')" :close-on-click-modal="false">
-      <vids-view :portId="currPortId" :portNum="initialNum" @applydone="vidsDialog=false"></vids-view>
-    </el-dialog>
-    <el-dialog :visible.sync="macsDialog" title="$t('tablica-mac-adresov-porta')" :close-on-click-modal="false">
-      <port-mac-list :portId="currPortId"></port-mac-list>
-    </el-dialog>
-  </el-card>
+<template lang="pug">
+  el-card
+    template(v-slot:header)
+      .clearfix
+        span
+          | {{ device.comment || 'Коммутатор' }}
+      
+        small
+          | {{ ` ${device.ip_address || device.mac_addr} ` }}
+      
+        template(v-if="device.parent_dev_name")
+          | {{ $t('roditelskoe-ustr') }}
+        
+          router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+            | {{ device.parent_dev_name }}
+      
+        el-button(
+          style="float: right; padding: 7px"
+          circle
+          icon="el-icon-edit"
+          type="primary"
+          @click="openDevForm"
+          :disabled="!$perms.devices.change_device")
+  
+    el-table(
+      :data="allPorts"
+      :loading="loading"
+      :row-class-name="tableRowClassName"
+      border
+      fit)
+      el-table-column(
+        label="$t('port-0')"
+        width="60"
+        align="center")
+        template(v-slot:default="{row}")
+          b
+            | {{ row.num }}
+    
+      el-table-column(
+        label="$t('vkl-vykl')"
+        width="80"
+        align="center")
+        template(v-slot:default="{row}")
+          switch-port-toggle-button(
+            v-if="row.isdb && row.snmp_num > 0"
+            :port="row"
+            :portId="row.id")
+        
+          el-button(
+            v-else
+            icon="el-icon-close"
+            circle
+            disabled)
+    
+      el-table-column(
+        label="$t('opisanie-3')"
+        min-width="267"
+        prop="descr")
+    
+      el-table-column(
+        label="$t('abonov')"
+        width="70"
+        align="center")
+        template(v-slot:default="{row}")
+          el-link(type="primary", @click="openPortView(row)")
+            | {{ row.user_count }}
+    
+      el-table-column(label="$t('imya-0')", min-width="235")
+        template(v-slot:default="{row}")
+          | {{ row.name || '-' }}
+    
+      el-table-column(label="$t('rezhim')", min-width="78")
+        template(v-slot:default="{row}")
+          | {{ row.speed ? portModesHuman(row.speed) : '-' }}
+    
+      el-table-column(label="UpTime", min-width="176")
+        template(v-slot:default="{row}")
+          | {{ row.uptime || '-' }}
+    
+      el-table-column(
+        label="$t('knopki-0')"
+        align="center"
+        min-width="194")
+        template(v-slot:default="{row}")
+          el-button-group(v-if="row.isdb")
+            el-button(icon="el-icon-notebook-2", @click="openMacsDialog(row)")
+          
+            el-button(
+              icon="el-icon-view"
+              @click="openVidsDialog(row)"
+              :disabled="!$perms.devices.view_portvlanmembermodel")
+          
+            el-button(
+              type="danger"
+              icon="el-icon-delete"
+              @click="delPort(row)"
+              :disabled="!$perms.devices.delete_port")
+          
+            el-button(
+              type="primary"
+              icon="el-icon-edit"
+              @click="openPortEdit(row)"
+              :disabled="!$perms.devices.change_port")
+        
+          el-button(
+            v-else
+            icon="el-icon-plus"
+            circle
+            @click="openPortAdd(row)"
+            :disabled="!$perms.devices.add_port")
+  
+    el-dialog(
+      :visible.sync="portViewDialog"
+      title="$t('abonenty-na-portu')"
+      :close-on-click-modal="false")
+      switch-port-view(:device="device", :portId="currPortId")
+  
+    el-dialog(
+      :visible.sync="portFormDialog"
+      title="$t('port-kommutatora')"
+      :close-on-click-modal="false")
+      switch-port-form(
+        :deviceId="device.id"
+        :portId="currPortId"
+        :initialNum="initialNum"
+        v-on:editdone="editPortDone"
+        v-on:adddone="addPortDone")
+  
+    el-dialog(
+      :visible.sync="devFormDialog"
+      title="$t('informaciya-ustroistva')"
+      :close-on-click-modal="false")
+      dev-form(v-on:done="devFrmDone")
+  
+    el-dialog(
+      :visible.sync="vidsDialog"
+      title="$t('vlany')"
+      :close-on-click-modal="false")
+      vids-view(
+        :portId="currPortId"
+        :portNum="initialNum"
+        @applydone="vidsDialog=false")
+  
+    el-dialog(
+      :visible.sync="macsDialog"
+      title="$t('tablica-mac-adresov-porta')"
+      :close-on-click-modal="false")
+      port-mac-list(:portId="currPortId")
 </template>
 
 <script lang="ts">

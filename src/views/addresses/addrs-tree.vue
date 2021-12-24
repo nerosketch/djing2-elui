@@ -1,13 +1,43 @@
-<template>
-  <div class="app-container">
-    <el-tree :props="props" :load="loadNode" :expand-on-click-node="false" node-key="id" ref="etree" lazy draggable :allow-drop="allowDrop" :default-expanded-keys="addrIdHierarchy" @node-drop="handleDrop" @node-expand="onNodeExpand"><span class="custom-tree-node" slot-scope="{ node, data }"><span>{{ node.label }}</span><span>
-          <el-button type="text" icon="el-icon-plus" @click="addNode(node)"></el-button>
-          <el-button type="text" icon="el-icon-edit" @click="openEdit(node)"></el-button></span></span></el-tree>
-    <el-button icon="el-icon-plus" type="success" @click="addAbsoluteNode">{{ $t('add') }}</el-button>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <address-form @added="frmAddDone" @changed="frmChangeDone"></address-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    el-tree(
+      :props="props"
+      :load="loadNode"
+      :expand-on-click-node="false"
+      node-key="id"
+      ref="etree"
+      lazy
+      draggable
+      :allow-drop="allowDrop"
+      :default-expanded-keys="addrIdHierarchy"
+      @node-drop="handleDrop"
+      @node-expand="onNodeExpand")
+      span.custom-tree-node(slot-scope="{ node, data }")
+        span
+          | {{ node.label }}
+      
+        span
+          el-button(
+            type="text"
+            icon="el-icon-plus"
+            @click="addNode(node)")
+        
+          el-button(
+            type="text"
+            icon="el-icon-edit"
+            @click="openEdit(node)")
+  
+    el-button(
+      icon="el-icon-plus"
+      type="success"
+      @click="addAbsoluteNode")
+      | {{ $t('add') }}
+  
+    el-dialog(
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      address-form(@added="frmAddDone", @changed="frmChangeDone")
 </template>
 
 <script lang="ts">

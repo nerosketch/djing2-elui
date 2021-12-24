@@ -1,33 +1,87 @@
-<template>
-  <el-card>
-    <template v-slot:header>
-      <div class="clearfix"><span>{{ $t('zte') }}</span><small>{{ ` ${device.ip_address || device.mac_addr} ` }}</small><small>{{ details }}</small>
-        <el-button style="float: right; padding: 7px" circle icon="el-icon-edit" type="primary" @click="openDevForm" :disabled="!$perms.devices.change_device"></el-button>
-      </div>
-    </template>
-    <el-row>
-      <el-col :xl="2" :md="3" :sm="6" :xs="12" v-for="(p, i) in allPorts" :key="i">
-        <olt-zte-port :devId="devPk" :port="p"></olt-zte-port>
-      </el-col>
-    </el-row>
-    <el-divider></el-divider>
-    <h4>{{ $t('nezaregistrirovannye-yunity') }}</h4>
-    <el-table :data="unregistered" :loading="unrloading" v-if="device !== null" border fit>
-      <el-table-column label="$t('mak')" min-width="150" prop="mac"></el-table-column>
-      <el-table-column label="$t('versiya-proshivki')" min-width="150" prop="firmware_ver"></el-table-column>
-      <el-table-column label="$t('loid-parol')" min-width="100" prop="loid_passw"></el-table-column>
-      <el-table-column label="LOID" min-width="150" prop="loid"></el-table-column>
-      <el-table-column label="sn" min-width="150" prop="sn"></el-table-column>
-      <el-table-column label="$t('sokhranit')" min-width="70">
-        <template v-slot:default="{row}">
-          <el-button icon="el-icon-plus" @click="onSaveOnu(row)"></el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-dialog title="$t('sokhranit-onu')" :visible.sync="saveOnuFormDialog" :close-on-click-modal="false">
-      <new-dev-form :initialMac="newOnuInitialMac" :initialDevType="gdevType" :initialGroup="device.group" :initialParentDev="devPk" :initialParentDevName="device.comment" v-if="saveOnuFormDialog" v-on:done="frmNewOnuDone" v-on:err="saveOnuFormDialog=false"></new-dev-form>
-    </el-dialog>
-  </el-card>
+<template lang="pug">
+  el-card
+    template(v-slot:header)
+      .clearfix
+        span
+          | {{ $t('zte') }}
+      
+        small
+          | {{ ` ${device.ip_address || device.mac_addr} ` }}
+      
+        small
+          | {{ details }}
+      
+        el-button(
+          style="float: right; padding: 7px"
+          circle
+          icon="el-icon-edit"
+          type="primary"
+          @click="openDevForm"
+          :disabled="!$perms.devices.change_device")
+  
+    el-row
+      el-col(
+        :xl="2"
+        :md="3"
+        :sm="6"
+        :xs="12"
+        v-for="(p, i) in allPorts"
+        :key="i")
+        olt-zte-port(:devId="devPk", :port="p")
+  
+    el-divider
+  
+    h4
+      | {{ $t('nezaregistrirovannye-yunity') }}
+  
+    el-table(
+      :data="unregistered"
+      :loading="unrloading"
+      v-if="device !== null"
+      border
+      fit)
+      el-table-column(
+        label="$t('mak')"
+        min-width="150"
+        prop="mac")
+    
+      el-table-column(
+        label="$t('versiya-proshivki')"
+        min-width="150"
+        prop="firmware_ver")
+    
+      el-table-column(
+        label="$t('loid-parol')"
+        min-width="100"
+        prop="loid_passw")
+    
+      el-table-column(
+        label="LOID"
+        min-width="150"
+        prop="loid")
+    
+      el-table-column(
+        label="sn"
+        min-width="150"
+        prop="sn")
+    
+      el-table-column(label="$t('sokhranit')", min-width="70")
+        template(v-slot:default="{row}")
+          el-button(icon="el-icon-plus", @click="onSaveOnu(row)")
+  
+    el-dialog(
+      title="$t('sokhranit-onu')"
+      :visible.sync="saveOnuFormDialog"
+      :close-on-click-modal="false")
+      new-dev-form(
+        :initialMac="newOnuInitialMac"
+        :initialDevType="gdevType"
+        :initialGroup="device.group"
+        :initialParentDev="devPk"
+        :initialParentDevName="device.comment"
+        v-if="saveOnuFormDialog"
+        v-on:done="frmNewOnuDone"
+        v-on:err="saveOnuFormDialog=false")
 </template>
 
 <script lang="ts">

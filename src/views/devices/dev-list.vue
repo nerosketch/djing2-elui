@@ -1,49 +1,105 @@
-<template>
-  <div class="app-container">
-    <el-row :gutter="10">
-      <el-col :col="24">
-        <list-filters :addrId="addrId" :group.sync="filterForm.group" :street.sync="filterForm.street" :fetchGroups="fetchGroups"></list-filters>
-      </el-col>
-      <el-col :lg="24" :md="20">
-        <datatable :columns="tableColumns" :getData="loadDevs" :heightDiff="118" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="devs" ref="tbl">
-          <template v-slot:comment="{row}">
-            <router-link class="el-link el-link--primary is-underline" v-if="$perms.devices.view_device" :to="{name: 'device-view', params: { devId: row.id }}">{{ row.comment }}</router-link><span v-else>{{ row.comment }}</span>
-          </template>
-          <template v-slot:ip_address="{row}">{{ row.ip_address || '-' }}</template>
-          <template v-slot:status="{row}">
-            <boolean-icon v-model="row.status"></boolean-icon>
-          </template>
-          <template v-slot:is_noticeable="{row}">
-            <boolean-icon v-model="row.is_noticeable"></boolean-icon>
-          </template>
-          <template v-slot:oper="{row}">
-            <el-button-group>
-              <el-button v-if="$perms.is_superuser" @click="openSitesDlg(row)">C</el-button>
-              <el-button icon="el-icon-lock" @click="openPermsDialog(row)" v-if="$perms.is_superuser"></el-button>
-              <el-button icon="el-icon-edit" @click="openEdit(row)" :disabled="!$perms.devices.change_device"></el-button>
-              <el-button type="danger" icon="el-icon-delete" @click="delDevice(row)" :disabled="!$perms.devices.delete_device"></el-button>
-            </el-button-group>
-          </template>
-          <el-button-group>
-            <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.devices.add_device">{{ $t('dobavit-ustroistvo') }}</el-button>
-            <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">{{ $t('polya') }}</el-button>
-          </el-button-group>
-        </datatable>
-      </el-col>
-    </el-row>
-    <el-dialog title="$t('zhelezka')" :visible.sync="dialogVisible" :close-on-click-modal="false" top="1%">
-      <dev-form v-if="dialogVisible" v-on:done="frmDone" :addrId="addrId"></dev-form>
-    </el-dialog>
-    <el-dialog title="$t('dobavit-ustroistvo-0')" :visible.sync="dialogNewDev" :close-on-click-modal="false" top="1%">
-      <new-dev-form v-if="dialogNewDev" v-on:done="frmNewDevDone" v-on:err="dialogNewDev=false" :initialAddress="addrId"></new-dev-form>
-    </el-dialog>
-    <el-dialog title="$t('kto-imeet-prava-na-ustroistvo')" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
-      <object-perms v-on:save="changeDeviceObjectPerms" :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp" :getSelectedObjectPerms="deviceGetSelectedObjectPerms" :objId="$store.state.address.title"></object-perms>
-    </el-dialog>
-    <el-dialog title="$t('prinadlezhnost-oborudovaniya-saitam')" :visible.sync="sitesDlg" :close-on-click-modal="false">
-      <sites-attach :selectedSiteIds="$store.state.devicemodule.sites" v-on:save="devSitesSave"></sites-attach>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    el-row(:gutter="10")
+      el-col(:col="24")
+        list-filters(
+          :addrId="addrId"
+          :group.sync="filterForm.group"
+          :street.sync="filterForm.street"
+          :fetchGroups="fetchGroups")
+    
+      el-col(:lg="24", :md="20")
+        datatable(
+          :columns="tableColumns"
+          :getData="loadDevs"
+          :heightDiff="118"
+          :editFieldsVisible.sync="editFieldsVisible"
+          widthStorageNamePrefix="devs"
+          ref="tbl")
+          template(v-slot:comment="{row}")
+            router-link.el-link.el-link--primary.is-underline(v-if="$perms.devices.view_device", :to="{name: 'device-view', params: { devId: row.id }}")
+              | {{ row.comment }}
+          
+            span(v-else)
+              | {{ row.comment }}
+        
+          template(v-slot:ip_address="{row}")
+            | {{ row.ip_address || '-' }}
+        
+          template(v-slot:status="{row}")
+            boolean-icon(v-model="row.status")
+        
+          template(v-slot:is_noticeable="{row}")
+            boolean-icon(v-model="row.is_noticeable")
+        
+          template(v-slot:oper="{row}")
+            el-button-group
+              el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+                | C
+            
+              el-button(
+                icon="el-icon-lock"
+                @click="openPermsDialog(row)"
+                v-if="$perms.is_superuser")
+            
+              el-button(
+                icon="el-icon-edit"
+                @click="openEdit(row)"
+                :disabled="!$perms.devices.change_device")
+            
+              el-button(
+                type="danger"
+                icon="el-icon-delete"
+                @click="delDevice(row)"
+                :disabled="!$perms.devices.delete_device")
+        
+          el-button-group
+            el-button(
+              icon="el-icon-plus"
+              @click="openNew"
+              :disabled="!$perms.devices.add_device")
+              | {{ $t('dobavit-ustroistvo') }}
+          
+            el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+              | {{ $t('polya') }}
+  
+    el-dialog(
+      title="$t('zhelezka')"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
+      top="1%")
+      dev-form(
+        v-if="dialogVisible"
+        v-on:done="frmDone"
+        :addrId="addrId")
+  
+    el-dialog(
+      title="$t('dobavit-ustroistvo-0')"
+      :visible.sync="dialogNewDev"
+      :close-on-click-modal="false"
+      top="1%")
+      new-dev-form(
+        v-if="dialogNewDev"
+        v-on:done="frmNewDevDone"
+        v-on:err="dialogNewDev=false"
+        :initialAddress="addrId")
+  
+    el-dialog(
+      title="$t('kto-imeet-prava-na-ustroistvo')"
+      :visible.sync="permsDialog"
+      top="5vh"
+      :close-on-click-modal="false")
+      object-perms(
+        v-on:save="changeDeviceObjectPerms"
+        :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="deviceGetSelectedObjectPerms"
+        :objId="$store.state.address.title")
+  
+    el-dialog(
+      title="$t('prinadlezhnost-oborudovaniya-saitam')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.devicemodule.sites", v-on:save="devSitesSave")
 </template>
 
 <script lang="ts">

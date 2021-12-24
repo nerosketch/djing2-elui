@@ -1,7 +1,13 @@
-<template>  
-  <el-select v-model="selectedGw" v-loading="loadingGws" :disabled="gwlist.length == 0">
-    <el-option v-for="gw in gwlist" :key="gw.id" :label="gw.title" :value="gw.id"></el-option>
-  </el-select>
+<template lang="pug">
+  el-select(
+    v-model="selectedGw"
+    v-loading="loadingGws"
+    :disabled="gwlist.length == 0")
+    el-option(
+      v-for="gw in gwlist"
+      :key="gw.id"
+      :label="gw.title"
+      :value="gw.id")
 </template>
 
 <script lang="ts">

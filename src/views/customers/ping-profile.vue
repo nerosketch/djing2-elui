@@ -1,5 +1,10 @@
-<template>
-  <el-button :type="btnType" :disabled="pingDisabled || !$perms.customers.can_ping" @click="pingProfile" :loading="pingLoading">{{ isCustomerNotHere ? $t('customers.notPassed') : btnText }}</el-button>
+<template lang="pug">
+  el-button(
+    :type="btnType"
+    :disabled="pingDisabled || !$perms.customers.can_ping"
+    @click="pingProfile"
+    :loading="pingLoading")
+    | {{ isCustomerNotHere ? $t('customers.notPassed') : btnText }}
 </template>
 
 <script lang="ts">

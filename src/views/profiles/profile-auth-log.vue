@@ -1,7 +1,10 @@
-<template>
-  <div class="app-container">
-    <datatable :columns="tableColumns" :getData="getAllLog" :heightDiff="201" widthStorageNamePrefix="auth_log"></datatable>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="getAllLog"
+      :heightDiff="201"
+      widthStorageNamePrefix="auth_log")
 </template>
 
 <script lang="ts">

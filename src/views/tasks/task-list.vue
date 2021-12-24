@@ -1,23 +1,40 @@
-<template>
-  <div>
-    <datatable :columns="tableColumns" :getData="loadTasks" :tableRowClassName="tableRowClassName" :heightDiff="188" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="tasks" ref="tbl">
-      <template v-slot:customer_full_name="{row}">
-        <router-link class="el-link el-link--primary is-underline" :to="{ name: 'customerDetails', params: {uid: row.customer } }">{{ row.customer_full_name }}</router-link>
-      </template>
-      <template v-slot:id="{row}">
-        <router-link :to="{name: 'taskDetails', params: { taskId: row.id }}">
-          <el-button :type="row.comment_count > 0 ? 'success' : 'primary'"><span v-if="row.comment_count > 0">{{ row.comment_count }}</span><i class="el-icon-view" v-else></i></el-button>
-        </router-link>
-      </template>
-      <el-button-group>
-        <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.tasks.add_task">{{ $t('dobavit-zadachu') }}</el-button>
-        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">{{ $t('polya-3') }}</el-button>
-      </el-button-group>
-    </datatable>
-    <el-dialog title="$t('sozdanie-zadachi')" :visible.sync="formDialog" :close-on-click-modal="false">
-      <task-form></task-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadTasks"
+      :tableRowClassName="tableRowClassName"
+      :heightDiff="188"
+      :editFieldsVisible.sync="editFieldsVisible"
+      widthStorageNamePrefix="tasks"
+      ref="tbl")
+      template(v-slot:customer_full_name="{row}")
+        router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerDetails', params: {uid: row.customer } }")
+          | {{ row.customer_full_name }}
+    
+      template(v-slot:id="{row}")
+        router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
+          el-button(:type="row.comment_count > 0 ? 'success' : 'primary'")
+            span(v-if="row.comment_count > 0")
+              | {{ row.comment_count }}
+          
+            i.el-icon-view(v-else)
+    
+      el-button-group
+        el-button(
+          icon="el-icon-plus"
+          @click="openNew"
+          :disabled="!$perms.tasks.add_task")
+          | {{ $t('dobavit-zadachu') }}
+      
+        el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+          | {{ $t('polya-3') }}
+  
+    el-dialog(
+      title="$t('sozdanie-zadachi')"
+      :visible.sync="formDialog"
+      :close-on-click-modal="false")
+      task-form
 </template>
 
 <script lang="ts">

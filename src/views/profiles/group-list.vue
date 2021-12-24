@@ -1,22 +1,38 @@
-<template>
-  <div>
-    <datatable :columns="tableColumns" :getData="loadUserGroups" :heightDiff="190" widthStorageNamePrefix="upg" ref="tbl">
-      <template v-slot:btn="{row}">
-        <el-button-group>
-          <el-button icon="el-icon-lock" @click="editGroupPerms(row)"></el-button>
-          <el-button icon="el-icon-edit" @click="editNewUserGroup(row)"></el-button>
-          <el-button type="danger" icon="el-icon-close" @click="delUserGroup(row)"></el-button>
-        </el-button-group>
-      </template>
-      <el-button icon="el-icon-plus" @click="addNewUserGroup">{{ $t('add') }}</el-button>
-    </datatable>
-    <el-dialog :title="dialogTitle" :visible.sync="ugFormDialog" :close-on-click-modal="false">
-      <user-group-form v-on:done="frmDone" v-on:cancel="ugFormDialog=false"></user-group-form>
-    </el-dialog>
-    <el-dialog title="$t('izmenit-prava-dlya-gruppy')" top="5vh" width="80%" :visible.sync="ugpDialog" :close-on-click-modal="false">
-      <user-group-perms v-on:done="editPermsDone"></user-group-perms>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadUserGroups"
+      :heightDiff="190"
+      widthStorageNamePrefix="upg"
+      ref="tbl")
+      template(v-slot:btn="{row}")
+        el-button-group
+          el-button(icon="el-icon-lock", @click="editGroupPerms(row)")
+        
+          el-button(icon="el-icon-edit", @click="editNewUserGroup(row)")
+        
+          el-button(
+            type="danger"
+            icon="el-icon-close"
+            @click="delUserGroup(row)")
+    
+      el-button(icon="el-icon-plus", @click="addNewUserGroup")
+        | {{ $t('add') }}
+  
+    el-dialog(
+      :title="dialogTitle"
+      :visible.sync="ugFormDialog"
+      :close-on-click-modal="false")
+      user-group-form(v-on:done="frmDone", v-on:cancel="ugFormDialog=false")
+  
+    el-dialog(
+      title="$t('izmenit-prava-dlya-gruppy')"
+      top="5vh"
+      width="80%"
+      :visible.sync="ugpDialog"
+      :close-on-click-modal="false")
+      user-group-perms(v-on:done="editPermsDone")
 </template>
 
 <script lang="ts">

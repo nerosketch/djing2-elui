@@ -1,8 +1,14 @@
-<template>  
-  <el-breadcrumb class="app-breadcrumb" separator="/">
-    <el-breadcrumb-item><i class="el-icon-s-home"></i></el-breadcrumb-item>
-    <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="index"><span class="no-redirect" v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1">{{ item.meta.title }}</span><a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a></el-breadcrumb-item>
-  </el-breadcrumb>
+<template lang="pug">
+  el-breadcrumb.app-breadcrumb(separator="/")
+    el-breadcrumb-item
+      i.el-icon-s-home
+  
+    el-breadcrumb-item(v-for="(item, index) in breadcrumbs", :key="index")
+      span.no-redirect(v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1")
+        | {{ item.meta.title }}
+    
+      a(v-else, @click.prevent="handleLink(item)")
+        | {{ item.meta.title }}
 </template>
 
 <script lang="ts">

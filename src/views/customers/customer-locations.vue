@@ -1,20 +1,24 @@
-<template>  
-  <div class="app-container">
-    <datatable :columns="innerTableColumns" :getData="getLocationsFunc || getLocations" :heightDiff="heightDiff" widthStorageNamePrefix="customerLocations">
-      <template #title="{row}">
-        <slot name="title" :row="row">
-          <router-link class="el-link el-link--primary is-underline" :to="{name: 'customerList', params:{ addrId: row.id }}">{{ row.title }}</router-link>
-        </slot>
-      </template>
-      <slot name="buttons">
-        <el-button-group>
-          <el-button icon="el-icon-d-caret" @click="goToAfkList">{{ $t('customers.afkFilter') }}</el-button>
-          <el-button icon="el-icon-user-solid" @click="go2Bums">{{ $t('customers.withoutAddrs') }}</el-button>
-        </el-button-group>
-      </slot>
-    </datatable>
-    <slot></slot>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="innerTableColumns"
+      :getData="getLocationsFunc || getLocations"
+      :heightDiff="heightDiff"
+      widthStorageNamePrefix="customerLocations")
+      template(#title="{row}")
+        slot(name="title", :row="row")
+          router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerList', params:{ addrId: row.id }}")
+            | {{ row.title }}
+    
+      slot(name="buttons")
+        el-button-group
+          el-button(icon="el-icon-d-caret", @click="goToAfkList")
+            | {{ $t('customers.afkFilter') }}
+        
+          el-button(icon="el-icon-user-solid", @click="go2Bums")
+            | {{ $t('customers.withoutAddrs') }}
+  
+    slot
 </template>
 
 <script lang="ts">

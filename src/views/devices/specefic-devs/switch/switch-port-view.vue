@@ -1,15 +1,16 @@
-<template>
-  <div>
-    <h4 v-if="loading">{{ $t('zagruzka') }}</h4>
-    <template v-else>
-      <div v-if="customers.length > 0">
-        <div v-for="(cst, i) in customers" :key="i">
-          <router-link class="el-link el-link--primary is-underline" :to="{name: 'customerDetails', params:{uid: cst.id }}">{{ cst.full_name }}</router-link>
-        </div>
-      </div>
-      <h4 v-else>{{ $t('abonenty-na-portu-ne-naideny') }}</h4>
-    </template>
-  </div>
+<template lang="pug">
+  div
+    h4(v-if="loading")
+      | {{ $t('zagruzka') }}
+  
+    template(v-else)
+      div(v-if="customers.length > 0")
+        div(v-for="(cst, i) in customers", :key="i")
+          router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: cst.id }}")
+            | {{ cst.full_name }}
+    
+      h4(v-else)
+        | {{ $t('abonenty-na-portu-ne-naideny') }}
 </template>
 
 <script lang="ts">

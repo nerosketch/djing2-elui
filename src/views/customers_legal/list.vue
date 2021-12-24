@@ -1,21 +1,47 @@
-<template>
-  <div class="app-container">
-    <datatable :columns="tableColumns" :getData="loadCustomersLegal" :heightDiff="118" widthStorageNamePrefix="legalcustomers" ref="table">
-      <template v-slot:btn="{row}">
-        <el-button icon="el-icon-edit" @click="openEdit(row)" :disabled="!$perms.customers_legal.change_customerlegalmodel"></el-button>
-      </template>
-      <template v-slot:username="{row}">
-        <router-link class="el-link el-link--primary is-underline" :to="{ name: 'customerLegalDetail', params: { uid: row.id } }">{{ row.username }}</router-link>
-      </template>
-      <el-button icon="el-icon-plus" @click="openNew" :disabled="!$perms.customers_legal.add_customerlegalmodel">{{ $t('dobavit-uchyotnuyu-zapis') }}</el-button>
-    </datatable>
-    <el-dialog title="$t('organizaciya')" :visible.sync="dialogVisible" :close-on-click-modal="false" top="1%">
-      <legal-form v-if="dialogVisible" v-on:added="frmAddDone" v-on:update="frmUpdateDone"></legal-form>
-    </el-dialog>
-    <el-dialog title="$t('kto-imeet-prava-na-uchyotnuyu-zapis')" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
-      <object-perms v-on:save="changeLegalObjectPerms" :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp" :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms" :objId="$store.state.customerlegal.title"></object-perms>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadCustomersLegal"
+      :heightDiff="118"
+      widthStorageNamePrefix="legalcustomers"
+      ref="table")
+      template(v-slot:btn="{row}")
+        el-button(
+          icon="el-icon-edit"
+          @click="openEdit(row)"
+          :disabled="!$perms.customers_legal.change_customerlegalmodel")
+    
+      template(v-slot:username="{row}")
+        router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerLegalDetail', params: { uid: row.id } }")
+          | {{ row.username }}
+    
+      el-button(
+        icon="el-icon-plus"
+        @click="openNew"
+        :disabled="!$perms.customers_legal.add_customerlegalmodel")
+        | {{ $t('dobavit-uchyotnuyu-zapis') }}
+  
+    el-dialog(
+      title="$t('organizaciya')"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
+      top="1%")
+      legal-form(
+        v-if="dialogVisible"
+        v-on:added="frmAddDone"
+        v-on:update="frmUpdateDone")
+  
+    el-dialog(
+      title="$t('kto-imeet-prava-na-uchyotnuyu-zapis')"
+      :visible.sync="permsDialog"
+      top="5vh"
+      :close-on-click-modal="false")
+      object-perms(
+        v-on:save="changeLegalObjectPerms"
+        :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms"
+        :objId="$store.state.customerlegal.title")
 </template>
 
 <script lang="ts">

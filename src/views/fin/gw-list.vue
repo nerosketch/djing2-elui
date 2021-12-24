@@ -1,25 +1,41 @@
-<template>
-  <div class="app-container">
-    <datatable :columns="tableColumns" :getData="loadPayGws" widthStorageNamePrefix="gws" ref="table">
-      <template v-slot:title="{row}">
-        <router-link class="el-link el-link--primary is-underline" :to="{ name: 'finReport' }">{{ row.title }}</router-link>
-      </template>
-      <template v-slot:oper="{row}">
-        <el-button-group>
-          <el-button v-if="$perms.is_superuser" @click="openSitesDlg(row)">C</el-button>
-          <el-button icon="el-icon-edit" @click="openEdit(row)"></el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="delPayGw(row)" :disabled="!$perms.fin_app.delete_payalltimegateway"></el-button>
-        </el-button-group>
-      </template>
-      <el-button icon="el-icon-plus" @click="openNew">{{ $t('dobavit-shlyuz') }}</el-button>
-    </datatable>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <pay-gw-form v-on:done="frmDone"></pay-gw-form>
-    </el-dialog>
-    <el-dialog title="$t('prinadlezhnost-saitam')" :visible.sync="sitesDlg" :close-on-click-modal="false">
-      <sites-attach :selectedSiteIds="$store.state.payalltimegateway.sites" v-on:save="payGwSitesSave"></sites-attach>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadPayGws"
+      widthStorageNamePrefix="gws"
+      ref="table")
+      template(v-slot:title="{row}")
+        router-link.el-link.el-link--primary.is-underline(:to="{ name: 'finReport' }")
+          | {{ row.title }}
+    
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+            | C
+        
+          el-button(icon="el-icon-edit", @click="openEdit(row)")
+        
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delPayGw(row)"
+            :disabled="!$perms.fin_app.delete_payalltimegateway")
+    
+      el-button(icon="el-icon-plus", @click="openNew")
+        | {{ $t('dobavit-shlyuz') }}
+  
+    el-dialog(
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      pay-gw-form(v-on:done="frmDone")
+  
+    el-dialog(
+      title="$t('prinadlezhnost-saitam')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.payalltimegateway.sites", v-on:save="payGwSitesSave")
 </template>
 
 <script lang="ts">

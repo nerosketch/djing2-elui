@@ -1,21 +1,31 @@
-<template>
-  <el-form ref="form" label-width="100px" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
-    <el-form-item :label="$t('title')" prop="title">
-      <el-input v-model="frmMod.title"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('service-id')" prop="service_id">
-      <el-input v-model="frmMod.service_id"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('slug')" prop="slug">
-      <el-input v-model="frmMod.slug"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('secret')" prop="secret">
-      <el-input v-model="frmMod.secret"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="isLoading" :disabled="!$perms.fin_app.change_payalltimegateway">{{ $t('save') }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="form"
+    label-width="100px"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')", prop="title")
+      el-input(v-model="frmMod.title")
+  
+    el-form-item(label="$t('service-id')", prop="service_id")
+      el-input(v-model="frmMod.service_id")
+  
+    el-form-item(label="$t('slug')", prop="slug")
+      el-input(v-model="frmMod.slug")
+  
+    el-form-item(label="$t('secret')", prop="secret")
+      el-input(v-model="frmMod.secret")
+  
+    el-form-item
+      el-button(
+        icon="el-icon-upload"
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+        :disabled="!$perms.fin_app.change_payalltimegateway")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">

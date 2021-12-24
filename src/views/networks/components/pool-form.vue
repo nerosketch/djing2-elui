@@ -1,40 +1,60 @@
-<template>
-  <el-form ref="poolfrm" label-width="120px" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
-    <el-form-item label="$t('podset')" prop="network">
-      <el-input v-model="frmMod.network"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('nach-ip')" prop="ip_start">
-      <el-input v-model="frmMod.ip_start"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('kon-ip')" prop="ip_end">
-      <el-input v-model="frmMod.ip_end"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('gruppy-2')">
-      <groups-choice v-model="frmMod.groups" multiple></groups-choice>
-    </el-form-item>
-    <el-form-item label="$t('shlyuz')" prop="gateway">
-      <el-input v-model="frmMod.gateway"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('vlan')">
-      <el-select v-model="frmMod.vlan_if" v-loading="vlanLoading">
-        <el-option v-for="v in vlans" :key="v.id" :label="$t('v-vid-v-title', [v.vid, v.title])" :value="v.id"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="$t('tip-seti')">
-      <el-select v-model="frmMod.kind">
-        <el-option v-for="k in networkPoolKinds" :key="k.val" :label="k.title" :value="k.val"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="$t('dinamicheskii-1')">
-      <el-checkbox v-model="frmMod.is_dynamic">{{ frmMod.is_dynamic ? 'Да' : 'Нет' }}</el-checkbox>
-    </el-form-item>
-    <el-form-item label="$t('opisanie-7')" prop="description">
-      <el-input v-model="frmMod.description" type="textarea" rows="5" autosize></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched">{{ $t('save') }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="poolfrm"
+    label-width="120px"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(label="$t('podset')", prop="network")
+      el-input(v-model="frmMod.network")
+  
+    el-form-item(label="$t('nach-ip')", prop="ip_start")
+      el-input(v-model="frmMod.ip_start")
+  
+    el-form-item(label="$t('kon-ip')", prop="ip_end")
+      el-input(v-model="frmMod.ip_end")
+  
+    el-form-item(label="$t('gruppy-2')")
+      groups-choice(v-model="frmMod.groups", multiple)
+  
+    el-form-item(label="$t('shlyuz')", prop="gateway")
+      el-input(v-model="frmMod.gateway")
+  
+    el-form-item(label="$t('vlan')")
+      el-select(v-model="frmMod.vlan_if", v-loading="vlanLoading")
+        el-option(
+          v-for="v in vlans"
+          :key="v.id"
+          :label="$t('v-vid-v-title', [v.vid, v.title])"
+          :value="v.id")
+  
+    el-form-item(label="$t('tip-seti')")
+      el-select(v-model="frmMod.kind")
+        el-option(
+          v-for="k in networkPoolKinds"
+          :key="k.val"
+          :label="k.title"
+          :value="k.val")
+  
+    el-form-item(label="$t('dinamicheskii-1')")
+      el-checkbox(v-model="frmMod.is_dynamic")
+        | {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
+  
+    el-form-item(label="$t('opisanie-7')", prop="description")
+      el-input(
+        v-model="frmMod.description"
+        type="textarea"
+        rows="5"
+        autosize)
+  
+    el-form-item
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading"
+        :disabled="isFormUntouched")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">

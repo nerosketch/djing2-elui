@@ -1,23 +1,19 @@
-<template>
-  <el-scrollbar wrap-class="scrollbar-wrapper">
-    <el-menu
+<template lang="pug">
+  el-scrollbar(wrap-class="scrollbar-wrapper")
+    el-menu(
       :collapse="isCollapse"
       :background-color="variables.menuBg"
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
       :unique-opened="false"
       :collapse-transition="false"
-      mode="vertical"
-    >
-      <sidebar-item
+      mode="vertical")
+      sidebar-item(
         v-for="route in routes"
         :key="route.path"
         :item="route"
         :base-path="route.path"
-        :is-collapse="isCollapse"
-      />
-    </el-menu>
-  </el-scrollbar>
+        :is-collapse="isCollapse")
 </template>
 
 <script lang="ts">

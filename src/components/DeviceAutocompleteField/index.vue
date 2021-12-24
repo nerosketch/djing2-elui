@@ -1,5 +1,12 @@
-<template>  
-  <el-autocomplete class="inline-input wideautocomplete" v-model="inpName" :fetch-suggestions="querySearch" :loading="loading" placeholder="Начни вводить название или ip оборудования" trigger-on-focus @select="handleSelect" value-key="comment"></el-autocomplete>
+<template lang="pug">
+  el-autocomplete.inline-input.wideautocomplete(
+    v-model="inpName"
+    :fetch-suggestions="querySearch"
+    :loading="loading"
+    placeholder="Начни вводить название или ip оборудования"
+    trigger-on-focus
+    @select="handleSelect"
+    value-key="comment")
 </template>
 
 <script lang="ts">

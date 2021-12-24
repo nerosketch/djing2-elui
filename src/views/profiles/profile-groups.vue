@@ -1,11 +1,25 @@
-<template>
-  <div>
-    <template v-if="groups.length > 0">
-      <el-checkbox v-for="grp in groups" :key="grp.id" :label="grp.name" v-model="grp.checked"></el-checkbox>
-    </template><span v-else><i class="el-icon-loading"></i>{{ $t('zagruzka-0') }}</span>
-    <el-divider></el-divider>
-    <el-button icon="el-icon-upload" type="primary" @click="saveGroups" :loading="loading" :disabled="!$perms.is_superuser">{{ $t('save') }}</el-button>
-  </div>
+<template lang="pug">
+  div
+    template(v-if="groups.length > 0")
+      el-checkbox(
+        v-for="grp in groups"
+        :key="grp.id"
+        :label="grp.name"
+        v-model="grp.checked")
+  
+    span(v-else)
+      i.el-icon-loading
+      | {{ $t('zagruzka-0') }}
+  
+    el-divider
+  
+    el-button(
+      icon="el-icon-upload"
+      type="primary"
+      @click="saveGroups"
+      :loading="loading"
+      :disabled="!$perms.is_superuser")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">

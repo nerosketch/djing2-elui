@@ -1,21 +1,34 @@
-<template>
-  <div class="app-container">
-    <datatable :columns="tableColumns" :getData="loadMessengers" widthStorageNamePrefix="messengers" ref="table">
-      <template v-slot:title="{row}">
-        <el-link type="primary" :href="row.global_link" target="_blank">{{ row.title }}</el-link>
-      </template>
-      <template v-slot:oper="{row}">
-        <el-button-group>
-          <el-button type="danger" icon="el-icon-delete" @click="delMessenger(row)"></el-button>
-          <el-button icon="el-icon-view" @click="go2Messenger(row)"></el-button>
-        </el-button-group>
-      </template>
-      <el-button icon="el-icon-plus" @click="openNew">{{ $t('dobavit-messenger') }}</el-button>
-    </datatable>
-    <el-dialog title="$t('sozdat-messenger')" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <messenger-form v-on:done="frmDone"></messenger-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadMessengers"
+      widthStorageNamePrefix="messengers"
+      ref="table")
+      template(v-slot:title="{row}")
+        el-link(
+          type="primary"
+          :href="row.global_link"
+          target="_blank")
+          | {{ row.title }}
+    
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delMessenger(row)")
+        
+          el-button(icon="el-icon-view", @click="go2Messenger(row)")
+    
+      el-button(icon="el-icon-plus", @click="openNew")
+        | {{ $t('dobavit-messenger') }}
+  
+    el-dialog(
+      title="$t('sozdat-messenger')"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      messenger-form(v-on:done="frmDone")
 </template>
 
 <script lang="ts">

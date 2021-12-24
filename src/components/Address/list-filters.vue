@@ -1,12 +1,10 @@
-<template>  
-  <el-form inline>
-    <el-form-item :label="$t('customers.streets')">
-      <address-street-choice :addrId="addrId" v-model="streetVal"></address-street-choice>
-    </el-form-item>
-    <el-form-item :label="$t('route.groups')">
-      <groups-choice v-model="groupVal" :fetchFunction="fetchGroups"></groups-choice>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(inline)
+    el-form-item(:label="$t('customers.streets')")
+      address-street-choice(:addrId="addrId", v-model="streetVal")
+  
+    el-form-item(:label="$t('route.groups')")
+      groups-choice(v-model="groupVal", :fetchFunction="fetchGroups")
 </template>
 
 <script lang="ts">

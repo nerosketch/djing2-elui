@@ -1,8 +1,16 @@
-<template>
-  <div v-loading="loading">
-    <line-chart :chartData="chartDat"></line-chart><span>{{ $t('vremennoi-srez') }}</span>
-    <el-date-picker v-model="timerange" type="datetimerange" range-separator="-" start-placeholder="Начало среза" end-placeholder="Конец среза"></el-date-picker>
-  </div>
+<template lang="pug">
+  div(v-loading="loading")
+    line-chart(:chartData="chartDat")
+  
+    span
+      | {{ $t('vremennoi-srez') }}
+  
+    el-date-picker(
+      v-model="timerange"
+      type="datetimerange"
+      range-separator="-"
+      start-placeholder="Начало среза"
+      end-placeholder="Конец среза")
 </template>
 
 <script lang="ts">

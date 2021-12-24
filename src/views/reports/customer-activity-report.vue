@@ -1,5 +1,8 @@
-<template>
-  <bar-chart :labels="barLabels" :values="barValues" :loading="cloading"></bar-chart>
+<template lang="pug">
+  bar-chart(
+    :labels="barLabels"
+    :values="barValues"
+    :loading="cloading")
 </template>
 
 <script lang="ts">

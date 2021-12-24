@@ -1,49 +1,136 @@
-<template>
-  <div class="app-container">
-    <el-row v-loading="loadingGws" :gutter="10">
-      <el-col :xs="24" :md="12" :xl="6" v-for="(gw, i) in gwlist" :key="i" style="margin-bottom: 10px;">
-        <el-card shadow="hover">
-          <template v-slot:header>
-            <div class="clearfix">{{ gw.title }}</div>
-          </template>
-          <dl>
-            <dt><b>{{ $t('ip-adres-0') }}</b></dt>
-            <dd>{{ gw.ip_address }}</dd>
-            <dt><b>{{ $t('port-1') }}</b></dt>
-            <dd>{{ gw.ip_port }}</dd>
-            <dt><b>{{ $t('login-dlya-vkhoda-0') }}</b></dt>
-            <dd>{{ gw.auth_login }}</dd>
-            <dt><b>{{ $t('parol-dlya-vkhoda-0') }}</b></dt>
-            <dd>{{ gw.auth_passw }}</dd>
-            <dt><b>{{ $t('tip-nas-0') }}</b></dt>
-            <dd>{{ gw.gw_type_str }}</dd>
-            <dt><b>{{ $t('po-umolchaniyu-0') }}</b></dt>
-            <dd><i>{{ gw.is_default ? 'Да' : 'Нет' }}</i></dd>
-            <dt><b>{{ $t('vklyuchen-0') }}</b></dt>
-            <dd><i>{{ gw.enabled ? 'Да' : 'Нет' }}</i></dd>
-            <dt><b>{{ $t('vsego-abon') }}</b></dt>
-            <dd><i>{{ gw.customer_count }}</i></dd>
-            <dt><b>{{ $t('aktivnykh-abon') }}</b></dt>
-            <dd><i>{{ gw.customer_count_active }}</i></dd>
-            <dt><b>{{ $t('abony-s-uslugoi') }}</b></dt>
-            <dd><i>{{ gw.customer_count_w_service }}</i></dd>
-            <dt><b>{{ $t('data-sozdaniya') }}</b></dt>
-            <dd><i>{{ gw.create_time }}</i></dd>
-            <dt><b>{{ $t('adres-0') }}</b></dt>
-            <dd><i>{{ gw.place || ' - ' }}</i></dd>
-          </dl>
-          <el-button-group>
-            <el-button icon="el-icon-edit" @click="openGwForm(gw)" :disabled="!$perms.gateways.change_gateway">{{ $t('izmenit') }}</el-button>
-            <el-button type="danger" icon="el-icon-delete" @click="onDel(gw)" :disabled="!$perms.gateways.delete_gateway">{{ $t('udalit-0') }}</el-button>
-          </el-button-group>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-button type="success" icon="el-icon-plus" @click="onAdd" :disabled="!$perms.gateways.add_gateway">{{ $t('add') }}</el-button>
-    <el-dialog :visible.sync="gwFormDialog" title="$t('izmenit-shlyuz-dostupa')" :close-on-click-modal="false">
-      <gw-form v-on:done="gwFrmDone" v-on:err="gwFormDialog=false"></gw-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    el-row(v-loading="loadingGws", :gutter="10")
+      el-col(
+        :xs="24"
+        :md="12"
+        :xl="6"
+        v-for="(gw, i) in gwlist"
+        :key="i"
+        style="margin-bottom: 10px;")
+        el-card(shadow="hover")
+          template(v-slot:header)
+            .clearfix
+              | {{ gw.title }}
+        
+          dl
+            dt
+              b
+                | {{ $t('ip-adres-0') }}
+          
+            dd
+              | {{ gw.ip_address }}
+          
+            dt
+              b
+                | {{ $t('port-1') }}
+          
+            dd
+              | {{ gw.ip_port }}
+          
+            dt
+              b
+                | {{ $t('login-dlya-vkhoda-0') }}
+          
+            dd
+              | {{ gw.auth_login }}
+          
+            dt
+              b
+                | {{ $t('parol-dlya-vkhoda-0') }}
+          
+            dd
+              | {{ gw.auth_passw }}
+          
+            dt
+              b
+                | {{ $t('tip-nas-0') }}
+          
+            dd
+              | {{ gw.gw_type_str }}
+          
+            dt
+              b
+                | {{ $t('po-umolchaniyu-0') }}
+          
+            dd
+              i
+                | {{ gw.is_default ? 'Да' : 'Нет' }}
+          
+            dt
+              b
+                | {{ $t('vklyuchen-0') }}
+          
+            dd
+              i
+                | {{ gw.enabled ? 'Да' : 'Нет' }}
+          
+            dt
+              b
+                | {{ $t('vsego-abon') }}
+          
+            dd
+              i
+                | {{ gw.customer_count }}
+          
+            dt
+              b
+                | {{ $t('aktivnykh-abon') }}
+          
+            dd
+              i
+                | {{ gw.customer_count_active }}
+          
+            dt
+              b
+                | {{ $t('abony-s-uslugoi') }}
+          
+            dd
+              i
+                | {{ gw.customer_count_w_service }}
+          
+            dt
+              b
+                | {{ $t('data-sozdaniya') }}
+          
+            dd
+              i
+                | {{ gw.create_time }}
+          
+            dt
+              b
+                | {{ $t('adres-0') }}
+          
+            dd
+              i
+                | {{ gw.place || ' - ' }}
+        
+          el-button-group
+            el-button(
+              icon="el-icon-edit"
+              @click="openGwForm(gw)"
+              :disabled="!$perms.gateways.change_gateway")
+              | {{ $t('izmenit') }}
+          
+            el-button(
+              type="danger"
+              icon="el-icon-delete"
+              @click="onDel(gw)"
+              :disabled="!$perms.gateways.delete_gateway")
+              | {{ $t('udalit-0') }}
+  
+    el-button(
+      type="success"
+      icon="el-icon-plus"
+      @click="onAdd"
+      :disabled="!$perms.gateways.add_gateway")
+      | {{ $t('add') }}
+  
+    el-dialog(
+      :visible.sync="gwFormDialog"
+      title="$t('izmenit-shlyuz-dostupa')"
+      :close-on-click-modal="false")
+      gw-form(v-on:done="gwFrmDone", v-on:err="gwFormDialog=false")
 </template>
 
 <script lang="ts">

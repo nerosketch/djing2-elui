@@ -1,9 +1,25 @@
-<template>  <span>
-    <el-table :data="onuList" v-loading="lloading" :row-class-name="onuRowColor" border fit>
-      <el-table-column label="$t('tip-0')" min-width="80" prop="onu_type"></el-table-column>
-      <el-table-column label="$t('port')" min-width="90" prop="onu_port"></el-table-column>
-      <el-table-column label="$t('seriinik')" min-width="90" prop="onu_sn"></el-table-column>
-    </el-table></span>
+<template lang="pug">
+  span
+    el-table(
+      :data="onuList"
+      v-loading="lloading"
+      :row-class-name="onuRowColor"
+      border
+      fit)
+      el-table-column(
+        label="$t('tip-0')"
+        min-width="80"
+        prop="onu_type")
+    
+      el-table-column(
+        label="$t('port')"
+        min-width="90"
+        prop="onu_port")
+    
+      el-table-column(
+        label="$t('seriinik')"
+        min-width="90"
+        prop="onu_sn")
 </template>
 
 <script lang="ts">

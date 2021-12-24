@@ -1,18 +1,29 @@
-<template>
-  <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
-    <el-form-item :label="$t('title')" prop="title">
-      <el-input v-model="frmMod.title"></el-input>
-    </el-form-item>
-    <el-form-item label="VID" prop="vid">
-      <el-input v-model="frmMod.vid" type="number"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('upravlenie-0')" prop="is_management">
-      <el-checkbox v-model="frmMod.is_management">{{ $t('yavlyaetsya-li-vlanom-upravleniya') }}<b>{{ frmMod.is_management ? 'Да' : 'Нет' }}</b></el-checkbox>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="form"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')", prop="title")
+      el-input(v-model="frmMod.title")
+  
+    el-form-item(label="VID", prop="vid")
+      el-input(v-model="frmMod.vid", type="number")
+  
+    el-form-item(label="$t('upravlenie-0')", prop="is_management")
+      el-checkbox(v-model="frmMod.is_management")
+        | {{ $t('yavlyaetsya-li-vlanom-upravleniya') }}
+      
+        b
+          | {{ frmMod.is_management ? 'Да' : 'Нет' }}
+  
+    el-form-item
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">

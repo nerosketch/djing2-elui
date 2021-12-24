@@ -1,15 +1,22 @@
-<template>
-  <el-form ref="shotfrm" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
-    <el-form-item :label="$t('title')" prop="name">
-      <el-input v-model="frmMod.name"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('stoimost-2')" prop="cost">
-      <el-input v-model="frmMod.cost"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="shotfrm"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')", prop="name")
+      el-input(v-model="frmMod.name")
+  
+    el-form-item(label="$t('stoimost-2')", prop="cost")
+      el-input(v-model="frmMod.cost")
+  
+    el-form-item
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">

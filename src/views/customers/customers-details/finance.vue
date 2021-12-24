@@ -1,13 +1,22 @@
-<template>
-  <div>
-    <datatable :columns="tableColumns" :getData="loadLog" :heightDiff="202" widthStorageNamePrefix="customerFin" ref="fintbl">
-      <template v-slot:author_name="{row}">{{ row.author_name || $t('customers.defaultAuthorName') }}</template>
-      <el-button @click="addCashDialog=true">{{ $t('customers.addCash2Account') }}</el-button>
-    </datatable>
-    <el-dialog :title="$t('customers.addCash2Account')" :visible.sync="addCashDialog" :close-on-click-modal="false">
-      <add-cash v-on:done="addCashDone"></add-cash>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadLog"
+      :heightDiff="202"
+      widthStorageNamePrefix="customerFin"
+      ref="fintbl")
+      template(v-slot:author_name="{row}")
+        | {{ row.author_name || $t('customers.defaultAuthorName') }}
+    
+      el-button(@click="addCashDialog=true")
+        | {{ $t('customers.addCash2Account') }}
+  
+    el-dialog(
+      :title="$t('customers.addCash2Account')"
+      :visible.sync="addCashDialog"
+      :close-on-click-modal="false")
+      add-cash(v-on:done="addCashDone")
 </template>
 
 <script lang="ts">

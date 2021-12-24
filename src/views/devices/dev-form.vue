@@ -1,47 +1,65 @@
-<template>
-  <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
-    <el-form-item :label="$t('ipAddress')" prop="ip_address">
-      <el-input v-model="frmMod.ip_address"></el-input>
-    </el-form-item>
-    <el-form-item :label="$t('macAddress')" prop="mac_addr">
-      <el-input v-model="frmMod.mac_addr"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('opisanie-0')" prop="comment">
-      <el-input v-model="frmMod.comment"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('tip-oborudovaniya')">
-      <el-select v-model="frmMod.dev_type">
-        <el-option v-for="dt in deviceTypeNames" :key="dt.v" :label="dt.nm" :value="dt.v"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="$t('snmp-community')">
-      <el-input v-model="frmMod.man_passw"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('gruppa-0')">
-      <groups-choice v-model="frmMod.group"></groups-choice>
-    </el-form-item>
-    <el-form-item label="$t('rodit-ustroistvo')">
-      <device-autocomplete-field v-model="frmMod.parent_dev" :defaultName="$store.state.devicemodule.parent_dev_name"></device-autocomplete-field>
-    </el-form-item>
-    <el-form-item label="$t('data-vvedeniya-v-ekspluataciyu')">
-      <datetime-counter v-model="frmMod.create_time"></datetime-counter>
-    </el-form-item>
-    <el-form-item label="$t('adres')">
-      <addr-field-input v-model="frmMod.address"></addr-field-input>
-    </el-form-item>
-    <el-form-item label="$t('doma')">
-      <el-input v-model="frmMod.place" disabled readonly></el-input>
-    </el-form-item>
-    <el-form-item label="$t('dop-info-dlya-snmp')">
-      <el-input v-model="frmMod.snmp_extra"></el-input>
-    </el-form-item>
-    <el-form-item prop="is_noticeable">
-      <el-checkbox v-model="frmMod.is_noticeable">{{ $t('opoveshat-pri-sobytiyakh-monitoringa') }}&#58;<b>{{ frmMod.is_noticeable ? 'Да' : 'Нет' }}</b></el-checkbox>
-    </el-form-item>
-    <el-form-item>
-      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="loading" :disabled="isFormUntouched || !$perms.devices.change_device">{{ $t('save') }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="form"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading")
+    el-form-item(:label="$t('ipAddress')", prop="ip_address")
+      el-input(v-model="frmMod.ip_address")
+  
+    el-form-item(:label="$t('macAddress')", prop="mac_addr")
+      el-input(v-model="frmMod.mac_addr")
+  
+    el-form-item(label="$t('opisanie-0')", prop="comment")
+      el-input(v-model="frmMod.comment")
+  
+    el-form-item(label="$t('tip-oborudovaniya')")
+      el-select(v-model="frmMod.dev_type")
+        el-option(
+          v-for="dt in deviceTypeNames"
+          :key="dt.v"
+          :label="dt.nm"
+          :value="dt.v")
+  
+    el-form-item(label="$t('snmp-community')")
+      el-input(v-model="frmMod.man_passw")
+  
+    el-form-item(label="$t('gruppa-0')")
+      groups-choice(v-model="frmMod.group")
+  
+    el-form-item(label="$t('rodit-ustroistvo')")
+      device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="$store.state.devicemodule.parent_dev_name")
+  
+    el-form-item(label="$t('data-vvedeniya-v-ekspluataciyu')")
+      datetime-counter(v-model="frmMod.create_time")
+  
+    el-form-item(label="$t('adres')")
+      addr-field-input(v-model="frmMod.address")
+  
+    el-form-item(label="$t('doma')")
+      el-input(
+        v-model="frmMod.place"
+        disabled
+        readonly)
+  
+    el-form-item(label="$t('dop-info-dlya-snmp')")
+      el-input(v-model="frmMod.snmp_extra")
+  
+    el-form-item(prop="is_noticeable")
+      el-checkbox(v-model="frmMod.is_noticeable")
+        | {{ $t('opoveshat-pri-sobytiyakh-monitoringa') }}:
+      
+        b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
+  
+    el-form-item
+      el-button(
+        icon="el-icon-upload"
+        type="primary"
+        @click="onSubmit"
+        :loading="loading"
+        :disabled="isFormUntouched || !$perms.devices.change_device")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">

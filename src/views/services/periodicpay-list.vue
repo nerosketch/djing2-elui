@@ -1,22 +1,42 @@
-<template>
-  <div>
-    <datatable :columns="tableColumns" :getData="loadPeriodics" :heightDiff="189" widthStorageNamePrefix="perpay" ref="table">
-      <template v-slot:oper="{row}">
-        <el-button-group>
-          <el-button v-if="$perms.is_superuser" @click="openSitesDlg(row)">C</el-button>
-          <el-button icon="el-icon-edit" @click="openEdit(row)"></el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="delPerPay(row)" :disabled="!$perms.services.delete_periodicpay"></el-button>
-        </el-button-group>
-      </template>
-      <el-button icon="el-icon-plus" type="success" @click="openNew" :disabled="!$perms.services.add_periodicpay">{{ $t('add') }}</el-button>
-    </datatable>
-    <el-dialog :title="$t('isnew-sozdanie-izmenenie-periodicheskogo-platezha', [(isNew ? `Создание` : `Изменение`)])" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <periodicpay-form v-on:done="frmDone"></periodicpay-form>
-    </el-dialog>
-    <el-dialog title="$t('prinadlezhnost-saitam-4')" :visible.sync="sitesDlg" :close-on-click-modal="false">
-      <sites-attach :selectedSiteIds="$store.state.periodicpay.sites" v-on:save="serviceSitesSave"></sites-attach>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadPeriodics"
+      :heightDiff="189"
+      widthStorageNamePrefix="perpay"
+      ref="table")
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+            | C
+        
+          el-button(icon="el-icon-edit", @click="openEdit(row)")
+        
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delPerPay(row)"
+            :disabled="!$perms.services.delete_periodicpay")
+    
+      el-button(
+        icon="el-icon-plus"
+        type="success"
+        @click="openNew"
+        :disabled="!$perms.services.add_periodicpay")
+        | {{ $t('add') }}
+  
+    el-dialog(
+      :title="$t('isnew-sozdanie-izmenenie-periodicheskogo-platezha', [(isNew ? `Создание` : `Изменение`)])"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      periodicpay-form(v-on:done="frmDone")
+  
+    el-dialog(
+      title="$t('prinadlezhnost-saitam-4')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.periodicpay.sites", v-on:save="serviceSitesSave")
 </template>
 
 <script lang="ts">

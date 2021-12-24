@@ -1,5 +1,9 @@
-<template>  
-  <dynamic-content-fields v-show="contents.length > 0" :contents="contents" @save="saveData" v-loading="loading"></dynamic-content-fields>
+<template lang="pug">
+  dynamic-content-fields(
+    v-show="contents.length > 0"
+    :contents="contents"
+    @save="saveData"
+    v-loading="loading")
 </template>
 
 <script lang="ts">

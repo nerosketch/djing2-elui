@@ -1,58 +1,81 @@
-<template>
-  <el-form ref="frm" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
-    <el-form-item :label="$t('customers.contractNum.s')" prop="username">
-      <el-input v-model="frmMod.username"></el-input>
-    </el-form-item>
-    <el-form-item :label="$t('title')" prop="title">
-      <el-input v-model="frmMod.title"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('fio-direktora')" prop="fio">
-      <el-input v-model="frmMod.fio"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('gruppa')">
-      <groups-choice v-model="frmMod.group"></groups-choice>
-    </el-form-item>
-    <el-form-item label="$t('tip-yurlica')" prop="legal_type">
-      <legal-type-choice v-model="frmMod.legal_type"></legal-type-choice>
-    </el-form-item>
-    <el-form-item label="$t('yuridicheskii-adres')" prop="address">
-      <addr-field-input v-model="frmMod.address"></addr-field-input>
-    </el-form-item>
-    <el-form-item label="$t('pochtovyi-indeks-yuridicheskogo-adresa')" prop="post_index">
-      <el-input v-model="frmMod.post_index"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('adres-dostavki-schyota')">
-      <addr-field-input v-model="frmMod.delivery_address"></addr-field-input>
-    </el-form-item>
-    <el-form-item label="$t('pochtovyi-indeks-adresa-dostavki-schyota')" prop="delivery_address_post_index">
-      <el-input v-model="frmMod.delivery_address_post_index">
-        <el-button slot="append" @click="copyDeliveryAddrFromLegalAddr" icon="el-icon-document-copy" title="$t('skopirovat-adres-iz-yuridicheskogo-adresa')" :disabled="addrCopyDisabled"></el-button>
-      </el-input>
-    </el-form-item>
-    <el-form-item label="$t('pochtovyi-adres')">
-      <addr-field-input v-model="frmMod.post_address"></addr-field-input>
-    </el-form-item>
-    <el-form-item label="$t('pochtovyi-indeks-pochtovogo-adresa')" prop="post_post_index">
-      <el-input v-model="frmMod.post_post_index">
-        <el-button slot="append" @click="copyPostAddrFromLegalAddr" icon="el-icon-document-copy" title="$t('skopirovat-adres-iz-yuridicheskogo-adresa-0')" :disabled="addrCopyDisabled"></el-button>
-      </el-input>
-    </el-form-item>
-    <el-form-item label="$t('inn')" prop="tax_number">
-      <el-input v-model="frmMod.tax_number" type="number"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('ogrn')" prop="state_level_reg_number">
-      <el-input v-model="frmMod.state_level_reg_number" type="number"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('data-nachala-deistviya-dogovora')">
-      <el-date-picker v-model="frmMod.actual_start_time" type="datetime" value-format="yyyy-MM-dd HH:mm" format="d.MM.yyyy HH:mm"></el-date-picker>
-    </el-form-item>
-    <el-form-item label="$t('opisanie')">
-      <el-input type="textarea" rows="5" v-model="frmMod.description"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button icon="el-icon-upload" :type="isNew ? 'success' : 'primary'" @click="onSubmit" :disabled="!$perms.customers_legal.add_customerlegalmodel">{{ isNew ? 'Добавить' : 'Сохранить' }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="frm"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading")
+    el-form-item(:label="$t('customers.contractNum.s')", prop="username")
+      el-input(v-model="frmMod.username")
+  
+    el-form-item(:label="$t('title')", prop="title")
+      el-input(v-model="frmMod.title")
+  
+    el-form-item(label="$t('fio-direktora')", prop="fio")
+      el-input(v-model="frmMod.fio")
+  
+    el-form-item(label="$t('gruppa')")
+      groups-choice(v-model="frmMod.group")
+  
+    el-form-item(label="$t('tip-yurlica')", prop="legal_type")
+      legal-type-choice(v-model="frmMod.legal_type")
+  
+    el-form-item(label="$t('yuridicheskii-adres')", prop="address")
+      addr-field-input(v-model="frmMod.address")
+  
+    el-form-item(label="$t('pochtovyi-indeks-yuridicheskogo-adresa')", prop="post_index")
+      el-input(v-model="frmMod.post_index")
+  
+    el-form-item(label="$t('adres-dostavki-schyota')")
+      addr-field-input(v-model="frmMod.delivery_address")
+  
+    el-form-item(label="$t('pochtovyi-indeks-adresa-dostavki-schyota')", prop="delivery_address_post_index")
+      el-input(v-model="frmMod.delivery_address_post_index")
+        el-button(
+          slot="append"
+          @click="copyDeliveryAddrFromLegalAddr"
+          icon="el-icon-document-copy"
+          title="$t('skopirovat-adres-iz-yuridicheskogo-adresa')"
+          :disabled="addrCopyDisabled")
+  
+    el-form-item(label="$t('pochtovyi-adres')")
+      addr-field-input(v-model="frmMod.post_address")
+  
+    el-form-item(label="$t('pochtovyi-indeks-pochtovogo-adresa')", prop="post_post_index")
+      el-input(v-model="frmMod.post_post_index")
+        el-button(
+          slot="append"
+          @click="copyPostAddrFromLegalAddr"
+          icon="el-icon-document-copy"
+          title="$t('skopirovat-adres-iz-yuridicheskogo-adresa-0')"
+          :disabled="addrCopyDisabled")
+  
+    el-form-item(label="$t('inn')", prop="tax_number")
+      el-input(v-model="frmMod.tax_number", type="number")
+  
+    el-form-item(label="$t('ogrn')", prop="state_level_reg_number")
+      el-input(v-model="frmMod.state_level_reg_number", type="number")
+  
+    el-form-item(label="$t('data-nachala-deistviya-dogovora')")
+      el-date-picker(
+        v-model="frmMod.actual_start_time"
+        type="datetime"
+        value-format="yyyy-MM-dd HH:mm"
+        format="d.MM.yyyy HH:mm")
+  
+    el-form-item(label="$t('opisanie')")
+      el-input(
+        type="textarea"
+        rows="5"
+        v-model="frmMod.description")
+  
+    el-form-item
+      el-button(
+        icon="el-icon-upload"
+        :type="isNew ? 'success' : 'primary'"
+        @click="onSubmit"
+        :disabled="!$perms.customers_legal.add_customerlegalmodel")
+        | {{ isNew ? 'Добавить' : 'Сохранить' }}
 </template>
 
 <script lang="ts">

@@ -1,18 +1,27 @@
-<template>
-  <div class="app-container">
-    <datatable :columns="tableColumns" :getData="loadFields" widthStorageNamePrefix="dfl" ref="fieldtable">
-      <template v-slot:btn="{row}">
-        <el-button-group>
-          <el-button icon="el-icon-edit" @click="editField(row)"></el-button>
-          <el-button type="danger" icon="el-icon-close" @click="delDynamicField(row)"></el-button>
-        </el-button-group>
-      </template>
-      <el-button icon="el-icon-plus" @click="openNew">{{ $t('dobavit-polya') }}</el-button>
-    </datatable>
-    <el-dialog title="$t('pole')" :visible.sync="fieldFormVisible" :close-on-click-modal="false">
-      <field-form @done="formDone"></field-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadFields"
+      widthStorageNamePrefix="dfl"
+      ref="fieldtable")
+      template(v-slot:btn="{row}")
+        el-button-group
+          el-button(icon="el-icon-edit", @click="editField(row)")
+        
+          el-button(
+            type="danger"
+            icon="el-icon-close"
+            @click="delDynamicField(row)")
+    
+      el-button(icon="el-icon-plus", @click="openNew")
+        | {{ $t('dobavit-polya') }}
+  
+    el-dialog(
+      title="$t('pole')"
+      :visible.sync="fieldFormVisible"
+      :close-on-click-modal="false")
+      field-form(@done="formDone")
 </template>
 
 <script lang="ts">

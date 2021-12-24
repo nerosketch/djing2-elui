@@ -1,15 +1,24 @@
-<template>
-  <el-form ref="frm" v-loading="loading" status-icon :rules="frmRules" :model="frmMod">
-    <el-form-item :label="$t('customers.phone')" prop="telephone">
-      <el-input v-model="frmMod.telephone" :maxlength="16"></el-input>
-    </el-form-item>
-    <el-form-item :label="$t('customers.phoneOwner')" prop="owner_name">
-      <el-input v-model="frmMod.owner_name" :maxlength="127"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button icon="el-icon-upload" type="primary" @click="onSubmit" :loading="loading" :disabled="!$perms.customers.add_additionaltelephone">{{ isNew ? $t('add') : $t('save') }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="frm"
+    v-loading="loading"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod")
+    el-form-item(:label="$t('customers.phone')", prop="telephone")
+      el-input(v-model="frmMod.telephone", :maxlength="16")
+  
+    el-form-item(:label="$t('customers.phoneOwner')", prop="owner_name")
+      el-input(v-model="frmMod.owner_name", :maxlength="127")
+  
+    el-form-item
+      el-button(
+        icon="el-icon-upload"
+        type="primary"
+        @click="onSubmit"
+        :loading="loading"
+        :disabled="!$perms.customers.add_additionaltelephone")
+        | {{ isNew ? $t('add') : $t('save') }}
 </template>
 
 <script lang="ts">

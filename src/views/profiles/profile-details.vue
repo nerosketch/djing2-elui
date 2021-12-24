@@ -1,38 +1,42 @@
-<template>
-  <div class="app-container">
-    <el-row :gutter="20">
-      <el-col :span="6" :xs="24">
-        <user-card></user-card>
-      </el-col>
-      <el-col :span="18" :xs="24">
-        <el-card>
-          <el-tabs v-model="activeTabName">
-            <el-tab-pane :label="$t('change')" name="account">
-              <profile-form v-if="ready"></profile-form>
-            </el-tab-pane>
-            <el-tab-pane label="$t('otvetstvennost-za-gruppy')" name="activity" lazy>
-              <group-responsibility :profileUname="profileUname"></group-responsibility>
-            </el-tab-pane>
-            <el-tab-pane label="$t('prava-na-klassy-deistvii')" v-if="$store.state.currentuserprofile.is_superuser" name="classperms" lazy>
-              <keep-alive v-if="ready">
-                <user-class-perms></user-class-perms>
-              </keep-alive>
-            </el-tab-pane>
-            <el-tab-pane label="$t('log-deistvii')" name="timeline" lazy>
-              <keep-alive v-if="ready">
-                <profile-log></profile-log>
-              </keep-alive>
-            </el-tab-pane>
-            <el-tab-pane label="$t('log-avtorizacii')" name="authlog" lazy>
-              <keep-alive v-if="ready">
-                <profile-auth-log></profile-auth-log>
-              </keep-alive>
-            </el-tab-pane>
-          </el-tabs>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
+<template lang="pug">
+  .app-container
+    el-row(:gutter="20")
+      el-col(:span="6", :xs="24")
+        user-card
+    
+      el-col(:span="18", :xs="24")
+        el-card
+          el-tabs(v-model="activeTabName")
+            el-tab-pane(:label="$t('change')", name="account")
+              profile-form(v-if="ready")
+          
+            el-tab-pane(
+              label="$t('otvetstvennost-za-gruppy')"
+              name="activity"
+              lazy)
+              group-responsibility(:profileUname="profileUname")
+          
+            el-tab-pane(
+              label="$t('prava-na-klassy-deistvii')"
+              v-if="$store.state.currentuserprofile.is_superuser"
+              name="classperms"
+              lazy)
+              keep-alive(v-if="ready")
+                user-class-perms
+          
+            el-tab-pane(
+              label="$t('log-deistvii')"
+              name="timeline"
+              lazy)
+              keep-alive(v-if="ready")
+                profile-log
+          
+            el-tab-pane(
+              label="$t('log-avtorizacii')"
+              name="authlog"
+              lazy)
+              keep-alive(v-if="ready")
+                profile-auth-log
 </template>
 
 <script lang="ts">

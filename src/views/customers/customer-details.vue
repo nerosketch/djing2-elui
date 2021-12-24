@@ -1,49 +1,69 @@
-<template>
-  <div class="app-container">
-    <slot name="head"><span>{{ $t('customers.balance') }}:</span><small> {{ $store.state.customer.balance }}.</small><span> {{ $t('startDate') }}:</span><small> {{ $store.state.customer.create_date }}</small></slot>
-    <el-tabs class="border-card" v-model="activeTabName">
-      <el-tab-pane :label="$t('customers.info')" name="info" lazy>
-        <slot name="info">
-          <keep-alive>
-            <info v-if="loaded"></info>
-          </keep-alive>
-        </slot>
-      </el-tab-pane>
-      <el-tab-pane :label="$t('route.services')" name="services" :disabled="!$perms.customers.view_customerservice" lazy>
-        <slot name="services">
-          <keep-alive>
-            <services v-if="loaded"></services>
-          </keep-alive>
-        </slot>
-      </el-tab-pane>
-      <el-tab-pane :label="$t('route.finance')" name="fin" :disabled="!$perms.customers.view_customerlog" lazy>
-        <slot name="fin">
-          <keep-alive>
-            <finance v-if="loaded"></finance>
-          </keep-alive>
-        </slot>
-      </el-tab-pane>
-      <el-tab-pane :label="$t('customers.taskHistory')" name="history" :disabled="!$perms.tasks.view_task" lazy>
-        <slot name="history">
-          <keep-alive>
-            <customer-task-history v-if="loaded"></customer-task-history>
-          </keep-alive>
-        </slot>
-      </el-tab-pane>
-      <el-tab-pane :label="$t('customers.trafHistory')" name="traf" lazy>
-        <slot name="traf">
-          <keep-alive>
-            <el-card v-if="loaded">
-              <template #header>{{ $t('customers.trafHistory') }}</template>
-              <traf-report :customerId="uid"></traf-report>
-            </el-card>
-          </keep-alive>
-        </slot>
-      </el-tab-pane>
-      <slot name="additional_tabs"></slot>
-    </el-tabs>
-    <slot></slot>
-  </div>
+<template lang="pug">
+  .app-container
+    slot(name="head")
+      span
+        | {{ $t('customers.balance') }}:
+    
+      small
+        | {{ $store.state.customer.balance }}.
+    
+      span
+        | {{ $t('startDate') }}:
+    
+      small
+        | {{ $store.state.customer.create_date }}
+  
+    el-tabs.border-card(v-model="activeTabName")
+      el-tab-pane(
+        :label="$t('customers.info')"
+        name="info"
+        lazy)
+        slot(name="info")
+          keep-alive
+            info(v-if="loaded")
+    
+      el-tab-pane(
+        :label="$t('route.services')"
+        name="services"
+        :disabled="!$perms.customers.view_customerservice"
+        lazy)
+        slot(name="services")
+          keep-alive
+            services(v-if="loaded")
+    
+      el-tab-pane(
+        :label="$t('route.finance')"
+        name="fin"
+        :disabled="!$perms.customers.view_customerlog"
+        lazy)
+        slot(name="fin")
+          keep-alive
+            finance(v-if="loaded")
+    
+      el-tab-pane(
+        :label="$t('customers.taskHistory')"
+        name="history"
+        :disabled="!$perms.tasks.view_task"
+        lazy)
+        slot(name="history")
+          keep-alive
+            customer-task-history(v-if="loaded")
+    
+      el-tab-pane(
+        :label="$t('customers.trafHistory')"
+        name="traf"
+        lazy)
+        slot(name="traf")
+          keep-alive
+            el-card(v-if="loaded")
+              template(#header)
+                | {{ $t('customers.trafHistory') }}
+            
+              traf-report(:customerId="uid")
+    
+      slot(name="additional_tabs")
+  
+    slot
 </template>
 
 <script lang="ts">

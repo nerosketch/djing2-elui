@@ -1,71 +1,115 @@
-<template>
-  <div class="app-container">
-    <el-row :gutter="10">
-      <el-col :col="24">
-        <slot name="filters">
-          <list-filters :addrId="addrId" :group.sync="filterForm.group" :street.sync="filterForm.street" :fetchGroups="fetchGroups"></list-filters>
-        </slot>
-      </el-col>
-      <el-col :lg="24" :md="20">
-        <datatable :columns="tableColumns" :getData="getAllCustomers" :tableRowClassName="rowColor" :heightDiff="heightDiff" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="customers" ref="tbl" :selectable="$perms.is_superuser" @selection-change="handleSelectionChange">
-          <template v-if="$perms.is_superuser" #id="{row}">
-            <slot name="id" :row="row">
-              <el-button v-if="$perms.is_superuser" icon="el-icon-lock" @click="openPermsDialog(row)"></el-button>
-            </slot>
-          </template>
-          <template #username="{row}">
-            <slot name="username" :row="row">
-              <router-link :to="{name: 'customerDetails', params:{uid: row.id }}">{{ row.username }}</router-link>
-            </slot>
-          </template>
-          <template #telephone="{row}">
-            <slot name="telephone" :row="row">
-              <el-link type="primary" :href="`tel:${row.telephone}`">{{ row.telephone }}</el-link>
-            </slot>
-          </template>
-          <template #marker_icons="{row}">
-            <slot name="marker_icons" :row="row">
-              <template v-if="row.marker_icons.length > 0"><span class="m-icon" v-for="(ic, i) in row.marker_icons" :class="`m-${ic}`" :key="i"></span></template><span v-else></span>
-            </slot>
-          </template>
-          <template #ping="{row}">
-            <slot name="ping" :row="row">
-              <ping-profile :customer="row"></ping-profile>
-            </slot>
-          </template>
-          <slot name="buttons">
-            <el-button-group>
-              <el-button icon="el-icon-plus" type="success" @click="addCustomerDialog=true" :disabled="!$perms.customers.add_customer">{{ $t('customers.customerAdd') }}</el-button>
-              <el-button icon="el-icon-set-up" @click="sitesDlg=true" v-if="isSomeoneSelected">{{ $t('customers.sites') }}</el-button>
-              <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">{{ $t('route.forms') }}</el-button>
-              <slot name="additional_button"></slot>
-            </el-button-group>
-          </slot>
-        </datatable>
-      </el-col>
-    </el-row>
-    <slot></slot>
-    <slot name="dialogs">
-      <slot name="dialog_customer_add">
-        <el-dialog title="$t('customers.customerAdd')" :visible.sync="addCustomerDialog" top="5vh" :close-on-click-modal="false">
-          <new-customer-form :selectedAddress="addrId" v-on:done="addFrmDone"></new-customer-form>
-        </el-dialog>
-      </slot>
-      <slot name="dialog_rights">
-        <el-dialog title="$t('customers.whoHaveRightsOnCustomer')" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
-          <object-perms v-on:save="changeCustomerObjectPerms" :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp" :getSelectedObjectPerms="customerGetSelectedObjectPerms" :objId="$store.state.customer.id"></object-perms>
-        </el-dialog>
-      </slot>
-      <slot name="dialog_sites">
-        <el-dialog v-if="$perms.is_superuser" title="$t('customers.customerSitesAccessory')" :visible.sync="sitesDlg" :close-on-click-modal="false">
-          <sites-attach v-on:save="selectedCustomerSitesSave"></sites-attach>
-          <el-dialog width="40%" :visible.sync="sitesDlgProgress" append-to-body :show-close="false" :close-on-press-escape="false" :close-on-click-modal="false">
-            <el-progress class="progress_disable_animations" :percentage="sitesProgress"></el-progress>
-          </el-dialog>
-        </el-dialog>
-      </slot>
-    </slot>
-  </div>
+<template lang="pug">
+  .app-container
+    el-row(:gutter="10")
+      el-col(:col="24")
+        slot(name="filters")
+          list-filters(
+            :addrId="addrId"
+            :group.sync="filterForm.group"
+            :street.sync="filterForm.street"
+            :fetchGroups="fetchGroups")
+    
+      el-col(:lg="24", :md="20")
+        datatable(
+          :columns="tableColumns"
+          :getData="getAllCustomers"
+          :tableRowClassName="rowColor"
+          :heightDiff="heightDiff"
+          :editFieldsVisible.sync="editFieldsVisible"
+          widthStorageNamePrefix="customers"
+          ref="tbl"
+          :selectable="$perms.is_superuser"
+          @selection-change="handleSelectionChange")
+          template(v-if="$perms.is_superuser", #id="{row}")
+            slot(name="id", :row="row")
+              el-button(
+                v-if="$perms.is_superuser"
+                icon="el-icon-lock"
+                @click="openPermsDialog(row)")
+        
+          template(#username="{row}")
+            slot(name="username", :row="row")
+              router-link(:to="{name: 'customerDetails', params:{uid: row.id }}")
+                | {{ row.username }}
+        
+          template(#telephone="{row}")
+            slot(name="telephone", :row="row")
+              el-link(type="primary", :href="`tel:${row.telephone}`")
+                | {{ row.telephone }}
+        
+          template(#marker_icons="{row}")
+            slot(name="marker_icons", :row="row")
+              template(v-if="row.marker_icons.length > 0")
+                span.m-icon(
+                  v-for="(ic, i) in row.marker_icons"
+                  :class="`m-${ic}`"
+                  :key="i")
+            
+              span(v-else)
+        
+          template(#ping="{row}")
+            slot(name="ping", :row="row")
+              ping-profile(:customer="row")
+        
+          slot(name="buttons")
+            el-button-group
+              el-button(
+                icon="el-icon-plus"
+                type="success"
+                @click="addCustomerDialog=true"
+                :disabled="!$perms.customers.add_customer")
+                | {{ $t('customers.customerAdd') }}
+            
+              el-button(
+                icon="el-icon-set-up"
+                @click="sitesDlg=true"
+                v-if="isSomeoneSelected")
+                | {{ $t('customers.sites') }}
+            
+              el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+                | {{ $t('route.forms') }}
+            
+              slot(name="additional_button")
+  
+    slot
+  
+    slot(name="dialogs")
+      slot(name="dialog_customer_add")
+        el-dialog(
+          title="$t('customers.customerAdd')"
+          :visible.sync="addCustomerDialog"
+          top="5vh"
+          :close-on-click-modal="false")
+          new-customer-form(:selectedAddress="addrId", v-on:done="addFrmDone")
+    
+      slot(name="dialog_rights")
+        el-dialog(
+          title="$t('customers.whoHaveRightsOnCustomer')"
+          :visible.sync="permsDialog"
+          top="5vh"
+          :close-on-click-modal="false")
+          object-perms(
+            v-on:save="changeCustomerObjectPerms"
+            :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
+            :getSelectedObjectPerms="customerGetSelectedObjectPerms"
+            :objId="$store.state.customer.id")
+    
+      slot(name="dialog_sites")
+        el-dialog(
+          v-if="$perms.is_superuser"
+          title="$t('customers.customerSitesAccessory')"
+          :visible.sync="sitesDlg"
+          :close-on-click-modal="false")
+          sites-attach(v-on:save="selectedCustomerSitesSave")
+        
+          el-dialog(
+            width="40%"
+            :visible.sync="sitesDlgProgress"
+            append-to-body
+            :show-close="false"
+            :close-on-press-escape="false"
+            :close-on-click-modal="false")
+            el-progress.progress_disable_animations(:percentage="sitesProgress")
 </template>
 
 <script lang="ts">

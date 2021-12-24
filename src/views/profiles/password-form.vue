@@ -1,21 +1,49 @@
-<template>
-  <el-form ref="form" status-icon :rules="frmRules" :model="frmMod" v-loading="loading">
-    <el-form-item label="$t('staryi-parol')" prop="old_passw" :error="frmErr.old_passw" v-if="!this.$perms.is_superuser">
-      <el-input v-model="frmMod.old_passw" maxlength="128" type="password"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('novyi-parol')" prop="new_passw" :error="frmErr.new_passw">
-      <el-input v-model="frmMod.new_passw" maxlength="128" type="password"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('povtori-parol')" prop="retype_passw" :error="frmErr.retype_passw">
-      <el-input v-model="frmMod.retype_passw" maxlength="128" type="password"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button-group>
-        <el-button type="primary" @click="onSubmit" icon="el-icon-download" :disabled="isEmpty">{{ $t('save') }}</el-button>
-        <el-button @click="$emit('cancel')" icon="el-icon-close">{{ $t('otmena') }}</el-button>
-      </el-button-group>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="form"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading")
+    el-form-item(
+      label="$t('staryi-parol')"
+      prop="old_passw"
+      :error="frmErr.old_passw"
+      v-if="!this.$perms.is_superuser")
+      el-input(
+        v-model="frmMod.old_passw"
+        maxlength="128"
+        type="password")
+  
+    el-form-item(
+      label="$t('novyi-parol')"
+      prop="new_passw"
+      :error="frmErr.new_passw")
+      el-input(
+        v-model="frmMod.new_passw"
+        maxlength="128"
+        type="password")
+  
+    el-form-item(
+      label="$t('povtori-parol')"
+      prop="retype_passw"
+      :error="frmErr.retype_passw")
+      el-input(
+        v-model="frmMod.retype_passw"
+        maxlength="128"
+        type="password")
+  
+    el-form-item
+      el-button-group
+        el-button(
+          type="primary"
+          @click="onSubmit"
+          icon="el-icon-download"
+          :disabled="isEmpty")
+          | {{ $t('save') }}
+      
+        el-button(@click="$emit('cancel')", icon="el-icon-close")
+          | {{ $t('otmena') }}
 </template>
 
 <script lang="ts">

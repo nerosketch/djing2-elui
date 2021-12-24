@@ -1,12 +1,20 @@
-<template>
-  <div v-loading>
-    <p v-if="lastConnectedExists">{{ $t('customers.serviceLastConnected') }} -<b>{{ lastConnectedTitle }}</b></p>
-    <p>{{ $t('customers.serviceAutocontinuation') }} -
-      <el-checkbox v-loading="serviceBlockLoad" v-on:change="onChangeAutoConnect" v-model="autoRenewalService" :disabled="!$perms.customers.change_customerservice">
-        <boolean-icon v-model="autoRenewalService"></boolean-icon>
-      </el-checkbox>
-    </p>
-  </div>
+<template lang="pug">
+  div(v-loading)
+    p(v-if="lastConnectedExists")
+      | {{ $t('customers.serviceLastConnected') }} -
+    
+      b
+        | {{ lastConnectedTitle }}
+  
+    p
+      | {{ $t('customers.serviceAutocontinuation') }} -
+    
+      el-checkbox(
+        v-loading="serviceBlockLoad"
+        v-on:change="onChangeAutoConnect"
+        v-model="autoRenewalService"
+        :disabled="!$perms.customers.change_customerservice")
+        boolean-icon(v-model="autoRenewalService")
 </template>
 
 <script lang="ts">

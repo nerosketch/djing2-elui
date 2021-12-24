@@ -1,19 +1,35 @@
-<template>  
-  <div>
-    <el-input v-model="myTel">
-      <template #append>
-        <el-button icon="el-icon-phone" circle @click="doCall"></el-button>
-        <el-button @click="openTelsDlg=true" :disabled="!$perms.customers.view_additionaltelephone" circle icon="el-icon-s-order"></el-button>
-        <el-button @click="openAddTels" :disabled="!$perms.customers.add_additionaltelephone" circle icon="el-icon-plus"></el-button>
-      </template>
-    </el-input>
-    <el-dialog :title="$t('customers.additionalPhones')" :visible.sync="openTelsDlg" :close-on-click-modal="false">
-      <additional-tels ref="additionaltels"></additional-tels>
-    </el-dialog>
-    <el-dialog :title="$t('customers.addPhone')" :visible.sync="openAddTelsDlg" :close-on-click-modal="false">
-      <tel-form :customer="$store.state.customer.id" v-on:done="telsFormDone"></tel-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    el-input(v-model="myTel")
+      template(#append)
+        el-button(
+          icon="el-icon-phone"
+          circle
+          @click="doCall")
+      
+        el-button(
+          @click="openTelsDlg=true"
+          :disabled="!$perms.customers.view_additionaltelephone"
+          circle
+          icon="el-icon-s-order")
+      
+        el-button(
+          @click="openAddTels"
+          :disabled="!$perms.customers.add_additionaltelephone"
+          circle
+          icon="el-icon-plus")
+  
+    el-dialog(
+      :title="$t('customers.additionalPhones')"
+      :visible.sync="openTelsDlg"
+      :close-on-click-modal="false")
+      additional-tels(ref="additionaltels")
+  
+    el-dialog(
+      :title="$t('customers.addPhone')"
+      :visible.sync="openAddTelsDlg"
+      :close-on-click-modal="false")
+      tel-form(:customer="$store.state.customer.id", v-on:done="telsFormDone")
 </template>
 
 <script lang="ts">

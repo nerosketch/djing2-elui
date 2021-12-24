@@ -1,7 +1,13 @@
-<template>  
-  <el-upload action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :http-request="uploadReq" :file-list="fileList">
-    <el-button type="primary">{{ $t('contractDocs.addDoc') }}</el-button>
-  </el-upload>
+<template lang="pug">
+  el-upload(
+    action=""
+    :on-preview="handlePreview"
+    :on-remove="handleRemove"
+    :before-remove="beforeRemove"
+    :http-request="uploadReq"
+    :file-list="fileList")
+    el-button(type="primary")
+      | {{ $t('contractDocs.addDoc') }}
 </template>
 
 <script lang="ts">

@@ -1,20 +1,21 @@
-<template>
-  <el-row class="app-container" :gutter="5">
-    <el-col class="mt5" :lg="12" :sm="24">
-      <el-card shadow="never">
-        <template v-slot:header>
-          <div class="clearfix">{{ $t('redaktirovat-zadachu-taskid', [taskId]) }}</div>
-        </template>
-        <task-form v-if="taskReady" :recipients="potentialRecipients"></task-form>
-      </el-card>
-    </el-col>
-    <el-col class="mt5" :lg="12" :sm="24">
-      <task-info v-if="taskReady" :recipients="potentialRecipients" :taskId="taskId"></task-info>
-    </el-col>
-    <el-col class="mt5" :lg="12" :sm="24">
-      <comments v-if="taskReady"></comments>
-    </el-col>
-  </el-row>
+<template lang="pug">
+  el-row.app-container(:gutter="5")
+    el-col.mt5(:lg="12", :sm="24")
+      el-card(shadow="never")
+        template(v-slot:header)
+          .clearfix
+            | {{ $t('redaktirovat-zadachu-taskid', [taskId]) }}
+      
+        task-form(v-if="taskReady", :recipients="potentialRecipients")
+  
+    el-col.mt5(:lg="12", :sm="24")
+      task-info(
+        v-if="taskReady"
+        :recipients="potentialRecipients"
+        :taskId="taskId")
+  
+    el-col.mt5(:lg="12", :sm="24")
+      comments(v-if="taskReady")
 </template>
 
 <script lang="ts">

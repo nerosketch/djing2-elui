@@ -1,5 +1,14 @@
-<template>
-  <el-alert offset="2" show-icon :closable="false"><b>{{ log.who_name }}:</b><small>({{ log.when }})</small>{{ log.human_representation }}.</el-alert>
+<template lang="pug">
+  el-alert(
+    offset="2"
+    show-icon
+    :closable="false")
+    b
+      | {{ log.who_name }}:
+  
+    small
+      | ({{ log.when }})
+    | {{ log.human_representation }}.
 </template>
 
 <script lang="ts">

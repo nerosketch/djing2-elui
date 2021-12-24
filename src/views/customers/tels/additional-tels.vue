@@ -1,17 +1,26 @@
-<template>
-  <el-table v-loading="loading" :data="tels" border fit>
-    <el-table-column :label="$t('customers.phoneOwner')" prop="owner_name"></el-table-column>
-    <el-table-column :label="$t('customers.phone')">
-      <template v-slot:default="{row}">
-        <el-link :href="`tel:${row.telephone}`">{{ row.telephone }}</el-link>
-      </template>
-    </el-table-column>
-    <el-table-column :label="$t('del')" width="75" align="center">
-      <template v-slot:default="{row}">
-        <el-button icon="el-icon-close" type="text" circle @click="delTel(row)"></el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+<template lang="pug">
+  el-table(
+    v-loading="loading"
+    :data="tels"
+    border
+    fit)
+    el-table-column(:label="$t('customers.phoneOwner')", prop="owner_name")
+  
+    el-table-column(:label="$t('customers.phone')")
+      template(v-slot:default="{row}")
+        el-link(:href="`tel:${row.telephone}`")
+          | {{ row.telephone }}
+  
+    el-table-column(
+      :label="$t('del')"
+      width="75"
+      align="center")
+      template(v-slot:default="{row}")
+        el-button(
+          icon="el-icon-close"
+          type="text"
+          circle
+          @click="delTel(row)")
 </template>
 
 <script lang="ts">

@@ -1,7 +1,14 @@
-<template>  
-  <el-upload action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :http-request="uploadReq" :file-list="fileList" :disabled="!$perms.customers.view_customerattachment">
-    <el-button type="primary">{{ $t('addDocument') }}</el-button>
-  </el-upload>
+<template lang="pug">
+  el-upload(
+    action=""
+    :on-preview="handlePreview"
+    :on-remove="handleRemove"
+    :before-remove="beforeRemove"
+    :http-request="uploadReq"
+    :file-list="fileList"
+    :disabled="!$perms.customers.view_customerattachment")
+    el-button(type="primary")
+      | {{ $t('addDocument') }}
 </template>
 
 <script lang="ts">

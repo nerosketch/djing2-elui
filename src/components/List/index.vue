@@ -1,17 +1,23 @@
-<template>  
-  <el-card v-loading="loading" shadow="never" body-style="padding: 10px;">
-    <template v-slot:header>
-      <slot name="header">
-        <div class="clearfix" v-if="title">{{ title }}</div>
-      </slot>
-    </template>
-    <slot name="items">
-      <div class="text item list-item" v-for="(it, i) in items" :key="i" :class="{'active': clickStates[i]}" v-on:click="itemClick(it, i)">
-        <slot name="item" v-bind:obj="it">{{ it[itemText] }}</slot>
-      </div>
-    </slot>
-    <slot name="footer"></slot>
-  </el-card>
+<template lang="pug">
+  el-card(
+    v-loading="loading"
+    shadow="never"
+    body-style="padding: 10px;")
+    template(v-slot:header)
+      slot(name="header")
+        .clearfix(v-if="title")
+          | {{ title }}
+  
+    slot(name="items")
+      .text.item.list-item(
+        v-for="(it, i) in items"
+        :key="i"
+        :class="{'active': clickStates[i]}"
+        v-on:click="itemClick(it, i)")
+        slot(name="item", v-bind:obj="it")
+          | {{ it[itemText] }}
+  
+    slot(name="footer")
 </template>
 
 <script lang="ts">

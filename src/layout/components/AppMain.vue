@@ -1,16 +1,9 @@
-<template>
-  <section class="app-main">
-    <breadcrumb
-      class="breadcrumb-container"
-    />
-    <!-- <router-view /> -->
-    <transition
-      name="fade-transform"
-      mode="out-in"
-    >
-      <router-view />
-    </transition>
-  </section>
+<template lang="pug">
+  section.app-main
+    breadcrumb.breadcrumb-container
+  
+    transition(name="fade-transform", mode="out-in")
+      router-view
 </template>
 
 <script lang="ts">

@@ -1,22 +1,41 @@
-<template>
-  <div>
-    <datatable :columns="tableColumns" :getData="loadShots" :heightDiff="189" widthStorageNamePrefix="shots" ref="table">
-      <template v-slot:oper="{row}">
-        <el-button-group>
-          <el-button v-if="$perms.is_superuser" @click="openSitesDlg(row)">C</el-button>
-          <el-button icon="el-icon-edit" @click="openEdit(row)"></el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="delShot(row)" :disabled="!$perms.services.delete_oneshotpay"></el-button>
-        </el-button-group>
-      </template>
-      <el-button icon="el-icon-plus" type="success" @click="openNew">{{ $t('add') }}</el-button>
-    </datatable>
-    <el-dialog :title="$t('isnew-sozdanie-izmenenie-odnorazovogo-platezha', [(isNew ? `Создание` : `Изменение`)])" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <shot-form v-on:done="frmDone"></shot-form>
-    </el-dialog>
-    <el-dialog title="$t('prinadlezhnost-saitam-6')" :visible.sync="sitesDlg" :close-on-click-modal="false">
-      <sites-attach :selectedSiteIds="$store.state.oneshotpay.sites" v-on:save="serviceSitesSave"></sites-attach>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadShots"
+      :heightDiff="189"
+      widthStorageNamePrefix="shots"
+      ref="table")
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+            | C
+        
+          el-button(icon="el-icon-edit", @click="openEdit(row)")
+        
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delShot(row)"
+            :disabled="!$perms.services.delete_oneshotpay")
+    
+      el-button(
+        icon="el-icon-plus"
+        type="success"
+        @click="openNew")
+        | {{ $t('add') }}
+  
+    el-dialog(
+      :title="$t('isnew-sozdanie-izmenenie-odnorazovogo-platezha', [(isNew ? `Создание` : `Изменение`)])"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      shot-form(v-on:done="frmDone")
+  
+    el-dialog(
+      title="$t('prinadlezhnost-saitam-6')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.oneshotpay.sites", v-on:save="serviceSitesSave")
 </template>
 
 <script lang="ts">

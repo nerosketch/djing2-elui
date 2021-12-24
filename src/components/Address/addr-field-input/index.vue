@@ -1,14 +1,23 @@
-<template>  
-  <div>
-    <el-button v-if="required" @click="dialogActivate">{{ fullTitleFromServer }}</el-button>
-    <el-button-group v-else>
-      <el-button @click="dialogActivate">{{ fullTitleFromServer }}</el-button>
-      <el-button @click="resetVal" icon="el-icon-close" circle></el-button>
-    </el-button-group>
-    <el-dialog title="Адрес" top="1%" :visible.sync="addrVisible" append-to-body>
-      <addr-select-form v-model="localValue" @done="addrDone"></addr-select-form>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    el-button(v-if="required", @click="dialogActivate")
+      | {{ fullTitleFromServer }}
+  
+    el-button-group(v-else)
+      el-button(@click="dialogActivate")
+        | {{ fullTitleFromServer }}
+    
+      el-button(
+        @click="resetVal"
+        icon="el-icon-close"
+        circle)
+  
+    el-dialog(
+      title="Адрес"
+      top="1%"
+      :visible.sync="addrVisible"
+      append-to-body)
+      addr-select-form(v-model="localValue", @done="addrDone")
 </template>
 
 <script lang="ts">

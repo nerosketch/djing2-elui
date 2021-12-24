@@ -1,17 +1,27 @@
-<template>  
-  <el-form v-loading="loading">
-    <el-form-item :label="$t('customers.periodicPay')">
-      <el-select v-model="pserviceId">
-        <el-option v-for="srv in pservices" :key="srv.id" :label="srv.name" :value="srv.id"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item :label="$t('customers.dateNextPay')">
-      <el-date-picker v-model="deadline" type="datetime" value-format="yyyy-MM-dd HH:mm" format="d.MM.yyyy HH:mm"></el-date-picker>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="success" @click="onSubmit" :loading="loading" :disabled="addDisabledGetter">{{ $t('add') }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(v-loading="loading")
+    el-form-item(:label="$t('customers.periodicPay')")
+      el-select(v-model="pserviceId")
+        el-option(
+          v-for="srv in pservices"
+          :key="srv.id"
+          :label="srv.name"
+          :value="srv.id")
+  
+    el-form-item(:label="$t('customers.dateNextPay')")
+      el-date-picker(
+        v-model="deadline"
+        type="datetime"
+        value-format="yyyy-MM-dd HH:mm"
+        format="d.MM.yyyy HH:mm")
+  
+    el-form-item
+      el-button(
+        type="success"
+        @click="onSubmit"
+        :loading="loading"
+        :disabled="addDisabledGetter")
+        | {{ $t('add') }}
 </template>
 
 <script lang="ts">

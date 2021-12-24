@@ -1,24 +1,50 @@
-<template>  
-  <div>
-    <el-table v-loading="loading" :data="services" border fit>
-      <el-table-column align="center" :label="$t('customers.orderShortText')" width="60">
-        <template v-slot:default="{row}">
-          <el-button type="primary" @click="buyOpen(row)" :disabled="isServiceAvailable || !$perms.customers.can_buy_service" icon="el-icon-shopping-cart-2" circle></el-button>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('customers.service')" prop="title"></el-table-column>
-      <el-table-column :label="$t('customers.sum')" prop="cost"></el-table-column>
-      <el-table-column :label="$t('customers.inSpeed')" prop="speed_in"></el-table-column>
-      <el-table-column :label="$t('customers.outSpeed')" prop="speed_out"></el-table-column>
-    </el-table>
-    <el-button @click="srvAccDialog=true" icon="el-icon-s-tools" type="primary">{{ $t('customers.attachServices2Groups') }}</el-button>
-    <el-dialog :title="$t('customers.belongingServices2Groups')" :visible.sync="srvAccDialog" :close-on-click-modal="false">
-      <service-accessory v-on:done="srvAccDone" :groupId="$store.state.customer.group"></service-accessory>
-    </el-dialog>
-    <el-dialog :title="$t('customers.buyService')" :visible.sync="buyDialog" :close-on-click-modal="false">
-      <buy-service v-on:done="buyDone" :services="services" :selectedServiceId="selectedServiceId"></buy-service>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    el-table(
+      v-loading="loading"
+      :data="services"
+      border
+      fit)
+      el-table-column(
+        align="center"
+        :label="$t('customers.orderShortText')"
+        width="60")
+        template(v-slot:default="{row}")
+          el-button(
+            type="primary"
+            @click="buyOpen(row)"
+            :disabled="isServiceAvailable || !$perms.customers.can_buy_service"
+            icon="el-icon-shopping-cart-2"
+            circle)
+    
+      el-table-column(:label="$t('customers.service')", prop="title")
+    
+      el-table-column(:label="$t('customers.sum')", prop="cost")
+    
+      el-table-column(:label="$t('customers.inSpeed')", prop="speed_in")
+    
+      el-table-column(:label="$t('customers.outSpeed')", prop="speed_out")
+  
+    el-button(
+      @click="srvAccDialog=true"
+      icon="el-icon-s-tools"
+      type="primary")
+      | {{ $t('customers.attachServices2Groups') }}
+  
+    el-dialog(
+      :title="$t('customers.belongingServices2Groups')"
+      :visible.sync="srvAccDialog"
+      :close-on-click-modal="false")
+      service-accessory(v-on:done="srvAccDone", :groupId="$store.state.customer.group")
+  
+    el-dialog(
+      :title="$t('customers.buyService')"
+      :visible.sync="buyDialog"
+      :close-on-click-modal="false")
+      buy-service(
+        v-on:done="buyDone"
+        :services="services"
+        :selectedServiceId="selectedServiceId")
 </template>
 
 <script lang="ts">

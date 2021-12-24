@@ -1,7 +1,10 @@
-<template>  
-  <el-select v-model="localValue" :loading="loading">
-    <el-option v-for="(type, i) in fiasTypes" :key="i" :label="type.addr_name" :value="type.addr_code"></el-option>
-  </el-select>
+<template lang="pug">
+  el-select(v-model="localValue", :loading="loading")
+    el-option(
+      v-for="(type, i) in fiasTypes"
+      :key="i"
+      :label="type.addr_name"
+      :value="type.addr_code")
 </template>
 
 <script lang="ts">

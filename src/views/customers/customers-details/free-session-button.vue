@@ -1,5 +1,9 @@
-<template>  
-  <el-button icon="el-icon-toilet-paper" :loading="loading" @click="freeSessionAction">{{ $t('customers.freeSession') }}</el-button>
+<template lang="pug">
+  el-button(
+    icon="el-icon-toilet-paper"
+    :loading="loading"
+    @click="freeSessionAction")
+    | {{ $t('customers.freeSession') }}
 </template>
 
 <script lang="ts">

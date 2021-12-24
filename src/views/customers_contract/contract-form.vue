@@ -1,37 +1,65 @@
-<template>
-  <el-form ref="frm" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
-    <el-form-item :label="$t('title')">
-      <el-input v-model="frmMod.title"></el-input>
-    </el-form-item>
-    <el-form-item :label="$t('contractDocs.contractNum.unique')" prop="contract_number">
-      <el-input v-model="frmMod.contract_number" :placeholder="$t('contractDocs.noRepeat')">
-        <template #append>
-          <el-button icon="el-icon-document" @click="doCopyFromUsername" :title="$t('contractDocs.copyFromLogin')"></el-button>
-        </template>
-      </el-input>
-    </el-form-item>
-    <el-form-item :label="$t('contractDocs.dateBegin')" prop="start_service_time">
-      <el-date-picker v-model="frmMod.start_service_time" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" format="d.MM.yyyy HH:mm:ss"></el-date-picker>
-    </el-form-item>
-    <el-form-item :label="$t('contractDocs.dateEnd')">
-      <el-date-picker v-model="frmMod.end_service_time" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" format="d.MM.yyyy HH:mm:ss"></el-date-picker>
-    </el-form-item>
-    <el-form-item :label="$t('contractDocs.activity')">
-      <el-checkbox v-model="frmMod.is_active">- {{ $t('contractDocs.activeContract') }}: {{ frmMod.is_active ? $t('yes') : $t('sno') }}</el-checkbox>
-    </el-form-item>
-    <el-form-item :label="$t('contractDocs.additional')">
-      <el-input v-model="frmMod.note" type="textarea" rows="5" cols="40"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button-group>
-        <el-button type="primary" icon="el-icon-upload" @click="onSubmit" :loading="isLoading" :disabled="isFormUntouched" :type="isNew ? 'success' : 'default'">{{ isNew ? $t('add') : $t('save') }}</el-button>
-        <el-button v-if="!isNew" icon="el-icon-document" @click="openDocsDialog">{{ $t('customers.docs') }}</el-button>
-      </el-button-group>
-    </el-form-item>
-    <el-dialog :title="$t('customers.docs')" :visible.sync="docsDialogVisible">
-      <contract-docs :contract="contract"></contract-docs>
-    </el-dialog>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="frm"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')")
+      el-input(v-model="frmMod.title")
+  
+    el-form-item(:label="$t('contractDocs.contractNum.unique')", prop="contract_number")
+      el-input(v-model="frmMod.contract_number", :placeholder="$t('contractDocs.noRepeat')")
+        template(#append)
+          el-button(
+            icon="el-icon-document"
+            @click="doCopyFromUsername"
+            :title="$t('contractDocs.copyFromLogin')")
+  
+    el-form-item(:label="$t('contractDocs.dateBegin')", prop="start_service_time")
+      el-date-picker(
+        v-model="frmMod.start_service_time"
+        type="datetime"
+        value-format="yyyy-MM-dd HH:mm:ss"
+        format="d.MM.yyyy HH:mm:ss")
+  
+    el-form-item(:label="$t('contractDocs.dateEnd')")
+      el-date-picker(
+        v-model="frmMod.end_service_time"
+        type="datetime"
+        value-format="yyyy-MM-dd HH:mm:ss"
+        format="d.MM.yyyy HH:mm:ss")
+  
+    el-form-item(:label="$t('contractDocs.activity')")
+      el-checkbox(v-model="frmMod.is_active")
+        | - {{ $t('contractDocs.activeContract') }}: {{ frmMod.is_active ? $t('yes') : $t('sno') }}
+  
+    el-form-item(:label="$t('contractDocs.additional')")
+      el-input(
+        v-model="frmMod.note"
+        type="textarea"
+        rows="5"
+        cols="40")
+  
+    el-form-item
+      el-button-group
+        el-button(
+          type="primary"
+          icon="el-icon-upload"
+          @click="onSubmit"
+          :loading="isLoading"
+          :disabled="isFormUntouched"
+          :type="isNew ? 'success' : 'default'")
+          | {{ isNew ? $t('add') : $t('save') }}
+      
+        el-button(
+          v-if="!isNew"
+          icon="el-icon-document"
+          @click="openDocsDialog")
+          | {{ $t('customers.docs') }}
+  
+    el-dialog(:title="$t('customers.docs')", :visible.sync="docsDialogVisible")
+      contract-docs(:contract="contract")
 </template>
 
 <script lang="ts">

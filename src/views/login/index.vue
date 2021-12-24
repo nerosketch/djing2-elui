@@ -1,19 +1,52 @@
-<template>
-  <div class="login-container">
-    <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules" autocomplete="on" label-position="left">
-      <div class="title-container">
-        <glsl-smog-effect id="smogblock" :width="518" :height="73"></glsl-smog-effect>
-        <h3 class="title">{{ $t('voiti') }}</h3>
-      </div>
-      <el-form-item prop="username"><span class="svg-container"><i class="el-icon-user-solid"></i></span>
-        <el-input ref="username" v-model="loginForm.username" name="username" type="text" autocomplete="on" placeholder="$t('login-0')"></el-input>
-      </el-form-item>
-      <el-form-item prop="password"><span class="svg-container"><i class="el-icon-lock"></i></span>
-        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="$t('parol')" name="password" autocomplete="on" @keyup.enter.native="handleLogin"></el-input><span class="show-pwd" @click="showPwd"><i :class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'"></i></span>
-      </el-form-item>
-      <el-button :loading="loading" type="primary" style="width:100%; margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('voiti-0') }}</el-button>
-    </el-form>
-  </div>
+<template lang="pug">
+  .login-container
+    el-form.login-form(
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      autocomplete="on"
+      label-position="left")
+      .title-container
+        glsl-smog-effect#smogblock(:width="518", :height="73")
+      
+        h3.title
+          | {{ $t('voiti') }}
+    
+      el-form-item(prop="username")
+        span.svg-container
+          i.el-icon-user-solid
+      
+        el-input(
+          ref="username"
+          v-model="loginForm.username"
+          name="username"
+          type="text"
+          autocomplete="on"
+          placeholder="$t('login-0')")
+    
+      el-form-item(prop="password")
+        span.svg-container
+          i.el-icon-lock
+      
+        el-input(
+          :key="passwordType"
+          ref="password"
+          v-model="loginForm.password"
+          :type="passwordType"
+          placeholder="$t('parol')"
+          name="password"
+          autocomplete="on"
+          @keyup.enter.native="handleLogin")
+      
+        span.show-pwd(@click="showPwd")
+          i(:class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'")
+    
+      el-button(
+        :loading="loading"
+        type="primary"
+        style="width:100%; margin-bottom:30px;"
+        @click.native.prevent="handleLogin")
+        | {{ $t('voiti-0') }}
 </template>
 
 <script lang="ts">

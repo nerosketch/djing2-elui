@@ -1,23 +1,26 @@
-<template>
-  <div class="tab-container">
-    <el-tabs v-model="activeTabName" type="border-card">
-      <el-tab-pane label="$t('tarify')" name="services" lazy>
-        <keep-alive>
-          <service-list></service-list>
-        </keep-alive>
-      </el-tab-pane>
-      <el-tab-pane label="$t('periodicheskie-platezhi')" name="periodicpays" lazy>
-        <keep-alive>
-          <periodic-pay-list></periodic-pay-list>
-        </keep-alive>
-      </el-tab-pane>
-      <el-tab-pane label="$t('edinorazovye-platezhi')" name="shots" lazy>
-        <keep-alive>
-          <shot-list></shot-list>
-        </keep-alive>
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+<template lang="pug">
+  .tab-container
+    el-tabs(v-model="activeTabName", type="border-card")
+      el-tab-pane(
+        label="$t('tarify')"
+        name="services"
+        lazy)
+        keep-alive
+          service-list
+    
+      el-tab-pane(
+        label="$t('periodicheskie-platezhi')"
+        name="periodicpays"
+        lazy)
+        keep-alive
+          periodic-pay-list
+    
+      el-tab-pane(
+        label="$t('edinorazovye-platezhi')"
+        name="shots"
+        lazy)
+        keep-alive
+          shot-list
 </template>
 
 <script lang="ts">

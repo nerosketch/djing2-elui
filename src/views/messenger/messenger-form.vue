@@ -1,23 +1,34 @@
-<template>
-  <el-form ref="form" label-width="115px" status-icon :rules="frmRules" :model="frmMod" v-loading="isLoading">
-    <el-form-item :label="$t('title')" prop="title">
-      <el-input v-model="frmMod.title"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('opisanie-5')" prop="description">
-      <el-input v-model="frmMod.description"></el-input>
-    </el-form-item>
-    <el-form-item label="$t('tip-bota')" prop="bot_type">
-      <el-select v-model="frmMod.bot_type" :loading="messengerTypesLoading">
-        <el-option v-for="mbt in messengerBotTypes" :key="mbt.val" :value="mbt.val" :label="mbt.text"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="$t('token')" prop="token">
-      <el-input v-model="frmMod.token"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit" :loading="isLoading">{{ $t('save') }}</el-button>
-    </el-form-item>
-  </el-form>
+<template lang="pug">
+  el-form(
+    ref="form"
+    label-width="115px"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')", prop="title")
+      el-input(v-model="frmMod.title")
+  
+    el-form-item(label="$t('opisanie-5')", prop="description")
+      el-input(v-model="frmMod.description")
+  
+    el-form-item(label="$t('tip-bota')", prop="bot_type")
+      el-select(v-model="frmMod.bot_type", :loading="messengerTypesLoading")
+        el-option(
+          v-for="mbt in messengerBotTypes"
+          :key="mbt.val"
+          :value="mbt.val"
+          :label="mbt.text")
+  
+    el-form-item(label="$t('token')", prop="token")
+      el-input(v-model="frmMod.token")
+  
+    el-form-item
+      el-button(
+        type="primary"
+        @click="onSubmit"
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">

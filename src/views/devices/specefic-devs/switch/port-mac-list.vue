@@ -1,9 +1,24 @@
-<template>
-  <el-table :data="macs" v-loading="macsLoading" empty-text="MAC адреса на порту не найдены" border fit>
-    <el-table-column :label="$t('title')" min-width="200" prop="name"></el-table-column>
-    <el-table-column label="VID" min-width="64" prop="vid"></el-table-column>
-    <el-table-column label="MAC" min-width="121" prop="mac"></el-table-column>
-  </el-table>
+<template lang="pug">
+  el-table(
+    :data="macs"
+    v-loading="macsLoading"
+    empty-text="MAC адреса на порту не найдены"
+    border
+    fit)
+    el-table-column(
+      :label="$t('title')"
+      min-width="200"
+      prop="name")
+  
+    el-table-column(
+      label="VID"
+      min-width="64"
+      prop="vid")
+  
+    el-table-column(
+      label="MAC"
+      min-width="121"
+      prop="mac")
 </template>
 
 <script lang="ts">

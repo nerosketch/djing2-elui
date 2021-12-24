@@ -1,38 +1,78 @@
-<template>
-  <div>
-    <datatable :columns="tableColumns" :getData="loadServices" :heightDiff="189" :editFieldsVisible.sync="editFieldsVisible" widthStorageNamePrefix="services" ref="table">
-      <template v-slot:isadm="{row}">
-        <el-checkbox v-model="row.is_admin" disabled>{{ row.is_admin ? 'Да' : 'Нет'}}</el-checkbox>
-      </template>
-      <template v-slot:oper="{row}">
-        <el-button-group>
-          <el-button v-if="$perms.is_superuser" @click="openSitesDlg(row)">C</el-button>
-          <el-button icon="el-icon-lock" @click="openPermsDialog(row)" v-if="$perms.is_superuser"></el-button>
-          <el-button icon="el-icon-edit" @click="openEdit(row)"></el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="delSrv(row)" :disabled="!$perms.services.delete_service"></el-button>
-        </el-button-group>
-      </template>
-      <template v-slot:usercount="{row}">
-        <el-button @click="openCustomerServiceListDialog(row.id)">{{ row.usercount }}</el-button>
-      </template>
-      <el-button-group>
-        <el-button icon="el-icon-plus" type="success" @click="openNew" :disabled="!$perms.services.add_service">{{ $t('add') }}</el-button>
-        <el-button icon="el-icon-s-operation" @click="editFieldsVisible=true">{{ $t('polya-2') }}</el-button>
-      </el-button-group>
-    </datatable>
-    <el-dialog :title="$t('isnew-sozdanie-izmenenie-uslugi', [(isNew ? `Создание` : `Изменение`)])" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <service-form v-on:done="frmDone"></service-form>
-    </el-dialog>
-    <el-dialog title="$t('kto-imeet-prava-na-uslugu')" :visible.sync="permsDialog" top="5vh" :close-on-click-modal="false">
-      <object-perms v-on:save="changeSrvObjectPerms" :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp" :getSelectedObjectPerms="serviceGetSelectedObjectPerms" :objId="srvIdGetter"></object-perms>
-    </el-dialog>
-    <el-dialog title="$t('prinadlezhnost-saitam-5')" :visible.sync="sitesDlg" :close-on-click-modal="false">
-      <sites-attach :selectedSiteIds="$store.state.service.sites" v-on:save="serviceSitesSave"></sites-attach>
-    </el-dialog>
-    <el-dialog title="$t('polzovateli-uslugi')" :visible.sync="customerServiceVisible" top="2vh" :close-on-click-modal="false">
-      <customer-service-list :serviceId="currentCustomerServiceId"></customer-service-list>
-    </el-dialog>
-  </div>
+<template lang="pug">
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadServices"
+      :heightDiff="189"
+      :editFieldsVisible.sync="editFieldsVisible"
+      widthStorageNamePrefix="services"
+      ref="table")
+      template(v-slot:isadm="{row}")
+        el-checkbox(v-model="row.is_admin", disabled)
+          | {{ row.is_admin ? 'Да' : 'Нет'}}
+    
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+            | C
+        
+          el-button(
+            icon="el-icon-lock"
+            @click="openPermsDialog(row)"
+            v-if="$perms.is_superuser")
+        
+          el-button(icon="el-icon-edit", @click="openEdit(row)")
+        
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delSrv(row)"
+            :disabled="!$perms.services.delete_service")
+    
+      template(v-slot:usercount="{row}")
+        el-button(@click="openCustomerServiceListDialog(row.id)")
+          | {{ row.usercount }}
+    
+      el-button-group
+        el-button(
+          icon="el-icon-plus"
+          type="success"
+          @click="openNew"
+          :disabled="!$perms.services.add_service")
+          | {{ $t('add') }}
+      
+        el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+          | {{ $t('polya-2') }}
+  
+    el-dialog(
+      :title="$t('isnew-sozdanie-izmenenie-uslugi', [(isNew ? `Создание` : `Изменение`)])"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      service-form(v-on:done="frmDone")
+  
+    el-dialog(
+      title="$t('kto-imeet-prava-na-uslugu')"
+      :visible.sync="permsDialog"
+      top="5vh"
+      :close-on-click-modal="false")
+      object-perms(
+        v-on:save="changeSrvObjectPerms"
+        :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
+        :objId="srvIdGetter")
+  
+    el-dialog(
+      title="$t('prinadlezhnost-saitam-5')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.service.sites", v-on:save="serviceSitesSave")
+  
+    el-dialog(
+      title="$t('polzovateli-uslugi')"
+      :visible.sync="customerServiceVisible"
+      top="2vh"
+      :close-on-click-modal="false")
+      customer-service-list(:serviceId="currentCustomerServiceId")
 </template>
 
 <script lang="ts">
