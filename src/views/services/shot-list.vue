@@ -93,7 +93,7 @@ export default class extends Vue {
   }
 
   private async delShot(shot: IOneShotPay) {
-    if (confirm({{ $t('deistvitelno-udalit-platyozh-shot-name', [shot.name]) }})) {
+    if (confirm(this.$t('deistvitelno-udalit-platyozh-shot-name', [shot.name]))) {
       await OneShotPayModule.DelOneShotPay(shot.id)
       this.$refs.table.LoadTableData()
     }

@@ -1,23 +1,35 @@
 <template lang="pug">
-  div
-    el-button(v-if="required", @click="dialogActivate")
-      | {{ fullTitleFromServer }}
-  
-    el-button-group(v-else)
-      el-button(@click="dialogActivate")
-        | {{ fullTitleFromServer }}
-    
+div
+  el-button(
+    v-if="required"
+    @click="dialogActivate"
+  ) {{ fullTitleFromServer }}
+  el-button-group(v-else)
+    el-button(
+      @click="dialogActivate"
+    ) {{ fullTitleFromServer }}
+    slot(name='buttons')
+    el-tooltip(
+      effect="dark"
+      :content="$t('clear')"
+    )
       el-button(
         @click="resetVal"
         icon="el-icon-close"
-        circle)
-  
-    el-dialog(
-      title="Адрес"
-      top="1%"
-      :visible.sync="addrVisible"
-      append-to-body)
-      addr-select-form(v-model="localValue", @done="addrDone")
+        circle
+      )
+
+  el-dialog(
+    :title="$t('addrs.addr')"
+    top='1%'
+    :visible.sync="addrVisible"
+    append-to-body
+  )
+    addr-select-form(
+      v-model="localValue"
+      @done="addrDone"
+    )
+
 </template>
 
 <script lang="ts">
@@ -31,7 +43,7 @@ import AddrSelectForm from './addr-select-form.vue'
   components: { AddrSelectForm }
 })
 export default class extends Vue {
-  @Prop({ default: '[Не выбран]'})
+  @Prop({ default: '[' + this.$t('notChosen') + ']'})
   private emptyLabel!: string
 
   @Prop({ default: null })

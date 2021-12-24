@@ -99,7 +99,7 @@ export default class extends Vue {
   }
 
   private async delPerPay(pay: IPeriodicPay) {
-    if (confirm({{ $t('deistvitelno-udalit-kvitanciyu-pay-name', [pay.name]) }})) {
+    if (confirm(this.$t('deistvitelno-udalit-kvitanciyu-pay-name', [pay.name]))) {
       await PeriodicPayModule.DelPeriodicPay(pay.id)
       this.$refs.table.LoadTableData()
     }

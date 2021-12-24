@@ -1,94 +1,62 @@
 <template lang="pug">
-  el-card(style="margin-bottom:20px;")
-    template(v-slot:header)
-      .clearfix
-        span
-          | {{ $t('info-0') }}
-  
-    .user-profile
-      .box-center
-        pan-thumb(
-          :image="$store.state.userprofile.avatar || defAvaConst"
-          height="100px"
-          width="100px"
-          :hoverable="false")
-    
-      .box-center
-        .user-name.text-center
-          | {{ $store.state.userprofile.username }}
-      
-        .user-role.text-center.text-muted
-          | {{ $store.state.userprofile.fio }}
-  
-    .user-bio
-      .user-education.user-bio-section
-        .user-bio-section-body
-          dl
-            dt
-              b
-                | {{ $t('telefon-0') }}
-          
-            dd
-              | {{ $store.state.userprofile.telephone }}
-          
-            dt
-              b
-                | {{ $t('login-4') }}
-          
-            dd
-              | {{ $store.state.userprofile.username }}
-          
-            dt
-              b
-                | {{ $t('imya-i-otchestvo') }}
-          
-            dd
-              | {{ $store.state.userprofile.fio }}
-          
-            dt
-              b
-                | {{ $t('vklyuchyon-li') }}
-          
-            dd
-              boolean-icon(v-model="$store.state.userprofile.is_active")
-          
-            dt
-              b
-                | {{ $t('superpolzovatel-0') }}
-          
-            dd
-              boolean-icon(v-model="$store.state.userprofile.is_superuser")
-    
-      .user-skills.user-bio-section
-        .user-bio-section-body
-          .progress-item
-            span
-              | {{ $t('uroven-dostupa') }}
-          
-            el-progress(
-              :percentage="$store.state.userprofile.access_level"
-              :status="$store.state.userprofile.access_level === 100 ? "
-              success"
-              :
-              undefined")
-        
-          .progress-item
-            span
-              | {{ $t('kakoi-to-drugoi-progress') }}
-          
-            el-progress(:percentage="45")
-        
-          .progress-item
-            span
-              | {{ $t('eshyo-chto-to') }}
-          
-            el-progress(:percentage="4")
-        
-          .progress-item
-            span
-              | {{ $t('chto-to-zavershyonnoe') }}
-          
-            el-progress(:percentage="100", status="success")
+el-card(style='margin-bottom:20px;')
+  template(v-slot:header)
+    .clearfix
+      span {{ $t('info-0') }}
+  .user-profile
+    .box-center
+      pan-thumb(
+        :image='$store.state.userprofile.avatar || defAvaConst'
+        height="100px"
+        width="100px"
+        :hoverable='false'
+      )
+    .box-center
+      .user-name.text-center
+        | {{ $store.state.userprofile.username }}
+      .user-role.text-center.text-muted
+        | {{ $store.state.userprofile.fio }}
+  .user-bio
+    .user-education.user-bio-section
+      .user-bio-section-body
+        dl
+          dt
+            b {{ $t('telefon-0') }}
+          dd {{ $store.state.userprofile.telephone }}
+          dt
+            b {{ $t('login-4') }}
+          dd {{ $store.state.userprofile.username }}
+          dt
+            b {{ $t('imya-i-otchestvo') }}
+          dd {{ $store.state.userprofile.fio }}
+          dt
+            b {{ $t('vklyuchyon-li') }}
+          dd
+            i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
+            i.el-icon-circle-close(v-else)
+          dt
+            b {{ $t('superpolzovatel-0') }}
+          dd
+            i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
+            i.el-icon-circle-close(v-else)
+    .user-skills.user-bio-section
+      .user-bio-section-body
+        .progress-item
+          span {{ $t('uroven-dostupa') }}
+          el-progress(
+            :percentage='$store.state.userprofile.access_level'
+            :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'
+          )
+        .progress-item
+          span {{ $t('kakoi-to-drugoi-progress') }}
+          el-progress(:percentage='45')
+        .progress-item
+          span {{ $t('eshyo-chto-to') }}
+          el-progress(:percentage='4')
+        .progress-item
+          span {{ $t('chto-to-zavershyonnoe') }}
+          el-progress(:percentage='100' status='success')
+
 </template>
 
 <script lang="ts">

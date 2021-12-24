@@ -91,7 +91,7 @@ export default class extends Vue {
   }
 
   private async delLease(lease: ICustomerIpLease) {
-    this.$confirm({{ $t('deistvitelno-udalit-sessiyu-lease-ip_address', [lease.ip_address]) }}).then(async() => {
+    this.$confirm(this.$t('deistvitelno-udalit-sessiyu-lease-ip_address', [lease.ip_address])).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
       this.$message.success(this.$t('sessiya-udalena'))
       this.$refs.table.LoadTableData()

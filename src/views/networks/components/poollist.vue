@@ -142,7 +142,7 @@ export default class extends Vue {
     } else {
       w = this.$t('change').toString()
     }
-    return {{ $t('w-podset', [w]) }}
+    return this.$t('w-podset', [w])
   }
 
   private async openEdit(pool: INetworkIpPool) {
@@ -156,7 +156,7 @@ export default class extends Vue {
   }
 
   private delPool(pool: INetworkIpPool) {
-    this.$confirm({{ $t('deistvitelno-udalit-pul-pool-network', [pool.network]) }}).then(async() => {
+    this.$confirm(this.$t('deistvitelno-udalit-pul-pool-network', [pool.network])).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
       this.$message.success(this.$t('podset-udalena'))
       this.$refs.table.LoadTableData()

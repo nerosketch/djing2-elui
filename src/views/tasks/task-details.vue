@@ -1,21 +1,15 @@
 <template lang="pug">
   el-row.app-container(:gutter="5")
-    el-col.mt5(:lg="12", :sm="24")
+    el-col.mt5(:lg="12" :sm='24')
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix
-            | {{ $t('redaktirovat-zadachu-taskid', [taskId]) }}
-      
-        task-form(v-if="taskReady", :recipients="potentialRecipients")
-  
-    el-col.mt5(:lg="12", :sm="24")
-      task-info(
-        v-if="taskReady"
-        :recipients="potentialRecipients"
-        :taskId="taskId")
-  
-    el-col.mt5(:lg="12", :sm="24")
-      comments(v-if="taskReady")
+          .clearfix {{ $t('redaktirovat-zadachu-taskid', [taskId]) }}
+        task-form(v-if='taskReady' :recipients="potentialRecipients")
+    el-col.mt5(:lg='12' :sm='24')
+      task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
+    el-col.mt5(:lg='12' :sm='24')
+      comments(v-if='taskReady')
+
 </template>
 
 <script lang="ts">
@@ -49,7 +43,7 @@ export default class extends mixins(taskMixin) {
       return
     }
     await TaskModule.GetTask(this.taskId)
-    document.title = {{ $t('zadacha-po-taskmodule-customer_full_name', [TaskModule.customer_full_name]) }}
+    document.title = this.$t('zadacha-po-taskmodule-customer_full_name', [TaskModule.customer_full_name])
   }
 
   async created() {

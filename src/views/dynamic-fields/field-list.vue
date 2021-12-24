@@ -85,9 +85,9 @@ export default class extends Vue {
   }
 
   private delDynamicField(field: IDynamicField) {
-    this.$confirm({{ $t('udalit-pole-field-title', [field.title]) }}).then(async() => {
+    this.$confirm(`${this.$t('udalit-pole')} ${field.title}?`).then(async() => {
       await DynamicFieldModule.DeleteField(field.id)
-      this.$message.success({{ $t('pole-field-title-udaleno', [field.title]) }})
+      this.$message.success(`${this.$t('pole-udaleno')} ${field.title}`)
       this.$refs.fieldtable.LoadTableData()
     })
   }

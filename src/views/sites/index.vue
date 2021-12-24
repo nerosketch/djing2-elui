@@ -80,7 +80,7 @@ export default class extends Vue {
     } else {
       t = this.$t('change').toString()
     }
-    return {{ $t('t-domen', [t]) }}
+    return this.$t('t-domen', [t])
   }
 
   private loadSites(params?: IDRFRequestListParameters) {

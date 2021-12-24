@@ -176,7 +176,7 @@ export default class extends Vue {
   }
 
   private async delSrv(srv: IService) {
-    if (confirm({{ $t('deistvitelno-udalit-uslugu-srv-title', [srv.title]) }})) {
+    if (confirm(this.$t('deistvitelno-udalit-uslugu-srv-title', [srv.title]))) {
       await ServiceModule.DelService(srv.id)
       this.$message.success(this.$t('usluga-udalena'))
       this.$refs.table.LoadTableData()

@@ -13,7 +13,7 @@
             @delete="onCommentDelete")
   
     el-form
-      el-form-item(label="Текст комментария", prop="currentComment")
+      el-form-item(label="Текст комментария" prop="currentComment")
         el-input(
           v-model="currentComment"
           type="textarea"
