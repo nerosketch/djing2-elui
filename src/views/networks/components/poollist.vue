@@ -106,7 +106,7 @@ export default class extends Vue {
     },
     {
       prop: 'is_dynamic',
-      label: this.$t('d'),
+      label: 'Д',
       'min-width': 40,
       align: DataTableColumnAlign.CENTER
     },
