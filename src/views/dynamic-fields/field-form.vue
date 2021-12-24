@@ -107,7 +107,7 @@ export default class extends Vue {
       {
         validator: _userTagsValidator,
         trigger: 'change',
-        message: this.$t('tegi-dolzhny-soderzhat-tolko-bukvy-cifry-i-znak-podchyorkivaniya')
+        message: this.$t('fieldTagValidation')
       }
     ]
   }

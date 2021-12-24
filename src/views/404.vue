@@ -46,7 +46,7 @@
     name: 'Page404'
   })
   export default class extends Vue {
-    private message = this.$t('404-page-not-found')
+    private message = this.$t('404nf')
   }
 </script>
 
