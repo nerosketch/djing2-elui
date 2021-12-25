@@ -64,7 +64,7 @@
               | {{ $t('field') }}
 
     el-dialog(
-      :title="$t('iron.')"
+      :title="$t('iron')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")
@@ -198,7 +198,7 @@ export default class extends mixins(TableWithAddrMixin) {
       label: this.$t('effectiveDate')
     },
     {
-      prop: 'op.',
+      prop: 'op',
       label: this.$t('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER

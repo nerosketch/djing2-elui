@@ -44,7 +44,7 @@
 
             dt
               b
-                | {{ $t('likeUs.') }}
+                | {{ $t('likeUs') }}
 
             dd
               | {{ gw.gw_type_str }}
@@ -67,7 +67,7 @@
 
             dt
               b
-                | {{ $t('itSABonus.') }}
+                | {{ $t('itSABonus') }}
 
             dd
               i
@@ -179,7 +179,7 @@ export default class extends mixins(GwsMethods) {
   }
 
   private onDel(gw: IGateway) {
-    this.$confirm(this.$t('removeTheAccessLockForTheSubscribers?')).then(async() => {
+    this.$confirm(this.$t('removeGatewayQuestion')).then(async() => {
       this.loadingGws = true
       await GatewayModule.DelGateway(gw.id)
       this.$message.success(this.$t('accessLockSuccessfullyRemoved'))

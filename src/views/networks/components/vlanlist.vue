@@ -91,12 +91,12 @@ export default class extends mixins(VlanMixin) {
     },
     {
       prop: 'ismng',
-      label: this.$t('iDid.'),
+      label: this.$t('iDid'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'op.',
+      prop: 'op',
       label: this.$t('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
@@ -128,7 +128,7 @@ export default class extends mixins(VlanMixin) {
   private async delVlan(vlan: IVlanIf) {
     this.$confirm(this.$t('deistvitelno-udalit-vlan-vlan-title', [vlan.title])).then(async() => {
       await VlanIfModule.DelVlan(vlan.id)
-      this.$message.success(this.$t('weReCleared.'))
+      this.$message.success(this.$t('weReCleared'))
       this.$refs.table.LoadTableData()
     })
   }

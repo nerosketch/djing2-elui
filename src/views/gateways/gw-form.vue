@@ -20,7 +20,7 @@
     el-form-item(:label="$t('inletPassword')")
       el-input(v-model="frmMod.auth_passw")
 
-    el-form-item(:label="$t('likeUs.')")
+    el-form-item(:label="$t('likeUs')")
       el-select(v-model="frmMod.gw_type")
         el-option(:label="$t('microsoft')", :value="0")
 
@@ -81,7 +81,7 @@ export default class extends mixins(FormMixin) {
       { validator: ipAddrValidator, trigger: 'change', message: this.$t('gateways.wrong_format_ipv4') }
     ],
     auth_login: [
-      { validator: latinValidator, trigger: 'change', message: this.$t('justLatin.') }
+      { validator: latinValidator, trigger: 'change', message: this.$t('justLatin') }
     ]
   }
 

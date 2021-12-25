@@ -8,7 +8,7 @@
     template(v-slot:closed="{row}")
       el-checkbox(v-model="row.closed", disabled)
         | {{ row.closed ? 'Да' : 'Нет' }}
-  
+
     template(v-slot:oper="{row}")
       el-button(icon="el-icon-delete-solid", @click="shutdownSesion(row)")
 </template>
@@ -57,7 +57,7 @@ export default class extends Vue {
     },
     {
       prop: 'closed',
-      label: this.$t('closed.')
+      label: this.$t('closed')
     },
     {
       prop: 'h_input_octets',
@@ -76,8 +76,8 @@ export default class extends Vue {
       label: this.$t('packages')
     },
     {
-      prop: 'op.',
-      label: this.$t('op.'),
+      prop: 'op',
+      label: this.$t('op'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -94,7 +94,7 @@ export default class extends Vue {
   }
 
   private shutdownSesion(ses: IUserSession) {
-    this.$confirm(this.$t('finishTheSession?')).then(async() => {
+    this.$confirm(this.$t('areYSureFinishSession')).then(async() => {
       await delSession(ses.id)
       this.$refs.table.LoadTableData()
     }).catch(err => {

@@ -32,7 +32,7 @@
         .text-404__headline {{ message }}
 
         .text-404__info
-          | {{ $t('iMSureYouReRight.') }}
+          | {{ $t('iMSureYouReRight') }}
 
         a.text-404__return-home(
           href=""

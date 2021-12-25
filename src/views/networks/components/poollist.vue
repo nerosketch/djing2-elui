@@ -74,7 +74,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'network',
-      label: this.$t('sitDown.'),
+      label: this.$t('sitDown'),
       sortable: true,
       'min-width': 150
     },
@@ -123,7 +123,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'op.',
+      prop: 'op',
       label: this.$t('buttons'),
       'min-width': 160,
       align: DataTableColumnAlign.CENTER

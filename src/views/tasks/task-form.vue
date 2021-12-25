@@ -155,7 +155,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
       { required: true, message: this.$t('weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
     customer: [
-      { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$t('weNeedToPickASubscription.') }
+      { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$t('weNeedToPickASubscription') }
     ]
   }
 
@@ -222,7 +222,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
 
   private onDel() {
     if (this.isNewTask) return
-    this.$confirm(this.$t('theTaskWillBeRemovedNow,Carefully.')).then(async() => {
+    this.$confirm(this.$t('theTaskWillBeRemovedNowCarefully')).then(async() => {
       await TaskModule.DelTask()
       this.$message.success(this.$t('targetRemoved'))
       this.$router.push({

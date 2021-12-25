@@ -31,7 +31,7 @@
       | {{ $t('groupMonthly') }}
 
     el-button(@click="downloadCsv")
-      | {{ $t('screwingTheEye.') }}
+      | {{ $t('screwingTheEye') }}
 
     el-table(
       v-loading="loading"

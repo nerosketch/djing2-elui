@@ -56,7 +56,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 
-const multipleAccessVlanMsg = this.$t('portCanTContainMoreThanOneAcques.')
+const multipleAccessVlanMsg = this.$t('portCanTContainMoreThanOneAcques')
 
 @Component({
   name: 'GenericVlanConfig'

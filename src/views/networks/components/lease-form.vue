@@ -49,7 +49,7 @@ export default class extends Vue {
   private frmRules = {
     ip_address: [
       { required: true, message: this.$t('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example192168023') }
     ],
     mac_address: [
       { required: true, message: this.$t('weDonTHaveToLeaveTheMobEmpty'), trigger: 'blur' },

@@ -106,7 +106,7 @@ export default class extends Vue {
   }
 
   private delUserGroup(grp: IUserGroup) {
-    this.$confirm(this.$t('removeTheBandOfSubscribers?')).then(async() => {
+    this.$confirm(this.$t('removeOptsFromPort')).then(async() => {
       await delUserGroup(grp.id)
       this.$message.success(this.$t('groupRemoved'))
       this.$refs.tbl.LoadTableData()

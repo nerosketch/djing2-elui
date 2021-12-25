@@ -25,7 +25,7 @@
         type="password")
 
     el-form-item(
-      :label="$t('repeatThePassword.')"
+      :label="$t('repeatThePassword')"
       prop="retype_passw"
       :error="frmErr.retype_passw")
       el-input(
@@ -82,7 +82,7 @@ export default class extends Vue {
             callback(new Error(rule.message))
           }
         },
-        message: this.$t('thePasswordsShouldMatch.')
+        message: this.$t('thePasswordsShouldMatch')
       }
     ]
   }

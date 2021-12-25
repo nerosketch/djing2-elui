@@ -115,7 +115,7 @@ export default class extends Vue {
     },
     {
       prop: 'speed_in',
-      label: this.$t('comeIn.'),
+      label: this.$t('comeIn'),
       'min-width': 110,
       sortable: true
     },
@@ -150,7 +150,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'op.',
+      prop: 'op',
       label: this.$t('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER

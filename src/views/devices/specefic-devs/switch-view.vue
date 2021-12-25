@@ -4,16 +4,16 @@
       .clearfix
         span
           | {{ device.comment || 'Коммутатор' }}
-      
+
         small
           | {{ ` ${device.ip_address || device.mac_addr} ` }}
-      
+
         template(v-if="device.parent_dev_name")
-          | {{ $t('parentalOyster:') }}
-        
+          | {{ $t('parentDev') }}
+
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
             | {{ device.parent_dev_name }}
-      
+
         el-button(
           style="float: right; padding: 7px"
           circle
@@ -21,7 +21,7 @@
           type="primary"
           @click="openDevForm"
           :disabled="!$perms.devices.change_device")
-  
+
     el-table(
       :data="allPorts"
       :loading="loading"
@@ -35,7 +35,7 @@
         template(v-slot:default="{row}")
           b
             | {{ row.num }}
-    
+
       el-table-column(
         :label="$t('bulk')"
         width="80"
@@ -45,18 +45,18 @@
             v-if="row.isdb && row.snmp_num > 0"
             :port="row"
             :portId="row.id")
-        
+
           el-button(
             v-else
             icon="el-icon-close"
             circle
             disabled)
-    
+
       el-table-column(
         :label="$t('description')"
         min-width="267"
         prop="descr")
-    
+
       el-table-column(
         :label="$t('aborions')"
         width="70"
@@ -64,25 +64,25 @@
         template(v-slot:default="{row}")
           el-link(type="primary", @click="openPortView(row)")
             | {{ row.user_count }}
-    
+
       el-table-column(
         :label="$t('name')"
         min-width="235"
       )
         template(v-slot:default="{row}")
           | {{ row.name || '-' }}
-    
+
       el-table-column(
         :label="$t('regime')"
         min-width="78"
       )
         template(v-slot:default="{row}")
           | {{ row.speed ? portModesHuman(row.speed) : '-' }}
-    
+
       el-table-column(label="UpTime", min-width="176")
         template(v-slot:default="{row}")
           | {{ row.uptime || '-' }}
-    
+
       el-table-column(
         :label="$t('buttons')"
         align="center"
@@ -90,37 +90,37 @@
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
             el-button(icon="el-icon-notebook-2", @click="openMacsDialog(row)")
-          
+
             el-button(
               icon="el-icon-view"
               @click="openVidsDialog(row)"
               :disabled="!$perms.devices.view_portvlanmembermodel")
-          
+
             el-button(
               type="danger"
               icon="el-icon-delete"
               @click="delPort(row)"
               :disabled="!$perms.devices.delete_port")
-          
+
             el-button(
               type="primary"
               icon="el-icon-edit"
               @click="openPortEdit(row)"
               :disabled="!$perms.devices.change_port")
-        
+
           el-button(
             v-else
             icon="el-icon-plus"
             circle
             @click="openPortAdd(row)"
             :disabled="!$perms.devices.add_port")
-  
+
     el-dialog(
       :visible.sync="portViewDialog"
       :title="$t('portSubscribers')"
       :close-on-click-modal="false")
       switch-port-view(:device="device", :portId="currPortId")
-  
+
     el-dialog(
       :visible.sync="portFormDialog"
       :title="$t('theSwitchboard')"
@@ -131,13 +131,13 @@
         :initialNum="initialNum"
         v-on:editdone="editPortDone"
         v-on:adddone="addPortDone")
-  
+
     el-dialog(
       :visible.sync="devFormDialog"
       :title="$t('informationOfTheDevice')"
       :close-on-click-modal="false")
       dev-form(v-on:done="devFrmDone")
-  
+
     el-dialog(
       :visible.sync="vidsDialog"
       :title="$t('vlanS')"
@@ -146,7 +146,7 @@
         :portId="currPortId"
         :portNum="initialNum"
         @applydone="vidsDialog=false")
-  
+
     el-dialog(
       :visible.sync="macsDialog"
       :title="$t('tableOfPortAddresses')"
@@ -352,7 +352,7 @@ export default class extends Vue {
       this.allPorts[ind].isdb = true
     }
     if (isAdd) {
-      this.$message.success(this.$t('portHasBeenSuccessfullyStored.'))
+      this.$message.success(this.$t('portHasBeenSuccessfullyStored'))
     } else {
       this.$message.success(this.$t('portSuccessfullyChanged'))
     }

@@ -42,7 +42,7 @@
       el-button#loginbtn(
         :loading="loading"
         @click.native.prevent="handleLogin"
-      ) {{ $t('comeIn.') }}
+      ) {{ $t('comeIn') }}
 
 </template>
 

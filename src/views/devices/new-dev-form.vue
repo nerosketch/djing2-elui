@@ -28,7 +28,7 @@
     el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
 
-    el-form-item(:label="$t('theDevice.')")
+    el-form-item(:label="$t('theDevice')")
       device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="initialParentDevName")
 
     el-form-item(:label="$t('effectiveDate')")
@@ -89,14 +89,14 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example192168023') }
     ],
     mac_addr: [
       { required: true, message: this.$t('macCanTBeEmpty'), trigger: 'blur' },
       { validator: macAddrValidator, trigger: 'change', message: this.$t('example:0A:0B:Cc:Dd:Ee:Ff') }
     ],
     comment: [
-      { required: true, message: this.$t('giveTheDeviceAName.'), trigger: 'blur' }
+      { required: true, message: this.$t('giveTheDeviceAName'), trigger: 'blur' }
     ],
     dev_type: [
       { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('specifyTheTypeOfDevice') }

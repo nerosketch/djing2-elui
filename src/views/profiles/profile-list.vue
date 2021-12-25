@@ -128,7 +128,7 @@ export default class extends Vue {
   }
 
   private delUserProfile(usr: IUserProfile) {
-    this.$confirm(this.$t('removeTheRecord?')).then(async() => {
+    this.$confirm(this.$t('removeAccountQuestion')).then(async() => {
       await delProfile(usr.username)
       this.$message.success(this.$t('recordsRemoved'))
     })

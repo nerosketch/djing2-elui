@@ -55,7 +55,7 @@ import { IMessenger } from '@/api/messenger/types'
 import { mixins } from 'vue-class-component'
 import BotTypesMixin from './bot_types_mixin'
 
-const tx = this.$t('iNeedToKnowWhatApiWillBeWorkingWith.')
+const tx = this.$t('iNeedToKnowWhatApiWillBeWorkingWith')
 
 @Component({
   name: 'MessengerForm'
@@ -110,7 +110,7 @@ export default class extends mixins(BotTypesMixin) {
               })
               this.$message.success(this.$t('chatbotIsEstablished'))
             } else {
-              this.$message.error(this.$t('chooseTheMassengerType.'))
+              this.$message.error(this.$t('chooseTheMassengerType'))
             }
           } else {
             newDat = await MessengerModule.PatchMessenger(this.frmMod)

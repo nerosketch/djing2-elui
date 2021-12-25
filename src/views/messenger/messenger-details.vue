@@ -5,21 +5,21 @@
         template(v-slot:header)
           .clearfix
             | {{ $t('bottomDetails') }} "{{ $store.state.messenger.title }}"
-      
+
         messenger-form(v-if="isReady")
-  
+
     el-col.mt5(:lg="12", :sm="24")
       div
         b
-          | {{ $t('ongoingWebSiteUrn:') }}
-      
+          | {{ $t('currentWebHook') }}
+
         span
           | {{ $store.state.messenger.current_webhook }}
-    
+
       el-button-group
         el-button(@click="setWebhook", :loading="setWebhookLoading")
           | {{ $t('sendWebHoseUrn') }}
-      
+
         el-button(@click="stopWebhook", :loading="stopWebhookLoading")
           | {{ $t('stopTheWebSite') }}
 </template>

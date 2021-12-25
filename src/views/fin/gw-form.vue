@@ -45,11 +45,11 @@ export default class extends Vue {
       { max: 64, trigger: 'change' }
     ],
     service_id: [
-      { required: true, message: this.$t('iLlBeSure.'), trigger: 'blur' },
+      { required: true, message: this.$t('iLlBeSure'), trigger: 'blur' },
       { max: 64, trigger: 'change' }
     ],
     slug: [
-      { required: true, message: this.$t('iLlBeSure.'), trigger: 'blur' },
+      { required: true, message: this.$t('iLlBeSure'), trigger: 'blur' },
       { max: 32, message: this.$t('only32Symbols'), trigger: 'change' }
     ]
   }

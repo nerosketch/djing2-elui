@@ -13,7 +13,7 @@
   
     el-form-item(:label="$t('office')", prop="is_management")
       el-checkbox(v-model="frmMod.is_management")
-        | {{ $t('itSAMoronOfControl.') }}
+        | {{ $t('itSAMoronOfControl') }}
       
         b
           | {{ frmMod.is_management ? 'Да' : 'Нет' }}

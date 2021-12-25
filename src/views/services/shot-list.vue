@@ -71,7 +71,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'op.',
+      prop: 'op',
       label: this.$t('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER

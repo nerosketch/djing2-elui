@@ -8,29 +8,29 @@
       template(v-slot:title="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{ name: 'finReport' }")
           | {{ row.title }}
-    
+
       template(v-slot:oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
             | C
-        
+
           el-button(icon="el-icon-edit", @click="openEdit(row)")
-        
+
           el-button(
             type="danger"
             icon="el-icon-delete"
             @click="delPayGw(row)"
             :disabled="!$perms.fin_app.delete_payalltimegateway")
-    
+
       el-button(icon="el-icon-plus", @click="openNew")
         | {{ $t('addALock') }}
-  
+
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       pay-gw-form(v-on:done="frmDone")
-  
+
     el-dialog(
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
@@ -92,7 +92,7 @@ export default class extends Vue {
       label: this.$t('numberOfPayments')
     },
     {
-      prop: 'op.',
+      prop: 'op',
       label: this.$t('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
@@ -113,7 +113,7 @@ export default class extends Vue {
   }
 
   private delPayGw(gw: IPayAllTimeGateway) {
-    this.$confirm(this.$t('removeThePayLock?')).then(async() => {
+    this.$confirm(this.$t('removePayGWQuestion')).then(async() => {
       await PayAllTimeGatewayModule.DelPayGroup(gw.id)
       this.$refs.table.LoadTableData()
     })

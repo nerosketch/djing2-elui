@@ -62,13 +62,13 @@ export default class extends Vue {
       { validator: this.titleDynamicValidator, trigger: 'change' }
     ],
     address_type: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickAType.') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickAType') }
     ],
     fias_address_level: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickALevel.') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickALevel') }
     ],
     fias_address_type: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickAFiasType.') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickAFiasType') }
     ]
   }
 

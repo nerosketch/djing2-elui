@@ -31,7 +31,7 @@
                 i.el-icon-error.el-alert--error.is-light(v-else)
 
             el-table-column(
-              :label="$t('snmNom.')"
+              :label="$t('snmNom')"
               min-width="97"
               prop="number")
 
@@ -46,7 +46,7 @@
               prop="mac_addr")
 
             el-table-column(
-              :label="$t('ur.')"
+              :label="$t('ur')"
               min-width="92"
               prop="signal")
 

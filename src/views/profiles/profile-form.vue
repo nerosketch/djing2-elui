@@ -18,7 +18,7 @@
         value-format="yyyy-MM-dd"
         format="d.MM.yyyy")
 
-    el-form-item(:label="$t('on.')")
+    el-form-item(:label="$t('on')")
       el-switch(v-model="frmMod.is_active")
 
       small
@@ -144,10 +144,10 @@ export default class extends Vue {
       { validator: telephoneValidator, trigger: 'change', message: this.$t('telValidation') }
     ],
     fio: [
-      { required: true, message: this.$t('youNeedToKnowTheNameOfTheOwnerOfTheAccount.'), trigger: 'blur' }
+      { required: true, message: this.$t('youNeedToKnowTheNameOfTheOwnerOfTheAccount'), trigger: 'blur' }
     ],
     email: [
-      { validator: emailValidator, trigger: 'change', message: this.$t('doesnTSoundLikeAnE-MailAddress') }
+      { validator: emailValidator, trigger: 'change', message: this.$t('doesnTSoundLikeEMailAddress') }
     ],
     password: [
       { required: true, message: this.$t('thePasswordCannotBeEmpty'), trigger: 'blur' },

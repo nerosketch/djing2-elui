@@ -35,7 +35,7 @@
           slot="append"
           @click="copyDeliveryAddrFromLegalAddr"
           icon="el-icon-document-copy"
-          :title="$t('copyTheAddressFromTheLegalAddress.')"
+          :title="$t('copyTheAddressFromTheLegalAddress')"
           :disabled="addrCopyDisabled")
 
     el-form-item(:label="$t('postalAddress')")
@@ -47,7 +47,7 @@
           slot="append"
           @click="copyPostAddrFromLegalAddr"
           icon="el-icon-document-copy"
-          :title="$t('copyTheAddressFromTheLegalAddress.')"
+          :title="$t('copyTheAddressFromTheLegalAddress')"
           :disabled="addrCopyDisabled")
 
     el-form-item(:label="$t('inn')", prop="tax_number")
@@ -187,14 +187,14 @@ export default class extends Vue {
       { required: true, message: this.$t('insNeedsToBeFilled'), trigger: 'blur' },
     ],
     address: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedALegalAddress.') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedALegalAddress') }
     ],
     state_level_reg_number: [
-      { required: true, message: this.$t('iWill.'), trigger: 'blur' },
+      { required: true, message: this.$t('iWill'), trigger: 'blur' },
     ],
     legal_type: [
       { required: true, message: this.$t('theTypeOfLawnIsMandatory'), trigger: 'blur' },
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues.') },
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues') },
     ]
   }
 

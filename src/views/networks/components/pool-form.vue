@@ -7,7 +7,7 @@
     :model="frmMod"
     v-loading="isLoading")
     el-form-item(
-      :label="$t('sitDown.')"
+      :label="$t('sitDown')"
       prop="network"
     )
       el-input(v-model="frmMod.network")
@@ -82,23 +82,23 @@ export default class extends mixins(FormMixin, VlanMixin) {
 
   private frmRules = {
     network: [
-      { required: true, message: this.$t('weNeedToSign.'), trigger: 'blur' },
-      { validator: ipAddrMaskValidator, trigger: 'change', message: this.$t('example:192.168.0.024') }
+      { required: true, message: this.$t('weNeedToSign'), trigger: 'blur' },
+      { validator: ipAddrMaskValidator, trigger: 'change', message: this.$t('example1921680024') }
     ],
     description: [
       { required: true, message: this.$t('iNeedADescription'), trigger: 'blur' }
     ],
     ip_start: [
       { required: true, message: this.$t('startPoint'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example192168023') }
     ],
     ip_end: [
       { required: true, message: this.$t('finalNeedToBeIndicated'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example192168023') }
     ],
     gateway: [
-      { required: true, message: this.$t('youNeedToPointOutTheLock.'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('exampleOfLock:192.168.0.1') }
+      { required: true, message: this.$t('youNeedToPointOutTheLock'), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('exampleOfLock19216801') }
     ]
   }
 

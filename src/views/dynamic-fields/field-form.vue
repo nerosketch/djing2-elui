@@ -23,7 +23,7 @@
     el-form-item(:label="$t('systemTag')")
       system-tags-input(v-model="frmMod.system_tag")
 
-    el-form-item(:label="$t('use.')" prop="user_tag")
+    el-form-item(:label="$t('use')" prop="user_tag")
       el-input(v-model="frmMod.user_tag")
 
     el-form-item

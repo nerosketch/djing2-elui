@@ -63,14 +63,14 @@
         prop="sn")
 
       el-table-column(
-        :label="$t('safe.')"
+        :label="$t('safe')"
         min-width="70"
       )
         template(v-slot:default="{row}")
           el-button(icon="el-icon-plus", @click="onSaveOnu(row)")
 
     el-dialog(
-      :title="$t('keepHimSafe.')"
+      :title="$t('keepHimSafe')"
       :visible.sync="saveOnuFormDialog"
       :close-on-click-modal="false")
       new-dev-form(

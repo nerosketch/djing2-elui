@@ -76,8 +76,8 @@ export default class extends Vue {
       label: this.$t('dynamic')
     },
     {
-      prop: 'op.',
-      label: this.$t('op.'),
+      prop: 'op',
+      label: this.$t('op'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

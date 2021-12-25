@@ -31,7 +31,7 @@
 
         .text.item.list-item
           b
-            | {{ $t('parentalDevice:') }}
+            | {{ $t('parentDev') }}
 
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
             | {{ device.parent_dev_name }}
@@ -43,7 +43,7 @@
 
         .text.item.list-item
           b
-            | {{ $t('affixedSubscribers:') }}
+            | {{ $t('affixedSubscribers') }}
 
           router-link.el-link.el-link--primary.is-underline(
             v-for="(ab, i) in device.attached_users"
@@ -169,7 +169,7 @@ export default class extends Vue {
     if (!this.device) return
     this.$confirm(`Действительно удалить onu "${this.device.comment}"?`).then(async() => {
       if (!this.device) {
-        this.$message.error(this.$t('notRemoved,ItLooksLikeSomeoneSAlreadyRemoved'))
+        this.$message.error(this.$t('notRemoved'))
         return
       }
       await DeviceModule.DelDevice(this.device.id)

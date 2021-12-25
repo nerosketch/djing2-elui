@@ -11,7 +11,7 @@
     el-form-item(:label="$t('description')" prop="descr")
       el-input(v-model="frmMod.descr")
 
-    el-form-item(:label="$t('comeIn.')" prop="speed_in")
+    el-form-item(:label="$t('comeIn')" prop="speed_in")
       el-input(v-model="frmMod.speed_in" type="number")
 
     el-form-item(:label="$t('speed.')" prop="speed_out")
@@ -25,7 +25,7 @@
 
     el-form-item(:label="$t('administrative')" prop="is_admin")
       el-checkbox(v-model="frmMod.is_admin")
-        | {{ $t('administrativeServices.') }}
+        | {{ $t('administrativeServices') }}
         b {{ frmMod.is_admin ? 'Да' : 'Нет' }}
 
     el-form-item(:label="$t('scream')", prop="calc_type")
@@ -80,7 +80,7 @@ export default class extends mixins(FormMixin) {
     ],
     speed_out: [
       speedRule,
-      { required: true, message: this.$t('speedIn.'), trigger: 'blur' }
+      { required: true, message: this.$t('speedIn'), trigger: 'blur' }
     ],
     cost: [
       { required: true, message: this.$t('thePriceShallBeSpecified'), trigger: 'blur' },

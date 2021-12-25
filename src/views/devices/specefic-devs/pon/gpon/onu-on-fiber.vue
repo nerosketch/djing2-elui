@@ -70,7 +70,7 @@ export default class extends Vue {
 
   private onuRowColor({ row }: ITableRowClassName) {
     switch (row.onu_state) {
-      case 'okay.':
+      case 'okay':
         return ''
       case 'down':
         return 'error-row'

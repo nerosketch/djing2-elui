@@ -3,10 +3,10 @@
     template(v-slot:header)
       span
         | {{ $t('onboardConfigurationOptions') }}
-  
+
     span
-      | {{ $t('heSGotAScalpForTheMan.') }}
-  
+      | {{ $t('heSGotAScalpForTheMan') }}
+
     el-select(
       v-model="currentConfig.configTypeCode"
       :placeholder="$t('configurationPanel')"
@@ -16,7 +16,7 @@
         :label="v.title"
         v-for="(v, i) in configTypeCodes"
         :key="i")
-  
+
     template(v-if="isAcceptVlanSelectedConfig")
       el-card(
         shadow="never"
@@ -29,12 +29,12 @@
             type="danger"
             @click="delVlanPort(portVlanConf.port)")
           | Vlan на порт №{{ portVlanConf.port }}
-      
+
         generic-vlan-config(:portVlanConf.sync="portVlanConf", :allVlans="vlans")
-  
+
     el-card(shadow="never", v-else)
       | {{ $t('vlanSettingNotAcceptedBySelectedConfiguration') }}
-  
+
     el-button(
       type="primary"
       icon="el-icon-download"
@@ -103,7 +103,7 @@ export default class extends mixins(VlanMixin) {
   }
 
   private delVlanPort(portNum: number) {
-    this.$confirm(this.$t('removeTheConstructionFromThePort?')).then(() => {
+    this.$confirm(this.$t('removeOptsFromPort')).then(() => {
       const confInd = this.currentConfig.vlanConfig.findIndex(v => v.port === portNum)
       if (confInd > -1) {
         this.currentConfig.vlanConfig.splice(confInd, 1)
