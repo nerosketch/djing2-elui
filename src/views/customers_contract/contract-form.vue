@@ -7,7 +7,7 @@
     v-loading="isLoading")
     el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
-  
+
     el-form-item(
       :label="$t('customers.contractNum.unique')"
       prop="contract_number"
@@ -21,32 +21,32 @@
             icon="el-icon-document"
             @click="doCopyFromUsername"
             :title="$t('contractDocs.copyFromLogin')")
-  
+
     el-form-item(:label="$t('contractDocs.dateBegin')", prop="start_service_time")
       el-date-picker(
         v-model="frmMod.start_service_time"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm:ss"
         format="d.MM.yyyy HH:mm:ss")
-  
+
     el-form-item(:label="$t('contractDocs.dateEnd')")
       el-date-picker(
         v-model="frmMod.end_service_time"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm:ss"
         format="d.MM.yyyy HH:mm:ss")
-  
+
     el-form-item(:label="$t('contractDocs.activity')")
       el-checkbox(v-model="frmMod.is_active")
         | - {{ $t('contractDocs.activeContract') }}: {{ frmMod.is_active ? $t('yes') : $t('sno') }}
-  
+
     el-form-item(:label="$t('contractDocs.additional')")
       el-input(
         v-model="frmMod.note"
         type="textarea"
         rows="5"
         cols="40")
-  
+
     el-form-item
       el-button-group
         el-button(
@@ -57,13 +57,13 @@
           :disabled="isFormUntouched"
           :type="isNew ? 'success' : 'default'")
           | {{ isNew ? $t('add') : $t('save') }}
-      
+
         el-button(
           v-if="!isNew"
           icon="el-icon-document"
           @click="openDocsDialog")
           | {{ $t('customers.docs') }}
-  
+
     el-dialog(:title="$t('customers.docs')", :visible.sync="docsDialogVisible")
       contract-docs(:contract="contract")
 </template>
@@ -163,7 +163,7 @@ export default class extends mixins(FormMixin) {
                 this.$t('contractDocs.savedMsg')
               )
             } else {
-              const tx = this.$t('heSAContractor,HeSAContractFormAndHeSGotAContract.')
+              const tx = 'Logic error on contractForm in onSubmit()'
               this.$message.error(tx)
               throw new Error(tx)
             }

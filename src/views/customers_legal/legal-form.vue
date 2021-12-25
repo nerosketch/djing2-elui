@@ -7,28 +7,28 @@
     v-loading="loading")
     el-form-item(:label="$t('customers.contractNum.s')", prop="username")
       el-input(v-model="frmMod.username")
-  
+
     el-form-item(:label="$t('title')", prop="title")
       el-input(v-model="frmMod.title")
-  
+
     el-form-item(:label="$t('fioDirector')", prop="fio")
       el-input(v-model="frmMod.fio")
-  
-    el-form-item(:label="$t('panel')")
+
+    el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
-  
+
     el-form-item(:label="$t('typeOfLawn')", prop="legal_type")
       legal-type-choice(v-model="frmMod.legal_type")
-  
+
     el-form-item(:label="$t('legalAddress')", prop="address")
       addr-field-input(v-model="frmMod.address")
-  
+
     el-form-item(:label="$t('postalLegalAddressIndex')", prop="post_index")
       el-input(v-model="frmMod.post_index")
-  
+
     el-form-item(:label="$t('accountDeliveryAddress')")
       addr-field-input(v-model="frmMod.delivery_address")
-  
+
     el-form-item(:label="$t('postalAccountDeliveryAddressIndex')", prop="delivery_address_post_index")
       el-input(v-model="frmMod.delivery_address_post_index")
         el-button(
@@ -37,10 +37,10 @@
           icon="el-icon-document-copy"
           :title="$t('copyTheAddressFromTheLegalAddress.')"
           :disabled="addrCopyDisabled")
-  
+
     el-form-item(:label="$t('postalAddress')")
       addr-field-input(v-model="frmMod.post_address")
-  
+
     el-form-item(:label="$t('postalAddressIndex')", prop="post_post_index")
       el-input(v-model="frmMod.post_post_index")
         el-button(
@@ -49,26 +49,26 @@
           icon="el-icon-document-copy"
           :title="$t('copyTheAddressFromTheLegalAddress.')"
           :disabled="addrCopyDisabled")
-  
+
     el-form-item(:label="$t('inn')", prop="tax_number")
       el-input(v-model="frmMod.tax_number", type="number")
-  
+
     el-form-item(:label="$t('grun')", prop="state_level_reg_number")
       el-input(v-model="frmMod.state_level_reg_number", type="number")
-  
+
     el-form-item(:label="$t('effectiveDate')")
       el-date-picker(
         v-model="frmMod.actual_start_time"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm"
         format="d.MM.yyyy HH:mm")
-  
+
     el-form-item(:label="$t('description')")
       el-input(
         type="textarea"
         rows="5"
         v-model="frmMod.description")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -166,7 +166,7 @@ export default class extends Vue {
   private frmRules = {
     username: [
       { required: true, message: this.$t('customers.contractNum.required'), trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: this.$t('theContractNumberMayContainLatinSymbolsAndFigures') }
+      { validator: latinValidator, trigger: 'change', message: this.$t('contractCanContainLatinAndDigits') }
     ],
     post_index: [
       maxLenValidator
@@ -181,7 +181,7 @@ export default class extends Vue {
       { required: true, message: this.$t('nameToBeIndicated'), trigger: 'blur' },
     ],
     fio: [
-      { required: true, message: this.$t('directorSFig.'), trigger: 'blur' },
+      { required: true, message: this.$t('directorSFioIsRequired'), trigger: 'blur' },
     ],
     tax_number: [
       { required: true, message: this.$t('insNeedsToBeFilled'), trigger: 'blur' },

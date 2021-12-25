@@ -9,7 +9,7 @@
       unlink-panels
       value-format="yyyy-MM-dd"
       :picker-options="pickerOptions")
-  
+
     el-select(
       v-model="reportParams.pay_gw"
       :placeholder="$t('payableLock')"
@@ -20,19 +20,19 @@
         :key="gw.id"
         :label="gw.title"
         :value="gw.id")
-  
+
     el-radio(v-model="reportParams.group_by", :label="1")
       | {{ $t('groupByDay') }}
-  
+
     el-radio(v-model="reportParams.group_by", :label="2")
       | {{ $t('groupingNextWeek') }}
-  
+
     el-radio(v-model="reportParams.group_by", :label="3")
       | {{ $t('groupMonthly') }}
-  
+
     el-button(@click="downloadCsv")
       | {{ $t('screwingTheEye.') }}
-  
+
     el-table(
       v-loading="loading"
       :data="tableData"
@@ -42,14 +42,14 @@
         :label="$t('date')"
         min-width="110"
         prop="pay_date")
-    
+
       el-table-column(
         :label="$t('amount')"
         min-width="110"
         prop="summ")
-    
+
       el-table-column(
-        :label="$t('payload.')"
+        :label="$t('paycount')"
         min-width="110"
         prop="pay_count")
 </template>
@@ -175,7 +175,7 @@ export default class extends Vue {
 
   private downloadCsv() {
     const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
-    dat.unshift([this.$t('date'), this.$t('amount'), this.$t('payload.')])
+    dat.unshift([this.$t('date'), this.$t('amount'), this.$t('paycount')])
     const sdat = dat.join('\n')
     save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
   }

@@ -1,14 +1,14 @@
 <template lang="pug">
   div
     h4(v-if="loading")
-      | {{ $t('loading...♪') }}
-  
+      | {{ $t('loading') }}
+
     template(v-else)
       div(v-if="customers.length > 0")
         div(v-for="(cst, i) in customers", :key="i")
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: cst.id }}")
             | {{ cst.full_name }}
-    
+
       h4(v-else)
         | {{ $t('noSubscribersFoundOnThePort') }}
 </template>

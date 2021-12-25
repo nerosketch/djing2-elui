@@ -11,17 +11,17 @@
           icon="el-icon-edit"
           @click="openEdit(row)"
           :disabled="!$perms.customers_legal.change_customerlegalmodel")
-    
+
       template(v-slot:username="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerLegalDetail', params: { uid: row.id } }")
           | {{ row.username }}
-    
+
       el-button(
         icon="el-icon-plus"
         @click="openNew"
         :disabled="!$perms.customers_legal.add_customerlegalmodel")
         | {{ $t('addAnAccountingRecord') }}
-  
+
     el-dialog(
       :title="$t('organization')"
       :visible.sync="dialogVisible"
@@ -31,9 +31,9 @@
         v-if="dialogVisible"
         v-on:added="frmAddDone"
         v-on:update="frmUpdateDone")
-  
+
     el-dialog(
-      :title="$t('whoHasTheRightToAnAccount.')"
+      :title="$t('whoHasTheRightToAnAccount')"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")
@@ -100,7 +100,7 @@ export default class extends Vue {
     },
     {
       prop: 'btn',
-      label: this.$t('♪'),
+      label: '#',
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }

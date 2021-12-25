@@ -7,7 +7,7 @@
     v-loading="loading")
     el-form-item(:label="$t('description')", prop="descr")
       el-input(v-model="frmMod.descr", maxlength="128")
-  
+
     el-form-item(:label="$t('implementers')", prop="recipients")
       el-select(v-model="frmMod.recipients", multiple)
         el-option(
@@ -15,7 +15,7 @@
           :key="rec.id"
           :label="rec.full_name || rec.username"
           :value="rec.id")
-  
+
     el-form-item(:label="$t('natureOfFracture')", prop="mode")
       el-select(v-model="frmMod.mode")
         el-option(
@@ -23,7 +23,7 @@
           :key="tt.v"
           :label="tt.nm"
           :value="tt.v")
-  
+
     el-form-item(:label="$t('priority')", prop="priority")
       el-select(v-model="frmMod.priority")
         el-option(
@@ -31,7 +31,7 @@
           :key="tt.v"
           :label="tt.nm"
           :value="tt.v")
-  
+
     el-form-item(:label="$t('status')", prop="task_state")
       el-select(v-model="frmMod.task_state")
         el-option(
@@ -39,13 +39,13 @@
           :key="tt.v"
           :label="tt.nm"
           :value="tt.v")
-  
+
     el-form-item(
       :label="$t('customer')"
       prop="customer"
     )
       customer-field(v-model="frmMod.customer", :defaultName="$store.state.task.customer_full_name")
-  
+
     el-form-item(:label="$t('relevance')", prop="out_date")
       el-tooltip(content="дата, до которой нужно завершить задачу", placement="right")
         el-date-picker(
@@ -53,7 +53,7 @@
           type="date"
           value-format="yyyy-MM-dd"
           format="d.MM.yyyy")
-  
+
     el-form-item
       el-button-group
         el-button(
@@ -62,7 +62,7 @@
           icon="el-icon-upload"
           :disabled="isFormUntouched")
           | {{ $t('save') }}
-      
+
         el-button(
           v-if="!isNewTask"
           type="danger"
@@ -70,7 +70,7 @@
           @click="onDel"
           :disabled="!$perms.tasks.delete_task")
           | {{ $t('delete.') }}
-      
+
         el-button(
           v-if="!isNewTask"
           type="success"
@@ -112,7 +112,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
     { nm: this.$t('connection'), v: ITaskType.CONNECTION },
     { nm: this.$t('periodicMissing'), v: ITaskType.PERIODIC_DISAPPEARANCE },
     { nm: this.$t('routeConstruction'), v: ITaskType.ROUTER_SETUP },
-    { nm: this.$t('ono.'), v: ITaskType.CONFIGURE_ONU },
+    { nm: this.$t('onuConfig'), v: ITaskType.CONFIGURE_ONU },
     { nm: this.$t('cable'), v: ITaskType.CRIMP_CABLE },
     // { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
     { nm: this.$t('other'), v: ITaskType.OTHER }
@@ -152,7 +152,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
 
   private frmRules = {
     recipients: [
-      { required: true, message: this.$t('weHaveToChooseOnePerpetrator.'), trigger: 'blur' }
+      { required: true, message: this.$t('weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
     customer: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$t('weNeedToPickASubscription.') }

@@ -25,7 +25,7 @@
     el-form-item(:label="$t('community')")
       el-input(v-model="frmMod.man_passw")
 
-    el-form-item(:label="$t('panel')")
+    el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
 
     el-form-item(:label="$t('theDevice.')")
@@ -37,13 +37,13 @@
     el-form-item(:label="$t('addresses')")
       addr-field-input(v-model="frmMod.address")
 
-    el-form-item(:label="$t('no.')")
+    el-form-item(:label="$t('houseNum')")
       el-input(
         v-model="frmMod.place"
         disabled
         readonly)
 
-    el-form-item(:label="$t('dop.')")
+    el-form-item(:label="$t('snmpInfo')")
       el-input(v-model="frmMod.snmp_extra")
 
     el-form-item(prop="is_noticeable")
@@ -94,7 +94,7 @@ export default class extends mixins(FormMixin) {
       { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
     ],
     mac_addr: [
-      { required: true, message: this.$t('macCanTBeEmpty.'), trigger: 'blur' },
+      { required: true, message: this.$t('macCanTBeEmpty'), trigger: 'blur' },
       { validator: macAddrValidator, trigger: 'change', message: this.$t('example:0A:0B:Cc:Dd:Ee:Ff') }
     ],
     comment: [

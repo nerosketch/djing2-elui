@@ -7,13 +7,13 @@
     v-loading="loading")
     el-form-item(:label="$t('ipAddress')", prop="ip_address")
       el-input(v-model="frmMod.ip_address")
-  
+
     el-form-item(:label="$t('macAddress')", prop="mac_addr")
       el-input(v-model="frmMod.mac_addr")
-  
+
     el-form-item(:label="$t('description')", prop="comment")
       el-input(v-model="frmMod.comment")
-  
+
     el-form-item(:label="$t('typeOfEquipment')", prop="dev_type")
       el-select(v-model="frmMod.dev_type")
         el-option(
@@ -21,29 +21,29 @@
           :key="dt.v"
           :label="dt.nm"
           :value="dt.v")
-  
+
     el-form-item(:label="$t('community')")
       el-input(v-model="frmMod.man_passw")
-  
-    el-form-item(:label="$t('panel')")
+
+    el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
-  
+
     el-form-item(:label="$t('theDevice.')")
       device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="initialParentDevName")
-  
+
     el-form-item(:label="$t('effectiveDate')")
       datetime-counter(v-model="frmMod.create_time")
-  
-    el-form-item(:label="$t('dop.')")
+
+    el-form-item(:label="$t('snmpInfo')")
       el-input(v-model="frmMod.snmp_extra")
-  
+
     el-form-item
       el-checkbox(v-model="frmMod.is_noticeable")
         | {{ $t('monitoringEventAlerts') }}:
-      
+
         b
           | {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
-  
+
     el-form-item
       el-button(
         type="success"
@@ -92,7 +92,7 @@ export default class extends Vue {
       { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
     ],
     mac_addr: [
-      { required: true, message: this.$t('macCanTBeEmpty.'), trigger: 'blur' },
+      { required: true, message: this.$t('macCanTBeEmpty'), trigger: 'blur' },
       { validator: macAddrValidator, trigger: 'change', message: this.$t('example:0A:0B:Cc:Dd:Ee:Ff') }
     ],
     comment: [

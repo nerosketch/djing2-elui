@@ -9,23 +9,23 @@
       template(v-slot:btn="{row}")
         el-button-group
           el-button(icon="el-icon-lock", @click="editGroupPerms(row)")
-        
+
           el-button(icon="el-icon-edit", @click="editNewUserGroup(row)")
-        
+
           el-button(
             type="danger"
             icon="el-icon-close"
             @click="delUserGroup(row)")
-    
+
       el-button(icon="el-icon-plus", @click="addNewUserGroup")
         | {{ $t('add') }}
-  
+
     el-dialog(
       :title="dialogTitle"
       :visible.sync="ugFormDialog"
       :close-on-click-modal="false")
       user-group-form(v-on:done="frmDone", v-on:cancel="ugFormDialog=false")
-  
+
     el-dialog(
       :title="$t('modifyTheRightsOfTheGroup')"
       top="5vh"
@@ -72,15 +72,15 @@ export default class extends Vue {
     },
     {
       prop: 'permcount',
-      label: this.$t('kol.')
+      label: this.$t('permcount')
     },
     {
       prop: 'usercount',
-      label: this.$t('cal.')
+      label: this.$t('usercount')
     },
     {
       prop: 'btn',
-      label: this.$t('♪'),
+      label: '#',
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -108,7 +108,7 @@ export default class extends Vue {
   private delUserGroup(grp: IUserGroup) {
     this.$confirm(this.$t('removeTheBandOfSubscribers?')).then(async() => {
       await delUserGroup(grp.id)
-      this.$message.success(this.$t('ualienGroup'))
+      this.$message.success(this.$t('groupRemoved'))
       this.$refs.tbl.LoadTableData()
     })
   }

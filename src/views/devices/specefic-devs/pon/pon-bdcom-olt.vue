@@ -3,13 +3,13 @@
     template(v-slot:header)
       .clearfix
         | {{ device.comment || 'BDCOM' }}
-      
+
         small
           | {{ ` ${device.ip_address || device.mac_addr} ` }}
-      
+
         router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
           | [{{ device.parent_dev_name }}]
-  
+
     el-row(v-if="ready")
       el-col(
         :span="24"
@@ -19,7 +19,7 @@
           template(v-slot:header)
             .clearfix
               | {{ fiber.fb_name }} ({{ fiber.fb_active_onu }}/{{ fiber.fb_onu_num }})
-        
+
           el-table(
             :data="fiber.onuList"
             border
@@ -27,34 +27,34 @@
             el-table-column(label="#", width="50")
               template(v-slot:default="{row}")
                 i.el-icon-success.el-alert--success.is-light(v-if="row.status")
-              
+
                 i.el-icon-error.el-alert--error.is-light(v-else)
-          
+
             el-table-column(
               :label="$t('snmNom.')"
               min-width="97"
               prop="number")
-          
+
             el-table-column(
               :label="$t('name')"
               min-width="93"
               prop="title")
-          
+
             el-table-column(
-              :label="$t('mac.')"
+              :label="$t('mac')"
               min-width="123"
               prop="mac_addr")
-          
+
             el-table-column(
               :label="$t('ur.')"
               min-width="92"
               prop="signal")
-          
+
             el-table-column(
-              :label="$t('network')"
+              :label="$t('uptime')"
               min-width="151"
               prop="uptime")
-          
+
             el-table-column(
               label="#"
               width="60"
@@ -65,9 +65,9 @@
                   circle
                   @click="openSaveOnu(row)"
                   :disabled="!$perms.devices.add_device")
-  
+
     el-progress.progress_disable_animations(v-else, :percentage="loadPercent")
-  
+
     el-dialog(
       :title="$t('addIt')"
       :visible.sync="dialogVisible"
@@ -162,7 +162,7 @@ export default class extends Vue {
 
   private frmDone(newOnu: IDevice) {
     this.dialogVisible = false
-    this.$message.success(this.$t('theNewOneIsRetained.'))
+    this.$message.success(this.$t('theNewONUIsSaved'))
     this.$router.push({
       name: 'device-view',
       params: {

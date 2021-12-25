@@ -100,7 +100,7 @@ export default class extends Vue {
     },
     {
       prop: 'btn',
-      label: this.$t('♪'),
+      label: "#",
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }

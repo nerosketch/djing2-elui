@@ -15,7 +15,7 @@
           type="primary"
           @click="openDevForm"
           :disabled="!$perms.devices.change_device")
-  
+
     el-row
       el-col(
         :xl="2"
@@ -25,12 +25,12 @@
         v-for="(p, i) in allPorts"
         :key="i")
         olt-zte-port(:devId="devPk", :port="p")
-  
+
     el-divider
-  
+
     h4
       | {{ $t('unregisteredYouth') }}
-  
+
     el-table(
       :data="unregistered"
       :loading="unrloading"
@@ -38,37 +38,37 @@
       border
       fit)
       el-table-column(
-        :label="$t('mac.')"
+        :label="$t('mac')"
         min-width="150"
         prop="mac")
-    
+
       el-table-column(
         :label="$t('livingVersion')"
         min-width="150"
         prop="firmware_ver")
-    
+
       el-table-column(
         :label="$t('loiPassword')"
         min-width="100"
         prop="loid_passw")
-    
+
       el-table-column(
         label="LOID"
         min-width="150"
         prop="loid")
-    
+
       el-table-column(
         label="sn"
         min-width="150"
         prop="sn")
-    
+
       el-table-column(
         :label="$t('safe.')"
         min-width="70"
       )
         template(v-slot:default="{row}")
           el-button(icon="el-icon-plus", @click="onSaveOnu(row)")
-  
+
     el-dialog(
       :title="$t('keepHimSafe.')"
       :visible.sync="saveOnuFormDialog"
@@ -166,7 +166,7 @@ export default class extends Vue {
 
   private frmNewOnuDone(newDev: IDevice) {
     this.saveOnuFormDialog = false
-    this.$message.success(this.$t('theNewOneIsRetained.'))
+    this.$message.success(this.$t('theNewONUIsSaved'))
     this.$router.push({ name: 'device-view', params: { devId: newDev.id.toString() } })
   }
 

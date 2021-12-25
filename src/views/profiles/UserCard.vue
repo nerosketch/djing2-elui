@@ -51,10 +51,10 @@ el-card(style='margin-bottom:20px;')
           span {{ $t('someOtherProgress') }}
           el-progress(:percentage='45')
         .progress-item
-          span {{ $t('somethingElse.') }}
+          span {{ $t('somethingElse') }}
           el-progress(:percentage='4')
         .progress-item
-          span {{ $t('somethingFinished.') }}
+          span {{ $t('somethingFinished') }}
           el-progress(:percentage='100' status='success')
 
 </template>

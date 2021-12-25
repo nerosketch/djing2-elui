@@ -7,31 +7,31 @@
     v-loading="isLoading")
     el-form-item(:label="$t('title')", prop="title")
       el-input(v-model="frmMod.title")
-  
+
     el-form-item(:label="$t('ipAddress')", prop="ip_address")
       el-input(v-model="frmMod.ip_address")
-  
+
     el-form-item(:label="$t('gateways.port')")
       el-input(v-model="frmMod.ip_port", type="number")
-  
+
     el-form-item(:label="$t('inletLogin')", prop="auth_login")
       el-input(v-model="frmMod.auth_login")
-  
+
     el-form-item(:label="$t('inletPassword')")
       el-input(v-model="frmMod.auth_passw")
-  
+
     el-form-item(:label="$t('likeUs.')")
       el-select(v-model="frmMod.gw_type")
         el-option(:label="$t('microsoft')", :value="0")
-      
-        el-option(:label="$t('linusc')", :value="1")
-  
+
+        el-option(label="Linux", :value="1")
+
     el-form-item(:label="$t('default')")
       el-checkbox(v-model="frmMod.is_default")
-  
+
     el-form-item(:label="$t('included')")
       el-checkbox(v-model="frmMod.enabled")
-  
+
     el-form-item(:label="$t('classOfLock')")
       el-select(v-model="frmMod.gw_class")
         el-option(
@@ -39,10 +39,10 @@
           :key="i"
           :value="gwc.v"
           :label="gwc.t")
-  
+
     el-form-item(:label="$t('addressOfInstallation')")
       el-input(v-model="frmMod.place")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"

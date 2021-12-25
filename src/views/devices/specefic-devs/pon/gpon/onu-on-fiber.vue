@@ -10,12 +10,12 @@
         :label="$t('type')"
         min-width="80"
         prop="onu_type")
-    
+
       el-table-column(
         :label="$t('port')"
         min-width="90"
         prop="onu_port")
-    
+
       el-table-column(
         :label="$t('serial')"
         min-width="90"
@@ -48,11 +48,11 @@ export default class extends Vue {
 
   private async loadFibers() {
     if (!this.fiberAddr || this.fiberAddr === 0) {
-      this.$message.error(this.$t('pyberaddreRequired.'))
+      this.$message.error(this.$t('pyberaddreRequired'))
       return
     }
     if (this.devId < 1 || !this.devId) {
-      this.$message.error(this.$t('deweedIsARiver.'))
+      this.$message.error(this.$t('devIdRequired'))
       return
     }
     this.lloading = true

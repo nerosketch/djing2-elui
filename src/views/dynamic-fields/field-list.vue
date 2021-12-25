@@ -8,15 +8,15 @@
       template(v-slot:btn="{row}")
         el-button-group
           el-button(icon="el-icon-edit", @click="editField(row)")
-        
+
           el-button(
             type="danger"
             icon="el-icon-close"
             @click="delDynamicField(row)")
-    
+
       el-button(icon="el-icon-plus", @click="openNew")
         | {{ $t('addFields') }}
-  
+
     el-dialog(
       :title="$t('field')"
       :visible.sync="fieldFormVisible"
@@ -62,7 +62,7 @@ export default class extends Vue {
     },
     {
       prop: 'groups',
-      label: this.$t('panels')
+      label: this.$t('route.groups')
     },
     {
       prop: 'system_tag_name',
@@ -74,7 +74,7 @@ export default class extends Vue {
     },
     {
       prop: 'btn',
-      label: this.$t('♪'),
+      label: '#',
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }

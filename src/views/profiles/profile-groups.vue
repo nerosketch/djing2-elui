@@ -6,13 +6,13 @@
         :key="grp.id"
         :label="grp.name"
         v-model="grp.checked")
-  
+
     span(v-else)
       i.el-icon-loading
-      | {{ $t('loading...♪') }}
-  
+      | {{ $t('loading') }}
+
     el-divider
-  
+
     el-button(
       icon="el-icon-upload"
       type="primary"

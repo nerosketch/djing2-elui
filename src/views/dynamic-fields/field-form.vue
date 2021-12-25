@@ -8,7 +8,7 @@
     v-loading="isLoading")
     el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
-  
+
     el-form-item(:label="$t('typeOfField')")
       el-select(v-model="frmMod.field_type")
         el-option(
@@ -16,16 +16,16 @@
           :key="i"
           :label="t.label"
           :value="t.value")
-  
-    el-form-item(:label="$t('panels')")
+
+    el-form-item(:label="$t('route.groups')")
       groups-choice(v-model="frmMod.groups" multiple)
-  
+
     el-form-item(:label="$t('systemTag')")
       system-tags-input(v-model="frmMod.system_tag")
-  
+
     el-form-item(:label="$t('use.')" prop="user_tag")
       el-input(v-model="frmMod.user_tag")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"

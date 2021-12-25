@@ -7,35 +7,35 @@
     v-loading="loading")
     el-form-item(:label="$t('login')", prop="username")
       el-input(v-model="frmMod.username")
-  
+
     el-form-item(:label="$t('fio')", prop="fio")
       el-input(v-model="frmMod.fio")
-  
+
     el-form-item(:label="$t('birthday')", prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
         format="d.MM.yyyy")
-  
+
     el-form-item(:label="$t('on.')")
       el-switch(v-model="frmMod.is_active")
-    
+
       small
         | {{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}
-  
+
     el-form-item(:label="$t('superman')")
       el-switch(v-model="frmMod.is_superuser")
-    
+
       small
         | {{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}
-  
+
     el-form-item(:label="$t('telephoneNumber')", prop="telephone")
       el-input(v-model="frmMod.telephone")
-  
+
     el-form-item(:label="$t('email')", prop="email")
       el-input(v-model="frmMod.email")
-  
+
     el-form-item(
       :label="$t('password')"
       prop="password"
@@ -44,7 +44,7 @@
         v-model="frmMod.password"
         type="password"
         autocomplete="new-password")
-  
+
     el-form-item
       el-button-group
         el-button(
@@ -52,18 +52,18 @@
           @click="onSubmit"
           icon="el-icon-upload")
           | {{ isNew ? 'Добавить' : 'Сохранить' }}
-      
+
         template(v-if="!isNew")
           el-button(@click="openPasswordForm", icon="el-icon-lock")
             | {{ $t('password') }}
-        
+
           template(v-if="$perms.is_superuser")
             el-button(@click="openGroupsForm", icon="el-icon-lock")
               | {{ $t('userGroups') }}
-          
+
             el-button(@click="sitesDlg = true", icon="el-icon-lock")
               | {{ $t('sait') }}
-  
+
     el-dialog(
       :title="$t('changeThePassword')"
       :visible.sync="passwordFormDialog"
@@ -72,13 +72,13 @@
         :profileId="$store.state.userprofile.id"
         v-on:done="passwordDone"
         v-on:cancel="passwordCancel")
-  
+
     el-dialog(
       :title="$t('entitlementOfUserGroups')"
       :visible.sync="userGroupAccessDialog"
       :close-on-click-modal="false")
       profile-groups(v-on:done="userGroupAccessDone")
-  
+
     el-dialog(
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
@@ -133,21 +133,21 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: this.$t('loginCanTBeEmpty.'), trigger: 'blur' },
+      { required: true, message: this.$t('loginCanTBeEmpty'), trigger: 'blur' },
       { validator: latinValidator, trigger: 'change', message: this.$t('laginCanContainLatinSymbolsAndFigures') }
     ],
     birth_day: [
-      { required: true, message: this.$t('loginCanTBeEmpty.'), trigger: 'blur' }
+      { required: true, message: this.$t('loginCanTBeEmpty'), trigger: 'blur' }
     ],
     telephone: [
-      { required: true, message: this.$t('thePhoneNumberIsMandatory.'), trigger: 'blur' },
+      { required: true, message: this.$t('phoneNumberIsRequired'), trigger: 'blur' },
       { validator: telephoneValidator, trigger: 'change', message: this.$t('telValidation') }
     ],
     fio: [
       { required: true, message: this.$t('youNeedToKnowTheNameOfTheOwnerOfTheAccount.'), trigger: 'blur' }
     ],
     email: [
-      { validator: emailValidator, trigger: 'change', message: this.$t('doesnTSoundLikeAnE-MailAddress.') }
+      { validator: emailValidator, trigger: 'change', message: this.$t('doesnTSoundLikeAnE-MailAddress') }
     ],
     password: [
       { required: true, message: this.$t('thePasswordCannotBeEmpty'), trigger: 'blur' },

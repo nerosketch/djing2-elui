@@ -36,7 +36,7 @@ export default class extends Vue {
     },
     {
       prop: 'user_agent',
-      label: this.$t('brauser')
+      label: this.$t('browser')
     }
   ]
 

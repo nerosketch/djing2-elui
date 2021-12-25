@@ -13,7 +13,7 @@
       el-form-item(prop="username")
         span.svg-container
           i.el-icon-user-solid
-      
+
         el-input(
           ref="username"
           v-model="loginForm.username"
@@ -21,11 +21,11 @@
           type="text"
           autocomplete="on"
           :placeholder="$t('login')")
-    
+
       el-form-item(prop="password")
         span.svg-container
           i.el-icon-lock
-      
+
         el-input(
           :key="passwordType"
           ref="password"
@@ -35,7 +35,7 @@
           name="password"
           autocomplete="on"
           @keyup.enter.native="handleLogin")
-      
+
         span.show-pwd(@click="showPwd")
           i(:class="passwordType === 'password' ? 'el-icon-view' : 'el-icon-close'")
 
@@ -70,8 +70,8 @@ export default class extends Vue {
 
   private loginRules = {
     username: [
-      { required: true, message: this.$t('loginCanTBeEmpty.'), trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: this.$t('needsLoginFromLatinSymbolsAndFigures.') }
+      { required: true, message: this.$t('loginCanTBeEmpty'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$t('needsLoginFromLatinSymbolsAndFigures') }
     ],
     password: [
       { required: true, message: this.$t('thePasswordCannotBeEmpty'), trigger: 'blur' },

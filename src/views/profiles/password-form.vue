@@ -14,7 +14,7 @@
         v-model="frmMod.old_passw"
         maxlength="128"
         type="password")
-  
+
     el-form-item(
       :label="$t('newPassword')"
       prop="new_passw"
@@ -23,7 +23,7 @@
         v-model="frmMod.new_passw"
         maxlength="128"
         type="password")
-  
+
     el-form-item(
       :label="$t('repeatThePassword.')"
       prop="retype_passw"
@@ -32,7 +32,7 @@
         v-model="frmMod.retype_passw"
         maxlength="128"
         type="password")
-  
+
     el-form-item
       el-button-group
         el-button(
@@ -41,7 +41,7 @@
           icon="el-icon-download"
           :disabled="isEmpty")
           | {{ $t('save') }}
-      
+
         el-button(@click="$emit('cancel')", icon="el-icon-close")
           | {{ $t('cancellation') }}
 </template>
@@ -63,17 +63,17 @@ export default class extends Vue {
 
   private frmRules = {
     old_passw: [
-      { required: !this.$perms.is_superuser, message: this.$t('iNeedToPointOutTheOldPassword.'), trigger: 'blur' },
+      { required: !this.$perms.is_superuser, message: this.$t('iNeedToPointOutTheOldPassword'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     new_passw: [
-      { required: true, message: this.$t('weNeedANewPassword.'), trigger: 'blur' },
+      { required: true, message: this.$t('weNeedANewPassword'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     retype_passw: [
-      { required: true, trigger: 'blur', message: this.$t('weNeedANewPassword.') },
+      { required: true, trigger: 'blur', message: this.$t('weNeedANewPassword') },
       {
         validator: (rule: any, value: string, callback: Function) => {
           if (value === this.frmMod.new_passw) {

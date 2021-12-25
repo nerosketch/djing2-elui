@@ -8,16 +8,16 @@
     v-loading="isLoading")
     el-form-item(:label="$t('title')", prop="title")
       el-input(v-model="frmMod.title")
-  
+
     el-form-item(:label="$t('id')", prop="service_id")
       el-input(v-model="frmMod.service_id")
-  
+
     el-form-item(:label="$t('servants')", prop="slug")
       el-input(v-model="frmMod.slug")
-  
+
     el-form-item(:label="$t('secret')", prop="secret")
       el-input(v-model="frmMod.secret")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -50,7 +50,7 @@ export default class extends Vue {
     ],
     slug: [
       { required: true, message: this.$t('iLlBeSure.'), trigger: 'blur' },
-      { max: 32, message: this.$t('32SymbolsForServants'), trigger: 'change' }
+      { max: 32, message: this.$t('only32Symbols'), trigger: 'change' }
     ]
   }
 

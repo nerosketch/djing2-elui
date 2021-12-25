@@ -14,13 +14,13 @@
         v-model="frmMod.num"
         type="number"
       )
-  
+
     el-form-item(
       :label="$t('description')"
       prop="descr"
     )
       el-input(v-model="frmMod.descr")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -47,7 +47,7 @@ export default class extends Vue {
 
   private frmRules = {
     descr: [
-      { required: true, message: this.$t('weNeedToNameThePort.'), trigger: 'blur' }
+      { required: true, message: this.$t('weNeedToNameThePort'), trigger: 'blur' }
     ]
   }
 

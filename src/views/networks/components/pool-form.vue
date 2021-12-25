@@ -12,19 +12,19 @@
     )
       el-input(v-model="frmMod.network")
 
-    el-form-item(:label="$t('nach.')", prop="ip_start")
+    el-form-item(:label="$t('startIp')", prop="ip_start")
       el-input(v-model="frmMod.ip_start")
 
-    el-form-item(:label="$t('con.')", prop="ip_end")
+    el-form-item(:label="$t('ipend')", prop="ip_end")
       el-input(v-model="frmMod.ip_end")
 
-    el-form-item(:label="$t('panels')")
+    el-form-item(:label="$t('route.groups')")
       groups-choice(v-model="frmMod.groups", multiple)
 
     el-form-item(:label="$t('surface')", prop="gateway")
       el-input(v-model="frmMod.gateway")
 
-    el-form-item(:label="$t('♪')")
+    el-form-item(label="Vlan")
       el-select(v-model="frmMod.vlan_if", v-loading="vlanLoading")
         el-option(
           v-for="v in vlans"
@@ -86,7 +86,7 @@ export default class extends mixins(FormMixin, VlanMixin) {
       { validator: ipAddrMaskValidator, trigger: 'change', message: this.$t('example:192.168.0.024') }
     ],
     description: [
-      { required: true, message: this.$t('iNeedADescription.'), trigger: 'blur' }
+      { required: true, message: this.$t('iNeedADescription'), trigger: 'blur' }
     ],
     ip_start: [
       { required: true, message: this.$t('startPoint'), trigger: 'blur' },

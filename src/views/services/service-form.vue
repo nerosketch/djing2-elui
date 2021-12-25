@@ -89,7 +89,7 @@ export default class extends mixins(FormMixin) {
   }
 
   private serviceTypeNames = [
-    { nm: this.$t('baseAccountFunction'), v: IServiceTypeEnum.BASE },
+    { nm: this.$t('baseCalcFunction'), v: IServiceTypeEnum.BASE },
     { nm: 'IS', v: IServiceTypeEnum.IS },
     { nm: this.$t('eternalService10Years'), v: IServiceTypeEnum.LONG },
     { nm: this.$t('daily'), v: IServiceTypeEnum.DAILY }

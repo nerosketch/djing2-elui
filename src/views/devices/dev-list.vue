@@ -7,7 +7,7 @@
           :group.sync="filterForm.group"
           :street.sync="filterForm.street"
           :fetchGroups="fetchGroups")
-    
+
       el-col(:lg="24", :md="20")
         datatable(
           :columns="tableColumns"
@@ -19,50 +19,50 @@
           template(v-slot:comment="{row}")
             router-link.el-link.el-link--primary.is-underline(v-if="$perms.devices.view_device", :to="{name: 'device-view', params: { devId: row.id }}")
               | {{ row.comment }}
-          
+
             span(v-else)
               | {{ row.comment }}
-        
+
           template(v-slot:ip_address="{row}")
             | {{ row.ip_address || '-' }}
-        
+
           template(v-slot:status="{row}")
             boolean-icon(v-model="row.status")
-        
+
           template(v-slot:is_noticeable="{row}")
             boolean-icon(v-model="row.is_noticeable")
-        
+
           template(v-slot:oper="{row}")
             el-button-group
               el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
                 | C
-            
+
               el-button(
                 icon="el-icon-lock"
                 @click="openPermsDialog(row)"
                 v-if="$perms.is_superuser")
-            
+
               el-button(
                 icon="el-icon-edit"
                 @click="openEdit(row)"
                 :disabled="!$perms.devices.change_device")
-            
+
               el-button(
                 type="danger"
                 icon="el-icon-delete"
                 @click="delDevice(row)"
                 :disabled="!$perms.devices.delete_device")
-        
+
           el-button-group
             el-button(
               icon="el-icon-plus"
               @click="openNew"
               :disabled="!$perms.devices.add_device")
               | {{ $t('addTheDevice') }}
-          
+
             el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
               | {{ $t('field') }}
-  
+
     el-dialog(
       :title="$t('iron.')"
       :visible.sync="dialogVisible"
@@ -72,7 +72,7 @@
         v-if="dialogVisible"
         v-on:done="frmDone"
         :addrId="addrId")
-  
+
     el-dialog(
       :title="$t('addTheDevice')"
       :visible.sync="dialogNewDev"
@@ -83,7 +83,7 @@
         v-on:done="frmNewDevDone"
         v-on:err="dialogNewDev=false"
         :initialAddress="addrId")
-  
+
     el-dialog(
       :title="$t('whoHasTheRightToTheDevice')"
       :visible.sync="permsDialog"
@@ -94,7 +94,7 @@
         :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
         :getSelectedObjectPerms="deviceGetSelectedObjectPerms"
         :objId="$store.state.address.title")
-  
+
     el-dialog(
       :title="$t('maintenanceOfWebsiteEquipment')"
       :visible.sync="sitesDlg"
@@ -191,7 +191,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'place',
-      label: this.$t('no.')
+      label: this.$t('houseNum')
     },
     {
       prop: 'create_time',

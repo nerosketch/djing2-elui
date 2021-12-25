@@ -121,7 +121,7 @@ export default class extends Vue {
     },
     {
       prop: 'speed_out',
-      label: this.$t('exodus.'),
+      label: this.$t('exodus'),
       'min-width': 110,
       sortable: true
     },
@@ -144,7 +144,7 @@ export default class extends Vue {
     },
     {
       prop: 'usercount',
-      label: this.$t('col.Use.'),
+      label: this.$t('userCnt'),
       'min-width': 130,
       sortable: true,
       align: DataTableColumnAlign.CENTER

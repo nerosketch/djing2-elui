@@ -11,13 +11,13 @@
       prop="title"
     )
       el-input(v-model="frmMod.title")
-  
+
     el-form-item(
       :label="$t('description')"
       prop="description"
     )
       el-input(v-model="frmMod.description")
-  
+
     el-form-item(
       :label="$t('typeOfBean')"
       prop="bot_type"
@@ -31,13 +31,13 @@
           :key="mbt.val"
           :value="mbt.val"
           :label="mbt.text")
-  
+
     el-form-item(
       :label="$t('token')"
       prop="token"
     )
       el-input(v-model="frmMod.token")
-  
+
     el-form-item
       el-button(
         type="primary"
@@ -114,7 +114,7 @@ export default class extends mixins(BotTypesMixin) {
             }
           } else {
             newDat = await MessengerModule.PatchMessenger(this.frmMod)
-            this.$message.success(this.$t('chatBotIsChanged.'))
+            this.$message.success(this.$t('chatBotIsChanged'))
           }
           this.$emit('done', newDat)
         } catch (err) {

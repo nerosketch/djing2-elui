@@ -10,20 +10,20 @@
       prop="ip_address"
     )
       el-input(v-model="frmMod.ip_address")
-  
+
     el-form-item(
       :label="$t('maqueres')"
       prop="mac_address"
     )
       el-input(v-model="frmMod.mac_address")
-  
+
     el-form-item(
       :label="$t('dynamic')"
       prop="is_dynamic"
     )
       el-checkbox(v-model="frmMod.is_dynamic")
         | {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -52,7 +52,7 @@ export default class extends Vue {
       { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
     ],
     mac_address: [
-      { required: true, message: this.$t('weDonTHaveToLeaveTheMobEmpty.'), trigger: 'blur' },
+      { required: true, message: this.$t('weDonTHaveToLeaveTheMobEmpty'), trigger: 'blur' },
       { validator: macAddrValidator, trigger: 'change', message: this.$t('example:0A:0B:Cc:Dd:Ee:Ff') }
     ]
   }

@@ -78,7 +78,7 @@ export default class extends mixins(ResizeMixin) {
         }
       }],
       series: [{
-        name: this.$t('number'),
+        name: this.$t('count'),
         type: 'bar',
         stack: 'vistors',
         // barWidth: '60%',

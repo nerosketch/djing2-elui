@@ -18,25 +18,25 @@
           src="@/assets/404-images/404-cloud.png"
           alt="404"
         )
-            
+
       .text-404
         .text-404__oops OOPS!
-              
+
         .text-404__info {{ $t('allRatesReserve') }}
           a(
             style="color:#20a0ff"
             href="https://wallstreetcn.com"
             target="_blank"
           ) wallstreetcn
-      
+
         .text-404__headline {{ message }}
-      
+
         .text-404__info
           | {{ $t('iMSureYouReRight.') }}
-      
+
         a.text-404__return-home(
           href=""
-        ) {{ $t('iMBeggingYou.') }}
+        ) {{ $t('toHome') }}
 </template>
 
 <script lang="ts">
