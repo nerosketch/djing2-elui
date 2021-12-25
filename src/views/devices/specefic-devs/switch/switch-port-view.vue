@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     h4(v-if="loading")
-      | {{ $t('zagruzka') }}
+      | {{ $t('loading...♪') }}
   
     template(v-else)
       div(v-if="customers.length > 0")
@@ -10,7 +10,7 @@
             | {{ cst.full_name }}
     
       h4(v-else)
-        | {{ $t('abonenty-na-portu-ne-naideny') }}
+        | {{ $t('noSubscribersFoundOnThePort') }}
 </template>
 
 <script lang="ts">
@@ -43,7 +43,7 @@ export default class extends Vue {
         this.loading = false
       }
     } else {
-      this.$message.error(this.$t('parameters-required'))
+      this.$message.error(this.$t('parametersRiver'))
     }
   }
 

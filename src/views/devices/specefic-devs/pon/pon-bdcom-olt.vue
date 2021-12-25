@@ -31,27 +31,27 @@
                 i.el-icon-error.el-alert--error.is-light(v-else)
           
             el-table-column(
-              :label="$t('snmp-nom')"
+              :label="$t('snmNom.')"
               min-width="97"
               prop="number")
           
             el-table-column(
-              :label="$t('imya')"
+              :label="$t('name')"
               min-width="93"
               prop="title")
           
             el-table-column(
-              :label="$t('mak')"
+              :label="$t('mac.')"
               min-width="123"
               prop="mac_addr")
           
             el-table-column(
-              :label="$t('ur-signala')"
+              :label="$t('ur.')"
               min-width="92"
               prop="signal")
           
             el-table-column(
-              :label="$t('v-seti')"
+              :label="$t('network')"
               min-width="151"
               prop="uptime")
           
@@ -69,7 +69,7 @@
     el-progress.progress_disable_animations(v-else, :percentage="loadPercent")
   
     el-dialog(
-      :title="$t('dobavit-onu')"
+      :title="$t('addIt')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       new-dev-form(
@@ -162,7 +162,7 @@ export default class extends Vue {
 
   private frmDone(newOnu: IDevice) {
     this.dialogVisible = false
-    this.$message.success(this.$t('novaya-onu-sokhranena'))
+    this.$message.success(this.$t('theNewOneIsRetained.'))
     this.$router.push({
       name: 'device-view',
       params: {

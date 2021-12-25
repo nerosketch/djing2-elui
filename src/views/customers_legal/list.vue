@@ -20,10 +20,10 @@
         icon="el-icon-plus"
         @click="openNew"
         :disabled="!$perms.customers_legal.add_customerlegalmodel")
-        | {{ $t('dobavit-uchyotnuyu-zapis') }}
+        | {{ $t('addAnAccountingRecord') }}
   
     el-dialog(
-      :title="$t('organizaciya')"
+      :title="$t('organization')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")
@@ -33,7 +33,7 @@
         v-on:update="frmUpdateDone")
   
     el-dialog(
-      :title="$t('kto-imeet-prava-na-uchyotnuyu-zapis')"
+      :title="$t('whoHasTheRightToAnAccount.')"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")
@@ -83,12 +83,12 @@ export default class extends Vue {
     },
     {
       prop: 'title',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       'min-width': 150
     },
     {
       prop: 'balance',
-      label: this.$t('balans')
+      label: this.$t('balance')
     },
     {
       prop: 'tax_number',
@@ -96,11 +96,11 @@ export default class extends Vue {
     },
     {
       prop: 'post_index',
-      label: this.$t('pochtovyi-indeks')
+      label: this.$t('postalIndex')
     },
     {
       prop: 'btn',
-      label: this.$t('key'),
+      label: this.$t('♪'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -149,7 +149,7 @@ export default class extends Vue {
         path: '/legal/',
         meta: {
           hidden: true,
-          title: this.$t('organizacii')
+          title: this.$t('organizations')
         }
       },
     ] as any)

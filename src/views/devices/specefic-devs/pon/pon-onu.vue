@@ -21,29 +21,29 @@
       
         .text.item.list-item
           b
-            | {{ $t('mak') }}
+            | {{ $t('mac.') }}
           | {{ device.mac_addr }}
       
         .text.item.list-item
           b
-            | {{ $t('opisanie') }}
+            | {{ $t('description') }}
           | {{ device.comment }}
       
         .text.item.list-item
           b
-            | {{ $t('roditelskoe-ustroistvo') }}
+            | {{ $t('parentalDevice:') }}
         
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
             | {{ device.parent_dev_name }}
       
         .text.item.list-item(v-if="device.iface_name")
           b
-            | {{ $t('interfeis') }}
+            | {{ $t('interface:') }}
           | {{ device.iface_name }}
       
         .text.item.list-item
           b
-            | {{ $t('prikreplyonnye-abonenty') }}
+            | {{ $t('affixedSubscribers:') }}
         
           router-link.el-link.el-link--primary.is-underline(
             v-for="(ab, i) in device.attached_users"
@@ -59,12 +59,12 @@
             icon="el-icon-delete"
             @click="delDevice"
             :disabled="!$perms.devices.delete_device")
-            | {{ $t('udalit') }}
+            | {{ $t('delete.') }}
   
     el-col(:lg="12", :sm="24")
       el-card(shadow="never", body-style="padding: 10px;")
         template(v-slot:header)
-          | {{ $t('sostoyanie-onu') }}
+          | {{ $t('status') }}
         
           el-link(
             style="float: right"
@@ -86,12 +86,12 @@
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
               b
-                | {{ $t('uroven-signala') }}
+                | {{ $t('signalLevel:') }}
               | {{ onuDetails.signal }}
           
             .text.item.list-item
               b
-                | {{ $t('mak-adres-s-olt') }}
+                | {{ $t('macSAddressFromTheAltogether:') }}
               | {{ macFromOlt }}
           
             .text.item.list-item(v-for="(inf, i) in onuDetails.info", :key="i")
@@ -110,7 +110,7 @@
   
     el-dialog(
       :visible.sync="devFormDialog"
-      :title="$t('izmenit-onu')"
+      :title="$t('amendIt')"
       :close-on-click-modal="false")
       dev-form(v-on:done="devFrmDone")
 </template>
@@ -169,11 +169,11 @@ export default class extends Vue {
     if (!this.device) return
     this.$confirm(`Действительно удалить onu "${this.device.comment}"?`).then(async() => {
       if (!this.device) {
-        this.$message.error(this.$t('ne-udalili-pokhozhe-uzhe-kto-to-udalil'))
+        this.$message.error(this.$t('notRemoved,ItLooksLikeSomeoneSAlreadyRemoved.'))
         return
       }
       await DeviceModule.DelDevice(this.device.id)
-      this.$message.success(this.$t('udalena'))
+      this.$message.success(this.$t('deleted'))
       if (this.device.group) {
         this.$router.push({ name: 'devicesList', params: { addrId: this.device.address.toString() } })
       } else {
@@ -195,7 +195,7 @@ export default class extends Vue {
 
   private devFrmDone() {
     this.devFormDialog = false
-    this.$message.success(this.$t('uspeshno-sokhraneno'))
+    this.$message.success(this.$t('successfullyMaintained'))
     this.refreshDev()
     this.getDetails()
   }

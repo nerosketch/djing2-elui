@@ -56,7 +56,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 
-const multipleAccessVlanMsg = this.$t('port-ne-mozhet-soderzhat-bolshe-odnogo-access-vlan')
+const multipleAccessVlanMsg = this.$t('portCanTContainMoreThanOneAcques.')
 
 @Component({
   name: 'GenericVlanConfig'
@@ -79,7 +79,7 @@ export default class extends mixins(VlanMixin) {
       return
     }
     v.native = !v.native
-    this.$message.success(this.$t('izmenyon-rezhim-trunk-success'))
+    this.$message.success(this.$t('modifiedTrunkSuccessMode'))
   }
 
   private vlanRemove(remVlan: IDevVlanSimple) {
@@ -88,7 +88,7 @@ export default class extends mixins(VlanMixin) {
       this.portVlanConf.vids.splice(confIndex, 1)
       this.$message.success(`Влан ${remVlan.vid} удалён с порта №${this.portVlanConf.port}`)
     } else {
-      this.$message.error(this.$t('ne-naiden-vid') + ' ' + remVlan.vid)
+      this.$message.error(this.$t('notFound') + ' ' + remVlan.vid)
     }
   }
 
@@ -104,7 +104,7 @@ export default class extends mixins(VlanMixin) {
   private onAddVidToPort() {
     const obj = this.addVlanFrmMod
     if (this.isVlanExists(obj.vid)) {
-      this.$message.error(this.$t('port-dolzhen-soderzhat-unikalnye-vlan'))
+      this.$message.error(this.$t('portShouldContainUniqueVlans'))
       return
     }
     if (obj.native && this.nativeVlanCount > 0) {

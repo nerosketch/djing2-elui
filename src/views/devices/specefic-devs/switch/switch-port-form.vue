@@ -16,7 +16,7 @@
       )
   
     el-form-item(
-      :label="$t('opisanie')"
+      :label="$t('description')"
       prop="descr"
     )
       el-input(v-model="frmMod.descr")
@@ -47,7 +47,7 @@ export default class extends Vue {
 
   private frmRules = {
     descr: [
-      { required: true, message: this.$t('nuzhno-kak-to-nazvat-port'), trigger: 'blur' }
+      { required: true, message: this.$t('weNeedToNameThePort.'), trigger: 'blur' }
     ]
   }
 

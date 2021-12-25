@@ -2,14 +2,14 @@
   .tab-container
     el-tabs(v-model="activeTabName", type="border-card")
       el-tab-pane(
-        :label="$t('sotrudniki')"
+        :label="$t('staff')"
         name="profiles"
         lazy)
         keep-alive
           profile-list
     
       el-tab-pane(
-        :label="$t('gruppy-sotrudnikov')"
+        :label="$t('staff')"
         name="profilegroups"
         lazy
         v-if="$perms.is_superuser")

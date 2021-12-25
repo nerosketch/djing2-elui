@@ -30,7 +30,7 @@
         icon="el-icon-plus"
         @click="openNew"
         :disabled="!$perms.groupapp.add_group")
-        | {{ $t('dobavit-gruppu') }}
+        | {{ $t('addTheGroup') }}
   
     el-dialog(
       :title="dialogTitle"
@@ -39,7 +39,7 @@
       group-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="`${$t('kto-imeet-prava-na-gruppu-abonentov')} ${GroupTitleGetter}`"
+      :title="`${$t('whoSEntitledToAGroupOfSubscribers+')} ${GroupTitleGetter}`"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")
@@ -50,7 +50,7 @@
         :objId="groupIdGetter")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam')"
+      :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.group.sites", v-on:save="groupSitesSave")
@@ -87,13 +87,13 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       sortable: true,
       'min-width': 250
     },
     {
-      prop: 'oper',
-      label: this.$t('knopki'),
+      prop: 'op.',
+      label: this.$t('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -135,16 +135,16 @@ export default class extends Vue {
   }
 
   private delGroup(group: IGroup) {
-    this.$confirm(`${this.$t('deistvitelno-udalit-gruppu')} ${group.title}?`).then(async() => {
+    this.$confirm(`${this.$t('itSTrueToRemoveTheGroup.')} ${group.title}?`).then(async() => {
       await GroupModule.DelGroup(group.id)
-      this.$message.success(`${this.$t('gruppa-udalena')} ${group.title}`)
+      this.$message.success(`${this.$t('groupRemoved')} ${group.title}`)
       this.$refs.grouptable.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success(this.$t('gruppa-sokhranena'))
+    this.$message.success(this.$t('groupRetained'))
     this.$refs.grouptable.LoadTableData()
   }
 
@@ -155,7 +155,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('gruppy')
+          title: this.$t('panels')
         }
       }
     ] as any)
@@ -185,7 +185,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.grouptable.LoadTableData()
-      this.$message.success(this.$t('prinadlezhnost-gruppy-saitam-sokhranena'))
+      this.$message.success(this.$t('theOwnershipOfThe'))
     })
     this.sitesDlg = false
   }

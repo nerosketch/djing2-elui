@@ -12,7 +12,7 @@
   
     el-select(
       v-model="reportParams.pay_gw"
-      :placeholder="$t('platyozhnyi-shlyuz')"
+      :placeholder="$t('payableLock')"
       v-loading="gatewaysLoading"
       :style="{width: '10%'}")
       el-option(
@@ -22,16 +22,16 @@
         :value="gw.id")
   
     el-radio(v-model="reportParams.group_by", :label="1")
-      | {{ $t('gruppirovat-po-dnyu') }}
+      | {{ $t('groupByDay') }}
   
     el-radio(v-model="reportParams.group_by", :label="2")
-      | {{ $t('gruppirovat-po-nedele') }}
+      | {{ $t('groupingNextWeek') }}
   
     el-radio(v-model="reportParams.group_by", :label="3")
-      | {{ $t('gruppirovat-po-mesyacu') }}
+      | {{ $t('groupMonthly') }}
   
     el-button(@click="downloadCsv")
-      | {{ $t('skachat-csv') }}
+      | {{ $t('screwingTheEye.') }}
   
     el-table(
       v-loading="loading"
@@ -39,17 +39,17 @@
       border
       fit)
       el-table-column(
-        :label="$t('data')"
+        :label="$t('date')"
         min-width="110"
         prop="pay_date")
     
       el-table-column(
-        :label="$t('summa')"
+        :label="$t('amount')"
         min-width="110"
         prop="summ")
     
       el-table-column(
-        :label="$t('kolich-platezhei')"
+        :label="$t('payload.')"
         min-width="110"
         prop="pay_count")
 </template>
@@ -104,7 +104,7 @@ export default class extends Vue {
 
   private pickerOptions = {
     shortcuts: [{
-      text: this.$t('poslednyaya-nedelya'),
+      text: this.$t('lastWeek'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -112,7 +112,7 @@ export default class extends Vue {
         picker.$emit('pick', [start, end])
       }
     }, {
-      text: this.$t('poslednii-mesyac'),
+      text: this.$t('lastMonth'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -120,7 +120,7 @@ export default class extends Vue {
         picker.$emit('pick', [start, end])
       }
     }, {
-      text: this.$t('poslednie-3-mesyaca'),
+      text: this.$t('last3Months'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -140,14 +140,14 @@ export default class extends Vue {
         path: '/fin',
         meta: {
           hidden: true,
-          title: this.$t('finansy')
+          title: this.$t('finance')
         }
       },
       {
         path: '',
         meta: {
           hidden: true,
-          title: this.$t('otchyot-o-postupleniyakh')
+          title: this.$t('incomeReport')
         }
       }
     ] as any)
@@ -164,7 +164,7 @@ export default class extends Vue {
     try {
       const { data } = await getPayGateways() as any
       data.unshift({
-        title: this.$t('ne-vybran'),
+        title: this.$t('notSelected'),
         id: 0
       })
       this.payGateways = data
@@ -175,7 +175,7 @@ export default class extends Vue {
 
   private downloadCsv() {
     const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
-    dat.unshift([this.$t('data'), this.$t('summa'), this.$t('kolich-platezhei')])
+    dat.unshift([this.$t('date'), this.$t('amount'), this.$t('payload.')])
     const sdat = dat.join('\n')
     save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
   }

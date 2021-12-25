@@ -2,14 +2,14 @@
   el-card(shadow="never", v-if="currentConfig.vlanConfig.length > 0")
     template(v-slot:header)
       span
-        | {{ $t('varianty-konfiguracii-na-onu') }}
+        | {{ $t('onboardConfigurationOptions') }}
   
     span
-      | {{ $t('shablon-konfiga-dlya-onu') }}
+      | {{ $t('heSGotAScalpForTheMan.') }}
   
     el-select(
       v-model="currentConfig.configTypeCode"
-      :placeholder="$t('shablon-konfiga')"
+      :placeholder="$t('configurationPanel')"
     )
       el-option(
         :value="v.code"
@@ -33,7 +33,7 @@
         generic-vlan-config(:portVlanConf.sync="portVlanConf", :allVlans="vlans")
   
     el-card(shadow="never", v-else)
-      | {{ $t('nastroika-vlan-ne-prinimaetsya-vybrannym-konfigom') }}
+      | {{ $t('vlanSettingNotAcceptedBySelectedConfiguration') }}
   
     el-button(
       type="primary"
@@ -41,7 +41,7 @@
       @click="onSubmit"
       :loading="vlanLoading"
       :disabled="!$perms.devices.can_apply_onu_config || disabled")
-      | {{ $t('primenit') }}
+      | {{ $t('applicable') }}
 </template>
 
 <script lang="ts">
@@ -82,7 +82,7 @@ export default class extends mixins(VlanMixin) {
         const { data } = await applyDeviceOnuConfig(this.$store.state.devicemodule.id, this.currentConfig)
         if (data.status == 1) {
           this.$message.success({
-            message: this.$t('onu-uspeshno-zaregistrirovana'),
+            message: this.$t('successfulRegistered'),
             duration: 15000,
             showClose: true
           })
@@ -98,12 +98,12 @@ export default class extends mixins(VlanMixin) {
         this.vlanLoading = false
       }
     } else {
-      this.$message.error(this.$t('id-oborudovaniya-ne-peredan'))
+      this.$message.error(this.$t('equipmentNotTransferred'))
     }
   }
 
   private delVlanPort(portNum: number) {
-    this.$confirm(this.$t('udalit-nastroiki-s-porta')).then(() => {
+    this.$confirm(this.$t('removeTheConstructionFromThePort?')).then(() => {
       const confInd = this.currentConfig.vlanConfig.findIndex(v => v.port === portNum)
       if (confInd > -1) {
         this.currentConfig.vlanConfig.splice(confInd, 1)

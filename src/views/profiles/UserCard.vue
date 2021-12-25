@@ -21,40 +21,40 @@ el-card(style='margin-bottom:20px;')
       .user-bio-section-body
         dl
           dt
-            b {{ $t('telefon') }}
+            b {{ $t('telephone') }}
           dd {{ $store.state.userprofile.telephone }}
           dt
             b {{ $t('login') }}
           dd {{ $store.state.userprofile.username }}
           dt
-            b {{ $t('imya-i-otchestvo') }}
+            b {{ $t('nameAndFatherhood') }}
           dd {{ $store.state.userprofile.fio }}
           dt
-            b {{ $t('vklyuchyon-li') }}
+            b {{ $t('on.') }}
           dd
             i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
             i.el-icon-circle-close(v-else)
           dt
-            b {{ $t('superpolzovatel') }}
+            b {{ $t('superman') }}
           dd
             i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
             i.el-icon-circle-close(v-else)
     .user-skills.user-bio-section
       .user-bio-section-body
         .progress-item
-          span {{ $t('uroven-dostupa') }}
+          span {{ $t('levelOfAccess') }}
           el-progress(
             :percentage='$store.state.userprofile.access_level'
             :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'
           )
         .progress-item
-          span {{ $t('kakoi-to-drugoi-progress') }}
+          span {{ $t('someOtherProgress') }}
           el-progress(:percentage='45')
         .progress-item
-          span {{ $t('eshyo-chto-to') }}
+          span {{ $t('somethingElse.') }}
           el-progress(:percentage='4')
         .progress-item
-          span {{ $t('chto-to-zavershyonnoe') }}
+          span {{ $t('somethingFinished.') }}
           el-progress(:percentage='100' status='success')
 
 </template>

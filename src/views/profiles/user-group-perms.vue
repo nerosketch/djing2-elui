@@ -8,7 +8,7 @@
       :titles="['Все права', 'Назначенные права']")
       template(v-slot:left-footer)
         el-button.transfer-footer(@click="selectReadonly")
-          | {{ $t('vydelit-prava-na-chtenie') }}
+          | {{ $t('giveReadingRights') }}
   
     el-button(
       icon="el-icon-upload"
@@ -37,7 +37,7 @@ export default class extends mixins(PermMngMixin) {
       permissions: this.assignedPerms
     })
     this.saveLoading = false
-    this.$message.success(this.$t('prava-dlya-gruppy-sokhraneny'))
+    this.$message.success(this.$t('groupRightsRetained'))
     this.$emit('done', updatedGroup)
   }
 

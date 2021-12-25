@@ -9,7 +9,7 @@
     el-form-item(:label="$t('title')", prop="name")
       el-input(v-model="frmMod.name")
   
-    el-form-item(:label="$t('domen')", prop="domain")
+    el-form-item(:label="$t('domain')", prop="domain")
       el-input(v-model="frmMod.domain")
   
     el-form-item
@@ -33,10 +33,10 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: this.$t('nazvanie-domena-nado-ukazat'), trigger: 'blur' }
+      { required: true, message: this.$t('domainNameShouldBeIndicated'), trigger: 'blur' }
     ],
     domain: [
-      { required: true, message: this.$t('domen-nado-ukazat'), trigger: 'blur' }
+      { required: true, message: this.$t('domenShouldIndicate'), trigger: 'blur' }
     ]
   }
 
@@ -66,10 +66,10 @@ export default class extends Vue {
         let newDat
         if (this.isNew) {
           newDat = await SiteModule.AddSite(this.frmMod)
-          this.$message.success(this.$t('domen-izmenyon'))
+          this.$message.success(this.$t('changed'))
         } else {
           newDat = await SiteModule.PatchSite(this.frmMod)
-          this.$message.success(this.$t('novyi-domen-sozdan'))
+          this.$message.success(this.$t('newDomain'))
         }
         this.isLoading = false
         this.$emit('done', newDat)

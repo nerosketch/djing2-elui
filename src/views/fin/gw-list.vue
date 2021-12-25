@@ -23,7 +23,7 @@
             :disabled="!$perms.fin_app.delete_payalltimegateway")
     
       el-button(icon="el-icon-plus", @click="openNew")
-        | {{ $t('dobavit-shlyuz') }}
+        | {{ $t('addALock') }}
   
     el-dialog(
       :title="dialogTitle"
@@ -32,7 +32,7 @@
       pay-gw-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam')"
+      :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.payalltimegateway.sites", v-on:save="payGwSitesSave")
@@ -62,26 +62,26 @@ export default class extends Vue {
     table: DataTableComp
   }
 
-  private dialogTitle = this.$t('platyozhnyi-shlyuz')
+  private dialogTitle = this.$t('payableLock')
   private dialogVisible = false
   private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'service_id',
-      label: this.$t('service-id'),
+      label: this.$t('id'),
       sortable: true,
       'min-width': 100
     },
     {
-      prop: 'slug',
-      label: this.$t('put')
+      prop: 'servants',
+      label: this.$t('the')
     },
     {
       prop: 'secret',
@@ -89,11 +89,11 @@ export default class extends Vue {
     },
     {
       prop: 'pay_count',
-      label: this.$t('kolichestvo-platezhei')
+      label: this.$t('numberOfPayments')
     },
     {
-      prop: 'oper',
-      label: this.$t('knopki'),
+      prop: 'op.',
+      label: this.$t('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -108,12 +108,12 @@ export default class extends Vue {
 
   private openEdit(gw: IPayAllTimeGateway) {
     PayAllTimeGatewayModule.SET_ALL_PAYGW(gw)
-    this.dialogTitle = this.$t('izmenit-platyozhnyi-shlyuz')
+    this.dialogTitle = this.$t('modifyThePlausibleLock')
     this.dialogVisible = true
   }
 
   private delPayGw(gw: IPayAllTimeGateway) {
-    this.$confirm(this.$t('udalit-platyozhnyi-shlyuz')).then(async() => {
+    this.$confirm(this.$t('removeThePayLock?')).then(async() => {
       await PayAllTimeGatewayModule.DelPayGroup(gw.id)
       this.$refs.table.LoadTableData()
     })
@@ -121,14 +121,14 @@ export default class extends Vue {
 
   private openNew() {
     PayAllTimeGatewayModule.RESET_ALL_PAYGW()
-    this.dialogTitle = this.$t('sozdat-platyozhnyi-shlyuz')
+    this.dialogTitle = this.$t('createAPayLock')
     this.dialogVisible = true
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.LoadTableData()
-    this.$message.success(this.$t('platyozhnyi-shlyuz-dobavlen'))
+    this.$message.success(this.$t('payableLockAdded'))
   }
 
   // Breadcrumbs
@@ -138,7 +138,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('finansy')
+          title: this.$t('finance')
         }
       }
     ] as any)
@@ -150,7 +150,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('prinadlezhnost-platyozhnogo-shlyuza-saitam-sokhranena'))
+      this.$message.success(this.$t('theContentOfThePayloadableSiteIsMaintained'))
     })
     this.sitesDlg = false
   }

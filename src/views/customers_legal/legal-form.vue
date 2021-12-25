@@ -11,59 +11,59 @@
     el-form-item(:label="$t('title')", prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(:label="$t('fio-direktora')", prop="fio")
+    el-form-item(:label="$t('fioDirector')", prop="fio")
       el-input(v-model="frmMod.fio")
   
-    el-form-item(:label="$t('gruppa')")
+    el-form-item(:label="$t('panel')")
       groups-choice(v-model="frmMod.group")
   
-    el-form-item(:label="$t('tip-yurlica')", prop="legal_type")
+    el-form-item(:label="$t('typeOfLawn')", prop="legal_type")
       legal-type-choice(v-model="frmMod.legal_type")
   
-    el-form-item(:label="$t('yuridicheskii-adres')", prop="address")
+    el-form-item(:label="$t('legalAddress')", prop="address")
       addr-field-input(v-model="frmMod.address")
   
-    el-form-item(:label="$t('pochtovyi-indeks-yuridicheskogo-adresa')", prop="post_index")
+    el-form-item(:label="$t('postalLegalAddressIndex')", prop="post_index")
       el-input(v-model="frmMod.post_index")
   
-    el-form-item(:label="$t('adres-dostavki-schyota')")
+    el-form-item(:label="$t('accountDeliveryAddress')")
       addr-field-input(v-model="frmMod.delivery_address")
   
-    el-form-item(:label="$t('pochtovyi-indeks-adresa-dostavki-schyota')", prop="delivery_address_post_index")
+    el-form-item(:label="$t('postalAccountDeliveryAddressIndex')", prop="delivery_address_post_index")
       el-input(v-model="frmMod.delivery_address_post_index")
         el-button(
           slot="append"
           @click="copyDeliveryAddrFromLegalAddr"
           icon="el-icon-document-copy"
-          :title="$t('skopirovat-adres-iz-yuridicheskogo-adresa')"
+          :title="$t('copyTheAddressFromTheLegalAddress.')"
           :disabled="addrCopyDisabled")
   
-    el-form-item(:label="$t('pochtovyi-adres')")
+    el-form-item(:label="$t('postalAddress')")
       addr-field-input(v-model="frmMod.post_address")
   
-    el-form-item(:label="$t('pochtovyi-indeks-pochtovogo-adresa')", prop="post_post_index")
+    el-form-item(:label="$t('postalAddressIndex')", prop="post_post_index")
       el-input(v-model="frmMod.post_post_index")
         el-button(
           slot="append"
           @click="copyPostAddrFromLegalAddr"
           icon="el-icon-document-copy"
-          :title="$t('skopirovat-adres-iz-yuridicheskogo-adresa')"
+          :title="$t('copyTheAddressFromTheLegalAddress.')"
           :disabled="addrCopyDisabled")
   
     el-form-item(:label="$t('inn')", prop="tax_number")
       el-input(v-model="frmMod.tax_number", type="number")
   
-    el-form-item(:label="$t('ogrn')", prop="state_level_reg_number")
+    el-form-item(:label="$t('grun')", prop="state_level_reg_number")
       el-input(v-model="frmMod.state_level_reg_number", type="number")
   
-    el-form-item(:label="$t('data-nachala-deistviya-dogovora')")
+    el-form-item(:label="$t('effectiveDate')")
       el-date-picker(
         v-model="frmMod.actual_start_time"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm"
         format="d.MM.yyyy HH:mm")
   
-    el-form-item(:label="$t('opisanie')")
+    el-form-item(:label="$t('description')")
       el-input(
         type="textarea"
         rows="5"
@@ -89,7 +89,7 @@ import { ICustomerLegal } from '@/api/customers_legal/types'
 import LegalTypeChoice from '@/components/CustomerLegal/legal-type-choice.vue'
 import i18n from '@/lang'
 
-const maxLenValidator = { max: 6, trigger: 'change', message: i18n.t('pochtovyi-indeks-soderzhit-ne-bolee-6ti-simvolov') }
+const maxLenValidator = { max: 6, trigger: 'change', message: i18n.t('thePostalIndexContainsNotMoreThan6Symbols') }
 
 @Component({
   name: 'LegalForm',
@@ -166,7 +166,7 @@ export default class extends Vue {
   private frmRules = {
     username: [
       { required: true, message: this.$t('customers.contractNum.required'), trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: this.$t('nomer-dogovora-mozhet-soderzhat-latinskie-simvoly-i-cifry') }
+      { validator: latinValidator, trigger: 'change', message: this.$t('theContractNumberMayContainLatinSymbolsAndFigures') }
     ],
     post_index: [
       maxLenValidator
@@ -178,23 +178,23 @@ export default class extends Vue {
       maxLenValidator
     ],
     title: [
-      { required: true, message: this.$t('nazvanie-nuzhno-ukazat'), trigger: 'blur' },
+      { required: true, message: this.$t('nameToBeIndicated'), trigger: 'blur' },
     ],
     fio: [
-      { required: true, message: this.$t('fio-direktora-obyazatelno'), trigger: 'blur' },
+      { required: true, message: this.$t('directorSFig.'), trigger: 'blur' },
     ],
     tax_number: [
-      { required: true, message: this.$t('inn-nuzhno-zapolnit'), trigger: 'blur' },
+      { required: true, message: this.$t('insNeedsToBeFilled'), trigger: 'blur' },
     ],
     address: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-ukazat-yuridicheskii-adres') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedALegalAddress.') }
     ],
     state_level_reg_number: [
-      { required: true, message: this.$t('obyazatelno'), trigger: 'blur' },
+      { required: true, message: this.$t('iWill.'), trigger: 'blur' },
     ],
     legal_type: [
-      { required: true, message: this.$t('tip-yurlica-obyazatelen'), trigger: 'blur' },
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-vybrat-iz-spiska-znachenii-podkhodyashii-tip-yurlica') },
+      { required: true, message: this.$t('theTypeOfLawnIsMandatory'), trigger: 'blur' },
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues.') },
     ]
   }
 
@@ -220,7 +220,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$t('isprav-oshibki-formy'))
+        this.$message.error(this.$t('correctFormsOfError'))
       }
     })
   }

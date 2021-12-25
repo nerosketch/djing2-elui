@@ -11,7 +11,7 @@
     )
 
     el-table-column(
-      :label="$t('imya')"
+      :label="$t('name')"
       prop="fio"
     )
       template(v-slot:default="{row}")

@@ -55,7 +55,7 @@ export default class extends Vue {
         this.macsLoading = false
       }
     } else {
-      this.$message.error(this.$t('port-id-ne-peredan'))
+      this.$message.error(this.$t('notTransmitted'))
     }
   }
 }

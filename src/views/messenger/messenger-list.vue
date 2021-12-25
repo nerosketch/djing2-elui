@@ -22,10 +22,10 @@
           el-button(icon="el-icon-view", @click="go2Messenger(row)")
     
       el-button(icon="el-icon-plus", @click="openNew")
-        | {{ $t('dobavit-messenger') }}
+        | {{ $t('addMassenger') }}
   
     el-dialog(
-      :title="$t('sozdat-messenger')"
+      :title="$t('createAMassenger')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       messenger-form(v-on:done="frmDone")
@@ -68,22 +68,22 @@ export default class extends Vue {
     },
     {
       prop: 'title',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'description',
-      label: this.$t('opisanie')
+      label: this.$t('description')
     },
     {
       prop: 'bot_type_name',
-      label: this.$t('tip-bota'),
+      label: this.$t('typeOfBean'),
       'min-width': 100
     },
     {
-      prop: 'oper',
-      label: this.$t('oper'),
+      prop: 'op.',
+      label: this.$t('op.'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -137,7 +137,7 @@ export default class extends Vue {
         path: '/messenger',
         meta: {
           hidden: true,
-          title: this.$t('messendzhery')
+          title: this.$t('messengers')
         }
       },
       {

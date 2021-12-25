@@ -35,7 +35,7 @@
           | {{ $t('add') }}
       
         el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-          | {{ $t('polya') }}
+          | {{ $t('field') }}
   
     el-dialog(
       :title="dialogTitle"
@@ -44,7 +44,7 @@
       vlan-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam')"
+      :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.vlan.sites", v-on:save="vlanSitesSave")
@@ -79,7 +79,7 @@ export default class extends mixins(VlanMixin) {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       sortable: true,
       'min-width': 150
     },
@@ -91,13 +91,13 @@ export default class extends mixins(VlanMixin) {
     },
     {
       prop: 'ismng',
-      label: this.$t('upravl'),
+      label: this.$t('iDid.'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'oper',
-      label: this.$t('knopki'),
+      prop: 'op.',
+      label: this.$t('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -108,9 +108,9 @@ export default class extends mixins(VlanMixin) {
   private editFieldsVisible = false
 
   get dialogTitle() {
-    let w = this.$t('izmenenie')
+    let w = this.$t('change')
     if (VlanIfModule.id === 0) {
-      w = this.$t('dobavlenie')
+      w = this.$t('addendum')
     }
     return `${w} vlan`
   }
@@ -128,7 +128,7 @@ export default class extends mixins(VlanMixin) {
   private async delVlan(vlan: IVlanIf) {
     this.$confirm(this.$t('deistvitelno-udalit-vlan-vlan-title', [vlan.title])).then(async() => {
       await VlanIfModule.DelVlan(vlan.id)
-      this.$message.success(this.$t('vlan-udalyon'))
+      this.$message.success(this.$t('weReCleared.'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -145,7 +145,7 @@ export default class extends mixins(VlanMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('set')
+          title: this.$t('network')
         }
       }
     ] as any)
@@ -157,7 +157,7 @@ export default class extends mixins(VlanMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('prinadlezhnost-vlan-saitam-sokhranena'))
+      this.$message.success(this.$t('webOwnershipMaintained'))
     })
     this.sitesDlg = false
   }

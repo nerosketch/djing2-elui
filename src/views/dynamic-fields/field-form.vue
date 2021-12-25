@@ -9,7 +9,7 @@
     el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
   
-    el-form-item(:label="$t('tip-polya')")
+    el-form-item(:label="$t('typeOfField')")
       el-select(v-model="frmMod.field_type")
         el-option(
           v-for="(t, i) in fieldTypeChoices"
@@ -17,13 +17,13 @@
           :label="t.label"
           :value="t.value")
   
-    el-form-item(:label="$t('gruppy')")
+    el-form-item(:label="$t('panels')")
       groups-choice(v-model="frmMod.groups" multiple)
   
-    el-form-item(:label="$t('sistemnyi-teg')")
+    el-form-item(:label="$t('systemTag')")
       system-tags-input(v-model="frmMod.system_tag")
   
-    el-form-item(:label="$t('polzov-teg')" prop="user_tag")
+    el-form-item(:label="$t('use.')" prop="user_tag")
       el-input(v-model="frmMod.user_tag")
   
     el-form-item

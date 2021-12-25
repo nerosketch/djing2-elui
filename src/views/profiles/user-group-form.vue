@@ -13,7 +13,7 @@
           | {{ $t('save') }}
       
         el-button(@click="$emit('cancel')", icon="el-icon-close")
-          | {{ $t('otmena') }}
+          | {{ $t('cancellation') }}
 </template>
 
 <script lang="ts">
@@ -49,10 +49,10 @@ export default class extends Vue {
       let changedUGroup
       if (this.isNew) {
         changedUGroup = await UserGroupModule.AddUserGroup(this.frmMod)
-        this.$message.success(this.$t('novaya-gruppa-dobavlena'))
+        this.$message.success(this.$t('newGroupAdded'))
       } else {
         changedUGroup = await UserGroupModule.PatchUserGroup(this.frmMod)
-        this.$message.success(this.$t('gruppa-izmenena'))
+        this.$message.success(this.$t('groupAmended'))
       }
       this.$emit('done', changedUGroup)
     } catch (err) {

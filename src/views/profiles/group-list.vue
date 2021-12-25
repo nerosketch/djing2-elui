@@ -27,7 +27,7 @@
       user-group-form(v-on:done="frmDone", v-on:cancel="ugFormDialog=false")
   
     el-dialog(
-      :title="$t('izmenit-prava-dlya-gruppy')"
+      :title="$t('modifyTheRightsOfTheGroup')"
       top="5vh"
       width="80%"
       :visible.sync="ugpDialog"
@@ -67,20 +67,20 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       'min-width': 150
     },
     {
       prop: 'permcount',
-      label: this.$t('kol-prav')
+      label: this.$t('kol.')
     },
     {
       prop: 'usercount',
-      label: this.$t('kol-uchyotok')
+      label: this.$t('cal.')
     },
     {
       prop: 'btn',
-      label: this.$t('key'),
+      label: this.$t('♪'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -95,20 +95,20 @@ export default class extends Vue {
 
   private async editNewUserGroup(grp: IUserGroup) {
     await UserGroupModule.SET_ALL_USER_USER_GROUP(grp)
-    this.dialogTitle = this.$t('izmenit-gruppu')
+    this.dialogTitle = this.$t('amendTheGroup')
     this.ugFormDialog = true
   }
 
   private async addNewUserGroup() {
     await UserGroupModule.RESET_ALL_USER_USER_GROUP()
-    this.dialogTitle = this.$t('dobavit-gruppu')
+    this.dialogTitle = this.$t('addTheGroup')
     this.ugFormDialog = true
   }
 
   private delUserGroup(grp: IUserGroup) {
-    this.$confirm(this.$t('udalit-gruppu-abonentov')).then(async() => {
+    this.$confirm(this.$t('removeTheBandOfSubscribers?')).then(async() => {
       await delUserGroup(grp.id)
-      this.$message.success(this.$t('gruppa-ualena'))
+      this.$message.success(this.$t('ualienGroup'))
       this.$refs.tbl.LoadTableData()
     })
   }
@@ -135,7 +135,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('uchyotnye-zapisi')
+          title: this.$t('records')
         }
       }
     ] as any)

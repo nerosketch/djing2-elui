@@ -31,7 +31,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          :placeholder="$t('parol')"
+          :placeholder="$t('password')"
           name="password"
           autocomplete="on"
           @keyup.enter.native="handleLogin")
@@ -42,7 +42,7 @@
       el-button#loginbtn(
         :loading="loading"
         @click.native.prevent="handleLogin"
-      ) {{ $t('voiti') }}
+      ) {{ $t('comeIn.') }}
 
 </template>
 
@@ -70,13 +70,13 @@ export default class extends Vue {
 
   private loginRules = {
     username: [
-      { required: true, message: this.$t('login-ne-mozhet-byt-pustym'), trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: this.$t('nuzhen-login-iz-latinskikh-simvolov-i-cifr') }
+      { required: true, message: this.$t('loginCanTBeEmpty.'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$t('needsLoginFromLatinSymbolsAndFigures.') }
     ],
     password: [
-      { required: true, message: this.$t('parol-ne-mozhet-byt-pustym'), trigger: 'blur' },
+      { required: true, message: this.$t('thePasswordCannotBeEmpty'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov') }
+      { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
     ]
   }
 
@@ -106,7 +106,7 @@ export default class extends Vue {
   }
 
   created() {
-    document.title = this.$t('vkhod')
+    document.title = this.$t('entry')
   }
 
   private showPwd() {

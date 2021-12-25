@@ -32,7 +32,7 @@
       shot-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam')"
+      :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.oneshotpay.sites", v-on:save="serviceSitesSave")
@@ -61,18 +61,18 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: this.$t('nazvanie-platezha'),
+      label: this.$t('nameOfPayment'),
       'min-width': 200
     },
     {
       prop: 'cost',
-      label: this.$t('stoimost'),
+      label: this.$t('value'),
       'min-width': 150,
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'oper',
-      label: this.$t('knopki'),
+      prop: 'op.',
+      label: this.$t('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -120,7 +120,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('prinadlezhnost-vida-platezhei-saitam-sokhranena'))
+      this.$message.success(this.$t('theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained'))
     })
     this.sitesDlg = false
   }

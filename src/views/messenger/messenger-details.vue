@@ -4,24 +4,24 @@
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix
-            | {{ $t('podrobnosti-bota') }} "{{ $store.state.messenger.title }}"
+            | {{ $t('bottomDetails') }} "{{ $store.state.messenger.title }}"
       
         messenger-form(v-if="isReady")
   
     el-col.mt5(:lg="12", :sm="24")
       div
         b
-          | {{ $t('tekushii-webhook-url') }}
+          | {{ $t('ongoingWebSiteUrn:') }}
       
         span
           | {{ $store.state.messenger.current_webhook }}
     
       el-button-group
         el-button(@click="setWebhook", :loading="setWebhookLoading")
-          | {{ $t('otpravit-webhook-url') }}
+          | {{ $t('sendWebHoseUrn') }}
       
         el-button(@click="stopWebhook", :loading="stopWebhookLoading")
-          | {{ $t('ostanovit-webhook') }}
+          | {{ $t('stopTheWebSite') }}
 </template>
 
 <script lang="ts">
@@ -93,7 +93,7 @@ export default class extends Vue {
         path: '/messenger',
         meta: {
           hidden: true,
-          title: this.$t('messendzhery')
+          title: this.$t('messengers')
         }
       },
       {

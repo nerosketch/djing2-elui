@@ -8,7 +8,7 @@
     el-form-item(:label="$t('title')", prop="name")
       el-input(v-model="frmMod.name")
   
-    el-form-item(:label="$t('stoimost')", prop="cost")
+    el-form-item(:label="$t('value')", prop="cost")
       el-input(v-model="frmMod.cost")
   
     el-form-item
@@ -33,10 +33,10 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: this.$t('nazvanie-nado-ukazat'), trigger: 'blur' }
+      { required: true, message: this.$t('nameShouldBeIndicated'), trigger: 'blur' }
     ],
     cost: [
-      { required: true, message: this.$t('cenu-nado-ukazat'), trigger: 'blur' },
+      { required: true, message: this.$t('thePriceShouldBeSpecified'), trigger: 'blur' },
       { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili-0') }
     ]
   }

@@ -18,7 +18,7 @@
       :titles="['Все права', 'Назначенные права']")
       template(v-slot:left-footer)
         el-button.transfer-footer(@click="selectReadonly")
-          | {{ $t('vydelit-prava-na-chtenie') }}
+          | {{ $t('giveReadingRights') }}
   
     el-button(
       icon="el-icon-upload"
@@ -47,7 +47,7 @@ export default class extends mixins(PermMngMixin) {
       user_permissions: this.assignedPerms
     })
     this.saveLoading = false
-    this.$message.success(this.$t('prava-dlya-polzovatelsya-sokhraneny'))
+    this.$message.success(this.$t('rightsRetained'))
   }
 
   @Watch('$store.state.userprofile.user_permissions')

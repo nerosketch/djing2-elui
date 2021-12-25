@@ -13,13 +13,13 @@
       el-input(v-model="frmMod.title")
   
     el-form-item(
-      :label="$t('opisanie')"
+      :label="$t('description')"
       prop="description"
     )
       el-input(v-model="frmMod.description")
   
     el-form-item(
-      :label="$t('tip-bota')"
+      :label="$t('typeOfBean')"
       prop="bot_type"
     )
       el-select(
@@ -55,7 +55,7 @@ import { IMessenger } from '@/api/messenger/types'
 import { mixins } from 'vue-class-component'
 import BotTypesMixin from './bot_types_mixin'
 
-const tx = this.$t('nuzhno-znat-s-kakim-api-budet-rabotat-bot')
+const tx = this.$t('iNeedToKnowWhatApiWillBeWorkingWith.')
 
 @Component({
   name: 'MessengerForm'
@@ -65,11 +65,11 @@ export default class extends mixins(BotTypesMixin) {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('nazvanie-dlya-messendzhera-nado-ukazat'), trigger: 'blur' }
+      { required: true, message: this.$t('nameForMassengerShouldBeIndicated'), trigger: 'blur' }
     ],
     token: this.isNew
       ? [
-          { required: true, message: this.$t('token-dlya-messendzhera-nado-ukazat'), trigger: 'blur' }
+          { required: true, message: this.$t('messengerTokenShouldBeIndicated'), trigger: 'blur' }
         ]
       : [],
     bot_type: [
@@ -90,7 +90,7 @@ export default class extends mixins(BotTypesMixin) {
 
     if (this.messengerBotTypes.length === 0) {
       this.loadMessengerTypes().then(() => {
-        this.messengerBotTypes.unshift({ val: 0, text: this.$t('ne-opredeleno') })
+        this.messengerBotTypes.unshift({ val: 0, text: this.$t('notSpecified') })
       })
     }
   }
@@ -108,13 +108,13 @@ export default class extends mixins(BotTypesMixin) {
                 m: this.frmMod,
                 typeName: botTypes[0].text
               })
-              this.$message.success(this.$t('chat-bot-sozdan'))
+              this.$message.success(this.$t('chatbotIsEstablished'))
             } else {
-              this.$message.error(this.$t('vyberi-tip-messenzhera'))
+              this.$message.error(this.$t('chooseTheMassengerType.'))
             }
           } else {
             newDat = await MessengerModule.PatchMessenger(this.frmMod)
-            this.$message.success(this.$t('chat-bot-izmenyon'))
+            this.$message.success(this.$t('chatBotIsChanged.'))
           }
           this.$emit('done', newDat)
         } catch (err) {

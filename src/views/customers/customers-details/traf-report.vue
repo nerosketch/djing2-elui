@@ -3,7 +3,7 @@
     line-chart(:chartData="chartDat")
   
     span
-      | {{ $t('vremennoi-srez') }}
+      | {{ $t('temporaryCut:') }}
   
     el-date-picker(
       v-model="timerange"

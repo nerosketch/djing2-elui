@@ -163,7 +163,7 @@ export default class extends mixins(FormMixin) {
                 this.$t('contractDocs.savedMsg')
               )
             } else {
-              const tx = this.$t('logic-error-on-contractform-in-onsubmit')
+              const tx = this.$t('heSAContractor,HeSAContractFormAndHeSGotAContract.')
               this.$message.error(tx)
               throw new Error(tx)
             }

@@ -9,7 +9,7 @@
           | {{ ` ${device.ip_address || device.mac_addr} ` }}
       
         template(v-if="device.parent_dev_name")
-          | {{ $t('roditelskoe-ustr') }}
+          | {{ $t('parentalOyster:') }}
         
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
             | {{ device.parent_dev_name }}
@@ -37,7 +37,7 @@
             | {{ row.num }}
     
       el-table-column(
-        :label="$t('vkl-vykl')"
+        :label="$t('bulk')"
         width="80"
         align="center")
         template(v-slot:default="{row}")
@@ -53,12 +53,12 @@
             disabled)
     
       el-table-column(
-        :label="$t('opisanie')"
+        :label="$t('description')"
         min-width="267"
         prop="descr")
     
       el-table-column(
-        :label="$t('abonov')"
+        :label="$t('aborions')"
         width="70"
         align="center")
         template(v-slot:default="{row}")
@@ -66,14 +66,14 @@
             | {{ row.user_count }}
     
       el-table-column(
-        :label="$t('imya')"
+        :label="$t('name')"
         min-width="235"
       )
         template(v-slot:default="{row}")
           | {{ row.name || '-' }}
     
       el-table-column(
-        :label="$t('rezhim')"
+        :label="$t('regime')"
         min-width="78"
       )
         template(v-slot:default="{row}")
@@ -84,7 +84,7 @@
           | {{ row.uptime || '-' }}
     
       el-table-column(
-        :label="$t('knopki')"
+        :label="$t('buttons')"
         align="center"
         min-width="194")
         template(v-slot:default="{row}")
@@ -117,13 +117,13 @@
   
     el-dialog(
       :visible.sync="portViewDialog"
-      :title="$t('abonenty-na-portu')"
+      :title="$t('portSubscribers')"
       :close-on-click-modal="false")
       switch-port-view(:device="device", :portId="currPortId")
   
     el-dialog(
       :visible.sync="portFormDialog"
-      :title="$t('port-kommutatora')"
+      :title="$t('theSwitchboard')"
       :close-on-click-modal="false")
       switch-port-form(
         :deviceId="device.id"
@@ -134,13 +134,13 @@
   
     el-dialog(
       :visible.sync="devFormDialog"
-      :title="$t('informaciya-ustroistva')"
+      :title="$t('informationOfTheDevice')"
       :close-on-click-modal="false")
       dev-form(v-on:done="devFrmDone")
   
     el-dialog(
       :visible.sync="vidsDialog"
-      :title="$t('vlany')"
+      :title="$t('vlanS')"
       :close-on-click-modal="false")
       vids-view(
         :portId="currPortId"
@@ -149,7 +149,7 @@
   
     el-dialog(
       :visible.sync="macsDialog"
-      :title="$t('tablica-mac-adresov-porta')"
+      :title="$t('tableOfPortAddresses')"
       :close-on-click-modal="false")
       port-mac-list(:portId="currPortId")
 </template>
@@ -320,7 +320,7 @@ export default class extends Vue {
         delete this.allPorts[ind].user_count
         this.allPorts[ind].isdb = false
       }
-      this.$message.success(this.$t('port-uspeshno-udalyon'))
+      this.$message.success(this.$t('portSuccessfullyRemoved'))
     })
   }
 
@@ -352,9 +352,9 @@ export default class extends Vue {
       this.allPorts[ind].isdb = true
     }
     if (isAdd) {
-      this.$message.success(this.$t('port-uspeshno-sokhranyon'))
+      this.$message.success(this.$t('portHasBeenSuccessfullyStored.'))
     } else {
-      this.$message.success(this.$t('port-uspeshno-izmenyon'))
+      this.$message.success(this.$t('portSuccessfullyChanged'))
     }
   }
 
@@ -364,7 +364,7 @@ export default class extends Vue {
 
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
-    this.$message.success(this.$t('uspeshno-sokhraneno'))
+    this.$message.success(this.$t('successfullyMaintained'))
     this.$router.push({ name: 'devicesList', params: { addrId: device.address.toString() } })
   }
 

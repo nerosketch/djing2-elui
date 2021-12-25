@@ -10,29 +10,29 @@
       template(v-slot:isadm="{row}")
         el-checkbox(v-model="row.is_admin", disabled)
           | {{ row.is_admin ? 'Да' : 'Нет'}}
-    
+
       template(v-slot:oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
             | C
-        
+
           el-button(
             icon="el-icon-lock"
             @click="openPermsDialog(row)"
             v-if="$perms.is_superuser")
-        
+
           el-button(icon="el-icon-edit", @click="openEdit(row)")
-        
+
           el-button(
             type="danger"
             icon="el-icon-delete"
             @click="delSrv(row)"
             :disabled="!$perms.services.delete_service")
-    
+
       template(v-slot:usercount="{row}")
         el-button(@click="openCustomerServiceListDialog(row.id)")
           | {{ row.usercount }}
-    
+
       el-button-group
         el-button(
           icon="el-icon-plus"
@@ -40,18 +40,18 @@
           @click="openNew"
           :disabled="!$perms.services.add_service")
           | {{ $t('add') }}
-      
+
         el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-          | {{ $t('polya') }}
-  
+          | {{ $t('field') }}
+
     el-dialog(
       :title="$t('isnew-sozdanie-izmenenie-uslugi', [(isNew ? `Создание` : `Изменение`)])"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       service-form(v-on:done="frmDone")
-  
+
     el-dialog(
-      :title="$t('kto-imeet-prava-na-uslugu')"
+      :title="$t('whoHasARightToAService')"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")
@@ -60,15 +60,15 @@
         :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp"
         :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
         :objId="srvIdGetter")
-  
+
     el-dialog(
-      :title="$t('prinadlezhnost-saitam')"
+      :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.service.sites", v-on:save="serviceSitesSave")
-  
+
     el-dialog(
-      :title="$t('polzovateli-uslugi')"
+      :title="$t('serviceUsers')"
       :visible.sync="customerServiceVisible"
       top="2vh"
       :close-on-click-modal="false")
@@ -104,24 +104,24 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       sortable: true,
       'min-width': 200
     },
     {
       prop: 'descr',
-      label: this.$t('opisanie'),
+      label: this.$t('description'),
       'min-width': 300
     },
     {
       prop: 'speed_in',
-      label: this.$t('vkhod-sk'),
+      label: this.$t('comeIn.'),
       'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_out',
-      label: this.$t('iskhod-sk'),
+      label: this.$t('exodus.'),
       'min-width': 110,
       sortable: true
     },
@@ -132,7 +132,7 @@ export default class extends Vue {
     },
     {
       prop: 'cost',
-      label: this.$t('cena'),
+      label: this.$t('price'),
       'min-width': 90,
       sortable: true
     },
@@ -144,14 +144,14 @@ export default class extends Vue {
     },
     {
       prop: 'usercount',
-      label: this.$t('kol-polz'),
+      label: this.$t('col.Use.'),
       'min-width': 130,
       sortable: true,
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'oper',
-      label: this.$t('knopki'),
+      prop: 'op.',
+      label: this.$t('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -178,7 +178,7 @@ export default class extends Vue {
   private async delSrv(srv: IService) {
     if (confirm(this.$t('deistvitelno-udalit-uslugu-srv-title', [srv.title]))) {
       await ServiceModule.DelService(srv.id)
-      this.$message.success(this.$t('usluga-udalena'))
+      this.$message.success(this.$t('serviceRemoved'))
       this.$refs.table.LoadTableData()
     }
   }
@@ -233,7 +233,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('tarify')
+          title: this.$t('tariffs')
         }
       }
     ] as any)
@@ -245,7 +245,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('prinadlezhnost-uslugi-saitam-sokhranena'))
+      this.$message.success(this.$t('facilitiesMaintained'))
     })
     this.sitesDlg = false
   }

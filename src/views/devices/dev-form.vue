@@ -7,51 +7,51 @@
     v-loading="loading")
     el-form-item(:label="$t('ipAddress')", prop="ip_address")
       el-input(v-model="frmMod.ip_address")
-  
+
     el-form-item(:label="$t('macAddress')", prop="mac_addr")
       el-input(v-model="frmMod.mac_addr")
-  
-    el-form-item(:label="$t('opisanie')", prop="comment")
+
+    el-form-item(:label="$t('description')", prop="comment")
       el-input(v-model="frmMod.comment")
-  
-    el-form-item(:label="$t('tip-oborudovaniya')")
+
+    el-form-item(:label="$t('typeOfEquipment')")
       el-select(v-model="frmMod.dev_type")
         el-option(
           v-for="dt in deviceTypeNames"
           :key="dt.v"
           :label="dt.nm"
           :value="dt.v")
-  
-    el-form-item(:label="$t('snmp-community')")
+
+    el-form-item(:label="$t('community')")
       el-input(v-model="frmMod.man_passw")
-  
-    el-form-item(:label="$t('gruppa')")
+
+    el-form-item(:label="$t('panel')")
       groups-choice(v-model="frmMod.group")
-  
-    el-form-item(:label="$t('rodit-ustroistvo')")
+
+    el-form-item(:label="$t('theDevice.')")
       device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="$store.state.devicemodule.parent_dev_name")
-  
-    el-form-item(:label="$t('data-vvedeniya-v-ekspluataciyu')")
+
+    el-form-item(:label="$t('effectiveDate')")
       datetime-counter(v-model="frmMod.create_time")
-  
-    el-form-item(:label="$t('adres')")
+
+    el-form-item(:label="$t('addresses')")
       addr-field-input(v-model="frmMod.address")
-  
-    el-form-item(:label="$t('doma')")
+
+    el-form-item(:label="$t('no.')")
       el-input(
         v-model="frmMod.place"
         disabled
         readonly)
-  
-    el-form-item(:label="$t('dop-info-dlya-snmp')")
+
+    el-form-item(:label="$t('dop.')")
       el-input(v-model="frmMod.snmp_extra")
-  
+
     el-form-item(prop="is_noticeable")
       el-checkbox(v-model="frmMod.is_noticeable")
-        | {{ $t('opoveshat-pri-sobytiyakh-monitoringa') }}:
-      
+        | {{ $t('monitoringEventAlerts') }}:
+
         b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -91,14 +91,14 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     ip_address: [
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
     ],
     mac_addr: [
-      { required: true, message: this.$t('mac-ne-mozhet-byt-pustym'), trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: this.$t('primer-mac-0a-0b-cc-dd-ee-ff') }
+      { required: true, message: this.$t('macCanTBeEmpty.'), trigger: 'blur' },
+      { validator: macAddrValidator, trigger: 'change', message: this.$t('example:0A:0B:Cc:Dd:Ee:Ff') }
     ],
     comment: [
-      { required: true, message: this.$t('ukazhi-ustroistvu-kakoe-to-imya'), trigger: 'blur' }
+      { required: true, message: this.$t('giveTheDeviceAName.'), trigger: 'blur' }
     ]
   }
 

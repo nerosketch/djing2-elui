@@ -14,25 +14,25 @@
     el-form-item(:label="$t('gateways.port')")
       el-input(v-model="frmMod.ip_port", type="number")
   
-    el-form-item(:label="$t('login-dlya-vkhoda')", prop="auth_login")
+    el-form-item(:label="$t('inletLogin')", prop="auth_login")
       el-input(v-model="frmMod.auth_login")
   
-    el-form-item(:label="$t('parol-dlya-vkhoda')")
+    el-form-item(:label="$t('inletPassword')")
       el-input(v-model="frmMod.auth_passw")
   
-    el-form-item(:label="$t('tip-nas')")
+    el-form-item(:label="$t('likeUs.')")
       el-select(v-model="frmMod.gw_type")
-        el-option(:label="$t('mikrotik')", :value="0")
+        el-option(:label="$t('microsoft')", :value="0")
       
-        el-option(:label="$t('linux')", :value="1")
+        el-option(:label="$t('linusc')", :value="1")
   
-    el-form-item(:label="$t('po-umolchaniyu')")
+    el-form-item(:label="$t('default')")
       el-checkbox(v-model="frmMod.is_default")
   
-    el-form-item(:label="$t('vklyuchen')")
+    el-form-item(:label="$t('included')")
       el-checkbox(v-model="frmMod.enabled")
   
-    el-form-item(:label="$t('klass-shlyuza')")
+    el-form-item(:label="$t('classOfLock')")
       el-select(v-model="frmMod.gw_class")
         el-option(
           v-for="(gwc, i) in gwClassChoices"
@@ -40,7 +40,7 @@
           :value="gwc.v"
           :label="gwc.t")
   
-    el-form-item(:label="$t('adres-ustanovki')")
+    el-form-item(:label="$t('addressOfInstallation')")
       el-input(v-model="frmMod.place")
   
     el-form-item
@@ -81,7 +81,7 @@ export default class extends mixins(FormMixin) {
       { validator: ipAddrValidator, trigger: 'change', message: this.$t('gateways.wrong_format_ipv4') }
     ],
     auth_login: [
-      { validator: latinValidator, trigger: 'change', message: this.$t('tolko-latinica') }
+      { validator: latinValidator, trigger: 'change', message: this.$t('justLatin.') }
     ]
   }
 

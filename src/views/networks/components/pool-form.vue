@@ -7,50 +7,50 @@
     :model="frmMod"
     v-loading="isLoading")
     el-form-item(
-      :label="$t('podset')"
+      :label="$t('sitDown.')"
       prop="network"
     )
       el-input(v-model="frmMod.network")
-  
-    el-form-item(:label="$t('nach-ip')", prop="ip_start")
+
+    el-form-item(:label="$t('nach.')", prop="ip_start")
       el-input(v-model="frmMod.ip_start")
-  
-    el-form-item(:label="$t('kon-ip')", prop="ip_end")
+
+    el-form-item(:label="$t('con.')", prop="ip_end")
       el-input(v-model="frmMod.ip_end")
-  
-    el-form-item(:label="$t('gruppy')")
+
+    el-form-item(:label="$t('panels')")
       groups-choice(v-model="frmMod.groups", multiple)
-  
-    el-form-item(:label="$t('shlyuz')", prop="gateway")
+
+    el-form-item(:label="$t('surface')", prop="gateway")
       el-input(v-model="frmMod.gateway")
-  
-    el-form-item(:label="$t('vlan')")
+
+    el-form-item(:label="$t('♪')")
       el-select(v-model="frmMod.vlan_if", v-loading="vlanLoading")
         el-option(
           v-for="v in vlans"
           :key="v.id"
           :label="$t('v-vid-v-title', [v.vid, v.title])"
           :value="v.id")
-  
-    el-form-item(:label="$t('tip-seti')")
+
+    el-form-item(:label="$t('typeOfNetwork')")
       el-select(v-model="frmMod.kind")
         el-option(
           v-for="k in networkPoolKinds"
           :key="k.val"
           :label="k.title"
           :value="k.val")
-  
-    el-form-item(:label="$t('dinamicheskii')")
+
+    el-form-item(:label="$t('dynamic')")
       el-checkbox(v-model="frmMod.is_dynamic")
         | {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
-  
-    el-form-item(:label="$t('opisanie')", prop="description")
+
+    el-form-item(:label="$t('description')", prop="description")
       el-input(
         v-model="frmMod.description"
         type="textarea"
         rows="5"
         autosize)
-  
+
     el-form-item
       el-button(
         type="primary"
@@ -82,23 +82,23 @@ export default class extends mixins(FormMixin, VlanMixin) {
 
   private frmRules = {
     network: [
-      { required: true, message: this.$t('podset-nado-ukazat'), trigger: 'blur' },
-      { validator: ipAddrMaskValidator, trigger: 'change', message: this.$t('primer-podseti-192-168-0-0-24') }
+      { required: true, message: this.$t('weNeedToSign.'), trigger: 'blur' },
+      { validator: ipAddrMaskValidator, trigger: 'change', message: this.$t('example:192.168.0.024') }
     ],
     description: [
-      { required: true, message: this.$t('kakae-to-opisanie-nuzhno'), trigger: 'blur' }
+      { required: true, message: this.$t('iNeedADescription.'), trigger: 'blur' }
     ],
     ip_start: [
-      { required: true, message: this.$t('startovyi-ip-nado-ukazat'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23') }
+      { required: true, message: this.$t('startPoint'), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
     ],
     ip_end: [
-      { required: true, message: this.$t('konechnyi-ip-nado-ukazat'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23') }
+      { required: true, message: this.$t('finalNeedToBeIndicated'), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
     ],
     gateway: [
-      { required: true, message: this.$t('shlyuz-nado-ukazat'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-shlyuza-192-168-0') }
+      { required: true, message: this.$t('youNeedToPointOutTheLock.'), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('exampleOfLock:192.168.0.1') }
     ]
   }
 
@@ -116,12 +116,12 @@ export default class extends mixins(FormMixin, VlanMixin) {
   }
 
   private networkPoolKinds = [
-    { val: 0, title: this.$t('ne-opredelyon') },
+    { val: 0, title: this.$t('notDefined') },
     { val: 1, title: this.$t('internet') },
-    { val: 2, title: this.$t('gostevoi') },
-    { val: 3, title: this.$t('doverennyi') },
-    { val: 4, title: this.$t('ustroistva') },
-    { val: 5, title: this.$t('administrativnyi') }
+    { val: 2, title: this.$t('hotel') },
+    { val: 3, title: this.$t('trustee') },
+    { val: 4, title: this.$t('route.devices') },
+    { val: 5, title: this.$t('administrative') }
   ]
 
   @Watch('$store.state.netpool', { deep: true })

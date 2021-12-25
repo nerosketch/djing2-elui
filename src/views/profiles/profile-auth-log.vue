@@ -26,17 +26,17 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'time',
-      label: this.$t('vremya'),
+      label: this.$t('time'),
       'min-width': 150
     },
     {
       prop: 'remote_ip',
-      label: this.$t('ip-vkhoda'),
+      label: this.$t('andGoIn'),
       'min-width': 130
     },
     {
       prop: 'user_agent',
-      label: this.$t('brauzer')
+      label: this.$t('brauser')
     }
   ]
 

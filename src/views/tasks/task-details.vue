@@ -39,7 +39,7 @@ export default class extends mixins(taskMixin) {
 
   private async loadTask() {
     if (this.taskId === 0) {
-      this.$message.error(this.$t('ne-peredan-id-zadachi'))
+      this.$message.error(this.$t('notTransferred'))
       return
     }
     await TaskModule.GetTask(this.taskId)

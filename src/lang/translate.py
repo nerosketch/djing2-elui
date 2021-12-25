@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import subprocess
+import json
 from transliterate import translit
 from libretranslatepy import LibreTranslateAPI
 
@@ -522,20 +523,34 @@ def replace(fromstr, tostr):
 
 
 def translate(text):
-    r = lt.translate(text, 'ru', 'en')
-    r = r.title().replace(' ', '')
+    return lt.translate(text, 'ru', 'en')
+
+
+def prepare_key(key):
+    r = key.title().replace(' ', '')
+    r = r.replace('/', '')
+    r = r.replace("'", '')
     r = translit(r, language_code='ru', reversed=True)
     r = r[:1].lower() + r[1:]
     return r
 
 
+
 def main():
+    res_ru = {}
+    res_en = {}
     for key, val in dct.items():
         if '{' in val or '}' in val:
             continue
         translated_val = translate(val)
-        print(translated_val)
-        replace(key, translated_val)
+        translated_key = prepare_key(translated_val)
+        replace(key, translated_key)
+        res_ru[translated_key] = val
+        res_en[translated_key] = translated_val
+    with open('lang/ru.json', 'w') as f:
+        json.dump(res_ru, f, ensure_ascii=False)
+    with open('lang/en.json', 'w') as f:
+        json.dump(res_en, f, ensure_ascii=False)
 
 
 if __name__ == '__main__':

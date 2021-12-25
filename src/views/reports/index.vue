@@ -8,12 +8,12 @@
         el-card
           template(v-slot:header)
             .clearfix
-              | {{ $t('chastota-ispolzovaniya-kharakterov-zadach') }}
+              | {{ $t('frequencyOfPerformance') }}
         
           task-mode-report-pie-chart(v-if="$perms.tasks.can_view_task_mode_report")
         
           h4(v-else)
-            | {{ $t('nedostatochno-prav') }}
+            | {{ $t('insufficientRights') }}
     
       el-col(
         :xs="24"
@@ -22,12 +22,12 @@
         el-card
           template(v-slot:header)
             .clearfix
-              | {{ $t('raspredelenie-ispolzovaniya-uslug-abonentami') }}
+              | {{ $t('distributionOfServicesBySubscribers') }}
         
           customer-service-type-report(v-if="$perms.customers.can_view_service_type_report")
         
           h4(v-else)
-            | {{ $t('nedostatochno-prav') }}
+            | {{ $t('insufficientRights') }}
     
       el-col(
         :xs="24"
@@ -36,12 +36,12 @@
         el-card
           template(v-slot:header)
             .clearfix
-              | {{ $t('aktivnost-abonentov') }}
+              | {{ $t('accelerationOfSubscribers') }}
         
           customer-activity-report(v-if="$perms.customers.can_view_activity_report")
         
           h4(v-else)
-            | {{ $t('nedostatochno-prav') }}
+            | {{ $t('insufficientRights') }}
 </template>
 
 <script lang="ts">
@@ -69,7 +69,7 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: this.$t('otchyoty-vsyakie')
+          title: this.$t('allReports')
         }
       }
     ] as any)
@@ -77,7 +77,7 @@ export default class extends Vue {
   // End Breadcrumbs
 
   created() {
-    document.title = this.$t('otchyoty-vsyakie')
+    document.title = this.$t('allReports')
     this.buildBreadcrumb()
   }
 }

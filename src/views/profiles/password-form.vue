@@ -6,7 +6,7 @@
     :model="frmMod"
     v-loading="loading")
     el-form-item(
-      :label="$t('staryi-parol')"
+      :label="$t('oldPassword')"
       prop="old_passw"
       :error="frmErr.old_passw"
       v-if="!this.$perms.is_superuser")
@@ -16,7 +16,7 @@
         type="password")
   
     el-form-item(
-      :label="$t('novyi-parol')"
+      :label="$t('newPassword')"
       prop="new_passw"
       :error="frmErr.new_passw")
       el-input(
@@ -25,7 +25,7 @@
         type="password")
   
     el-form-item(
-      :label="$t('povtori-parol')"
+      :label="$t('repeatThePassword.')"
       prop="retype_passw"
       :error="frmErr.retype_passw")
       el-input(
@@ -43,7 +43,7 @@
           | {{ $t('save') }}
       
         el-button(@click="$emit('cancel')", icon="el-icon-close")
-          | {{ $t('otmena') }}
+          | {{ $t('cancellation') }}
 </template>
 
 <script lang="ts">
@@ -63,17 +63,17 @@ export default class extends Vue {
 
   private frmRules = {
     old_passw: [
-      { required: !this.$perms.is_superuser, message: this.$t('nado-ukazat-staryi-parol'), trigger: 'blur' },
+      { required: !this.$perms.is_superuser, message: this.$t('iNeedToPointOutTheOldPassword.'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov') }
+      { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     new_passw: [
-      { required: true, message: this.$t('nado-ukazat-novyi-parol'), trigger: 'blur' },
+      { required: true, message: this.$t('weNeedANewPassword.'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('parol-sostoit-minimum-iz-6ti-simvolov') }
+      { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     retype_passw: [
-      { required: true, trigger: 'blur', message: this.$t('nuzhno-povtorit-novyi-parol') },
+      { required: true, trigger: 'blur', message: this.$t('weNeedANewPassword.') },
       {
         validator: (rule: any, value: string, callback: Function) => {
           if (value === this.frmMod.new_passw) {
@@ -82,7 +82,7 @@ export default class extends Vue {
             callback(new Error(rule.message))
           }
         },
-        message: this.$t('paroli-dolzhny-sovpadat')
+        message: this.$t('thePasswordsShouldMatch.')
       }
     ]
   }

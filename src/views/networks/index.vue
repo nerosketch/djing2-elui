@@ -2,28 +2,28 @@
   .tab-container
     el-tabs(v-model="activeTabName", type="border-card")
       el-tab-pane(
-        :label="$t('gostevye-sessii')"
+        :label="$t('openingSessions')"
         name="sessions"
         lazy)
         keep-alive
           session-list
     
       el-tab-pane(
-        :label="$t('podseti')"
+        :label="$t('subset')"
         name="pools"
         lazy)
         keep-alive
           pool-list
     
       el-tab-pane(
-        :label="$t('vlany')"
+        :label="$t('vlanS')"
         name="vlans"
         lazy)
         keep-alive
           vlan-list
     
       el-tab-pane(
-        :label="$t('arendy-ip')"
+        :label="$t('hipLeases')"
         name="leases"
         lazy)
         keep-alive

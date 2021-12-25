@@ -11,10 +11,10 @@
     el-form-item(:label="$t('macAddress')", prop="mac_addr")
       el-input(v-model="frmMod.mac_addr")
   
-    el-form-item(:label="$t('opisanie')", prop="comment")
+    el-form-item(:label="$t('description')", prop="comment")
       el-input(v-model="frmMod.comment")
   
-    el-form-item(:label="$t('tip-oborudovaniya')", prop="dev_type")
+    el-form-item(:label="$t('typeOfEquipment')", prop="dev_type")
       el-select(v-model="frmMod.dev_type")
         el-option(
           v-for="dt in deviceTypeNames"
@@ -22,24 +22,24 @@
           :label="dt.nm"
           :value="dt.v")
   
-    el-form-item(:label="$t('snmp-community')")
+    el-form-item(:label="$t('community')")
       el-input(v-model="frmMod.man_passw")
   
-    el-form-item(:label="$t('gruppa')")
+    el-form-item(:label="$t('panel')")
       groups-choice(v-model="frmMod.group")
   
-    el-form-item(:label="$t('rodit-ustroistvo')")
+    el-form-item(:label="$t('theDevice.')")
       device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="initialParentDevName")
   
-    el-form-item(:label="$t('data-vvedeniya-v-ekspluataciyu')")
+    el-form-item(:label="$t('effectiveDate')")
       datetime-counter(v-model="frmMod.create_time")
   
-    el-form-item(:label="$t('dop-info-dlya-snmp')")
+    el-form-item(:label="$t('dop.')")
       el-input(v-model="frmMod.snmp_extra")
   
     el-form-item
       el-checkbox(v-model="frmMod.is_noticeable")
-        | {{ $t('opoveshat-pri-sobytiyakh-monitoringa') }}:
+        | {{ $t('monitoringEventAlerts') }}:
       
         b
           | {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
@@ -89,17 +89,17 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('primer-ip-192-168-0-23') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example:192.168.0.23') }
     ],
     mac_addr: [
-      { required: true, message: this.$t('mac-ne-mozhet-byt-pustym'), trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: this.$t('primer-mac-0a-0b-cc-dd-ee-ff') }
+      { required: true, message: this.$t('macCanTBeEmpty.'), trigger: 'blur' },
+      { validator: macAddrValidator, trigger: 'change', message: this.$t('example:0A:0B:Cc:Dd:Ee:Ff') }
     ],
     comment: [
-      { required: true, message: this.$t('ukazhi-ustroistvu-kakoe-to-imya'), trigger: 'blur' }
+      { required: true, message: this.$t('giveTheDeviceAName.'), trigger: 'blur' }
     ],
     dev_type: [
-      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-ukazat-tip-ustroistva') }
+      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('specifyTheTypeOfDevice') }
     ]
   }
 

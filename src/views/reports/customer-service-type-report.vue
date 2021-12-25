@@ -23,8 +23,8 @@ export default class extends Vue {
     this.repLoading = true
     try {
       const { data } = await customerServiceTypeReportRequest()
-      const admName = this.$t('s-administrativnymi-uslugami')
-      const zeroName = this.$t('s-besplatnymi-uslugami')
+      const admName = this.$t('withAdministrativeServices')
+      const zeroName = this.$t('freeServices')
       const chartData = [{
         value: data.admin_count,
         name: admName

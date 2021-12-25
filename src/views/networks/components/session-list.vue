@@ -36,12 +36,12 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'assign_time',
-      label: this.$t('vremya-starta'),
+      label: this.$t('startTime'),
       'min-width': 130
     },
     {
       prop: 'session_duration',
-      label: this.$t('prodolzhitelnost-sessii'),
+      label: this.$t('durationOfTheSession'),
       'min-width': 200
     },
     {
@@ -51,33 +51,33 @@ export default class extends Vue {
     },
     {
       prop: 'ip_lease_mac',
-      label: this.$t('mac-adres'),
+      label: this.$t('maqueres'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'closed',
-      label: this.$t('zakryt')
+      label: this.$t('closed.')
     },
     {
       prop: 'h_input_octets',
-      label: this.$t('vkhodyashikh-bait')
+      label: this.$t('incomingByte')
     },
     {
       prop: 'h_output_octets',
-      label: this.$t('iskhodyashikh-bait')
+      label: this.$t('basedOnByte')
     },
     {
       prop: 'h_input_packets',
-      label: this.$t('vkhodyashikh-paketov')
+      label: this.$t('incomingPackages')
     },
     {
       prop: 'h_output_packets',
-      label: this.$t('iskhodyashikh-paketov')
+      label: this.$t('packages')
     },
     {
-      prop: 'oper',
-      label: this.$t('oper'),
+      prop: 'op.',
+      label: this.$t('op.'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -94,7 +94,7 @@ export default class extends Vue {
   }
 
   private shutdownSesion(ses: IUserSession) {
-    this.$confirm(this.$t('zavershit-sessiyu')).then(async() => {
+    this.$confirm(this.$t('finishTheSession?')).then(async() => {
       await delSession(ses.id)
       this.$refs.table.LoadTableData()
     }).catch(err => {

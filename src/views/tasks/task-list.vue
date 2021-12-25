@@ -11,27 +11,27 @@
       template(v-slot:customer_full_name="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerDetails', params: {uid: row.customer } }")
           | {{ row.customer_full_name }}
-    
+
       template(v-slot:id="{row}")
         router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
           el-button(:type="row.comment_count > 0 ? 'success' : 'primary'")
             span(v-if="row.comment_count > 0")
               | {{ row.comment_count }}
-          
+
             i.el-icon-view(v-else)
-    
+
       el-button-group
         el-button(
           icon="el-icon-plus"
           @click="openNew"
           :disabled="!$perms.tasks.add_task")
-          | {{ $t('dobavit-zadachu') }}
-      
+          | {{ $t('addTheTask') }}
+
         el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-          | {{ $t('polya') }}
-  
+          | {{ $t('field') }}
+
     el-dialog(
-      :title="$t('sozdanie-zadachi')"
+      :title="$t('creatingTheChallenge')"
       :visible.sync="formDialog"
       :close-on-click-modal="false")
       task-form
@@ -87,38 +87,38 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_full_name',
-      label: this.$t('imya'),
+      label: this.$t('name'),
       'min-width': 250
     },
     {
       prop: 'customer_address',
-      label: this.$t('adres'),
+      label: this.$t('addresses'),
       'min-width': 300,
       cutLeft: true
     },
     {
       prop: 'mode_str',
-      label: this.$t('kharakter-polomki'),
+      label: this.$t('natureOfFracture'),
       'min-width': 150
     },
     {
       prop: 'descr',
-      label: this.$t('opisanie'),
+      label: this.$t('description'),
       'min-width': 400
     },
     {
       prop: 'state_str',
-      label: this.$t('sostoyanie'),
+      label: this.$t('status'),
       'min-width': 100
     },
     {
       prop: 'time_of_create',
-      label: this.$t('data-sozdaniya'),
+      label: this.$t('dateOfEstablishment'),
       'min-width': 170
     },
     {
       prop: 'id',
-      label: this.$t('smotret'),
+      label: this.$t('watch'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     }

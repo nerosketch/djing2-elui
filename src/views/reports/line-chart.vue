@@ -76,10 +76,10 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         legend: {
-          data: [this.$t('kbaity'), this.$t('pakety')]
+          data: [this.$t('bytes'), this.$t('packages')]
         },
         series: [{
-          name: this.$t('kbaity'),
+          name: this.$t('bytes'),
           itemStyle: {
             color: '#FF005A',
             lineStyle: {
@@ -94,7 +94,7 @@ export default class extends mixins(ResizeMixin) {
           animationEasing: 'cubicInOut'
         },
         {
-          name: this.$t('pakety'),
+          name: this.$t('packages'),
           smooth: false,
           type: 'line',
           itemStyle: {

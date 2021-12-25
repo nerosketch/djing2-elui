@@ -29,7 +29,7 @@
             shadow="hover"
             :body-style="defCardStyle"
           )
-            h3 {{ $t('abonenty-ne-naideny') }}
+            h3 {{ $t('noSubscribersFound') }}
 
         el-col(:sm='24' :md='12')
           template(v-if="$store.state.search.devices && $store.state.search.devices.length > 0")
@@ -49,7 +49,7 @@
             shadow="hover"
             :body-style="defCardStyle"
           )
-            h3 {{ $t('oborudovanie-ne-naideno') }}
+            h3 {{ $t('equipmentNotFound') }}
 </template>
 
 <script lang="ts">

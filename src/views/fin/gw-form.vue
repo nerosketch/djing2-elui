@@ -9,10 +9,10 @@
     el-form-item(:label="$t('title')", prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(:label="$t('service-id')", prop="service_id")
+    el-form-item(:label="$t('id')", prop="service_id")
       el-input(v-model="frmMod.service_id")
   
-    el-form-item(:label="$t('slug')", prop="slug")
+    el-form-item(:label="$t('servants')", prop="slug")
       el-input(v-model="frmMod.slug")
   
     el-form-item(:label="$t('secret')", prop="secret")
@@ -41,16 +41,16 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('nazvanie-gruppy-nado-ukazat'), trigger: 'blur' },
+      { required: true, message: this.$t('nameOfGroup'), trigger: 'blur' },
       { max: 64, trigger: 'change' }
     ],
     service_id: [
-      { required: true, message: this.$t('service-id-obyazatelno'), trigger: 'blur' },
+      { required: true, message: this.$t('iLlBeSure.'), trigger: 'blur' },
       { max: 64, trigger: 'change' }
     ],
     slug: [
-      { required: true, message: this.$t('service-id-obyazatelno'), trigger: 'blur' },
-      { max: 32, message: this.$t('maksimum-32-simvola-dlya-slug'), trigger: 'change' }
+      { required: true, message: this.$t('iLlBeSure.'), trigger: 'blur' },
+      { max: 32, message: this.$t('32SymbolsForServants'), trigger: 'change' }
     ]
   }
 

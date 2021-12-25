@@ -14,7 +14,7 @@
     el-form-item(:label="$t('customers.phone')", prop="telephone")
       tels-input(v-model="frmMod.telephone")
   
-    el-form-item(:label="$t('dom-ustar')")
+    el-form-item(:label="$t('house(Old)')")
       el-input(
         v-model="frmMod.house"
         :maxlength="12"
@@ -273,7 +273,7 @@ export default class extends mixins(FormMixin) {
             params: { taskId: data.task_id.toString() }
           })
         } else {
-          this.$message.error(this.$t('task-id-expected-from-backend'))
+          this.$message.error(this.$t('idEcspectedRumBaccand'))
         }
       }
     } finally {

@@ -2,35 +2,35 @@
   .tab-container
     el-tabs(v-model="activeTabName", type="border-card")
       el-tab-pane(
-        :label="$t('novye-zadachi')"
+        :label="$t('newChallenges')"
         name="tnew"
         lazy)
         keep-alive
           task-list(tabUrl="get_new")
     
       el-tab-pane(
-        :label="$t('vypolnennye-zadachi')"
+        :label="$t('challengesAchieved')"
         name="tfin"
         lazy)
         keep-alive
           task-list(tabUrl="get_finished")
     
       el-tab-pane(
-        :label="$t('provalennye-zadachi')"
+        :label="$t('challenges')"
         name="tf"
         lazy)
         keep-alive
           task-list(tabUrl="get_failed")
     
       el-tab-pane(
-        :label="$t('vse-zadachi')"
+        :label="$t('allTasks')"
         name="tall"
         lazy)
         keep-alive
           task-list(tabUrl="get_all")
     
       el-tab-pane(
-        :label="$t('vse-nezavershyonnye')"
+        :label="$t('allUncompleted')"
         name="tallnew"
         lazy)
         keep-alive

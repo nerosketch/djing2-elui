@@ -56,10 +56,10 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         indicator: [
-          { name: this.$t('sales'), max: 10000 },
+          { name: this.$t('sáles'), max: 10000 },
           { name: this.$t('administration'), max: 20000 },
-          { name: this.$t('information-technology'), max: 20000 },
-          { name: this.$t('customer-support'), max: 20000 },
+          { name: this.$t('technologists'), max: 20000 },
+          { name: this.$t('soupport'), max: 20000 },
           { name: this.$t('development'), max: 20000 },
           { name: this.$t('marketing'), max: 20000 }
         ]
@@ -67,7 +67,7 @@ export default class extends mixins(ResizeMixin) {
       legend: {
         left: 'center',
         bottom: '10',
-        data: [this.$t('allocated-budget'), this.$t('expected-spending'), this.$t('actual-spending')]
+        data: [this.$t('allocadeBudget'), this.$t('spectaped'), this.$t('iVeBeenDoingTheSanding')]
       },
       series: [{
         type: 'radar',
@@ -82,15 +82,15 @@ export default class extends mixins(ResizeMixin) {
         data: [
           {
             value: [5000, 7000, 12000, 11000, 15000, 14000],
-            name: this.$t('allocated-budget')
+            name: this.$t('allocadeBudget')
           },
           {
             value: [4000, 9000, 15000, 15000, 13000, 11000],
-            name: this.$t('expected-spending')
+            name: this.$t('spectaped')
           },
           {
             value: [5500, 11000, 12000, 15000, 12000, 12000],
-            name: this.$t('actual-spending')
+            name: this.$t('iVeBeenDoingTheSanding')
           }
         ],
         animationDuration: animationDuration

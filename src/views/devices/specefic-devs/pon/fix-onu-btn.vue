@@ -17,7 +17,7 @@ import { DeviceModule } from '@/store/modules/devices/device'
 })
 export default class extends Vue {
   private fixLoading = false
-  private buttonText = this.$t('ispravit')
+  private buttonText = this.$t('correct.')
   private buttonStatus = 0
 
   get statusType() {
@@ -44,7 +44,7 @@ export default class extends Vue {
     this.buttonStatus = status === 1 ? 1 : -1
     this.buttonText = text
     let tm = setTimeout(() => {
-      this.buttonText = this.$t('ispravit')
+      this.buttonText = this.$t('correct.')
       this.buttonStatus = 0
       clearTimeout(tm)
     }, 15000)

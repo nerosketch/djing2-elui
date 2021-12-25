@@ -58,13 +58,13 @@
               icon="el-icon-plus"
               @click="openNew"
               :disabled="!$perms.devices.add_device")
-              | {{ $t('dobavit-ustroistvo') }}
+              | {{ $t('addTheDevice') }}
           
             el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-              | {{ $t('polya') }}
+              | {{ $t('field') }}
   
     el-dialog(
-      :title="$t('zhelezka')"
+      :title="$t('iron.')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")
@@ -74,7 +74,7 @@
         :addrId="addrId")
   
     el-dialog(
-      :title="$t('dobavit-ustroistvo')"
+      :title="$t('addTheDevice')"
       :visible.sync="dialogNewDev"
       :close-on-click-modal="false"
       top="1%")
@@ -85,7 +85,7 @@
         :initialAddress="addrId")
   
     el-dialog(
-      :title="$t('kto-imeet-prava-na-ustroistvo')"
+      :title="$t('whoHasTheRightToTheDevice')"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")
@@ -96,7 +96,7 @@
         :objId="$store.state.address.title")
   
     el-dialog(
-      :title="$t('prinadlezhnost-oborudovaniya-saitam')"
+      :title="$t('maintenanceOfWebsiteEquipment')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.devicemodule.sites", v-on:save="devSitesSave")
@@ -163,43 +163,43 @@ export default class extends mixins(TableWithAddrMixin) {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'comment',
-      label: this.$t('komment'),
+      label: this.$t('comment'),
       'min-width': 300
     },
     {
       prop: 'ip_address',
-      label: this.$t('ip-adres'),
+      label: this.$t('idres'),
       'min-width': 120
     },
     {
       prop: 'dev_type_str',
-      label: this.$t('tip'),
+      label: this.$t('type'),
       'min-width': 150
     },
     {
       prop: 'mac_addr',
-      label: this.$t('mac-adres'),
+      label: this.$t('maqueres'),
       'min-width': 150
     },
     {
       prop: 'status',
-      label: this.$t('sostoyanie')
+      label: this.$t('status')
     },
     {
       prop: 'is_noticeable',
-      label: this.$t('opovesheniya')
+      label: this.$t('notices')
     },
     {
       prop: 'place',
-      label: this.$t('doma')
+      label: this.$t('no.')
     },
     {
       prop: 'create_time',
-      label: this.$t('data-vvedeniya-v-ekspluataciyu')
+      label: this.$t('effectiveDate')
     },
     {
-      prop: 'oper',
-      label: this.$t('knopki'),
+      prop: 'op.',
+      label: this.$t('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -234,7 +234,7 @@ export default class extends mixins(TableWithAddrMixin) {
   private async delDevice(dev: IDevice) {
     this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
       await DeviceModule.DelDevice(dev.id)
-      this.$message.success(this.$t('udaleno'))
+      this.$message.success(this.$t('deleted'))
       this.$refs.tbl.LoadTableData()
     })
   }
@@ -246,7 +246,7 @@ export default class extends mixins(TableWithAddrMixin) {
 
   private frmNewDevDone(newDev: IDevice) {
     this.dialogNewDev = false
-    this.$message.success(this.$t('novoe-ustroistvo-sokhraneno'))
+    this.$message.success(this.$t('newDeviceRetained'))
     this.$router.push({
       name: 'device-view',
       params: {
@@ -270,7 +270,7 @@ export default class extends mixins(TableWithAddrMixin) {
           path: '/devices',
           meta: {
             hidden: true,
-            title: this.$t('oborudovanie')
+            title: this.$t('equipment')
           }
         },
         {
@@ -309,7 +309,7 @@ export default class extends mixins(TableWithAddrMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.tbl.LoadTableData()
-      this.$message.success(this.$t('prinadlezhnost-oborudovaniya-saitam-sokhranena'))
+      this.$message.success(this.$t('facilitiesMaintained'))
     })
     this.sitesDlg = false
   }

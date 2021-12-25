@@ -22,7 +22,7 @@
         template(v-slot:default="{row}")
           boolean-icon(v-model="row.native")
     
-      el-table-column(:label="$t('upravlenie')")
+      el-table-column(:label="$t('office')")
         template(v-slot:default="{row}")
           boolean-icon(v-model="row.is_management")
 </template>
@@ -63,7 +63,7 @@ export default class extends Vue {
         this.loading = false
       }
     } else {
-      this.$message.error(this.$t('portid-parameter-is-required'))
+      this.$message.error(this.$t('parameterAndRiver'))
     }
   }
 }

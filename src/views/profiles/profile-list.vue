@@ -9,16 +9,16 @@
       ref="tbl")
       template(v-slot:avatar="{row}")
         el-avatar(:src="row.avatar || defAvaConst", shape="square")
-    
+
       template(v-slot:username="{row}")
         router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}")
           el-link(type="primary", :icon="row.is_superuser ? 'el-icon-warning' : ''")
             | {{ row.username }}
-    
+
       template(v-slot:telephone="{row}")
         el-link(type="primary", :href="`tel:${row.telephone}`")
           | {{ row.telephone }}
-    
+
       template(v-slot:btn="{row}")
         el-button(
           type="danger"
@@ -26,15 +26,15 @@
           circle
           @click="delUserProfile(row)"
           :disabled="!$perms.is_superuser")
-    
+
       el-button(
         icon="el-icon-plus"
         @click="addNewProfile"
         :disabled="!$perms.is_superuser")
         | {{ $t('add') }}
-  
+
     el-dialog(
-      :title="$t('dobavit-uchyotku')"
+      :title="$t('addTheCalculation')"
       :visible.sync="profileFormDialog"
       :close-on-click-modal="false")
       profile-form(v-on:done="addProfileDone")
@@ -75,7 +75,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'avatar',
-      label: this.$t('foto'),
+      label: this.$t('photo'),
       'min-width': 60,
       align: DataTableColumnAlign.CENTER
     },
@@ -90,17 +90,17 @@ export default class extends Vue {
     },
     {
       prop: 'telephone',
-      label: this.$t('telefon'),
+      label: this.$t('telephone'),
       'min-width': 120
     },
     {
       prop: 'email',
-      label: this.$t('adres-elektronnoi-pochty'),
+      label: this.$t('EMail'),
       'min-width': 250
     },
     {
       prop: 'btn',
-      label: this.$t('key'),
+      label: this.$t('♪'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -128,9 +128,9 @@ export default class extends Vue {
   }
 
   private delUserProfile(usr: IUserProfile) {
-    this.$confirm(this.$t('udalit-uchyotnuyu-zapis')).then(async() => {
+    this.$confirm(this.$t('removeTheRecord?')).then(async() => {
       await delProfile(usr.username)
-      this.$message.success(this.$t('uchyotnaya-zapis-udalena'))
+      this.$message.success(this.$t('recordsRemoved'))
     })
   }
 }

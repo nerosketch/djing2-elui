@@ -21,7 +21,7 @@
             :disabled="!$perms.networks.delete_customeripleasemodel")
   
     el-dialog(
-      :title="$t('izmenenie-sessii')"
+      :title="$t('modificationOfSessions')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       lease-form(v-on:done="frmDone")
@@ -50,34 +50,34 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'ip_address',
-      label: this.$t('ip-adres'),
+      label: this.$t('idres'),
       sortable: true,
       'min-width': 130
     },
     {
       prop: 'lease_time',
-      label: this.$t('vremya-sozdaniya-arendy'),
+      label: this.$t('leasingTime'),
       sortable: true,
       'min-width': 200
     },
     {
       prop: 'last_update',
-      label: this.$t('vremya-poslednego-obnovleniya'),
+      label: this.$t('lastUpdate'),
       'min-width': 200
     },
     {
       prop: 'mac_address',
-      label: this.$t('mac-adres'),
+      label: this.$t('maqueres'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'is_dynamic',
-      label: this.$t('dinamicheskii')
+      label: this.$t('dynamic')
     },
     {
-      prop: 'oper',
-      label: this.$t('oper'),
+      prop: 'op.',
+      label: this.$t('op.'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -93,7 +93,7 @@ export default class extends Vue {
   private async delLease(lease: ICustomerIpLease) {
     this.$confirm(this.$t('deistvitelno-udalit-sessiyu-lease-ip_address', [lease.ip_address])).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
-      this.$message.success(this.$t('sessiya-udalena'))
+      this.$message.success(this.$t('sessionRemoved'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -107,7 +107,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success(this.$t('sessiya-izmenena'))
+    this.$message.success(this.$t('sessionChanged'))
     this.$refs.table.LoadTableData()
     // this.loadLeases()
   }

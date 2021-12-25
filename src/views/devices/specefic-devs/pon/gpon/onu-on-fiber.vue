@@ -7,7 +7,7 @@
       border
       fit)
       el-table-column(
-        :label="$t('tip')"
+        :label="$t('type')"
         min-width="80"
         prop="onu_type")
     
@@ -17,7 +17,7 @@
         prop="onu_port")
     
       el-table-column(
-        :label="$t('seriinik')"
+        :label="$t('serial')"
         min-width="90"
         prop="onu_sn")
 </template>
@@ -48,11 +48,11 @@ export default class extends Vue {
 
   private async loadFibers() {
     if (!this.fiberAddr || this.fiberAddr === 0) {
-      this.$message.error(this.$t('fiberaddr-required'))
+      this.$message.error(this.$t('pyberaddreRequired.'))
       return
     }
     if (this.devId < 1 || !this.devId) {
-      this.$message.error(this.$t('devid-required'))
+      this.$message.error(this.$t('deweedIsARiver.'))
       return
     }
     this.lloading = true
@@ -70,7 +70,7 @@ export default class extends Vue {
 
   private onuRowColor({ row }: ITableRowClassName) {
     switch (row.onu_state) {
-      case 'ok':
+      case 'okay.':
         return ''
       case 'down':
         return 'error-row'

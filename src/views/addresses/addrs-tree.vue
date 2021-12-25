@@ -110,7 +110,7 @@ export default class extends Vue {
 
   private frmAddDone(addr: IAddressModel) {
     this.dialogVisible = false
-    this.$message.success(this.$t('adresnyi-obekt-dobavlen'))
+    this.$message.success(this.$t('addressObjectAdded'))
 
     if (addr.parent_addr) {
       this.$refs.etree.append(addr, addr.parent_addr)
@@ -119,7 +119,7 @@ export default class extends Vue {
 
   private frmChangeDone(addr: IAddressModel) {
     this.dialogVisible = false
-    this.$message.success(this.$t('adresnyi-obekt-izmenyon'))
+    this.$message.success(this.$t('rearObjectChanged'))
 
     if (this.tmpAddrTreeNode) {
       this.tmpAddrTreeNode.data = addr
@@ -153,7 +153,7 @@ export default class extends Vue {
       {
         meta: {
           hidden: true,
-          title: this.$t('adresa')
+          title: this.$t('addresses')
         }
       }
     ] as any)

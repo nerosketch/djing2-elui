@@ -34,7 +34,7 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('nazvanie-gruppy-nado-ukazat'), trigger: 'blur' }
+      { required: true, message: this.$t('nameOfGroup'), trigger: 'blur' }
     ]
   }
 

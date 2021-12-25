@@ -12,7 +12,7 @@
           :disabled="!$perms.is_superuser")
     
       el-button(icon="el-icon-plus", @click="openNew")
-        | {{ $t('dobavit-domen') }}
+        | {{ $t('addTheName') }}
   
     el-dialog(
       :title="dialogTitle"
@@ -55,19 +55,19 @@ export default class extends Vue {
     },
     {
       prop: 'domain',
-      label: this.$t('domen'),
+      label: this.$t('domain'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'name',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       sortable: true,
       'min-width': 250
     },
     {
-      prop: 'oper',
-      label: this.$t('knopki'),
+      prop: 'op.',
+      label: this.$t('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -107,13 +107,13 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = this.$t('saity')
+    document.title = this.$t('sait')
     BreadcrumbsModule.SetCrumbs([
       {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('saity')
+          title: this.$t('sait')
         }
       }
     ] as any)

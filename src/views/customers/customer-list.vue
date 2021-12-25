@@ -198,7 +198,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'house',
-      label: this.$t('nomer-doma-ust'),
+      label: this.$t('houseNumber'),
       sortable: true
     },
     {

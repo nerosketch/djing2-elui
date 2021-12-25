@@ -21,7 +21,7 @@ export default class extends mixins(BtnShareMixin) {
   @Prop({ default: 0 }) private devId!: number | null
 
   private created() {
-    this.btnText = this.$t('udalit-s-olt')
+    this.btnText = this.$t('removeTheAltogether.')
   }
 
   private async delFromOltOnu() {
@@ -41,7 +41,7 @@ export default class extends mixins(BtnShareMixin) {
         this.loading = false
       }
     } else {
-      this.setResState(this.$t('v-knopku-ne-peredano-ustroistvo'), 'danger')
+      this.setResState(this.$t('noDeviceTransmittedToTheButton'), 'danger')
     }
     this.loading = false
   }

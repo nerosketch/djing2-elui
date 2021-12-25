@@ -22,7 +22,7 @@
       .text-404
         .text-404__oops OOPS!
               
-        .text-404__info {{ $t('all-rights-reserved') }}
+        .text-404__info {{ $t('allRatesReserve') }}
           a(
             style="color:#20a0ff"
             href="https://wallstreetcn.com"
@@ -32,11 +32,11 @@
         .text-404__headline {{ message }}
       
         .text-404__info
-          | {{ $t('please-check-that-the-url-you-entered-is-correct-or-click-the-bu') }}
+          | {{ $t('iMSureYouReRight.') }}
       
         a.text-404__return-home(
           href=""
-        ) {{ $t('back-to-home') }}
+        ) {{ $t('iMBeggingYou.') }}
 </template>
 
 <script lang="ts">

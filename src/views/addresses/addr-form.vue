@@ -8,13 +8,13 @@
     el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(:label="$t('uroven-fias')", prop="fias_address_level")
+    el-form-item(:label="$t('fiasLevel')", prop="fias_address_level")
       fias-level-choice(v-model="frmMod.fias_address_level")
   
-    el-form-item(:label="$t('tip-adresa-fias')", prop="fias_address_type")
+    el-form-item(:label="$t('typeOfFiasAddress')", prop="fias_address_type")
       fias-type-choice(v-model="frmMod.fias_address_type", :level="frmMod.fias_address_level")
   
-    el-form-item(:label="$t('tip-adresnogo-obekta')", prop="address_type")
+    el-form-item(:label="$t('typeOfAddressObject')", prop="address_type")
       address-type-choice(v-model="frmMod.address_type")
   
     el-form-item
@@ -32,7 +32,7 @@
         target="_blank"
         type="info"
         icon="el-icon-thumb")
-        | {{ $t('spravochnik-adresnykh-obektov') }}
+        | {{ $t('repertoireOfAddresses') }}
 </template>
 
 <script lang="ts">
@@ -58,17 +58,17 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('nazvanie-nado-ukazat'), trigger: 'blur' },
+      { required: true, message: this.$t('nameShouldBeIndicated'), trigger: 'blur' },
       { validator: this.titleDynamicValidator, trigger: 'change' }
     ],
     address_type: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-vybrat-tip') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickAType.') }
     ],
     fias_address_level: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-vybrat-uroven') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickALevel.') }
     ],
     fias_address_type: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('nuzhno-vybrat-tip-fias') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToPickAFiasType.') }
     ]
   }
 
@@ -78,7 +78,7 @@ export default class extends Vue {
       if (!isNaN(value) && Number(value) > 0) {
         callback()
       } else {
-        callback(new Error(this.$t('dolzhno-soderzhat-tolko-chislo')))
+        callback(new Error(this.$t('onlyNumber')))
       }
     } else {
       callback()

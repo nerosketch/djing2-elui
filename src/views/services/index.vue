@@ -5,7 +5,7 @@
       type="border-card"
     )
       el-tab-pane(
-        :label="$t('tarify')"
+        :label="$t('tariffs')"
         name="services"
         lazy
       )
@@ -13,7 +13,7 @@
           service-list
     
       el-tab-pane(
-        :label="$t('periodicheskie-platezhi')"
+        :label="$t('recurrentPayments')"
         name="periodicpays"
         lazy
       )
@@ -21,7 +21,7 @@
           periodic-pay-list
     
       el-tab-pane(
-        :label="$t('edinorazovye-platezhi')"
+        :label="$t('singlePayments')"
         name="shots"
         lazy
       )

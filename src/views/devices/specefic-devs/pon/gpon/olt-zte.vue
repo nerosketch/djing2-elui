@@ -29,7 +29,7 @@
     el-divider
   
     h4
-      | {{ $t('nezaregistrirovannye-yunity') }}
+      | {{ $t('unregisteredYouth') }}
   
     el-table(
       :data="unregistered"
@@ -38,17 +38,17 @@
       border
       fit)
       el-table-column(
-        :label="$t('mak')"
+        :label="$t('mac.')"
         min-width="150"
         prop="mac")
     
       el-table-column(
-        :label="$t('versiya-proshivki')"
+        :label="$t('livingVersion')"
         min-width="150"
         prop="firmware_ver")
     
       el-table-column(
-        :label="$t('loid-parol')"
+        :label="$t('loiPassword')"
         min-width="100"
         prop="loid_passw")
     
@@ -63,14 +63,14 @@
         prop="sn")
     
       el-table-column(
-        :label="$t('sokhranit')"
+        :label="$t('safe.')"
         min-width="70"
       )
         template(v-slot:default="{row}")
           el-button(icon="el-icon-plus", @click="onSaveOnu(row)")
   
     el-dialog(
-      :title="$t('sokhranit-onu')"
+      :title="$t('keepHimSafe.')"
       :visible.sync="saveOnuFormDialog"
       :close-on-click-modal="false")
       new-dev-form(
@@ -166,7 +166,7 @@ export default class extends Vue {
 
   private frmNewOnuDone(newDev: IDevice) {
     this.saveOnuFormDialog = false
-    this.$message.success(this.$t('novaya-onu-sokhranena'))
+    this.$message.success(this.$t('theNewOneIsRetained.'))
     this.$router.push({ name: 'device-view', params: { devId: newDev.id.toString() } })
   }
 

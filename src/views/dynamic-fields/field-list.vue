@@ -15,10 +15,10 @@
             @click="delDynamicField(row)")
     
       el-button(icon="el-icon-plus", @click="openNew")
-        | {{ $t('dobavit-polya') }}
+        | {{ $t('addFields') }}
   
     el-dialog(
-      :title="$t('pole')"
+      :title="$t('field')"
       :visible.sync="fieldFormVisible"
       :close-on-click-modal="false")
       field-form(@done="formDone")
@@ -53,28 +53,28 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('nazvanie'),
+      label: this.$t('title'),
       'min-width': 150
     },
     {
       prop: 'field_type_name',
-      label: this.$t('tip-polya')
+      label: this.$t('typeOfField')
     },
     {
       prop: 'groups',
-      label: this.$t('gruppy')
+      label: this.$t('panels')
     },
     {
       prop: 'system_tag_name',
-      label: this.$t('sistemnyi-teg')
+      label: this.$t('systemTag')
     },
     {
       prop: 'user_tag',
-      label: this.$t('polzovatelskii-teg')
+      label: this.$t('userTag')
     },
     {
       prop: 'btn',
-      label: this.$t('key'),
+      label: this.$t('♪'),
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -85,9 +85,9 @@ export default class extends Vue {
   }
 
   private delDynamicField(field: IDynamicField) {
-    this.$confirm(`${this.$t('udalit-pole')} ${field.title}?`).then(async() => {
+    this.$confirm(`${this.$t('deleteTheField')} ${field.title}?`).then(async() => {
       await DynamicFieldModule.DeleteField(field.id)
-      this.$message.success(`${this.$t('pole-udaleno')} ${field.title}`)
+      this.$message.success(`${this.$t('fieldRemoved')} ${field.title}`)
       this.$refs.fieldtable.LoadTableData()
     })
   }
@@ -114,7 +114,7 @@ export default class extends Vue {
       {
         meta: {
           hidden: true,
-          title: this.$t('formy')
+          title: this.$t('forms')
         }
       }
     ] as any)

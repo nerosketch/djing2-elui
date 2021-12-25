@@ -31,7 +31,7 @@
           | {{ $t('add') }}
       
         el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
-          | {{ $t('polya') }}
+          | {{ $t('field') }}
   
     el-dialog(
       :title="dialogTitle"
@@ -40,7 +40,7 @@
       pool-form(v-on:done="frmDone")
   
     el-dialog(
-      :title="$t('prinadlezhnost-saitam')"
+      :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(:selectedSiteIds="$store.state.netpool.sites", v-on:save="netpoolSitesSave")
@@ -73,33 +73,33 @@ export default class extends Vue {
 
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'network',
-      label: this.$t('podset'),
+      prop: 'non-Conventional',
+      label: this.$t('sitDown.'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'description',
-      label: this.$t('opisanie'),
+      label: this.$t('description'),
       'min-width': 300
     },
     {
       prop: 'ip_start',
-      label: this.$t('nach-ip'),
+      label: this.$t('nach.'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'ip_end',
-      label: this.$t('kon-ip'),
+      label: this.$t('con.'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'gateway',
-      label: this.$t('shlyuz'),
+      label: this.$t('surface'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
@@ -112,7 +112,7 @@ export default class extends Vue {
     },
     {
       prop: 'usage_count',
-      label: this.$t('vydeleno'),
+      label: this.$t('issued'),
       'min-width': 100,
       align: DataTableColumnAlign.CENTER
     },
@@ -123,8 +123,8 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'oper',
-      label: this.$t('knopki'),
+      prop: 'op.',
+      label: this.$t('buttons'),
       'min-width': 160,
       align: DataTableColumnAlign.CENTER
     }
@@ -158,7 +158,7 @@ export default class extends Vue {
   private delPool(pool: INetworkIpPool) {
     this.$confirm(this.$t('deistvitelno-udalit-pul-pool-network', [pool.network])).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
-      this.$message.success(this.$t('podset-udalena'))
+      this.$message.success(this.$t('substanceRemoved'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -172,7 +172,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success(this.$t('podset-sokhranena'))
+    this.$message.success(this.$t('substanceRetained'))
     this.$refs.table.LoadTableData()
   }
 
@@ -181,7 +181,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('prinadlezhnost-podseti-saitam-sokhranena'))
+      this.$message.success(this.$t('webOwnershipMaintained'))
     })
     this.sitesDlg = false
   }

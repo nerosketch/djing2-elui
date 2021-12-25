@@ -1,28 +1,28 @@
 <template lang="pug">
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix {{ $t('detali-zadachi') }}
+      .clearfix {{ $t('targets') }}
     p {{ $t('opisanie-store-state-task-descr', [$store.state.task.descr]) }}
     p {{ $t('avtor-zadachi', [$store.state.task.author_full_name]) }}
-    div {{ $t('ispolniteli') }}
+    div {{ $t('implementers') }}
       ul
         li(v-for="rec in taskRecipients" :key='rec.id') {{ rec.full_name || rec.username }}
-    b {{ $t('prioritet') }}
+    b {{ $t('priority') }}
     span {{ $store.state.task.priority_name }}
     br
-    b {{ $t('zadacha-deistvitelna-do') }}
+    b {{ $t('targetValidUntil') }}
     span {{ $store.state.task.task_out_date }}
     br
-    b {{ $t('data-sozdaniya') }}
+    b {{ $t('dateOfEstablishment') }}
     span {{ $store.state.task.time_of_create }}
     br
-    b {{ $t('vremeni-ostalos') }}
+    b {{ $t('timeLeft:') }}
     span {{ $store.state.task.task_time_diff }}
     br
-    b {{ $t('kharakter-polomki') }}
+    b {{ $t('natureOfFracture') }}
     span {{ $store.state.task.mode_str }}
     br
-    b {{ $t('sostoyanie') }}
+    b {{ $t('status') }}
     span {{ $store.state.task.state_str }}
     br
     b {{ $t('customer') }}

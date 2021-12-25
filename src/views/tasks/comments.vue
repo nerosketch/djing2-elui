@@ -49,7 +49,7 @@ export default class extends Vue {
 
   private async delComment(commentId: number) {
     await delComment(commentId)
-    this.$message.success(this.$t('kommentarii-udalyon'))
+    this.$message.success(this.$t('commentDeleted'))
     this.loadComments()
   }
 }
