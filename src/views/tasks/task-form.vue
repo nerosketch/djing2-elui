@@ -69,7 +69,7 @@
           icon="el-icon-delete"
           @click="onDel"
           :disabled="!$perms.tasks.delete_task")
-          | {{ $t('delete.') }}
+          | {{ $t('del') }}
 
         el-button(
           v-if="!isNewTask"

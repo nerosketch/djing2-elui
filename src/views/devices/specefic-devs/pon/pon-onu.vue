@@ -59,7 +59,7 @@
             icon="el-icon-delete"
             @click="delDevice"
             :disabled="!$perms.devices.delete_device")
-            | {{ $t('delete.') }}
+            | {{ $t('del') }}
 
     el-col(:lg="12", :sm="24")
       el-card(shadow="never", body-style="padding: 10px;")

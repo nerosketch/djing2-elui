@@ -117,7 +117,7 @@
               icon="el-icon-delete"
               @click="onDel(gw)"
               :disabled="!$perms.gateways.delete_gateway")
-              | {{ $t('delete.') }}
+              | {{ $t('del') }}
 
     el-button(
       type="success"
