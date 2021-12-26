@@ -31,6 +31,7 @@ export default {
   customer: "Абонент",
   customers: {
     afkFilter: "Фильтр afk",
+    ipPool: "IP Pool",
     periodicPay: "Периодический платёж",
     dateNextPay: "Дата следующего платежа",
     lastPay: "Последний платёж",
@@ -57,7 +58,6 @@ export default {
     howMuchAddition: "Укажи сколько денег надо положить на счёт",
     additionMoreThanForbidden: "Нельзя пополнять больше чем на",
     withdrawalMoreThanForbidden: "Нельзя снимать больше чем",
-    ipPool: "IP Pool",
     poolsNotExists: "Нет пулов",
     badIp: "Не правильный ip",
     badMac: "Не правильный mac",
@@ -445,9 +445,8 @@ export default {
   notSpecified: "не определено",
   notDefined: "Не определён",
   notTransferred: "Не передан ID задачи",
-  "doesnTSoundLikeEMailAddress": "Не похоже на адрес почты",
-  "notRemoved":
-    "Не удалили, похоже уже кто-то удалил",
+  doesnTSoundLikeEMailAddress: "Не похоже на адрес почты",
+  notRemoved: "Не удалили, похоже уже кто-то удалил",
   notAvailable: "Не удалось получить группы",
   notSelected: "Не выбрано",
   insufficientRights: "Недостаточно прав",
@@ -653,9 +652,9 @@ export default {
   recordRetained: "Учётка сохранена",
   recordsRemoved: "Учётная запись удалена",
   records: "Учётные записи",
-  "removeSubscribersGroup": "Удалить группу абонентов?",
-  "removeOptsFromPort": "Удалить настройки с порта?",
-  "removePayGWQuestion": "Удалить платёжный шлюз?",
+  removeSubscribersGroup: "Удалить группу абонентов?",
+  removeOptsFromPort: "Удалить настройки с порта?",
+  removePayGWQuestion: "Удалить платёжный шлюз?",
   deleteTheField: "Удалить поле",
   removeTheAltogether: "Удалить с OLT",
   removeGatewayQuestion: "Удалить шлюз доступа абонентов?",
@@ -717,6 +716,6 @@ export default {
   closed: "Закрыт",
   complete: "Завершить",
   areYSureFinishSession: "Завершить сессию?",
-  iron: "Железка",
+  device: "Железка",
   yellowTriangle: "жёлтый треугольник"
 };
