@@ -277,6 +277,7 @@ export default {
     reports: 'Отчёты',
     domains: 'Домены',
     messengers: 'Мессенжеры',
+    settings: 'Настройки',
     exit: 'Exit'
   },
   portSubscribers: "Абоненты на порту",

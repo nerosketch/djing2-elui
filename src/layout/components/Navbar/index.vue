@@ -17,7 +17,7 @@
           el-button(
             icon="el-icon-search"
             @click="doSearch"
-            title="Поиск"
+            :title="$t('search')"
           )
 
     .right-menu
@@ -41,6 +41,8 @@
               el-dropdown-item {{ $t('optMenu.domains') }}
             router-link(to='/messenger')
               el-dropdown-item {{ $t('optMenu.messengers') }}
+            router-link(:to="{name: 'profileDetail', params:{ profileUname: $store.state.currentuserprofile.username }}")
+              el-dropdown-item {{ $t('optMenu.settings') }}
             el-dropdown-item(divided)
               span(
                 style="display:block;"

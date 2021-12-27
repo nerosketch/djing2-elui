@@ -279,6 +279,7 @@ export default {
     reports: 'Reports',
     domains: 'Domain',
     messengers: 'Messengers',
+    settings: 'Settings',
     exit: 'Exit'
   },
   portSubscribers: "Port subscribers",
