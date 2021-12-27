@@ -17,7 +17,7 @@ export default {
   ipAddress: "IP Address",
   macAddress: "MAC Address",
   addDocument: "Add document",
-  defaultCurrencySymbol: "$",
+  defaultCurrencySymbol: "₽",
   loading: "Loading ...",
   attention: "Attention",
   view: "View",
