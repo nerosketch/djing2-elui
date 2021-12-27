@@ -40,13 +40,14 @@
 </template>
 
 <script lang="ts">
+  import i18n from '@/lang'
   import { Component, Vue } from 'vue-property-decorator'
 
   @Component({
     name: 'Page404'
   })
   export default class extends Vue {
-    private message = this.$t('404nf')
+    private message = i18n.t('404nf')
   }
 </script>
 

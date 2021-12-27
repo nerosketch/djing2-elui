@@ -21,7 +21,7 @@ export default class extends mixins(BtnShareMixin) {
   @Prop({ default: 0 }) private devId!: number | null
 
   private created() {
-    this.btnText = this.$t('removeTheAltogether')
+    this.btnText = this.$t('removeFromOLT')
   }
 
   private async delFromOltOnu() {

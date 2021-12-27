@@ -17,7 +17,7 @@
             @click="openDevForm")
 
         .text.item.list-item
-          | {{ $t('ip-adres-device-ip_address-or-or', [device.ip_address || '-']) }}
+          | {{ $t('ipAddress', [device.ip_address || '-']) }}
 
         .text.item.list-item
           b
@@ -38,7 +38,7 @@
 
         .text.item.list-item(v-if="device.iface_name")
           b
-            | {{ $t(:') }}
+            | {{ $t('interface') }}
           | {{ device.iface_name }}
 
         .text.item.list-item
@@ -86,18 +86,18 @@
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
               b
-                | {{ $t('signalLevel:') }}
+                | {{ $t('signalLevel') }}
               | {{ onuDetails.signal }}
 
             .text.item.list-item
               b
-                | {{ $t('macSAddressFromTheOLT') }}
+                | {{ $t('macAddrFromOLT') }}
               | {{ macFromOlt }}
 
-            .text.item.list-item(v-for="(inf, i) in onuDetails.info", :key="i")
-              b
-                | {{ $t('inf-0', [inf[0]]) }}
-              | {{ inf[1] }}
+            template(v-for="(inf, i) in onuDetails.info" v-if="inf[1]")
+              .text.item.list-item(:key="i")
+                  b {{ inf[0] }}:&nbsp;
+                  | {{ inf[1] || '-' }}
 
         el-row(v-else)
           el-col

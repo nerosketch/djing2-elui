@@ -16,7 +16,7 @@
           dl
             dt
               b
-                | {{ $t('idres') }}
+                | {{ $t('ipAddress') }}
 
             dd
               | {{ gw.ip_address }}

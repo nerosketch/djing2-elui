@@ -6,7 +6,7 @@
     :model="frmMod"
     v-loading="isLoading")
     el-form-item(
-      :label="$t('idres')"
+      :label="$t('ipAddress')"
       prop="ip_address"
     )
       el-input(v-model="frmMod.ip_address")

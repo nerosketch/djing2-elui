@@ -168,7 +168,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'ip_address',
-      label: this.$t('idres'),
+      label: this.$t('ipAddress'),
       'min-width': 120
     },
     {

@@ -55,8 +55,9 @@ import { IVlanIf } from '@/api/networks/types'
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
+import i18n from '@/lang'
 
-const multipleAccessVlanMsg = this.$t('portCanTContainMoreThanOneAcques')
+const multipleAccessVlanMsg = i18n.t('portCanTContainMoreThanOneAcques')
 
 @Component({
   name: 'GenericVlanConfig'

@@ -2,10 +2,10 @@
   el-card(shadow="never", v-if="currentConfig.vlanConfig.length > 0")
     template(v-slot:header)
       span
-        | {{ $t('onboardConfigurationOptions') }}
+        | {{ $t('ONUConfigurationOptions') }}
 
     span
-      | {{ $t('heSGotAScalpForTheMan') }}
+      | {{ $t('onuConfigTemplate') }}
 
     el-select(
       v-model="currentConfig.configTypeCode"
