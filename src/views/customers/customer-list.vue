@@ -9,7 +9,7 @@
             :street.sync="filterForm.street"
             :fetchGroups="fetchGroups")
     
-      el-col(:lg="24", :md="20")
+      el-col(:lg="24" :md="20")
         datatable(
           :columns="tableColumns"
           :getData="getAllCustomers"
@@ -20,25 +20,25 @@
           ref="tbl"
           :selectable="$perms.is_superuser"
           @selection-change="handleSelectionChange")
-          template(v-if="$perms.is_superuser", #id="{row}")
-            slot(name="id", :row="row")
+          template(v-if="$perms.is_superuser" #id="{row}")
+            slot(name="id" :row="row")
               el-button(
                 v-if="$perms.is_superuser"
                 icon="el-icon-lock"
                 @click="openPermsDialog(row)")
         
           template(#username="{row}")
-            slot(name="username", :row="row")
+            slot(name="username" :row="row")
               router-link(:to="{name: 'customerDetails', params:{uid: row.id }}")
                 | {{ row.username }}
         
           template(#telephone="{row}")
-            slot(name="telephone", :row="row")
-              el-link(type="primary", :href="`tel:${row.telephone}`")
+            slot(name="telephone" :row="row")
+              el-link(type="primary" :href="`tel:${row.telephone}`")
                 | {{ row.telephone }}
         
           template(#marker_icons="{row}")
-            slot(name="marker_icons", :row="row")
+            slot(name="marker_icons" :row="row")
               template(v-if="row.marker_icons.length > 0")
                 span.m-icon(
                   v-for="(ic, i) in row.marker_icons"
@@ -48,7 +48,7 @@
               span(v-else)
         
           template(#ping="{row}")
-            slot(name="ping", :row="row")
+            slot(name="ping" :row="row")
               ping-profile(:customer="row")
         
           slot(name="buttons")
@@ -66,7 +66,7 @@
                 v-if="isSomeoneSelected")
                 | {{ $t('customers.sites') }}
             
-              el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+              el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
                 | {{ $t('route.forms') }}
             
               slot(name="additional_button")
@@ -80,7 +80,7 @@
           :visible.sync="addCustomerDialog"
           top="5vh"
           :close-on-click-modal="false")
-          new-customer-form(:selectedAddress="addrId", v-on:done="addFrmDone")
+          new-customer-form(:selectedAddress="addrId" v-on:done="addFrmDone")
     
       slot(name="dialog_rights")
         el-dialog(

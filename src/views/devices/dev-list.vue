@@ -8,23 +8,23 @@
           :street.sync="filterForm.street"
           :fetchGroups="fetchGroups")
 
-      el-col(:lg="24", :md="20")
+      el-col(:lg="24" :md="20")
         datatable(
           :columns="tableColumns"
           :getData="loadDevs"
-          :heightDiff="118"
+          :heightDiff="165"
           :editFieldsVisible.sync="editFieldsVisible"
           widthStorageNamePrefix="devs"
           ref="tbl")
           template(v-slot:comment="{row}")
-            router-link.el-link.el-link--primary.is-underline(v-if="$perms.devices.view_device", :to="{name: 'device-view', params: { devId: row.id }}")
-              | {{ row.comment }}
+            router-link.el-link.el-link--primary.is-underline(
+              v-if="$perms.devices.view_device"
+              :to="{name: 'device-view', params: { devId: row.id }}"
+            ) {{ row.comment }}
 
-            span(v-else)
-              | {{ row.comment }}
+            span(v-else) {{ row.comment }}
 
-          template(v-slot:ip_address="{row}")
-            | {{ row.ip_address || '-' }}
+          template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
 
           template(v-slot:status="{row}")
             boolean-icon(v-model="row.status")
@@ -34,7 +34,7 @@
 
           template(v-slot:oper="{row}")
             el-button-group
-              el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+              el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
                 | C
 
               el-button(
@@ -60,7 +60,7 @@
               :disabled="!$perms.devices.add_device")
               | {{ $t('addTheDevice') }}
 
-            el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+            el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
               | {{ $t('field') }}
 
     el-dialog(
@@ -99,7 +99,10 @@
       :title="$t('maintenanceOfWebsiteEquipment')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.devicemodule.sites", v-on:save="devSitesSave")
+      sites-attach(
+        :selectedSiteIds="$store.state.devicemodule.sites"
+        v-on:save="devSitesSave"
+      )
 </template>
 
 <script lang="ts">
