@@ -34,20 +34,22 @@
         template(v-slot:dropdown)
           el-dropdown-menu
             router-link(to="/customers")
-              el-dropdown-item {{ $t('optMenu.home') }}
+              el-dropdown-item(icon='el-icon-s-home') {{ $t('optMenu.home') }}
             router-link(to="/reports")
-              el-dropdown-item {{ $t('optMenu.reports') }}
+              el-dropdown-item(icon='el-icon-s-order') {{ $t('optMenu.reports') }}
             router-link(to="/sites" v-if="$perms.is_superuser")
-              el-dropdown-item {{ $t('optMenu.domains') }}
+              el-dropdown-item(icon='el-icon-eleme') {{ $t('optMenu.domains') }}
             router-link(to='/messenger')
-              el-dropdown-item {{ $t('optMenu.messengers') }}
+              el-dropdown-item(icon='el-icon-s-promotion') {{ $t('optMenu.messengers') }}
             router-link(:to="{name: 'profileDetail', params:{ profileUname: $store.state.currentuserprofile.username }}")
-              el-dropdown-item {{ $t('optMenu.settings') }}
+              el-dropdown-item(icon='el-icon-s-tools') {{ $t('optMenu.settings') }}
             el-dropdown-item(divided)
               span(
                 style="display:block;"
                 @click="logout"
-              ) {{ $t('optMenu.exit') }}
+              )
+                i.el-icon-switch-button
+                | {{ $t('optMenu.exit') }}
 </template>
 
 <script lang="ts">
