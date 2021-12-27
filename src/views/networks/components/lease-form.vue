@@ -12,7 +12,7 @@
       el-input(v-model="frmMod.ip_address")
 
     el-form-item(
-      :label="$t('maqueres')"
+      :label="$t('macAddress')"
       prop="mac_address"
     )
       el-input(v-model="frmMod.mac_address")

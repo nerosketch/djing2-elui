@@ -27,7 +27,7 @@
             :class-name="col.cutLeft ? 'col-cut-left' : undefined"
             v-bind="col")
             template(v-slot:default="{row}")
-              slot(:name="col.prop", :row="row")
+              slot(:name="col.prop" :row="row")
                 | {{ row[col.prop] }}
   
     slot(name="default")

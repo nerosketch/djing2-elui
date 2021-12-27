@@ -45,7 +45,7 @@
           | {{ $t('field') }}
 
     el-dialog(
-      :title="$t('isnew-sozdanie-izmenenie-uslugi', [(isNew ? `Создание` : `Изменение`)])"
+      :title="isNew ? 'Создание' : 'Изменение'"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       service-form(v-on:done="frmDone")
@@ -150,7 +150,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'op',
+      prop: 'oper',
       label: this.$t('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
@@ -175,6 +175,7 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
+  //- TODO: translate
   private async delSrv(srv: IService) {
     if (confirm(this.$t('deistvitelno-udalit-uslugu-srv-title', [srv.title]))) {
       await ServiceModule.DelService(srv.id)

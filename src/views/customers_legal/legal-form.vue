@@ -17,7 +17,7 @@
     el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
 
-    el-form-item(:label="$t('typeOfLawn')", prop="legal_type")
+    el-form-item(:label="$t('typeOfLegal')", prop="legal_type")
       legal-type-choice(v-model="frmMod.legal_type")
 
     el-form-item(:label="$t('legalAddress')", prop="address")
@@ -53,10 +53,10 @@
     el-form-item(:label="$t('inn')", prop="tax_number")
       el-input(v-model="frmMod.tax_number", type="number")
 
-    el-form-item(:label="$t('grun')", prop="state_level_reg_number")
+    el-form-item(label="ОГРН", prop="state_level_reg_number")
       el-input(v-model="frmMod.state_level_reg_number", type="number")
 
-    el-form-item(:label="$t('effectiveDate')")
+    el-form-item(:label="$t('contractDocs.dateBegin')")
       el-date-picker(
         v-model="frmMod.actual_start_time"
         type="datetime"

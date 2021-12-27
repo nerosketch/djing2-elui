@@ -8,10 +8,10 @@
       ref="table")
       template(v-slot:oper="{row}")
         el-button-group
-          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
         
-          el-button(icon="el-icon-edit", @click="openEdit(row)")
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
         
           el-button(
             type="danger"
@@ -27,7 +27,7 @@
         | {{ $t('add') }}
   
     el-dialog(
-      :title="$t('isnew-sozdanie-izmenenie-periodicheskogo-platezha', [(isNew ? `Создание` : `Изменение`)])"
+      :title="isNew ? 'Создание' : 'Изменение'"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       periodicpay-form(v-on:done="frmDone")
@@ -77,7 +77,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'op',
+      prop: 'oper',
       label: this.$t('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER

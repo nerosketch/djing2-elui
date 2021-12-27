@@ -76,7 +76,7 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         legend: {
-          data: [this.$t('kbytes'), this.$t('packages')]
+          data: [this.$t('kbytes'), this.$t('outgoingPackets')]
         },
         series: [{
           name: this.$t('kbytes'),
@@ -94,7 +94,7 @@ export default class extends mixins(ResizeMixin) {
           animationEasing: 'cubicInOut'
         },
         {
-          name: this.$t('packages'),
+          name: this.$t('outgoingPackets'),
           smooth: false,
           type: 'line',
           itemStyle: {

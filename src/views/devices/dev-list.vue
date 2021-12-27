@@ -178,7 +178,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'mac_addr',
-      label: this.$t('maqueres'),
+      label: this.$t('macAddress'),
       'min-width': 150
     },
     {
@@ -198,7 +198,7 @@ export default class extends mixins(TableWithAddrMixin) {
       label: this.$t('effectiveDate')
     },
     {
-      prop: 'op',
+      prop: 'oper',
       label: this.$t('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER

@@ -51,7 +51,7 @@ export default class extends Vue {
     },
     {
       prop: 'ip_lease_mac',
-      label: this.$t('maqueres'),
+      label: this.$t('macAddress'),
       sortable: true,
       'min-width': 150
     },
@@ -69,15 +69,15 @@ export default class extends Vue {
     },
     {
       prop: 'h_input_packets',
-      label: this.$t('incomingPackages')
+      label: this.$t('incomingPackets')
     },
     {
       prop: 'h_output_packets',
-      label: this.$t('packages')
+      label: this.$t('outgoingPackets')
     },
     {
-      prop: 'op',
-      label: this.$t('op'),
+      prop: 'oper',
+      label: '#',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

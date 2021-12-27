@@ -82,8 +82,8 @@ export default class extends Vue {
       'min-width': 100
     },
     {
-      prop: 'op',
-      label: this.$t('op'),
+      prop: 'oper',
+      label: '#',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

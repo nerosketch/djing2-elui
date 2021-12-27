@@ -67,7 +67,7 @@ export default class extends Vue {
     },
     {
       prop: 'mac_address',
-      label: this.$t('maqueres'),
+      label: this.$t('macAddress'),
       sortable: true,
       'min-width': 150
     },
@@ -76,8 +76,8 @@ export default class extends Vue {
       label: this.$t('dynamic')
     },
     {
-      prop: 'op',
-      label: this.$t('op'),
+      prop: 'oper',
+      label: '#',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

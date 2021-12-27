@@ -4,11 +4,14 @@
       :columns="tableColumns"
       :getData="loadGroups"
       widthStorageNamePrefix="groups"
-      ref="grouptable")
-      template(v-slot:oper="{row}")
+      ref="grouptable"
+    )
+      template(#oper="{row}")
         el-button-group
-          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
-            | C
+          el-button(
+            v-if="$perms.is_superuser"
+            @click="openSitesDlg(row)"
+          ) C
 
           el-button(
             icon="el-icon-lock"
@@ -39,7 +42,7 @@
       group-form(v-on:done="frmDone")
 
     el-dialog(
-      :title="`${$t('whoSEntitledToAGroupOfSubscribers')} ${GroupTitleGetter}`"
+      :title="`${$t('whoSEntitledToAGroupOfSubscribers')} \"${GroupTitleGetter}\"`"
       :visible.sync="permsDialog"
       top="5vh"
       :close-on-click-modal="false")
@@ -92,7 +95,7 @@ export default class extends Vue {
       'min-width': 250
     },
     {
-      prop: 'op',
+      prop: 'oper',
       label: this.$t('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
@@ -135,7 +138,7 @@ export default class extends Vue {
   }
 
   private delGroup(group: IGroup) {
-    this.$confirm(`${this.$t('itSTrueToRemoveTheGroup')} ${group.title}?`).then(async() => {
+    this.$confirm(`${this.$t('areUSuretRemoveGroup')} ${group.title}?`).then(async() => {
       await GroupModule.DelGroup(group.id)
       this.$message.success(`${this.$t('groupRemoved')} ${group.title}`)
       this.$refs.grouptable.LoadTableData()

@@ -3,8 +3,7 @@
     el-collapse-item
       template(slot="title")
         el-form-item(:label="$t('customers.fio')", style="margin-bottom: 0")
-          b
-            | {{ origValue }}
+          b {{ origValue }}
     
       el-form(
         status-icon

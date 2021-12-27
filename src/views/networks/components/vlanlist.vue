@@ -9,7 +9,7 @@
       ref="table")
       template(v-slot:ismng="{row}")
         boolean-icon(v-model="row.is_management")
-          | {{ row.is_management ? 'Да' : 'Нет' }}
+          | &nbsp;{{ row.is_management ? $t('yes') : $t('sno') }}
     
       template(v-slot:oper="{row}")
         el-button-group
@@ -96,7 +96,7 @@ export default class extends mixins(VlanMixin) {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'op',
+      prop: 'oper',
       label: this.$t('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
@@ -126,7 +126,7 @@ export default class extends mixins(VlanMixin) {
   }
 
   private async delVlan(vlan: IVlanIf) {
-    this.$confirm(this.$t('deistvitelno-udalit-vlan-vlan-title', [vlan.title])).then(async() => {
+    this.$confirm(this.$t('aus2delVlan', [vlan.title])).then(async() => {
       await VlanIfModule.DelVlan(vlan.id)
       this.$message.success(this.$t('weReCleared'))
       this.$refs.table.LoadTableData()

@@ -16,7 +16,7 @@
           task-list(tabUrl="get_finished")
     
       el-tab-pane(
-        :label="$t('challenges')"
+        :label="$t('failedChallenges')"
         name="tf"
         lazy)
         keep-alive

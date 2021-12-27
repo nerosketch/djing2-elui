@@ -74,7 +74,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'network',
-      label: this.$t('sitDown'),
+      label: this.$t('subnet'),
       sortable: true,
       'min-width': 150
     },
@@ -99,14 +99,14 @@ export default class extends Vue {
     },
     {
       prop: 'gateway',
-      label: this.$t('surface'),
+      label: this.$t('gateway'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'is_dynamic',
-      label: 'Д',
+      label: 'D',
       'min-width': 40,
       align: DataTableColumnAlign.CENTER
     },
@@ -123,7 +123,7 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     },
     {
-      prop: 'op',
+      prop: 'oper',
       label: this.$t('buttons'),
       'min-width': 160,
       align: DataTableColumnAlign.CENTER
@@ -156,7 +156,7 @@ export default class extends Vue {
   }
 
   private delPool(pool: INetworkIpPool) {
-    this.$confirm(this.$t('deistvitelno-udalit-pul-pool-network', [pool.network])).then(async() => {
+    this.$confirm(this.$t('aus2delIpPool', [pool.network])).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
       this.$message.success(this.$t('substanceRemoved'))
       this.$refs.table.LoadTableData()

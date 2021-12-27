@@ -7,25 +7,25 @@
     :model="frmMod"
     v-loading="isLoading")
     el-form-item(
-      :label="$t('sitDown')"
+      :label="$t('subnet')"
       prop="network"
     )
       el-input(v-model="frmMod.network")
 
-    el-form-item(:label="$t('startIp')", prop="ip_start")
+    el-form-item(:label="$t('startIp')" prop="ip_start")
       el-input(v-model="frmMod.ip_start")
 
-    el-form-item(:label="$t('ipend')", prop="ip_end")
+    el-form-item(:label="$t('ipend')" prop="ip_end")
       el-input(v-model="frmMod.ip_end")
 
     el-form-item(:label="$t('route.groups')")
-      groups-choice(v-model="frmMod.groups", multiple)
+      groups-choice(v-model="frmMod.groups" multiple)
 
-    el-form-item(:label="$t('surface')", prop="gateway")
+    el-form-item(:label="$t('gateway')" prop="gateway")
       el-input(v-model="frmMod.gateway")
 
     el-form-item(label="Vlan")
-      el-select(v-model="frmMod.vlan_if", v-loading="vlanLoading")
+      el-select(v-model="frmMod.vlan_if" v-loading="vlanLoading")
         el-option(
           v-for="v in vlans"
           :key="v.id"

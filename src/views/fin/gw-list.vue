@@ -81,7 +81,7 @@ export default class extends Vue {
     },
     {
       prop: 'servants',
-      label: this.$t('the')
+      label: this.$t('path')
     },
     {
       prop: 'secret',
@@ -92,7 +92,7 @@ export default class extends Vue {
       label: this.$t('numberOfPayments')
     },
     {
-      prop: 'op',
+      prop: 'oper',
       label: this.$t('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER

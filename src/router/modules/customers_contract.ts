@@ -10,7 +10,7 @@ const customerContractRoutes: RouteConfig = {
       name: 'customersLink',
       component: () => import(/* webpackChunkName: "contract-customer-locations" */ '@/views/customers_contract/index.vue'),
       meta: {
-        title: 'Абоненты',
+        title: 'customers',
         icon: 'el-icon-user-solid'
       }
     },
