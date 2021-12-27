@@ -3,7 +3,7 @@
     el-alert(
       v-if="$store.state.userprofile.is_superuser"
       :title="$t('attention')"
-      description="Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно"
+      :description="$t('profiles.ifSupersuerRights')"
       type="warning"
       effect="dark"
       :closable="false"
@@ -15,7 +15,7 @@
       :props="prop"
       :data="allPerms"
       :left-default-checked="leftChecked"
-      :titles="['Все права', 'Назначенные права']")
+      :titles="[$t('profiles.allRights'), $t('profiles.assignedRights')]")
       template(v-slot:left-footer)
         el-button.transfer-footer(@click="selectReadonly")
           | {{ $t('giveReadingRights') }}

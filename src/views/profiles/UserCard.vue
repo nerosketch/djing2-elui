@@ -30,12 +30,12 @@ el-card(style='margin-bottom:20px;')
             b {{ $t('nameAndFatherhood') }}
           dd {{ $store.state.userprofile.fio }}
           dt
-            b {{ $t('on') }}
+            b {{ $t('profiles.isActive') }}
           dd
             i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
             i.el-icon-circle-close(v-else)
           dt
-            b {{ $t('superman') }}
+            b {{ $t('profiles.isSuperuser') }}
           dd
             i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
             i.el-icon-circle-close(v-else)

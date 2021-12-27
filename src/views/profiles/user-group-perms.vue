@@ -5,7 +5,7 @@
       :props="prop"
       :data="allPerms"
       :left-default-checked="leftChecked"
-      :titles="['Все права', 'Назначенные права']")
+      :titles="[$t('profiles.allRights'), $t('profiles.assignedRights')]")
       template(v-slot:left-footer)
         el-button.transfer-footer(@click="selectReadonly")
           | {{ $t('giveReadingRights') }}

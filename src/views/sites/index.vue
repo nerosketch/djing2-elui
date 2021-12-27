@@ -12,7 +12,7 @@
           :disabled="!$perms.is_superuser")
     
       el-button(icon="el-icon-plus", @click="openNew")
-        | {{ $t('addTheName') }}
+        | {{ $t('addDomain') }}
   
     el-dialog(
       :title="dialogTitle"
@@ -80,7 +80,7 @@ export default class extends Vue {
     } else {
       t = this.$t('change').toString()
     }
-    return this.$t('t-domen', [t])
+    return this.$t('sites.addDomain')
   }
 
   private loadSites(params?: IDRFRequestListParameters) {
@@ -107,13 +107,13 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = this.$t('sait')
+    document.title = this.$t('sites.site')
     BreadcrumbsModule.SetCrumbs([
       {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('sait')
+          title: this.$t('sites.site')
         }
       }
     ] as any)

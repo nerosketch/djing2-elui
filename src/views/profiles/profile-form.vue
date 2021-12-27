@@ -18,17 +18,17 @@
         value-format="yyyy-MM-dd"
         format="d.MM.yyyy")
 
-    el-form-item(:label="$t('on')")
+    el-form-item(:label="$t('profiles.isActive')")
       el-switch(v-model="frmMod.is_active")
 
       small
-        | {{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}
+        | {{ frmMod.is_active ? '' : ' ' + $t('profiles.ifNotActive') }}
 
-    el-form-item(:label="$t('superman')")
+    el-form-item(:label="$t('profiles.isSuperuser')")
       el-switch(v-model="frmMod.is_superuser")
 
       small
-        | {{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}
+        | {{ frmMod.is_superuser ? ' ' + $t('profiles.ifSuperuser') : '' }}
 
     el-form-item(:label="$t('telephoneNumber')", prop="telephone")
       el-input(v-model="frmMod.telephone")
@@ -51,7 +51,7 @@
           :type="isNew ? 'success' : 'primary'"
           @click="onSubmit"
           icon="el-icon-upload")
-          | {{ isNew ? 'Добавить' : 'Сохранить' }}
+          | {{ isNew ? $t('add') : $t('save') }}
 
         template(v-if="!isNew")
           el-button(@click="openPasswordForm", icon="el-icon-lock")
@@ -62,7 +62,7 @@
               | {{ $t('userGroups') }}
 
             el-button(@click="sitesDlg = true", icon="el-icon-lock")
-              | {{ $t('sait') }}
+              | {{ $t('sites.site') }}
 
     el-dialog(
       :title="$t('changeThePassword')"
@@ -170,8 +170,6 @@ export default class extends Vue {
             this.$message.success(this.$t('recordRetained'))
           }
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.loading = false
         }

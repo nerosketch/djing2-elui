@@ -55,8 +55,6 @@ export default class extends Vue {
         this.$message.success(this.$t('groupAmended'))
       }
       this.$emit('done', changedUGroup)
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }
