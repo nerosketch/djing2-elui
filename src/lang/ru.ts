@@ -29,6 +29,7 @@ export default {
   telValidation: "+[7,8,9,3] и 10,11 цифр",
   "404nf": "404 Page Not Found",
   customer: "Абонент",
+  search: 'Поиск',
   customers: {
     afkFilter: "Фильтр afk",
     ipPool: "IP Pool",
@@ -270,6 +271,13 @@ export default {
     addCustomerContract: "Добавить договор абоненту",
     delQuestion: "Удалить договор с абонентом?",
     delOk: "Договор успешно удалён"
+  },
+  optMenu: {
+    home: 'Домашняя',
+    reports: 'Отчёты',
+    domains: 'Домены',
+    messengers: 'Мессенжеры',
+    exit: 'Exit'
   },
   portSubscribers: "Абоненты на порту",
   noSubscribersFoundOnThePort: "Абоненты на порту не найдены",

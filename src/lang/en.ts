@@ -29,6 +29,7 @@ export default {
   telValidation: "+[7,8,9,3] and 10,11 digits",
   "404nf": "404 Page Not Found",
   customer: "Customer",
+  search: 'Search',
   customers: {
     afkFilter: "Filter AFK",
     ipPool: "IP Pool",
@@ -272,6 +273,13 @@ export default {
     addCustomerContract: "Add the contract to the subscriber",
     delQuestion: "Remove the contract with the subscriber?",
     delOk: "Successfully removed"
+  },
+  optMenu: {
+    home: 'Home',
+    reports: 'Reports',
+    domains: 'Domain',
+    messengers: 'Messengers',
+    exit: 'Exit'
   },
   portSubscribers: "Port subscribers",
   noSubscribersFoundOnThePort: "No subscribers found on the port",

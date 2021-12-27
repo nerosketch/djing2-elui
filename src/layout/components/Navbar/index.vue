@@ -10,7 +10,7 @@
     )
       el-input(
         v-model="searchStr"
-        placeholder="Поиск"
+        :placeholder="$t('search')"
         prefix-icon="el-icon-search"
       )
         template(v-slot:append)
@@ -34,18 +34,18 @@
         template(v-slot:dropdown)
           el-dropdown-menu
             router-link(to="/customers")
-              el-dropdown-item Домашняя
+              el-dropdown-item {{ $t('optMenu.home') }}
             router-link(to="/reports")
-              el-dropdown-item Отчёты
+              el-dropdown-item {{ $t('optMenu.reports') }}
             router-link(to="/sites" v-if="$perms.is_superuser")
-              el-dropdown-item Домены
+              el-dropdown-item {{ $t('optMenu.domains') }}
             router-link(to='/messenger')
-              el-dropdown-item Мессенжеры
+              el-dropdown-item {{ $t('optMenu.messengers') }}
             el-dropdown-item(divided)
               span(
                 style="display:block;"
                 @click="logout"
-              ) Выйти
+              ) {{ $t('optMenu.exit') }}
 </template>
 
 <script lang="ts">
