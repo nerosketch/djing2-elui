@@ -1,6 +1,6 @@
 <template lang="pug">
   el-form(:model="frmMod", v-loading="loading")
-    el-form-item(:label="$t('customersLegal.branch')", prop="customer")
+    el-form-item(:label="$t('customersLegal.branch')" prop="customer")
       customer-field(v-model="frmMod.branch")
   
     el-form-item

@@ -8,16 +8,16 @@
       ref="tbl")
       template(v-slot:btn="{row}")
         el-button-group
-          el-button(icon="el-icon-lock", @click="editGroupPerms(row)")
+          el-button(icon="el-icon-lock" @click="editGroupPerms(row)")
 
-          el-button(icon="el-icon-edit", @click="editNewUserGroup(row)")
+          el-button(icon="el-icon-edit" @click="editNewUserGroup(row)")
 
           el-button(
             type="danger"
             icon="el-icon-close"
             @click="delUserGroup(row)")
 
-      el-button(icon="el-icon-plus", @click="addNewUserGroup")
+      el-button(icon="el-icon-plus" @click="addNewUserGroup")
         | {{ $t('add') }}
 
     el-dialog(

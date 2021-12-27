@@ -10,13 +10,13 @@
         :rules="frmRules"
         :model="frmData"
         :label-width="$store.getters.isMobileView ? undefined : '115px'")
-        el-form-item(:label="$t('customers.surname')", prop="surname")
+        el-form-item(:label="$t('customers.surname')" prop="surname")
           el-input(v-model="frmData.surname")
       
-        el-form-item(:label="$t('customers.name')", prop="firstName")
+        el-form-item(:label="$t('customers.name')" prop="firstName")
           el-input(v-model="frmData.firstName")
       
-        el-form-item(:label="$t('customers.lastName')", prop="lastName")
+        el-form-item(:label="$t('customers.lastName')" prop="lastName")
           el-input(v-model="frmData.lastName")
 </template>
 

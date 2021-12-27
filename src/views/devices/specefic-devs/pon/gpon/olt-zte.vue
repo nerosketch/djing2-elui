@@ -67,7 +67,7 @@
         min-width="70"
       )
         template(v-slot:default="{row}")
-          el-button(icon="el-icon-plus", @click="onSaveOnu(row)")
+          el-button(icon="el-icon-plus" @click="onSaveOnu(row)")
 
     el-dialog(
       :title="$t('keepHimSafe')"

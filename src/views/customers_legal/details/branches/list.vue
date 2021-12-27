@@ -6,14 +6,14 @@
       :empty-text="$t('customersLegal.branchNotAttached')"
       border
       fit)
-      el-table-column(:label="$t('customers.contractNum.s')", prop="username")
+      el-table-column(:label="$t('customers.contractNum.s')" prop="username")
         template(v-slot:default="{row}")
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: row.id }}")
             | {{ row.username }}
     
-      el-table-column(:label="$t('customersLegal.fname')", prop="full_name")
+      el-table-column(:label="$t('customersLegal.fname')" prop="full_name")
     
-      el-table-column(:label="$t('customersLegal.tel')", prop="telephone")
+      el-table-column(:label="$t('customersLegal.tel')" prop="telephone")
     
       el-table-column(label="#", width="50")
         template(v-slot:default="{row}")

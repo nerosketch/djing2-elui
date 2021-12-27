@@ -1,6 +1,6 @@
 <template lang="pug">
   el-form
-    el-form-item(:label="$t('customers.password')", prop="password")
+    el-form-item(:label="$t('customers.password')" prop="password")
       el-input(
         v-model="frmMod.password"
         maxlength="128"

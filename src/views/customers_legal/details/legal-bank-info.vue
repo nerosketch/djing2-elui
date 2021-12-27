@@ -5,16 +5,16 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('customersLegal.bank.title')", prop="title")
+    el-form-item(:label="$t('customersLegal.bank.title')" prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(:label="$t('customersLegal.bank.bik')", prop="bank_code")
-      el-input(v-model="frmMod.bank_code", type="number")
+    el-form-item(:label="$t('customersLegal.bank.bik')" prop="bank_code")
+      el-input(v-model="frmMod.bank_code" type="number")
   
-    el-form-item(:label="$t('customersLegal.bank.cacc')", prop="correspondent_account")
+    el-form-item(:label="$t('customersLegal.bank.cacc')" prop="correspondent_account")
       el-input(v-model="frmMod.correspondent_account")
   
-    el-form-item(:label="$t('customersLegal.bank.pacc')", prop="settlement_account")
+    el-form-item(:label="$t('customersLegal.bank.pacc')" prop="settlement_account")
       el-input(v-model="frmMod.settlement_account")
   
     el-form-item

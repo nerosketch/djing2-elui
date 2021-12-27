@@ -8,10 +8,10 @@
     v-loading="isLoading")
     customer-form-fio(v-model="frmMod.fio")
   
-    el-form-item(:label="$t('customers.username')", prop="username")
+    el-form-item(:label="$t('customers.username')" prop="username")
       el-input(v-model="frmMod.username")
   
-    el-form-item(:label="$t('customers.phone')", prop="telephone")
+    el-form-item(:label="$t('customers.phone')" prop="telephone")
       tels-input(v-model="frmMod.telephone")
   
     el-form-item(:label="$t('house(Old)')")
@@ -21,7 +21,7 @@
         readonly
         disabled)
   
-    el-form-item(:label="$t('customers.birthDay')", prop="birth_day")
+    el-form-item(:label="$t('customers.birthDay')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"

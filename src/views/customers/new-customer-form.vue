@@ -7,10 +7,10 @@
     v-loading="loading")
     customer-form-fio(v-model="frmMod.fio")
   
-    el-form-item(:label="$t('customers.login')", prop="username")
+    el-form-item(:label="$t('customers.login')" prop="username")
       el-input(v-model="frmMod.username")
   
-    el-form-item(:label="$t('customers.phone')", prop="telephone")
+    el-form-item(:label="$t('customers.phone')" prop="telephone")
       el-input(v-model="frmMod.telephone")
   
     el-form-item(:label="$t('groups.group')")
@@ -24,7 +24,7 @@
         cols="40"
         autosize)
   
-    el-form-item(:label="$t('customers.birthDay')", prop="birth_day")
+    el-form-item(:label="$t('customers.birthDay')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"

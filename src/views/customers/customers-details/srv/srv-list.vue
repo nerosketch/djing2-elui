@@ -17,13 +17,13 @@
             icon="el-icon-shopping-cart-2"
             circle)
     
-      el-table-column(:label="$t('customers.service')", prop="title")
+      el-table-column(:label="$t('customers.service')" prop="title")
     
-      el-table-column(:label="$t('customers.sum')", prop="cost")
+      el-table-column(:label="$t('customers.sum')" prop="cost")
     
-      el-table-column(:label="$t('customers.inSpeed')", prop="speed_in")
+      el-table-column(:label="$t('customers.inSpeed')" prop="speed_in")
     
-      el-table-column(:label="$t('customers.outSpeed')", prop="speed_out")
+      el-table-column(:label="$t('customers.outSpeed')" prop="speed_out")
   
     el-button(
       @click="srvAccDialog=true"

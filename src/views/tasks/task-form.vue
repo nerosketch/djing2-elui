@@ -5,10 +5,10 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('description')", prop="descr")
+    el-form-item(:label="$t('description')" prop="descr")
       el-input(v-model="frmMod.descr", maxlength="128")
 
-    el-form-item(:label="$t('implementers')", prop="recipients")
+    el-form-item(:label="$t('implementers')" prop="recipients")
       el-select(v-model="frmMod.recipients", multiple)
         el-option(
           v-for="rec in potentialRecipients"
@@ -16,7 +16,7 @@
           :label="rec.full_name || rec.username"
           :value="rec.id")
 
-    el-form-item(:label="$t('natureOfFracture')", prop="mode")
+    el-form-item(:label="$t('natureOfFracture')" prop="mode")
       el-select(v-model="frmMod.mode")
         el-option(
           v-for="tt in taskTypes"
@@ -24,7 +24,7 @@
           :label="tt.nm"
           :value="tt.v")
 
-    el-form-item(:label="$t('priority')", prop="priority")
+    el-form-item(:label="$t('priority')" prop="priority")
       el-select(v-model="frmMod.priority")
         el-option(
           v-for="tt in taskPriorities"
@@ -32,7 +32,7 @@
           :label="tt.nm"
           :value="tt.v")
 
-    el-form-item(:label="$t('status')", prop="task_state")
+    el-form-item(:label="$t('status')" prop="task_state")
       el-select(v-model="frmMod.task_state")
         el-option(
           v-for="tt in taskStates"
@@ -46,7 +46,7 @@
     )
       customer-field(v-model="frmMod.customer", :defaultName="$store.state.task.customer_full_name")
 
-    el-form-item(:label="$t('relevance')", prop="out_date")
+    el-form-item(:label="$t('relevance')" prop="out_date")
       el-tooltip(content="дата, до которой нужно завершить задачу", placement="right")
         el-date-picker(
           v-model="frmMod.out_date"

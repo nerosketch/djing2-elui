@@ -11,10 +11,10 @@
 
       template(v-slot:oper="{row}")
         el-button-group
-          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
 
-          el-button(icon="el-icon-edit", @click="openEdit(row)")
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
 
           el-button(
             type="danger"
@@ -22,7 +22,7 @@
             @click="delPayGw(row)"
             :disabled="!$perms.fin_app.delete_payalltimegateway")
 
-      el-button(icon="el-icon-plus", @click="openNew")
+      el-button(icon="el-icon-plus" @click="openNew")
         | {{ $t('addALock') }}
 
     el-dialog(

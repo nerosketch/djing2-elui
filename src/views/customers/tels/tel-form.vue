@@ -5,10 +5,10 @@
     status-icon
     :rules="frmRules"
     :model="frmMod")
-    el-form-item(:label="$t('customers.phone')", prop="telephone")
+    el-form-item(:label="$t('customers.phone')" prop="telephone")
       el-input(v-model="frmMod.telephone", :maxlength="16")
   
-    el-form-item(:label="$t('customers.phoneOwner')", prop="owner_name")
+    el-form-item(:label="$t('customers.phoneOwner')" prop="owner_name")
       el-input(v-model="frmMod.owner_name", :maxlength="127")
   
     el-form-item

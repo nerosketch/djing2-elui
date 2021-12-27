@@ -12,10 +12,10 @@
     
       slot(name="buttons")
         el-button-group
-          el-button(icon="el-icon-d-caret", @click="goToAfkList")
+          el-button(icon="el-icon-d-caret" @click="goToAfkList")
             | {{ $t('customers.afkFilter') }}
         
-          el-button(icon="el-icon-user-solid", @click="go2Bums")
+          el-button(icon="el-icon-user-solid" @click="go2Bums")
             | {{ $t('customers.withoutAddrs') }}
   
     slot

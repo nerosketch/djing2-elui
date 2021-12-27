@@ -5,13 +5,13 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('ipAddress')", prop="ip_address")
+    el-form-item(:label="$t('ipAddress')" prop="ip_address")
       el-input(v-model="frmMod.ip_address")
 
-    el-form-item(:label="$t('macAddress')", prop="mac_addr")
+    el-form-item(:label="$t('macAddress')" prop="mac_addr")
       el-input(v-model="frmMod.mac_addr")
 
-    el-form-item(:label="$t('description')", prop="comment")
+    el-form-item(:label="$t('description')" prop="comment")
       el-input(v-model="frmMod.comment")
 
     el-form-item(:label="$t('typeOfEquipment')")

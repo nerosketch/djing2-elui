@@ -5,10 +5,10 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(:label="$t('title')", prop="name")
+    el-form-item(:label="$t('title')" prop="name")
       el-input(v-model="frmMod.name")
   
-    el-form-item(:label="$t('value')", prop="cost")
+    el-form-item(:label="$t('value')" prop="cost")
       el-input(v-model="frmMod.cost")
   
     el-form-item

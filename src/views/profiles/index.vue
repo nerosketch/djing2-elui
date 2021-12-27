@@ -1,6 +1,6 @@
 <template lang="pug">
   .tab-container
-    el-tabs(v-model="activeTabName", type="border-card")
+    el-tabs(v-model="activeTabName" type="border-card")
       el-tab-pane(
         :label="$t('route.staff')"
         name="profiles"

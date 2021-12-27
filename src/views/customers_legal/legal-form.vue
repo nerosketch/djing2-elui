@@ -5,31 +5,31 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('customers.contractNum.s')", prop="username")
+    el-form-item(:label="$t('customers.contractNum.s')" prop="username")
       el-input(v-model="frmMod.username")
 
-    el-form-item(:label="$t('title')", prop="title")
+    el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
 
-    el-form-item(:label="$t('fioDirector')", prop="fio")
+    el-form-item(:label="$t('fioDirector')" prop="fio")
       el-input(v-model="frmMod.fio")
 
     el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
 
-    el-form-item(:label="$t('typeOfLegal')", prop="legal_type")
+    el-form-item(:label="$t('typeOfLegal')" prop="legal_type")
       legal-type-choice(v-model="frmMod.legal_type")
 
-    el-form-item(:label="$t('legalAddress')", prop="address")
+    el-form-item(:label="$t('legalAddress')" prop="address")
       addr-field-input(v-model="frmMod.address")
 
-    el-form-item(:label="$t('postalLegalAddressIndex')", prop="post_index")
+    el-form-item(:label="$t('postalLegalAddressIndex')" prop="post_index")
       el-input(v-model="frmMod.post_index")
 
     el-form-item(:label="$t('accountDeliveryAddress')")
       addr-field-input(v-model="frmMod.delivery_address")
 
-    el-form-item(:label="$t('postalAccountDeliveryAddressIndex')", prop="delivery_address_post_index")
+    el-form-item(:label="$t('postalAccountDeliveryAddressIndex')" prop="delivery_address_post_index")
       el-input(v-model="frmMod.delivery_address_post_index")
         el-button(
           slot="append"
@@ -41,7 +41,7 @@
     el-form-item(:label="$t('postalAddress')")
       addr-field-input(v-model="frmMod.post_address")
 
-    el-form-item(:label="$t('postalAddressIndex')", prop="post_post_index")
+    el-form-item(:label="$t('postalAddressIndex')" prop="post_post_index")
       el-input(v-model="frmMod.post_post_index")
         el-button(
           slot="append"
@@ -50,11 +50,11 @@
           :title="$t('copyTheAddressFromTheLegalAddress')"
           :disabled="addrCopyDisabled")
 
-    el-form-item(:label="$t('inn')", prop="tax_number")
-      el-input(v-model="frmMod.tax_number", type="number")
+    el-form-item(:label="$t('inn')" prop="tax_number")
+      el-input(v-model="frmMod.tax_number" type="number")
 
-    el-form-item(label="ОГРН", prop="state_level_reg_number")
-      el-input(v-model="frmMod.state_level_reg_number", type="number")
+    el-form-item(label="ОГРН" prop="state_level_reg_number")
+      el-input(v-model="frmMod.state_level_reg_number" type="number")
 
     el-form-item(:label="$t('contractDocs.dateBegin')")
       el-date-picker(

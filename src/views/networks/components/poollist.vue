@@ -12,10 +12,10 @@
 
       template(v-slot:oper="{row}")
         el-button-group
-          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
 
-          el-button(icon="el-icon-edit", @click="openEdit(row)")
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
 
           el-button(
             type="danger"
@@ -30,7 +30,7 @@
           :disabled="!$perms.networks.add_networkippool")
           | {{ $t('add') }}
 
-        el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+        el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
           | {{ $t('field') }}
 
     el-dialog(

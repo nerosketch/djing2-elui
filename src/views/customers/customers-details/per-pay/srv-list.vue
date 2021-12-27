@@ -5,15 +5,15 @@
       :data="pservices"
       border
       fit)
-      el-table-column(:label="$t('customers.lastPay')", prop="last_pay")
+      el-table-column(:label="$t('customers.lastPay')" prop="last_pay")
     
-      el-table-column(:label="$t('customers.nextPay')", prop="next_pay")
+      el-table-column(:label="$t('customers.nextPay')" prop="next_pay")
     
-      el-table-column(:label="$t('title')", prop="service_name")
+      el-table-column(:label="$t('title')" prop="service_name")
     
-      el-table-column(:label="$t('customers.calcType')", prop="service_calc_type")
+      el-table-column(:label="$t('customers.calcType')" prop="service_calc_type")
     
-      el-table-column(:label="$t('customers.cost')", prop="service_amount")
+      el-table-column(:label="$t('customers.cost')" prop="service_amount")
     
       el-table-column(:label="$t('del')")
         template(v-slot:default="{row}")
@@ -23,7 +23,7 @@
             type="danger"
             @click="delP4IdPay(row)")
   
-    el-button(type="primary", @click="pSrvDialog=true")
+    el-button(type="primary" @click="pSrvDialog=true")
       | {{ $t('customers.addPeriodicPay') }}
   
     el-dialog(

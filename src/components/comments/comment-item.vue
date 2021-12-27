@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-card(shadow="hover", :body-style="defCardStyle")
+  el-card(shadow="hover" :body-style="defCardStyle")
     template(v-slot:header)
       .clearfix
         span

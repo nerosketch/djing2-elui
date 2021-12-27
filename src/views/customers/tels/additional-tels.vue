@@ -4,7 +4,7 @@
     :data="tels"
     border
     fit)
-    el-table-column(:label="$t('customers.phoneOwner')", prop="owner_name")
+    el-table-column(:label="$t('customers.phoneOwner')" prop="owner_name")
   
     el-table-column(:label="$t('customers.phone')")
       template(v-slot:default="{row}")

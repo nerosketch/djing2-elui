@@ -19,9 +19,9 @@
             icon="el-icon-delete"
             @click="delMessenger(row)")
         
-          el-button(icon="el-icon-view", @click="go2Messenger(row)")
+          el-button(icon="el-icon-view" @click="go2Messenger(row)")
     
-      el-button(icon="el-icon-plus", @click="openNew")
+      el-button(icon="el-icon-plus" @click="openNew")
         | {{ $t('addMassenger') }}
   
     el-dialog(

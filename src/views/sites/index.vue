@@ -11,7 +11,7 @@
           @click="openEdit(row)"
           :disabled="!$perms.is_superuser")
     
-      el-button(icon="el-icon-plus", @click="openNew")
+      el-button(icon="el-icon-plus" @click="openNew")
         | {{ $t('addDomain') }}
   
     el-dialog(

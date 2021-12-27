@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(:class="[{'is-active': isActive}]", @click="toggleClick")
+  div(:class="[{'is-active': isActive}]" @click="toggleClick")
     i.hamb.el-icon-s-fold
 </template>
 

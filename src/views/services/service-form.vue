@@ -28,7 +28,7 @@
         | {{ $t('administrativeServices') }}
         b {{ frmMod.is_admin ? 'Да' : 'Нет' }}
 
-    el-form-item(:label="$t('scream')", prop="calc_type")
+    el-form-item(:label="$t('scream')" prop="calc_type")
       el-select(v-model="frmMod.calc_type")
         el-option(
           v-for="dt in serviceTypeNames"

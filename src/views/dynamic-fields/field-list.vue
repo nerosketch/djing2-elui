@@ -7,14 +7,14 @@
       ref="fieldtable")
       template(v-slot:btn="{row}")
         el-button-group
-          el-button(icon="el-icon-edit", @click="editField(row)")
+          el-button(icon="el-icon-edit" @click="editField(row)")
 
           el-button(
             type="danger"
             icon="el-icon-close"
             @click="delDynamicField(row)")
 
-      el-button(icon="el-icon-plus", @click="openNew")
+      el-button(icon="el-icon-plus" @click="openNew")
         | {{ $t('addFields') }}
 
     el-dialog(

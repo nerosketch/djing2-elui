@@ -5,13 +5,13 @@
     status-icon
     :rules="frmRules"
     :model="frmMod")
-    el-form-item(:label="$t('customers.sum')", prop="cost")
+    el-form-item(:label="$t('customers.sum')" prop="cost")
       el-input(
         v-model="frmMod.cost"
         type="number"
         max="15000")
   
-    el-form-item(:label="$t('comment')", prop="comment")
+    el-form-item(:label="$t('comment')" prop="comment")
       el-input(v-model="frmMod.comment", :maxlength="128")
   
     el-form-item

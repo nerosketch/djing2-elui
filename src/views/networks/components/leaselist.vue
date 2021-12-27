@@ -12,7 +12,7 @@
     
       template(v-slot:oper="{row}")
         el-button-group
-          el-button(icon="el-icon-edit", @click="openEdit(row)")
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
         
           el-button(
             type="danger"

@@ -1,5 +1,5 @@
 <template lang="pug">
-  comment-list(:comments="comments", @send="onSendComment")
+  comment-list(:comments="comments" @send="onSendComment")
     template(v-slot:comment_item="{ comment }")
       comment-item.mt5(
         v-if="comment.type === 'comment'"

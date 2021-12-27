@@ -10,7 +10,7 @@
         | {{ row.closed ? 'Да' : 'Нет' }}
 
     template(v-slot:oper="{row}")
-      el-button(icon="el-icon-delete-solid", @click="shutdownSesion(row)")
+      el-button(icon="el-icon-delete-solid" @click="shutdownSesion(row)")
 </template>
 
 <script lang="ts">

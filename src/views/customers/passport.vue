@@ -5,19 +5,19 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('customers.passportSerial')", prop="series")
-      el-input(v-model="frmMod.series", type="number")
+    el-form-item(:label="$t('customers.passportSerial')" prop="series")
+      el-input(v-model="frmMod.series" type="number")
   
-    el-form-item(:label="$t('customers.passportNum')", prop="number")
-      el-input(v-model="frmMod.number", type="number")
+    el-form-item(:label="$t('customers.passportNum')" prop="number")
+      el-input(v-model="frmMod.number" type="number")
   
-    el-form-item(:label="$t('customers.passportDistributor')", prop="distributor")
+    el-form-item(:label="$t('customers.passportDistributor')" prop="distributor")
       el-input(v-model="frmMod.distributor", :maxlength="64")
   
-    el-form-item(:label="$t('customers.passportDivisionCode')", prop="division_code")
+    el-form-item(:label="$t('customers.passportDivisionCode')" prop="division_code")
       el-input(v-model="frmMod.division_code", :maxlength="64")
   
-    el-form-item(:label="$t('customers.passportDivisionCode')", prop="date_of_acceptance")
+    el-form-item(:label="$t('customers.passportDivisionCode')" prop="date_of_acceptance")
       el-date-picker(
         v-model="frmMod.date_of_acceptance"
         type="date"

@@ -1,6 +1,6 @@
 <template lang="pug">
   el-row.app-container(:gutter="5")
-    el-col.mt5(:lg="12", :sm="24")
+    el-col.mt5(:lg="12" :sm="24")
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix
@@ -8,7 +8,7 @@
 
         messenger-form(v-if="isReady")
 
-    el-col.mt5(:lg="12", :sm="24")
+    el-col.mt5(:lg="12" :sm="24")
       div
         b
           | {{ $t('currentWebHook') }}

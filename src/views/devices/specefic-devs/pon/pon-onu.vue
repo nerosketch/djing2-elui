@@ -61,7 +61,7 @@
             :disabled="!$perms.devices.delete_device")
             | {{ $t('del') }}
 
-    el-col(:lg="12", :sm="24")
+    el-col(:lg="12" :sm="24")
       el-card(shadow="never", body-style="padding: 10px;")
         template(v-slot:header)
           | {{ $t('status') }}
@@ -105,7 +105,7 @@
 
         fix-onu-btn(v-if="$store.getters.isOnuRegistered && macsNotEqual")
 
-    el-col(:lg="12", :sm="24")
+    el-col(:lg="12" :sm="24")
       onu-vlan-form(:disabled="$store.getters.isOnuRegistered && macsNotEqual", :style="{'margin-top': '5px'}")
 
     el-dialog(

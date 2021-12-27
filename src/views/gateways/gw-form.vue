@@ -5,16 +5,16 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(:label="$t('title')", prop="title")
+    el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
 
-    el-form-item(:label="$t('ipAddress')", prop="ip_address")
+    el-form-item(:label="$t('ipAddress')" prop="ip_address")
       el-input(v-model="frmMod.ip_address")
 
     el-form-item(:label="$t('gateways.port')")
-      el-input(v-model="frmMod.ip_port", type="number")
+      el-input(v-model="frmMod.ip_port" type="number")
 
-    el-form-item(:label="$t('inletLogin')", prop="auth_login")
+    el-form-item(:label="$t('inletLogin')" prop="auth_login")
       el-input(v-model="frmMod.auth_login")
 
     el-form-item(:label="$t('inletPassword')")

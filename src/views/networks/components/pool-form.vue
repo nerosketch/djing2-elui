@@ -44,7 +44,7 @@
       el-checkbox(v-model="frmMod.is_dynamic")
         | {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
 
-    el-form-item(:label="$t('description')", prop="description")
+    el-form-item(:label="$t('description')" prop="description")
       el-input(
         v-model="frmMod.description"
         type="textarea"

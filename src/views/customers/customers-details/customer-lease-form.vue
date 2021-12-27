@@ -6,7 +6,7 @@
     status-icon
     :rules="frmRules"
     :model="frmMod")
-    el-form-item(:label="$t('ipAddress')", prop="ip_address")
+    el-form-item(:label="$t('ipAddress')" prop="ip_address")
       el-input(v-model="frmMod.ip_address")
         template(v-slot:append)
           el-button(
@@ -15,7 +15,7 @@
             :loading="getFreeIpLoad"
             :disabled="frmMod.pool === 0")
   
-    el-form-item(:label="$t('customers.ipPool')", prop="pool")
+    el-form-item(:label="$t('customers.ipPool')" prop="pool")
       el-select(
         v-model="frmMod.pool"
         v-loading="poolsLoading"
@@ -32,7 +32,7 @@
           :label="$t('customers.poolsNotExists')"
           :value="null")
   
-    el-form-item(:label="$t('macAddress')", prop="mac_address")
+    el-form-item(:label="$t('macAddress')" prop="mac_address")
       el-input(v-model="frmMod.mac_address")
   
     el-form-item

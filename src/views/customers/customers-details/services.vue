@@ -1,13 +1,13 @@
 <template lang="pug">
   el-row(:gutter="5")
-    el-col(:sm="24", :md="12")
+    el-col(:sm="24" :md="12")
       el-card(shadow="never")
         template(v-slot:header)
           | {{ $t('customers.services4Buy') }}
       
         services-list(v-on:buydone="loadCurrentService", :isServiceAvailable="isServiceAvailable")
   
-    el-col(:sm="24", :md="12")
+    el-col(:sm="24" :md="12")
       el-card(
         shadow="never"
         :loading="serviceBlockLoad"
@@ -81,7 +81,7 @@
         h3(v-else)
           | {{ $t('loading') }}
   
-    el-col(:sm="24", :md="12")
+    el-col(:sm="24" :md="12")
       el-card(shadow="never")
         template(v-slot:header)
           | {{ $t('customers.attachedPeriodicPays') }}

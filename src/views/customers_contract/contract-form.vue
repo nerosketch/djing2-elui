@@ -22,7 +22,7 @@
             @click="doCopyFromUsername"
             :title="$t('contractDocs.copyFromLogin')")
 
-    el-form-item(:label="$t('contractDocs.dateBegin')", prop="start_service_time")
+    el-form-item(:label="$t('contractDocs.dateBegin')" prop="start_service_time")
       el-date-picker(
         v-model="frmMod.start_service_time"
         type="datetime"

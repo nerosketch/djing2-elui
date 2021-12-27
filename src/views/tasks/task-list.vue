@@ -27,7 +27,7 @@
           :disabled="!$perms.tasks.add_task")
           | {{ $t('addTheTask') }}
 
-        el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+        el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
           | {{ $t('field') }}
 
     el-dialog(

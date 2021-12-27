@@ -5,13 +5,13 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
-    el-form-item(:label="$t('title')", prop="title")
+    el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
   
-    el-form-item(label="VID", prop="vid")
-      el-input(v-model="frmMod.vid", type="number")
+    el-form-item(label="VID" prop="vid")
+      el-input(v-model="frmMod.vid" type="number")
   
-    el-form-item(:label="$t('office')", prop="is_management")
+    el-form-item(:label="$t('office')" prop="is_management")
       el-checkbox(v-model="frmMod.is_management")
         | {{ $t('itSAMoronOfControl') }}
       

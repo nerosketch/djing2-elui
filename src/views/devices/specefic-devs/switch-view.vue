@@ -62,7 +62,7 @@
         width="70"
         align="center")
         template(v-slot:default="{row}")
-          el-link(type="primary", @click="openPortView(row)")
+          el-link(type="primary" @click="openPortView(row)")
             | {{ row.user_count }}
 
       el-table-column(
@@ -89,7 +89,7 @@
         min-width="194")
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
-            el-button(icon="el-icon-notebook-2", @click="openMacsDialog(row)")
+            el-button(icon="el-icon-notebook-2" @click="openMacsDialog(row)")
 
             el-button(
               icon="el-icon-view"

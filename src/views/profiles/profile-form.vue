@@ -5,13 +5,13 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('login')", prop="username")
+    el-form-item(:label="$t('login')" prop="username")
       el-input(v-model="frmMod.username")
 
-    el-form-item(:label="$t('fio')", prop="fio")
+    el-form-item(:label="$t('fio')" prop="fio")
       el-input(v-model="frmMod.fio")
 
-    el-form-item(:label="$t('birthday')", prop="birth_day")
+    el-form-item(:label="$t('birthday')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"
@@ -30,10 +30,10 @@
       small
         | {{ frmMod.is_superuser ? ' ' + $t('profiles.ifSuperuser') : '' }}
 
-    el-form-item(:label="$t('telephoneNumber')", prop="telephone")
+    el-form-item(:label="$t('telephoneNumber')" prop="telephone")
       el-input(v-model="frmMod.telephone")
 
-    el-form-item(:label="$t('email')", prop="email")
+    el-form-item(:label="$t('email')" prop="email")
       el-input(v-model="frmMod.email")
 
     el-form-item(

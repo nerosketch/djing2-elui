@@ -1,6 +1,6 @@
 <template lang="pug">
   el-form(:model="frmMod", v-loading="loading")
-    el-form-item(:label="$t('title')", prop="name")
+    el-form-item(:label="$t('title')" prop="name")
       el-input(v-model="frmMod.name", maxlength="150")
   
     el-form-item

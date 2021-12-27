@@ -13,7 +13,7 @@
     
       template(v-slot:oper="{row}")
         el-button-group
-          el-button(v-if="$perms.is_superuser", @click="openSitesDlg(row)")
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
         
           el-button(
@@ -34,7 +34,7 @@
           :disabled="!$perms.networks.add_vlanif")
           | {{ $t('add') }}
       
-        el-button(icon="el-icon-s-operation", @click="editFieldsVisible=true")
+        el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
           | {{ $t('field') }}
   
     el-dialog(
