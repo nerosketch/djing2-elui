@@ -3,8 +3,7 @@
     v-show="contents.length > 0"
     :contents="contents"
     @save="saveData"
-    v-loading="loading"
-  )
+    v-loading="loading")
 </template>
 
 <script lang="ts">

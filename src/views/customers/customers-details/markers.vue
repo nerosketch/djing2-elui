@@ -3,15 +3,16 @@
     el-checkbox(
       v-for="(ic, i) in markerData"
       :key="i"
-      v-model="ic[1]"
-    )
+      v-model="ic[1]")
       span.m-icon(:class="`m-${ic[0]}`")
+
     el-divider
+
     el-button(
-      icon='el-icon-download'
-      :loading='loading'
-      @click='saveMarkers'
-    ) Сохранить
+      icon="el-icon-download"
+      :loading="loading"
+      @click="saveMarkers")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">

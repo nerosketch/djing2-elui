@@ -1,19 +1,13 @@
 <template lang="pug">
-comment-list(
-  :comments="comments"
-  @send="onSendComment"
-)
-  template(v-slot:comment_item="{ comment }")
-    comment-item.mt5(
-      v-if="comment.type === 'comment'"
-      :key="comment.id"
-      :comment="comment"
-      @delete="delComment"
-    )
-    comment-change-log.mt5(
-      v-else
-      :log="comment"
-    )
+  comment-list(:comments="comments" @send="onSendComment")
+    template(v-slot:comment_item="{ comment }")
+      comment-item.mt5(
+        v-if="comment.type === 'comment'"
+        :key="comment.id"
+        :comment="comment"
+        @delete="delComment")
+
+      comment-change-log.mt5(v-else, :log="comment")
 </template>
 
 <script lang="ts">
@@ -36,12 +30,8 @@ export default class extends Vue {
   private comments: IExtraCommentCombinedWithTaskStateChangeLog[] = []
 
   private async loadComments() {
-    try {
-      const { data } = await getCommentsWithLogs(this.$store.state.task.id)
-      this.comments = data
-    } catch (err) {
-      this.$message.error(err)
-    }
+    const { data } = await getCommentsWithLogs(this.$store.state.task.id)
+    this.comments = data
   }
 
   created() {
@@ -55,7 +45,7 @@ export default class extends Vue {
 
   private async delComment(commentId: number) {
     await delComment(commentId)
-    this.$message.success('Комментарий удалён')
+    this.$message.success(this.$tc('commentDeleted'))
     this.loadComments()
   }
 }

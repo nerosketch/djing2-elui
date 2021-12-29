@@ -1,55 +1,43 @@
 <template lang="pug">
   el-form(
-    ref='frm'
+    ref="frm"
     status-icon
     :rules="frmRules"
     :model="frmMod"
-    v-loading="loading"
-  )
-    customer-form-fio(
-      v-model="frmMod.fio"
-    )
-    el-form-item(
-      label="Логин"
-      prop='username'
-    )
+    v-loading="loading")
+    customer-form-fio(v-model="frmMod.fio")
+
+    el-form-item(:label="$t('customers.login')" prop="username")
       el-input(v-model="frmMod.username")
-    el-form-item(
-      label="Телефон"
-      prop='telephone'
-    )
+
+    el-form-item(:label="$t('customers.phone')" prop="telephone")
       el-input(v-model="frmMod.telephone")
-    el-form-item(
-      label="Группа"
-    )
+
+    el-form-item(:label="$t('groups.group')")
       groups-choice(v-model="frmMod.group")
-    el-form-item(
-      label="Комментарий"
-    )
+
+    el-form-item(:label="$t('comment')")
       el-input(
         v-model="frmMod.description"
         type="textarea"
         rows="4"
         cols="40"
-        autosize
-      )
-    el-form-item(
-      label="День рождения"
-      prop='birth_day'
-    )
+        autosize)
+
+    el-form-item(:label="$t('customers.birthDay')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
-        format="d.MM.yyyy"
-      )
+        format="d.MM.yyyy")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
-        :disabled="!$perms.customers.add_customer"
-      ) Сохранить
+        :disabled="!$perms.customers.add_customer")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -90,14 +78,30 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: 'Логин абонента обязателен', trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
+      {
+        required: true,
+        message: this.$tc('customers.loginFieldRequiredMsg'),
+        trigger: 'blur'
+      },
+      {
+        validator: latinValidator,
+        trigger: 'change',
+        message: this.$tc('customers.loginValidationMessage')
+      }
     ],
     telephone: [
-      { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
+      {
+        validator: telephoneValidator,
+        trigger: 'change',
+        message: this.$tc('telValidation')
+      }
     ],
     birth_day: [
-      { required: true, message: 'Нужно указать дату рождения', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$tc('customers.birthDayValidationMessage'),
+        trigger: 'blur'
+      }
     ]
   }
 
@@ -138,7 +142,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

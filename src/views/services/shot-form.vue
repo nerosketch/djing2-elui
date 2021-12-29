@@ -1,27 +1,22 @@
 <template lang="pug">
   el-form(
-    ref='shotfrm'
+    ref="shotfrm"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-      prop='name'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')" prop="name")
       el-input(v-model="frmMod.name")
-    el-form-item(
-      label="Стоимость"
-      prop="cost"
-    )
+
+    el-form-item(:label="$t('value')" prop="cost")
       el-input(v-model="frmMod.cost")
+
     el-form-item
       el-button(
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -38,11 +33,11 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: 'Название надо указать', trigger: 'blur' }
+      { required: true, message: this.$tc('nameShouldBeIndicated'), trigger: 'blur' }
     ],
     cost: [
-      { required: true, message: 'Цену надо указать', trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: 'Цена должна быть положительной или 0' }
+      { required: true, message: this.$tc('thePriceShouldBeSpecified'), trigger: 'blur' },
+      { validator: positiveValidator, trigger: 'change', message: this.$tc('cena-dolzhna-byt-polozhitelnoi-ili-0') }
     ]
   }
 
@@ -69,7 +64,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

@@ -1,76 +1,77 @@
 <template lang="pug">
   el-card
     template(v-slot:header)
-      .clearfix {{ device.comment || 'BDCOM' }}
-        small {{ ` ${device.ip_address || device.mac_addr} ` }}
-        router-link.el-link.el-link--primary.is-underline(
-          :to="{name: 'device-view', params: { devId: device.parent_dev }}"
-        ) [{{ device.parent_dev_name }}]
+      .clearfix
+        | {{ device.comment || 'BDCOM' }}
+
+        small
+          | {{ ` ${device.ip_address || device.mac_addr} ` }}
+
+        router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+          | [{{ device.parent_dev_name }}]
+
     el-row(v-if="ready")
       el-col(
         :span="24"
         v-for="(fiber, i) in fibers"
-        :key="i"
-      )
+        :key="i")
         el-card(shadow="never")
           template(v-slot:header)
-            .clearfix {{ fiber.fb_name }} ({{ fiber.fb_active_onu }}/{{ fiber.fb_onu_num }})
+            .clearfix
+              | {{ fiber.fb_name }} ({{ fiber.fb_active_onu }}/{{ fiber.fb_onu_num }})
+
           el-table(
             :data="fiber.onuList"
-            border fit
-          )
-            el-table-column(
-              label="#"
-              width="50"
-            )
+            border
+            fit)
+            el-table-column(label="#", width="50")
               template(v-slot:default="{row}")
                 i.el-icon-success.el-alert--success.is-light(v-if="row.status")
+
                 i.el-icon-error.el-alert--error.is-light(v-else)
+
             el-table-column(
-              label="SNMP Ном."
+              :label="$t('snmNom')"
               min-width="97"
-              prop="number"
-            )
+              prop="number")
+
             el-table-column(
-              label="Имя"
+              :label="$t('name')"
               min-width="93"
-              prop="title"
-            )
+              prop="title")
+
             el-table-column(
-              label="Мак"
+              :label="$t('mac')"
               min-width="123"
-              prop="mac_addr"
-            )
+              prop="mac_addr")
+
             el-table-column(
-              label="Ур. сигнала"
+              :label="$t('ur')"
               min-width="92"
-              prop='signal'
-            )
+              prop="signal")
+
             el-table-column(
-              label="В сети"
+              :label="$t('uptime')"
               min-width="151"
-              prop='uptime'
-            )
+              prop="uptime")
+
             el-table-column(
-              label='#'
-              width='60'
-              align='center'
-            )
+              label="#"
+              width="60"
+              align="center")
               template(v-slot:default="{row}")
                 el-button(
-                  icon='el-icon-plus' circle
+                  icon="el-icon-plus"
+                  circle
                   @click="openSaveOnu(row)"
-                  :disabled="!$perms.devices.add_device"
-                )
-    el-progress.progress_disable_animations(
-      v-else
-      :percentage="loadPercent"
-    )
+                  :disabled="!$perms.devices.add_device")
+
+    el-progress.progress_disable_animations(v-else, :percentage="loadPercent")
+
     el-dialog(
-      title="Добавить ONU"
+      :title="$t('addIt')"
       :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-    )
+      :close-on-click-modal="false")
       new-dev-form(
         v-if="dialogVisible"
         v-on:done="frmDone"
@@ -80,8 +81,7 @@
         :initialGroup="device.group"
         :initialSnmpSxtra="currentOnu.number"
         :initialParentDev="device.id"
-        :initialParentDevName="`${device.ip_address} ${device.comment}`"
-      )
+        :initialParentDevName="`${device.ip_address} ${device.comment}`")
 </template>
 
 <script lang="ts">
@@ -162,7 +162,7 @@ export default class extends Vue {
 
   private frmDone(newOnu: IDevice) {
     this.dialogVisible = false
-    this.$message.success('Новая onu сохранена')
+    this.$message.success(this.$tc('theNewONUIsSaved'))
     this.$router.push({
       name: 'device-view',
       params: {

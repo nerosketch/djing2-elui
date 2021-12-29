@@ -5,22 +5,24 @@
       type="border-card"
     )
       el-tab-pane(
-        label='Тарифы'
-        name='services'
+        :label="$t('tariffs')"
+        name="services"
         lazy
       )
         keep-alive
           service-list
+
       el-tab-pane(
-        label='Периодические платежи'
-        name='periodicpays'
+        :label="$t('recurrentPayments')"
+        name="periodicpays"
         lazy
       )
         keep-alive
           periodic-pay-list
+
       el-tab-pane(
-        label='Единоразовые платежи'
-        name='shots'
+        :label="$t('singlePayments')"
+        name="shots"
         lazy
       )
         keep-alive

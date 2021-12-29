@@ -3,41 +3,32 @@
     datatable(
       :columns="tableColumns"
       :getData="loadMessengers"
-      widthStorageNamePrefix='messengers'
-      ref='table'
-    )
+      widthStorageNamePrefix="messengers"
+      ref="table")
       template(v-slot:title="{row}")
         el-link(
-          type='primary'
+          type="primary"
           :href="row.global_link"
-          target="_blank"
-        ) {{ row.title }}
+          target="_blank")
+          | {{ row.title }}
 
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
-            type="danger" icon="el-icon-delete"
-            @click="delMessenger(row)"
-          )
-          el-button(
-            icon="el-icon-view"
-            @click="go2Messenger(row)"
-          )
+            type="danger"
+            icon="el-icon-delete"
+            @click="delMessenger(row)")
 
-      el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-      ) Добавить Messenger
+          el-button(icon="el-icon-view" @click="go2Messenger(row)")
+
+      el-button(icon="el-icon-plus" @click="openNew")
+        | {{ $t('addMassenger') }}
 
     el-dialog(
-      title="Создать messenger"
+      :title="$t('createAMassenger')"
       :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-    )
-      messenger-form(
-        v-on:done="frmDone"
-      )
-
+      :close-on-click-modal="false")
+      messenger-form(v-on:done="frmDone")
 </template>
 
 <script lang="ts">
@@ -77,22 +68,22 @@ export default class extends Vue {
     },
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'description',
-      label: 'Описание'
+      label: this.$tc('description')
     },
     {
       prop: 'bot_type_name',
-      label: 'Тип бота',
+      label: this.$tc('typeOfBean'),
       'min-width': 100
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: '#',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -103,23 +94,17 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private async loadMessengers(params?: IDRFRequestListParameters) {
+  private loadMessengers(params?: IDRFRequestListParameters) {
     if (params) {
       params.fields = 'id,title,description,bot_type_name,global_link'
     }
-    try {
-      const r = await getMessengers(this.messengerTypeName, params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getMessengers(this.messengerTypeName, params)
   }
 
   private delMessenger(m: IMessenger) {
-    this.$confirm(`Ты действительно хочешь удалить чат бот "${m.title}"?`).then(async() => {
+    this.$confirm(this.$t('messenger.austRemove', [m.title]) as string).then(async() => {
       await MessengerModule.DelMessenger(m.id)
-      this.$message.success(`Чат бот "${m.title}" удалён`)
+      this.$message.success(this.$t('messenger.botRemoved', [m.title]) as string)
       this.$refs.table.LoadTableData()
     })
   }
@@ -146,7 +131,7 @@ export default class extends Vue {
         path: '/messenger',
         meta: {
           hidden: true,
-          title: 'Мессенджеры'
+          title: this.$tc('messengers')
         }
       },
       {

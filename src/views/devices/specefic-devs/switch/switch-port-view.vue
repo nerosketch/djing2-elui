@@ -1,13 +1,16 @@
 <template lang="pug">
-div
-  h4(v-if="loading") Загрузка...
-  template(v-else)
-    div(v-if="customers.length > 0")
-      div(v-for="(cst, i) in customers" :key="i")
-        router-link.el-link.el-link--primary.is-underline(
-          :to="{name: 'customerDetails', params:{uid: cst.id }}"
-        ) {{ cst.full_name }}
-    h4(v-else) Абоненты на порту не найдены
+  div
+    h4(v-if="loading")
+      | {{ $t('loading') }}
+
+    template(v-else)
+      div(v-if="customers.length > 0")
+        div(v-for="(cst, i) in customers", :key="i")
+          router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: cst.id }}")
+            | {{ cst.full_name }}
+
+      h4(v-else)
+        | {{ $t('noSubscribersFoundOnThePort') }}
 </template>
 
 <script lang="ts">
@@ -36,13 +39,11 @@ export default class extends Vue {
       try {
         const { data } = await filterDevicePort(this.device.id, this.portId)
         this.customers = data
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.loading = false
       }
     } else {
-      this.$message.error('Parameters required')
+      this.$message.error(this.$tc('parametersRiver'))
     }
   }
 

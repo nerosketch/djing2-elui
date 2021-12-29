@@ -9,15 +9,14 @@
       :default-sort="defaultSorting"
       v-bind="$attrs"
       border
-      v-on="listeners"
-    )
+      v-on="listeners")
       slot(name="columns")
         el-table-column(
           v-if="selectable"
           type="selection"
           width="40"
-          align="center"
-        )
+          align="center")
+
         template(v-for="col in localCols")
           el-table-column(
             v-if="col.visible"
@@ -26,26 +25,22 @@
             :align="col.align"
             :width="col.colWidth"
             :class-name="col.cutLeft ? 'col-cut-left' : undefined"
-            v-bind="col"
-          )
+            v-bind="col")
             template(v-slot:default="{row}")
-              slot(
-                :name="col.prop"
-                :row="row"
-              ) {{ row[col.prop] }}
+              slot(:name="col.prop" :row="row")
+                | {{ row[col.prop] }}
+
     slot(name="default")
 
     el-dialog(
       title="Отображаемые поля таблицы"
       :visible.sync="editFieldsVisibleloc"
-      :close-on-click-modal="false"
-    )
+      :close-on-click-modal="false")
       template(v-if="editFieldsVisibleloc")
         datatable-edit-fields(
           :columns.sync="localCols"
           :storePrefix="widthStorageNamePrefix"
-          v-on:done="editFieldsVisibleloc=false"
-        )
+          v-on:done="editFieldsVisibleloc=false")
 </template>
 
 <script lang="ts">

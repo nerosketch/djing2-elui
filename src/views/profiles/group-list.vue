@@ -1,51 +1,45 @@
 <template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadUserGroups"
-    :heightDiff='190'
-    widthStorageNamePrefix='upg'
-    ref='tbl'
-  )
-    template(v-slot:btn="{row}")
-      el-button-group
-        el-button(
-          icon='el-icon-lock'
-          @click="editGroupPerms(row)"
-        )
-        el-button(
-          icon='el-icon-edit'
-          @click="editNewUserGroup(row)"
-        )
-        el-button(
-          type="danger"
-          icon='el-icon-close'
-          @click="delUserGroup(row)"
-        )
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadUserGroups"
+      :heightDiff="190"
+      widthStorageNamePrefix="upg"
+      ref="tbl")
+      template(v-slot:btn="{row}")
+        el-button-group
+          el-button(
+            icon="el-icon-lock"
+            @click="editGroupPerms(row)"
+          )
 
-    el-button(
-      icon='el-icon-plus'
-      @click="addNewUserGroup"
-    ) Добавить
-  el-dialog(
-    :title="dialogTitle"
-    :visible.sync="ugFormDialog"
-    :close-on-click-modal="false"
-  )
-    user-group-form(
-      v-on:done="frmDone"
-      v-on:cancel="ugFormDialog=false"
-    )
-  el-dialog(
-    title="Изменить права для группы"
-    top="5vh"
-    width="80%"
-    :visible.sync="ugpDialog"
-    :close-on-click-modal="false"
-  )
-    user-group-perms(
-      v-on:done="editPermsDone"
-    )
+          el-button(
+            icon="el-icon-edit"
+            @click="editNewUserGroup(row)"
+          )
+
+          el-button(
+            type="danger"
+            icon="el-icon-close"
+            @click="delUserGroup(row)"
+          )
+
+      el-button(icon="el-icon-plus" @click="addNewUserGroup")
+        | {{ $t('add') }}
+
+    el-dialog(
+      :title="dialogTitle"
+      :visible.sync="ugFormDialog"
+      :close-on-click-modal="false")
+      user-group-form(v-on:done="frmDone", v-on:cancel="ugFormDialog=false")
+
+    el-dialog(
+      :title="$t('modifyTheRightsOfTheGroup')"
+      top="5vh"
+      width="80%"
+      :visible.sync="ugpDialog"
+      :close-on-click-modal="false")
+      user-group-perms(v-on:done="editPermsDone")
 </template>
 
 <script lang="ts">
@@ -80,20 +74,20 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: 'Название',
+      label: this.$tc('title'),
       'min-width': 150
     },
     {
       prop: 'permcount',
-      label: 'Кол. прав'
+      label: this.$tc('permcount')
     },
     {
       prop: 'usercount',
-      label: 'Кол. учёток'
+      label: this.$tc('usercount')
     },
     {
       prop: 'btn',
-      label: '—',
+      label: '#',
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -108,20 +102,20 @@ export default class extends Vue {
 
   private async editNewUserGroup(grp: IUserGroup) {
     await UserGroupModule.SET_ALL_USER_USER_GROUP(grp)
-    this.dialogTitle = 'Изменить группу'
+    this.dialogTitle = this.$tc('amendTheGroup')
     this.ugFormDialog = true
   }
 
   private async addNewUserGroup() {
     await UserGroupModule.RESET_ALL_USER_USER_GROUP()
-    this.dialogTitle = 'Добавить группу'
+    this.dialogTitle = this.$tc('addTheGroup')
     this.ugFormDialog = true
   }
 
   private delUserGroup(grp: IUserGroup) {
-    this.$confirm('Удалить группу абонентов?').then(async() => {
+    this.$confirm(this.$tc('removeOptsFromPort')).then(async() => {
       await delUserGroup(grp.id)
-      this.$message.success('Группа уалена')
+      this.$message.success(this.$tc('groupRemoved'))
       this.$refs.tbl.LoadTableData()
     })
   }
@@ -148,7 +142,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Учётные записи'
+          title: this.$tc('records')
         }
       }
     ] as any)

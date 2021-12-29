@@ -1,29 +1,15 @@
 <template lang="pug">
-.tab-container
-  el-tabs(
-    v-model="activeTabName"
-    type="border-card"
-  )
-    el-tab-pane(
-      label='Детали задачи'
-      name='details'
-    )
-      el-row(:gutter="5")
-        el-col.mt5(:lg="12" :sm='24')
-          el-card(shadow="never")
-            template(v-slot:header)
-              .clearfix Редактировать задачу № {{ taskId }}
-            task-form(v-if='taskReady' :recipients="potentialRecipients")
-        el-col.mt5(:lg='12' :sm='24')
-          task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
-        el-col.mt5(:lg='12' :sm='24')
-          comments(v-if='taskReady')
+  el-row.app-container(:gutter="5")
+    el-col.mt5(:lg="12" :sm='24')
+      el-card(shadow="never")
+        template(v-slot:header)
+          .clearfix {{ $t('redaktirovat-zadachu-taskid', [taskId]) }}
+        task-form(v-if='taskReady' :recipients="potentialRecipients")
+    el-col.mt5(:lg='12' :sm='24')
+      task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
+    el-col.mt5(:lg='12' :sm='24')
+      comments(v-if='taskReady')
 
-    //- el-tab-pane(
-    //-   label='Завершение задачи'
-    //-   name='finishing'
-    //- )
-    //-   task-finishing
 </template>
 
 <script lang="ts">
@@ -64,11 +50,11 @@ export default class extends mixins(taskMixin, TabMixin) {
 
   private async loadTask() {
     if (this.taskId === 0) {
-      this.$message.error('Не передан ID задачи')
+      this.$message.error(this.$tc('notTransferred'))
       return
     }
     await TaskModule.GetTask(this.taskId)
-    document.title = `Задача по ${TaskModule.customer_full_name}`
+    document.title = this.$t('taskCustomerDocTitle', [TaskModule.customer_full_name]) as string
   }
 
   async created() {

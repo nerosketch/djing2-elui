@@ -3,14 +3,11 @@
     datatable(
       :columns="tableColumns"
       :getData="loadDevAddresses"
-      :heightDiff='96'
-      widthStorageNamePrefix='devAddresses'
-    )
+      :heightDiff="96"
+      widthStorageNamePrefix="devAddresses")
       template(v-slot:title="{row}")
-        router-link.el-link.el-link--primary.is-underline(
-          :to="{name: 'devicesList', params:{ addrId: row.id }}"
-        ) {{ row.fias_address_type_name }} {{ row.title }}
-
+        router-link.el-link.el-link--primary.is-underline(:to="{name: 'devicesList', params:{ addrId: row.id }}")
+          | {{ row.fias_address_type_name }} {{ row.title }}
 </template>
 
 <script lang="ts">
@@ -33,7 +30,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     }
@@ -56,7 +53,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Оборудование'
+          title: this.$tc('equipment')
         }
       }
     ] as any)

@@ -1,10 +1,10 @@
 <template lang="pug">
   el-button(
-    :icon='defIcon'
+    :icon="defIcon"
     @click="pingIcmp(row)"
     :type="defType"
-    :loading="loading"
-  ) {{ btnText }}
+    :loading="loading")
+    | {{ btnText }}
 </template>
 
 <script lang="ts">

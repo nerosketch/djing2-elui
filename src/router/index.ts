@@ -58,7 +58,7 @@ export const constantRoutes: RouteConfig [] = [
         path: '',
         component: () => import(/* webpackChunkName: "groups" */ '@/views/groups/group-list.vue'),
         meta: {
-          title: 'Группы',
+          title: 'groups',
           icon: 'el-icon-s-management'
         }
       }
@@ -72,7 +72,7 @@ export const constantRoutes: RouteConfig [] = [
         path: '',
         component: () => import(/* webpackChunkName: "servicesindex" */ '@/views/services/index.vue'),
         meta: {
-          title: 'Тарифы',
+          title: 'services',
           icon: 'el-icon-s-order'
         }
       }
@@ -86,7 +86,7 @@ export const constantRoutes: RouteConfig [] = [
         path: '',
         component: () => import(/* webpackChunkName: "network" */ '@/views/networks/index.vue'),
         meta: {
-          title: 'Сеть',
+          title: 'network',
           icon: 'el-icon-upload'
         }
       }
@@ -101,7 +101,7 @@ export const constantRoutes: RouteConfig [] = [
         path: '',
         component: () => import(/* webpackChunkName: "gatewaysList" */ '@/views/gateways/gw-list.vue'),
         meta: {
-          title: 'Шлюзы',
+          title: 'gateways',
           icon: 'el-icon-receiving'
         }
       }

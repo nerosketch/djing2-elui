@@ -15,7 +15,6 @@ div
     :disabled="!isSaveIsActive"
     @click="saveSelected"
   ) Ok
-
 </template>
 
 <script lang="ts">

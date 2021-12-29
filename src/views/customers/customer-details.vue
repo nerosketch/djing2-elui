@@ -1,60 +1,65 @@
 <template lang="pug">
   .app-container
     slot(name="head")
-      span Баланс:
-      small  {{ $store.state.customer.balance }}.
-      span  Создан:
-      small  {{ $store.state.customer.create_date }}
-    el-tabs.border-card(
-      v-model="activeTabName"
-    )
+      span
+        | {{ $t('customers.balance') }}:
+
+      small
+        | {{ $store.state.customer.balance }}.
+
+      span
+        | {{ $t('startDate') }}:
+
+      small
+        | {{ $store.state.customer.create_date }}
+
+    el-tabs.border-card(v-model="activeTabName")
       el-tab-pane(
-        label="Инфо"
+        :label="$t('customers.info')"
         name="info"
-        lazy
-      )
+        lazy)
         slot(name="info")
           keep-alive
-            info(v-if='loaded')
+            info(v-if="loaded")
+
       el-tab-pane(
-        label="Тарифы"
+        :label="$t('route.services')"
         name="services"
         :disabled="!$perms.customers.view_customerservice"
-        lazy
-      )
+        lazy)
         slot(name="services")
           keep-alive
-            services(v-if='loaded')
+            services(v-if="loaded")
+
       el-tab-pane(
-        label="Финансы"
+        :label="$t('route.finance')"
         name="fin"
         :disabled="!$perms.customers.view_customerlog"
-        lazy
-      )
+        lazy)
         slot(name="fin")
           keep-alive
-            finance(v-if='loaded')
+            finance(v-if="loaded")
+
       el-tab-pane(
-        label="История задач"
+        :label="$t('customers.taskHistory')"
         name="history"
         :disabled="!$perms.tasks.view_task"
-        lazy
-      )
+        lazy)
         slot(name="history")
           keep-alive
-            customer-task-history(v-if='loaded')
+            customer-task-history(v-if="loaded")
+
       el-tab-pane(
-        label="История трафика"
+        :label="$t('customers.trafHistory')"
         name="traf"
-        lazy
-      )
+        lazy)
         slot(name="traf")
           keep-alive
-            el-card(v-if='loaded')
-              template(#header) История трафика
-              traf-report(
-                :customerId="uid"
-              )
+            el-card(v-if="loaded")
+              template(#header)
+                | {{ $t('customers.trafHistory') }}
+
+              traf-report(:customerId="uid")
 
       slot(name="additional_tabs")
 
@@ -111,7 +116,7 @@ export default class extends mixins(TabMixin) {
     await CustomerModule.GetCustomer(this.uid)
     this.loaded = true
     this.setCrumbs(this.$store.state.customer.address)
-    document.title = this.$store.state.customer.full_name || 'Абонент'
+    document.title = this.$store.state.customer.full_name || this.$tc('customers.customer').toString()
   }
 
   private onCustomerServerUpdate(msg: IWsMessage) {
@@ -129,7 +134,7 @@ export default class extends mixins(TabMixin) {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: 'Населённые пункты'
+          title: this.$tc('addrs.addresses').toString()
         }
       },
       /* {

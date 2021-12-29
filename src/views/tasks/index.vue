@@ -1,46 +1,38 @@
 <template lang="pug">
   .tab-container
-    el-tabs(
-      v-model="activeTabName"
-      type="border-card"
-    )
+    el-tabs(v-model="activeTabName" type="border-card")
       el-tab-pane(
-        label='Новые задачи'
-        name='tnew'
-        lazy
-      )
+        :label="$t('newChallenges')"
+        name="tnew"
+        lazy)
         keep-alive
           slot(name="tasklistnew")
             task-list(tabUrl="get_new")
       el-tab-pane(
-        label='Выполненные задачи'
-        name='tfin'
-        lazy
-      )
+        :label="$t('challengesAchieved')"
+        name="tfin"
+        lazy)
         keep-alive
           slot(name="tasklistfin")
             task-list(tabUrl="get_finished")
       el-tab-pane(
-        label='Проваленные задачи'
-        name='tf'
-        lazy
-      )
+        :label="$t('failedChallenges')"
+        name="tf"
+        lazy)
         keep-alive
           slot(name="tasklistfailed")
             task-list(tabUrl="get_failed")
       el-tab-pane(
-        label='Все задачи'
-        name='tall'
-        lazy
-      )
+        :label="$t('allTasks')"
+        name="tall"
+        lazy)
         keep-alive
           slot(name="tasklistall")
             task-list(tabUrl="get_all")
       el-tab-pane(
-        label='Все незавершённые'
-        name='tallnew'
-        lazy
-      )
+        :label="$t('allUncompleted')"
+        name="tallnew"
+        lazy)
         keep-alive
           slot(name="tasklistallnew")
             task-list(tabUrl="get_all_new")

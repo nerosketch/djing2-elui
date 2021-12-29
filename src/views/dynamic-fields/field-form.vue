@@ -1,48 +1,38 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     label-width="110px"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
-    el-form-item(
-      label="Тип поля"
-    )
+
+    el-form-item(:label="$t('typeOfField')")
       el-select(v-model="frmMod.field_type")
         el-option(
           v-for="(t, i) in fieldTypeChoices"
           :key="i"
           :label="t.label"
-          :value="t.value"
-        )
-    el-form-item(
-      label="Группы"
-    )
+          :value="t.value")
+
+    el-form-item(:label="$t('route.groups')")
       groups-choice(v-model="frmMod.groups" multiple)
-    el-form-item(
-      label="Системный тэг"
-    )
-      system-tags-input(
-        v-model="frmMod.system_tag"
-      )
-    el-form-item(
-      label="Пользов. тэг"
-      prop="user_tag"
-    )
+
+    el-form-item(:label="$t('systemTag')")
+      system-tags-input(v-model="frmMod.system_tag")
+
+    el-form-item(:label="$t('use')" prop="user_tag")
       el-input(v-model="frmMod.user_tag")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -117,7 +107,7 @@ export default class extends Vue {
       {
         validator: _userTagsValidator,
         trigger: 'change',
-        message: 'Тэги должны содержать только буквы, цифры и знак подчёркивания (как [a-zA-Z0-9_]). И могут быть разделены запятой.'
+        message: this.$tc('fieldTagValidation')
       }
     ]
   }

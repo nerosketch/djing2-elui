@@ -1,35 +1,31 @@
 <template lang="pug">
   .tab-container
-    el-tabs(
-      v-model="activeTabName"
-      type="border-card"
-    )
+    el-tabs(v-model="activeTabName" type="border-card")
       el-tab-pane(
-        label='Гостевые сессии'
-        name='sessions'
-        lazy
-      )
+        :label="$t('guestSessions')"
+        name="sessions"
+        lazy)
         keep-alive
           session-list
+
       el-tab-pane(
-        label='Подсети'
-        name='pools'
-        lazy
-      )
+        :label="$t('subnets')"
+        name="pools"
+        lazy)
         keep-alive
           pool-list
+
       el-tab-pane(
-        label='Вланы'
-        name='vlans'
-        lazy
-      )
+        :label="$t('vlanS')"
+        name="vlans"
+        lazy)
         keep-alive
           vlan-list
+
       el-tab-pane(
-        label='Аренды ip'
-        name='leases'
-        lazy
-      )
+        :label="$t('ipLeases')"
+        name="leases"
+        lazy)
         keep-alive
           lease-list
 </template>

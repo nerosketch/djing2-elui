@@ -32,7 +32,7 @@
     icon='el-icon-plus'
     type='success'
     @click="addAbsoluteNode"
-  ) Добавить
+  ) {{ $t('add') }}
   el-dialog(
     :title="dialogTitle"
     :visible.sync="dialogVisible"
@@ -71,9 +71,11 @@ export default class extends Vue {
       tn: a.fias_address_type_name,
       t: a.title
     }),
+    isLeaf: (a: IAddressModel) => (a.children_count === 0)
   }
 
   private dialogVisible = false
+  private parentTitle: string | null = null
 
   private tmpAddrTreeNode: AddrTreeNode | null = null
   private addrIdHierarchy: number[] = []
@@ -97,6 +99,7 @@ export default class extends Vue {
   private addNode(node: AddrTreeNode) {
     AddressModule.RESET_ALL_ADDR()
     AddressModule.SET_ADDR_PARENT(node.data.id)
+    this.parentTitle = `${node.data.fias_address_type_name} ${node.data.title}`
     this.dialogVisible = true
   }
 
@@ -107,7 +110,7 @@ export default class extends Vue {
 
   private frmAddDone(addr: IAddressModel) {
     this.dialogVisible = false
-    this.$message.success('Адресный объект добавлен')
+    this.$message.success(this.$tc('addressObjectAdded'))
 
     if (addr.parent_addr) {
       this.$refs.etree.append(addr, addr.parent_addr)
@@ -116,7 +119,7 @@ export default class extends Vue {
 
   private frmChangeDone(addr: IAddressModel) {
     this.dialogVisible = false
-    this.$message.success('Адресный объект изменён')
+    this.$message.success(this.$tc('rearObjectChanged'))
 
     if (this.tmpAddrTreeNode) {
       this.tmpAddrTreeNode.data = addr
@@ -128,18 +131,20 @@ export default class extends Vue {
     const { data } = await getAddresses({
       page: 1,
       page_size: 0,
-      parent_addr: parent || 0,
+      parent_addr: parent || 0
       // fields: 'id,title,parent_addr'
     })
     return data as unknown as IAddressModel[]
   }
 
   get dialogTitle() {
-    let t = 'Изменить'
     if (this.$store.state.address.id === 0) {
-      t = 'Создать'
+      if (this.parentTitle) {
+        return `Создать адресный объект в "${this.parentTitle}"`
+      }
+      return 'Создать адресный объект'
     }
-    return `${t} адресный объект`
+    return 'Изменить адресный объект'
   }
 
   // Breadcrumbs
@@ -148,7 +153,7 @@ export default class extends Vue {
       {
         meta: {
           hidden: true,
-          title: 'Адреса'
+          title: this.$tc('addresses')
         }
       }
     ] as any)
@@ -169,8 +174,7 @@ export default class extends Vue {
     }
   }
 
-  private onNodeExpand(openedNode: IAddressModel, node: AddrTreeNode, nodeSelf: AddrTreeNode, ) {
-    const pos = localStorage.getItem('addrTreeLastId')
+  private onNodeExpand(openedNode: IAddressModel, node: AddrTreeNode, nodeSelf: AddrTreeNode) {
     localStorage.setItem('addrTreeLastId', openedNode.id.toString())
   }
 

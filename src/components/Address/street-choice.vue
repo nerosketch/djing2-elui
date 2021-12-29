@@ -1,11 +1,13 @@
 <template lang="pug">
-  el-select(v-model="localValue" :loading='loading' clearable)
+  el-select(
+    v-model="localValue"
+    :loading="loading"
+    clearable)
     el-option(
       v-for="str in streets"
       :key="str.id"
       :label="str.fias_address_type_name ? `${str.fias_address_type_name} ${str.title}` : str.title"
-      :value="str.id"
-    )
+      :value="str.id")
 </template>
 
 <script lang="ts">

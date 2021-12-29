@@ -1,27 +1,26 @@
 <template lang="pug">
   el-form(
-    ref='frm'
-    v-loading='loading'
+    ref="frm"
+    v-loading="loading"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-  )
-    el-form-item(
-      label="Количество денег"
-      prop='cost'
-    )
-      el-input(v-model="frmMod.cost" type='number' max="15000")
-    el-form-item(
-      label="Комментарий"
-      prop='comment'
-    )
-      el-input(v-model="frmMod.comment" :maxlength='128')
+    :rules="frmRules"
+    :model="frmMod")
+    el-form-item(:label="$t('customers.sum')" prop="cost")
+      el-input(
+        v-model="frmMod.cost"
+        type="number"
+        max="15000")
+
+    el-form-item(:label="$t('comment')" prop="comment")
+      el-input(v-model="frmMod.comment", :maxlength="128")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
-        type="primary" @click="onSubmit"
-        :loading="loading"
-      ) Сохранить
+        icon="el-icon-upload"
+        type="primary"
+        @click="onSubmit"
+        :loading="loading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -42,7 +41,7 @@ export default class extends Vue {
 
   private frmRules = {
     cost: [
-      { required: true, message: 'Укажи сколько денег надо положить на счёт', trigger: 'blur' },
+      { required: true, message: this.$tc('customers.howMuchAddition').toString(), trigger: 'blur' },
       {
         validator: (rule: any, value: number, callback: Function) => {
           if (value >= 15000) {
@@ -52,7 +51,7 @@ export default class extends Vue {
           }
         },
         trigger: 'change',
-        message: 'Нельзя пополнять больше чем на 15000'
+        message: this.$tc('customers.additionMoreThanForbidden').toString() + ' 15000'
       },
       {
         validator: (rule: any, value: number, callback: Function) => {
@@ -63,7 +62,7 @@ export default class extends Vue {
           }
         },
         trigger: 'change',
-        message: 'Нельзя снимать больше чем 15000'
+        message: this.$tc('customers.withdrawalMoreThanForbidden').toString() + ' 15000'
       }
     ]
   }
@@ -80,7 +79,9 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(
+          this.$tc('fixFormErrs').toString()
+        )
       }
     })
   }

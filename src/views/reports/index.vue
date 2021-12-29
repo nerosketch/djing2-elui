@@ -1,42 +1,47 @@
 <template lang="pug">
-.app-container
-  el-row(:gutter="32")
-    el-col(
-      :xs="24"
-      :sm="24"
-      :lg="8"
-    )
-      el-card
-        template(v-slot:header)
-          .clearfix Частота использования характеров задач
-        task-mode-report-pie-chart(
-          v-if="$perms.tasks.can_view_task_mode_report"
-        )
-        h4(v-else) Недостаточно прав
-    el-col(
-      :xs="24"
-      :sm="24"
-      :lg="8"
-    )
-      el-card
-        template(v-slot:header)
-          .clearfix Распределение использования услуг абонентами
-        customer-service-type-report(
-          v-if="$perms.customers.can_view_service_type_report"
-        )
-        h4(v-else) Недостаточно прав
-    el-col(
-      :xs="24"
-      :sm="24"
-      :lg="8"
-    )
-      el-card
-        template(v-slot:header)
-          .clearfix Активность абонентов
-        customer-activity-report(
-          v-if="$perms.customers.can_view_activity_report"
-        )
-        h4(v-else) Недостаточно прав
+  .app-container
+    el-row(:gutter="32")
+      el-col(
+        :xs="24"
+        :sm="24"
+        :lg="8")
+        el-card
+          template(v-slot:header)
+            .clearfix
+              | {{ $t('frequencyOfPerformance') }}
+
+          task-mode-report-pie-chart(v-if="$perms.tasks.can_view_task_mode_report")
+
+          h4(v-else)
+            | {{ $t('insufficientRights') }}
+
+      el-col(
+        :xs="24"
+        :sm="24"
+        :lg="8")
+        el-card
+          template(v-slot:header)
+            .clearfix
+              | {{ $t('distributionOfServicesBySubscribers') }}
+
+          customer-service-type-report(v-if="$perms.customers.can_view_service_type_report")
+
+          h4(v-else)
+            | {{ $t('insufficientRights') }}
+
+      el-col(
+        :xs="24"
+        :sm="24"
+        :lg="8")
+        el-card
+          template(v-slot:header)
+            .clearfix
+              | {{ $t('accelerationOfSubscribers') }}
+
+          customer-activity-report(v-if="$perms.customers.can_view_activity_report")
+
+          h4(v-else)
+            | {{ $t('insufficientRights') }}
 </template>
 
 <script lang="ts">
@@ -64,7 +69,7 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: 'Отчёты всякие'
+          title: this.$tc('allReports')
         }
       }
     ] as any)
@@ -72,7 +77,7 @@ export default class extends Vue {
   // End Breadcrumbs
 
   created() {
-    document.title = 'Отчёты всякие'
+    document.title = this.$tc('allReports')
     this.buildBreadcrumb()
   }
 }

@@ -1,11 +1,11 @@
 <template lang="pug">
   el-button(
-    icon='el-icon-close'
+    icon="el-icon-close"
     :type="btnType"
     :loading="loading"
     @click="delFromOltOnu"
-    :disabled="!$perms.devices.can_remove_from_olt"
-  ) {{ btnText }}
+    :disabled="!$perms.devices.can_remove_from_olt")
+    | {{ btnText }}
 </template>
 
 <script lang="ts">
@@ -21,7 +21,7 @@ export default class extends mixins(BtnShareMixin) {
   @Prop({ default: 0 }) private devId!: number | null
 
   private created() {
-    this.btnText = 'Удалить с OLT'
+    this.btnText = this.$tc('removeFromOLT')
   }
 
   private async delFromOltOnu() {
@@ -41,7 +41,7 @@ export default class extends mixins(BtnShareMixin) {
         this.loading = false
       }
     } else {
-      this.setResState('В кнопку не передано устройство', 'danger')
+      this.setResState(this.$tc('noDeviceTransmittedToTheButton'), 'danger')
     }
     this.loading = false
   }

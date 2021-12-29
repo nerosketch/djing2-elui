@@ -1,16 +1,16 @@
 <template lang="pug">
-div(v-loading='loading')
-  line-chart(
-    :chartData="chartDat"
-  )
-  span Временной срез:
-  el-date-picker(
-    v-model="timerange"
-    type="datetimerange"
-    range-separator="-"
-    start-placeholder="Начало среза"
-    end-placeholder="Конец среза"
-  )
+  div(v-loading="loading")
+    line-chart(:chartData="chartDat")
+
+    span
+      | {{ $t('temporaryCut:') }}
+
+    el-date-picker(
+      v-model="timerange"
+      type="datetimerange"
+      range-separator="-"
+      start-placeholder="Начало среза"
+      end-placeholder="Конец среза")
 </template>
 
 <script lang="ts">

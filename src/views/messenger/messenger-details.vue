@@ -1,23 +1,27 @@
 <template lang="pug">
   el-row.app-container(:gutter="5")
-    el-col.mt5(:lg="12" :sm='24')
+    el-col.mt5(:lg="12" :sm="24")
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix Подробности бота "{{ $store.state.messenger.title }}"
-        messenger-form(v-if='isReady')
-    el-col.mt5(:lg='12' :sm='24')
+          .clearfix
+            | {{ $t('bottomDetails') }} "{{ $store.state.messenger.title }}"
+
+        messenger-form(v-if="isReady")
+
+    el-col.mt5(:lg="12" :sm="24")
       div
-        b Текущий webhook url:
-        span {{ $store.state.messenger.current_webhook }}
+        b
+          | {{ $t('currentWebHook') }}
+
+        span
+          | {{ $store.state.messenger.current_webhook }}
+
       el-button-group
-        el-button(
-          @click="setWebhook"
-          :loading='setWebhookLoading'
-        ) Отправить webhook url
-        el-button(
-          @click="stopWebhook"
-          :loading='stopWebhookLoading'
-        ) Остановить webhook
+        el-button(@click="setWebhook", :loading="setWebhookLoading")
+          | {{ $t('sendWebHoseUrn') }}
+
+        el-button(@click="stopWebhook", :loading="stopWebhookLoading")
+          | {{ $t('stopTheWebSite') }}
 </template>
 
 <script lang="ts">
@@ -89,7 +93,7 @@ export default class extends Vue {
         path: '/messenger',
         meta: {
           hidden: true,
-          title: 'Мессенджеры'
+          title: this.$tc('messengers')
         }
       },
       {

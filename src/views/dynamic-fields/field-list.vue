@@ -1,35 +1,27 @@
 <template lang="pug">
-.app-container
-  datatable(
-    :columns="tableColumns"
-    :getData="loadFields"
-    widthStorageNamePrefix='dfl'
-    ref='fieldtable'
-  )
-    template(v-slot:btn="{row}")
-      el-button-group
-        el-button(
-          icon='el-icon-edit'
-          @click="editField(row)"
-        )
-        el-button(
-          type="danger"
-          icon='el-icon-close'
-          @click="delDynamicField(row)"
-        )
-    el-button(
-      icon='el-icon-plus'
-      @click='openNew'
-    ) Добавить поля
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadFields"
+      widthStorageNamePrefix="dfl"
+      ref="fieldtable")
+      template(v-slot:btn="{row}")
+        el-button-group
+          el-button(icon="el-icon-edit" @click="editField(row)")
 
-  el-dialog(
-    title="Поле"
-    :visible.sync="fieldFormVisible"
-    :close-on-click-modal="false"
-  )
-    field-form(
-      @done="formDone"
-    )
+          el-button(
+            type="danger"
+            icon="el-icon-close"
+            @click="delDynamicField(row)")
+
+      el-button(icon="el-icon-plus" @click="openNew")
+        | {{ $t('addFields') }}
+
+    el-dialog(
+      :title="$t('field')"
+      :visible.sync="fieldFormVisible"
+      :close-on-click-modal="false")
+      field-form(@done="formDone")
 </template>
 
 <script lang="ts">
@@ -61,28 +53,28 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$tc('title'),
       'min-width': 150
     },
     {
       prop: 'field_type_name',
-      label: 'Тип поля'
+      label: this.$tc('typeOfField')
     },
     {
       prop: 'groups',
-      label: 'Группы'
+      label: this.$tc('route.groups')
     },
     {
       prop: 'system_tag_name',
-      label: 'Системный тэг'
+      label: this.$tc('systemTag')
     },
     {
       prop: 'user_tag',
-      label: 'Пользовательский тэг'
+      label: this.$tc('userTag')
     },
     {
       prop: 'btn',
-      label: '—',
+      label: '#',
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -93,9 +85,9 @@ export default class extends Vue {
   }
 
   private delDynamicField(field: IDynamicField) {
-    this.$confirm(`Удалить поле "${field.title}"?`).then(async() => {
+    this.$confirm(`${this.$tc('deleteTheField')} ${field.title}?`).then(async() => {
       await DynamicFieldModule.DeleteField(field.id)
-      this.$message.success(`Поле "${field.title}" удалено`)
+      this.$message.success(`${this.$tc('fieldRemoved')} ${field.title}`)
       this.$refs.fieldtable.LoadTableData()
     })
   }
@@ -107,7 +99,7 @@ export default class extends Vue {
 
   private formDone() {
     this.fieldFormVisible = false
-    this.$message.success('Сохранено')
+    this.$message.success(this.$tc('saved'))
     this.$refs.fieldtable.LoadTableData()
   }
 
@@ -122,7 +114,7 @@ export default class extends Vue {
       {
         meta: {
           hidden: true,
-          title: 'Формы'
+          title: this.$tc('forms')
         }
       }
     ] as any)

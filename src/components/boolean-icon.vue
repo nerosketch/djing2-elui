@@ -1,8 +1,5 @@
 <template lang="pug">
-  span(
-    :class="iconClass"
-    :style="iconColor"
-  )
+  span(:class="iconClass", :style="iconColor")
     slot
 </template>
 

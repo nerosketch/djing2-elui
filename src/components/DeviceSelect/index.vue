@@ -1,11 +1,10 @@
 <template lang="pug">
-  el-select(v-model='selectedDeviceId' :disabled="devices.length == 0")
+  el-select(v-model="selectedDeviceId", :disabled="devices.length == 0")
     el-option(
       v-for="dv in devices"
       :key="dv.id"
       :label="dv.comment + (dv.ip_address ? ` (${dv.ip_address})` : '')"
-      :value="dv.id"
-    )
+      :value="dv.id")
 </template>
 
 <script lang="ts">

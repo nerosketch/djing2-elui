@@ -2,18 +2,16 @@
   datatable(
     :columns="tableColumns"
     :getData="loadTLog"
-    :heightDiff='167'
-    widthStorageNamePrefix='customerTaskHistory'
-    ref='tlogtbl'
-  )
+    :heightDiff="167"
+    widthStorageNamePrefix="customerTaskHistory"
+    ref="tlogtbl")
     template(v-slot:viewbtn="{row}")
       router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
-        el-button(
-          :type="row.comment_count > 0 ? 'success' : 'primary'"
-        )
-          template(v-if="row.comment_count > 0") {{ row.comment_count }}
-          i.el-icon-view(v-else)
+        el-button(:type="row.comment_count > 0 ? 'success' : 'primary'")
+          template(v-if="row.comment_count > 0")
+            | {{ row.comment_count }}
 
+          i.el-icon-view(v-else)
 </template>
 
 <script lang="ts">
@@ -42,27 +40,27 @@ export default class extends Vue {
     },
     {
       prop: 'author_uname',
-      label: 'Автор',
+      label: this.$tc('customers.author').toString(),
       'min-width': 100
     },
     {
       prop: 'descr',
-      label: 'Комментарий',
+      label: this.$tc('comment').toString(),
       'min-width': 250
     },
     {
       prop: 'state_str',
-      label: 'Состояние',
+      label: this.$tc('customers.state').toString(),
       'min-width': 200
     },
     {
       prop: 'mode_str',
-      label: 'Тип',
+      label: this.$tc('customers.type').toString(),
       'min-width': 150
     },
     {
       prop: 'time_of_create',
-      label: 'Дата создания',
+      label: this.$tc('startDate').toString(),
       'min-width': 200
     }
   ]

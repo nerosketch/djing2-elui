@@ -1,78 +1,71 @@
 <template lang="pug">
   el-form(
-    ref='frm'
+    ref="frm"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
+
     el-form-item(
-      label="Номер договора(уникальный)"
+      :label="$t('customers.contractNum.unique')"
       prop="contract_number"
     )
       el-input(
         v-model="frmMod.contract_number"
-        placeholder="не должен повторяться"
+        :placeholder="$t('contractDocs.noRepeat')"
       )
         template(#append)
           el-button(
-            icon='el-icon-document'
+            icon="el-icon-document"
             @click="doCopyFromUsername"
-            title="Скопировать из логина абонента"
-          )
-    el-form-item(
-      label="Дата начала действия договора"
-      prop="start_service_time"
-    )
+            :title="$t('contractDocs.copyFromLogin')")
+
+    el-form-item(:label="$t('contractDocs.dateBegin')" prop="start_service_time")
       el-date-picker(
         v-model="frmMod.start_service_time"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm:ss"
-        format="d.MM.yyyy HH:mm:ss"
-      )
-    el-form-item(
-      label="Дата окончания действия договора"
-    )
+        format="d.MM.yyyy HH:mm:ss")
+
+    el-form-item(:label="$t('contractDocs.dateEnd')")
       el-date-picker(
         v-model="frmMod.end_service_time"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm:ss"
-        format="d.MM.yyyy HH:mm:ss"
-      )
-    el-form-item(
-      label="Активность"
-    )
-      el-checkbox(v-model="frmMod.is_active") - Действующий договор: {{ frmMod.is_active ? 'Да' : 'Нет' }}
-    el-form-item(
-      label="Доп. сведения"
-    )
-      el-input(v-model="frmMod.note" type="textarea" rows="5" cols="40")
+        format="d.MM.yyyy HH:mm:ss")
+
+    el-form-item(:label="$t('contractDocs.activity')")
+      el-checkbox(v-model="frmMod.is_active")
+        | - {{ $t('contractDocs.activeContract') }}: {{ frmMod.is_active ? $t('yes') : $t('sno') }}
+
+    el-form-item(:label="$t('contractDocs.additional')")
+      el-input(
+        v-model="frmMod.note"
+        type="textarea"
+        rows="5"
+        cols="40")
+
     el-form-item
       el-button-group
         el-button(
-          type="primary" icon='el-icon-upload'
+          type="primary"
+          icon="el-icon-upload"
           @click="onSubmit"
           :loading="isLoading"
           :disabled="isFormUntouched"
-          :type="isNew ? 'success' : 'default'"
-        ) {{ isNew ? 'Добавить' : 'Сохранить' }}
+          :type="isNew ? 'success' : 'default'")
+          | {{ isNew ? $t('add') : $t('save') }}
+
         el-button(
           v-if="!isNew"
           icon="el-icon-document"
-          @click="openDocsDialog"
-        ) Документы
+          @click="openDocsDialog")
+          | {{ $t('customers.docs') }}
 
-    el-dialog(
-      title="Документы"
-      :visible.sync="docsDialogVisible"
-    )
-      contract-docs(
-        :contract="contract"
-      )
+    el-dialog(:title="$t('customers.docs')", :visible.sync="docsDialogVisible")
+      contract-docs(:contract="contract")
 </template>
 
 <script lang="ts">
@@ -123,10 +116,10 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     contract_number: [
-      { required: true, message: 'Номер договора обязателен', trigger: 'blur' },
+      { required: true, message: this.$tc('customers.contractNum.required'), trigger: 'blur' },
     ],
     start_service_time: [
-      { required: true, message: 'Нужно указать когда начал действовать договор', trigger: 'blur' },
+      { required: true, message: this.$tc('customers.contractNum.validation'), trigger: 'blur' },
     ]
   }
 
@@ -159,25 +152,29 @@ export default class extends mixins(FormMixin) {
           if (this.isNew) {
             const newDat = await addContract(this.frmMod)
             this.$emit('added', newDat)
-            this.$message.success('Договор добавлен')
+            this.$message.success(
+              this.$tc('contractDocs.addedMsg')
+            )
           } else {
             if (this.contract && this.contract.id) {
               const newDat = await changeContract(this.contract.id, this.frmMod)
               this.$emit('changed', newDat)
-              this.$message.success('Договор сохранён')
+              this.$message.success(
+                this.$tc('contractDocs.savedMsg')
+              )
             } else {
               const tx = 'Logic error on contractForm in onSubmit()'
               this.$message.error(tx)
               throw new Error(tx)
             }
           }
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(
+          this.$tc('fixFormErrs')
+        )
       }
     })
   }

@@ -5,8 +5,7 @@
     :loading="loading"
     :disabled="isdis || !$perms.devices.can_toggle_ports"
     @click="togglePort"
-    circle
-  )
+    circle)
 </template>
 
 <script lang="ts">

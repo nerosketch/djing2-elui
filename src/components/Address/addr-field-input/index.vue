@@ -8,14 +8,19 @@ div
     el-button(
       @click="dialogActivate"
     ) {{ fullTitleFromServer }}
-    el-button(
-      @click="resetVal"
-      icon="el-icon-close"
-      circle
+    slot(name='buttons')
+    el-tooltip(
+      effect="dark"
+      :content="$t('clear')"
     )
+      el-button(
+        @click="resetVal"
+        icon="el-icon-close"
+        circle
+      )
 
   el-dialog(
-    title="Адрес"
+    :title="$t('addrs.addr')"
     top='1%'
     :visible.sync="addrVisible"
     append-to-body
@@ -24,6 +29,7 @@ div
       v-model="localValue"
       @done="addrDone"
     )
+
 </template>
 
 <script lang="ts">
@@ -37,7 +43,7 @@ import AddrSelectForm from './addr-select-form.vue'
   components: { AddrSelectForm }
 })
 export default class extends Vue {
-  @Prop({ default: '[Не выбран]'})
+  @Prop({ default: '[notChosen]'})
   private emptyLabel!: string
 
   @Prop({ default: null })

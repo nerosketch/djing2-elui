@@ -2,7 +2,7 @@
 el-card(style='margin-bottom:20px;')
   template(v-slot:header)
     .clearfix
-      span Инфо
+      span {{ $t('info') }}
   .user-profile
     .box-center
       pan-thumb(
@@ -21,38 +21,40 @@ el-card(style='margin-bottom:20px;')
       .user-bio-section-body
         dl
           dt
-            b Телефон
+            b {{ $t('telephone') }}
           dd {{ $store.state.userprofile.telephone }}
           dt
-            b Логин
+            b {{ $t('login') }}
           dd {{ $store.state.userprofile.username }}
           dt
-            b Имя и отчество
+            b {{ $t('nameAndFatherhood') }}
           dd {{ $store.state.userprofile.fio }}
           dt
-            b Включён-ли
+            b {{ $t('profiles.isActive') }}
           dd
-            boolean-icon(v-model="$store.state.userprofile.is_active")
+            i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
+            i.el-icon-circle-close(v-else)
           dt
-            b Суперпользователь
+            b {{ $t('profiles.isSuperuser') }}
           dd
-            boolean-icon(v-model="$store.state.userprofile.is_superuser")
+            i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
+            i.el-icon-circle-close(v-else)
     .user-skills.user-bio-section
       .user-bio-section-body
         .progress-item
-          span Уровень доступа
+          span {{ $t('levelOfAccess') }}
           el-progress(
             :percentage='$store.state.userprofile.access_level'
             :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'
           )
         .progress-item
-          span Какой-то другой прогресс
+          span {{ $t('someOtherProgress') }}
           el-progress(:percentage='45')
         .progress-item
-          span ещё что-то
+          span {{ $t('somethingElse') }}
           el-progress(:percentage='4')
         .progress-item
-          span Что-то завершённое
+          span {{ $t('somethingFinished') }}
           el-progress(:percentage='100' status='success')
 
 </template>

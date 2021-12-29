@@ -1,22 +1,15 @@
 <template lang="pug">
-  el-form(
-    :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      label="Филиал (абонент)"
-      prop='customer'
-    )
-      customer-field(
-        v-model="frmMod.branch"
-      )
+  el-form(:model="frmMod", v-loading="loading")
+    el-form-item(:label="$t('customersLegal.branch')" prop="customer")
+      customer-field(v-model="frmMod.branch")
+
     el-form-item
       el-button(
-        type='primary'
-        icon='el-icon-plus'
+        type="primary"
+        icon="el-icon-plus"
         :disabled="!isFilled"
-        @click="onSubmit"
-      ) Добавить
+        @click="onSubmit")
+        | {{ $t('add') }}
 </template>
 
 
@@ -47,7 +40,7 @@ export default class extends Vue {
       this.loading = true
       try {
         const customerLegal = await CustomerLegalModule.updateCustomerLegal({ branches })
-        this.$message.success('Сохранено')
+        this.$message.success(this.$tc('saved'))
         this.$emit('done', customerLegal)
       } finally {
         this.loading = false

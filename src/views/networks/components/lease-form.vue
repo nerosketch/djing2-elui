@@ -1,33 +1,36 @@
 <template lang="pug">
   el-form(
-    ref='leasefrm'
+    ref="leasefrm"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
     el-form-item(
-      label='IP Адрес'
-      prop='ip_address'
+      :label="$t('ipAddress')"
+      prop="ip_address"
     )
       el-input(v-model="frmMod.ip_address")
+
     el-form-item(
-      label='MAC Адрес'
-      prop='mac_address'
+      :label="$t('macAddress')"
+      prop="mac_address"
     )
       el-input(v-model="frmMod.mac_address")
+
     el-form-item(
-      label='Динамический'
-      prop='is_dynamic'
+      :label="$t('dynamic')"
+      prop="is_dynamic"
     )
-      el-checkbox(v-model="frmMod.is_dynamic") {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
+      el-checkbox(v-model="frmMod.is_dynamic")
+        | {{ frmMod.is_dynamic ? 'Да' : 'Нет' }}
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
-        type='primary'
+        icon="el-icon-upload"
+        type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -45,12 +48,12 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: 'IP не может быть пустым', trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: 'Пример ip: 192.168.0.23' }
+      { required: true, message: this.$tc('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('example192168023') }
     ],
     mac_address: [
-      { required: true, message: 'MAC не нужно оставлять пустым', trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: 'Пример mac: 0a:0b:cc:dd::ee:ff' }
+      { required: true, message: this.$tc('weDonTHaveToLeaveTheMobEmpty'), trigger: 'blur' },
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc('example:0A:0B:Cc:Dd:Ee:Ff') }
     ]
   }
 
@@ -84,7 +87,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

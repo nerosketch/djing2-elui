@@ -2,8 +2,7 @@
   div(
     :class="className"
     :style="{height: height, width: width}"
-    v-loading="loading"
-  )
+    v-loading="loading")
 </template>
 
 <script lang="ts">
@@ -79,7 +78,7 @@ export default class extends mixins(ResizeMixin) {
         }
       }],
       series: [{
-        name: 'Количество',
+        name: this.$tc('count'),
         type: 'bar',
         stack: 'vistors',
         // barWidth: '60%',

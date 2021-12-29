@@ -1,71 +1,57 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     status-icon
     :rules="frmRules"
     :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      label="IP Адрес"
-      prop='ip_address'
-    )
+    v-loading="loading")
+    el-form-item(:label="$t('ipAddress')" prop="ip_address")
       el-input(v-model="frmMod.ip_address")
-    el-form-item(
-      label="MAC Адрес"
-      prop='mac_addr'
-    )
+
+    el-form-item(:label="$t('macAddress')" prop="mac_addr")
       el-input(v-model="frmMod.mac_addr")
-    el-form-item(
-      label="Описание"
-      prop='comment'
-    )
+
+    el-form-item(:label="$t('description')" prop="comment")
       el-input(v-model="frmMod.comment")
-    el-form-item(
-      label="Тип оборудования"
-      prop='dev_type'
-    )
+
+    el-form-item(:label="$t('typeOfEquipment')" prop="dev_type")
       el-select(v-model="frmMod.dev_type")
         el-option(
           v-for="dt in deviceTypeNames"
           :key="dt.v"
           :label="dt.nm"
-          :value="dt.v"
-        )
-    el-form-item(
-      label="SNMP Community"
-    )
+          :value="dt.v")
+
+    el-form-item(:label="$t('community')")
       el-input(v-model="frmMod.man_passw")
-    el-form-item(
-      label="Группа"
-    )
+
+    el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
-    el-form-item(
-      label="Родит. устройство"
-    )
-      device-autocomplete-field(
-        v-model="frmMod.parent_dev"
-        :defaultName="initialParentDevName"
-      )
-    el-form-item(
-      label="Дата введения в эксплуатацию"
-    )
-      datetime-counter(
-        v-model="frmMod.create_time"
-      )
-    el-form-item(
-      label="Доп. инфо для snmp"
-    )
+
+    el-form-item(:label="$t('theDevice')")
+      device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="initialParentDevName")
+
+    el-form-item(:label="$t('effectiveDate')")
+      datetime-counter(v-model="frmMod.create_time")
+
+    el-form-item(:label="$t('snmpInfo')")
       el-input(v-model="frmMod.snmp_extra")
+
     el-form-item
-      el-checkbox(v-model="frmMod.is_noticeable") Оповещать при событиях мониторинга&#58;
-        b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
+      el-checkbox(v-model="frmMod.is_noticeable")
+        | {{ $t('monitoringEventAlerts') }}:&nbsp;
+
+        b
+          | {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
+
     el-form-item
       el-button(
-        type="success" @click="onSubmit" icon="el-icon-plus"
+        type="success"
+        @click="onSubmit"
+        icon="el-icon-plus"
         :loading="loading"
-        :disabled="!$perms.devices.add_device"
-      ) Добавить
+        :disabled="!$perms.devices.add_device")
+        | {{ $t('add') }}
 </template>
 
 <script lang="ts">
@@ -103,17 +89,17 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { validator: ipAddrValidator, trigger: 'change', message: 'Пример ip: 192.168.0.23' }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('example192168023') }
     ],
     mac_addr: [
-      { required: true, message: 'MAC не может быть пустым', trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: 'Пример mac: 0a:0b:cc:dd::ee:ff' }
+      { required: true, message: this.$tc('macCanTBeEmpty'), trigger: 'blur' },
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc('example:0A:0B:Cc:Dd:Ee:Ff') }
     ],
     comment: [
-      { required: true, message: 'Укажи устройству какое-то имя', trigger: 'blur' }
+      { required: true, message: this.$tc('giveTheDeviceAName'), trigger: 'blur' }
     ],
     dev_type: [
-      { validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно указать тип устройства' }
+      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('specifyTheTypeOfDevice') }
     ]
   }
 
@@ -149,7 +135,7 @@ export default class extends Vue {
           this.$emit('err', err)
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

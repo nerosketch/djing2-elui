@@ -1,54 +1,52 @@
 <template lang="pug">
   el-row.mt5.mb5
     el-col(:span="1")
-      el-popover(
-        width='400'
-        trigger="click"
-      )
+      el-popover(width="400", trigger="click")
         el-select(v-model="addVlanFrmMod.vid")
           el-option(
             v-for="v in vlans"
             :key="v.id"
-            :label="`${v.title} [${v.vid}]`"
-            :value="v.vid"
-          )
+            :label="$t('v-title-v-vid', [v.title, v.vid])"
+            :value="v.vid")
+
         el-divider
+
         el-switch(
           v-model="addVlanFrmMod.native"
           active-text="Access"
-          inactive-text="Trunk"
-        )
+          inactive-text="Trunk")
+
         el-divider(direction="vertical")
-        el-button(
-          type="success"
-          icon='el-icon-plus'
-          @click="onAddVidToPort"
-        ) Добавить
 
         el-button(
-          slot='reference'
           type="success"
           icon="el-icon-plus"
-          circle
-        )
+          @click="onAddVidToPort")
+          | {{ $t('add') }}
 
-    el-col(:span="3" v-for="(v, i) in portVlanConf.vids" :key="i")
-      //- el-tooltip.item(
-      //-   :content="calcVlanTitleByVid(v.vid)"
-      //-   placement="top"
-      //- )
+        el-button(
+          slot="reference"
+          type="success"
+          icon="el-icon-plus"
+          circle)
+
+    el-col(
+      :span="3"
+      v-for="(v, i) in portVlanConf.vids"
+      :key="i")
       el-button-group
         el-button.btn_miniwidth(
-          :type='v.native ? "info" : "primary"'
+          :type="v.native ? 'info' : 'primary'"
           @click="changeVlanMode(v)"
         ) {{ v.native ? 'A' : 'T' }}
+
         el-button {{ v.vid }}
+
         el-button.btn_miniwidth(
-          type='danger'
-          icon='el-icon-close'
+          type="danger"
+          icon="el-icon-close"
           @click="vlanRemove(v)"
         )
-
 </template>
 
 <script lang="ts">
@@ -57,8 +55,9 @@ import { IVlanIf } from '@/api/networks/types'
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
+import i18n from '@/lang'
 
-const multipleAccessVlanMsg = 'Порт не может содержать больше одного access vlan'
+const multipleAccessVlanMsg = i18n.tc('portCanTContainMoreThanOneAcques')
 
 @Component({
   name: 'GenericVlanConfig'
@@ -81,7 +80,7 @@ export default class extends mixins(VlanMixin) {
       return
     }
     v.native = !v.native
-    this.$message.success('Изменён режим Trunk/Success')
+    this.$message.success(this.$tc('modifiedTrunkSuccessMode'))
   }
 
   private vlanRemove(remVlan: IDevVlanSimple) {
@@ -90,7 +89,7 @@ export default class extends mixins(VlanMixin) {
       this.portVlanConf.vids.splice(confIndex, 1)
       this.$message.success(`Влан ${remVlan.vid} удалён с порта №${this.portVlanConf.port}`)
     } else {
-      this.$message.error('Не найден vid=' + remVlan.vid)
+      this.$message.error(this.$tc('notFound') + ' ' + remVlan.vid)
     }
   }
 
@@ -106,7 +105,7 @@ export default class extends mixins(VlanMixin) {
   private onAddVidToPort() {
     const obj = this.addVlanFrmMod
     if (this.isVlanExists(obj.vid)) {
-      this.$message.error('Порт должен содержать уникальные vlan')
+      this.$message.error(this.$tc('portShouldContainUniqueVlans'))
       return
     }
     if (obj.native && this.nativeVlanCount > 0) {

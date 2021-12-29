@@ -7,9 +7,10 @@ const customerRoutes: RouteConfig = {
   children: [
     {
       path: '',
+      name: 'customersLink',
       component: () => import(/* webpackChunkName: "customer-locations" */ '@/views/customers/customer-locations.vue'),
       meta: {
-        title: 'Абоненты',
+        title: 'customers',
         icon: 'el-icon-user-solid'
       }
     },

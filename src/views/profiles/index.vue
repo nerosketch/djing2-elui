@@ -1,22 +1,18 @@
 <template lang="pug">
   .tab-container
-    el-tabs(
-      v-model="activeTabName"
-      type="border-card"
-    )
+    el-tabs(v-model="activeTabName" type="border-card")
       el-tab-pane(
-        label='Сотрудники'
-        name='profiles'
-        lazy
-      )
+        :label="$t('route.staff')"
+        name="profiles"
+        lazy)
         keep-alive
           profile-list
+
       el-tab-pane(
-        label='Группы сотрудников'
-        name='profilegroups'
+        :label="$t('profiles.profileGroups')"
+        name="profilegroups"
         lazy
-        v-if="$perms.is_superuser"
-      )
+        v-if="$perms.is_superuser")
         keep-alive
           group-list
 </template>

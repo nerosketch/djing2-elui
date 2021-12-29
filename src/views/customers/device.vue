@@ -1,39 +1,50 @@
 <template lang="pug">
-el-form(
-  :model='frmMod'
-  v-loading='isLoading'
-  :label-width="$store.getters.isMobileView ? undefined : '100px'"
-)
-  el-card(shadow="never")
-    template(v-slot:header) Оборудование
-    el-row
-      el-col(:span='8') Устройство
-      el-col(:span='16')
-        device-select(
-          v-model="frmMod.device"
-          :addrId="$store.state.customer.address"
-          :initialDevice="devComm"
-        )
-    el-row
-      el-col(:span='8') Порт
-      el-col(:span='16')
-        selected-dev-port(v-model='frmMod.dev_port' :deviceId='frmMod.device')
-    el-row
-      el-col
-        el-button-group
-          el-button(
-            icon='el-icon-upload'
-            type="primary" @click="onSubmit"
-            :loading="isLoading"
-          ) Сохранить
-          el-button(
-            icon="el-icon-view" @click="onGo2Dev"
-            :disabled="!frmMod.device"
-          ) Смотреть
-          el-button(
-            type="danger" icon="el-icon-delete"
-            @click="onClearDevice"
-          ) Очистить
+  el-form(
+    :model="frmMod"
+    v-loading="isLoading"
+    :label-width="$store.getters.isMobileView ? undefined : '100px'")
+    el-card(shadow="never")
+      template(v-slot:header)
+        | {{ $t('route.devices') }}
+
+      el-row
+        el-col(:span="8")
+          | {{ $t('devices.dev' ) }}
+
+        el-col(:span="16")
+          device-select(
+            v-model="frmMod.device"
+            :addrId="$store.state.customer.address"
+            :initialDevice="devComm")
+
+      el-row
+        el-col(:span="8")
+          | {{ $t('devices.port') }}
+
+        el-col(:span="16")
+          selected-dev-port(v-model="frmMod.dev_port", :deviceId="frmMod.device")
+
+      el-row
+        el-col
+          el-button-group
+            el-button(
+              icon="el-icon-upload"
+              type="primary"
+              @click="onSubmit"
+              :loading="isLoading")
+              | {{ $t('save') }}
+
+            el-button(
+              icon="el-icon-view"
+              @click="onGo2Dev"
+              :disabled="!frmMod.device")
+              | {{ $t('view') }}
+
+            el-button(
+              type="danger"
+              icon="el-icon-delete"
+              @click="onClearDevice")
+              | {{ $t('clear') }}
 </template>
 
 <script lang="ts">
@@ -81,7 +92,9 @@ export default class extends Vue {
   }
 
   private onClearDevice() {
-    this.$confirm('Действительно очистить устройство абонента?').then(async() => {
+    this.$confirm(
+      this.$tc('customers.clearDevQuestion').toString()
+    ).then(async() => {
       this.isLoading = true
       const { data } = await CustomerModule.ClearDevice()
       this.frmMod.device = data.device

@@ -28,6 +28,7 @@ export interface IAddressModel {
   fias_address_level_name?: string
   fias_address_type: number
   fias_address_type_name?: string
+  children_count: number
 }
 export type IAddressModelList = IDRFListResponse<IAddressModel>
 export type IAddressModelListAxiosResponsePromise = IDRFAxiosResponsePromise<IAddressModelList>

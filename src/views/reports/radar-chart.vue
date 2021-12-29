@@ -1,8 +1,5 @@
 <template lang="pug">
-  div(
-    :class="className"
-    :style="{height: height, width: width}"
-  )
+  div(:class="className", :style="{height: height, width: width}")
 </template>
 
 <script lang="ts">
@@ -59,18 +56,18 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         indicator: [
-          { name: 'Sales', max: 10000 },
-          { name: 'Administration', max: 20000 },
-          { name: 'Information Technology', max: 20000 },
-          { name: 'Customer Support', max: 20000 },
-          { name: 'Development', max: 20000 },
-          { name: 'Marketing', max: 20000 }
+          { name: this.$tc('sáles'), max: 10000 },
+          { name: this.$tc('administration'), max: 20000 },
+          { name: this.$tc('technologists'), max: 20000 },
+          { name: this.$tc('soupport'), max: 20000 },
+          { name: this.$tc('development'), max: 20000 },
+          { name: this.$tc('marketing'), max: 20000 }
         ]
       },
       legend: {
         left: 'center',
         bottom: '10',
-        data: ['Allocated Budget', 'Expected Spending', 'Actual Spending']
+        data: [this.$tc('allocadeBudget'), this.$tc('spectaped'), this.$tc('iVeBeenDoingTheSanding')]
       },
       series: [{
         type: 'radar',
@@ -85,15 +82,15 @@ export default class extends mixins(ResizeMixin) {
         data: [
           {
             value: [5000, 7000, 12000, 11000, 15000, 14000],
-            name: 'Allocated Budget'
+            name: this.$tc('allocadeBudget')
           },
           {
             value: [4000, 9000, 15000, 15000, 13000, 11000],
-            name: 'Expected Spending'
+            name: this.$tc('spectaped')
           },
           {
             value: [5500, 11000, 12000, 15000, 12000, 12000],
-            name: 'Actual Spending'
+            name: this.$tc('iVeBeenDoingTheSanding')
           }
         ],
         animationDuration: animationDuration

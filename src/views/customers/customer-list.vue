@@ -1,43 +1,41 @@
 <template lang="pug">
   .app-container
     el-row(:gutter="10")
-      el-col(:col='24')
+      el-col(:col="24")
         slot(name="filters")
           list-filters(
             :addrId="addrId"
             :group.sync="filterForm.group"
             :street.sync="filterForm.street"
-            :fetchGroups="fetchGroups"
-          )
-      el-col(:lg='24' :md='20')
+            :fetchGroups="fetchGroups")
+
+      el-col(:lg="24" :md="20")
         datatable(
           :columns="tableColumns"
           :getData="getAllCustomers"
           :tableRowClassName="rowColor"
           :heightDiff="heightDiff"
           :editFieldsVisible.sync="editFieldsVisible"
-          widthStorageNamePrefix='customers'
-          ref='tbl'
+          widthStorageNamePrefix="customers"
+          ref="tbl"
           :selectable="$perms.is_superuser"
-          @selection-change="handleSelectionChange"
-        )
+          @selection-change="handleSelectionChange")
           template(v-if="$perms.is_superuser" #id="{row}")
             slot(name="id" :row="row")
               el-button(
                 v-if="$perms.is_superuser"
-                icon='el-icon-lock'
-                @click="openPermsDialog(row)"
-              )
+                icon="el-icon-lock"
+                @click="openPermsDialog(row)")
 
           template(#username="{row}")
             slot(name="username" :row="row")
-              router-link(
-                :to="{name: 'customerDetails', params:{uid: row.id }}"
-              ) {{ row.username }}
+              router-link(:to="{name: 'customerDetails', params:{uid: row.id }}")
+                | {{ row.username }}
 
           template(#telephone="{row}")
             slot(name="telephone" :row="row")
-              el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
+              el-link(type="primary" :href="`tel:${row.telephone}`")
+                | {{ row.telephone }}
 
           template(#marker_icons="{row}")
             slot(name="marker_icons" :row="row")
@@ -45,8 +43,8 @@
                 span.m-icon(
                   v-for="(ic, i) in row.marker_icons"
                   :class="`m-${ic}`"
-                  :key="i"
-                )
+                  :key="i")
+
               span(v-else)
 
           template(#ping="{row}")
@@ -56,20 +54,21 @@
           slot(name="buttons")
             el-button-group
               el-button(
-                icon='el-icon-plus'
-                type='success'
+                icon="el-icon-plus"
+                type="success"
                 @click="addCustomerDialog=true"
-                :disabled="!$perms.customers.add_customer"
-              ) Добавить абонента
+                :disabled="!$perms.customers.add_customer")
+                | {{ $t('customers.customerAdd') }}
+
               el-button(
-                icon='el-icon-set-up'
+                icon="el-icon-set-up"
                 @click="sitesDlg=true"
-                v-if="isSomeoneSelected"
-              ) Сайты
-              el-button(
-                icon='el-icon-s-operation'
-                @click="editFieldsVisible=true"
-              ) Поля
+                v-if="isSomeoneSelected")
+                | {{ $t('customers.sites') }}
+
+              el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
+                | {{ $t('route.forms') }}
+
               slot(name="additional_button")
 
     slot
@@ -77,51 +76,40 @@
     slot(name="dialogs")
       slot(name="dialog_customer_add")
         el-dialog(
-          title='Добавить абонента'
-          :visible.sync='addCustomerDialog'
+          :title="$t('customers.customerAdd')"
+          :visible.sync="addCustomerDialog"
           top="5vh"
-          :close-on-click-modal="false"
-        )
-          new-customer-form(
-            :selectedAddress='addrId'
-            v-on:done="addFrmDone"
-          )
+          :close-on-click-modal="false")
+          new-customer-form(:selectedAddress="addrId" v-on:done="addFrmDone")
 
       slot(name="dialog_rights")
         el-dialog(
-          title="Кто имеет права на абонента"
+          :title="$t('customers.whoHaveRightsOnCustomer')"
           :visible.sync="permsDialog"
           top="5vh"
-          :close-on-click-modal="false"
-        )
+          :close-on-click-modal="false")
           object-perms(
             v-on:save="changeCustomerObjectPerms"
             :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
             :getSelectedObjectPerms="customerGetSelectedObjectPerms"
-            :objId="$store.state.customer.id"
-          )
+            :objId="$store.state.customer.id")
 
       slot(name="dialog_sites")
         el-dialog(
           v-if="$perms.is_superuser"
-          title="Принадлежность выбранных абонентов сайтам"
+          :title="$t('customers.customerSitesAccessory')"
           :visible.sync="sitesDlg"
-          :close-on-click-modal="false"
-        )
-          sites-attach(
-            v-on:save="selectedCustomerSitesSave"
-          )
+          :close-on-click-modal="false")
+          sites-attach(v-on:save="selectedCustomerSitesSave")
+
           el-dialog(
             width="40%"
             :visible.sync="sitesDlgProgress"
             append-to-body
             :show-close="false"
             :close-on-press-escape="false"
-            :close-on-click-modal="false"
-          )
-            el-progress.progress_disable_animations(
-              :percentage="sitesProgress"
-            )
+            :close-on-click-modal="false")
+            el-progress.progress_disable_animations(:percentage="sitesProgress")
 </template>
 
 <script lang="ts">
@@ -191,55 +179,55 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'username',
-      label: 'Логин',
+      label: this.$tc('customers.username').toString(),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'fio',
-      label: 'ФИО',
+      label: this.$tc('customers.fio').toString(),
       'min-width': 300,
       sortable: true
     },
     {
       prop: 'address_title',
-      label: 'Полный адрес',
+      label: this.$tc('addrs.full').toString(),
       sortable: true,
       'min-width': 110,
       cutLeft: true
     },
     {
       prop: 'house',
-      label: 'Номер дома(уст.)',
+      label: this.$tc('houseNumber'),
       sortable: true
     },
     {
       prop: 'telephone',
-      label: 'Телефон',
+      label: this.$tc('customers.phone').toString(),
       'min-width': 140
     },
     {
       prop: 'current_service_title',
-      label: 'Услуга',
+      label: this.$tc('customers.service').toString(),
       'min-width': 240
     },
     {
       prop: 'balance',
-      label: 'Баланс',
+      label: this.$tc('customers.balance').toString(),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'group_title',
-      label: 'Группа'
+      label: this.$tc('groups.group').toString()
     },
     {
       prop: 'marker_icons',
-      label: 'Маркер'
+      label: this.$tc('customers.marker').toString()
     },
     {
       prop: 'ping',
-      label: 'Ping',
+      label: this.$tc('ping'),
       'min-width': 150
     }
   ]
@@ -269,12 +257,14 @@ export default class extends mixins(TableWithAddrMixin) {
 
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
-    this.$message.success('Абонент добавлен')
+    this.$message.success(
+      this.$tc('customers.customerAddedOk').toString()
+    )
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
   created() {
-    document.title = 'Список абонентов'
+    document.title = this.$tc('customers.customersList').toString()
     this.setCrumbs()
   }
 
@@ -288,7 +278,7 @@ export default class extends mixins(TableWithAddrMixin) {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: 'Населённые пункты'
+          title: this.$tc('addrs.addresses').toString()
         }
       },
       {
@@ -345,7 +335,7 @@ export default class extends mixins(TableWithAddrMixin) {
       })
       this.sitesProgress = Math.ceil(i * 100 / ln)
     }
-    this.$message.success('Готово')
+    this.$message.success('Ok')
     this.sitesDlgProgress = false
   }
 

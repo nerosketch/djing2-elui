@@ -3,28 +3,22 @@
     datatable(
       :columns="tableColumns"
       :getData="loadSites"
-      widthStorageNamePrefix='sites'
-      ref='sitestable'
-    )
+      widthStorageNamePrefix="sites"
+      ref="sitestable")
       template(v-slot:oper="{row}")
         el-button(
           icon="el-icon-edit"
           @click="openEdit(row)"
-          :disabled="!$perms.is_superuser"
-        )
-      el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-      ) Добавить домен
+          :disabled="!$perms.is_superuser")
+
+      el-button(icon="el-icon-plus" @click="openNew")
+        | {{ $t('addDomain') }}
 
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-    )
-      site-form(
-        v-on:done="frmDone"
-      )
+      :close-on-click-modal="false")
+      site-form(v-on:done="frmDone")
 </template>
 
 <script lang="ts">
@@ -61,30 +55,32 @@ export default class extends Vue {
     },
     {
       prop: 'domain',
-      label: 'Домен',
+      label: this.$tc('domain'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'name',
-      label: 'Название',
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
 
   get dialogTitle() {
-    let t = 'Изменить'
+    let t
     if (SiteModule.id === 0) {
-      t = 'Создать'
+      t = this.$tc('add')
+    } else {
+      t = this.$tc('change')
     }
-    return `${t} домен`
+    return this.$t('sites.doDomain', [t])
   }
 
   private loadSites(params?: IDRFRequestListParameters) {
@@ -111,13 +107,13 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = 'Сайты'
+    document.title = this.$tc('sites.site')
     BreadcrumbsModule.SetCrumbs([
       {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Сайты'
+          title: this.$t('sites.site')
         }
       }
     ] as any)

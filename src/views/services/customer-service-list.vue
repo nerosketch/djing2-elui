@@ -1,16 +1,18 @@
 <template lang="pug">
   el-table(
-    v-loading='loading'
+    v-loading="loading"
     :data="customeServiceList"
-    border fit
+    border
+    fit
   )
     el-table-column(
-      label="Логин"
-      prop='username'
+      :label="$t('login')"
+      prop="username"
     )
+
     el-table-column(
-      label="Имя"
-      prop='fio'
+      :label="$t('name')"
+      prop="fio"
     )
       template(v-slot:default="{row}")
         router-link.el-link.el-link--primary.is-underline(
@@ -45,8 +47,6 @@ export default class extends Vue {
     try {
       const { data } = await getServiceUsers(srvId)
       this.customeServiceList = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

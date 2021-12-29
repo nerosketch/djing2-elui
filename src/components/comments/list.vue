@@ -1,27 +1,33 @@
 <template lang="pug">
-el-card(shadow="never" :loading="loading")
-  template(v-slot:header)
-    .clearfix {{ defaultCardTitle }}
-  div
-    template(v-for="c in comments")
-      slot(name="comment_item" v-bind:comment="c")
-        comment-item.mt5(
-          :key="c.id"
-          :comment="c"
-          @delete="onCommentDelete"
-        )
-  el-form
-    el-form-item(
-      label="Текст комментария"
-      prop='currentComment'
-    )
-      el-input(v-model="currentComment" type="textarea" cols="40" rows="4" autosize)
-    el-form-item
-      el-button(
-        type="primary" icon="el-icon-s-promotion"
-        @click="onSendComment"
-        :loading="sendLoading"
-      ) Отправить
+  el-card(shadow="never", :loading="loading")
+    template(v-slot:header)
+      .clearfix
+        | {{ defaultCardTitle }}
+
+    div
+      template(v-for="c in comments")
+        slot(name="comment_item", v-bind:comment="c")
+          comment-item.mt5(
+            :key="c.id"
+            :comment="c"
+            @delete="onCommentDelete")
+
+    el-form
+      el-form-item(label="Текст комментария" prop="currentComment")
+        el-input(
+          v-model="currentComment"
+          type="textarea"
+          cols="40"
+          rows="4"
+          autosize)
+
+      el-form-item
+        el-button(
+          type="primary"
+          icon="el-icon-s-promotion"
+          @click="onSendComment"
+          :loading="sendLoading")
+          | Отправить
 </template>
 
 <script lang="ts">

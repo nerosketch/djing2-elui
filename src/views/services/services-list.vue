@@ -1,85 +1,78 @@
 <template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadServices"
-    :heightDiff='189'
-    :editFieldsVisible.sync="editFieldsVisible"
-    widthStorageNamePrefix='services'
-    ref='table'
-  )
-    template(v-slot:isadm="{row}")
-      el-checkbox(v-model="row.is_admin" disabled) {{ row.is_admin ? 'Да' : 'Нет'}}
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadServices"
+      :heightDiff="189"
+      :editFieldsVisible.sync="editFieldsVisible"
+      widthStorageNamePrefix="services"
+      ref="table")
+      template(v-slot:isadm="{row}")
+        el-checkbox(v-model="row.is_admin", disabled)
+          | {{ row.is_admin ? 'Да' : 'Нет'}}
 
-    template(v-slot:oper="{row}")
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
+            | C
+
+          el-button(
+            icon="el-icon-lock"
+            @click="openPermsDialog(row)"
+            v-if="$perms.is_superuser")
+
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
+
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delSrv(row)"
+            :disabled="!$perms.services.delete_service")
+
+      template(v-slot:usercount="{row}")
+        el-button(@click="openCustomerServiceListDialog(row.id)")
+          | {{ row.usercount }}
+
       el-button-group
         el-button(
-          v-if="$perms.is_superuser"
-          @click="openSitesDlg(row)"
-        ) C
-        el-button(icon='el-icon-lock' @click="openPermsDialog(row)" v-if="$perms.is_superuser")
-        el-button(icon="el-icon-edit" @click="openEdit(row)")
-        el-button(
-          type="danger" icon="el-icon-delete"
-          @click="delSrv(row)"
-          :disabled="!$perms.services.delete_service"
-        )
+          icon="el-icon-plus"
+          type="success"
+          @click="openNew"
+          :disabled="!$perms.services.add_service")
+          | {{ $t('add') }}
 
-    template(v-slot:usercount="{row}")
-      el-button(
-        @click="openCustomerServiceListDialog(row.id)"
-      ) {{ row.usercount }}
+        el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
+          | {{ $t('field') }}
 
-    el-button-group
-      el-button(
-        icon='el-icon-plus'
-        type='success'
-        @click="openNew"
-        :disabled="!$perms.services.add_service"
-      ) Добавить
-      el-button(
-        icon='el-icon-s-operation'
-        @click="editFieldsVisible=true"
-      ) Поля
+    el-dialog(
+      :title="isNew ? 'Создание' : 'Изменение'"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      service-form(v-on:done="frmDone")
 
-  el-dialog(
-    :title="(isNew ? 'Создание' : 'Изменение') + ' услуги'"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-  )
-    service-form(
-      v-on:done="frmDone"
-    )
-  el-dialog(
-    title="Кто имеет права на услугу"
-    :visible.sync="permsDialog"
-    top="5vh"
-    :close-on-click-modal="false"
-  )
-    object-perms(
-      v-on:save="changeSrvObjectPerms"
-      :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp"
-      :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
-      :objId="srvIdGetter"
-    )
-  el-dialog(
-    title="Принадлежность сайтам"
-    :visible.sync="sitesDlg"
-    :close-on-click-modal="false"
-  )
-    sites-attach(
-      :selectedSiteIds="$store.state.service.sites"
-      v-on:save="serviceSitesSave"
-    )
-  el-dialog(
-    title="Пользователи услуги"
-    :visible.sync="customerServiceVisible"
-    top="2vh"
-    :close-on-click-modal="false"
-  )
-    customer-service-list(
-      :serviceId="currentCustomerServiceId"
-    )
+    el-dialog(
+      :title="$t('whoHasARightToAService')"
+      :visible.sync="permsDialog"
+      top="5vh"
+      :close-on-click-modal="false")
+      object-perms(
+        v-on:save="changeSrvObjectPerms"
+        :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
+        :objId="srvIdGetter")
+
+    el-dialog(
+      :title="$t('facilities')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.service.sites", v-on:save="serviceSitesSave")
+
+    el-dialog(
+      :title="$t('serviceUsers')"
+      :visible.sync="customerServiceVisible"
+      top="2vh"
+      :close-on-click-modal="false")
+      customer-service-list(:serviceId="currentCustomerServiceId")
 </template>
 
 <script lang="ts">
@@ -111,54 +104,54 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 200
     },
     {
       prop: 'descr',
-      label: 'Описание',
+      label: this.$tc('description'),
       'min-width': 300
     },
     {
       prop: 'speed_in',
-      label: 'Вход.ск.',
+      label: this.$tc('comeIn'),
       'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_out',
-      label: 'Исход.ск.',
+      label: this.$tc('exodus'),
       'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_burst',
-      label: 'Бурст',
+      label: this.$tc('burst'),
       'min-width': 100
     },
     {
       prop: 'cost',
-      label: 'Цена',
+      label: this.$tc('price'),
       'min-width': 90,
       sortable: true
     },
     {
       prop: 'isadm',
-      label: 'Админ.',
+      label: this.$tc('admin'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'usercount',
-      label: 'Кол.польз.',
+      label: this.$tc('userCnt'),
       'min-width': 130,
       sortable: true,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -183,9 +176,9 @@ export default class extends Vue {
   }
 
   private async delSrv(srv: IService) {
-    if (confirm(`Действительно удалить услугу "${srv.title}"?`)) {
+    if (confirm(this.$t('austRemoveService', [srv.title]) as string)) {
       await ServiceModule.DelService(srv.id)
-      this.$message.success('Услуга удалена')
+      this.$message.success(this.$tc('serviceRemoved'))
       this.$refs.table.LoadTableData()
     }
   }
@@ -240,7 +233,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Тарифы'
+          title: this.$tc('tariffs')
         }
       }
     ] as any)
@@ -252,7 +245,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success('Принадлежность услуги сайтам сохранена')
+      this.$message.success(this.$tc('facilitiesMaintained'))
     })
     this.sitesDlg = false
   }

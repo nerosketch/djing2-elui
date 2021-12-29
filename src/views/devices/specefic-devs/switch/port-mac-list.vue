@@ -3,24 +3,22 @@
     :data="macs"
     v-loading="macsLoading"
     empty-text="MAC адреса на порту не найдены"
-    border fit
-  )
+    border
+    fit)
     el-table-column(
-      label="Название"
-      min-width='200'
-      prop='name'
-    )
+      :label="$t('title')"
+      min-width="200"
+      prop="name")
+
     el-table-column(
       label="VID"
-      min-width='64'
-      prop='vid'
-    )
+      min-width="64"
+      prop="vid")
+
     el-table-column(
       label="MAC"
-      min-width='121'
-      prop='mac'
-    )
-
+      min-width="121"
+      prop="mac")
 </template>
 
 <script lang="ts">
@@ -53,13 +51,11 @@ export default class extends Vue {
       this.macsLoading = true
       try {
         this.macs = await PortModule.ScanMacAddressPort(pid)
+      } finally {
         this.macsLoading = false
-      } catch (err) {
-        this.macsLoading = false
-        this.$message.error(err)
       }
     } else {
-      this.$message.error('Port id не передан')
+      this.$message.error(this.$tc('notTransmitted'))
     }
   }
 }

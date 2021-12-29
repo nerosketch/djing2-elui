@@ -1,27 +1,27 @@
 <template lang="pug">
   .app-container
     el-row(:gutter="10")
-      el-col(:col='24')
+      el-col(:col="24")
         list-filters(
           :addrId="addrId"
           :group.sync="filterForm.group"
           :street.sync="filterForm.street"
-          :fetchGroups="fetchGroups"
-        )
-      el-col(:lg='24' :md='20')
+          :fetchGroups="fetchGroups")
+
+      el-col(:lg="24" :md="20")
         datatable(
           :columns="tableColumns"
           :getData="loadDevs"
-          :heightDiff='118'
+          :heightDiff="165"
           :editFieldsVisible.sync="editFieldsVisible"
-          widthStorageNamePrefix='devs'
-          ref='tbl'
-        )
+          widthStorageNamePrefix="devs"
+          ref="tbl")
           template(v-slot:comment="{row}")
             router-link.el-link.el-link--primary.is-underline(
               v-if="$perms.devices.view_device"
               :to="{name: 'device-view', params: { devId: row.id }}"
             ) {{ row.comment }}
+
             span(v-else) {{ row.comment }}
 
           template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
@@ -34,83 +34,75 @@
 
           template(v-slot:oper="{row}")
             el-button-group
+              el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
+                | C
+
               el-button(
-                v-if="$perms.is_superuser"
-                @click="openSitesDlg(row)"
-              ) C
-              el-button(
-                icon='el-icon-lock'
+                icon="el-icon-lock"
                 @click="openPermsDialog(row)"
-                v-if="$perms.is_superuser"
-              )
+                v-if="$perms.is_superuser")
+
               el-button(
                 icon="el-icon-edit"
                 @click="openEdit(row)"
-                :disabled="!$perms.devices.change_device"
-              )
+                :disabled="!$perms.devices.change_device")
+
               el-button(
-                type="danger" icon="el-icon-delete"
+                type="danger"
+                icon="el-icon-delete"
                 @click="delDevice(row)"
-                :disabled="!$perms.devices.delete_device"
-              )
+                :disabled="!$perms.devices.delete_device")
 
           el-button-group
             el-button(
-              icon='el-icon-plus'
+              icon="el-icon-plus"
               @click="openNew"
-              :disabled="!$perms.devices.add_device"
-            ) Добавить устройство
-            el-button(
-              icon='el-icon-s-operation'
-              @click="editFieldsVisible=true"
-            ) Поля
+              :disabled="!$perms.devices.add_device")
+              | {{ $t('addTheDevice') }}
+
+            el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
+              | {{ $t('field') }}
 
     el-dialog(
-      title="Железка"
+      :title="$t('iron')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
-      top="1%"
-    )
+      top="1%")
       dev-form(
         v-if="dialogVisible"
         v-on:done="frmDone"
-        :addrId="addrId"
-      )
+        :addrId="addrId")
+
     el-dialog(
-      title="Добавить устройство"
+      :title="$t('addTheDevice')"
       :visible.sync="dialogNewDev"
       :close-on-click-modal="false"
-      top="1%"
-    )
+      top="1%")
       new-dev-form(
         v-if="dialogNewDev"
         v-on:done="frmNewDevDone"
         v-on:err="dialogNewDev=false"
-        :initialAddress="addrId"
-      )
+        :initialAddress="addrId")
+
     el-dialog(
-      title="Кто имеет права на устройство"
+      :title="$t('whoHasTheRightToTheDevice')"
       :visible.sync="permsDialog"
       top="5vh"
-      :close-on-click-modal="false"
-    )
+      :close-on-click-modal="false")
       object-perms(
         v-on:save="changeDeviceObjectPerms"
         :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
         :getSelectedObjectPerms="deviceGetSelectedObjectPerms"
-        :objId="$store.state.address.title"
-      )
+        :objId="$store.state.address.title")
 
     el-dialog(
-      title="Принадлежность оборудования сайтам"
+      :title="$t('maintenanceOfWebsiteEquipment')"
       :visible.sync="sitesDlg"
-      :close-on-click-modal="false"
-    )
+      :close-on-click-modal="false")
       sites-attach(
         :selectedSiteIds="$store.state.devicemodule.sites"
         v-on:save="devSitesSave"
       )
-
 </template>
 
 <script lang="ts">
@@ -174,43 +166,43 @@ export default class extends mixins(TableWithAddrMixin) {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'comment',
-      label: 'Коммент',
+      label: this.$tc('comment'),
       'min-width': 300
     },
     {
       prop: 'ip_address',
-      label: 'IP Адрес',
+      label: this.$tc('ipAddress'),
       'min-width': 120
     },
     {
       prop: 'dev_type_str',
-      label: 'Тип',
+      label: this.$tc('type'),
       'min-width': 150
     },
     {
       prop: 'mac_addr',
-      label: 'MAC Адрес',
+      label: this.$tc('macAddress'),
       'min-width': 150
     },
     {
       prop: 'status',
-      label: 'Состояние'
+      label: this.$tc('status')
     },
     {
       prop: 'is_noticeable',
-      label: 'Оповещения'
+      label: this.$tc('notices')
     },
     {
       prop: 'place',
-      label: '№ дома'
+      label: this.$tc('houseNum')
     },
     {
       prop: 'create_time',
-      label: 'Дата введения в эксплуатацию'
+      label: this.$tc('effectiveDate')
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -245,7 +237,7 @@ export default class extends mixins(TableWithAddrMixin) {
   private async delDevice(dev: IDevice) {
     this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
       await DeviceModule.DelDevice(dev.id)
-      this.$message.success('Удалено')
+      this.$message.success(this.$tc('deleted'))
       this.$refs.tbl.LoadTableData()
     })
   }
@@ -257,7 +249,7 @@ export default class extends mixins(TableWithAddrMixin) {
 
   private frmNewDevDone(newDev: IDevice) {
     this.dialogNewDev = false
-    this.$message.success('Новое устройство сохранено')
+    this.$message.success(this.$tc('newDeviceRetained'))
     this.$router.push({
       name: 'device-view',
       params: {
@@ -281,7 +273,7 @@ export default class extends mixins(TableWithAddrMixin) {
           path: '/devices',
           meta: {
             hidden: true,
-            title: 'Оборудование'
+            title: this.$tc('equipment')
           }
         },
         {
@@ -303,7 +295,7 @@ export default class extends mixins(TableWithAddrMixin) {
   }
 
   private getDeviceObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getDevObjectsPerms(this.$store.state.address.title)
+    return getDevObjectsPerms(this.$store.state.address.id)
   }
 
   private openPermsDialog(d: IDevice) {
@@ -320,7 +312,7 @@ export default class extends mixins(TableWithAddrMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.tbl.LoadTableData()
-      this.$message.success('Принадлежность оборудования сайтам сохранена')
+      this.$message.success(this.$tc('facilitiesMaintained'))
     })
     this.sitesDlg = false
   }

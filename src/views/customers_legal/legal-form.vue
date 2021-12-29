@@ -1,128 +1,81 @@
 <template lang="pug">
-el-form(
-  ref='frm'
-  status-icon
-  :rules="frmRules"
-  :model="frmMod"
-  v-loading='loading'
-)
-  el-form-item(
-    label="Номер договора"
-    prop='username'
-  )
-    el-input(
-      v-model="frmMod.username"
-    )
-  el-form-item(
-    label="Название"
-    prop='title'
-  )
-    el-input(
-      v-model="frmMod.title"
-    )
-  el-form-item(
-    label="Фио директора"
-    prop='fio'
-  )
-    el-input(v-model='frmMod.fio')
-  el-form-item(
-    label="Группа"
-  )
-    groups-choice(
-      v-model='frmMod.group'
-    )
-  el-form-item(
-    label="Тип юрлица"
-    prop="legal_type"
-  )
-    legal-type-choice(
-      v-model="frmMod.legal_type"
-    )
-  el-form-item(
-    label="Юридический адрес"
-    prop='address'
-  )
-    addr-field-input(v-model="frmMod.address")
-  el-form-item(
-    label="Почтовый индекс юридического адреса"
-    prop="post_index"
-  )
-    el-input(v-model="frmMod.post_index")
-  el-form-item(
-    label="Адрес доставки счёта"
-  )
-    addr-field-input(v-model="frmMod.delivery_address")
-  el-form-item(
-    label="Почтовый индекс адреса доставки счёта"
-    prop="delivery_address_post_index"
-  )
-    el-input(v-model="frmMod.delivery_address_post_index")
+  el-form(
+    ref="frm"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading")
+    el-form-item(:label="$t('customers.contractNum.s')" prop="username")
+      el-input(v-model="frmMod.username")
+
+    el-form-item(:label="$t('title')" prop="title")
+      el-input(v-model="frmMod.title")
+
+    el-form-item(:label="$t('fioDirector')" prop="fio")
+      el-input(v-model="frmMod.fio")
+
+    el-form-item(:label="$t('group')")
+      groups-choice(v-model="frmMod.group")
+
+    el-form-item(:label="$t('typeOfLegal')" prop="legal_type")
+      legal-type-choice(v-model="frmMod.legal_type")
+
+    el-form-item(:label="$t('legalAddress')" prop="address")
+      addr-field-input(v-model="frmMod.address")
+
+    el-form-item(:label="$t('postalLegalAddressIndex')" prop="post_index")
+      el-input(v-model="frmMod.post_index")
+
+    el-form-item(:label="$t('accountDeliveryAddress')")
+      addr-field-input(v-model="frmMod.delivery_address")
+
+    el-form-item(:label="$t('postalAccountDeliveryAddressIndex')" prop="delivery_address_post_index")
+      el-input(v-model="frmMod.delivery_address_post_index")
+        el-button(
+          slot="append"
+          @click="copyDeliveryAddrFromLegalAddr"
+          icon="el-icon-document-copy"
+          :title="$t('copyTheAddressFromTheLegalAddress')"
+          :disabled="addrCopyDisabled")
+
+    el-form-item(:label="$t('postalAddress')")
+      addr-field-input(v-model="frmMod.post_address")
+
+    el-form-item(:label="$t('postalAddressIndex')" prop="post_post_index")
+      el-input(v-model="frmMod.post_post_index")
+        el-button(
+          slot="append"
+          @click="copyPostAddrFromLegalAddr"
+          icon="el-icon-document-copy"
+          :title="$t('copyTheAddressFromTheLegalAddress')"
+          :disabled="addrCopyDisabled")
+
+    el-form-item(:label="$t('inn')" prop="tax_number")
+      el-input(v-model="frmMod.tax_number" type="number")
+
+    el-form-item(label="ОГРН" prop="state_level_reg_number")
+      el-input(v-model="frmMod.state_level_reg_number" type="number")
+
+    el-form-item(:label="$t('contractDocs.dateBegin')")
+      el-date-picker(
+        v-model="frmMod.actual_start_time"
+        type="datetime"
+        value-format="yyyy-MM-dd HH:mm"
+        format="d.MM.yyyy HH:mm")
+
+    el-form-item(:label="$t('description')")
+      el-input(
+        type="textarea"
+        rows="5"
+        v-model="frmMod.description")
+
+    el-form-item
       el-button(
-        slot='append'
-        @click="copyDeliveryAddrFromLegalAddr"
-        icon="el-icon-document-copy"
-        title="Скопировать адрес из юридического адреса"
-        :disabled="addrCopyDisabled"
-      )
-
-  el-form-item(
-    label="Почтовый адрес"
-  )
-    addr-field-input(v-model="frmMod.post_address")
-  el-form-item(
-    label="Почтовый индекс почтового адреса"
-    prop="post_post_index"
-  )
-    el-input(v-model="frmMod.post_post_index")
-      el-button(
-        slot='append'
-        @click="copyPostAddrFromLegalAddr"
-        icon="el-icon-document-copy"
-        title="Скопировать адрес из юридического адреса"
-        :disabled="addrCopyDisabled"
-      )
-
-  el-form-item(
-    label="ИНН"
-    prop='tax_number'
-  )
-    el-input(
-      v-model="frmMod.tax_number"
-      type='number'
-    )
-  el-form-item(
-    label="ОГРН"
-    prop="state_level_reg_number"
-  )
-    el-input(
-      v-model="frmMod.state_level_reg_number"
-      type='number'
-    )
-  el-form-item(
-    label="Дата начала действия договора"
-  )
-    el-date-picker(
-      v-model="frmMod.actual_start_time"
-      type="datetime"
-      value-format="yyyy-MM-dd HH:mm"
-      format="d.MM.yyyy HH:mm"
-    )
-  el-form-item(
-    label='Описание'
-  )
-    el-input(
-      type='textarea'
-      rows='5'
-      v-model="frmMod.description"
-    )
-  el-form-item
-    el-button(
-      icon='el-icon-upload'
-      :type="isNew ? 'success' : 'primary'"
-      @click="onSubmit"
-      :disabled="!$perms.customers_legal.add_customerlegalmodel"
-    ) {{ isNew ? 'Добавить' : 'Сохранить' }}
-
+        icon="el-icon-upload"
+        :type="isNew ? 'success' : 'primary'"
+        @click="onSubmit"
+        :disabled="!$perms.customers_legal.add_customerlegalmodel")
+        | {{ isNew ? 'Добавить' : 'Сохранить' }}
 </template>
 
 <script lang="ts">
@@ -134,8 +87,9 @@ import GroupsChoice from '@/components/Groups/groups-choice.vue'
 import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 import { ICustomerLegal } from '@/api/customers_legal/types'
 import LegalTypeChoice from '@/components/CustomerLegal/legal-type-choice.vue'
+import i18n from '@/lang'
 
-const maxLenValidator = { max: 6, trigger: 'change', message: 'Почтовый индекс содержит не более 6ти символов' }
+const maxLenValidator = { max: 6, trigger: 'change', message: i18n.t('thePostalIndexContainsNotMoreThan6Symbols') }
 
 @Component({
   name: 'LegalForm',
@@ -211,8 +165,8 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: 'Номер договора обязателен', trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: 'Номер договора может содержать латинские символы и цифры' }
+      { required: true, message: this.$tc('customers.contractNum.required'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$tc('contractCanContainLatinAndDigits') }
     ],
     post_index: [
       maxLenValidator
@@ -224,23 +178,23 @@ export default class extends Vue {
       maxLenValidator
     ],
     title: [
-      { required: true, message: 'Название нужно указать', trigger: 'blur' },
+      { required: true, message: this.$tc('nameToBeIndicated'), trigger: 'blur' },
     ],
     fio: [
-      { required: true, message: 'Фио директора обязательно', trigger: 'blur' },
+      { required: true, message: this.$tc('directorSFioIsRequired'), trigger: 'blur' },
     ],
     tax_number: [
-      { required: true, message: 'ИНН нужно заполнить', trigger: 'blur' },
+      { required: true, message: this.$tc('insNeedsToBeFilled'), trigger: 'blur' },
     ],
     address: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно указать юридический адрес' }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedALegalAddress') }
     ],
     state_level_reg_number: [
-      { required: true, message: 'Обязательно', trigger: 'blur' },
+      { required: true, message: this.$tc('iWill'), trigger: 'blur' },
     ],
     legal_type: [
-      { required: true, message: 'Тип юрлица обязателен', trigger: 'blur' },
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать из списка значений подходящий тип юрлица' },
+      { required: true, message: this.$tc('theTypeOfLawnIsMandatory'), trigger: 'blur' },
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues') },
     ]
   }
 
@@ -266,7 +220,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки формы')
+        this.$message.error(this.$tc('correctFormsOfError'))
       }
     })
   }

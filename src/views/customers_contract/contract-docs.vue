@@ -1,15 +1,13 @@
 <template lang="pug">
-el-upload(
-  action=""
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :before-remove="beforeRemove"
-  :http-request="uploadReq"
-  :file-list="fileList"
-)
-  el-button(
-    type="primary"
-  ) Добавить документ
+  el-upload(
+    action=""
+    :on-preview="handlePreview"
+    :on-remove="handleRemove"
+    :before-remove="beforeRemove"
+    :http-request="uploadReq"
+    :file-list="fileList")
+    el-button(type="primary")
+      | {{ $t('contractDocs.addDoc') }}
 </template>
 
 <script lang="ts">
@@ -40,14 +38,18 @@ export default class extends Vue {
   private async handleRemove(file: IFileItem) {
     try {
       await delContractDoc(file.id)
-      this.$message.success('Документ удалён')
+      this.$message.success(
+        this.$tc('contractDocs.docDeleted')
+      )
     } catch {
-      this.$message.error('Ошибка удаления документа')
+      this.$message.error(
+        this.$tc('contractDocs.docDelFail')
+      )
     }
   }
 
   private beforeRemove(file: IFileItem) {
-    return this.$confirm(`Удалить "${file.name}"?`)
+    return this.$confirm(`${this.$tc('del')} "${file.name}"?`)
   }
 
   private async uploadReq(req: HttpRequestOptions) {
@@ -80,10 +82,14 @@ export default class extends Vue {
           this.addFileListItem(el)
         }
       } catch {
-        this.$message.error('Ошибка загрузки документов')
+        this.$message.error(
+          this.$tc('contractDocs.docLoadFail')
+        )
       }
     } else {
-      this.$message.error('Не передан договор')
+      this.$message.error(
+        this.$tc('contractDocs.contractNotPassed')
+      )
     }
   }
 

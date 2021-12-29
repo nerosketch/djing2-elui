@@ -4,14 +4,15 @@
       v-for="srv in selected"
       :key="srv.id"
       :label="srv.title"
-      v-model="srv.state"
-    )
+      v-model="srv.state")
+
     el-divider
+
     el-button(
-      icon='el-icon-upload'
-      type='primary'
-      @click="saveAccessory"
-    ) Сохранить
+      icon="el-icon-upload"
+      type="primary"
+      @click="saveAccessory")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -79,7 +80,9 @@ export default class extends Vue {
     const selectedState = this.selected.filter(s => s.state)
     const res = selectedState.map(s => s.id)
     await CustomerModule.SetServiceGroupAccessory(res)
-    this.$message.success('Группы привязаны')
+    this.$message.success(
+      this.$tc('customers.groupsSuccessAttached').toString()
+    )
     this.$emit('done')
   }
 }

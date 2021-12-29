@@ -15,6 +15,7 @@ class Address extends VuexModule implements IAddressModel {
   public fias_address_level_name = ''
   public fias_address_type = 0
   public fias_address_type_name = ''
+  public children_count = 0
 
   @Mutation
   public RESET_ALL_ADDR() {
@@ -28,6 +29,7 @@ class Address extends VuexModule implements IAddressModel {
     this.fias_address_level_name = ''
     this.fias_address_type = 0
     this.fias_address_type_name = ''
+    this.children_count = 0
   }
 
   @Mutation
@@ -42,6 +44,7 @@ class Address extends VuexModule implements IAddressModel {
     this.fias_address_level_name = addr.fias_address_level_name!
     this.fias_address_type = addr.fias_address_type
     this.fias_address_type_name = addr.fias_address_type_name!
+    this.children_count = addr.children_count
   }
 
   @Mutation

@@ -1,45 +1,29 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-      prop='title'
-    )
-      el-input(
-        v-model="frmMod.title"
-      )
-    el-form-item(
-      label="Уровень ФИАС"
-      prop='fias_address_level'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')" prop="title")
+      el-input(v-model="frmMod.title")
+
+    el-form-item(:label="$t('fiasLevel')" prop="fias_address_level")
       fias-level-choice(v-model="frmMod.fias_address_level")
-    el-form-item(
-      label="Тип адреса ФИАС"
-      prop='fias_address_type'
-    )
-      fias-type-choice(
-        v-model="frmMod.fias_address_type"
-        :level="frmMod.fias_address_level"
-      )
-    el-form-item(
-      label="Тип адресного объекта"
-      prop='address_type'
-    )
-      address-type-choice(
-        v-model="frmMod.address_type"
-      )
+
+    el-form-item(:label="$t('typeOfFiasAddress')" prop="fias_address_type")
+      fias-type-choice(v-model="frmMod.fias_address_type", :level="frmMod.fias_address_level")
+
+    el-form-item(:label="$t('typeOfAddressObject')" prop="address_type")
+      address-type-choice(v-model="frmMod.address_type")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 
       el-divider(direction="vertical")
 
@@ -47,12 +31,12 @@
         href="https://github.com/hflabs/socrbase/blob/master/socrbase.csv"
         target="_blank"
         type="info"
-        icon="el-icon-thumb"
-      ) Справочник адресных объектов
+        icon="el-icon-thumb")
+        | {{ $t('repertoireOfAddresses') }}
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { AddressModule } from '@/store/modules/addresses/address'
 import AddressTypeChoice from '@/components/Address/type-choice.vue'
@@ -74,17 +58,17 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название надо указать', trigger: 'blur' },
+      { required: true, message: this.$tc('nameShouldBeIndicated'), trigger: 'blur' },
       { validator: this.titleDynamicValidator, trigger: 'change' }
     ],
     address_type: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип' }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedToPickAType') }
     ],
     fias_address_level: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать уровень' }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedToPickALevel') }
     ],
     fias_address_type: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: 'Нужно выбрать тип ФИАС' }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedToPickAFiasType') }
     ]
   }
 
@@ -94,7 +78,7 @@ export default class extends Vue {
       if (!isNaN(value) && Number(value) > 0) {
         callback()
       } else {
-        callback(new Error('Должно содержать только число'))
+        callback(new Error(this.$tc('onlyNumber')))
       }
     } else {
       callback()
@@ -173,7 +157,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

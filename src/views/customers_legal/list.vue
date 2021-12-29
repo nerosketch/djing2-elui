@@ -1,68 +1,47 @@
 <template lang="pug">
-.app-container
-  datatable(
-    :columns="tableColumns"
-    :getData="loadCustomersLegal"
-    :heightDiff='118'
-    widthStorageNamePrefix='legalcustomers'
-    ref='table'
-  )
-    template(v-slot:btn="{row}")
-      //- el-button(
-      //-   v-if="$perms.is_superuser"
-      //-   @click="openSitesDlg(row)"
-      //- ) C
+  .app-container
+    datatable(
+      :columns="tableColumns"
+      :getData="loadCustomersLegal"
+      :heightDiff="118"
+      widthStorageNamePrefix="legalcustomers"
+      ref="table")
+      template(v-slot:btn="{row}")
+        el-button(
+          icon="el-icon-edit"
+          @click="openEdit(row)"
+          :disabled="!$perms.customers_legal.change_customerlegalmodel")
+
+      template(v-slot:username="{row}")
+        router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerLegalDetail', params: { uid: row.id } }")
+          | {{ row.username }}
+
       el-button(
-        icon="el-icon-edit"
-        @click="openEdit(row)"
-        :disabled="!$perms.customers_legal.change_customerlegalmodel"
-      )
+        icon="el-icon-plus"
+        @click="openNew"
+        :disabled="!$perms.customers_legal.add_customerlegalmodel")
+        | {{ $t('addAnAccountingRecord') }}
 
-    template(v-slot:username="{row}")
-      router-link.el-link.el-link--primary.is-underline(
-        :to="{ name: 'customerLegalDetail', params: { uid: row.id } }"
-      ) {{ row.username }}
+    el-dialog(
+      :title="$t('organization')"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
+      top="1%")
+      legal-form(
+        v-if="dialogVisible"
+        v-on:added="frmAddDone"
+        v-on:update="frmUpdateDone")
 
-    el-button(
-      icon='el-icon-plus'
-      @click="openNew"
-      :disabled="!$perms.customers_legal.add_customerlegalmodel"
-    ) Добавить учётную запись
-
-  el-dialog(
-    title="Организация"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-    top="1%"
-  )
-    legal-form(
-      v-if="dialogVisible"
-      v-on:added="frmAddDone"
-      v-on:update="frmUpdateDone"
-    )
-  el-dialog(
-    title="Кто имеет права на учётную запись"
-    :visible.sync="permsDialog"
-    top="5vh"
-    :close-on-click-modal="false"
-  )
-    object-perms(
-      v-on:save="changeLegalObjectPerms"
-      :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp"
-      :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms"
-      :objId="$store.state.customerlegal.title"
-    )
-
-  //- el-dialog(
-  //-   title="Принадлежность учётных записей сайтам"
-  //-   :visible.sync="sitesDlg"
-  //-   :close-on-click-modal="false"
-  //- )
-  //-   sites-attach(
-  //-     :selectedSiteIds="$store.state.devicemodule.sites"
-  //-     v-on:save="devSitesSave"
-  //-   )
-
+    el-dialog(
+      :title="$t('whoHasTheRightToAnAccount')"
+      :visible.sync="permsDialog"
+      top="5vh"
+      :close-on-click-modal="false")
+      object-perms(
+        v-on:save="changeLegalObjectPerms"
+        :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp"
+        :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms"
+        :objId="$store.state.customerlegal.title")
 </template>
 
 <script lang="ts">
@@ -100,28 +79,28 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'username',
-      label: 'Логин'
+      label: this.$tc('login')
     },
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$tc('title'),
       'min-width': 150
     },
     {
       prop: 'balance',
-      label: 'Баланс'
+      label: this.$tc('balance')
     },
     {
       prop: 'tax_number',
-      label: 'ИНН'
+      label: this.$tc('inn')
     },
     {
       prop: 'post_index',
-      label: 'Почтовый индекс'
+      label: this.$tc('postalIndex')
     },
     {
       prop: 'btn',
-      label: '—',
+      label: '#',
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -170,7 +149,7 @@ export default class extends Vue {
         path: '/legal/',
         meta: {
           hidden: true,
-          title: 'Организации'
+          title: this.$tc('organizations')
         }
       },
     ] as any)

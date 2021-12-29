@@ -1,18 +1,16 @@
 <template lang="pug">
   el-table.app-container(
-    v-loading='messengerTypesLoading'
+    v-loading="messengerTypesLoading"
     :data="messengerBotTypes"
-    border fit
-  )
+    border
+    fit)
     el-table-column(
-      label="Тип бота"
-      prop='text'
+      :label="$t('typeOfBean')"
+      prop="text"
     )
       template(v-slot:default="{row}")
-        router-link(
-          :to="{ name: 'messengerList', params: { messengerTypeName: row.text } }"
-        ) {{ row.text }}
-
+        router-link(:to="{ name: 'messengerList', params: { messengerTypeName: row.text } }")
+          | {{ row.text }}
 </template>
 
 <script lang="ts">
@@ -33,7 +31,7 @@ export default class extends mixins(BotTypesMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Мессенджеры'
+          title: this.$tc('messengers')
         }
       }
     ] as any)

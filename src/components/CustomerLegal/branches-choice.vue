@@ -1,14 +1,10 @@
 <template lang="pug">
-  el-select(
-    v-model="localValue"
-    multiple
-  )
+  el-select(v-model="localValue", multiple)
     el-option(
       v-for="o in opts"
       :key="o.id"
       :value="o.id"
-      :label="o.title"
-    )
+      :label="o.title")
 </template>
 
 <script lang="ts">

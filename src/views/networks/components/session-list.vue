@@ -2,18 +2,15 @@
   datatable(
     :columns="tableColumns"
     :getData="loadSessions"
-    :heightDiff='160'
-    widthStorageNamePrefix='sessions'
-    ref='table'
-  )
+    :heightDiff="160"
+    widthStorageNamePrefix="sessions"
+    ref="table")
     template(v-slot:closed="{row}")
-      el-checkbox(v-model="row.closed" disabled) {{ row.closed ? 'Да' : 'Нет' }}
+      el-checkbox(v-model="row.closed", disabled)
+        | {{ row.closed ? 'Да' : 'Нет' }}
 
     template(v-slot:oper="{row}")
-      el-button(
-        icon="el-icon-delete-solid"
-        @click="shutdownSesion(row)"
-      )
+      el-button(icon="el-icon-delete-solid" @click="shutdownSesion(row)")
 </template>
 
 <script lang="ts">
@@ -39,12 +36,12 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'assign_time',
-      label: 'Время старта',
+      label: this.$tc('startTime'),
       'min-width': 130
     },
     {
       prop: 'session_duration',
-      label: 'Продолжительность сессии',
+      label: this.$tc('durationOfTheSession'),
       'min-width': 200
     },
     {
@@ -54,33 +51,33 @@ export default class extends Vue {
     },
     {
       prop: 'ip_lease_mac',
-      label: 'MAC Адрес',
+      label: this.$tc('macAddress'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'closed',
-      label: 'Закрыт'
+      label: this.$tc('closed')
     },
     {
       prop: 'h_input_octets',
-      label: 'Входящих байт'
+      label: this.$tc('incomingByte')
     },
     {
       prop: 'h_output_octets',
-      label: 'Исходящих байт'
+      label: this.$tc('basedOnByte')
     },
     {
       prop: 'h_input_packets',
-      label: 'Входящих пакетов'
+      label: this.$tc('incomingPackets')
     },
     {
       prop: 'h_output_packets',
-      label: 'Исходящих пакетов'
+      label: this.$tc('outgoingPackets')
     },
     {
       prop: 'oper',
-      label: 'Oper',
+      label: '#',
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -97,7 +94,7 @@ export default class extends Vue {
   }
 
   private shutdownSesion(ses: IUserSession) {
-    this.$confirm('Завершить сессию?').then(async() => {
+    this.$confirm(this.$tc('areYSureFinishSession')).then(async() => {
       await delSession(ses.id)
       this.$refs.table.LoadTableData()
     }).catch(err => {

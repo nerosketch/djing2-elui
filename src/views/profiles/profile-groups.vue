@@ -5,20 +5,21 @@
         v-for="grp in groups"
         :key="grp.id"
         :label="grp.name"
-        v-model="grp.checked"
-      )
+        v-model="grp.checked")
 
     span(v-else)
       i.el-icon-loading
-      | Загрузка...
+      | {{ $t('loading') }}
+
     el-divider
+
     el-button(
-      icon='el-icon-upload'
-      type='primary'
+      icon="el-icon-upload"
+      type="primary"
       @click="saveGroups"
       :loading="loading"
-      :disabled="!$perms.is_superuser"
-    ) Сохранить
+      :disabled="!$perms.is_superuser")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">

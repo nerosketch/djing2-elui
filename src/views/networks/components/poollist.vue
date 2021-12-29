@@ -1,57 +1,49 @@
 <template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadPools"
-    :heightDiff='188'
-    :editFieldsVisible.sync="editFieldsVisible"
-    widthStorageNamePrefix='pools'
-    ref='table'
-  )
-    template(v-slot:is_dynamic="{row}")
-      boolean-icon(v-model="row.is_dynamic")
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadPools"
+      :heightDiff="188"
+      :editFieldsVisible.sync="editFieldsVisible"
+      widthStorageNamePrefix="pools"
+      ref="table")
+      template(v-slot:is_dynamic="{row}")
+        boolean-icon(v-model="row.is_dynamic")
 
-    template(v-slot:oper="{row}")
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
+            | C
+
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
+
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delPool(row)"
+            :disabled="!$perms.networks.delete_networkippool")
+
       el-button-group
         el-button(
-          v-if="$perms.is_superuser"
-          @click="openSitesDlg(row)"
-        ) C
-        el-button(icon="el-icon-edit" @click="openEdit(row)")
-        el-button(
-          type="danger" icon="el-icon-delete"
-          @click="delPool(row)"
-          :disabled="!$perms.networks.delete_networkippool"
-        )
+          icon="el-icon-plus"
+          @click="openNew"
+          :disabled="!$perms.networks.add_networkippool")
+          | {{ $t('add') }}
 
-    el-button-group
-      el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-        :disabled="!$perms.networks.add_networkippool"
-      ) Добавить
-      el-button(
-        icon='el-icon-s-operation'
-        @click="editFieldsVisible=true"
-      ) Поля
+        el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
+          | {{ $t('field') }}
 
-  el-dialog(
-    :title="dialogTitle"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-  )
-    pool-form(
-      v-on:done="frmDone"
-    )
-  el-dialog(
-    title="Принадлежность сайтам"
-    :visible.sync="sitesDlg"
-    :close-on-click-modal="false"
-  )
-    sites-attach(
-      :selectedSiteIds="$store.state.netpool.sites"
-      v-on:save="netpoolSitesSave"
-    )
+    el-dialog(
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      pool-form(v-on:done="frmDone")
+
+    el-dialog(
+      :title="$t('facilities')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.netpool.sites", v-on:save="netpoolSitesSave")
 </template>
 
 <script lang="ts">
@@ -82,45 +74,45 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'network',
-      label: 'Подсеть',
+      label: this.$tc('subnet'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'description',
-      label: 'Описание',
+      label: this.$tc('description'),
       'min-width': 300
     },
     {
       prop: 'ip_start',
-      label: 'нач. ip',
+      label: this.$tc('startIp'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'ip_end',
-      label: 'кон. ip',
+      label: this.$tc('ipend'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'gateway',
-      label: 'шлюз',
+      label: this.$tc('gateway'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'is_dynamic',
-      label: 'Д',
+      label: 'D',
       'min-width': 40,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'usage_count',
-      label: 'Выделено',
+      label: this.$tc('issued'),
       'min-width': 100,
       align: DataTableColumnAlign.CENTER
     },
@@ -132,7 +124,7 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 160,
       align: DataTableColumnAlign.CENTER
     }
@@ -144,11 +136,13 @@ export default class extends Vue {
   private editFieldsVisible = false
 
   get dialogTitle() {
-    let w = 'Изменить'
+    let w
     if (NetworkIpPoolModule.id === 0) {
-      w = 'Добавить'
+      w = this.$tc('add').toString()
+    } else {
+      w = this.$tc('change').toString()
     }
-    return `${w} подсеть`
+    return this.$t('networks.tPool', [w])
   }
 
   private async openEdit(pool: INetworkIpPool) {
@@ -162,9 +156,9 @@ export default class extends Vue {
   }
 
   private delPool(pool: INetworkIpPool) {
-    this.$confirm(`Действительно удалить пул "${pool.network}"?`).then(async() => {
+    this.$confirm(this.$t('aus2delIpPool', [pool.network]) as string).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
-      this.$message.success('Подсеть удалена')
+      this.$message.success(this.$tc('substanceRemoved'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -178,7 +172,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success('Подсеть сохранена')
+    this.$message.success(this.$tc('substanceRetained'))
     this.$refs.table.LoadTableData()
   }
 
@@ -187,7 +181,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success('Принадлежность подсети сайтам сохранена')
+      this.$message.success(this.$tc('webOwnershipMaintained'))
     })
     this.sitesDlg = false
   }

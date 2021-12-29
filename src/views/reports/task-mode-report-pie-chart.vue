@@ -2,8 +2,7 @@
   pie-chart(
     :repLoading="repLoading"
     :chartInputData="taskModeReport"
-    seriesName="Характеры задач"
-  )
+    seriesName="Характеры задач")
 </template>
 
 <script lang="ts">

@@ -13,7 +13,7 @@ class Breadcrumbs extends VuexModule implements IBreadcrumbs {
   }
 
   @Action
-  public async SetCrumbs(brs: RouteRecord[]) {
+  public SetCrumbs(brs: RouteRecord[]) {
     this.SET_CRUMBS(brs)
   }
 }

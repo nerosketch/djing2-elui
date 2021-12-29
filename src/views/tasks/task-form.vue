@@ -1,106 +1,82 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     status-icon
     :rules="frmRules"
     :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      label="Описание"
-      prop='descr'
-    )
-      el-input(
-        v-model="frmMod.descr"
-        maxlength="128"
-      )
-    el-form-item(
-      label="Исполнители"
-      prop='recipients'
-    )
-      el-select(v-model="frmMod.recipients" multiple)
+    v-loading="loading")
+    el-form-item(:label="$t('description')" prop="descr")
+      el-input(v-model="frmMod.descr", maxlength="128")
+
+    el-form-item(:label="$t('implementers')" prop="recipients")
+      el-select(v-model="frmMod.recipients", multiple)
         el-option(
           v-for="rec in potentialRecipients"
           :key="rec.id"
           :label="rec.full_name || rec.username"
-          :value="rec.id"
-        )
-    el-form-item(
-      label="Характер поломки"
-      prop='mode'
-    )
+          :value="rec.id")
+
+    el-form-item(:label="$t('natureOfFracture')" prop="mode")
       el-select(v-model="frmMod.mode")
         el-option(
           v-for="tt in taskTypes"
           :key="tt.v"
           :label="tt.nm"
-          :value="tt.v"
-        )
-    el-form-item(
-      label="Приоритет"
-      prop='priority'
-    )
+          :value="tt.v")
+
+    el-form-item(:label="$t('priority')" prop="priority")
       el-select(v-model="frmMod.priority")
         el-option(
           v-for="tt in taskPriorities"
           :key="tt.v"
           :label="tt.nm"
-          :value="tt.v"
-        )
-    el-form-item(
-      label="Состояние"
-      prop='task_state'
-    )
+          :value="tt.v")
+
+    el-form-item(:label="$t('status')" prop="task_state")
       el-select(v-model="frmMod.task_state")
         el-option(
           v-for="tt in taskStates"
           :key="tt.v"
           :label="tt.nm"
-          :value="tt.v"
-        )
+          :value="tt.v")
+
     el-form-item(
-      label="Абонент"
-      prop='customer'
+      :label="$t('customer')"
+      prop="customer"
     )
-      customer-field(
-        v-model="frmMod.customer"
-        :defaultName="$store.state.task.customer_full_name"
-      )
-    el-form-item(
-      label="Актуальность"
-      prop='out_date'
-    )
-      el-tooltip(
-        content="дата, до которой нужно завершить задачу"
-        placement="right"
-      )
+      customer-field(v-model="frmMod.customer", :defaultName="$store.state.task.customer_full_name")
+
+    el-form-item(:label="$t('relevance')" prop="out_date")
+      el-tooltip(content="дата, до которой нужно завершить задачу", placement="right")
         el-date-picker(
           v-model="frmMod.out_date"
           type="date"
           value-format="yyyy-MM-dd"
-          format="d.MM.yyyy"
-        )
+          format="d.MM.yyyy")
+
     el-form-item
       el-button-group
         el-button(
           type="primary"
           @click="onSubmit"
-          icon='el-icon-upload'
-          :disabled="isFormUntouched"
-        ) Сохранить
+          icon="el-icon-upload"
+          :disabled="isFormUntouched")
+          | {{ $t('save') }}
+
         el-button(
           v-if="!isNewTask"
           type="danger"
           icon="el-icon-delete"
           @click="onDel"
-          :disabled="!$perms.tasks.delete_task"
-        ) Удалить
+          :disabled="!$perms.tasks.delete_task")
+          | {{ $t('del') }}
+
         el-button(
           v-if="!isNewTask"
           type="success"
           @click="onFinish"
-          icon="el-icon-check"
-        ) Завершить
+          icon="el-icon-check")
+          | {{ $t('complete') }}
 </template>
 
 <script lang="ts">
@@ -127,31 +103,31 @@ export default class extends mixins(FormMixin, TaskMixin) {
   private loading = false
 
   private taskTypes = [
-    { nm: 'Не выбрано', v: ITaskType.NOT_CHOSEN },
-    { nm: 'ip конфликт', v: ITaskType.IP_CONFLICT },
-    { nm: 'жёлтый треугольник', v: ITaskType.YELLOW_TRIANGLE },
-    { nm: 'красный крестик', v: ITaskType.RED_CROSS },
-    { nm: 'слабая скорость', v: ITaskType.WEAK_SPEED },
-    { nm: 'обрыв кабеля', v: ITaskType.CABLE_BREAK },
-    { nm: 'подключение', v: ITaskType.CONNECTION },
-    { nm: 'периодическое пропадание', v: ITaskType.PERIODIC_DISAPPEARANCE },
-    { nm: 'настройка роутера', v: ITaskType.ROUTER_SETUP },
-    { nm: 'настройка onu', v: ITaskType.CONFIGURE_ONU },
-    { nm: 'обжать кабель', v: ITaskType.CRIMP_CABLE },
+    { nm: this.$tc('notSelected'), v: ITaskType.NOT_CHOSEN },
+    { nm: this.$tc('conflict'), v: ITaskType.IP_CONFLICT },
+    { nm: this.$tc('yellowTriangle'), v: ITaskType.YELLOW_TRIANGLE },
+    { nm: this.$tc('redCross'), v: ITaskType.RED_CROSS },
+    { nm: this.$tc('weakSpeed'), v: ITaskType.WEAK_SPEED },
+    { nm: this.$tc('cableBreaking'), v: ITaskType.CABLE_BREAK },
+    { nm: this.$tc('connection'), v: ITaskType.CONNECTION },
+    { nm: this.$tc('periodicMissing'), v: ITaskType.PERIODIC_DISAPPEARANCE },
+    { nm: this.$tc('routeConstruction'), v: ITaskType.ROUTER_SETUP },
+    { nm: this.$tc('onuConfig'), v: ITaskType.CONFIGURE_ONU },
+    { nm: this.$tc('cable'), v: ITaskType.CRIMP_CABLE },
     // { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
-    { nm: 'другое', v: ITaskType.OTHER }
+    { nm: this.$tc('other'), v: ITaskType.OTHER }
   ]
 
   private taskPriorities = [
-    { nm: 'Низкий', v: ITaskPriority.LOW },
-    { nm: 'Средний', v: ITaskPriority.AWARAGE },
-    { nm: 'Высший', v: ITaskPriority.HIGHER }
+    { nm: this.$tc('low'), v: ITaskPriority.LOW },
+    { nm: this.$tc('average'), v: ITaskPriority.AWARAGE },
+    { nm: this.$tc('higher'), v: ITaskPriority.HIGHER }
   ]
 
   private taskStates = [
-    { nm: 'Новая', v: ITaskState.NEW },
-    { nm: 'Провалена', v: ITaskState.CONFUSED },
-    { nm: 'Выполнена', v: ITaskState.COMPLETED }
+    { nm: this.$tc('new'), v: ITaskState.NEW },
+    { nm: this.$tc('loss'), v: ITaskState.CONFUSED },
+    { nm: this.$tc('implemented'), v: ITaskState.COMPLETED }
   ]
 
   private frmMod = this.fromTaskModule
@@ -176,10 +152,10 @@ export default class extends mixins(FormMixin, TaskMixin) {
 
   private frmRules = {
     recipients: [
-      { required: true, message: 'Надо выбрать хотябы одного исполнителя', trigger: 'blur' }
+      { required: true, message: this.$tc('weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
     customer: [
-      { validator: positiveNumberValueAvailable, trigger: 'blur', message: 'Нужно выбрать абонента' }
+      { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }
     ]
   }
 
@@ -203,14 +179,14 @@ export default class extends mixins(FormMixin, TaskMixin) {
         path: '/tasks',
         meta: {
           hidden: true,
-          title: 'Задачи'
+          title: this.$tc('route.tasks')
         }
       },
       {
         path: '',
         meta: {
           hidden: true,
-          title: 'Редактировать'
+          title: this.$tc('editorial')
         }
       }
     ] as any)
@@ -227,7 +203,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         this.loading = true
         if (this.isNewTask) {
           const newTask = await TaskModule.AddTask(this.frmMod)
-          this.$message.success('Задача добавлена')
+          this.$message.success(this.$tc('targetAdded'))
           this.$router.push({
             name: 'taskDetails',
             params: { taskId: newTask.id.toString() }
@@ -235,20 +211,20 @@ export default class extends mixins(FormMixin, TaskMixin) {
         } else {
           await TaskModule.PatchTask(this.frmMod)
           this.frmInitial = this.fromTaskModule
-          this.$message.success('Задача сохранена')
+          this.$message.success(this.$tc('targetRetained'))
         }
         this.loading = false
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
 
   private onDel() {
     if (this.isNewTask) return
-    this.$confirm('Задача сейчас будет удалена, внимательно').then(async() => {
+    this.$confirm(this.$tc('theTaskWillBeRemovedNowCarefully')).then(async() => {
       await TaskModule.DelTask()
-      this.$message.success('Задача удалена')
+      this.$message.success(this.$tc('targetRemoved'))
       this.$router.push({
         name: 'taskList'
       })
@@ -258,7 +234,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
   private async onFinish() {
     if (this.isNewTask) return
     await TaskModule.FinishTask()
-    this.$message.success('Задача завершена')
+    this.$message.success(this.$tc('targetCompleted'))
     this.$router.push({
       name: 'taskList'
     })

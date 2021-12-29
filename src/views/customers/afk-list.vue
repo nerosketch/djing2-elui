@@ -1,31 +1,32 @@
 <template lang="pug">
-.app-container
-  span Дата отсчёта:
-  el-date-picker(
-    v-model="reqParams.date_limit"
-    type="datetime"
-    value-format="yyyy-MM-dd HH:mm"
-    format="d.MM.yyyy HH:mm"
-    placeholder="Дата отсчёта"
-  )
-  span  Лимит вывода:
-  el-input(
-    placeholder="Лимит вывода"
-    :style="{width: '150px'}"
-    type="number"
-    v-model="reqParams.out_limit"
-  )
-  datatable(
-    :columns="tableColumns"
-    :getData="loadAfk"
-    widthStorageNamePrefix='usersafk'
-    ref='afktbl'
-  )
-    template(v-slot:customer_uname="{row}")
-      router-link.el-link.el-link--primary.is-underline(
-        :to="{name: 'customerDetails', params:{uid: row.customer_id }}"
-      ) {{ row.customer_uname }}
+  .app-container
+    span
+      | {{ $t('customers.afkReferenceDate') }}:
 
+    el-date-picker(
+      v-model="reqParams.date_limit"
+      type="datetime"
+      value-format="yyyy-MM-dd HH:mm"
+      format="d.MM.yyyy HH:mm"
+      :placeholder="$t('customers.afkReferenceDate')")
+
+    span
+      | {{ $t('customers.afkOutLimit') }}:
+
+    el-input(
+      :placeholder="$t('customers.afkOutLimit')"
+      :style="{width: '150px'}"
+      type="number"
+      v-model="reqParams.out_limit")
+
+    datatable(
+      :columns="tableColumns"
+      :getData="loadAfk"
+      widthStorageNamePrefix="usersafk"
+      ref="afktbl")
+      template(v-slot:customer_uname="{row}")
+        router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: row.customer_id }}")
+          | {{ row.customer_uname }}
 </template>
 
 <script lang="ts">
@@ -62,19 +63,19 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_uname',
-      label: 'логин'
+      label: this.$tc('customers.username').toString()
     },
     {
       prop: 'customer_fio',
-      label: 'ФИО'
+      label: this.$tc('customers.fio').toString()
     },
     {
       prop: 'last_date',
-      label: 'дата'
+      label: this.$tc('customers.afkLastDate').toString()
     },
     {
       prop: 'timediff',
-      label: 'Продолжительность'
+      label: this.$tc('customers.afkDuration').toString()
     }
   ]
 
@@ -89,7 +90,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Фильтр afk'
+          title: this.$tc('customers.afkFilter').toString()
         }
       }
     ] as any)

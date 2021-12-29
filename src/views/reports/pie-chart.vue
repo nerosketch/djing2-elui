@@ -2,8 +2,7 @@
   div(
     :class="className"
     :style="{height: height, width: width}"
-    v-loading="repLoading"
-  )
+    v-loading="repLoading")
 </template>
 
 <script lang="ts">

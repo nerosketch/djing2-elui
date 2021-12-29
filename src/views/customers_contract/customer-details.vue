@@ -1,10 +1,8 @@
 <template lang="pug">
-  customer-details(
-    :uid='uid'
-  )
+  customer-details(:uid="uid")
     template(#additional_tabs)
       el-tab-pane(
-        label="Договор абонента"
+        :label="$t('contractDocs.customerContract')"
         name="contracts"
         lazy
       )
@@ -13,28 +11,30 @@
             el-col.col_vert_space(
               v-for="(c, i) in contracts"
               :key="i"
-              :sm='24'
-              :md='12'
-              :xl='6'
-            )
+              :sm="24"
+              :md="12"
+              :xl="6")
               el-card
-                template(#header) Договор абонента № {{ c.contract_number }}
+                template(#header)
+                  | {{ $t('contractDocs.customerContract') }} № {{ c.contract_number }}
+
                   el-button.card_del_btn(
                     v-show="c.id"
-                    type="text" icon='el-icon-close'
-                    @click="delContract(c)"
-                  )
-                contract-form(
-                  :contract="c"
-                )
-        span(v-else) Нет договоров &nbsp;
-        el-button(
-          @click="newContractFormVisible=true"
-        ) Добавить
+                    type="text"
+                    icon="el-icon-close"
+                    @click="delContract(c)")
+
+                contract-form(:contract="c")
+
+        span(v-else)
+          | {{ $t('contractDocs.noContracts') }}
+
+        el-button(@click="newContractFormVisible=true")
+          | {{ $t('add') }}
 
     el-dialog(
       :visible.sync="newContractFormVisible"
-      title="Добавить договор абоненту"
+      :title="$t('contractDocs.addCustomerContract')"
     )
       contract-form(
         @added="doneAdd"
@@ -84,12 +84,14 @@ export default class extends Vue {
 
   private delContract(c: ICustomerContract) {
     if (!c.id) return
-    this.$confirm('Удалить договор с абонентом?', {
-      confirmButtonText: 'да',
-      cancelButtonText: 'нет'
+    this.$confirm(this.$tc('contractDocs.delQuestion'), {
+      confirmButtonText: this.$tc('yes'),
+      cancelButtonText: this.$tc('no')
     }).then(() => {
       delContract(c.id as any).then(() => {
-        this.$message.success('Договор успешно удалён')
+        this.$message.success(
+          this.$tc('contractDocs.delOk')
+        )
         this.loadContracts()
       })
     })

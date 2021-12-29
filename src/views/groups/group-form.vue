@@ -1,24 +1,24 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     label-width="100px"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
     el-form-item(
-      label="Название"
-      prop='title'
+      :label="$t('title')"
+      prop="title"
     )
       el-input(v-model="frmMod.title")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -34,7 +34,7 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название группы надо указать', trigger: 'blur' }
+      { required: true, message: this.$tc('nameOfGroup'), trigger: 'blur' }
     ]
   }
 
@@ -68,7 +68,7 @@ export default class extends Vue {
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

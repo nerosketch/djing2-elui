@@ -66,7 +66,7 @@ class UserProfile extends BaseProfileVuexModule implements IUserProfile {
     return data
   }
 
-  @Action({ rawError: true })
+  @Action
   public PatchPassword(newPassw: IPasswordUpdateForm) {
     return setProfilePassword(this.username, newPassw)
   }

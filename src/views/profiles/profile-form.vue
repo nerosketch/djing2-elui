@@ -1,102 +1,89 @@
 <template lang="pug">
   el-form(
-    ref='frm'
+    ref="frm"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='loading'
-  )
-    el-form-item(
-      label="Логин"
-      prop='username'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading")
+    el-form-item(:label="$t('login')" prop="username")
       el-input(v-model="frmMod.username")
-    el-form-item(
-      label="ФИО"
-      prop='fio'
-    )
+
+    el-form-item(:label="$t('fio')" prop="fio")
       el-input(v-model="frmMod.fio")
-    el-form-item(
-      label="День рождения"
-      prop='birth_day'
-    )
+
+    el-form-item(:label="$t('birthday')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
-        format="d.MM.yyyy"
-      )
-    el-form-item(
-      label="Включён"
-    )
+        format="d.MM.yyyy")
+
+    el-form-item(:label="$t('profiles.isActive')")
       el-switch(v-model="frmMod.is_active")
-      small {{ frmMod.is_active ? '' : ' Если выключить учётку то её владелец не сможет заходить' }}
-    el-form-item(
-      label="Суперпользователь"
-    )
+
+      small
+        | {{ frmMod.is_active ? '' : ' ' + $t('profiles.ifNotActive') }}
+
+    el-form-item(:label="$t('profiles.isSuperuser')")
       el-switch(v-model="frmMod.is_superuser")
-      small {{ frmMod.is_superuser ? ' Если учётка имеет статус суперпользователя, то для неё не проверяются права, ей можно всё' : '' }}
-    el-form-item(
-      label="Номер телефона"
-      prop='telephone'
-    )
+
+      small
+        | {{ frmMod.is_superuser ? ' ' + $t('profiles.ifSuperuser') : '' }}
+
+    el-form-item(:label="$t('telephoneNumber')" prop="telephone")
       el-input(v-model="frmMod.telephone")
-    el-form-item(
-      label="ЭПочта"
-      prop='email'
-    )
+
+    el-form-item(:label="$t('email')" prop="email")
       el-input(v-model="frmMod.email")
+
     el-form-item(
-      label="Пароль"
-      prop='password'
-      v-if="isNew"
-    )
-      el-input(v-model="frmMod.password" type="password" autocomplete="new-password")
+      :label="$t('password')"
+      prop="password"
+      v-if="isNew")
+      el-input(
+        v-model="frmMod.password"
+        type="password"
+        autocomplete="new-password")
+
     el-form-item
       el-button-group
         el-button(
           :type="isNew ? 'success' : 'primary'"
           @click="onSubmit"
-          icon='el-icon-upload'
-        ) {{ isNew ? 'Добавить' : 'Сохранить' }}
+          icon="el-icon-upload")
+          | {{ isNew ? $t('add') : $t('save') }}
+
         template(v-if="!isNew")
-          el-button(@click="openPasswordForm" icon="el-icon-lock") Пароль
+          el-button(@click="openPasswordForm", icon="el-icon-lock")
+            | {{ $t('password') }}
+
           template(v-if="$perms.is_superuser")
-            el-button(@click="openGroupsForm" icon="el-icon-lock") Группы пользователей
-            el-button(
-              @click="sitesDlg = true"
-              icon='el-icon-lock'
-            ) Сайты
+            el-button(@click="openGroupsForm", icon="el-icon-lock")
+              | {{ $t('userGroups') }}
+
+            el-button(@click="sitesDlg = true", icon="el-icon-lock")
+              | {{ $t('sites.site') }}
 
     el-dialog(
-      title="Поменять пароль"
+      :title="$t('changeThePassword')"
       :visible.sync="passwordFormDialog"
-      :close-on-click-modal="false"
-    )
+      :close-on-click-modal="false")
       password-form(
         :profileId="$store.state.userprofile.id"
         v-on:done="passwordDone"
-        v-on:cancel="passwordCancel"
-      )
+        v-on:cancel="passwordCancel")
 
     el-dialog(
-      title="Назначить принадлежность группам пользователей"
+      :title="$t('entitlementOfUserGroups')"
       :visible.sync="userGroupAccessDialog"
-      :close-on-click-modal="false"
-    )
-      profile-groups(
-        v-on:done="userGroupAccessDone"
-      )
-    el-dialog(
-      title="Принадлежность сайтам"
-      :visible.sync="sitesDlg"
-      :close-on-click-modal="false"
-    )
-      sites-attach(
-        :selectedSiteIds="$store.state.userprofile.sites"
-        v-on:save="profileSitesSave"
-      )
+      :close-on-click-modal="false")
+      profile-groups(v-on:done="userGroupAccessDone")
 
+    el-dialog(
+      :title="$t('facilities')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.userprofile.sites", v-on:save="profileSitesSave")
 </template>
 
 <script lang="ts">
@@ -146,26 +133,26 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: 'Логин не может быть пустым', trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: 'Логин может содержать латинские символы и цифры' }
+      { required: true, message: this.$tc('loginCanTBeEmpty'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$tc('laginCanContainLatinSymbolsAndFigures') }
     ],
     birth_day: [
-      { required: true, message: 'Логин не может быть пустым', trigger: 'blur' }
+      { required: true, message: this.$tc('loginCanTBeEmpty'), trigger: 'blur' }
     ],
     telephone: [
-      { required: true, message: 'Номер телефона обязательно', trigger: 'blur' },
-      { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
+      { required: true, message: this.$tc('phoneNumberIsRequired'), trigger: 'blur' },
+      { validator: telephoneValidator, trigger: 'change', message: this.$tc('telValidation') }
     ],
     fio: [
-      { required: true, message: 'Нужно знать как зовут владельца учётки', trigger: 'blur' }
+      { required: true, message: this.$tc('youNeedToKnowTheNameOfTheOwnerOfTheAccount'), trigger: 'blur' }
     ],
     email: [
-      { validator: emailValidator, trigger: 'change', message: 'Не похоже на адрес почты' }
+      { validator: emailValidator, trigger: 'change', message: this.$tc('doesnTSoundLikeEMailAddress') }
     ],
     password: [
-      { required: true, message: 'Пароль не может быть пустым', trigger: 'blur' },
+      { required: true, message: this.$tc('thePasswordCannotBeEmpty'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
+      { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ]
   }
 
@@ -177,19 +164,17 @@ export default class extends Vue {
         try {
           if (this.isNew) {
             newDat = await UserProfileModule.AddProfile(this.frmMod)
-            this.$message.success('Учётка добавлена')
+            this.$message.success(this.$tc('added'))
           } else {
             newDat = await UserProfileModule.PatchProfile(this.frmMod)
-            this.$message.success('Учётка сохранена')
+            this.$message.success(this.$tc('recordRetained'))
           }
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
@@ -199,7 +184,7 @@ export default class extends Vue {
   }
 
   private passwordDone() {
-    this.$message.success('Пароль успешно изменён')
+    this.$message.success(this.$tc('thePasswordHasBeenChangedSuccessfully'))
     this.passwordFormDialog = false
   }
 
@@ -219,7 +204,7 @@ export default class extends Vue {
     UserProfileModule.PatchProfile({
       sites: selectedSiteIds
     }).then(() => {
-      this.$message.success('Принадлежность учётных записей сайтам сохранена')
+      this.$message.success(this.$tc('webRecordsMaintained'))
     })
     this.sitesDlg = false
   }

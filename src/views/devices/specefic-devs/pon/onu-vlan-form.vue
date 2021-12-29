@@ -1,50 +1,47 @@
 <template lang="pug">
-  el-card(shadow='never' v-if="currentConfig.vlanConfig.length > 0")
+  el-card(shadow="never", v-if="currentConfig.vlanConfig.length > 0")
     template(v-slot:header)
-      span Варианты конфигурации на ONU
+      span
+        | {{ $t('ONUConfigurationOptions') }}
 
-    span Шаблон конфига для ONU
-    el-select(v-model="currentConfig.configTypeCode" placeholder="Шаблон конфига")
+    span
+      | {{ $t('onuConfigTemplate') }}
+
+    el-select(
+      v-model="currentConfig.configTypeCode"
+      :placeholder="$t('configurationPanel')"
+    )
       el-option(
-        :value='v.code'
-        :label='v.title'
+        :value="v.code"
+        :label="v.title"
         v-for="(v, i) in configTypeCodes"
-        :key="i"
-      )
+        :key="i")
 
     template(v-if="isAcceptVlanSelectedConfig")
       el-card(
-        shadow='never'
+        shadow="never"
         v-for="portVlanConf in currentConfig.vlanConfig"
-        :key="portVlanConf.port"
-      )
+        :key="portVlanConf.port")
         template(v-slot:header)
           el-link(
             style="float: right"
-            icon='el-icon-close'
-            type='danger'
-            @click="delVlanPort(portVlanConf.port)"
-          )
+            icon="el-icon-close"
+            type="danger"
+            @click="delVlanPort(portVlanConf.port)")
           | Vlan на порт №{{ portVlanConf.port }}
 
-        generic-vlan-config(
-          :portVlanConf.sync="portVlanConf"
-          :allVlans="vlans"
-        )
+        generic-vlan-config(:portVlanConf.sync="portVlanConf", :allVlans="vlans")
 
-    el-card(
-      shadow='never'
-      v-else
-    ) Настройка VLAN не принимается выбранным конфигом
+    el-card(shadow="never", v-else)
+      | {{ $t('vlanSettingNotAcceptedBySelectedConfiguration') }}
 
     el-button(
       type="primary"
       icon="el-icon-download"
       @click="onSubmit"
       :loading="vlanLoading"
-      :disabled="!$perms.devices.can_apply_onu_config || disabled"
-    ) Применить
-
+      :disabled="!$perms.devices.can_apply_onu_config || disabled")
+      | {{ $t('applicable') }}
 </template>
 
 <script lang="ts">
@@ -85,7 +82,7 @@ export default class extends mixins(VlanMixin) {
         const { data } = await applyDeviceOnuConfig(this.$store.state.devicemodule.id, this.currentConfig)
         if (data.status == 1) {
           this.$message.success({
-            message: 'ONU успешно зарегистрирована',
+            message: this.$tc('successfulRegistered'),
             duration: 15000,
             showClose: true
           })
@@ -97,18 +94,16 @@ export default class extends mixins(VlanMixin) {
           })
         }
         DeviceModule.GetDevice(this.$store.state.devicemodule.id)
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.vlanLoading = false
       }
     } else {
-      this.$message.error('Id оборудования не передан')
+      this.$message.error(this.$tc('equipmentNotTransferred'))
     }
   }
 
   private delVlanPort(portNum: number) {
-    this.$confirm('Удалить настройки с порта?').then(() => {
+    this.$confirm(this.$tc('removeOptsFromPort')).then(() => {
       const confInd = this.currentConfig.vlanConfig.findIndex(v => v.port === portNum)
       if (confInd > -1) {
         this.currentConfig.vlanConfig.splice(confInd, 1)

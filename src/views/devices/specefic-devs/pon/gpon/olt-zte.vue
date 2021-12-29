@@ -3,64 +3,76 @@
     template(v-slot:header)
       .clearfix
         span zte -
+
         small {{ ` ${device.ip_address || device.mac_addr} ` }}
+
         small {{ details }}
+
         el-button(
-          style="float: right; padding: 7px" circle icon='el-icon-edit' type='primary'
+          style="float: right; padding: 7px"
+          circle
+          icon="el-icon-edit"
+          type="primary"
           @click="openDevForm"
-          :disabled="!$perms.devices.change_device"
-        )
+          :disabled="!$perms.devices.change_device")
+
     el-row
-      el-col(:xl="2" :md="3" :sm="6" :xs="12" v-for="(p, i) in allPorts" :key="i")
-        olt-zte-port(
-          :devId="devPk"
-          :port="p"
-        )
+      el-col(
+        :xl="2"
+        :md="3"
+        :sm="6"
+        :xs="12"
+        v-for="(p, i) in allPorts"
+        :key="i")
+        olt-zte-port(:devId="devPk", :port="p")
+
     el-divider
-    h4 Незарегистрированные юниты
+
+    h4
+      | {{ $t('unregisteredYouth') }}
+
     el-table(
       :data="unregistered"
       :loading="unrloading"
       v-if="device !== null"
-      border fit
-    )
+      border
+      fit)
       el-table-column(
-        label="Мак"
+        :label="$t('mac')"
         min-width="150"
-        prop='mac'
-      )
+        prop="mac")
+
       el-table-column(
-        label="Версия прошивки"
+        :label="$t('livingVersion')"
         min-width="150"
-        prop='firmware_ver'
-      )
+        prop="firmware_ver")
+
       el-table-column(
-        label="LOID пароль"
+        :label="$t('loiPassword')"
         min-width="100"
-        prop='loid_passw'
-      )
+        prop="loid_passw")
+
       el-table-column(
         label="LOID"
         min-width="150"
-        prop='loid'
-      )
+        prop="loid")
+
       el-table-column(
         label="sn"
         min-width="150"
-        prop='sn'
-      )
+        prop="sn")
+
       el-table-column(
-        label="Сохранить"
+        :label="$t('safe')"
         min-width="70"
       )
         template(v-slot:default="{row}")
-          el-button(icon='el-icon-plus' @click="onSaveOnu(row)")
+          el-button(icon="el-icon-plus" @click="onSaveOnu(row)")
 
     el-dialog(
-      title="Сохранить ONU"
+      :title="$t('keepHimSafe')"
       :visible.sync="saveOnuFormDialog"
-      :close-on-click-modal="false"
-    )
+      :close-on-click-modal="false")
       new-dev-form(
         :initialMac="newOnuInitialMac"
         :initialDevType="gdevType"
@@ -69,9 +81,7 @@
         :initialParentDevName="device.comment"
         v-if="saveOnuFormDialog"
         v-on:done="frmNewOnuDone"
-        v-on:err="saveOnuFormDialog=false"
-      )
-
+        v-on:err="saveOnuFormDialog=false")
 </template>
 
 <script lang="ts">
@@ -113,8 +123,6 @@ export default class extends Vue {
       try {
         const { data } = await scanOltFibers(this.devPk)
         this.allPorts = data
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.loading = false
       }
@@ -127,8 +135,6 @@ export default class extends Vue {
       try {
         const { data } = await scanUnitsUnregistered(this.devPk)
         this.unregistered = data
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.unrloading = false
       }
@@ -160,7 +166,7 @@ export default class extends Vue {
 
   private frmNewOnuDone(newDev: IDevice) {
     this.saveOnuFormDialog = false
-    this.$message.success('Новая onu сохранена')
+    this.$message.success(this.$tc('theNewONUIsSaved'))
     this.$router.push({ name: 'device-view', params: { devId: newDev.id.toString() } })
   }
 

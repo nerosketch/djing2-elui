@@ -1,46 +1,28 @@
 <template lang="pug">
   el-form(
-    ref='frm'
+    ref="frm"
     status-icon
     :rules="frmRules"
     :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      label="Название банка"
-      prop="title"
-    )
-      el-input(
-        v-model="frmMod.title"
-      )
-    el-form-item(
-      label="БИК"
-      prop="bank_code"
-    )
-      el-input(
-        v-model="frmMod.bank_code"
-        type='number'
-      )
-    el-form-item(
-      label="Корреспондентский счёт"
-      prop="correspondent_account"
-    )
-      el-input(
-        v-model="frmMod.correspondent_account"
-      )
-    el-form-item(
-      label="Расчётный счёт"
-      prop="settlement_account"
-    )
-      el-input(
-        v-model="frmMod.settlement_account"
-      )
+    v-loading="loading")
+    el-form-item(:label="$t('customersLegal.bank.title')" prop="title")
+      el-input(v-model="frmMod.title")
+
+    el-form-item(:label="$t('customersLegal.bank.bik')" prop="bank_code")
+      el-input(v-model="frmMod.bank_code" type="number")
+
+    el-form-item(:label="$t('customersLegal.bank.cacc')" prop="correspondent_account")
+      el-input(v-model="frmMod.correspondent_account")
+
+    el-form-item(:label="$t('customersLegal.bank.pacc')" prop="settlement_account")
+      el-input(v-model="frmMod.settlement_account")
+
     el-form-item
       el-button(
         icon="el-icon-upload"
-        type='primary'
-        @click="onSubmit"
-      ) Сохранить
+        type="primary"
+        @click="onSubmit")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -77,16 +59,16 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название банка обязательно', trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
     ],
     bank_code: [
-      { required: true, message: 'Обязательно', trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
     ],
     correspondent_account: [
-      { required: true, message: 'Обязательно', trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
     ],
     settlement_account: [
-      { required: true, message: 'Обязательно', trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
     ]
   }
 
@@ -125,12 +107,12 @@ export default class extends Vue {
           } else {
             await CustomerLegalBankModule.updateLegalBank(this.frmMod)
           }
-          this.$message.success('Сохранено')
+          this.$message.success(this.$tc('saved'))
         } finally {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

@@ -3,9 +3,8 @@
     datatable(
       :columns="tableColumns"
       :getData="getAllLog"
-      :heightDiff='201'
-      widthStorageNamePrefix='profile_log'
-    )
+      :heightDiff="201"
+      widthStorageNamePrefix="profile_log")
 </template>
 
 <script lang="ts">
@@ -27,17 +26,17 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'action_date',
-      label: 'Дата',
+      label: this.$tc('date'),
       'min-width': 150
     },
     {
       prop: 'additional_text',
-      label: 'Дополнительное',
+      label: this.$tc('supplementary'),
       'min-width': 400
     },
     {
       prop: 'do_type_text',
-      label: 'Описание',
+      label: this.$tc('description'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

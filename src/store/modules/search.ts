@@ -6,22 +6,20 @@ import { IDevice } from '@/api/devices/types'
 
 @Module({ dynamic: true, store, name: 'search' })
 class Search extends VuexModule implements SearchResult {
-  accounts: Array<ICustomer> = []
-  devices: Array<IDevice> = []
-  searchStr = ''
+  public accounts: ICustomer[] = []
+  public devices: IDevice[] = []
+  public searchStr = ''
 
-  @MutationAction({ mutate: ['accounts', 'devices'] })
+  @MutationAction({ mutate: ['accounts', 'devices', 'searchStr'] })
   public async DoSearch(s?: string) {
-    if (s && s !== this.searchStr) {
-      this.searchStr = s
-    }
-    if (this.searchStr) {
-      const { data } = await doSearch(this.searchStr)
-      return data
+    if (s) {
+      const { data } = await doSearch(s)
+      return Object.assign({ searchStr: s }, data)
     }
     return {
       accounts: [],
-      devices: []
+      devices: [],
+      searchStr: s || ''
     }
   }
 }

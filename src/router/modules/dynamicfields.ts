@@ -10,7 +10,7 @@ const dfRoutes: RouteConfig = {
       name: 'dfFieldList',
       component: () => import(/* webpackChunkName: "dynamicfields" */ '@/views/dynamic-fields/field-list.vue'),
       meta: {
-        title: 'Формы',
+        title: 'forms',
         icon: 'el-icon-s-fold'
       }
     }

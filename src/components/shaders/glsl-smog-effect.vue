@@ -3,8 +3,7 @@
     :width="width.toString()"
     :height="height.toString()"
     v-bind:u_time="uTime"
-    v-bind:u_resolution="[width, height]"
-  )
+    v-bind:u_resolution="[width, height]")
 </template>
 
 <script>
@@ -32,7 +31,7 @@ export default {
   },
   mounted() {
     this.timerTime = setInterval(() => {
-      this.uTime += 0.06
+      this.uTime += 0.03
     }, 16)
   },
   beforeDestroy() {

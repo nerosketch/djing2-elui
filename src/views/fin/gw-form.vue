@@ -1,40 +1,31 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     label-width="100px"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-      prop='title'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
-    el-form-item(
-      label="Service ID"
-      prop='service_id'
-    )
+
+    el-form-item(:label="$t('id')" prop="service_id")
       el-input(v-model="frmMod.service_id")
-    el-form-item(
-      label="Slug"
-      prop='slug'
-    )
+
+    el-form-item(:label="$t('servants')" prop="slug")
       el-input(v-model="frmMod.slug")
-    el-form-item(
-      label="Secret"
-      prop='secret'
-    )
+
+    el-form-item(:label="$t('secret')" prop="secret")
       el-input(v-model="frmMod.secret")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
         :loading="isLoading"
-        :disabled="!$perms.fin_app.change_payalltimegateway"
-      ) Сохранить
+        :disabled="!$perms.fin_app.change_payalltimegateway")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -50,16 +41,16 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название группы надо указать', trigger: 'blur' },
+      { required: true, message: this.$tc('nameOfGroup'), trigger: 'blur' },
       { max: 64, trigger: 'change' }
     ],
     service_id: [
-      { required: true, message: 'Service ID обязательно', trigger: 'blur' },
+      { required: true, message: this.$tc('iLlBeSure'), trigger: 'blur' },
       { max: 64, trigger: 'change' }
     ],
     slug: [
-      { required: true, message: 'Service ID обязательно', trigger: 'blur' },
-      { max: 32, message: 'Максимум 32 символа для slug', trigger: 'change' }
+      { required: true, message: this.$tc('iLlBeSure'), trigger: 'blur' },
+      { max: 32, message: this.$tc('only32Symbols'), trigger: 'change' }
     ]
   }
 
@@ -99,12 +90,11 @@ export default class extends Vue {
           }
           this.isLoading = false
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
+        } catch {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

@@ -6,8 +6,7 @@
     placeholder="Начни вводить название или ip оборудования"
     trigger-on-focus
     @select="handleSelect"
-    value-key="comment"
-  )
+    value-key="comment")
 </template>
 
 <script lang="ts">

@@ -1,28 +1,27 @@
 <template lang="pug">
-  el-form(
-    v-loading='loading'
-  )
-    el-form-item(label="Услуга")
+  el-form(v-loading="loading")
+    el-form-item(:label="$t('customers.service')")
       el-select(v-model="frmMod.service_id")
         el-option(
           v-for="srv in services"
           :key="srv.id"
           :label="srv.title"
-          :value="srv.id"
-        )
-    el-form-item(label="Дата завершения")
+          :value="srv.id")
+
+    el-form-item(:label="$t('endDate')")
       el-date-picker(
         v-model="frmMod.deadline"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm"
-        format="d.MM.yyyy HH:mm"
-      )
+        format="d.MM.yyyy HH:mm")
+
     el-form-item
       el-button(
-        type="success" @click="onSubmit"
+        type="success"
+        @click="onSubmit"
         :loading="loading"
-        :disabled="!$perms.customers.can_buy_service"
-      ) Купить
+        :disabled="!$perms.customers.can_buy_service")
+        | {{ $t('buy') }}
 </template>
 
 <script lang="ts">
@@ -73,7 +72,9 @@ export default class extends Vue {
   private async onSubmit() {
     this.loading = true
     if (this.frmMod.service_id === 0) {
-      this.$message.error('Надо выбрать услугу')
+      this.$message.error(
+        this.$tc('customers.chooseServiceNecessary').toString()
+      )
       return
     }
     try {

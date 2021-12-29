@@ -1,9 +1,9 @@
 <template lang="pug">
-el-button(
-  icon='el-icon-toilet-paper'
-  :loading='loading'
-  @click="freeSessionAction"
-) Освободить сессию
+  el-button(
+    icon="el-icon-toilet-paper"
+    :loading="loading"
+    @click="freeSessionAction")
+    | {{ $t('customers.freeSession') }}
 </template>
 
 <script lang="ts">

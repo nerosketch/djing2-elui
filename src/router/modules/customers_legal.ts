@@ -9,7 +9,7 @@ const customerLegalRoutes: RouteConfig = {
       path: '',
       component: () => import(/* webpackChunkName: "legal" */ '@/views/customers_legal/list.vue'),
       meta: {
-        title: 'Организации',
+        title: 'organizations',
         icon: 'el-icon-user'
       }
     },
