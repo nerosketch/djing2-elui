@@ -234,7 +234,7 @@ export default {
     adding: "Creating the task",
     edit: 'Edit task "{0}"',
     austRemoveDocument: 'Are you sure to remove file "{0}"?',
-    taskCustomerDocTitle: 'Задача по "${0}"',
+    taskCustomerDocTitle: 'Task by "${0}"',
     austRemoveShotPay: 'Are you sure to remove pay "{0}"?',
     austRemoveService: 'Are you sure to remove service "{0}"?',
     austRemovePP: 'Are you sure to remove receipt "{0}"?',
