@@ -11,8 +11,8 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // Add X-Access-Token header to every request, you can add other custom headers here
-    if (CurrentUserProfileModule.token) {
-      config.headers['Authorization'] = `Token ${CurrentUserProfileModule.token}`
+    if (CurrentUserProfileModule.token && config && config.headers) {
+      config.headers.Authorization = `Token ${CurrentUserProfileModule.token}`
     }
     return config
   },
@@ -25,7 +25,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   async response => {
     if (![200, 201, 202, 204].includes(response.status)) {
-      let er = Object.entries(response.data).join('\n')
+      const er = Object.entries(response.data).join('\n')
       Message({
         message: er || 'Не известная ошибка',
         type: 'error',

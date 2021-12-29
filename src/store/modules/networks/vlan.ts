@@ -44,7 +44,7 @@ class VlanIf extends VuexModule implements IVlanIf {
 
   @Action
   public async AddVlan(newVlan: object) {
-    let { data } = await addVlanIf(newVlan)
+    const { data } = await addVlanIf(newVlan)
     this.SET_ALL_VLAN(data)
     return data
   }

@@ -1,47 +1,44 @@
 <template lang="pug">
   el-form(
-    ref='pspfrm'
+    ref="pspfrm"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='loading'
-  )
-    el-form-item(
-      label="Серия пас."
-      prop='series'
-    )
-      el-input(v-model="frmMod.series" type='number')
-    el-form-item(
-      label="Номер пас."
-      prop='number'
-    )
-      el-input(v-model="frmMod.number" type='number')
-    el-form-item(
-      label="Кем выдан"
-      prop='distributor'
-    )
-      el-input(v-model="frmMod.distributor" :maxlength='64')
-    el-form-item(
-      label="Код подразделения"
-      prop='division_code'
-    )
-      el-input(v-model="frmMod.division_code" :maxlength='64')
-    el-form-item(
-      label="Дата выдачи"
-      prop='date_of_acceptance'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading")
+    el-form-item(:label="$t('customers.passportSerial')" prop="series")
+      el-input(v-model="frmMod.series" type="number")
+
+    el-form-item(:label="$t('customers.passportNum')" prop="number")
+      el-input(v-model="frmMod.number" type="number")
+
+    el-form-item(:label="$t('customers.passportDistributor')" prop="distributor")
+      el-input(v-model="frmMod.distributor", :maxlength="64")
+
+    el-form-item(:label="$t('customers.passportDivisionCode')" prop="division_code")
+      el-input(v-model="frmMod.division_code", :maxlength="64")
+
+    el-form-item(:label="$t('customers.passportDivisionCode')" prop="date_of_acceptance")
       el-date-picker(
         v-model="frmMod.date_of_acceptance"
         type="date"
         value-format="yyyy-MM-d"
         format="d.MM.yyyy"
       )
+    el-form-item(
+      label="Адрес регистрации"
+    )
+      addr-field-input(v-model="frmMod.registration_address")
+        template(#buttons)
+          el-tooltip(effect="dark" content="Совпадает с адресом учётной записи")
+            el-button(@click="copyFromCustomerAddr" icon='el-icon-document-copy')
     el-form-item
       el-button(
-        icon='el-icon-upload'
-        type='primary' @click="onSubmit" :loading="loading"
-        :disabled="!$perms.customers.add_passportinfo || !$perms.customers.change_passportinfo"
-      ) Сохранить
+        icon="el-icon-upload"
+        type="primary"
+        @click="onSubmit"
+        :loading="loading"
+        :disabled="!$perms.customers.add_passportinfo || !$perms.customers.change_passportinfo")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -50,9 +47,13 @@ import { Form } from 'element-ui'
 import { IPassportInfo } from '@/api/customers/types'
 import { setPassportInfo, getPassportInfo } from '@/api/customers/req'
 import { CustomerModule } from '@/store/modules/customers/customer'
+import AddrFieldInput from '@/components/Address/addr-field-input/index.vue'
 
 @Component({
-  name: 'Passport'
+  name: 'Passport',
+  components: {
+    AddrFieldInput
+  }
 })
 export default class extends Vue {
   private loading = false
@@ -63,40 +64,64 @@ export default class extends Vue {
     number: '',
     distributor: '',
     date_of_acceptance: '',
-    division_code: ''
+    division_code: '',
+    registration_address: 0,
+    registration_address_title: ''
   }
 
   private frmRules = {
     series: [
-      { required: true, message: 'Укажи серию паспорта', trigger: 'blur' },
-      { max: 4, trigger: 'change', message: 'Серия паспорта не должна быть больше 4х символов' }
+      {
+        required: true,
+        message: this.$tc('customers.passportSerialRequiredMsg'),
+        trigger: 'blur'
+      },
+      {
+        max: 4,
+        trigger: 'change',
+        message: this.$tc('customers.passportSerialValidationMsg'),
+      }
     ],
     number: [
-      { required: true, message: 'Укажи номер паспорта', trigger: 'blur' },
-      { max: 6, trigger: 'change', message: 'Номер паспорта не должен быть больше 6ти символов' }
+      {
+        required: true,
+        message: this.$tc('customers.passportNumRequiredMsg'),
+        trigger: 'blur'
+      },
+      {
+        max: 6,
+        trigger: 'change',
+        message: this.$tc('customers.passportNumValidatationMsg')
+      }
     ],
     distributor: [
-      { required: true, message: 'Укажи кем выдан паспорт', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$tc('customers.passportDistributorRequiredMsg'),
+        trigger: 'blur'
+      }
     ],
     date_of_acceptance: [
-      { required: true, message: 'Надо указать когда он был выдан', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$tc('customers.passportDateOfAcceptanceRequiredMsg'),
+        trigger: 'blur'
+      }
     ]
   }
 
   private onSubmit() {
-    (this.$refs['pspfrm'] as Form).validate(async valid => {
+    (this.$refs.pspfrm as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         try {
-          let { data } = await setPassportInfo(CustomerModule.pk, this.frmMod)
+          const { data } = await setPassportInfo(CustomerModule.id, this.frmMod)
           this.$emit('done', data)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
@@ -104,10 +129,8 @@ export default class extends Vue {
   private async loadPasspInfo() {
     this.loading = true
     try {
-      const { data } = await getPassportInfo(CustomerModule.pk)
+      const { data } = await getPassportInfo(CustomerModule.id)
       this.frmMod = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }
@@ -115,6 +138,10 @@ export default class extends Vue {
 
   mounted() {
     this.loadPasspInfo()
+  }
+
+  private copyFromCustomerAddr() {
+    this.frmMod.registration_address = CustomerModule.address
   }
 }
 </script>

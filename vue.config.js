@@ -1,19 +1,20 @@
 const path = require('path')
 const name = 'Djing2 ui'
+const description = 'Админка Djing2'
 
 module.exports = {
-  publicPath: '/',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
+
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
-      // swSrc is required in InjectManifest mode.
       swSrc: 'src/service-worker.js'
-      // ...other Workbox options...
     },
-    name: name
+    name: 'Djing2 ui',
+    msTileColor: '#0C4428'
   },
+
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'scss',
@@ -23,12 +24,14 @@ module.exports = {
       ]
     }
   },
+
   chainWebpack(config) {
     // provide the app's title in html-webpack-plugin's options list so that
     // it can be accessed in index.html to inject the correct title.
     // https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
     config.plugin('html').tap(args => {
       args[0].title = name
+      args[0].description = description
       return args
     })
 
@@ -45,7 +48,6 @@ module.exports = {
 
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
-
 
     config
       .when(process.env.NODE_ENV !== 'development',
@@ -78,8 +80,8 @@ module.exports = {
           config.optimization.runtimeChunk('single')
         }
       )
-
   },
+
   configureWebpack: {
     module: {
       rules: [
@@ -90,6 +92,7 @@ module.exports = {
       ]
     }
   },
+
   devServer: {
     disableHostCheck: true
   }

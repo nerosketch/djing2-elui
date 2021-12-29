@@ -8,14 +8,14 @@ import { IOneShotPay } from '@/api/services/types'
 
 @Module({ dynamic: true, store, name: 'oneshotpay' })
 class OneShotPay extends VuexModule implements IOneShotPay {
-  pk = 0
-  name = ''
-  cost = 0.0
-  sites?: number[] = []
+  public id = 0
+  public name = ''
+  public cost = 0.0
+  public sites?: number[] = []
 
   @Mutation
   public SET_ALL_OSPAY(data: IOneShotPay) {
-    this.pk = data.pk
+    this.id = data.id
     this.name = data.name
     this.cost = data.cost
     this.sites = data.sites || []
@@ -23,7 +23,7 @@ class OneShotPay extends VuexModule implements IOneShotPay {
 
   @Mutation
   public RESET_ALL_OSPAY() {
-    this.pk = 0
+    this.id = 0
     this.name = ''
     this.cost = 0.0
     this.sites = []
@@ -45,7 +45,7 @@ class OneShotPay extends VuexModule implements IOneShotPay {
 
   @Action
   public async PatchOneShotPay(newOSPay: object) {
-    const r = await changeOneShotPay(this.pk, newOSPay)
+    const r = await changeOneShotPay(this.id, newOSPay)
     this.SET_ALL_OSPAY(r.data)
     return r
   }

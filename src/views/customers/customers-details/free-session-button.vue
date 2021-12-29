@@ -1,13 +1,13 @@
 <template lang="pug">
-el-button(
-  icon='el-icon-toilet-paper'
-  :loading='loading'
-  @click="freeSessionAction"
-) Освободить сессию
+  el-button(
+    icon="el-icon-toilet-paper"
+    :loading="loading"
+    @click="freeSessionAction")
+    | {{ $t('customers.freeSession') }}
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { sessionRequestFree } from '@/api/sessions/req'
 
 @Component({
@@ -24,7 +24,7 @@ export default class extends Vue {
     try {
       const { data } = await sessionRequestFree(this.sessionId)
       if (data) {
-        this.$message.success('ok')
+        this.$message.success(data)
       } else {
         this.$message.error('failed')
       }
@@ -36,4 +36,3 @@ export default class extends Vue {
 }
 
 </script>
-

@@ -2,8 +2,7 @@ import Vue from 'vue'
 
 import 'normalize.css'
 import ElementUI from 'element-ui'
-import lang from 'element-ui/lib/locale/lang/ru-RU'
-import locale from 'element-ui/lib/locale'
+import i18n from '@/lang'
 import { CurrentPermissionsModule } from '@/store/current-user-permissions'
 import ObjectPerms from '@/components/object-perms.vue'
 import SitesAttach from '@/components/sites-attach.vue'
@@ -16,14 +15,15 @@ import store from '@/store'
 import router from '@/router'
 import '@/permission'
 import PushNotificationsClass from './utils/notifications'
+import VueI18n from 'vue-i18n'
 
-// configure language
-locale.use(lang)
+Vue.use(ElementUI, {
+  size: 'mini',
+  i18n: (key: string, value: string) => i18n.t(key, value)
+})
 
-Vue.use(ElementUI, { size: 'mini' })
-
-Vue.component('object-perms', ObjectPerms)
-Vue.component('sites-attach', SitesAttach)
+Vue.component('ObjectPerms', ObjectPerms)
+Vue.component('SitesAttach', SitesAttach)
 
 Vue.config.productionTip = false
 
@@ -32,7 +32,8 @@ Vue.prototype.$perms = CurrentPermissionsModule
 declare module 'vue/types/vue' {
   interface Vue {
     $eventHub: Vue,
-    $messagingMng: PushNotificationsClass
+    $messagingMng: PushNotificationsClass,
+    // $t: (key: VueI18n.Path, values?: VueI18n.Values) => string
   }
 }
 
@@ -43,5 +44,6 @@ Vue.prototype.$messagingMng = new PushNotificationsClass()
 new Vue({
   router,
   store,
+  i18n,
   render: (h) => h(App)
 }).$mount('#app')

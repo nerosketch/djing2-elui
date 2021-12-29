@@ -1,49 +1,42 @@
 <template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadPeriodics"
-    :heightDiff='189'
-    widthStorageNamePrefix='perpay'
-    ref='table'
-  )
-    template(v-slot:oper="{row}")
-      el-button-group
-        el-button(
-          v-if="$perms.is_superuser"
-          @click="openSitesDlg(row)"
-        ) C
-        el-button(icon="el-icon-edit" @click="openEdit(row)")
-        el-button(
-          type="danger" icon="el-icon-delete"
-          @click="delPerPay(row)"
-          :disabled="!$perms.services.delete_periodicpay"
-        )
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadPeriodics"
+      :heightDiff="189"
+      widthStorageNamePrefix="perpay"
+      ref="table")
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
+            | C
 
-    el-button(
-      icon='el-icon-plus'
-      type='success'
-      @click="openNew"
-      :disabled="!$perms.services.add_periodicpay"
-    ) Добавить
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
 
-  el-dialog(
-    :title="(isNew ? 'Создание' : 'Изменение') + ' периодического платежа'"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-  )
-    periodicpay-form(
-      v-on:done="frmDone"
-    )
-  el-dialog(
-    title="Принадлежность сайтам"
-    :visible.sync="sitesDlg"
-    :close-on-click-modal="false"
-  )
-    sites-attach(
-      :selectedSiteIds="$store.state.periodicpay.sites"
-      v-on:save="serviceSitesSave"
-    )
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delPerPay(row)"
+            :disabled="!$perms.services.delete_periodicpay")
+
+      el-button(
+        icon="el-icon-plus"
+        type="success"
+        @click="openNew"
+        :disabled="!$perms.services.add_periodicpay")
+        | {{ $t('add') }}
+
+    el-dialog(
+      :title="isNew ? 'Создание' : 'Изменение'"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      periodicpay-form(v-on:done="frmDone")
+
+    el-dialog(
+      :title="$t('facilities')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.periodicpay.sites", v-on:save="serviceSitesSave")
 </template>
 
 <script lang="ts">
@@ -59,36 +52,38 @@ class DataTableComp extends DataTable<IPeriodicPay> {}
 
 @Component({
   name: 'PeriodicPayList',
-  components: { 'datatable': DataTableComp, PeriodicpayForm }
+  components: { datatable: DataTableComp, PeriodicpayForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: 'Название платежа',
+      label: this.$tc('nameOfPayment'),
       'min-width': 200
     },
     {
       prop: 'when_add',
-      label: 'Дата создания',
+      label: this.$tc('dateOfEstablishment'),
       'min-width': 150
     },
     {
       prop: 'amount',
-      label: 'стоимость',
+      label: this.$tc('value'),
       'min-width': 150,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private pays: IPeriodicPay[] = []
   private dialogVisible = false
   private sitesDlg = false
@@ -104,37 +99,38 @@ export default class extends Vue {
   }
 
   private async delPerPay(pay: IPeriodicPay) {
-    if (confirm(`Действительно удалить квитанцию "${pay.name}"?`)) {
-      await PeriodicPayModule.DelPeriodicPay(pay.pk)
-      this.$refs.table.GetTableData()
+    if (confirm(this.$t('austRemovePP', [pay.name]) as string)) {
+      await PeriodicPayModule.DelPeriodicPay(pay.id)
+      this.$refs.table.LoadTableData()
     }
   }
 
   get isNew() {
-    return PeriodicPayModule.pk === 0
+    return PeriodicPayModule.id === 0
   }
 
   private loadPeriodics(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'pk,name,when_add,amount,sites'
+      params.fields = 'id,name,when_add,amount,sites'
     }
     return getPeriodicPays(params)
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   private serviceSitesSave(selectedSiteIds: number[]) {
     PeriodicPayModule.PatchPeriodicPay({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
-      this.$message.success('Принадлежность услуги сайтам сохранена')
+      this.$refs.table.LoadTableData()
+      this.$message.success(this.$tc('facilitiesMaintained'))
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(srv: IPeriodicPay) {
     PeriodicPayModule.SET_ALL_PPAY(srv)
     this.sitesDlg = true

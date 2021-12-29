@@ -1,51 +1,89 @@
 <template lang="pug">
-el-popover(
-  trigger='manual'
-  width='400'
-  v-model="isDisplay"
-)
-  el-card(
-    shadow='never'
-    style="font-size: small;"
-    v-loading="detailLoading"
-  )
-    template(v-slot:header) Сессия
-      el-link(style="float: right" icon='el-icon-close' @click="isDisplay=false" :underline='false')
-    template(v-if="ses")
-      template(v-if="lease")
-        b {{ lease.ip_address }}
-        i  &lt;{{ lease.mac_address }}&gt;
-      dl
-        dt
-          b Время старта
-        dd {{ ses.assign_time || '-----' }}
-        dt
-          b Продолжительность
-        dd {{ ses.session_duration || '-----' }}
-        dt
-          b последнее обновление
-        dd {{ ses.last_event_time || '-----' }}
-        dt
-          b Вход. траф.
-        dd {{ ses.h_input_octets || '-----' }}
-        dt
-          b Исход. траф.
-        dd {{ ses.h_output_octets || '-----' }}
-        dt
-          b Вход. пакеты
-        dd {{ ses.h_input_packets || '-----' }}
-        dt
-          b Исход. пакеты
-        dd {{ ses.h_output_packets || '-----' }}
-      free-session-button(
-        :sessionId="ses.id"
-      )
-    div(v-else) Нет сессии
-  el-button(
-    slot='reference'
-    icon='el-icon-s-data'
-    @click="isDisplay=!isDisplay"
-  ) Detail
+  el-popover(
+    trigger="manual"
+    width="400"
+    v-model="isDisplay")
+    el-card(
+      shadow="never"
+      style="font-size: small;"
+      v-loading="detailLoading")
+      template(v-slot:header)
+        | {{ $t('customers.session') }}
+
+        el-link(
+          style="float: right"
+          icon="el-icon-close"
+          @click="isDisplay=false"
+          :underline="false")
+
+      template(v-if="ses")
+        template(v-if="lease")
+          b
+            | {{ lease.ip_address }}
+
+          i
+            | <{{ lease.mac_address }}>
+
+        dl
+          dt
+            b
+              | {{ $t('customers.sessionStartTime') }}
+
+          dd
+            | {{ ses.assign_time || '-----' }}
+
+          dt
+            b
+              | {{ $t('customers.sessionDuration') }}
+
+          dd
+            | {{ ses.session_duration || '-----' }}
+
+          dt
+            b
+              | {{ $t('customers.sessionLastUpdate') }}
+
+          dd
+            | {{ ses.last_event_time || '-----' }}
+
+          dt
+            b
+              | {{ $t('customers.sessionInTraf') }}
+
+          dd
+            | {{ ses.h_input_octets || '-----' }}
+
+          dt
+            b
+              | {{ $t('customers.sessionOutTraf') }}
+
+          dd
+            | {{ ses.h_output_octets || '-----' }}
+
+          dt
+            b
+              | {{ $t('customers.sessionInPkts') }}
+
+          dd
+            | {{ ses.h_input_packets || '-----' }}
+
+          dt
+            b
+              | {{ $t('customers.sessionOutPkts') }}
+
+          dd
+            | {{ ses.h_output_packets || '-----' }}
+
+        free-session-button(:sessionId="ses.id")
+
+      div(v-else)
+        | {{ $t('customers.sessionNotFound') }}
+
+    el-button(
+      slot="reference"
+      icon="el-icon-s-data"
+      @click="isDisplay=!isDisplay")
+      | {{ $t('customers.sessionDetail') }}
 </template>
 
 <script lang="ts">

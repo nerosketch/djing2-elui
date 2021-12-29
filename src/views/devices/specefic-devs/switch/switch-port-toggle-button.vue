@@ -5,8 +5,7 @@
     :loading="loading"
     :disabled="isdis || !$perms.devices.can_toggle_ports"
     @click="togglePort"
-    circle
-  )
+    circle)
 </template>
 
 <script lang="ts">
@@ -39,7 +38,7 @@ export default class extends Vue {
     await PortModule.SET_PORT_PK(this.portId)
     await PortModule.TogglePort({
       port_state: st ? IDevPortState.DOWN : IDevPortState.UP,
-      port_snmp_num: this.port ? this.port.snmp_number : 0
+      port_snmp_num: this.port ? this.port.snmp_num : 0
     })
     this.loading = false
   }

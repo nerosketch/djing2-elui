@@ -1,28 +1,24 @@
 <template lang="pug">
-el-form(
-  ref='frm'
-  v-loading='loading'
-  status-icon
-  :rules='frmRules'
-  :model='frmMod'
-)
-  el-form-item(
-    label="Номер телефона"
-    prop='telephone'
-  )
-    el-input(v-model="frmMod.telephone" :maxlength='16')
-  el-form-item(
-    label="Владелец телефона"
-    prop='owner_name'
-  )
-    el-input(v-model="frmMod.owner_name" :maxlength='127')
-  el-form-item
-    el-button(
-      icon='el-icon-upload'
-      type="primary" @click="onSubmit"
-      :loading="loading"
-      :disabled="!$perms.customers.add_additionaltelephone"
-    ) {{ isNew ? 'Добавить' : 'Сохранить' }}
+  el-form(
+    ref="frm"
+    v-loading="loading"
+    status-icon
+    :rules="frmRules"
+    :model="frmMod")
+    el-form-item(:label="$t('customers.phone')" prop="telephone")
+      el-input(v-model="frmMod.telephone", :maxlength="16")
+
+    el-form-item(:label="$t('customers.phoneOwner')" prop="owner_name")
+      el-input(v-model="frmMod.owner_name", :maxlength="127")
+
+    el-form-item
+      el-button(
+        icon="el-icon-upload"
+        type="primary"
+        @click="onSubmit"
+        :loading="loading"
+        :disabled="!$perms.customers.add_additionaltelephone")
+        | {{ isNew ? $t('add') : $t('save') }}
 </template>
 
 <script lang="ts">
@@ -47,11 +43,19 @@ export default class extends Vue {
 
   private frmRules = {
     owner_name: [
-      { required: true, message: 'Какое имя у контакта?', trigger: 'blur' }
+      {
+        required: true,
+        message: this.$tc('customers.contactNameRequired').toString(),
+        trigger: 'blur'
+      }
     ],
     telephone: [
-      { required: true, message: 'Нужен номер телефона', trigger: 'blur' },
-      { validator: telephoneValidator, trigger: 'change', message: '+[7,8,9,3] и 10,11 цифр' }
+      {
+        required: true,
+        message: this.$tc('customers.contactPhoneRequired').toString(),
+        trigger: 'blur'
+      },
+      { validator: telephoneValidator, trigger: 'change' }
     ]
   }
 
@@ -60,7 +64,7 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['frm'] as Form).validate(async valid => {
+    (this.$refs.frm as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         let tel
@@ -68,19 +72,21 @@ export default class extends Vue {
           const dat = Object.assign(this.frmMod, { customer: this.customer })
           if (this.isNew) {
             tel = await AdditionalTelephoneModule.AddTelephone(dat)
-            this.$message.success('Телефон сохранён')
+            this.$message.success(
+              this.$tc('customers.contactPhoneSaved').toString()
+            )
           } else {
             tel = await AdditionalTelephoneModule.PatchTelephone(dat)
-            this.$message.success('Телефон изменён')
+            this.$message.success(
+              this.$tc('customers.contactPhoneChanged').toString()
+            )
           }
           this.$emit('done', tel)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

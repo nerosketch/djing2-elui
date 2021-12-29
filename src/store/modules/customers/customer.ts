@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
+import { Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import {
   ICustomer, IBalanceAmountRequest,
   IPeriodicPayForIdRequest,
@@ -17,23 +17,17 @@ import {
   setCustomerMarkers
 } from '@/api/customers/req'
 import store from '@/store'
+import { BaseProfileVuexModule, RESET_ALL_BASE_PROFILE, SET_ALL_BASE_PROFILE } from '@/store/modules/profiles/base-profile'
 
 @Module({ dynamic: true, store, name: 'customer' })
-class Customer extends VuexModule implements ICustomer {
-  pk = 0
-  username = ''
-  telephone = ''
-  fio = ''
-  birth_day = ''
-  create_date = ''
+class Customer extends BaseProfileVuexModule implements ICustomer {
   group = 0
   group_title = ''
+  address = 0
+  address_title = ''
   balance = 0.0
   description = ''
-  street = 0
-  street_name?: string
   house = ''
-  is_active = false
   gateway = 0
   gateway_title = ''
   auto_renewal_service = false
@@ -43,37 +37,30 @@ class Customer extends VuexModule implements ICustomer {
   last_connected_service = 0
   last_connected_service_title = ''
   current_service = 0
-  current_service__service__title = ''
+  current_service_title = ''
   service_id = 0
   is_dynamic_ip = false
   full_name = ''
   raw_password = ''
   lease_count = 0
-  sites: number[] = []
   traf_octs = 0
   marker_icons: string[] = []
 
   @Mutation
   public SET_ID_CUSTOMER(id: number) {
-    this.pk = id
+    this.id = id
   }
 
   @Mutation
   public SET_ALL_CUSTOMER(data: ICustomer) {
-    this.pk = data.pk
-    this.username = data.username
-    this.telephone = data.telephone
-    this.fio = data.fio
-    this.birth_day = data.birth_day
-    this.create_date = data.create_date
+    SET_ALL_BASE_PROFILE(this, data)
     this.group = data.group
     this.group_title = data.group_title!
+    this.address = data.address
+    this.address_title = data.address_title
     this.balance = data.balance
     this.description = data.description
-    this.street = data.street
-    this.street_name = data.street_name
     this.house = data.house
-    this.is_active = data.is_active
     this.gateway = data.gateway
     this.gateway_title = data.gateway_title!
     this.auto_renewal_service = data.auto_renewal_service
@@ -83,34 +70,27 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = data.last_connected_service!
     this.last_connected_service_title = data.last_connected_service_title
     this.current_service = data.current_service!
-    this.current_service__service__title = data.current_service__service__title!
+    this.current_service_title = data.current_service_title!
     this.service_id = data.service_id!
     this.is_dynamic_ip = data.is_dynamic_ip
     this.full_name = data.full_name!
     this.raw_password = data.raw_password!
     this.lease_count = data.lease_count
     this.traf_octs = data.traf_octs!
-    this.sites = data.sites
     this.marker_icons = data.marker_icons
     return this
   }
 
   @Mutation
   public RESET_ALL_CUSTOMER() {
-    this.pk = 0
-    this.username = ''
-    this.telephone = ''
-    this.fio = ''
-    this.birth_day = ''
-    this.create_date = ''
+    RESET_ALL_BASE_PROFILE(this)
     this.group = 0
     this.group_title = ''
+    this.address = 0
+    this.address_title = ''
     this.balance = 0.0
     this.description = ''
-    this.street = 0
-    delete this.street_name
     this.house = ''
-    this.is_active = false
     this.gateway = 0
     this.gateway_title = ''
     this.auto_renewal_service = false
@@ -120,13 +100,12 @@ class Customer extends VuexModule implements ICustomer {
     this.last_connected_service = 0!
     this.last_connected_service_title = ''
     this.current_service = 0!
-    this.current_service__service__title = ''!
+    this.current_service_title = ''!
     this.service_id = 0
     this.is_dynamic_ip = false
     this.full_name = ''
     this.raw_password = ''
     this.lease_count = 0
-    this.sites = []
     this.traf_octs = 0
     this.marker_icons = []
     return this
@@ -151,7 +130,7 @@ class Customer extends VuexModule implements ICustomer {
 
   @Action
   public UpdateCustomer() {
-    return this.GetCustomer(this.pk)
+    return this.GetCustomer(this.id)
   }
 
   @Action
@@ -163,7 +142,7 @@ class Customer extends VuexModule implements ICustomer {
 
   @Action
   public async PatchCustomer(newData: object) {
-    const { data } = await changeCustomer(this.pk, newData)
+    const { data } = await changeCustomer(this.id, newData)
     this.SET_ALL_CUSTOMER(data)
     return data
   }
@@ -173,40 +152,40 @@ class Customer extends VuexModule implements ICustomer {
     if (id) {
       await delCustomer(id)
     } else {
-      await delCustomer(this.pk)
+      await delCustomer(this.id)
     }
     this.RESET_ALL_CUSTOMER()
   }
 
   @Action
   public PickService(buyPayload: IBuyPayloadType) {
-    return pickService(this.pk, buyPayload)
+    return pickService(this.id, buyPayload)
   }
 
   @Action
   public MakeShot(shotId: number) {
-    return makeShot(this.pk, shotId)
+    return makeShot(this.id, shotId)
   }
 
   @Action
   public StopService() {
-    return stopService(this.pk)
+    return stopService(this.id)
   }
 
   @Action
   public AddBalance(qry: IBalanceAmountRequest) {
-    return addBalance(this.pk, qry)
+    return addBalance(this.id, qry)
   }
 
   @Action
   public async GetCurrentServiceDetails() {
-    const { data } = await getCurrentService(this.pk)
+    const { data } = await getCurrentService(this.id)
     return data
   }
 
   @Action
   public async ClearDevice() {
-    const r = await changeCustomer(this.pk, {
+    const r = await changeCustomer(this.id, {
       device: null,
       dev_port: null
     })
@@ -216,20 +195,20 @@ class Customer extends VuexModule implements ICustomer {
 
   @Action
   public SetServiceGroupAccessory(services: number[]) {
-    return setServiceGroupAccessory(this.pk, this.group, services)
+    return setServiceGroupAccessory(this.id, this.group, services)
   }
 
   @Action
   public MakePeriodicPay(req: IPeriodicPayForIdRequest) {
-    return makePeriodicPay4Customer(this.pk, req)
+    return makePeriodicPay4Customer(this.id, req)
   }
 
   @Action
   public SetMarkers(markerNames?: string[]) {
     if (markerNames) {
-      return setCustomerMarkers(this.pk, markerNames)
+      return setCustomerMarkers(this.id, markerNames)
     } else {
-      return setCustomerMarkers(this.pk, this.marker_icons)
+      return setCustomerMarkers(this.id, this.marker_icons)
     }
   }
 }

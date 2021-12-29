@@ -11,7 +11,7 @@ import {
 
 @Module({ dynamic: true, store, name: 'service' })
 class Service extends VuexModule implements IService {
-  pk = 0
+  id = 0
   title = ''
   descr = ''
   speed_in = 0.0
@@ -27,7 +27,7 @@ class Service extends VuexModule implements IService {
 
   @Mutation
   public SET_ALL_SERVICE(data: IService) {
-    this.pk = data.pk
+    this.id = data.id
     this.title = data.title
     this.descr = data.descr
     this.speed_in = data.speed_in
@@ -44,7 +44,7 @@ class Service extends VuexModule implements IService {
 
   @Mutation
   public RESET_ALL_SERVICE() {
-    this.pk = 0
+    this.id = 0
     this.title = ''
     this.descr = ''
     this.speed_in = 0.0
@@ -74,7 +74,7 @@ class Service extends VuexModule implements IService {
 
   @Action
   public async PatchService(newSrv: object) {
-    const r = await changeService(this.pk, newSrv)
+    const r = await changeService(this.id, newSrv)
     this.SET_ALL_SERVICE(r.data)
     return r
   }

@@ -1,35 +1,48 @@
 <template lang="pug">
   .app-container
     el-row(:gutter="20")
-      el-col(
-        :span="6"
-        :xs="24"
-      )
+      el-col(:span="6", :xs="24")
         user-card
-      el-col(
-        :span="18"
-        :xs="24"
-      )
+
+      el-col(:span="18", :xs="24")
         el-card
-          el-tabs(v-model='activeTab')
-            el-tab-pane(label='Изменить' name='account')
-              keep-alive
-                profile-form
-            el-tab-pane(label='Ответственность за группы' name='activity' lazy)
-              group-responsibility(:profileUname='profileUname')
-            el-tab-pane(label="Права на классы действий" v-if="$store.state.currentuserprofile.is_superuser" lazy)
-              keep-alive
+          el-tabs(v-model="activeTabName")
+            el-tab-pane(:label="$t('change')", name="account")
+              profile-form(v-if="ready")
+
+            el-tab-pane(
+              :label="$t('responsibilityForGroups')"
+              name="activity"
+              lazy)
+              group-responsibility(:profileUname="profileUname")
+
+            el-tab-pane(
+              :label="$t('rightsToClassesOfAction')"
+              v-if="$store.state.currentuserprofile.is_superuser"
+              name="classperms"
+              lazy)
+              keep-alive(v-if="ready")
                 user-class-perms
-            el-tab-pane(label='Лог действий' name='timeline' lazy)
-              keep-alive
+
+            el-tab-pane(
+              :label="$t('actionLog')"
+              name="timeline"
+              lazy)
+              keep-alive(v-if="ready")
                 profile-log
-            el-tab-pane(label='Лог авторизаций' name='authlog' lazy)
-              keep-alive
+
+            el-tab-pane(
+              :label="$t('authorizationLogs')"
+              name="authlog"
+              lazy)
+              keep-alive(v-if="ready")
                 profile-auth-log
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
+import TabMixin from '@/utils/tab-mixin'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
 import UserCard from './UserCard.vue'
@@ -49,21 +62,28 @@ import ProfileAuthLog from './profile-auth-log.vue'
     ProfileAuthLog
   }
 })
-export default class extends Vue {
+export default class extends mixins(TabMixin) {
   @Prop({ default: '' }) private profileUname!: string
 
-  private activeTab = 'account'
+  protected activeTabName = 'account'
+  private ready = false
 
   created() {
-    this.loadProfile()
+    this.loadProfile(this.profileUname)
   }
 
-  private loadProfile() {
-    if (this.profileUname) {
-      UserProfileModule.GetProfile(this.profileUname).then(profile => {
-        document.title = profile.full_name || this.profileUname
+  @Watch('profileUname')
+  private onChangeUname(uname: string) {
+    this.loadProfile(uname)
+  }
+
+  private loadProfile(uname: string) {
+    if (uname) {
+      UserProfileModule.GetProfile(uname).then(profile => {
+        document.title = profile.full_name || uname
+        this.ready = true
       }).catch(() => {
-        document.title = this.profileUname
+        document.title = uname
       })
     }
   }

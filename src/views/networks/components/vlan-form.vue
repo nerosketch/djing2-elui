@@ -1,33 +1,29 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-      prop='title'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
-    el-form-item(
-      label="VID"
-      prop='vid'
-    )
-      el-input(v-model="frmMod.vid" type='number')
-    el-form-item(
-      label="Управление"
-      prop="is_management"
-    )
-      el-checkbox(v-model="frmMod.is_management") Является-ли вланом управления.
-        b {{ frmMod.is_management ? 'Да' : 'Нет' }}
+
+    el-form-item(label="VID" prop="vid")
+      el-input(v-model="frmMod.vid" type="number")
+
+    el-form-item(:label="$t('office')" prop="is_management")
+      el-checkbox(v-model="frmMod.is_management")
+        | {{ $t('itSAMoronOfControl') }}
+
+        b
+          | {{ frmMod.is_management ? 'Да' : 'Нет' }}
+
     el-form-item
       el-button(
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -44,10 +40,10 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название vlan надо указать', trigger: 'blur' }
+      { required: true, message: this.$tc('theNameOfTheVlanShouldBeIndicated'), trigger: 'blur' }
     ],
     vid: [
-      { required: true, message: 'Стартовый ip надо указать', trigger: 'blur' },
+      { required: true, message: this.$tc('startPoint'), trigger: 'blur' },
       {
         validator: (rule: any, value: number, callback: Function) => {
           if (value && value > 1 && value < 4095) {
@@ -57,7 +53,7 @@ export default class extends Vue {
           }
         },
         trigger: 'change',
-        message: 'Vlan может быть в пределах 2-4094'
+        message: this.$tc('2-4094')
       }
     ]
   }
@@ -75,7 +71,7 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
         try {
@@ -92,7 +88,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

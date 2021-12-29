@@ -3,28 +3,22 @@
     datatable(
       :columns="tableColumns"
       :getData="loadSites"
-      widthStorageNamePrefix='sites'
-      ref='sitestable'
-    )
+      widthStorageNamePrefix="sites"
+      ref="sitestable")
       template(v-slot:oper="{row}")
         el-button(
           icon="el-icon-edit"
           @click="openEdit(row)"
-          :disabled="!$perms.is_superuser"
-        )
-      el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-      ) Добавить домен
+          :disabled="!$perms.is_superuser")
+
+      el-button(icon="el-icon-plus" @click="openNew")
+        | {{ $t('addDomain') }}
 
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-    )
-      site-form(
-        v-on:done="frmDone"
-      )
+      :close-on-click-modal="false")
+      site-form(v-on:done="frmDone")
 </template>
 
 <script lang="ts">
@@ -42,7 +36,7 @@ class DataTableComp extends DataTable<ISite> {}
 @Component({
   name: 'SiteIndex',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     SiteForm
   }
 })
@@ -50,6 +44,7 @@ export default class extends Vue {
   public readonly $refs!: {
     sitestable: DataTableComp
   }
+
   private dialogVisible = false
 
   private tableColumns: IDataTableColumn[] = [
@@ -60,35 +55,37 @@ export default class extends Vue {
     },
     {
       prop: 'domain',
-      label: 'Домен',
+      label: this.$tc('domain'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'name',
-      label: 'Название',
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
 
   get dialogTitle() {
-    let t = 'Изменить'
+    let t
     if (SiteModule.id === 0) {
-      t = 'Создать'
+      t = this.$tc('add')
+    } else {
+      t = this.$tc('change')
     }
-    return `${t} домен`
+    return this.$t('sites.doDomain', [t])
   }
 
   private loadSites(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,name,domain'
+      params.fields = 'id,name,domain'
     }
     return getSites(params)
   }
@@ -97,6 +94,7 @@ export default class extends Vue {
     SiteModule.SET_ALL_SITE(site)
     this.dialogVisible = true
   }
+
   private openNew() {
     SiteModule.RESET_ALL_SITE()
     this.dialogVisible = true
@@ -104,21 +102,21 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.sitestable.GetTableData()
+    this.$refs.sitestable.LoadTableData()
   }
 
   // Breadcrumbs
   created() {
-    document.title = 'Сайты'
+    document.title = this.$tc('sites.site')
     BreadcrumbsModule.SetCrumbs([
       {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Сайты'
+          title: this.$t('sites.site')
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

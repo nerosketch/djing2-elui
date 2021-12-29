@@ -1,34 +1,27 @@
 <template lang="pug">
   el-form
-    el-form-item(
-      label="Пароль"
-      prop='password'
-    )
+    el-form-item(:label="$t('customers.password')" prop="password")
       el-input(
         v-model="frmMod.password"
         maxlength="128"
         :type="passwordType"
-        placeholder="пароль"
-      )
+        :placeholder="$t('customers.passwordLong')")
         template(v-slot:append)
-          el-button(
-            @click="togglePwd"
-            :icon="passwordType === 'password' ? 'el-icon-view' : 'el-icon-minus'"
-          )
+          el-button(@click="togglePwd", :icon="passwordType === 'password' ? 'el-icon-view' : 'el-icon-minus'")
+
           el-button(
             @click="genPasw"
             :loading="passwLoading"
-            icon='el-icon-refresh'
-          )
+            icon="el-icon-refresh")
 
     el-form-item
       el-button(
-        type='primary'
+        type="primary"
         @click="onSubmit"
-        icon='el-icon-upload'
-        :disabled='isEmpty'
-        :loading="loading"
-      ) Сохранить
+        icon="el-icon-upload"
+        :disabled="isEmpty"
+        :loading="loading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -57,7 +50,9 @@ export default class extends Vue {
     try {
       this.loading = true
       const { data } = await changeCustomer(this.customerId, this.frmMod)
-      this.$message.success('Пароль успешно обновлён')
+      this.$message.success(
+        this.$tc('customers.passwordUpdateOk').toString()
+      )
       this.$emit('done', data)
     } catch (err) {
       this.$message.error(err)

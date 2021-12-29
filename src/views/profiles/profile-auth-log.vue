@@ -3,9 +3,8 @@
     datatable(
       :columns="tableColumns"
       :getData="getAllLog"
-      :heightDiff='201'
-      widthStorageNamePrefix='auth_log'
-    )
+      :heightDiff="201"
+      widthStorageNamePrefix="auth_log")
 </template>
 
 <script lang="ts">
@@ -20,29 +19,29 @@ class DataTableComp extends DataTable<IUserProfileAuthLog> {}
 @Component({
   name: 'ProfileAuthLog',
   components: {
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'time',
-      label: 'Время',
+      label: this.$tc('time'),
       'min-width': 150
     },
     {
       prop: 'remote_ip',
-      label: 'Ip входа',
+      label: this.$tc('andGoIn'),
       'min-width': 130
     },
     {
       prop: 'user_agent',
-      label: 'Браузер'
+      label: this.$tc('browser')
     }
   ]
 
   private getAllLog(params?: IDRFRequestListParameters) {
-    return getAuthLog(params, this.$store.state.userprofile.pk)
+    return getAuthLog(params, this.$store.state.userprofile.id)
   }
 }
 </script>

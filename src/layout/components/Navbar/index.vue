@@ -10,13 +10,14 @@
     )
       el-input(
         v-model="searchStr"
-        placeholder="Поиск"
+        :placeholder="$t('search')"
         prefix-icon="el-icon-search"
       )
         template(v-slot:append)
           el-button(
             icon="el-icon-search"
             @click="doSearch"
+            :title="$t('search')"
           )
 
     .right-menu
@@ -33,18 +34,22 @@
         template(v-slot:dropdown)
           el-dropdown-menu
             router-link(to="/customers")
-              el-dropdown-item Домашняя
+              el-dropdown-item(icon='el-icon-s-home') {{ $t('optMenu.home') }}
             router-link(to="/reports")
-              el-dropdown-item Отчёты
+              el-dropdown-item(icon='el-icon-s-order') {{ $t('optMenu.reports') }}
             router-link(to="/sites" v-if="$perms.is_superuser")
-              el-dropdown-item Домены
+              el-dropdown-item(icon='el-icon-eleme') {{ $t('optMenu.domains') }}
             router-link(to='/messenger')
-              el-dropdown-item Мессенжеры
+              el-dropdown-item(icon='el-icon-s-promotion') {{ $t('optMenu.messengers') }}
+            router-link(:to="{name: 'profileDetail', params:{ profileUname: $store.state.currentuserprofile.username }}")
+              el-dropdown-item(icon='el-icon-s-tools') {{ $t('optMenu.settings') }}
             el-dropdown-item(divided)
               span(
                 style="display:block;"
                 @click="logout"
-              ) Выйти
+              )
+                i.el-icon-switch-button
+                | {{ $t('optMenu.exit') }}
 </template>
 
 <script lang="ts">

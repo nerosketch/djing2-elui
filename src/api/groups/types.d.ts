@@ -1,14 +1,9 @@
-import { IDRFAxiosResponsePromise, IDRFListResponse } from '@/api/types'
-
 export interface IGroup {
-  pk: number
+  id: number
   title: string
   sites?: number[]
 }
 
-export type IGroupList = IDRFListResponse<IGroup>
-export type IGroupAxoisResponsePromise = IDRFAxiosResponsePromise<IGroup>
-export type IGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IGroupList | IGroup[]>
 
 // export interface SetPermissionsRecursiveRequest {
 //   permission_ids: number[]

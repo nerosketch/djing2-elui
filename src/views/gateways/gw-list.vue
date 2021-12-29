@@ -1,72 +1,136 @@
 <template lang="pug">
-.app-container
-  el-row(v-loading="loadingGws" :gutter="10")
-    el-col(:xs="24" :md="12" :xl="6" v-for="(gw, i) in gwlist" :key="i" style="margin-bottom: 10px;")
-      el-card(shadow="hover")
-        template(v-slot:header)
-          .clearfix {{ gw.title }}
-        dl
-          dt
-            b IP адрес
-          dd {{ gw.ip_address }}
-          dt
-            b Порт
-          dd {{ gw.ip_port }}
-          dt
-            b Логин для входа
-          dd {{ gw.auth_login }}
-          dt
-            b Пароль для входа
-          dd {{ gw.auth_passw }}
-          dt
-            b Тип NAS
-          dd {{ gw.gw_type_str }}
-          dt
-            b По умолчанию
-          dd
-            i {{ gw.is_default ? 'Да' : 'Нет' }}
-          dt
-            b Включен
-          dd
-            i {{ gw.enabled ? 'Да' : 'Нет' }}
-          dt
-            b Всего абон.
-          dd
-            i {{ gw.customer_count }}
-          dt
-            b Активных абон.
-          dd
-            i {{ gw.customer_count_active }}
-          dt
-            b Абоны с услугой
-          dd
-            i {{ gw.customer_count_w_service }}
-        el-button-group
-          el-button(
-            icon='el-icon-edit' @click="openGwForm(gw)"
-            :disabled="!$perms.gateways.change_gateway"
-          ) Изменить
-          el-button(
-            type="danger" icon='el-icon-delete' @click="onDel(gw)"
-            :disabled="!$perms.gateways.delete_gateway"
-          ) Удалить
+  .app-container
+    el-row(v-loading="loadingGws", :gutter="10")
+      el-col(
+        :xs="24"
+        :md="12"
+        :xl="6"
+        v-for="(gw, i) in gwlist"
+        :key="i"
+        style="margin-bottom: 10px;")
+        el-card(shadow="hover")
+          template(v-slot:header)
+            .clearfix
+              | {{ gw.title }}
 
-  el-button(
-    type="success" icon='el-icon-plus'
-    @click="onAdd"
-    :disabled="!$perms.gateways.add_gateway"
-  ) Добавить
+          dl
+            dt
+              b
+                | {{ $t('ipAddress') }}
 
-  el-dialog(
-    :visible.sync="gwFormDialog"
-    title="Изменить шлюз доступа"
-    :close-on-click-modal="false"
-  )
-    gw-form(
-      v-on:done="gwFrmDone"
-      v-on:err="gwFormDialog=false"
-    )
+            dd
+              | {{ gw.ip_address }}
 
+            dt
+              b
+                | {{ $t('port') }}
+
+            dd
+              | {{ gw.ip_port }}
+
+            dt
+              b
+                | {{ $t('inletLogin') }}
+
+            dd
+              | {{ gw.auth_login }}
+
+            dt
+              b
+                | {{ $t('inletPassword') }}
+
+            dd
+              | {{ gw.auth_passw }}
+
+            dt
+              b
+                | {{ $t('likeUs') }}
+
+            dd
+              | {{ gw.gw_type_str }}
+
+            dt
+              b
+                | {{ $t('default') }}
+
+            dd
+              i
+                | {{ gw.is_default ? 'Да' : 'Нет' }}
+
+            dt
+              b
+                | {{ $t('included') }}
+
+            dd
+              i
+                | {{ gw.enabled ? 'Да' : 'Нет' }}
+
+            dt
+              b
+                | {{ $t('itSABonus') }}
+
+            dd
+              i
+                | {{ gw.customer_count }}
+
+            dt
+              b
+                | {{ $t('activeCustomersCount') }}
+
+            dd
+              i
+                | {{ gw.customer_count_active }}
+
+            dt
+              b
+                | {{ $t('service') }}
+
+            dd
+              i
+                | {{ gw.customer_count_w_service }}
+
+            dt
+              b
+                | {{ $t('dateOfEstablishment') }}
+
+            dd
+              i
+                | {{ gw.create_time }}
+
+            dt
+              b
+                | {{ $t('addresses') }}
+
+            dd
+              i
+                | {{ gw.place || ' - ' }}
+
+          el-button-group
+            el-button(
+              icon="el-icon-edit"
+              @click="openGwForm(gw)"
+              :disabled="!$perms.gateways.change_gateway")
+              | {{ $t('amend') }}
+
+            el-button(
+              type="danger"
+              icon="el-icon-delete"
+              @click="onDel(gw)"
+              :disabled="!$perms.gateways.delete_gateway")
+              | {{ $t('del') }}
+
+    el-button(
+      type="success"
+      icon="el-icon-plus"
+      @click="onAdd"
+      :disabled="!$perms.gateways.add_gateway")
+      | {{ $t('add') }}
+
+    el-dialog(
+      :visible.sync="gwFormDialog"
+      :title="$t('modifyAccessLock')"
+      :close-on-click-modal="false")
+      gw-form(v-on:done="gwFrmDone", v-on:err="gwFormDialog=false")
 </template>
 
 <script lang="ts">
@@ -96,10 +160,10 @@ export default class extends mixins(GwsMethods) {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Шлюзы'
+          title: this.$tc('locks')
         }
       }
-    ] as any[])
+    ] as any)
     // End Breadcrumbs
   }
 
@@ -110,15 +174,15 @@ export default class extends mixins(GwsMethods) {
 
   private gwFrmDone() {
     this.gwFormDialog = false
-    this.$message.success('Шлюз доступа сохранён')
+    this.$message.success(this.$tc('accessLockSecure'))
     this.loadGateways()
   }
 
   private onDel(gw: IGateway) {
-    this.$confirm('Удалить шлюз доступа абонентов?').then(async() => {
+    this.$confirm(this.$tc('removeGatewayQuestion')).then(async() => {
       this.loadingGws = true
       await GatewayModule.DelGateway(gw.id)
-      this.$message.success('Шлюз доступа успешно удалён')
+      this.$message.success(this.$tc('accessLockSuccessfullyRemoved'))
       this.loadGateways()
     }).catch(() => {
       this.loadingGws = false

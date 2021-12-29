@@ -1,0 +1,18 @@
+version: '3.5'
+services:
+  ui:
+    build: .
+    container_name: djing2-elui
+    stop_grace_period: 1m
+    ports:
+      - 8080:8080
+    stdin_open: true
+    tty: true
+    environment:
+      - VUE_APP_BASE_API
+      - NODE_ENV
+    volumes:
+      - .:/home/node/app
+      - /tmp:/tmp
+      - /etc/localtime:/etc/localtime
+

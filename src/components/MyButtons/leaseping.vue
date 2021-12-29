@@ -1,10 +1,10 @@
 <template lang="pug">
   el-button(
-    :icon='defIcon'
+    :icon="defIcon"
     @click="pingIcmp(row)"
     :type="defType"
-    :loading="loading"
-  ) {{ btnText }}
+    :loading="loading")
+    | {{ btnText }}
 </template>
 
 <script lang="ts">
@@ -38,7 +38,7 @@ export default class extends Vue {
       } catch (err) {
         this.$message.error(err)
       }
-      let tv = setTimeout(() => {
+      const tv = setTimeout(() => {
         this.btnText = 'Ping'
         this.defType = ''
         this.defIcon = 'el-icon-mouse'

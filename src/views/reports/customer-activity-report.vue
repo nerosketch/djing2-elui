@@ -2,8 +2,7 @@
   bar-chart(
     :labels="barLabels"
     :values="barValues"
-    :loading="cloading"
-  )
+    :loading="cloading")
 </template>
 
 <script lang="ts">
@@ -16,7 +15,7 @@ import { customersActivityReportRequest } from '@/api/customers/req'
   components: { BarChart }
 })
 export default class extends Vue {
-  private barLabels = ['Всего', 'Включённые', 'С услугой', 'Активные', 'Оплатившие']
+  private barLabels = [this.$tc('total'), this.$tc('including'), this.$tc('withServices'), this.$tc('active'), this.$tc('payments')]
   private barValues = [0, 0, 0, 0, 0]
   private cloading = false
 

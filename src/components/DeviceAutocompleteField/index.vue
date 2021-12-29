@@ -6,14 +6,14 @@
     placeholder="Начни вводить название или ip оборудования"
     trigger-on-focus
     @select="handleSelect"
-    value-key="comment"
-  )
+    value-key="comment")
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { IDevice } from '@/api/devices/types'
 import { findDevices } from '@/api/devices/req'
+import { FetchSuggestionsCallback } from 'element-ui/types/autocomplete'
 
 @Component({
   name: 'DeviceAutocompleteField'
@@ -25,7 +25,7 @@ export default class extends Vue {
   @Prop({ default: '' })
   private defaultName!: string
 
-  private async querySearch(queryString: string, cb: any) {
+  private async querySearch(queryString: string, cb: FetchSuggestionsCallback) {
     if (this.loading) return
     this.loading = true
     const { data } = await findDevices(queryString)
@@ -34,11 +34,16 @@ export default class extends Vue {
   }
 
   private handleSelect(d: IDevice) {
-    this.$emit('input', d.pk)
+    this.$emit('input', d.id)
   }
 
-  created() {
-    this.inpName = this.defaultName
+  @Watch('defaultName')
+  private onChangedDefaultName(name: string) {
+    this.inpName = name
+  }
+
+  mounted() {
+    this.onChangedDefaultName(this.defaultName)
   }
 }
 </script>

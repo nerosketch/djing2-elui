@@ -1,11 +1,11 @@
 <template lang="pug">
   el-button(
-    :type='statusType'
-    icon='el-icon-magic-stick'
+    :type="statusType"
+    icon="el-icon-magic-stick"
     @click="tryToFixOnu"
     :loading="fixLoading"
-    :disabled="!$perms.devices.can_fix_onu"
-  ) {{ buttonText }}
+    :disabled="!$perms.devices.can_fix_onu")
+    | {{ buttonText }}
 </template>
 
 <script lang="ts">
@@ -17,7 +17,7 @@ import { DeviceModule } from '@/store/modules/devices/device'
 })
 export default class extends Vue {
   private fixLoading = false
-  private buttonText = 'Исправить'
+  private buttonText = this.$tc('correct')
   private buttonStatus = 0
 
   get statusType() {
@@ -30,23 +30,21 @@ export default class extends Vue {
   }
 
   private async tryToFixOnu() {
+    this.fixLoading = true
     try {
-      this.fixLoading = true
-      let r = await DeviceModule.FixOnu()
+      const r = await DeviceModule.FixOnu()
       this.setBtnStatus(r.text, r.status)
       this.$emit('done')
-    } catch (err) {
-      this.$message.error(err)
+    } finally {
+      this.fixLoading = false
     }
-    this.fixLoading = false
   }
 
   private setBtnStatus(text: string, status: number) {
     this.buttonStatus = status === 1 ? 1 : -1
-    let origText = this.buttonText
     this.buttonText = text
     let tm = setTimeout(() => {
-      this.buttonText = origText
+      this.buttonText = this.$tc('correct')
       this.buttonStatus = 0
       clearTimeout(tm)
     }, 15000)

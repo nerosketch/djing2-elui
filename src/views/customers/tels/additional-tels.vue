@@ -1,31 +1,26 @@
 <template lang="pug">
   el-table(
-    v-loading='loading'
-    :data='tels'
-    border fit
-  )
-    el-table-column(
-      label="Владелец телефона"
-      prop="owner_name"
-    )
+    v-loading="loading"
+    :data="tels"
+    border
+    fit)
+    el-table-column(:label="$t('customers.phoneOwner')" prop="owner_name")
+
+    el-table-column(:label="$t('customers.phone')")
+      template(v-slot:default="{row}")
+        el-link(:href="`tel:${row.telephone}`")
+          | {{ row.telephone }}
 
     el-table-column(
-      label="Телефон"
-    )
-      template(v-slot:default="{row}")
-        el-link(:href="`tel:${row.telephone}`") {{ row.telephone }}
-    el-table-column(
-      label="Удалить"
+      :label="$t('del')"
       width="75"
-      align='center'
-    )
+      align="center")
       template(v-slot:default="{row}")
         el-button(
-          icon='el-icon-close'
-          type='text'
+          icon="el-icon-close"
+          type="text"
           circle
-          @click="delTel(row)"
-        )
+          @click="delTel(row)")
 </template>
 
 <script lang="ts">
@@ -45,10 +40,8 @@ export default class extends Vue {
   public async loadTels() {
     this.loading = true
     try {
-      const { data } = await getTelephones(CustomerModule.pk) as any
+      const { data } = await getTelephones(CustomerModule.id) as any
       this.tels = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }
@@ -59,9 +52,13 @@ export default class extends Vue {
   }
 
   private delTel(tel: IAdditionalTelephone) {
-    this.$confirm('Удалить дополнительный номер телефона?').then(async() => {
+    this.$confirm(
+      this.$tc('customers.areUShure2DelAdditionalPhone').toString()
+    ).then(async() => {
       await AdditionalTelephoneModule.DelTelephone(tel.id)
-      this.$message.success('Успешно удалено')
+      this.$message.success(
+        this.$tc('deleted').toString()
+      )
       this.loadTels()
     })
   }

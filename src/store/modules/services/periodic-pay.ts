@@ -9,15 +9,15 @@ import { IPeriodicPay } from '@/api/services/types'
 
 @Module({ dynamic: true, store, name: 'periodicpay' })
 class PeriodicPay extends VuexModule implements IPeriodicPay {
-  pk = 0
-  name = ''
-  when_add = ''
-  amount = 0
-  sites?: number[] = []
+  public id = 0
+  public name = ''
+  public when_add = ''
+  public amount = 0
+  public sites?: number[] = []
 
   @Mutation
   public SET_ALL_PPAY(data: IPeriodicPay) {
-    this.pk = data.pk
+    this.id = data.id
     this.name = data.name
     this.when_add = data.when_add!
     this.amount = data.amount
@@ -26,7 +26,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
 
   @Mutation
   public RESET_ALL_PPAY() {
-    this.pk = 0
+    this.id = 0
     this.name = ''
     this.when_add = ''
     this.amount = 0
@@ -49,7 +49,7 @@ class PeriodicPay extends VuexModule implements IPeriodicPay {
 
   @Action
   public async PatchPeriodicPay(newPpay: object) {
-    const r = await changePeriodicPay(this.pk, newPpay)
+    const r = await changePeriodicPay(this.id, newPpay)
     this.SET_ALL_PPAY(r.data)
     return r
   }

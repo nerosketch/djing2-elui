@@ -13,8 +13,11 @@ class Gateway extends VuexModule implements IGateway {
   public auth_login = ''
   public auth_passw = ''
   public gw_type = 0
+  public gw_class = 0
   public is_default = false
   public enabled = false
+  public create_time = ''
+  public place = ''
   public customers_count = 0
   public sites?: number[] = []
 
@@ -27,8 +30,11 @@ class Gateway extends VuexModule implements IGateway {
     this.auth_login = data.auth_login
     this.auth_passw = data.auth_passw
     this.gw_type = data.gw_type
+    this.gw_class = data.gw_class
     this.is_default = data.is_default
     this.enabled = data.enabled
+    this.create_time = data.create_time
+    this.place = data.place
     this.customers_count = data.customers_count!
     this.sites = data.sites || []
     return this
@@ -43,8 +49,11 @@ class Gateway extends VuexModule implements IGateway {
     this.auth_login = ''
     this.auth_passw = ''
     this.gw_type = 0
+    this.gw_class = 0
     this.is_default = false
     this.enabled = false
+    this.create_time = ''
+    this.place = ''
     this.customers_count = 0
     this.sites = []
     return this

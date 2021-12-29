@@ -58,7 +58,7 @@ div:focus {
 
 .el-table {
   th, td {
-    padding: 1px 0;
+    padding: 1px 0!important;
   }
   .warning-row {
     background-color: oldlace;
@@ -175,6 +175,30 @@ ul {
   margin: 8px 0 8px 0;
 }
 
-.hidden {
-  display: none;
+/* Collapse */
+.el-collapse-item__content {
+  padding-bottom: 14px;
+}
+.el-collapse-item__header {
+  height: 37px;
+}
+
+/* Dropdown */
+.el-select-dropdown__wrap {
+  max-height: 85vh;
+}
+
+
+.col_vert_space {
+  padding-bottom: 3px;
+}
+
+.el-tree-node__expand-icon {
+  color: black;
+}
+
+
+.card_del_btn {
+  float: right;
+  padding: 3px 0;
 }

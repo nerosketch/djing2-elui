@@ -1,19 +1,23 @@
 <template lang="pug">
-el-card(
-  shadow="hover"
-  :body-style="defCardStyle"
-)
-  template(v-slot:header)
-    .clearfix
-      span {{ comment.author_name }} 
-      small {{ comment.date_create }}
-      el-button.comment_del_btn(
-        type="text" icon='el-icon-close'
-        v-if="comment.can_remove"
-        @click="delComment"
-      )
-  el-avatar(shape="square" :src='comment.author_avatar')
-  span &nbsp; {{ comment.text }}
+  el-card(shadow="hover" :body-style="defCardStyle")
+    template(v-slot:header)
+      .clearfix
+        span
+          | {{ comment.author_name }}
+
+        small
+          | {{ comment.date_create }}
+
+        el-button.card_del_btn(
+          type="text"
+          icon="el-icon-close"
+          v-if="comment.can_remove"
+          @click="delComment")
+
+    el-avatar(shape="square", :src="comment.author_avatar")
+
+    span
+      | {{ comment.text }}
 </template>
 
 <script lang="ts">
@@ -41,10 +45,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style>
-.comment_del_btn {
-  float: right;
-  padding: 3px 0;
-}
-</style>

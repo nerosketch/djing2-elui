@@ -1,18 +1,16 @@
-<template>
-  <a
+<template lang="pug">
+  a(
     v-if="isExternal(to)"
     :href="to"
     target="_blank"
     rel="noopener"
-  >
-    <slot />
-  </a>
-  <router-link
+  )
+    slot
+  router-link(
     v-else
     :to="to"
-  >
-    <slot />
-  </router-link>
+  )
+    slot
 </template>
 
 <script lang="ts">

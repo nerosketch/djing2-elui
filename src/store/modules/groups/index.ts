@@ -5,13 +5,13 @@ import store from '@/store'
 
 @Module({ dynamic: true, store, name: 'group' })
 class Group extends VuexModule implements IGroup {
-  public pk = 0
+  public id = 0
   public title = ''
   public sites?: number[] = []
 
   @Mutation
   public SET_ALL_MGROUP(data: IGroup) {
-    this.pk = data.pk
+    this.id = data.id
     this.title = data.title
     this.sites = data.sites || []
     return this
@@ -19,7 +19,7 @@ class Group extends VuexModule implements IGroup {
 
   @Mutation
   public RESET_ALL_MGROUP() {
-    this.pk = 0
+    this.id = 0
     this.title = ''
     this.sites = []
     return this
@@ -40,7 +40,7 @@ class Group extends VuexModule implements IGroup {
 
   @Action
   public async PatchGroup(newData: object) {
-    const { data } = await changeGroup(this.pk, newData)
+    const { data } = await changeGroup(this.id, newData)
     this.SET_ALL_MGROUP(data)
   }
 

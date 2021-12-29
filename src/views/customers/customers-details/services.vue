@@ -1,60 +1,92 @@
 <template lang="pug">
-  el-row(:gutter='5')
-    el-col(:sm='24' :md='12')
+  el-row(:gutter="5")
+    el-col(:sm="24" :md="12")
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix
-            span Услуги для заказа
-        services-list(
-          v-on:buydone="loadCurrentService"
-          :isServiceAvailable="isServiceAvailable"
-        )
+          | {{ $t('customers.services4Buy') }}
 
-    el-col(:sm='24' :md='12')
-      el-card(shadow="never" :loading="serviceBlockLoad" style="font-size: small;")
+        services-list(v-on:buydone="loadCurrentService", :isServiceAvailable="isServiceAvailable")
+
+    el-col(:sm="24" :md="12")
+      el-card(
+        shadow="never"
+        :loading="serviceBlockLoad"
+        style="font-size: small;")
         template(v-slot:header)
-          .clearfix Текущая услуга абонента
+          | {{ $t('customers.currentCustomerService') }}
+
         template(v-if="!serviceBlockLoad")
           div(v-if="isServiceAvailable")
-            h3 {{ currentService.service.title }}
-            i {{ currentService.service.descr }}
+            h3
+              | {{ currentService.service.title }}
+
+            i
+              | {{ currentService.service.descr }}
+
             dl
               dt
-                b Сумма
-              dd {{ currentService.service.cost }} руб.
+                b
+                  | {{ $t('customers.sum') }}
+
+              dd
+                | {{ currentService.service.cost }} {{ $t('defaultCurrencySymbol') }}
+
               dt
-                b Входящая скорость
-              dd {{ currentService.service.speed_in }}
+                b
+                  | {{ $t('customers.inSpeed') }}
+
+              dd
+                | {{ currentService.service.speed_in }}
+
               dt
-                b Исходящая скорость
-              dd {{ currentService.service.speed_out }}
+                b
+                  | {{ $t('customers.outSpeed') }}
+
+              dd
+                | {{ currentService.service.speed_out }}
+
               dt
-                b Ускорение(burst (не доделан))
-              dd {{ currentService.service.speed_burst }}
+                b
+                  | {{ $t('customers.burst') }}
+
+              dd
+                | {{ currentService.service.speed_burst }}
+
               dt
-                b Дата начала
-              dd {{ currentService.start_time }}
+                b
+                  | {{ $t('customers.serviceStartDate') }}
+
+              dd
+                | {{ currentService.start_time }}
+
               dt
-                b Действует до
-              dd {{ currentService.deadline }}
+                b
+                  | {{ $t('customers.serviceWorksUntil') }}
+
+              dd
+                | {{ currentService.deadline }}
 
             el-button(
-              type='danger'
-              icon='el-icon-delete'
+              type="danger"
+              icon="el-icon-delete"
               @click="onStopService"
-              :disabled="!$perms.customers.can_complete_service"
-            ) Завершить услугу
-          b(v-else) Услуга не подключена
-          last-connected-service
-        h3(v-else) Загрузка ...
+              :disabled="!$perms.customers.can_complete_service")
+              | {{ $t('customers.serviceFinish') }}
 
-    el-col(:sm='24' :md='12')
+          b(v-else)
+            | {{ $t('customers.serviceNotConnected') }}
+
+          last-connected-service
+
+        h3(v-else)
+          | {{ $t('loading') }}
+
+    el-col(:sm="24" :md="12")
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix Назначенные периодические платежи
+          | {{ $t('customers.attachedPeriodicPays') }}
 
         periodic-services-list
-
 </template>
 
 <script lang="ts">
@@ -102,15 +134,17 @@ export default class extends Vue {
   }
 
   onStopService() {
-    this.$confirm('Завершить услугу абонента досрочно?', {
-      confirmButtonText: 'Да',
-      cancelButtonText: 'Нет, не надо',
+    this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule').toString(), {
+      confirmButtonText: this.$tc('yes').toString(),
+      cancelButtonText: this.$tc('no').toString(),
       type: 'info'
     }).then(async() => {
       await CustomerModule.StopService()
       await CustomerModule.UpdateCustomer()
       await this.loadCurrentService()
-      this.$message.success('Услуга остановлена досрочно')
+      this.$message.success(
+        this.$tc('customers.serviceStoppedAheadOfSheduleOk').toString()
+      )
     })
   }
 }

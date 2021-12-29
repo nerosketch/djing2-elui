@@ -1,28 +1,23 @@
 <template lang="pug">
   el-form(
-    ref='perfrm'
+    ref="perfrm"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-      prop='name'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')" prop="name")
       el-input(v-model="frmMod.name")
-    el-form-item(
-      label="Стоимость"
-      prop="amount"
-    )
+
+    el-form-item(:label="$t('value')" prop="amount")
       el-input(v-model="frmMod.amount")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -39,11 +34,11 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: 'Название надо указать', trigger: 'blur' }
+      { required: true, message: this.$tc('nameShouldBeIndicated'), trigger: 'blur' }
     ],
     amount: [
-      { required: true, message: 'Цену надо указать', trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: 'Цена должна быть положительной или 0' }
+      { required: true, message: this.$tc('thePriceShouldBeSpecified'), trigger: 'blur' },
+      { validator: positiveValidator, trigger: 'change', message: this.$tc('thePriceShallBePositiveOr0') }
     ]
   }
 
@@ -53,7 +48,7 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['perfrm'] as Form).validate(async valid => {
+    (this.$refs.perfrm as Form).validate(async valid => {
       if (valid) {
         try {
           this.isLoading = true
@@ -70,13 +65,13 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
 
   get isNew() {
-    return PeriodicPayModule.pk === 0
+    return PeriodicPayModule.id === 0
   }
 }
 </script>

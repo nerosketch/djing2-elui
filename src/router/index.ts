@@ -2,16 +2,18 @@ import Vue from 'vue'
 import Router, { RouteConfig } from 'vue-router'
 import Layout from '@/layout/regular.vue'
 
-import customerRoutes from './modules/customers'
+// import customerRoutes from './modules/customers'
+import customerContractRoutes from './modules/customers_contract'
 import deviceRoutes from './modules/devices'
 import taskRoutes from './modules/tasks'
 import profileRoutes from './modules/profiles'
 import finRoutes from './modules/fin'
 import messengerRoutes from './modules/messenger'
 import sitesRoutes from './modules/sites'
-import sormRoutes from './modules/sorm'
+import addrRoutes from './modules/addrs'
+import dfRoutes from './modules/dynamicfields'
 import mapsRoutes from './modules/maps'
-
+import customerLegalRoutes from './modules/customers_legal'
 
 Vue.use(Router)
 
@@ -45,7 +47,9 @@ export const constantRoutes: RouteConfig [] = [
     }
   },
   profileRoutes,
-  customerRoutes,
+  // customerRoutes,
+  customerContractRoutes,
+  customerLegalRoutes,
   taskRoutes,
   {
     path: '/groups',
@@ -55,7 +59,7 @@ export const constantRoutes: RouteConfig [] = [
         path: '',
         component: () => import(/* webpackChunkName: "groups" */ '@/views/groups/group-list.vue'),
         meta: {
-          title: 'Группы',
+          title: 'groups',
           icon: 'el-icon-s-management'
         }
       }
@@ -69,7 +73,7 @@ export const constantRoutes: RouteConfig [] = [
         path: '',
         component: () => import(/* webpackChunkName: "servicesindex" */ '@/views/services/index.vue'),
         meta: {
-          title: 'Тарифы',
+          title: 'services',
           icon: 'el-icon-s-order'
         }
       }
@@ -83,7 +87,7 @@ export const constantRoutes: RouteConfig [] = [
         path: '',
         component: () => import(/* webpackChunkName: "network" */ '@/views/networks/index.vue'),
         meta: {
-          title: 'Сеть',
+          title: 'network',
           icon: 'el-icon-upload'
         }
       }
@@ -98,7 +102,7 @@ export const constantRoutes: RouteConfig [] = [
         path: '',
         component: () => import(/* webpackChunkName: "gatewaysList" */ '@/views/gateways/gw-list.vue'),
         meta: {
-          title: 'Шлюзы',
+          title: 'gateways',
           icon: 'el-icon-receiving'
         }
       }
@@ -133,8 +137,21 @@ export const constantRoutes: RouteConfig [] = [
   finRoutes,
   messengerRoutes,
   sitesRoutes,
-  sormRoutes,
+  addrRoutes,
   mapsRoutes,
+  dfRoutes,
+  {
+    path: '/afk',
+    component: Layout,
+    meta: { hidden: true },
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "afklist" */ '@/views/customers/afk-list.vue'),
+        meta: { hidden: true }
+      }
+    ]
+  },
   {
     path: '*',
     redirect: '/404',

@@ -1,53 +1,44 @@
 import request from '@/utils/request'
 import { IDRFRequestListParameters } from '@/api/types'
 import {
-  IVlanIf, IVlanIfList, IVlanIfListAxiosResponsePromise,
-  IVlanIfAxoisResponsePromise,
+  IVlanIf,
   INetworkIpPool,
-  INetworkIpPoolList, INetworkIpPoolAxoisResponsePromise,
+  INetworkIpPoolList,
   INetworkIpPoolListAxiosResponsePromise,
   ICustomerIpLease, ICustomerIpLeaseList,
-  ICustomerIpLeaseAxoisResponsePromise,
   ICustomerIpLeaseListAxiosResponsePromise,
   ICustomerIpLeasePingAxoisResponsePromise,
   ICustomerIpLeasePlainListResponsePromise
 } from './types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  getObjectListDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
 
-const baseVlanUrl = '/networks/vlan/'
 
 // VlanIf
-export const getVlans = (params?: IDRFRequestListParameters): IVlanIfListAxiosResponsePromise =>
-  request.get<IVlanIfList>(baseVlanUrl, { params })
+const baseVlanUrl = '/networks/vlan/'
+export const getVlans = getObjectListDecorator<IVlanIf>(baseVlanUrl)
+export const getVlanIf = getObjectDecorator<IVlanIf>(baseVlanUrl)
+export const addVlanIf = addObjectDecorator<IVlanIf>(baseVlanUrl)
+export const changeVlanIf = patchObjectDecorator<IVlanIf>(baseVlanUrl)
+export const delVlanIf = delObjectDecorator<IVlanIf>(baseVlanUrl)
 
-export const getVlanIf = (vlanId: number): IVlanIfAxoisResponsePromise =>
-  request.get<IVlanIf>(`${baseVlanUrl}${vlanId}/`)
 
-export const addVlanIf = (newVlan: object): IVlanIfAxoisResponsePromise =>
-  request.post<IVlanIf>(baseVlanUrl, newVlan)
-
-export const changeVlanIf = (vlanId: number, newData: object): IVlanIfAxoisResponsePromise =>
-  request.patch<IVlanIf>(`${baseVlanUrl}${vlanId}/`, newData)
-
-export const delVlanIf = (vlanId: number) =>
-  request.delete(`${baseVlanUrl}${vlanId}/`)
-
+// NetworkIpPool
 const baseNetUrl = '/networks/pool/'
 
 // NetworkIpPool
 export const getNetworkIpPools = (params?: object): INetworkIpPoolListAxiosResponsePromise =>
   request.get<INetworkIpPoolList>(baseNetUrl, { params })
 
-export const getNetworkIpPool = (poolId: number): INetworkIpPoolAxoisResponsePromise =>
-  request.get<INetworkIpPool>(`${baseNetUrl}${poolId}/`)
-
-export const addNetworkIpPool = (newPool: object): INetworkIpPoolAxoisResponsePromise =>
-  request.post<INetworkIpPool>(baseNetUrl, newPool)
-
-export const changeNetworkIpPool = (poolId: number, newData: object): INetworkIpPoolAxoisResponsePromise =>
-  request.patch<INetworkIpPool>(`${baseNetUrl}${poolId}/`, newData)
-
-export const delNetworkIpPool = (poolId: number) =>
-  request.delete(`${baseNetUrl}${poolId}/`)
+export const getNetworkIpPool = getObjectDecorator<INetworkIpPool>(baseNetUrl)
+export const addNetworkIpPool = addObjectDecorator<INetworkIpPool>(baseNetUrl)
+export const changeNetworkIpPool = patchObjectDecorator<INetworkIpPool>(baseNetUrl)
+export const delNetworkIpPool = delObjectDecorator<INetworkIpPool>(baseNetUrl)
 
 export const groupAttach = (poolId: number, groups: number[]) =>
   request.post(`${baseNetUrl}${poolId}/group_attach/`, { gr: groups })
@@ -65,17 +56,10 @@ export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer
   return request.get<ICustomerIpLeaseList>(baseLeaseUrl, { params })
 }
 
-export const getCustomerIpLease = (leaseId: number): ICustomerIpLeaseAxoisResponsePromise =>
-  request.get<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`)
-
-export const addCustomerIpLease = (newLease: object): ICustomerIpLeaseAxoisResponsePromise =>
-  request.post<ICustomerIpLease>(baseLeaseUrl, newLease)
-
-export const changeCustomerIpLease = (leaseId: number, newData: object): ICustomerIpLeaseAxoisResponsePromise =>
-  request.patch<ICustomerIpLease>(`${baseLeaseUrl}${leaseId}/`, newData)
-
-export const delCustomerIpLease = (leaseId: number) =>
-  request.delete(`${baseLeaseUrl}${leaseId}/`)
+export const getCustomerIpLease = getObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
+export const addCustomerIpLease = addObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
+export const changeCustomerIpLease = patchObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
+export const delCustomerIpLease = delObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
 
 export const pingIcmpIpLease = (leaseId: number): ICustomerIpLeasePingAxoisResponsePromise =>
   request.get(`${baseLeaseUrl}${leaseId}/ping_ip/`)

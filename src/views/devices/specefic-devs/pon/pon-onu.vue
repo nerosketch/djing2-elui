@@ -1,82 +1,118 @@
 <template lang="pug">
-  el-row(:gutter='5')
-    el-col(:lg="12" :sm='24' v-if="device")
-      el-card(
-        shadow="never"
-        body-style="padding: 10px;"
-      )
-        template(v-slot:header) {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }} &nbsp;
-          small {{ `${device.ip_address || device.mac_addr}` }}
-          el-link(style="float: right" icon='el-icon-edit' @click="openDevForm")
-        .text.item.list-item IP адрес: {{ device.ip_address || '-' }}
-        .text.item.list-item
-          b Мак: 
-          | {{ device.mac_addr }}
-        .text.item.list-item
-          b Описание: 
-          | {{ device.comment }}
-        .text.item.list-item
-          b Родительское устройство: 
-          router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
-            el-link(type="primary") {{ device.parent_dev_name }}
-        .text.item.list-item(v-if="device.iface_name")
-          b Интерфейс: 
-          | {{ device.iface_name }}
-        .text.item.list-item
-          b Прикреплённые абоненты: 
-          router-link(v-for="(ab, i) in device.attached_users" :key="i" :to="{name: 'customerDetails', params:{ uid: ab.pk }}")
-            el-link(type="primary") {{ ab.full_name }}
-        el-button-group
-          delete-from-olt-btn(:devId="device.pk" v-on:done="getDetails")
-          el-button(
-            type="danger" icon="el-icon-delete"
-            @click="delDevice"
-            :disabled="!$perms.devices.delete_device"
-          ) Удалить
+  el-row(:gutter="5")
+    el-col(
+      :lg="12"
+      :sm="24"
+      v-if="device")
+      el-card(shadow="never", body-style="padding: 10px;")
+        template(v-slot:header)
+          | {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }}
 
-    el-col(:lg="12" :sm='24')
-      el-card(
-        shadow="never"
-        body-style="padding: 10px;"
-      )
-        template(v-slot:header) Состояние ONU
-          el-link(style="float: right" icon='el-icon-refresh' @click="refreshDev")
-        p(type='flex' v-if="macsNotEqual")
-          b Внимание!
-          span  Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить".
-            |  Если И она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
-            |  Так же можно проверить место на "глазе" olt, может он заполнен.
-        el-row(type='flex' v-else-if="$store.getters.isOnuRegistered")
-          el-col(style='width: 128px;')
+          small
+            | {{ `${device.ip_address || device.mac_addr}` }}
+
+          el-link(
+            style="float: right"
+            icon="el-icon-edit"
+            @click="openDevForm")
+
+        .text.item.list-item
+          | {{ $t('ipAddress', [device.ip_address || '-']) }}
+
+        .text.item.list-item
+          b
+            | {{ $t('mac') }}
+          | {{ device.mac_addr }}
+
+        .text.item.list-item
+          b
+            | {{ $t('description') }}
+          | {{ device.comment }}
+
+        .text.item.list-item
+          b
+            | {{ $t('parentDev') }}
+
+          router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+            | {{ device.parent_dev_name }}
+
+        .text.item.list-item(v-if="device.iface_name")
+          b
+            | {{ $t('interface') }}
+          | {{ device.iface_name }}
+
+        .text.item.list-item
+          b
+            | {{ $t('affixedSubscribers') }}
+
+          router-link.el-link.el-link--primary.is-underline(
+            v-for="(ab, i) in device.attached_users"
+            :key="i"
+            :to="{name: 'customerDetails', params:{ uid: ab.id }}")
+            | {{ ab.full_name }}
+
+        el-button-group
+          delete-from-olt-btn(:devId="device.id", v-on:done="getDetails")
+
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delDevice"
+            :disabled="!$perms.devices.delete_device")
+            | {{ $t('del') }}
+
+    el-col(:lg="12" :sm="24")
+      el-card(shadow="never", body-style="padding: 10px;")
+        template(v-slot:header)
+          | {{ $t('status') }}
+
+          el-link(
+            style="float: right"
+            icon="el-icon-refresh"
+            @click="refreshDev")
+
+        p(type="flex", v-if="$store.getters.isOnuRegistered && macsNotEqual")
+          b
+            | {{ $t('attention') }}!
+
+          span
+            | Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить". Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
+            |              Так же можно проверить место на "глазе" olt, может он заполнен.
+
+        el-row(type="flex", v-else-if="$store.getters.isOnuRegistered")
+          el-col(style="width: 128px;")
             i.icon-big(:class="iconStatusClass")
+
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
-              b Уровень сигнала: 
+              b
+                | {{ $t('signalLevel') }}
               | {{ onuDetails.signal }}
-            .text.item.list-item
-              b Мак адрес с OLT: 
-              | {{ macFromOlt }}
-            .text.item.list-item(v-for="(inf, i) in onuDetails.info" :key="i")
-              b {{ inf[0] }}: 
-              | {{ inf[1] }}
-        el-row(v-else)
-          el-col Нет информации об ONU. (Поле "Доп. инфо для snmp" в форме редактирования устройства). Возможно, onu не зарегистрирована.
-        fix-onu-btn(v-if="macsNotEqual")
 
-    el-col(:lg="12" :sm='24')
-      onu-vlan-form(
-        :disabled="macsNotEqual"
-        :style="{'margin-top': '5px'}"
-      )
+            .text.item.list-item
+              b
+                | {{ $t('macAddrFromOLT') }}
+              | {{ macFromOlt }}
+
+            template(v-for="(inf, i) in onuDetails.info" v-if="inf[1]")
+              .text.item.list-item(:key="i")
+                  b {{ inf[0] }}:&nbsp;
+                  | {{ inf[1] || '-' }}
+
+        el-row(v-else)
+          el-col
+            | Нет информации об ONU. (Поле "Доп. инфо для snmp" в форме редактирования устройства). Возможно, onu не зарегистрирована.
+
+        fix-onu-btn(v-if="$store.getters.isOnuRegistered && macsNotEqual")
+
+    el-col(:lg="12" :sm="24")
+      onu-vlan-form(:disabled="$store.getters.isOnuRegistered && macsNotEqual", :style="{'margin-top': '5px'}")
 
     el-dialog(
       :visible.sync="devFormDialog"
-      title="Изменить ONU"
-      :close-on-click-modal="false"
-    )
-      dev-form(
-        v-on:done="devFrmDone"
-      )
+      :title="$t('amendIt')"
+      :close-on-click-modal="false")
+      dev-form(v-on:done="devFrmDone")
 </template>
 
 <script lang="ts">
@@ -112,12 +148,15 @@ export default class extends Vue {
       'el-icon-question': this.isStatusUnknown
     }
   }
+
   get isStatusSuccess() {
     return this.onuDetails !== null && this.onuDetails.status === IOnuDetailsStatus.UP
   }
+
   get isStatusError() {
     return this.onuDetails !== null && this.onuDetails.status === IOnuDetailsStatus.DOWN
   }
+
   get isStatusUnknown() {
     return !this.onuDetails || this.onuDetails.status === IOnuDetailsStatus.UNKNOWN
   }
@@ -130,13 +169,13 @@ export default class extends Vue {
     if (!this.device) return
     this.$confirm(`Действительно удалить onu "${this.device.comment}"?`).then(async() => {
       if (!this.device) {
-        this.$message.error('Не удалили, похоже уже кто-то удалил')
+        this.$message.error(this.$tc('notRemoved'))
         return
       }
-      await DeviceModule.DelDevice(this.device.pk)
-      this.$message.success('Удалена')
+      await DeviceModule.DelDevice(this.device.id)
+      this.$message.success(this.$tc('deleted'))
       if (this.device.group) {
-        this.$router.push({ name: 'devicesList', params: { groupId: this.device.group.toString() } })
+        this.$router.push({ name: 'devicesList', params: { addrId: this.device.address.toString() } })
       } else {
         this.$router.push('/devices')
       }
@@ -145,7 +184,7 @@ export default class extends Vue {
 
   private async getDetails() {
     if (this.device !== null) {
-      const { data } = await scanPonDetails(this.device.pk)
+      const { data } = await scanPonDetails(this.device.id)
       this.onuDetails = data
     }
   }
@@ -156,7 +195,7 @@ export default class extends Vue {
 
   private devFrmDone() {
     this.devFormDialog = false
-    this.$message.success('Успешно сохранено')
+    this.$message.success(this.$tc('successfullyMaintained'))
     this.refreshDev()
     this.getDetails()
   }
@@ -169,7 +208,7 @@ export default class extends Vue {
     this.$emit('reqrefresh')
   }
 
-  get macsNotEqual(): boolean {
+  get macsNotEqual() {
     return this.device && this.onuDetails ? this.device.mac_addr !== this.macFromOlt : false
   }
 }

@@ -2,7 +2,6 @@ import request from '@/utils/request'
 import { IDRFRequestListParameters, IDRFAxiosResponsePromise } from '@/api/types'
 import {
   ITaskList, ITaskListAxiosResponsePromise, ITask,
-  ITaskAxoisResponsePromise,
   IExtraCommentAxoisResponsePromise,
   IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise,
   IExtraCommentCombinedWithTaskStateChangeLog,
@@ -16,24 +15,23 @@ import {
   TaskModeReport,
   TaskModeReportAxoisResponsePromise
 } from './types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
+
 
 // ITask
 const baseTaskUrl = '/tasks/'
-
 export const getTasks = (params?: IDRFRequestListParameters, url: string = ''): ITaskListAxiosResponsePromise =>
   request.get<ITaskList>(`${baseTaskUrl}${url ? (url + '/') : ''}`, { params })
 
-export const getTask = (id: number): ITaskAxoisResponsePromise =>
-  request.get<ITask>(`${baseTaskUrl}${id}/`)
-
-export const addTask = (data: object): ITaskAxoisResponsePromise =>
-  request.post<ITask>(baseTaskUrl, data)
-
-export const changeTask = (id: number, data: ITask): ITaskAxoisResponsePromise =>
-  request.patch<ITask>(`${baseTaskUrl}${id}/`, data)
-
-export const delTask = (id: number) =>
-  request.delete(`${baseTaskUrl}${id}/`)
+export const getTask = getObjectDecorator<ITask>(baseTaskUrl)
+export const addTask = addObjectDecorator<ITask>(baseTaskUrl)
+export const changeTask = patchObjectDecorator<ITask>(baseTaskUrl)
+export const delTask = delObjectDecorator<ITask>(baseTaskUrl)
 
 export const getActiveTaskCount = (): IDRFAxiosResponsePromise<number> =>
   request.get<number>(`${baseTaskUrl}active_task_count/`)
@@ -56,27 +54,22 @@ const baseCommentUrl = '/tasks/comments/'
 export const getCommentsWithLogs = (task: number): IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise =>
   request.get<IExtraCommentCombinedWithTaskStateChangeLog[]>(`${baseCommentUrl}combine_with_logs/`, { params: { task } })
 
-export const getComment = (id: number): IExtraCommentAxoisResponsePromise =>
-  request.get<IExtraComment>(`${baseCommentUrl}${id}/`)
+export const getComment = getObjectDecorator<IExtraComment>(baseCommentUrl)
 
 export const addComment = (text: string, taskId: number): IExtraCommentAxoisResponsePromise =>
   request.post<IExtraComment>(baseCommentUrl, {
     text, task: taskId
   })
 
-export const changeComment = (id: number, data: IExtraComment): IExtraCommentAxoisResponsePromise =>
-  request.patch<IExtraComment>(`${baseCommentUrl}${id}/`, data)
-
-export const delComment = (id: number) =>
-  request.delete(`${baseCommentUrl}${id}/`)
+export const changeComment = patchObjectDecorator<IExtraComment>(baseCommentUrl)
+export const delComment = delObjectDecorator<IExtraComment>(baseCommentUrl)
 
 // ITaskDocumentAttachment
 const TaskAttachmUrl = '/tasks/attachment/'
 export const getAttachments = (task: number): ITaskDocumentAttachmentList =>
   request.get<ITaskDocumentAttachment[]>(TaskAttachmUrl, { params: { task } })
 
-export const getAttachment = (id: number): ITaskDocumentAttachmentAxoisResponsePromise =>
-  request.get<ITaskDocumentAttachment>(`${TaskAttachmUrl}${id}/`)
+export const getAttachment = getObjectDecorator<ITaskDocumentAttachment>(TaskAttachmUrl)
 
 export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponsePromise => {
   const formData = new FormData()
@@ -86,8 +79,7 @@ export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponse
   return request.post<ITaskDocumentAttachment>(TaskAttachmUrl, formData)
 }
 
-export const delAttachment = (id: number) =>
-  request.delete(`${TaskAttachmUrl}${id}/`)
+export const delAttachment = delObjectDecorator<ITaskDocumentAttachment>(TaskAttachmUrl)
 
 export const taskStatePercentReport = (stateNum: number): TaskStatePercentReportAxoisResponsePromise =>
   request.get<TaskStatePercentReport>(`/tasks/state_percent_report/${stateNum}/`)

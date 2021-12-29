@@ -26,11 +26,6 @@ export class CurrentPermissions extends VuexModule {
     delete_customer: false,
     view_customer: false,
 
-    add_customerstreet: false,
-    change_customerstreet: false,
-    delete_customerstreet: false,
-    view_customerstreet: false,
-
     can_buy_service: false,
     can_add_balance: false,
     can_ping: false,
@@ -67,6 +62,13 @@ export class CurrentPermissions extends VuexModule {
     view_periodicpayforid: false,
     change_periodicpayforid: false,
     delete_periodicpayforid: false
+  }
+
+  public customers_legal = {
+    add_customerlegalmodel: false,
+    view_customerlegalmodel: false,
+    change_customerlegalmodel: false,
+    delete_customerlegalmodel: false
   }
 
   public networks = {
@@ -172,6 +174,13 @@ export class CurrentPermissions extends VuexModule {
     delete_periodicpay: false
   }
 
+  public addresses = {
+    add_addressmodel: false,
+    view_addressmodel: false,
+    change_addressmodel: false,
+    delete_addressmodel: false
+  }
+
   @Mutation
   public SET_IS_SUPERUSER(isu: boolean) {
     this.is_superuser = isu
@@ -180,13 +189,13 @@ export class CurrentPermissions extends VuexModule {
   @Mutation
   public SET_CURRENT_PERM(perms: string[]) {
     if (!this.__ob__) return
-    for (let s of perms) {
-      let chunks = s.split('.')
+    for (const s of perms) {
+      const chunks = s.split('.')
       if (chunks.length === 2) {
-        let k = chunks[0]
-        let sect = this.__ob__.value[k]
+        const k = chunks[0]
+        const sect = this.__ob__.value[k]
         if (sect) {
-          let v = chunks[1] as string | undefined
+          const v = chunks[1] as string | undefined
           if (v) {
             sect[v] = true
           }

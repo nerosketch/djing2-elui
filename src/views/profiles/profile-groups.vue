@@ -5,20 +5,21 @@
         v-for="grp in groups"
         :key="grp.id"
         :label="grp.name"
-        v-model="grp.checked"
-      )
+        v-model="grp.checked")
 
     span(v-else)
-      i.el-icon-loading 
-      | Загрузка...
+      i.el-icon-loading
+      | {{ $t('loading') }}
+
     el-divider
+
     el-button(
-      icon='el-icon-upload'
-      type='primary'
+      icon="el-icon-upload"
+      type="primary"
       @click="saveGroups"
       :loading="loading"
-      :disabled="!$perms.is_superuser"
-    ) Сохранить
+      :disabled="!$perms.is_superuser")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -39,7 +40,7 @@ export default class extends Vue {
   private loading = false
 
   private async loadGroups() {
-    let p = {
+    const p = {
       page: 1,
       page_size: 0,
       fields: 'id,name'
@@ -60,8 +61,8 @@ export default class extends Vue {
   }
 
   private async saveGroups() {
-    let grps = this.groups.filter(g => g.checked)
-    let grpids = grps.map(g => g.id)
+    const grps = this.groups.filter(g => g.checked)
+    const grpids = grps.map(g => g.id)
     this.loading = true
     try {
       const r = await UserProfileModule.PatchProfile({

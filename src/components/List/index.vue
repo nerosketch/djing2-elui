@@ -1,22 +1,22 @@
 <template lang="pug">
   el-card(
-    v-loading='loading'
+    v-loading="loading"
     shadow="never"
-    body-style="padding: 10px;"
-  )
+    body-style="padding: 10px;")
     template(v-slot:header)
       slot(name="header")
-        .clearfix(
-          v-if='title'
-        ) {{ title }}
+        .clearfix(v-if="title")
+          | {{ title }}
+
     slot(name="items")
       .text.item.list-item(
         v-for="(it, i) in items"
         :key="i"
         :class="{'active': clickStates[i]}"
-        v-on:click="itemClick(it, i)"
-      )
-        slot(name="item" v-bind:obj="it") {{ it[itemText] }}
+        v-on:click="itemClick(it, i)")
+        slot(name="item", v-bind:obj="it")
+          | {{ it[itemText] }}
+
     slot(name="footer")
 </template>
 

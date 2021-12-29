@@ -6,9 +6,7 @@
     placeholder="Начни вводить имя абонента"
     trigger-on-focus
     @select="handleSelect"
-    value-key="full_name"
-  )
-
+    value-key="full_name")
 </template>
 
 <script lang="ts">
@@ -36,7 +34,7 @@ export default class extends Vue {
   }
 
   private handleSelect(c: ICustomer) {
-    this.$emit('input', c.pk)
+    this.$emit('input', c.id)
   }
 
   created() {

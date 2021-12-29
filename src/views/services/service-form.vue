@@ -1,66 +1,48 @@
 <template lang="pug">
   el-form(
-    ref='srvfrm'
+    ref="srvfrm"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-      prop='title'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
-    el-form-item(
-      label="Описание"
-      prop='descr'
-    )
+
+    el-form-item(:label="$t('description')" prop="descr")
       el-input(v-model="frmMod.descr")
-    el-form-item(
-      label="Вход. скорость"
-      prop='speed_in'
-    )
+
+    el-form-item(:label="$t('comeIn')" prop="speed_in")
       el-input(v-model="frmMod.speed_in" type="number")
-    el-form-item(
-      label="Исход. скорость"
-      prop='speed_out'
-    )
+
+    el-form-item(:label="$t('speed.')" prop="speed_out")
       el-input(v-model="frmMod.speed_out" type="number")
-    el-form-item(
-      label="Ускорение"
-      prop='speed_burst'
-    )
+
+    el-form-item(:label="$t('acceleration')" prop="speed_burst")
       el-input(v-model="frmMod.speed_burst" type="number")
-    el-form-item(
-      label="Стоимость"
-      prop='cost'
-    )
+
+    el-form-item(:label="$t('value')" prop="cost")
       el-input(v-model="frmMod.cost" type="number")
-    el-form-item(
-      label="Административная"
-      prop='is_admin'
-    )
-      el-checkbox(v-model="frmMod.is_admin") Является-ли административной услугой.
+
+    el-form-item(:label="$t('administrative')" prop="is_admin")
+      el-checkbox(v-model="frmMod.is_admin")
+        | {{ $t('administrativeServices') }}
         b {{ frmMod.is_admin ? 'Да' : 'Нет' }}
-    el-form-item(
-      label="Скрипт"
-      prop='calc_type'
-    )
+
+    el-form-item(:label="$t('scream')" prop="calc_type")
       el-select(v-model="frmMod.calc_type")
         el-option(
           v-for="dt in serviceTypeNames"
           :key="dt.v"
           :label="dt.nm"
-          :value="dt.v"
-        )
+          :value="dt.v")
 
     el-form-item
       el-button(
         type="primary"
         @click="onSubmit"
         :loading="isLoading"
-        :disabled="isFormUntouched"
-      ) Сохранить
+        :disabled="isFormUntouched")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -71,10 +53,11 @@ import { positiveValidator, positiveNumberValueAvailable } from '@/utils/validat
 import { IServiceTypeEnum } from '@/api/services/types'
 import { ServiceModule } from '@/store/modules/services/service'
 import FormMixin from '@/utils/forms'
+import i18n from '@/lang'
 
 const speedRule = {
   validator: positiveNumberValueAvailable,
-  message: 'Скорость должна быть положительной',
+  message: i18n.t('speedShallBePositive'),
   trigger: 'change'
 }
 
@@ -86,30 +69,30 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название надо указать', trigger: 'blur' }
+      { required: true, message: this.$tc('nameShouldBeIndicated'), trigger: 'blur' }
     ],
     descr: [
-      { required: true, message: 'Описание обязательно', trigger: 'blur' }
+      { required: true, message: this.$tc('descriptionMandatory'), trigger: 'blur' }
     ],
     speed_in: [
       speedRule,
-      { required: true, message: 'Укажи исходящую скорость', trigger: 'blur' }
+      { required: true, message: this.$tc('speedOut'), trigger: 'blur' }
     ],
     speed_out: [
       speedRule,
-      { required: true, message: 'Укажи входящую скорость', trigger: 'blur' }
+      { required: true, message: this.$tc('speedIn'), trigger: 'blur' }
     ],
     cost: [
-      { required: true, message: 'Цена должна быть указана', trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: 'Цена должна быть положительной или 0' }
+      { required: true, message: this.$tc('thePriceShallBeSpecified'), trigger: 'blur' },
+      { validator: positiveValidator, trigger: 'change', message: this.$tc('cena-dolzhna-byt-polozhitelnoi-ili-0') }
     ]
   }
 
   private serviceTypeNames = [
-    { nm: 'Базовый расчётный функционал', v: IServiceTypeEnum.BASE },
+    { nm: this.$tc('baseCalcFunction'), v: IServiceTypeEnum.BASE },
     { nm: 'IS', v: IServiceTypeEnum.IS },
-    { nm: '"Вечная" услуга (10 лет)', v: IServiceTypeEnum.LONG },
-    { nm: 'Суточная', v: IServiceTypeEnum.DAILY }
+    { nm: this.$tc('eternalService10Years'), v: IServiceTypeEnum.LONG },
+    { nm: this.$tc('daily'), v: IServiceTypeEnum.DAILY }
   ]
 
   private frmMod = {
@@ -123,7 +106,7 @@ export default class extends mixins(FormMixin) {
     calc_type: ServiceModule.calc_type
   }
 
-  @Watch('$store.state.service.pk')
+  @Watch('$store.state.service.id')
   private async onSrvCh() {
     this.frmMod = {
       title: ServiceModule.title,
@@ -139,26 +122,24 @@ export default class extends mixins(FormMixin) {
   }
 
   private onSubmit() {
-    (this.$refs['srvfrm'] as Form).validate(async valid => {
+    (this.$refs.srvfrm as Form).validate(async valid => {
       if (valid) {
         try {
           this.isLoading = true
           let newDat
-          if (ServiceModule.pk === 0) {
+          if (ServiceModule.id === 0) {
             newDat = await ServiceModule.AddService(this.frmMod)
-            this.$message.success('Услуга создана')
+            this.$message.success(this.$tc('serviceEstablished'))
           } else {
             newDat = await ServiceModule.PatchService(this.frmMod)
-            this.$message.success('Услуга изменена')
+            this.$message.success(this.$tc('serviceChanged'))
           }
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

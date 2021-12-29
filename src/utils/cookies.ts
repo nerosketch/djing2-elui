@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie'
 
 function getNight() {
-  let now = new Date()
-  now.setDate(now.getDate() + 1)
+  const now = new Date()
+  now.setDate(now.getDate() + 7)
   now.setHours(3, 0, 0, 0)
   return now
 }
@@ -11,6 +11,10 @@ function getNight() {
 const sidebarStatusKey = 'sidebar_status'
 export const getSidebarStatus = () => Cookies.get(sidebarStatusKey)
 export const setSidebarStatus = (sidebarStatus: string) => Cookies.set(sidebarStatusKey, sidebarStatus)
+
+const languageKey = 'language'
+export const getLanguage = () => Cookies.get(languageKey)
+export const setLanguage = (language: string) => Cookies.set(languageKey, language)
 
 // User
 const tokenKey = 'djing2_admin_access_token'

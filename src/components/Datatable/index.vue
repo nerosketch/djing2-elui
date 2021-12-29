@@ -9,42 +9,38 @@
       :default-sort="defaultSorting"
       v-bind="$attrs"
       border
-      v-on="listeners"
-    )
+      v-on="listeners")
       slot(name="columns")
         el-table-column(
           v-if="selectable"
           type="selection"
           width="40"
-          align="center"
-        )
+          align="center")
+
         template(v-for="col in localCols")
           el-table-column(
             v-if="col.visible"
             :key="col.prop"
             :sortable="col.sortable ? 'custom' : false"
             :align="col.align"
-            :width="getColumnWidth(col)"
-            v-bind="col"
-          )
+            :width="col.colWidth"
+            :class-name="col.cutLeft ? 'col-cut-left' : undefined"
+            v-bind="col")
             template(v-slot:default="{row}")
-              slot(
-                :name="col.prop"
-                :row="row"
-              ) {{ row[col.prop] }}
+              slot(:name="col.prop" :row="row")
+                | {{ row[col.prop] }}
+
     slot(name="default")
 
     el-dialog(
       title="Отображаемые поля таблицы"
       :visible.sync="editFieldsVisibleloc"
-      :close-on-click-modal="false"
-    )
+      :close-on-click-modal="false")
       template(v-if="editFieldsVisibleloc")
         datatable-edit-fields(
           :columns.sync="localCols"
           :storePrefix="widthStorageNamePrefix"
-          v-on:done="editFieldsVisibleloc=false"
-        )
+          v-on:done="editFieldsVisibleloc=false")
 </template>
 
 <script lang="ts">
@@ -64,11 +60,14 @@ export interface IDataTableColumn {
   prop: string
   label: string
   align?: DataTableColumnAlign
+  width?: number
   'min-width'?: number
+  cutLeft?: boolean
 }
 
 export interface ILocalDataTableColumn extends IDataTableColumn {
   visible: boolean
+  colWidth: number
 }
 
 export class DataTableColumn implements IDataTableColumn {
@@ -85,10 +84,7 @@ interface getTableDataParam {
 
 function loadFieldVisibility(pref: string, col: IDataTableColumn): boolean {
   const store = localStorage.getItem(`${pref}_visible_${col.prop}`)
-  if (store === null || store === '1') {
-    return true
-  }
-  return false
+  return store === null || store === '1'
 }
 
 @Component({
@@ -120,6 +116,7 @@ export default class <T> extends Vue {
     previous: null,
     results: []
   }
+
   private tableData: T[] = []
   private page = 1
   private intLoading = false
@@ -156,7 +153,7 @@ export default class <T> extends Vue {
     return this.responseData.next === null
   }
 
-  public async GetTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
+  public async LoadTableData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     this.page = 1
     this.endPage = false
     if (this.intLoading) return
@@ -170,6 +167,10 @@ export default class <T> extends Vue {
     }
   }
 
+  public get TableDataGetter() {
+    return this.tableData
+  }
+
   private async loadRemoteData(params: getTableDataParam = { page: 0, limit: 0 }, otherParams: object = {}) {
     const { page } = params
     const allParams = Object.assign(otherParams, {
@@ -177,7 +178,7 @@ export default class <T> extends Vue {
       page_size: 60,
       ordering: this.$route.query.ordering as string | undefined
     })
-    let response = await this.getData(allParams)
+    const response = await this.getData(allParams)
     this.responseData = response.data
     if (response.data.next === null) {
       this.endPage = true
@@ -198,12 +199,12 @@ export default class <T> extends Vue {
     } else {
       this.onChangeOrderingField(undefined)
     }
-    this.GetTableData()
+    this.LoadTableData()
   }
 
   private onChangeOrderingField(orderField?: string) {
-    let qr = this.$route.query as Record<string, any>
-    let newQuery = Object.assign({}, qr)
+    const qr = this.$route.query as Record<string, any>
+    const newQuery = Object.assign({}, qr)
     if (orderField == qr.ordering) {
       delete newQuery.ordering
     } else {
@@ -230,13 +231,15 @@ export default class <T> extends Vue {
 
   created() {
     this.localCols = this.columns.map(col => Object.assign(col, {
-      visible: loadFieldVisibility(this.widthStorageNamePrefix, col)
+      visible: loadFieldVisibility(this.widthStorageNamePrefix, col),
+      colWidth: Number(localStorage.getItem(`${this.widthStorageNamePrefix}_${col.prop}`) || col.width)
     }))
 
-    this.GetTableData()
+    this.LoadTableData()
     window.addEventListener('resize', this.onWinResize)
     this.onWinResize()
   }
+
   beforeDestroy() {
     window.removeEventListener('resize', this.onWinResize)
   }
@@ -261,9 +264,11 @@ export default class <T> extends Vue {
   private onFieldWidthChange(newWidth: number, oldWidth: number, column: any) {
     localStorage.setItem(`${this.widthStorageNamePrefix}_${column.property}`, String(newWidth))
   }
-
-  private getColumnWidth(column: IDataTableColumn): string | null {
-    return localStorage.getItem(`${this.widthStorageNamePrefix}_${column.prop}`)
-  }
 }
 </script>
+
+<style>
+.col-cut-left {
+  direction: rtl;
+}
+</style>

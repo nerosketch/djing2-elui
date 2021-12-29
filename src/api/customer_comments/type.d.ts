@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {
-  IDRFAxiosResponsePromise,
+  IDRFAxiosResponsePromise
 } from '@/api/types'
 
 export interface ICustomerComment {
@@ -15,5 +15,4 @@ export interface ICustomerComment {
   can_remove: boolean
 }
 export type ICustomerCommentList = ICustomerComment[]
-export type ICustomerCommentAxiosResponse = IDRFAxiosResponsePromise<ICustomerComment>
 export type ICustomerCommentListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerCommentList>

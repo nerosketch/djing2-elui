@@ -10,7 +10,7 @@ export default class extends Vue {
     if (!this.frmInitial) return false
     if (this.$data.hasOwnProperty('frmMod')) {
       for (const [k, v] of Object.entries(this.frmInitial as Object)) {
-        const lv = this.$data['frmMod'][k] || null
+        const lv = this.$data.frmMod[k] || null
         const rv = v || null
         if (Array.isArray(lv) && Array.isArray(rv)) {
           if (lv.filter(i => rv.indexOf(i) < 0).length === 0) continue

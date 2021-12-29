@@ -1,24 +1,19 @@
 <template lang="pug">
-  el-form(
-    :model="frmMod"
-    v-loading="loading"
-  )
-    el-form-item(
-      label="Название"
-      prop='name'
-    )
-      el-input(v-model="frmMod.name" maxlength="150")
+  el-form(:model="frmMod", v-loading="loading")
+    el-form-item(:label="$t('title')" prop="name")
+      el-input(v-model="frmMod.name", maxlength="150")
+
     el-form-item
       el-button-group
         el-button(
-          type="primary" @click="onSubmit"
-          icon='el-icon-upload'
-          :disabled="isEmpty || !$perms.is_superuser"
-        ) Сохранить
-        el-button(
-          @click="$emit('cancel')"
-          icon="el-icon-close"
-        ) Отмена
+          type="primary"
+          @click="onSubmit"
+          icon="el-icon-upload"
+          :disabled="isEmpty || !$perms.is_superuser")
+          | {{ $t('save') }}
+
+        el-button(@click="$emit('cancel')", icon="el-icon-close")
+          | {{ $t('cancellation') }}
 </template>
 
 <script lang="ts">
@@ -54,14 +49,12 @@ export default class extends Vue {
       let changedUGroup
       if (this.isNew) {
         changedUGroup = await UserGroupModule.AddUserGroup(this.frmMod)
-        this.$message.success('Новая группа добавлена')
+        this.$message.success(this.$tc('newGroupAdded'))
       } else {
         changedUGroup = await UserGroupModule.PatchUserGroup(this.frmMod)
-        this.$message.success('Группа изменена')
+        this.$message.success(this.$tc('groupAmended'))
       }
       this.$emit('done', changedUGroup)
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

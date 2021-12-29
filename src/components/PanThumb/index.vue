@@ -5,6 +5,7 @@
   )
     img.pan-thumb(
       :src="image"
+      :height="height"
       ref="avaimg"
     )
     input(type='file' ref='avainput' hidden accept="image/png, image/jpeg, image/gif")
@@ -47,7 +48,7 @@ export default class extends Vue {
   }
 
   private isIam() {
-    return this.$store.state.userprofile.pk === CurrentUserProfileModule.pk
+    return this.$store.state.userprofile.id === CurrentUserProfileModule.id
   }
 }
 </script>
