@@ -10,10 +10,10 @@
         v-model="frmMod.cost"
         type="number"
         max="15000")
-  
+
     el-form-item(:label="$t('comment')" prop="comment")
       el-input(v-model="frmMod.comment", :maxlength="128")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -41,7 +41,7 @@ export default class extends Vue {
 
   private frmRules = {
     cost: [
-      { required: true, message: this.$t('customers.howMuchAddition').toString(), trigger: 'blur' },
+      { required: true, message: this.$tc('customers.howMuchAddition').toString(), trigger: 'blur' },
       {
         validator: (rule: any, value: number, callback: Function) => {
           if (value >= 15000) {
@@ -51,7 +51,7 @@ export default class extends Vue {
           }
         },
         trigger: 'change',
-        message: this.$t('customers.additionMoreThanForbidden').toString() + ' 15000'
+        message: this.$tc('customers.additionMoreThanForbidden').toString() + ' 15000'
       },
       {
         validator: (rule: any, value: number, callback: Function) => {
@@ -62,7 +62,7 @@ export default class extends Vue {
           }
         },
         trigger: 'change',
-        message: this.$t('customers.withdrawalMoreThanForbidden').toString() + ' 15000'
+        message: this.$tc('customers.withdrawalMoreThanForbidden').toString() + ' 15000'
       }
     ]
   }
@@ -80,7 +80,7 @@ export default class extends Vue {
         }
       } else {
         this.$message.error(
-          this.$t('fixFormErrs').toString()
+          this.$tc('fixFormErrs').toString()
         )
       }
     })

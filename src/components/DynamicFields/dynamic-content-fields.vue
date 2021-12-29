@@ -3,7 +3,7 @@
     template(v-slot:header)
       .clearfix
         | Дополнительные данные
-  
+
     el-form
       template(v-if="localContents.length > 0")
         el-form-item(
@@ -15,27 +15,27 @@
             v-if="f.field_type == 1"
             v-model="f.content"
             type="number")
-        
+
           el-input(
             v-else-if="f.field_type == 2"
             v-model="f.content"
             placeholder="example@mail.com"
             type="email")
-        
+
           el-date-picker(
             v-else-if="f.field_type == 6"
             v-model="f.content"
             type="datetime"
             value-format="yyyy-MM-dd HH:mm"
             format="d.MM.yyyy HH:mm")
-        
+
           el-switch(v-else-if="f.field_type == 7", v-model="f.content")
-        
+
           el-input(v-else, v-model="f.content")
-    
+
       h3(v-else)
         | Нет полей
-    
+
       el-form-item
         el-button(
           icon="el-icon-upload"

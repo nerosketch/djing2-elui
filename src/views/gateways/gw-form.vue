@@ -73,15 +73,15 @@ export default class extends mixins(FormMixin) {
     title: [
       {
         required: true,
-        message: this.$t('groups.group_required'),
+        message: this.$tc('groups.group_required'),
         trigger: 'blur'
       }
     ],
     ip_address: [
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('gateways.wrong_format_ipv4') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('gateways.wrong_format_ipv4') }
     ],
     auth_login: [
-      { validator: latinValidator, trigger: 'change', message: this.$t('justLatin') }
+      { validator: latinValidator, trigger: 'change', message: this.$tc('justLatin') }
     ]
   }
 
@@ -142,7 +142,7 @@ export default class extends mixins(FormMixin) {
           this.$emit('err', err)
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

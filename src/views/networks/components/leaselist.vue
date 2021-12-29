@@ -9,17 +9,17 @@
       template(v-slot:is_dynamic="{row}")
         el-checkbox(v-model="row.is_dynamic", disabled)
           | {{ row.is_dynamic ? 'Да' : 'Нет' }}
-    
+
       template(v-slot:oper="{row}")
         el-button-group
           el-button(icon="el-icon-edit" @click="openEdit(row)")
-        
+
           el-button(
             type="danger"
             icon="el-icon-delete"
             @click="delLease(row)"
             :disabled="!$perms.networks.delete_customeripleasemodel")
-  
+
     el-dialog(
       :title="$t('modificationOfSessions')"
       :visible.sync="dialogVisible"
@@ -50,30 +50,30 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'ip_address',
-      label: this.$t('ipAddress'),
+      label: this.$tc('ipAddress'),
       sortable: true,
       'min-width': 130
     },
     {
       prop: 'lease_time',
-      label: this.$t('leasingTime'),
+      label: this.$tc('leasingTime'),
       sortable: true,
       'min-width': 200
     },
     {
       prop: 'last_update',
-      label: this.$t('lastUpdate'),
+      label: this.$tc('lastUpdate'),
       'min-width': 200
     },
     {
       prop: 'mac_address',
-      label: this.$t('macAddress'),
+      label: this.$tc('macAddress'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'is_dynamic',
-      label: this.$t('dynamic')
+      label: this.$tc('dynamic')
     },
     {
       prop: 'oper',
@@ -91,9 +91,9 @@ export default class extends Vue {
   }
 
   private async delLease(lease: ICustomerIpLease) {
-    this.$confirm(this.$t('deistvitelno-udalit-sessiyu-lease-ip_address', [lease.ip_address])).then(async() => {
+    this.$confirm(this.$t('networks.austRemoveLease', [lease.ip_address]) as string).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
-      this.$message.success(this.$t('sessionRemoved'))
+      this.$message.success(this.$tc('sessionRemoved'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -107,7 +107,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success(this.$t('sessionChanged'))
+    this.$message.success(this.$tc('sessionChanged'))
     this.$refs.table.LoadTableData()
     // this.loadLeases()
   }

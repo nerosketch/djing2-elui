@@ -160,7 +160,7 @@ export default class extends mixins(GwsMethods) {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('locks')
+          title: this.$tc('locks')
         }
       }
     ] as any)
@@ -174,15 +174,15 @@ export default class extends mixins(GwsMethods) {
 
   private gwFrmDone() {
     this.gwFormDialog = false
-    this.$message.success(this.$t('accessLockSecure'))
+    this.$message.success(this.$tc('accessLockSecure'))
     this.loadGateways()
   }
 
   private onDel(gw: IGateway) {
-    this.$confirm(this.$t('removeGatewayQuestion')).then(async() => {
+    this.$confirm(this.$tc('removeGatewayQuestion')).then(async() => {
       this.loadingGws = true
       await GatewayModule.DelGateway(gw.id)
-      this.$message.success(this.$t('accessLockSuccessfullyRemoved'))
+      this.$message.success(this.$tc('accessLockSuccessfullyRemoved'))
       this.loadGateways()
     }).catch(() => {
       this.loadingGws = false

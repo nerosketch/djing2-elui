@@ -103,31 +103,31 @@ export default class extends mixins(FormMixin, TaskMixin) {
   private loading = false
 
   private taskTypes = [
-    { nm: this.$t('notSelected'), v: ITaskType.NOT_CHOSEN },
-    { nm: this.$t('conflict'), v: ITaskType.IP_CONFLICT },
-    { nm: this.$t('yellowTriangle'), v: ITaskType.YELLOW_TRIANGLE },
-    { nm: this.$t('redCross'), v: ITaskType.RED_CROSS },
-    { nm: this.$t('weakSpeed'), v: ITaskType.WEAK_SPEED },
-    { nm: this.$t('cableBreaking'), v: ITaskType.CABLE_BREAK },
-    { nm: this.$t('connection'), v: ITaskType.CONNECTION },
-    { nm: this.$t('periodicMissing'), v: ITaskType.PERIODIC_DISAPPEARANCE },
-    { nm: this.$t('routeConstruction'), v: ITaskType.ROUTER_SETUP },
-    { nm: this.$t('onuConfig'), v: ITaskType.CONFIGURE_ONU },
-    { nm: this.$t('cable'), v: ITaskType.CRIMP_CABLE },
+    { nm: this.$tc('notSelected'), v: ITaskType.NOT_CHOSEN },
+    { nm: this.$tc('conflict'), v: ITaskType.IP_CONFLICT },
+    { nm: this.$tc('yellowTriangle'), v: ITaskType.YELLOW_TRIANGLE },
+    { nm: this.$tc('redCross'), v: ITaskType.RED_CROSS },
+    { nm: this.$tc('weakSpeed'), v: ITaskType.WEAK_SPEED },
+    { nm: this.$tc('cableBreaking'), v: ITaskType.CABLE_BREAK },
+    { nm: this.$tc('connection'), v: ITaskType.CONNECTION },
+    { nm: this.$tc('periodicMissing'), v: ITaskType.PERIODIC_DISAPPEARANCE },
+    { nm: this.$tc('routeConstruction'), v: ITaskType.ROUTER_SETUP },
+    { nm: this.$tc('onuConfig'), v: ITaskType.CONFIGURE_ONU },
+    { nm: this.$tc('cable'), v: ITaskType.CRIMP_CABLE },
     // { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
-    { nm: this.$t('other'), v: ITaskType.OTHER }
+    { nm: this.$tc('other'), v: ITaskType.OTHER }
   ]
 
   private taskPriorities = [
-    { nm: this.$t('low'), v: ITaskPriority.LOW },
-    { nm: this.$t('average'), v: ITaskPriority.AWARAGE },
-    { nm: this.$t('higher'), v: ITaskPriority.HIGHER }
+    { nm: this.$tc('low'), v: ITaskPriority.LOW },
+    { nm: this.$tc('average'), v: ITaskPriority.AWARAGE },
+    { nm: this.$tc('higher'), v: ITaskPriority.HIGHER }
   ]
 
   private taskStates = [
-    { nm: this.$t('new'), v: ITaskState.NEW },
-    { nm: this.$t('loss'), v: ITaskState.CONFUSED },
-    { nm: this.$t('implemented'), v: ITaskState.COMPLETED }
+    { nm: this.$tc('new'), v: ITaskState.NEW },
+    { nm: this.$tc('loss'), v: ITaskState.CONFUSED },
+    { nm: this.$tc('implemented'), v: ITaskState.COMPLETED }
   ]
 
   private frmMod = this.fromTaskModule
@@ -152,10 +152,10 @@ export default class extends mixins(FormMixin, TaskMixin) {
 
   private frmRules = {
     recipients: [
-      { required: true, message: this.$t('weHaveToChooseOnePerpetrator'), trigger: 'blur' }
+      { required: true, message: this.$tc('weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
     customer: [
-      { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$t('weNeedToPickASubscription') }
+      { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }
     ]
   }
 
@@ -179,14 +179,14 @@ export default class extends mixins(FormMixin, TaskMixin) {
         path: '/tasks',
         meta: {
           hidden: true,
-          title: this.$t('route.tasks')
+          title: this.$tc('route.tasks')
         }
       },
       {
         path: '',
         meta: {
           hidden: true,
-          title: this.$t('editorial')
+          title: this.$tc('editorial')
         }
       }
     ] as any)
@@ -203,7 +203,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         this.loading = true
         if (this.isNewTask) {
           const newTask = await TaskModule.AddTask(this.frmMod)
-          this.$message.success(this.$t('targetAdded'))
+          this.$message.success(this.$tc('targetAdded'))
           this.$router.push({
             name: 'taskDetails',
             params: { taskId: newTask.id.toString() }
@@ -211,20 +211,20 @@ export default class extends mixins(FormMixin, TaskMixin) {
         } else {
           await TaskModule.PatchTask(this.frmMod)
           this.frmInitial = this.fromTaskModule
-          this.$message.success(this.$t('targetRetained'))
+          this.$message.success(this.$tc('targetRetained'))
         }
         this.loading = false
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
 
   private onDel() {
     if (this.isNewTask) return
-    this.$confirm(this.$t('theTaskWillBeRemovedNowCarefully')).then(async() => {
+    this.$confirm(this.$tc('theTaskWillBeRemovedNowCarefully')).then(async() => {
       await TaskModule.DelTask()
-      this.$message.success(this.$t('targetRemoved'))
+      this.$message.success(this.$tc('targetRemoved'))
       this.$router.push({
         name: 'taskList'
       })
@@ -234,7 +234,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
   private async onFinish() {
     if (this.isNewTask) return
     await TaskModule.FinishTask()
-    this.$message.success(this.$t('targetCompleted'))
+    this.$message.success(this.$tc('targetCompleted'))
     this.$router.push({
       name: 'taskList'
     })

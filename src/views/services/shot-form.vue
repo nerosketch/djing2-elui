@@ -7,10 +7,10 @@
     v-loading="isLoading")
     el-form-item(:label="$t('title')" prop="name")
       el-input(v-model="frmMod.name")
-  
+
     el-form-item(:label="$t('value')" prop="cost")
       el-input(v-model="frmMod.cost")
-  
+
     el-form-item
       el-button(
         type="primary"
@@ -33,11 +33,11 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: this.$t('nameShouldBeIndicated'), trigger: 'blur' }
+      { required: true, message: this.$tc('nameShouldBeIndicated'), trigger: 'blur' }
     ],
     cost: [
-      { required: true, message: this.$t('thePriceShouldBeSpecified'), trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili-0') }
+      { required: true, message: this.$tc('thePriceShouldBeSpecified'), trigger: 'blur' },
+      { validator: positiveValidator, trigger: 'change', message: this.$tc('cena-dolzhna-byt-polozhitelnoi-ili-0') }
     ]
   }
 
@@ -64,7 +64,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

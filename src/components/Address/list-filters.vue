@@ -2,7 +2,7 @@
   el-form(inline)
     el-form-item(:label="$t('customers.streets')")
       address-street-choice(:addrId="addrId", v-model="streetVal")
-  
+
     el-form-item(:label="$t('route.groups')")
       groups-choice(v-model="groupVal", :fetchFunction="fetchGroups")
 </template>

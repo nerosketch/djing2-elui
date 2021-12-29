@@ -3,7 +3,7 @@
     template(v-slot:header)
       .clearfix
         | {{ defaultCardTitle }}
-  
+
     div
       template(v-for="c in comments")
         slot(name="comment_item", v-bind:comment="c")
@@ -11,7 +11,7 @@
             :key="c.id"
             :comment="c"
             @delete="onCommentDelete")
-  
+
     el-form
       el-form-item(label="Текст комментария" prop="currentComment")
         el-input(
@@ -20,7 +20,7 @@
           cols="40"
           rows="4"
           autosize)
-    
+
       el-form-item
         el-button(
           type="primary"

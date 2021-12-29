@@ -8,28 +8,28 @@
             :key="v.id"
             :label="$t('v-title-v-vid', [v.title, v.vid])"
             :value="v.vid")
-      
+
         el-divider
-      
+
         el-switch(
           v-model="addVlanFrmMod.native"
           active-text="Access"
           inactive-text="Trunk")
-      
+
         el-divider(direction="vertical")
-      
+
         el-button(
           type="success"
           icon="el-icon-plus"
           @click="onAddVidToPort")
           | {{ $t('add') }}
-      
+
         el-button(
           slot="reference"
           type="success"
           icon="el-icon-plus"
           circle)
-  
+
     el-col(
       :span="3"
       v-for="(v, i) in portVlanConf.vids"
@@ -39,9 +39,9 @@
           :type="v.native ? 'info' : 'primary'"
           @click="changeVlanMode(v)"
         ) {{ v.native ? 'A' : 'T' }}
-      
+
         el-button {{ v.vid }}
-      
+
         el-button.btn_miniwidth(
           type="danger"
           icon="el-icon-close"
@@ -57,7 +57,7 @@ import { mixins } from 'vue-class-component'
 import VlanMixin from '@/views/networks/components/vlan-mixin'
 import i18n from '@/lang'
 
-const multipleAccessVlanMsg = i18n.t('portCanTContainMoreThanOneAcques')
+const multipleAccessVlanMsg = i18n.tc('portCanTContainMoreThanOneAcques')
 
 @Component({
   name: 'GenericVlanConfig'
@@ -80,7 +80,7 @@ export default class extends mixins(VlanMixin) {
       return
     }
     v.native = !v.native
-    this.$message.success(this.$t('modifiedTrunkSuccessMode'))
+    this.$message.success(this.$tc('modifiedTrunkSuccessMode'))
   }
 
   private vlanRemove(remVlan: IDevVlanSimple) {
@@ -89,7 +89,7 @@ export default class extends mixins(VlanMixin) {
       this.portVlanConf.vids.splice(confIndex, 1)
       this.$message.success(`Влан ${remVlan.vid} удалён с порта №${this.portVlanConf.port}`)
     } else {
-      this.$message.error(this.$t('notFound') + ' ' + remVlan.vid)
+      this.$message.error(this.$tc('notFound') + ' ' + remVlan.vid)
     }
   }
 
@@ -105,7 +105,7 @@ export default class extends mixins(VlanMixin) {
   private onAddVidToPort() {
     const obj = this.addVlanFrmMod
     if (this.isVlanExists(obj.vid)) {
-      this.$message.error(this.$t('portShouldContainUniqueVlans'))
+      this.$message.error(this.$tc('portShouldContainUniqueVlans'))
       return
     }
     if (obj.native && this.nativeVlanCount > 0) {

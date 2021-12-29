@@ -9,12 +9,12 @@
           template(v-slot:header)
             .clearfix
               | {{ $t('frequencyOfPerformance') }}
-        
+
           task-mode-report-pie-chart(v-if="$perms.tasks.can_view_task_mode_report")
-        
+
           h4(v-else)
             | {{ $t('insufficientRights') }}
-    
+
       el-col(
         :xs="24"
         :sm="24"
@@ -23,12 +23,12 @@
           template(v-slot:header)
             .clearfix
               | {{ $t('distributionOfServicesBySubscribers') }}
-        
+
           customer-service-type-report(v-if="$perms.customers.can_view_service_type_report")
-        
+
           h4(v-else)
             | {{ $t('insufficientRights') }}
-    
+
       el-col(
         :xs="24"
         :sm="24"
@@ -37,9 +37,9 @@
           template(v-slot:header)
             .clearfix
               | {{ $t('accelerationOfSubscribers') }}
-        
+
           customer-activity-report(v-if="$perms.customers.can_view_activity_report")
-        
+
           h4(v-else)
             | {{ $t('insufficientRights') }}
 </template>
@@ -69,7 +69,7 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: this.$t('allReports')
+          title: this.$tc('allReports')
         }
       }
     ] as any)
@@ -77,7 +77,7 @@ export default class extends Vue {
   // End Breadcrumbs
 
   created() {
-    document.title = this.$t('allReports')
+    document.title = this.$tc('allReports')
     this.buildBreadcrumb()
   }
 }

@@ -16,27 +16,27 @@
             :disabled="isServiceAvailable || !$perms.customers.can_buy_service"
             icon="el-icon-shopping-cart-2"
             circle)
-    
+
       el-table-column(:label="$t('customers.service')" prop="title")
-    
+
       el-table-column(:label="$t('customers.sum')" prop="cost")
-    
+
       el-table-column(:label="$t('customers.inSpeed')" prop="speed_in")
-    
+
       el-table-column(:label="$t('customers.outSpeed')" prop="speed_out")
-  
+
     el-button(
       @click="srvAccDialog=true"
       icon="el-icon-s-tools"
       type="primary")
       | {{ $t('customers.attachServices2Groups') }}
-  
+
     el-dialog(
       :title="$t('customers.belongingServices2Groups')"
       :visible.sync="srvAccDialog"
       :close-on-click-modal="false")
       service-accessory(v-on:done="srvAccDone", :groupId="$store.state.customer.group")
-  
+
     el-dialog(
       :title="$t('customers.buyService')"
       :visible.sync="buyDialog"
@@ -100,9 +100,9 @@ export default class extends Vue {
   buyOpen(s: IService) {
     if (s.cost > CustomerModule.balance) {
       this.$confirm(
-        this.$t('customers.customerNotEnoughMoneyDoConnectItQuestion').toString(), {
-          confirmButtonText: this.$t('yes').toString(),
-          cancelButtonText: this.$t('no').toString(),
+        this.$tc('customers.customerNotEnoughMoneyDoConnectItQuestion').toString(), {
+          confirmButtonText: this.$tc('yes').toString(),
+          cancelButtonText: this.$tc('no').toString(),
           type: 'warning'
         }
       ).then(() => {
@@ -110,7 +110,7 @@ export default class extends Vue {
         this.buyDialog = true
       }).catch(() => {
         this.$message.info(
-          this.$t('customers.buyServiceCancellation').toString()
+          this.$tc('customers.buyServiceCancellation').toString()
         )
       })
     } else {
@@ -122,7 +122,7 @@ export default class extends Vue {
   buyDone() {
     this.buyDialog = false
     this.$message.success(
-      this.$t('customers.buyServiceOk').toString()
+      this.$tc('customers.buyServiceOk').toString()
     )
     CustomerModule.UpdateCustomer()
     this.$emit('buydone')

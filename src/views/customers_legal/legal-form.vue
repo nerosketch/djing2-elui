@@ -165,8 +165,8 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: this.$t('customers.contractNum.required'), trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: this.$t('contractCanContainLatinAndDigits') }
+      { required: true, message: this.$tc('customers.contractNum.required'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$tc('contractCanContainLatinAndDigits') }
     ],
     post_index: [
       maxLenValidator
@@ -178,23 +178,23 @@ export default class extends Vue {
       maxLenValidator
     ],
     title: [
-      { required: true, message: this.$t('nameToBeIndicated'), trigger: 'blur' },
+      { required: true, message: this.$tc('nameToBeIndicated'), trigger: 'blur' },
     ],
     fio: [
-      { required: true, message: this.$t('directorSFioIsRequired'), trigger: 'blur' },
+      { required: true, message: this.$tc('directorSFioIsRequired'), trigger: 'blur' },
     ],
     tax_number: [
-      { required: true, message: this.$t('insNeedsToBeFilled'), trigger: 'blur' },
+      { required: true, message: this.$tc('insNeedsToBeFilled'), trigger: 'blur' },
     ],
     address: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedALegalAddress') }
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedALegalAddress') }
     ],
     state_level_reg_number: [
-      { required: true, message: this.$t('iWill'), trigger: 'blur' },
+      { required: true, message: this.$tc('iWill'), trigger: 'blur' },
     ],
     legal_type: [
-      { required: true, message: this.$t('theTypeOfLawnIsMandatory'), trigger: 'blur' },
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues') },
+      { required: true, message: this.$tc('theTypeOfLawnIsMandatory'), trigger: 'blur' },
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues') },
     ]
   }
 
@@ -220,7 +220,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$t('correctFormsOfError'))
+        this.$message.error(this.$tc('correctFormsOfError'))
       }
     })
   }

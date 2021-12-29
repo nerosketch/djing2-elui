@@ -63,17 +63,17 @@ export default class extends Vue {
 
   private frmRules = {
     old_passw: [
-      { required: !this.$perms.is_superuser, message: this.$t('iNeedToPointOutTheOldPassword'), trigger: 'blur' },
+      { required: !this.$perms.is_superuser, message: this.$tc('iNeedToPointOutTheOldPassword'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
+      { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     new_passw: [
-      { required: true, message: this.$t('weNeedANewPassword'), trigger: 'blur' },
+      { required: true, message: this.$tc('weNeedANewPassword'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
+      { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     retype_passw: [
-      { required: true, trigger: 'blur', message: this.$t('weNeedANewPassword') },
+      { required: true, trigger: 'blur', message: this.$tc('weNeedANewPassword') },
       {
         validator: (rule: any, value: string, callback: Function) => {
           if (value === this.frmMod.new_passw) {
@@ -82,7 +82,7 @@ export default class extends Vue {
             callback(new Error(rule.message))
           }
         },
-        message: this.$t('thePasswordsShouldMatch')
+        message: this.$tc('thePasswordsShouldMatch')
       }
     ]
   }
@@ -116,7 +116,7 @@ export default class extends Vue {
             new_passw: this.frmMod.retype_passw
           })
           this.$emit('done', changedUser)
-        } catch (err) {
+        } catch (err: any) {
           if (typeof err === 'object' && err.hasOwnProperty('response')) {
             const d = err.response.data
             this.frmErr.old_passw = d.old_passw
@@ -127,7 +127,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

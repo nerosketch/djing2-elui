@@ -169,11 +169,11 @@ export default class extends Vue {
     if (!this.device) return
     this.$confirm(`Действительно удалить onu "${this.device.comment}"?`).then(async() => {
       if (!this.device) {
-        this.$message.error(this.$t('notRemoved'))
+        this.$message.error(this.$tc('notRemoved'))
         return
       }
       await DeviceModule.DelDevice(this.device.id)
-      this.$message.success(this.$t('deleted'))
+      this.$message.success(this.$tc('deleted'))
       if (this.device.group) {
         this.$router.push({ name: 'devicesList', params: { addrId: this.device.address.toString() } })
       } else {
@@ -195,7 +195,7 @@ export default class extends Vue {
 
   private devFrmDone() {
     this.devFormDialog = false
-    this.$message.success(this.$t('successfullyMaintained'))
+    this.$message.success(this.$tc('successfullyMaintained'))
     this.refreshDev()
     this.getDetails()
   }

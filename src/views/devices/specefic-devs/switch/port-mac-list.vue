@@ -9,12 +9,12 @@
       :label="$t('title')"
       min-width="200"
       prop="name")
-  
+
     el-table-column(
       label="VID"
       min-width="64"
       prop="vid")
-  
+
     el-table-column(
       label="MAC"
       min-width="121"
@@ -55,7 +55,7 @@ export default class extends Vue {
         this.macsLoading = false
       }
     } else {
-      this.$message.error(this.$t('notTransmitted'))
+      this.$message.error(this.$tc('notTransmitted'))
     }
   }
 }

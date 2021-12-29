@@ -39,17 +39,17 @@ export default class extends Vue {
     try {
       await delContractDoc(file.id)
       this.$message.success(
-        this.$t('contractDocs.docDeleted')
+        this.$tc('contractDocs.docDeleted')
       )
     } catch {
       this.$message.error(
-        this.$t('contractDocs.docDelFail')
+        this.$tc('contractDocs.docDelFail')
       )
     }
   }
 
   private beforeRemove(file: IFileItem) {
-    return this.$confirm(`${this.$t('del')} "${file.name}"?`)
+    return this.$confirm(`${this.$tc('del')} "${file.name}"?`)
   }
 
   private async uploadReq(req: HttpRequestOptions) {
@@ -83,12 +83,12 @@ export default class extends Vue {
         }
       } catch {
         this.$message.error(
-          this.$t('contractDocs.docLoadFail')
+          this.$tc('contractDocs.docLoadFail')
         )
       }
     } else {
       this.$message.error(
-        this.$t('contractDocs.contractNotPassed')
+        this.$tc('contractDocs.contractNotPassed')
       )
     }
   }

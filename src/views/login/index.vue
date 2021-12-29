@@ -70,13 +70,13 @@ export default class extends Vue {
 
   private loginRules = {
     username: [
-      { required: true, message: this.$t('loginCanTBeEmpty'), trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: this.$t('needsLoginFromLatinSymbolsAndFigures') }
+      { required: true, message: this.$tc('loginCanTBeEmpty'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$tc('needsLoginFromLatinSymbolsAndFigures') }
     ],
     password: [
-      { required: true, message: this.$t('thePasswordCannotBeEmpty'), trigger: 'blur' },
+      { required: true, message: this.$tc('thePasswordCannotBeEmpty'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
+      { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ]
   }
 
@@ -106,7 +106,7 @@ export default class extends Vue {
   }
 
   created() {
-    document.title = this.$t('entry')
+    document.title = this.$tc('entry')
   }
 
   private showPwd() {

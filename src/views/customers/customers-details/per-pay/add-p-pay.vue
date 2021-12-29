@@ -7,14 +7,14 @@
           :key="srv.id"
           :label="srv.name"
           :value="srv.id")
-  
+
     el-form-item(:label="$t('customers.dateNextPay')")
       el-date-picker(
         v-model="deadline"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm"
         format="d.MM.yyyy HH:mm")
-  
+
     el-form-item
       el-button(
         type="success"

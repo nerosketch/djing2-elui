@@ -75,32 +75,32 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'avatar',
-      label: this.$t('photo'),
+      label: this.$tc('photo'),
       'min-width': 60,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'username',
-      label: this.$t('login')
+      label: this.$tc('login')
     },
     {
       prop: 'fio',
-      label: this.$t('fio'),
+      label: this.$tc('fio'),
       'min-width': 250
     },
     {
       prop: 'telephone',
-      label: this.$t('telephone'),
+      label: this.$tc('telephone'),
       'min-width': 120
     },
     {
       prop: 'email',
-      label: this.$t('EMail'),
+      label: this.$tc('EMail'),
       'min-width': 250
     },
     {
       prop: 'btn',
-      label: "#",
+      label: '#',
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -128,9 +128,9 @@ export default class extends Vue {
   }
 
   private delUserProfile(usr: IUserProfile) {
-    this.$confirm(this.$t('removeAccountQuestion')).then(async() => {
+    this.$confirm(this.$tc('removeAccountQuestion')).then(async() => {
       await delProfile(usr.username)
-      this.$message.success(this.$t('recordsRemoved'))
+      this.$message.success(this.$tc('recordsRemoved'))
     })
   }
 }

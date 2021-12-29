@@ -53,24 +53,24 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       'min-width': 150
     },
     {
       prop: 'field_type_name',
-      label: this.$t('typeOfField')
+      label: this.$tc('typeOfField')
     },
     {
       prop: 'groups',
-      label: this.$t('route.groups')
+      label: this.$tc('route.groups')
     },
     {
       prop: 'system_tag_name',
-      label: this.$t('systemTag')
+      label: this.$tc('systemTag')
     },
     {
       prop: 'user_tag',
-      label: this.$t('userTag')
+      label: this.$tc('userTag')
     },
     {
       prop: 'btn',
@@ -85,9 +85,9 @@ export default class extends Vue {
   }
 
   private delDynamicField(field: IDynamicField) {
-    this.$confirm(`${this.$t('deleteTheField')} ${field.title}?`).then(async() => {
+    this.$confirm(`${this.$tc('deleteTheField')} ${field.title}?`).then(async() => {
       await DynamicFieldModule.DeleteField(field.id)
-      this.$message.success(`${this.$t('fieldRemoved')} ${field.title}`)
+      this.$message.success(`${this.$tc('fieldRemoved')} ${field.title}`)
       this.$refs.fieldtable.LoadTableData()
     })
   }
@@ -99,7 +99,7 @@ export default class extends Vue {
 
   private formDone() {
     this.fieldFormVisible = false
-    this.$message.success(this.$t('saved'))
+    this.$message.success(this.$tc('saved'))
     this.$refs.fieldtable.LoadTableData()
   }
 
@@ -114,7 +114,7 @@ export default class extends Vue {
       {
         meta: {
           hidden: true,
-          title: this.$t('forms')
+          title: this.$tc('forms')
         }
       }
     ] as any)

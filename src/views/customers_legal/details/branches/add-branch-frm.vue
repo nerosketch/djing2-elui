@@ -2,7 +2,7 @@
   el-form(:model="frmMod", v-loading="loading")
     el-form-item(:label="$t('customersLegal.branch')" prop="customer")
       customer-field(v-model="frmMod.branch")
-  
+
     el-form-item
       el-button(
         type="primary"
@@ -40,7 +40,7 @@ export default class extends Vue {
       this.loading = true
       try {
         const customerLegal = await CustomerLegalModule.updateCustomerLegal({ branches })
-        this.$message.success(this.$t('saved'))
+        this.$message.success(this.$tc('saved'))
         this.$emit('done', customerLegal)
       } finally {
         this.loading = false

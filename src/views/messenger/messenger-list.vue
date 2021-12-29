@@ -11,19 +11,19 @@
           :href="row.global_link"
           target="_blank")
           | {{ row.title }}
-    
+
       template(v-slot:oper="{row}")
         el-button-group
           el-button(
             type="danger"
             icon="el-icon-delete"
             @click="delMessenger(row)")
-        
+
           el-button(icon="el-icon-view" @click="go2Messenger(row)")
-    
+
       el-button(icon="el-icon-plus" @click="openNew")
         | {{ $t('addMassenger') }}
-  
+
     el-dialog(
       :title="$t('createAMassenger')"
       :visible.sync="dialogVisible"
@@ -68,17 +68,17 @@ export default class extends Vue {
     },
     {
       prop: 'title',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'description',
-      label: this.$t('description')
+      label: this.$tc('description')
     },
     {
       prop: 'bot_type_name',
-      label: this.$t('typeOfBean'),
+      label: this.$tc('typeOfBean'),
       'min-width': 100
     },
     {
@@ -94,23 +94,17 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private async loadMessengers(params?: IDRFRequestListParameters) {
+  private loadMessengers(params?: IDRFRequestListParameters) {
     if (params) {
       params.fields = 'id,title,description,bot_type_name,global_link'
     }
-    try {
-      const r = await getMessengers(this.messengerTypeName, params)
-      return r
-    } catch (err) {
-      this.$message.error(err)
-    }
-    return null
+    return getMessengers(this.messengerTypeName, params)
   }
 
   private delMessenger(m: IMessenger) {
-    this.$confirm(this.$t('ty-deistvitelno-khochesh-udalit-chat-bot-m-title', [m.title])).then(async() => {
+    this.$confirm(this.$t('messenger.austRemove', [m.title]) as string).then(async() => {
       await MessengerModule.DelMessenger(m.id)
-      this.$message.success(this.$t('chat-bot-udalyon', [m.title]))
+      this.$message.success(this.$t('messenger.botRemoved', [m.title]) as string)
       this.$refs.table.LoadTableData()
     })
   }
@@ -137,7 +131,7 @@ export default class extends Vue {
         path: '/messenger',
         meta: {
           hidden: true,
-          title: this.$t('messengers')
+          title: this.$tc('messengers')
         }
       },
       {

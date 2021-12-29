@@ -9,7 +9,7 @@
       :closable="false"
       show-icon
       center)
-  
+
     el-transfer(
       v-model="assignedPerms"
       :props="prop"
@@ -19,7 +19,7 @@
       template(v-slot:left-footer)
         el-button.transfer-footer(@click="selectReadonly")
           | {{ $t('giveReadingRights') }}
-  
+
     el-button(
       icon="el-icon-upload"
       type="primary"
@@ -47,7 +47,7 @@ export default class extends mixins(PermMngMixin) {
       user_permissions: this.assignedPerms
     })
     this.saveLoading = false
-    this.$message.success(this.$t('rightsRetained'))
+    this.$message.success(this.$tc('rightsRetained'))
   }
 
   @Watch('$store.state.userprofile.user_permissions')

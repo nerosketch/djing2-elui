@@ -6,15 +6,15 @@
       border
       fit)
       el-table-column(:label="$t('customers.lastPay')" prop="last_pay")
-    
+
       el-table-column(:label="$t('customers.nextPay')" prop="next_pay")
-    
+
       el-table-column(:label="$t('title')" prop="service_name")
-    
+
       el-table-column(:label="$t('customers.calcType')" prop="service_calc_type")
-    
+
       el-table-column(:label="$t('customers.cost')" prop="service_amount")
-    
+
       el-table-column(:label="$t('del')")
         template(v-slot:default="{row}")
           el-button(
@@ -22,10 +22,10 @@
             circle
             type="danger"
             @click="delP4IdPay(row)")
-  
+
     el-button(type="primary" @click="pSrvDialog=true")
       | {{ $t('customers.addPeriodicPay') }}
-  
+
     el-dialog(
       :title="$t('customers.addPeriodicPay')"
       :visible.sync="pSrvDialog"
@@ -75,12 +75,12 @@ export default class extends Vue {
 
   private delP4IdPay(pay: IPeriodicPayForId) {
     this.$confirm(
-      this.$t('customers.areUSure2DelPeriodicPay').toString()
+      this.$tc('customers.areUSure2DelPeriodicPay').toString()
     ).then(async() => {
       await delAssignedPeriodicPay(pay.id)
       this.loadPIdServices()
       this.$message.success(
-        this.$t('deleted').toString()
+        this.$tc('deleted').toString()
       )
     })
   }

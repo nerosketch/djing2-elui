@@ -116,10 +116,10 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     contract_number: [
-      { required: true, message: this.$t('customers.contractNum.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customers.contractNum.required'), trigger: 'blur' },
     ],
     start_service_time: [
-      { required: true, message: this.$t('customers.contractNum.validation'), trigger: 'blur' },
+      { required: true, message: this.$tc('customers.contractNum.validation'), trigger: 'blur' },
     ]
   }
 
@@ -153,14 +153,14 @@ export default class extends mixins(FormMixin) {
             const newDat = await addContract(this.frmMod)
             this.$emit('added', newDat)
             this.$message.success(
-              this.$t('contractDocs.addedMsg')
+              this.$tc('contractDocs.addedMsg')
             )
           } else {
             if (this.contract && this.contract.id) {
               const newDat = await changeContract(this.contract.id, this.frmMod)
               this.$emit('changed', newDat)
               this.$message.success(
-                this.$t('contractDocs.savedMsg')
+                this.$tc('contractDocs.savedMsg')
               )
             } else {
               const tx = 'Logic error on contractForm in onSubmit()'
@@ -173,7 +173,7 @@ export default class extends mixins(FormMixin) {
         }
       } else {
         this.$message.error(
-          this.$t('fixFormErrs')
+          this.$tc('fixFormErrs')
         )
       }
     })

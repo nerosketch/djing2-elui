@@ -166,43 +166,43 @@ export default class extends mixins(TableWithAddrMixin) {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'comment',
-      label: this.$t('comment'),
+      label: this.$tc('comment'),
       'min-width': 300
     },
     {
       prop: 'ip_address',
-      label: this.$t('ipAddress'),
+      label: this.$tc('ipAddress'),
       'min-width': 120
     },
     {
       prop: 'dev_type_str',
-      label: this.$t('type'),
+      label: this.$tc('type'),
       'min-width': 150
     },
     {
       prop: 'mac_addr',
-      label: this.$t('macAddress'),
+      label: this.$tc('macAddress'),
       'min-width': 150
     },
     {
       prop: 'status',
-      label: this.$t('status')
+      label: this.$tc('status')
     },
     {
       prop: 'is_noticeable',
-      label: this.$t('notices')
+      label: this.$tc('notices')
     },
     {
       prop: 'place',
-      label: this.$t('houseNum')
+      label: this.$tc('houseNum')
     },
     {
       prop: 'create_time',
-      label: this.$t('effectiveDate')
+      label: this.$tc('effectiveDate')
     },
     {
       prop: 'oper',
-      label: this.$t('buttons'),
+      label: this.$tc('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -237,7 +237,7 @@ export default class extends mixins(TableWithAddrMixin) {
   private async delDevice(dev: IDevice) {
     this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
       await DeviceModule.DelDevice(dev.id)
-      this.$message.success(this.$t('deleted'))
+      this.$message.success(this.$tc('deleted'))
       this.$refs.tbl.LoadTableData()
     })
   }
@@ -249,7 +249,7 @@ export default class extends mixins(TableWithAddrMixin) {
 
   private frmNewDevDone(newDev: IDevice) {
     this.dialogNewDev = false
-    this.$message.success(this.$t('newDeviceRetained'))
+    this.$message.success(this.$tc('newDeviceRetained'))
     this.$router.push({
       name: 'device-view',
       params: {
@@ -273,7 +273,7 @@ export default class extends mixins(TableWithAddrMixin) {
           path: '/devices',
           meta: {
             hidden: true,
-            title: this.$t('equipment')
+            title: this.$tc('equipment')
           }
         },
         {
@@ -312,7 +312,7 @@ export default class extends mixins(TableWithAddrMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.tbl.LoadTableData()
-      this.$message.success(this.$t('facilitiesMaintained'))
+      this.$message.success(this.$tc('facilitiesMaintained'))
     })
     this.sitesDlg = false
   }

@@ -133,26 +133,26 @@ export default class extends Vue {
 
   private frmRules = {
     username: [
-      { required: true, message: this.$t('loginCanTBeEmpty'), trigger: 'blur' },
-      { validator: latinValidator, trigger: 'change', message: this.$t('laginCanContainLatinSymbolsAndFigures') }
+      { required: true, message: this.$tc('loginCanTBeEmpty'), trigger: 'blur' },
+      { validator: latinValidator, trigger: 'change', message: this.$tc('laginCanContainLatinSymbolsAndFigures') }
     ],
     birth_day: [
-      { required: true, message: this.$t('loginCanTBeEmpty'), trigger: 'blur' }
+      { required: true, message: this.$tc('loginCanTBeEmpty'), trigger: 'blur' }
     ],
     telephone: [
-      { required: true, message: this.$t('phoneNumberIsRequired'), trigger: 'blur' },
-      { validator: telephoneValidator, trigger: 'change', message: this.$t('telValidation') }
+      { required: true, message: this.$tc('phoneNumberIsRequired'), trigger: 'blur' },
+      { validator: telephoneValidator, trigger: 'change', message: this.$tc('telValidation') }
     ],
     fio: [
-      { required: true, message: this.$t('youNeedToKnowTheNameOfTheOwnerOfTheAccount'), trigger: 'blur' }
+      { required: true, message: this.$tc('youNeedToKnowTheNameOfTheOwnerOfTheAccount'), trigger: 'blur' }
     ],
     email: [
-      { validator: emailValidator, trigger: 'change', message: this.$t('doesnTSoundLikeEMailAddress') }
+      { validator: emailValidator, trigger: 'change', message: this.$tc('doesnTSoundLikeEMailAddress') }
     ],
     password: [
-      { required: true, message: this.$t('thePasswordCannotBeEmpty'), trigger: 'blur' },
+      { required: true, message: this.$tc('thePasswordCannotBeEmpty'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: this.$t('thePasswordConsistsOfAMinimumOf6Symbols') }
+      { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ]
   }
 
@@ -164,17 +164,17 @@ export default class extends Vue {
         try {
           if (this.isNew) {
             newDat = await UserProfileModule.AddProfile(this.frmMod)
-            this.$message.success(this.$t('added'))
+            this.$message.success(this.$tc('added'))
           } else {
             newDat = await UserProfileModule.PatchProfile(this.frmMod)
-            this.$message.success(this.$t('recordRetained'))
+            this.$message.success(this.$tc('recordRetained'))
           }
           this.$emit('done', newDat)
         } finally {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
@@ -184,7 +184,7 @@ export default class extends Vue {
   }
 
   private passwordDone() {
-    this.$message.success(this.$t('thePasswordHasBeenChangedSuccessfully'))
+    this.$message.success(this.$tc('thePasswordHasBeenChangedSuccessfully'))
     this.passwordFormDialog = false
   }
 
@@ -204,7 +204,7 @@ export default class extends Vue {
     UserProfileModule.PatchProfile({
       sites: selectedSiteIds
     }).then(() => {
-      this.$message.success(this.$t('webRecordsMaintained'))
+      this.$message.success(this.$tc('webRecordsMaintained'))
     })
     this.sitesDlg = false
   }

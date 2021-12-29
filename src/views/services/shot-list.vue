@@ -10,32 +10,35 @@
         el-button-group
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
-        
+
           el-button(icon="el-icon-edit" @click="openEdit(row)")
-        
+
           el-button(
             type="danger"
             icon="el-icon-delete"
             @click="delShot(row)"
             :disabled="!$perms.services.delete_oneshotpay")
-    
+
       el-button(
         icon="el-icon-plus"
         type="success"
         @click="openNew")
         | {{ $t('add') }}
-  
+
     el-dialog(
-      :title="$t('isnew-sozdanie-izmenenie-odnorazovogo-platezha', [(isNew ? `Создание` : `Изменение`)])"
+      :title="$t('services.doPP', [(isNew ? 'Создание' : 'Изменение')])"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       shot-form(v-on:done="frmDone")
-  
+
     el-dialog(
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.oneshotpay.sites", v-on:save="serviceSitesSave")
+      sites-attach(
+        :selectedSiteIds="$store.state.oneshotpay.sites"
+        v-on:save="serviceSitesSave"
+      )
 </template>
 
 <script lang="ts">
@@ -61,18 +64,18 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: this.$t('nameOfPayment'),
+      label: this.$tc('nameOfPayment'),
       'min-width': 200
     },
     {
       prop: 'cost',
-      label: this.$t('value'),
+      label: this.$tc('value'),
       'min-width': 150,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: this.$t('buttons'),
+      label: this.$tc('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -93,7 +96,7 @@ export default class extends Vue {
   }
 
   private async delShot(shot: IOneShotPay) {
-    if (confirm(this.$t('deistvitelno-udalit-platyozh-shot-name', [shot.name]))) {
+    if (confirm(this.$t('austRemoveShotPay', [shot.name]) as string)) {
       await OneShotPayModule.DelOneShotPay(shot.id)
       this.$refs.table.LoadTableData()
     }
@@ -120,7 +123,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained'))
+      this.$message.success(this.$tc('theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained'))
     })
     this.sitesDlg = false
   }

@@ -4,9 +4,9 @@
       el-card(shadow="never")
         template(v-slot:header)
           | {{ $t('customers.services4Buy') }}
-      
+
         services-list(v-on:buydone="loadCurrentService", :isServiceAvailable="isServiceAvailable")
-  
+
     el-col(:sm="24" :md="12")
       el-card(
         shadow="never"
@@ -14,78 +14,78 @@
         style="font-size: small;")
         template(v-slot:header)
           | {{ $t('customers.currentCustomerService') }}
-      
+
         template(v-if="!serviceBlockLoad")
           div(v-if="isServiceAvailable")
             h3
               | {{ currentService.service.title }}
-          
+
             i
               | {{ currentService.service.descr }}
-          
+
             dl
               dt
                 b
                   | {{ $t('customers.sum') }}
-            
+
               dd
                 | {{ currentService.service.cost }} {{ $t('defaultCurrencySymbol') }}
-            
+
               dt
                 b
                   | {{ $t('customers.inSpeed') }}
-            
+
               dd
                 | {{ currentService.service.speed_in }}
-            
+
               dt
                 b
                   | {{ $t('customers.outSpeed') }}
-            
+
               dd
                 | {{ currentService.service.speed_out }}
-            
+
               dt
                 b
                   | {{ $t('customers.burst') }}
-            
+
               dd
                 | {{ currentService.service.speed_burst }}
-            
+
               dt
                 b
                   | {{ $t('customers.serviceStartDate') }}
-            
+
               dd
                 | {{ currentService.start_time }}
-            
+
               dt
                 b
                   | {{ $t('customers.serviceWorksUntil') }}
-            
+
               dd
                 | {{ currentService.deadline }}
-          
+
             el-button(
               type="danger"
               icon="el-icon-delete"
               @click="onStopService"
               :disabled="!$perms.customers.can_complete_service")
               | {{ $t('customers.serviceFinish') }}
-        
+
           b(v-else)
             | {{ $t('customers.serviceNotConnected') }}
-        
+
           last-connected-service
-      
+
         h3(v-else)
           | {{ $t('loading') }}
-  
+
     el-col(:sm="24" :md="12")
       el-card(shadow="never")
         template(v-slot:header)
           | {{ $t('customers.attachedPeriodicPays') }}
-      
+
         periodic-services-list
 </template>
 
@@ -134,16 +134,16 @@ export default class extends Vue {
   }
 
   onStopService() {
-    this.$confirm(this.$t('customers.doFinishServiceAheadOfShedule').toString(), {
-      confirmButtonText: this.$t('yes').toString(),
-      cancelButtonText: this.$t('no').toString(),
+    this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule').toString(), {
+      confirmButtonText: this.$tc('yes').toString(),
+      cancelButtonText: this.$tc('no').toString(),
       type: 'info'
     }).then(async() => {
       await CustomerModule.StopService()
       await CustomerModule.UpdateCustomer()
       await this.loadCurrentService()
       this.$message.success(
-        this.$t('customers.serviceStoppedAheadOfSheduleOk').toString()
+        this.$tc('customers.serviceStoppedAheadOfSheduleOk').toString()
       )
     })
   }

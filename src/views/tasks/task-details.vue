@@ -39,11 +39,11 @@ export default class extends mixins(taskMixin) {
 
   private async loadTask() {
     if (this.taskId === 0) {
-      this.$message.error(this.$t('notTransferred'))
+      this.$message.error(this.$tc('notTransferred'))
       return
     }
     await TaskModule.GetTask(this.taskId)
-    document.title = this.$t('zadacha-po-taskmodule-customer_full_name', [TaskModule.customer_full_name])
+    document.title = this.$t('taskCustomerDocTitle', [TaskModule.customer_full_name]) as string
   }
 
   async created() {

@@ -87,38 +87,38 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_full_name',
-      label: this.$t('name'),
+      label: this.$tc('name'),
       'min-width': 250
     },
     {
       prop: 'customer_address',
-      label: this.$t('addresses'),
+      label: this.$tc('addresses'),
       'min-width': 300,
       cutLeft: true
     },
     {
       prop: 'mode_str',
-      label: this.$t('natureOfFracture'),
+      label: this.$tc('natureOfFracture'),
       'min-width': 150
     },
     {
       prop: 'descr',
-      label: this.$t('description'),
+      label: this.$tc('description'),
       'min-width': 400
     },
     {
       prop: 'state_str',
-      label: this.$t('status'),
+      label: this.$tc('status'),
       'min-width': 100
     },
     {
       prop: 'time_of_create',
-      label: this.$t('dateOfEstablishment'),
+      label: this.$tc('dateOfEstablishment'),
       'min-width': 170
     },
     {
       prop: 'id',
-      label: this.$t('watch'),
+      label: this.$tc('watch'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     }
@@ -143,7 +143,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('route.tasks')
+          title: this.$tc('route.tasks')
         }
       }
     ] as any)

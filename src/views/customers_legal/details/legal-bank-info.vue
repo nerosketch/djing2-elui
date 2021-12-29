@@ -7,16 +7,16 @@
     v-loading="loading")
     el-form-item(:label="$t('customersLegal.bank.title')" prop="title")
       el-input(v-model="frmMod.title")
-  
+
     el-form-item(:label="$t('customersLegal.bank.bik')" prop="bank_code")
       el-input(v-model="frmMod.bank_code" type="number")
-  
+
     el-form-item(:label="$t('customersLegal.bank.cacc')" prop="correspondent_account")
       el-input(v-model="frmMod.correspondent_account")
-  
+
     el-form-item(:label="$t('customersLegal.bank.pacc')" prop="settlement_account")
       el-input(v-model="frmMod.settlement_account")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -59,16 +59,16 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('customersLegal.bank.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
     ],
     bank_code: [
-      { required: true, message: this.$t('customersLegal.bank.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
     ],
     correspondent_account: [
-      { required: true, message: this.$t('customersLegal.bank.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
     ],
     settlement_account: [
-      { required: true, message: this.$t('customersLegal.bank.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
     ]
   }
 
@@ -107,12 +107,12 @@ export default class extends Vue {
           } else {
             await CustomerLegalBankModule.updateLegalBank(this.frmMod)
           }
-          this.$message.success(this.$t('saved'))
+          this.$message.success(this.$tc('saved'))
         } finally {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

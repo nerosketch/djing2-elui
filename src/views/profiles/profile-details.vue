@@ -3,19 +3,19 @@
     el-row(:gutter="20")
       el-col(:span="6", :xs="24")
         user-card
-    
+
       el-col(:span="18", :xs="24")
         el-card
           el-tabs(v-model="activeTabName")
             el-tab-pane(:label="$t('change')", name="account")
               profile-form(v-if="ready")
-          
+
             el-tab-pane(
               :label="$t('responsibilityForGroups')"
               name="activity"
               lazy)
               group-responsibility(:profileUname="profileUname")
-          
+
             el-tab-pane(
               :label="$t('rightsToClassesOfAction')"
               v-if="$store.state.currentuserprofile.is_superuser"
@@ -23,14 +23,14 @@
               lazy)
               keep-alive(v-if="ready")
                 user-class-perms
-          
+
             el-tab-pane(
               :label="$t('actionLog')"
               name="timeline"
               lazy)
               keep-alive(v-if="ready")
                 profile-log
-          
+
             el-tab-pane(
               :label="$t('authorizationLogs')"
               name="authlog"

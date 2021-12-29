@@ -26,17 +26,17 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'action_date',
-      label: this.$t('date'),
+      label: this.$tc('date'),
       'min-width': 150
     },
     {
       prop: 'additional_text',
-      label: this.$t('supplementary'),
+      label: this.$tc('supplementary'),
       'min-width': 400
     },
     {
       prop: 'do_type_text',
-      label: this.$t('description'),
+      label: this.$tc('description'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }

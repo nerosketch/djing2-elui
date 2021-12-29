@@ -18,13 +18,13 @@ import { ICustomer } from '@/api/customers/types'
 export default class extends Vue {
   @Prop({ default: null }) private customer!: ICustomer | null
   private pingLoading = false
-  private btnText = this.$t('ping')
+  private btnText = this.$tc('ping')
   private btnType = 'primary'
 
   private async pingProfile() {
     if (!this.customer || this.isCustomerNotHere) {
       this.$message.error(
-        this.$t('customers.notPassed').toString()
+        this.$tc('customers.notPassed').toString()
       )
       return
     }

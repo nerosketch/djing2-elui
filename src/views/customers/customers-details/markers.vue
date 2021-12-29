@@ -5,9 +5,9 @@
       :key="i"
       v-model="ic[1]")
       span.m-icon(:class="`m-${ic[0]}`")
-  
+
     el-divider
-  
+
     el-button(
       icon="el-icon-download"
       :loading="loading"

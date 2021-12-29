@@ -122,7 +122,7 @@ export default class extends Vue {
   private translated(title: string) {
     const code = `route.${title}`
     if (this.$te(code)) {
-      return this.$t(code)
+      return this.$tc(code)
     }
     return title
   }

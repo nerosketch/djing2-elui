@@ -10,7 +10,7 @@
         el-button(:type="row.comment_count > 0 ? 'success' : 'primary'")
           template(v-if="row.comment_count > 0")
             | {{ row.comment_count }}
-        
+
           i.el-icon-view(v-else)
 </template>
 
@@ -40,27 +40,27 @@ export default class extends Vue {
     },
     {
       prop: 'author_uname',
-      label: this.$t('customers.author').toString(),
+      label: this.$tc('customers.author').toString(),
       'min-width': 100
     },
     {
       prop: 'descr',
-      label: this.$t('comment').toString(),
+      label: this.$tc('comment').toString(),
       'min-width': 250
     },
     {
       prop: 'state_str',
-      label: this.$t('customers.state').toString(),
+      label: this.$tc('customers.state').toString(),
       'min-width': 200
     },
     {
       prop: 'mode_str',
-      label: this.$t('customers.type').toString(),
+      label: this.$tc('customers.type').toString(),
       'min-width': 150
     },
     {
       prop: 'time_of_create',
-      label: this.$t('startDate').toString(),
+      label: this.$tc('startDate').toString(),
       'min-width': 200
     }
   ]

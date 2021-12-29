@@ -79,24 +79,24 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'username',
-      label: this.$t('login')
+      label: this.$tc('login')
     },
     {
       prop: 'title',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       'min-width': 150
     },
     {
       prop: 'balance',
-      label: this.$t('balance')
+      label: this.$tc('balance')
     },
     {
       prop: 'tax_number',
-      label: this.$t('inn')
+      label: this.$tc('inn')
     },
     {
       prop: 'post_index',
-      label: this.$t('postalIndex')
+      label: this.$tc('postalIndex')
     },
     {
       prop: 'btn',
@@ -149,7 +149,7 @@ export default class extends Vue {
         path: '/legal/',
         meta: {
           hidden: true,
-          title: this.$t('organizations')
+          title: this.$tc('organizations')
         }
       },
     ] as any)

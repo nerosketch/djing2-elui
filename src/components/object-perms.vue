@@ -2,30 +2,30 @@
   div
     h4
       | Какие группы сотрудников будут иметь доступ
-  
+
     el-select(v-model="selectedProfileGroup")
       el-option(
         v-for="grp in groups"
         :key="grp.id"
         :label="grp.name"
         :value="grp.id")
-  
+
     h4
       | Какие права будет иметь выбранная группа сотрудников
-  
+
     template(v-if="initialGroupPerms")
       el-checkbox(
         v-for="p in initialGroupPerms.availablePerms"
         :key="p.id"
         :label="p.name"
         v-model="p.checked")
-  
+
     span(v-else)
       i.el-icon-loading
       | Загрузка доступных прав...
-  
+
     el-divider
-  
+
     el-button(
       icon="el-icon-upload"
       type="primary"
@@ -76,8 +76,6 @@ export default class extends Vue {
         fields: 'id,name'
       }) as any
       this.groups = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.oGroupsLoading = false
     }
@@ -128,8 +126,6 @@ export default class extends Vue {
         for (const ap of this.initialGroupPerms.availablePerms) {
           this.$set(ap, 'checked', data.includes(ap.id))
         }
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.oGroupsLoading = false
       }

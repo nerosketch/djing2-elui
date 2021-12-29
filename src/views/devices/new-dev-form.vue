@@ -89,17 +89,17 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example192168023') }
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('example192168023') }
     ],
     mac_addr: [
-      { required: true, message: this.$t('macCanTBeEmpty'), trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: this.$t('example:0A:0B:Cc:Dd:Ee:Ff') }
+      { required: true, message: this.$tc('macCanTBeEmpty'), trigger: 'blur' },
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc('example:0A:0B:Cc:Dd:Ee:Ff') }
     ],
     comment: [
-      { required: true, message: this.$t('giveTheDeviceAName'), trigger: 'blur' }
+      { required: true, message: this.$tc('giveTheDeviceAName'), trigger: 'blur' }
     ],
     dev_type: [
-      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$t('specifyTheTypeOfDevice') }
+      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('specifyTheTypeOfDevice') }
     ]
   }
 
@@ -135,7 +135,7 @@ export default class extends Vue {
           this.$emit('err', err)
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

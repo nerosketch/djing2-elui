@@ -43,7 +43,7 @@ export default class extends Vue {
         this.loading = false
       }
     } else {
-      this.$message.error(this.$t('parametersRiver'))
+      this.$message.error(this.$tc('parametersRiver'))
     }
   }
 

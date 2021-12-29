@@ -9,7 +9,7 @@
       template(v-slot:left-footer)
         el-button.transfer-footer(@click="selectReadonly")
           | {{ $t('giveReadingRights') }}
-  
+
     el-button(
       icon="el-icon-upload"
       type="primary"
@@ -37,7 +37,7 @@ export default class extends mixins(PermMngMixin) {
       permissions: this.assignedPerms
     })
     this.saveLoading = false
-    this.$message.success(this.$t('groupRightsRetained'))
+    this.$message.success(this.$tc('groupRightsRetained'))
     this.$emit('done', updatedGroup)
   }
 

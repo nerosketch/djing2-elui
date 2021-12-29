@@ -93,7 +93,7 @@ export default class extends Vue {
         path: '/messenger',
         meta: {
           hidden: true,
-          title: this.$t('messengers')
+          title: this.$tc('messengers')
         }
       },
       {

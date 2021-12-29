@@ -229,7 +229,12 @@ export default {
   },
   tasks: {
     add: "Добавить задачу",
-    adding: "Создание задачи"
+    adding: "Создание задачи",
+    austRemoveDocument: 'Действительно удалить файл "{0}"?',
+    taskCustomerDocTitle: 'Задача по "${0}"',
+    austRemoveShotPay: 'Действительно удалить платёж "{0}"?',
+    austRemoveService: 'Действительно удалить услугу "{0}"?',
+    austRemovePP: 'Действительно удалить квитанцию "{0}"?',
   },
   devices: {
     dev: "Устройство",
@@ -290,11 +295,23 @@ export default {
     ifSupersuerRights: 'Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно',
     allRights: 'Все права',
     assignedRights: 'Назначенные права',
-    isActive: "Включён"
+    isActive: "Включён",
+    readRightsNotFound: "Не нашёл права на чтение",
   },
   sites: {
-    addDomain: 'Создать домен',
+    doDomain: '{0} домен',
     site: "Сайты",
+  },
+  networks: {
+    tPool: '{0} подсеть',
+    austRemoveLease: 'Действительно удалить сессию "{0}"?',
+  },
+  messenger: {
+    botRemoved: 'Чат бот "{0}" удалён',
+    austRemove: 'Действительно удалить чат бот "{0}"?',
+  },
+  services: {
+    doPP: '{0} ',
   },
   portSubscribers: "Абоненты на порту",
   noSubscribersFoundOnThePort: "Абоненты на порту не найдены",
@@ -613,7 +630,6 @@ export default {
   serial: "Серийник",
   id: "Service ID",
   iLlBeSure: "Service ID обязательно",
-  services: "Services",
   sessionChanged: "Сессия изменена",
   sessionRemoved: "Сессия удалена",
   uptime: "В сети",

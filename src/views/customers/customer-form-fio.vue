@@ -4,7 +4,7 @@
       template(slot="title")
         el-form-item(:label="$t('customers.fio')", style="margin-bottom: 0")
           b {{ origValue }}
-    
+
       el-form(
         status-icon
         :rules="frmRules"
@@ -12,10 +12,10 @@
         :label-width="$store.getters.isMobileView ? undefined : '115px'")
         el-form-item(:label="$t('customers.surname')" prop="surname")
           el-input(v-model="frmData.surname")
-      
+
         el-form-item(:label="$t('customers.name')" prop="firstName")
           el-input(v-model="frmData.firstName")
-      
+
         el-form-item(:label="$t('customers.lastName')" prop="lastName")
           el-input(v-model="frmData.lastName")
 </template>
@@ -49,7 +49,7 @@ export default class extends Vue {
     firstName: [
       {
         required: true,
-        message: this.$t('customers.nameRequiredValidatorErrText'),
+        message: this.$tc('customers.nameRequiredValidatorErrText'),
         trigger: 'blur'
       },
       { validator: nameValidator, trigger: 'change', message: errText }
@@ -60,7 +60,7 @@ export default class extends Vue {
     surname: [
       {
         required: true,
-        message: this.$t('customers.surnameRequiredValidatorErrText'),
+        message: this.$tc('customers.surnameRequiredValidatorErrText'),
         trigger: 'blur'
       },
       { validator: nameValidator, trigger: 'change', message: errText }

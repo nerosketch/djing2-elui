@@ -2,13 +2,13 @@
   div(v-loading)
     p(v-if="lastConnectedExists")
       | {{ $t('customers.serviceLastConnected') }} -
-    
+
       b
         | {{ lastConnectedTitle }}
-  
+
     p
       | {{ $t('customers.serviceAutocontinuation') }} -
-    
+
       el-checkbox(
         v-loading="serviceBlockLoad"
         v-on:change="onChangeAutoConnect"
@@ -44,7 +44,7 @@ export default class extends Vue {
     })
     this.serviceBlockLoad = false
     this.$message.success(
-      this.$t('customers.autoContinuationSaved').toString()
+      this.$tc('customers.autoContinuationSaved').toString()
     )
   }
 

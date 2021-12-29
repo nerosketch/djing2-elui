@@ -41,7 +41,7 @@ export default class extends Vue {
   }
 
   private beforeRemove(file: IFileItem) {
-    return this.$confirm(`${this.$t('del')} "${file.name}"?`)
+    return this.$confirm(`${this.$tc('del')} "${file.name}"?`)
   }
 
   get customerId() {
@@ -75,12 +75,12 @@ export default class extends Vue {
         }
       } catch {
         this.$message.error(
-          this.$t('customers.docLoadFailed').toString()
+          this.$tc('customers.docLoadFailed').toString()
         )
       }
     } else {
       this.$message.error(
-        this.$t('customers.customerIdNotPassed').toString()
+        this.$tc('customers.customerIdNotPassed').toString()
       )
     }
   }

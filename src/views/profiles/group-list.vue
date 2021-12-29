@@ -8,14 +8,21 @@
       ref="tbl")
       template(v-slot:btn="{row}")
         el-button-group
-          el-button(icon="el-icon-lock" @click="editGroupPerms(row)")
+          el-button(
+            icon="el-icon-lock"
+            @click="editGroupPerms(row)"
+          )
 
-          el-button(icon="el-icon-edit" @click="editNewUserGroup(row)")
+          el-button(
+            icon="el-icon-edit"
+            @click="editNewUserGroup(row)"
+          )
 
           el-button(
             type="danger"
             icon="el-icon-close"
-            @click="delUserGroup(row)")
+            @click="delUserGroup(row)"
+          )
 
       el-button(icon="el-icon-plus" @click="addNewUserGroup")
         | {{ $t('add') }}
@@ -67,16 +74,16 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       'min-width': 150
     },
     {
       prop: 'permcount',
-      label: this.$t('permcount')
+      label: this.$tc('permcount')
     },
     {
       prop: 'usercount',
-      label: this.$t('usercount')
+      label: this.$tc('usercount')
     },
     {
       prop: 'btn',
@@ -95,20 +102,20 @@ export default class extends Vue {
 
   private async editNewUserGroup(grp: IUserGroup) {
     await UserGroupModule.SET_ALL_USER_USER_GROUP(grp)
-    this.dialogTitle = this.$t('amendTheGroup')
+    this.dialogTitle = this.$tc('amendTheGroup')
     this.ugFormDialog = true
   }
 
   private async addNewUserGroup() {
     await UserGroupModule.RESET_ALL_USER_USER_GROUP()
-    this.dialogTitle = this.$t('addTheGroup')
+    this.dialogTitle = this.$tc('addTheGroup')
     this.ugFormDialog = true
   }
 
   private delUserGroup(grp: IUserGroup) {
-    this.$confirm(this.$t('removeOptsFromPort')).then(async() => {
+    this.$confirm(this.$tc('removeOptsFromPort')).then(async() => {
       await delUserGroup(grp.id)
-      this.$message.success(this.$t('groupRemoved'))
+      this.$message.success(this.$tc('groupRemoved'))
       this.$refs.tbl.LoadTableData()
     })
   }
@@ -135,7 +142,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('records')
+          title: this.$tc('records')
         }
       }
     ] as any)

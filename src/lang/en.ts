@@ -231,7 +231,12 @@ export default {
   },
   tasks: {
     add: "Add the task",
-    adding: "Creating the task"
+    adding: "Creating the task",
+    austRemoveDocument: 'Are you sure to remove file "{0}"?',
+    taskCustomerDocTitle: 'Задача по "${0}"',
+    austRemoveShotPay: 'Are you sure to remove pay "{0}"?',
+    austRemoveService: 'Are you sure to remove service "{0}"?',
+    austRemovePP: 'Are you sure to remove receipt "{0}"?',
   },
   devices: {
     dev: "Device",
@@ -292,11 +297,22 @@ export default {
     ifSupersuerRights: 'As long as the account has the superuser status, then changing the rights for it does not make sense, because superuser rights are not checked, they can do EVERYTHING',
     allRights: 'All rights',
     assignedRights: 'Assigned rights',
-    isActive: "Is active"
+    isActive: "Is active",
+    readRightsNotFound: "Read rights not found",
   },
   sites: {
-    addDomain: 'Create domain',
+    doDomain: '{0} domain',
     site: "Site",
+  },
+  networks: {
+    tPool: '{0} ip pool',
+    austRemoveLease: 'Are you sure to remove lease "{0}"?',
+  },
+  messenger: {
+    botRemoved: 'Messenger "{0}" has been removed',
+  },
+  services: {
+    doPP: '{0} one-time pay',
   },
   portSubscribers: "Port subscribers",
   noSubscribersFoundOnThePort: "No subscribers found on the port",
@@ -613,7 +629,6 @@ export default {
   serial: "Serial",
   id: "Id",
   iLlBeSure: "I'll be sure.",
-  services: "Services",
   sessionChanged: "Session changed",
   sessionRemoved: "Session removed",
   uptime: "Uptime",

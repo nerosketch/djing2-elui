@@ -8,10 +8,10 @@
     v-loading="isLoading")
     el-form-item(:label="$t('title')" prop="name")
       el-input(v-model="frmMod.name")
-  
+
     el-form-item(:label="$t('domain')" prop="domain")
       el-input(v-model="frmMod.domain")
-  
+
     el-form-item
       el-button(
         type="primary"
@@ -33,10 +33,10 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: this.$t('domainNameShouldBeIndicated'), trigger: 'blur' }
+      { required: true, message: this.$tc('domainNameShouldBeIndicated'), trigger: 'blur' }
     ],
     domain: [
-      { required: true, message: this.$t('domenShouldIndicate'), trigger: 'blur' }
+      { required: true, message: this.$tc('domenShouldIndicate'), trigger: 'blur' }
     ]
   }
 
@@ -66,15 +66,15 @@ export default class extends Vue {
         let newDat
         if (this.isNew) {
           newDat = await SiteModule.AddSite(this.frmMod)
-          this.$message.success(this.$t('changed'))
+          this.$message.success(this.$tc('changed'))
         } else {
           newDat = await SiteModule.PatchSite(this.frmMod)
-          this.$message.success(this.$t('newDomain'))
+          this.$message.success(this.$tc('newDomain'))
         }
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

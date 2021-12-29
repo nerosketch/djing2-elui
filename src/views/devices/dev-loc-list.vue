@@ -30,7 +30,7 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     }
@@ -53,7 +53,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('equipment')
+          title: this.$tc('equipment')
         }
       }
     ] as any)

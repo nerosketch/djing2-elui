@@ -11,7 +11,7 @@
       )
         keep-alive
           service-list
-    
+
       el-tab-pane(
         :label="$t('recurrentPayments')"
         name="periodicpays"
@@ -19,7 +19,7 @@
       )
         keep-alive
           periodic-pay-list
-    
+
       el-tab-pane(
         :label="$t('singlePayments')"
         name="shots"

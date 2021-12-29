@@ -14,7 +14,7 @@
             @click="getFreeIp"
             :loading="getFreeIpLoad"
             :disabled="frmMod.pool === 0")
-  
+
     el-form-item(:label="$t('customers.ipPool')" prop="pool")
       el-select(
         v-model="frmMod.pool"
@@ -26,15 +26,15 @@
             :key="p.id"
             :label="`${p.network} - ${p.description}`"
             :value="p.id")
-      
+
         el-option(
           v-else
           :label="$t('customers.poolsNotExists')"
           :value="null")
-  
+
     el-form-item(:label="$t('macAddress')" prop="mac_address")
       el-input(v-model="frmMod.mac_address")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -70,11 +70,11 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: this.$t('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('customers.badIp') }
+      { required: true, message: this.$tc('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('customers.badIp') }
     ],
     mac_address: [
-      { validator: macAddrValidator, trigger: 'change', message: this.$t('customers.badMac') }
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc('customers.badMac') }
     ]
   }
 
@@ -102,7 +102,7 @@ export default class extends Vue {
           this.frmLoading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
@@ -116,7 +116,7 @@ export default class extends Vue {
         this.frmMod.ip_address = ip
       } else {
         this.$message.error(
-          this.$t('customers.failedGettingFreeIp').toString()
+          this.$tc('customers.failedGettingFreeIp').toString()
         )
       }
     } catch (err) {

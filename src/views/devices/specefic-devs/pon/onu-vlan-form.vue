@@ -82,7 +82,7 @@ export default class extends mixins(VlanMixin) {
         const { data } = await applyDeviceOnuConfig(this.$store.state.devicemodule.id, this.currentConfig)
         if (data.status == 1) {
           this.$message.success({
-            message: this.$t('successfulRegistered'),
+            message: this.$tc('successfulRegistered'),
             duration: 15000,
             showClose: true
           })
@@ -98,12 +98,12 @@ export default class extends mixins(VlanMixin) {
         this.vlanLoading = false
       }
     } else {
-      this.$message.error(this.$t('equipmentNotTransferred'))
+      this.$message.error(this.$tc('equipmentNotTransferred'))
     }
   }
 
   private delVlanPort(portNum: number) {
-    this.$confirm(this.$t('removeOptsFromPort')).then(() => {
+    this.$confirm(this.$tc('removeOptsFromPort')).then(() => {
       const confInd = this.currentConfig.vlanConfig.findIndex(v => v.port === portNum)
       if (confInd > -1) {
         this.currentConfig.vlanConfig.splice(confInd, 1)

@@ -2,16 +2,16 @@
   .app-container
     span
       | {{ $t('customers.balance') }}:
-  
+
     small
       | {{ $store.state.customerlegal.balance }}.
-  
+
     span
       | {{ $t('createDate') }}:
-  
+
     small
       | {{ $store.state.customerlegal.create_date }}
-  
+
     el-tabs.border-card(v-model="activeTabName")
       el-tab-pane(:label="$t('customers.info')", name="info")
         el-row(:gutter="5")
@@ -19,16 +19,16 @@
             el-card(shadow="never")
               template(v-slot:header)
                 | {{ $t('customersLegal.changeInfo') }}
-            
+
               legal-form(v-if="ready")
-        
+
           el-col.col_vert_space(:sm="24" :md="12")
             el-card(shadow="never")
               template(v-slot:header)
                 | {{ $t('customersLegal.bank.requisites') }}
-            
+
               legal-bank-info(v-if="ready", :uid="uid")
-    
+
       el-tab-pane(
         :label="$t('customersLegal.branches')"
         name="branches"
@@ -95,7 +95,7 @@ export default class extends mixins(TabMixin) {
         path: '/legal/',
         meta: {
           hidden: true,
-          title: this.$t('route.organizations')
+          title: this.$tc('route.organizations')
         }
       },
       {

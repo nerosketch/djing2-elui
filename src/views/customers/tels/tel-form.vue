@@ -7,10 +7,10 @@
     :model="frmMod")
     el-form-item(:label="$t('customers.phone')" prop="telephone")
       el-input(v-model="frmMod.telephone", :maxlength="16")
-  
+
     el-form-item(:label="$t('customers.phoneOwner')" prop="owner_name")
       el-input(v-model="frmMod.owner_name", :maxlength="127")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -45,14 +45,14 @@ export default class extends Vue {
     owner_name: [
       {
         required: true,
-        message: this.$t('customers.contactNameRequired').toString(),
+        message: this.$tc('customers.contactNameRequired').toString(),
         trigger: 'blur'
       }
     ],
     telephone: [
       {
         required: true,
-        message: this.$t('customers.contactPhoneRequired').toString(),
+        message: this.$tc('customers.contactPhoneRequired').toString(),
         trigger: 'blur'
       },
       { validator: telephoneValidator, trigger: 'change' }
@@ -73,12 +73,12 @@ export default class extends Vue {
           if (this.isNew) {
             tel = await AdditionalTelephoneModule.AddTelephone(dat)
             this.$message.success(
-              this.$t('customers.contactPhoneSaved').toString()
+              this.$tc('customers.contactPhoneSaved').toString()
             )
           } else {
             tel = await AdditionalTelephoneModule.PatchTelephone(dat)
             this.$message.success(
-              this.$t('customers.contactPhoneChanged').toString()
+              this.$tc('customers.contactPhoneChanged').toString()
             )
           }
           this.$emit('done', tel)
@@ -86,7 +86,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

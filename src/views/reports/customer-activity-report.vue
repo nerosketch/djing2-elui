@@ -15,7 +15,7 @@ import { customersActivityReportRequest } from '@/api/customers/req'
   components: { BarChart }
 })
 export default class extends Vue {
-  private barLabels = [this.$t('total'), this.$t('including'), this.$t('withServices'), this.$t('active'), this.$t('payments')]
+  private barLabels = [this.$tc('total'), this.$tc('including'), this.$tc('withServices'), this.$tc('active'), this.$tc('payments')]
   private barValues = [0, 0, 0, 0, 0]
   private cloading = false
 

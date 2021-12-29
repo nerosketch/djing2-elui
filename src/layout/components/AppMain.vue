@@ -1,7 +1,7 @@
 <template lang="pug">
   section.app-main
     breadcrumb.breadcrumb-container
-  
+
     transition(name="fade-transform" mode="out-in")
       router-view
 </template>

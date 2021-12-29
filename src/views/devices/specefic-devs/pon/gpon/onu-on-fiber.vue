@@ -48,11 +48,11 @@ export default class extends Vue {
 
   private async loadFibers() {
     if (!this.fiberAddr || this.fiberAddr === 0) {
-      this.$message.error(this.$t('pyberaddreRequired'))
+      this.$message.error(this.$tc('pyberaddreRequired'))
       return
     }
     if (this.devId < 1 || !this.devId) {
-      this.$message.error(this.$t('devIdRequired'))
+      this.$message.error(this.$tc('devIdRequired'))
       return
     }
     this.lloading = true
@@ -70,7 +70,7 @@ export default class extends Vue {
 
   private onuRowColor({ row }: ITableRowClassName) {
     switch (row.onu_state) {
-      case 'okay':
+      case 'ok':
         return ''
       case 'down':
         return 'error-row'

@@ -48,12 +48,12 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: this.$t('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example192168023') }
+      { required: true, message: this.$tc('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('example192168023') }
     ],
     mac_address: [
-      { required: true, message: this.$t('weDonTHaveToLeaveTheMobEmpty'), trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: this.$t('example:0A:0B:Cc:Dd:Ee:Ff') }
+      { required: true, message: this.$tc('weDonTHaveToLeaveTheMobEmpty'), trigger: 'blur' },
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc('example:0A:0B:Cc:Dd:Ee:Ff') }
     ]
   }
 
@@ -87,7 +87,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

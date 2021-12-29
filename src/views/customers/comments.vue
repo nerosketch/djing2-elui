@@ -48,7 +48,7 @@ export default class extends Vue {
   private async delComment(commentId: number) {
     await deleteCustomerComment(commentId)
     this.$message.success(
-      this.$t('customers.commentRemoved').toString()
+      this.$tc('customers.commentRemoved').toString()
     )
     this.loadComments()
   }

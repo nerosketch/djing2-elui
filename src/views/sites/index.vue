@@ -10,10 +10,10 @@
           icon="el-icon-edit"
           @click="openEdit(row)"
           :disabled="!$perms.is_superuser")
-    
+
       el-button(icon="el-icon-plus" @click="openNew")
         | {{ $t('addDomain') }}
-  
+
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
@@ -55,19 +55,19 @@ export default class extends Vue {
     },
     {
       prop: 'domain',
-      label: this.$t('domain'),
+      label: this.$tc('domain'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'name',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: this.$t('buttons'),
+      label: this.$tc('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -76,11 +76,11 @@ export default class extends Vue {
   get dialogTitle() {
     let t
     if (SiteModule.id === 0) {
-      t = this.$t('add').toString()
+      t = this.$tc('add')
     } else {
-      t = this.$t('change').toString()
+      t = this.$tc('change')
     }
-    return this.$t('sites.addDomain')
+    return this.$t('sites.doDomain', [t])
   }
 
   private loadSites(params?: IDRFRequestListParameters) {
@@ -107,7 +107,7 @@ export default class extends Vue {
 
   // Breadcrumbs
   created() {
-    document.title = this.$t('sites.site')
+    document.title = this.$tc('sites.site')
     BreadcrumbsModule.SetCrumbs([
       {
         path: '/',

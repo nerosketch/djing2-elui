@@ -11,7 +11,7 @@
       prop="title"
     )
       el-input(v-model="frmMod.title")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -34,7 +34,7 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('nameOfGroup'), trigger: 'blur' }
+      { required: true, message: this.$tc('nameOfGroup'), trigger: 'blur' }
     ]
   }
 
@@ -68,7 +68,7 @@ export default class extends Vue {
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

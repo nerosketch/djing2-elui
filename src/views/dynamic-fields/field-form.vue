@@ -107,7 +107,7 @@ export default class extends Vue {
       {
         validator: _userTagsValidator,
         trigger: 'change',
-        message: this.$t('fieldTagValidation')
+        message: this.$tc('fieldTagValidation')
       }
     ]
   }

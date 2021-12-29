@@ -7,16 +7,16 @@
     v-loading="loading")
     el-form-item(:label="$t('customers.passportSerial')" prop="series")
       el-input(v-model="frmMod.series" type="number")
-  
+
     el-form-item(:label="$t('customers.passportNum')" prop="number")
       el-input(v-model="frmMod.number" type="number")
-  
+
     el-form-item(:label="$t('customers.passportDistributor')" prop="distributor")
       el-input(v-model="frmMod.distributor", :maxlength="64")
-  
+
     el-form-item(:label="$t('customers.passportDivisionCode')" prop="division_code")
       el-input(v-model="frmMod.division_code", :maxlength="64")
-  
+
     el-form-item(:label="$t('customers.passportDivisionCode')" prop="date_of_acceptance")
       el-date-picker(
         v-model="frmMod.date_of_acceptance"
@@ -73,38 +73,38 @@ export default class extends Vue {
     series: [
       {
         required: true,
-        message: this.$t('customers.passportSerialRequiredMsg'),
+        message: this.$tc('customers.passportSerialRequiredMsg'),
         trigger: 'blur'
       },
       {
         max: 4,
         trigger: 'change',
-        message: this.$t('customers.passportSerialValidationMsg'),
+        message: this.$tc('customers.passportSerialValidationMsg'),
       }
     ],
     number: [
       {
         required: true,
-        message: this.$t('customers.passportNumRequiredMsg'),
+        message: this.$tc('customers.passportNumRequiredMsg'),
         trigger: 'blur'
       },
       {
         max: 6,
         trigger: 'change',
-        message: this.$t('customers.passportNumValidatationMsg')
+        message: this.$tc('customers.passportNumValidatationMsg')
       }
     ],
     distributor: [
       {
         required: true,
-        message: this.$t('customers.passportDistributorRequiredMsg'),
+        message: this.$tc('customers.passportDistributorRequiredMsg'),
         trigger: 'blur'
       }
     ],
     date_of_acceptance: [
       {
         required: true,
-        message: this.$t('customers.passportDateOfAcceptanceRequiredMsg'),
+        message: this.$tc('customers.passportDateOfAcceptanceRequiredMsg'),
         trigger: 'blur'
       }
     ]
@@ -121,7 +121,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

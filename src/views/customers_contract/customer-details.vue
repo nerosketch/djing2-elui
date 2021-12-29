@@ -84,13 +84,13 @@ export default class extends Vue {
 
   private delContract(c: ICustomerContract) {
     if (!c.id) return
-    this.$confirm(this.$t('contractDocs.delQuestion'), {
-      confirmButtonText: this.$t('yes'),
-      cancelButtonText: this.$t('no')
+    this.$confirm(this.$tc('contractDocs.delQuestion'), {
+      confirmButtonText: this.$tc('yes'),
+      cancelButtonText: this.$tc('no')
     }).then(() => {
       delContract(c.id as any).then(() => {
         this.$message.success(
-          this.$t('contractDocs.delOk')
+          this.$tc('contractDocs.delOk')
         )
         this.loadContracts()
       })

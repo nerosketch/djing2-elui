@@ -7,14 +7,14 @@
           :key="srv.id"
           :label="srv.title"
           :value="srv.id")
-  
+
     el-form-item(:label="$t('endDate')")
       el-date-picker(
         v-model="frmMod.deadline"
         type="datetime"
         value-format="yyyy-MM-dd HH:mm"
         format="d.MM.yyyy HH:mm")
-  
+
     el-form-item
       el-button(
         type="success"
@@ -73,7 +73,7 @@ export default class extends Vue {
     this.loading = true
     if (this.frmMod.service_id === 0) {
       this.$message.error(
-        this.$t('customers.chooseServiceNecessary').toString()
+        this.$tc('customers.chooseServiceNecessary').toString()
       )
       return
     }

@@ -74,32 +74,32 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'network',
-      label: this.$t('subnet'),
+      label: this.$tc('subnet'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'description',
-      label: this.$t('description'),
+      label: this.$tc('description'),
       'min-width': 300
     },
     {
       prop: 'ip_start',
-      label: this.$t('startIp'),
+      label: this.$tc('startIp'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'ip_end',
-      label: this.$t('ipend'),
+      label: this.$tc('ipend'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
     },
     {
       prop: 'gateway',
-      label: this.$t('gateway'),
+      label: this.$tc('gateway'),
       sortable: true,
       align: DataTableColumnAlign.CENTER,
       'min-width': 150
@@ -112,7 +112,7 @@ export default class extends Vue {
     },
     {
       prop: 'usage_count',
-      label: this.$t('issued'),
+      label: this.$tc('issued'),
       'min-width': 100,
       align: DataTableColumnAlign.CENTER
     },
@@ -124,7 +124,7 @@ export default class extends Vue {
     },
     {
       prop: 'oper',
-      label: this.$t('buttons'),
+      label: this.$tc('buttons'),
       'min-width': 160,
       align: DataTableColumnAlign.CENTER
     }
@@ -138,11 +138,11 @@ export default class extends Vue {
   get dialogTitle() {
     let w
     if (NetworkIpPoolModule.id === 0) {
-      w = this.$t('add').toString()
+      w = this.$tc('add').toString()
     } else {
-      w = this.$t('change').toString()
+      w = this.$tc('change').toString()
     }
-    return this.$t('w-podset', [w])
+    return this.$t('networks.tPool', [w])
   }
 
   private async openEdit(pool: INetworkIpPool) {
@@ -156,9 +156,9 @@ export default class extends Vue {
   }
 
   private delPool(pool: INetworkIpPool) {
-    this.$confirm(this.$t('aus2delIpPool', [pool.network])).then(async() => {
+    this.$confirm(this.$t('aus2delIpPool', [pool.network]) as string).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
-      this.$message.success(this.$t('substanceRemoved'))
+      this.$message.success(this.$tc('substanceRemoved'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -172,7 +172,7 @@ export default class extends Vue {
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success(this.$t('substanceRetained'))
+    this.$message.success(this.$tc('substanceRetained'))
     this.$refs.table.LoadTableData()
   }
 
@@ -181,7 +181,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('webOwnershipMaintained'))
+      this.$message.success(this.$tc('webOwnershipMaintained'))
     })
     this.sitesDlg = false
   }

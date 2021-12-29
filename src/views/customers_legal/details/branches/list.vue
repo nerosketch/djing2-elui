@@ -10,11 +10,11 @@
         template(v-slot:default="{row}")
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: row.id }}")
             | {{ row.username }}
-    
+
       el-table-column(:label="$t('customersLegal.fname')" prop="full_name")
-    
+
       el-table-column(:label="$t('customersLegal.tel')" prop="telephone")
-    
+
       el-table-column(label="#", width="50")
         template(v-slot:default="{row}")
           el-button(
@@ -22,14 +22,14 @@
             type="danger"
             circle
             @click="delBranch(row)")
-    
+
       template(v-slot:append)
         el-button(
           type="success"
           icon="el-icon-plus"
           @click="addBranch")
           | {{ $t('add') }}
-  
+
     el-dialog(
       :title="$t('customersLegal.addBranch')"
       :visible.sync="branchFormVisible"
@@ -95,7 +95,7 @@ export default class extends Vue {
   }
 
   private delBranch(customer: ICustomer) {
-    this.$confirm(`${this.$t('customersLegal.delBranch')} "${customer.full_name}"?`).then(async () => {
+    this.$confirm(`${this.$tc('customersLegal.delBranch')} "${customer.full_name}"?`).then(async () => {
       const branches = CustomerLegalModule.branches
       const br = branches.findIndex(b => b === customer.id)
       if (br > -1) {
@@ -103,7 +103,7 @@ export default class extends Vue {
         await CustomerLegalModule.updateCustomerLegal({ branches })
         this.loadBranches(this.customerId)
         this.$message.success(
-          this.$t('customersLegal.branchDeleted')
+          this.$tc('customersLegal.branchDeleted')
         )
       }
     })

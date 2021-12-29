@@ -9,15 +9,15 @@
         slot(name="title", :row="row")
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerList', params:{ addrId: row.id }}")
             | {{ row.title }}
-    
+
       slot(name="buttons")
         el-button-group
           el-button(icon="el-icon-d-caret" @click="goToAfkList")
             | {{ $t('customers.afkFilter') }}
-        
+
           el-button(icon="el-icon-user-solid" @click="go2Bums")
             | {{ $t('customers.withoutAddrs') }}
-  
+
     slot
 </template>
 
@@ -42,7 +42,7 @@ export default class extends Vue {
   private innerTableColumns: IDataTableColumn[] = this.tableColumns || [
     {
       prop: 'title',
-      label: this.$t('title').toString(),
+      label: this.$tc('title').toString(),
       'min-width': 250
     }
   ]
@@ -64,7 +64,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('addrs.addresses')
+          title: this.$tc('addrs.addresses')
         }
       }
     ] as any)

@@ -6,7 +6,7 @@
         :key="comment.id"
         :comment="comment"
         @delete="delComment")
-    
+
       comment-change-log.mt5(v-else, :log="comment")
 </template>
 
@@ -30,12 +30,8 @@ export default class extends Vue {
   private comments: IExtraCommentCombinedWithTaskStateChangeLog[] = []
 
   private async loadComments() {
-    try {
-      const { data } = await getCommentsWithLogs(this.$store.state.task.id)
-      this.comments = data
-    } catch (err) {
-      this.$message.error(err)
-    }
+    const { data } = await getCommentsWithLogs(this.$store.state.task.id)
+    this.comments = data
   }
 
   created() {
@@ -49,7 +45,7 @@ export default class extends Vue {
 
   private async delComment(commentId: number) {
     await delComment(commentId)
-    this.$message.success(this.$t('commentDeleted'))
+    this.$message.success(this.$tc('commentDeleted'))
     this.loadComments()
   }
 }

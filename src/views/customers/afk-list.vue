@@ -2,23 +2,23 @@
   .app-container
     span
       | {{ $t('customers.afkReferenceDate') }}:
-  
+
     el-date-picker(
       v-model="reqParams.date_limit"
       type="datetime"
       value-format="yyyy-MM-dd HH:mm"
       format="d.MM.yyyy HH:mm"
       :placeholder="$t('customers.afkReferenceDate')")
-  
+
     span
       | {{ $t('customers.afkOutLimit') }}:
-  
+
     el-input(
       :placeholder="$t('customers.afkOutLimit')"
       :style="{width: '150px'}"
       type="number"
       v-model="reqParams.out_limit")
-  
+
     datatable(
       :columns="tableColumns"
       :getData="loadAfk"
@@ -63,19 +63,19 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_uname',
-      label: this.$t('customers.username').toString()
+      label: this.$tc('customers.username').toString()
     },
     {
       prop: 'customer_fio',
-      label: this.$t('customers.fio').toString()
+      label: this.$tc('customers.fio').toString()
     },
     {
       prop: 'last_date',
-      label: this.$t('customers.afkLastDate').toString()
+      label: this.$tc('customers.afkLastDate').toString()
     },
     {
       prop: 'timediff',
-      label: this.$t('customers.afkDuration').toString()
+      label: this.$tc('customers.afkDuration').toString()
     }
   ]
 
@@ -90,7 +90,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('customers.afkFilter').toString()
+          title: this.$tc('customers.afkFilter').toString()
         }
       }
     ] as any)

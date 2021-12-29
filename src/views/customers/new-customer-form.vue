@@ -6,16 +6,16 @@
     :model="frmMod"
     v-loading="loading")
     customer-form-fio(v-model="frmMod.fio")
-  
+
     el-form-item(:label="$t('customers.login')" prop="username")
       el-input(v-model="frmMod.username")
-  
+
     el-form-item(:label="$t('customers.phone')" prop="telephone")
       el-input(v-model="frmMod.telephone")
-  
+
     el-form-item(:label="$t('groups.group')")
       groups-choice(v-model="frmMod.group")
-  
+
     el-form-item(:label="$t('comment')")
       el-input(
         v-model="frmMod.description"
@@ -23,14 +23,14 @@
         rows="4"
         cols="40"
         autosize)
-  
+
     el-form-item(:label="$t('customers.birthDay')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
         format="d.MM.yyyy")
-  
+
     el-form-item
       el-button(
         icon="el-icon-upload"
@@ -80,26 +80,26 @@ export default class extends Vue {
     username: [
       {
         required: true,
-        message: this.$t('customers.loginFieldRequiredMsg'),
+        message: this.$tc('customers.loginFieldRequiredMsg'),
         trigger: 'blur'
       },
       {
         validator: latinValidator,
         trigger: 'change',
-        message: this.$t('customers.loginValidationMessage')
+        message: this.$tc('customers.loginValidationMessage')
       }
     ],
     telephone: [
       {
         validator: telephoneValidator,
         trigger: 'change',
-        message: this.$t('telValidation')
+        message: this.$tc('telValidation')
       }
     ],
     birth_day: [
       {
         required: true,
-        message: this.$t('customers.birthDayValidationMessage'),
+        message: this.$tc('customers.birthDayValidationMessage'),
         trigger: 'blur'
       }
     ]
@@ -142,7 +142,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

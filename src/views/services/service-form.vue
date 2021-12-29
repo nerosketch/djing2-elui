@@ -69,30 +69,30 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('nameShouldBeIndicated'), trigger: 'blur' }
+      { required: true, message: this.$tc('nameShouldBeIndicated'), trigger: 'blur' }
     ],
     descr: [
-      { required: true, message: this.$t('descriptionMandatory'), trigger: 'blur' }
+      { required: true, message: this.$tc('descriptionMandatory'), trigger: 'blur' }
     ],
     speed_in: [
       speedRule,
-      { required: true, message: this.$t('speedOut'), trigger: 'blur' }
+      { required: true, message: this.$tc('speedOut'), trigger: 'blur' }
     ],
     speed_out: [
       speedRule,
-      { required: true, message: this.$t('speedIn'), trigger: 'blur' }
+      { required: true, message: this.$tc('speedIn'), trigger: 'blur' }
     ],
     cost: [
-      { required: true, message: this.$t('thePriceShallBeSpecified'), trigger: 'blur' },
-      { validator: positiveValidator, trigger: 'change', message: this.$t('cena-dolzhna-byt-polozhitelnoi-ili-0') }
+      { required: true, message: this.$tc('thePriceShallBeSpecified'), trigger: 'blur' },
+      { validator: positiveValidator, trigger: 'change', message: this.$tc('cena-dolzhna-byt-polozhitelnoi-ili-0') }
     ]
   }
 
   private serviceTypeNames = [
-    { nm: this.$t('baseCalcFunction'), v: IServiceTypeEnum.BASE },
+    { nm: this.$tc('baseCalcFunction'), v: IServiceTypeEnum.BASE },
     { nm: 'IS', v: IServiceTypeEnum.IS },
-    { nm: this.$t('eternalService10Years'), v: IServiceTypeEnum.LONG },
-    { nm: this.$t('daily'), v: IServiceTypeEnum.DAILY }
+    { nm: this.$tc('eternalService10Years'), v: IServiceTypeEnum.LONG },
+    { nm: this.$tc('daily'), v: IServiceTypeEnum.DAILY }
   ]
 
   private frmMod = {
@@ -129,17 +129,17 @@ export default class extends mixins(FormMixin) {
           let newDat
           if (ServiceModule.id === 0) {
             newDat = await ServiceModule.AddService(this.frmMod)
-            this.$message.success(this.$t('serviceEstablished'))
+            this.$message.success(this.$tc('serviceEstablished'))
           } else {
             newDat = await ServiceModule.PatchService(this.frmMod)
-            this.$message.success(this.$t('serviceChanged'))
+            this.$message.success(this.$tc('serviceChanged'))
           }
           this.$emit('done', newDat)
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs'))
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

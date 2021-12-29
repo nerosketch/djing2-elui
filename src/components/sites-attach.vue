@@ -2,20 +2,20 @@
   div
     h4
       | В каких сайтах будет доступно
-  
+
     template(v-if="sitesList.length > 0")
       el-checkbox(
         v-for="s in sitesList"
         :key="s.id"
         :label="`${s.name} (${s.domain})`"
         v-model="s.checked")
-  
+
     span(v-else)
       i.el-icon-loading
       | Загрузка сайтов...
-  
+
     el-divider
-  
+
     el-button(
       icon="el-icon-upload"
       type="primary"

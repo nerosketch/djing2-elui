@@ -8,7 +8,7 @@
             :group.sync="filterForm.group"
             :street.sync="filterForm.street"
             :fetchGroups="fetchGroups")
-    
+
       el-col(:lg="24" :md="20")
         datatable(
           :columns="tableColumns"
@@ -26,17 +26,17 @@
                 v-if="$perms.is_superuser"
                 icon="el-icon-lock"
                 @click="openPermsDialog(row)")
-        
+
           template(#username="{row}")
             slot(name="username" :row="row")
               router-link(:to="{name: 'customerDetails', params:{uid: row.id }}")
                 | {{ row.username }}
-        
+
           template(#telephone="{row}")
             slot(name="telephone" :row="row")
               el-link(type="primary" :href="`tel:${row.telephone}`")
                 | {{ row.telephone }}
-        
+
           template(#marker_icons="{row}")
             slot(name="marker_icons" :row="row")
               template(v-if="row.marker_icons.length > 0")
@@ -44,13 +44,13 @@
                   v-for="(ic, i) in row.marker_icons"
                   :class="`m-${ic}`"
                   :key="i")
-            
+
               span(v-else)
-        
+
           template(#ping="{row}")
             slot(name="ping" :row="row")
               ping-profile(:customer="row")
-        
+
           slot(name="buttons")
             el-button-group
               el-button(
@@ -59,20 +59,20 @@
                 @click="addCustomerDialog=true"
                 :disabled="!$perms.customers.add_customer")
                 | {{ $t('customers.customerAdd') }}
-            
+
               el-button(
                 icon="el-icon-set-up"
                 @click="sitesDlg=true"
                 v-if="isSomeoneSelected")
                 | {{ $t('customers.sites') }}
-            
+
               el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
                 | {{ $t('route.forms') }}
-            
+
               slot(name="additional_button")
-  
+
     slot
-  
+
     slot(name="dialogs")
       slot(name="dialog_customer_add")
         el-dialog(
@@ -81,7 +81,7 @@
           top="5vh"
           :close-on-click-modal="false")
           new-customer-form(:selectedAddress="addrId" v-on:done="addFrmDone")
-    
+
       slot(name="dialog_rights")
         el-dialog(
           :title="$t('customers.whoHaveRightsOnCustomer')"
@@ -93,7 +93,7 @@
             :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
             :getSelectedObjectPerms="customerGetSelectedObjectPerms"
             :objId="$store.state.customer.id")
-    
+
       slot(name="dialog_sites")
         el-dialog(
           v-if="$perms.is_superuser"
@@ -101,7 +101,7 @@
           :visible.sync="sitesDlg"
           :close-on-click-modal="false")
           sites-attach(v-on:save="selectedCustomerSitesSave")
-        
+
           el-dialog(
             width="40%"
             :visible.sync="sitesDlgProgress"
@@ -179,55 +179,55 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'username',
-      label: this.$t('customers.username').toString(),
+      label: this.$tc('customers.username').toString(),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'fio',
-      label: this.$t('customers.fio').toString(),
+      label: this.$tc('customers.fio').toString(),
       'min-width': 300,
       sortable: true
     },
     {
       prop: 'address_title',
-      label: this.$t('addrs.full').toString(),
+      label: this.$tc('addrs.full').toString(),
       sortable: true,
       'min-width': 110,
       cutLeft: true
     },
     {
       prop: 'house',
-      label: this.$t('houseNumber'),
+      label: this.$tc('houseNumber'),
       sortable: true
     },
     {
       prop: 'telephone',
-      label: this.$t('customers.phone').toString(),
+      label: this.$tc('customers.phone').toString(),
       'min-width': 140
     },
     {
       prop: 'current_service_title',
-      label: this.$t('customers.service').toString(),
+      label: this.$tc('customers.service').toString(),
       'min-width': 240
     },
     {
       prop: 'balance',
-      label: this.$t('customers.balance').toString(),
+      label: this.$tc('customers.balance').toString(),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'group_title',
-      label: this.$t('groups.group').toString()
+      label: this.$tc('groups.group').toString()
     },
     {
       prop: 'marker_icons',
-      label: this.$t('customers.marker').toString()
+      label: this.$tc('customers.marker').toString()
     },
     {
       prop: 'ping',
-      label: this.$t('ping'),
+      label: this.$tc('ping'),
       'min-width': 150
     }
   ]
@@ -258,13 +258,13 @@ export default class extends mixins(TableWithAddrMixin) {
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
     this.$message.success(
-      this.$t('customers.customerAddedOk').toString()
+      this.$tc('customers.customerAddedOk').toString()
     )
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
   created() {
-    document.title = this.$t('customers.customersList').toString()
+    document.title = this.$tc('customers.customersList').toString()
     this.setCrumbs()
   }
 
@@ -278,7 +278,7 @@ export default class extends mixins(TableWithAddrMixin) {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: this.$t('addrs.addresses').toString()
+          title: this.$tc('addrs.addresses').toString()
         }
       },
       {

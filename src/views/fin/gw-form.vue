@@ -41,16 +41,16 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$t('nameOfGroup'), trigger: 'blur' },
+      { required: true, message: this.$tc('nameOfGroup'), trigger: 'blur' },
       { max: 64, trigger: 'change' }
     ],
     service_id: [
-      { required: true, message: this.$t('iLlBeSure'), trigger: 'blur' },
+      { required: true, message: this.$tc('iLlBeSure'), trigger: 'blur' },
       { max: 64, trigger: 'change' }
     ],
     slug: [
-      { required: true, message: this.$t('iLlBeSure'), trigger: 'blur' },
-      { max: 32, message: this.$t('only32Symbols'), trigger: 'change' }
+      { required: true, message: this.$tc('iLlBeSure'), trigger: 'blur' },
+      { max: 32, message: this.$tc('only32Symbols'), trigger: 'change' }
     ]
   }
 
@@ -94,7 +94,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

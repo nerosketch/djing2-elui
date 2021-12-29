@@ -7,7 +7,7 @@
       slot(name="header")
         .clearfix(v-if="title")
           | {{ title }}
-  
+
     slot(name="items")
       .text.item.list-item(
         v-for="(it, i) in items"
@@ -16,7 +16,7 @@
         v-on:click="itemClick(it, i)")
         slot(name="item", v-bind:obj="it")
           | {{ it[itemText] }}
-  
+
     slot(name="footer")
 </template>
 

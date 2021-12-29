@@ -47,7 +47,7 @@ export default class extends Vue {
 
   private frmRules = {
     descr: [
-      { required: true, message: this.$t('weNeedToNameThePort'), trigger: 'blur' }
+      { required: true, message: this.$tc('weNeedToNameThePort'), trigger: 'blur' }
     ]
   }
 
@@ -99,7 +99,7 @@ export default class extends Vue {
           this.$emit('adddone', newPort)
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

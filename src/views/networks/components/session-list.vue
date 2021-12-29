@@ -36,12 +36,12 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'assign_time',
-      label: this.$t('startTime'),
+      label: this.$tc('startTime'),
       'min-width': 130
     },
     {
       prop: 'session_duration',
-      label: this.$t('durationOfTheSession'),
+      label: this.$tc('durationOfTheSession'),
       'min-width': 200
     },
     {
@@ -51,29 +51,29 @@ export default class extends Vue {
     },
     {
       prop: 'ip_lease_mac',
-      label: this.$t('macAddress'),
+      label: this.$tc('macAddress'),
       sortable: true,
       'min-width': 150
     },
     {
       prop: 'closed',
-      label: this.$t('closed')
+      label: this.$tc('closed')
     },
     {
       prop: 'h_input_octets',
-      label: this.$t('incomingByte')
+      label: this.$tc('incomingByte')
     },
     {
       prop: 'h_output_octets',
-      label: this.$t('basedOnByte')
+      label: this.$tc('basedOnByte')
     },
     {
       prop: 'h_input_packets',
-      label: this.$t('incomingPackets')
+      label: this.$tc('incomingPackets')
     },
     {
       prop: 'h_output_packets',
-      label: this.$t('outgoingPackets')
+      label: this.$tc('outgoingPackets')
     },
     {
       prop: 'oper',
@@ -94,7 +94,7 @@ export default class extends Vue {
   }
 
   private shutdownSesion(ses: IUserSession) {
-    this.$confirm(this.$t('areYSureFinishSession')).then(async() => {
+    this.$confirm(this.$tc('areYSureFinishSession')).then(async() => {
       await delSession(ses.id)
       this.$refs.table.LoadTableData()
     }).catch(err => {

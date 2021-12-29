@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     | Порт №{{ portNum }}
-  
+
     el-table(
       :data="deviceVlans"
       v-loading="loading"
@@ -12,16 +12,16 @@
         :label="$t('title')"
         min-width="200"
         prop="title")
-    
+
       el-table-column(
         label="VID"
         min-width="64"
         prop="vid")
-    
+
       el-table-column(label="native")
         template(v-slot:default="{row}")
           boolean-icon(v-model="row.native")
-    
+
       el-table-column(:label="$t('office')")
         template(v-slot:default="{row}")
           boolean-icon(v-model="row.is_management")
@@ -63,7 +63,7 @@ export default class extends Vue {
         this.loading = false
       }
     } else {
-      this.$message.error(this.$t('parameterAndRiver'))
+      this.$message.error(this.$tc('parameterAndRiver'))
     }
   }
 }

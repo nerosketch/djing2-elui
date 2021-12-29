@@ -7,7 +7,7 @@
         lazy)
         keep-alive
           profile-list
-    
+
       el-tab-pane(
         :label="$t('profiles.profileGroups')"
         name="profilegroups"

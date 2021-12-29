@@ -2,16 +2,16 @@
   div
     p
       | Поля, отмеченные галками, будут видны.
-  
+
     template(v-if="colsLoc.length > 0")
       el-checkbox(
         v-for="(col, i) in colsLoc"
         :key="i"
         :label="col.label"
         v-model="col.visible")
-  
+
     el-divider
-  
+
     el-button(
       icon="el-icon-upload"
       type="primary"

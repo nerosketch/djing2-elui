@@ -320,7 +320,7 @@ export default class extends Vue {
         delete this.allPorts[ind].user_count
         this.allPorts[ind].isdb = false
       }
-      this.$message.success(this.$t('portSuccessfullyRemoved'))
+      this.$message.success(this.$tc('portSuccessfullyRemoved'))
     })
   }
 
@@ -352,9 +352,9 @@ export default class extends Vue {
       this.allPorts[ind].isdb = true
     }
     if (isAdd) {
-      this.$message.success(this.$t('portHasBeenSuccessfullyStored'))
+      this.$message.success(this.$tc('portHasBeenSuccessfullyStored'))
     } else {
-      this.$message.success(this.$t('portSuccessfullyChanged'))
+      this.$message.success(this.$tc('portSuccessfullyChanged'))
     }
   }
 
@@ -364,7 +364,7 @@ export default class extends Vue {
 
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
-    this.$message.success(this.$t('successfullyMaintained'))
+    this.$message.success(this.$tc('successfullyMaintained'))
     this.$router.push({ name: 'devicesList', params: { addrId: device.address.toString() } })
   }
 

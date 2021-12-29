@@ -16,7 +16,7 @@
           type="selection"
           width="40"
           align="center")
-      
+
         template(v-for="col in localCols")
           el-table-column(
             v-if="col.visible"
@@ -29,9 +29,9 @@
             template(v-slot:default="{row}")
               slot(:name="col.prop" :row="row")
                 | {{ row[col.prop] }}
-  
+
     slot(name="default")
-  
+
     el-dialog(
       title="Отображаемые поля таблицы"
       :visible.sync="editFieldsVisibleloc"

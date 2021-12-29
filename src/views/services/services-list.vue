@@ -104,54 +104,54 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 200
     },
     {
       prop: 'descr',
-      label: this.$t('description'),
+      label: this.$tc('description'),
       'min-width': 300
     },
     {
       prop: 'speed_in',
-      label: this.$t('comeIn'),
+      label: this.$tc('comeIn'),
       'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_out',
-      label: this.$t('exodus'),
+      label: this.$tc('exodus'),
       'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_burst',
-      label: this.$t('burst'),
+      label: this.$tc('burst'),
       'min-width': 100
     },
     {
       prop: 'cost',
-      label: this.$t('price'),
+      label: this.$tc('price'),
       'min-width': 90,
       sortable: true
     },
     {
       prop: 'isadm',
-      label: this.$t('admin'),
+      label: this.$tc('admin'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'usercount',
-      label: this.$t('userCnt'),
+      label: this.$tc('userCnt'),
       'min-width': 130,
       sortable: true,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: this.$t('buttons'),
+      label: this.$tc('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -175,11 +175,10 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  //- TODO: translate
   private async delSrv(srv: IService) {
-    if (confirm(this.$t('deistvitelno-udalit-uslugu-srv-title', [srv.title]))) {
+    if (confirm(this.$t('austRemoveService', [srv.title]) as string)) {
       await ServiceModule.DelService(srv.id)
-      this.$message.success(this.$t('serviceRemoved'))
+      this.$message.success(this.$tc('serviceRemoved'))
       this.$refs.table.LoadTableData()
     }
   }
@@ -234,7 +233,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('tariffs')
+          title: this.$tc('tariffs')
         }
       }
     ] as any)
@@ -246,7 +245,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('facilitiesMaintained'))
+      this.$message.success(this.$tc('facilitiesMaintained'))
     })
     this.sitesDlg = false
   }

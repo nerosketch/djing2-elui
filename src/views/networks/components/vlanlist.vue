@@ -10,39 +10,39 @@
       template(v-slot:ismng="{row}")
         boolean-icon(v-model="row.is_management")
           | &nbsp;{{ row.is_management ? $t('yes') : $t('sno') }}
-    
+
       template(v-slot:oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
-        
+
           el-button(
             icon="el-icon-edit"
             @click="openEdit(row)"
             :disabled="!$perms.networks.change_vlanif")
-        
+
           el-button(
             type="danger"
             icon="el-icon-delete"
             @click="delVlan(row)"
             :disabled="!$perms.networks.delete_vlanif")
-    
+
       el-button-group
         el-button(
           icon="el-icon-plus"
           @click="openNew"
           :disabled="!$perms.networks.add_vlanif")
           | {{ $t('add') }}
-      
+
         el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
           | {{ $t('field') }}
-  
+
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
       vlan-form(v-on:done="frmDone")
-  
+
     el-dialog(
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
@@ -79,7 +79,7 @@ export default class extends mixins(VlanMixin) {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 150
     },
@@ -91,13 +91,13 @@ export default class extends mixins(VlanMixin) {
     },
     {
       prop: 'ismng',
-      label: this.$t('iDid'),
+      label: this.$tc('iDid'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: this.$t('buttons'),
+      label: this.$tc('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
@@ -108,9 +108,9 @@ export default class extends mixins(VlanMixin) {
   private editFieldsVisible = false
 
   get dialogTitle() {
-    let w = this.$t('change')
+    let w = this.$tc('change')
     if (VlanIfModule.id === 0) {
-      w = this.$t('addendum')
+      w = this.$tc('addendum')
     }
     return `${w} vlan`
   }
@@ -126,9 +126,9 @@ export default class extends mixins(VlanMixin) {
   }
 
   private async delVlan(vlan: IVlanIf) {
-    this.$confirm(this.$t('aus2delVlan', [vlan.title])).then(async() => {
+    this.$confirm(this.$t('aus2delVlan', [vlan.title]) as string).then(async() => {
       await VlanIfModule.DelVlan(vlan.id)
-      this.$message.success(this.$t('weReCleared'))
+      this.$message.success(this.$tc('weReCleared'))
       this.$refs.table.LoadTableData()
     })
   }
@@ -145,7 +145,7 @@ export default class extends mixins(VlanMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('network')
+          title: this.$tc('network')
         }
       }
     ] as any)
@@ -157,7 +157,7 @@ export default class extends mixins(VlanMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('webOwnershipMaintained'))
+      this.$message.success(this.$tc('webOwnershipMaintained'))
     })
     this.sitesDlg = false
   }

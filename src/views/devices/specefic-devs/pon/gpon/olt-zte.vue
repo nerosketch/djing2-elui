@@ -166,7 +166,7 @@ export default class extends Vue {
 
   private frmNewOnuDone(newDev: IDevice) {
     this.saveOnuFormDialog = false
-    this.$message.success(this.$t('theNewONUIsSaved'))
+    this.$message.success(this.$tc('theNewONUIsSaved'))
     this.$router.push({ name: 'device-view', params: { devId: newDev.id.toString() } })
   }
 

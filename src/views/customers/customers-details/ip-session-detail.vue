@@ -9,76 +9,76 @@
       v-loading="detailLoading")
       template(v-slot:header)
         | {{ $t('customers.session') }}
-      
+
         el-link(
           style="float: right"
           icon="el-icon-close"
           @click="isDisplay=false"
           :underline="false")
-    
+
       template(v-if="ses")
         template(v-if="lease")
           b
             | {{ lease.ip_address }}
-        
+
           i
             | <{{ lease.mac_address }}>
-      
+
         dl
           dt
             b
               | {{ $t('customers.sessionStartTime') }}
-        
+
           dd
             | {{ ses.assign_time || '-----' }}
-        
+
           dt
             b
               | {{ $t('customers.sessionDuration') }}
-        
+
           dd
             | {{ ses.session_duration || '-----' }}
-        
+
           dt
             b
               | {{ $t('customers.sessionLastUpdate') }}
-        
+
           dd
             | {{ ses.last_event_time || '-----' }}
-        
+
           dt
             b
               | {{ $t('customers.sessionInTraf') }}
-        
+
           dd
             | {{ ses.h_input_octets || '-----' }}
-        
+
           dt
             b
               | {{ $t('customers.sessionOutTraf') }}
-        
+
           dd
             | {{ ses.h_output_octets || '-----' }}
-        
+
           dt
             b
               | {{ $t('customers.sessionInPkts') }}
-        
+
           dd
             | {{ ses.h_input_packets || '-----' }}
-        
+
           dt
             b
               | {{ $t('customers.sessionOutPkts') }}
-        
+
           dd
             | {{ ses.h_output_packets || '-----' }}
-      
+
         free-session-button(:sessionId="ses.id")
-    
+
       div(v-else)
         | {{ $t('customers.sessionNotFound') }}
-  
+
     el-button(
       slot="reference"
       icon="el-icon-s-data"

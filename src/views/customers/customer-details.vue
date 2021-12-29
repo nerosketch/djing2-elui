@@ -3,16 +3,16 @@
     slot(name="head")
       span
         | {{ $t('customers.balance') }}:
-    
+
       small
         | {{ $store.state.customer.balance }}.
-    
+
       span
         | {{ $t('startDate') }}:
-    
+
       small
         | {{ $store.state.customer.create_date }}
-  
+
     el-tabs.border-card(v-model="activeTabName")
       el-tab-pane(
         :label="$t('customers.info')"
@@ -21,7 +21,7 @@
         slot(name="info")
           keep-alive
             info(v-if="loaded")
-    
+
       el-tab-pane(
         :label="$t('route.services')"
         name="services"
@@ -30,7 +30,7 @@
         slot(name="services")
           keep-alive
             services(v-if="loaded")
-    
+
       el-tab-pane(
         :label="$t('route.finance')"
         name="fin"
@@ -39,7 +39,7 @@
         slot(name="fin")
           keep-alive
             finance(v-if="loaded")
-    
+
       el-tab-pane(
         :label="$t('customers.taskHistory')"
         name="history"
@@ -48,7 +48,7 @@
         slot(name="history")
           keep-alive
             customer-task-history(v-if="loaded")
-    
+
       el-tab-pane(
         :label="$t('customers.trafHistory')"
         name="traf"
@@ -58,11 +58,11 @@
             el-card(v-if="loaded")
               template(#header)
                 | {{ $t('customers.trafHistory') }}
-            
+
               traf-report(:customerId="uid")
-    
+
       slot(name="additional_tabs")
-  
+
     slot
 </template>
 
@@ -116,7 +116,7 @@ export default class extends mixins(TabMixin) {
     await CustomerModule.GetCustomer(this.uid)
     this.loaded = true
     this.setCrumbs(this.$store.state.customer.address)
-    document.title = this.$store.state.customer.full_name || this.$t('customers.customer').toString()
+    document.title = this.$store.state.customer.full_name || this.$tc('customers.customer').toString()
   }
 
   private onCustomerServerUpdate(msg: IWsMessage) {
@@ -134,7 +134,7 @@ export default class extends mixins(TabMixin) {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: this.$t('addrs.addresses').toString()
+          title: this.$tc('addrs.addresses').toString()
         }
       },
       /* {

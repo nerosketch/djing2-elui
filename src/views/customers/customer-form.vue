@@ -7,54 +7,54 @@
     :model="frmMod"
     v-loading="isLoading")
     customer-form-fio(v-model="frmMod.fio")
-  
+
     el-form-item(:label="$t('customers.username')" prop="username")
       el-input(v-model="frmMod.username")
-  
+
     el-form-item(:label="$t('customers.phone')" prop="telephone")
       tels-input(v-model="frmMod.telephone")
-  
+
     el-form-item(:label="$t('house(Old)')")
       el-input(
         v-model="frmMod.house"
         :maxlength="12"
         readonly
         disabled)
-  
+
     el-form-item(:label="$t('customers.birthDay')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
         type="date"
         value-format="yyyy-MM-dd"
         format="d.MM.yyyy")
-  
+
     el-form-item(:label="$t('groups.group')")
       groups-choice(v-model="frmMod.group")
-  
+
     el-form-item(:label="$t('customers.options')")
       el-checkbox(v-model="frmMod.is_active")
         | - {{ $t('customers.isActive') }}:
-      
+
         boolean-icon(v-model="frmMod.is_active")
-    
+
       el-checkbox(v-model="frmMod.is_dynamic_ip")
         | - {{ $t('customers.dhcpDynamic') }}:
-      
+
         boolean-icon(v-model="frmMod.is_dynamic_ip")
-  
+
     el-form-item(:label="$t('addrs.addr')")
       addr-field-input(v-model="frmMod.address")
-  
+
     el-form-item(:label="$t('customers.gateway')")
       gws-selectfield(v-model="frmMod.gateway")
-  
+
     el-form-item(:label="$t('customers.additionalInfo')")
       el-input(
         v-model="frmMod.description"
         type="textarea"
         rows="5"
         cols="40")
-  
+
     el-form-item
       el-button-group
         el-button(
@@ -64,50 +64,50 @@
           :loading="isLoading"
           :disabled="isFormUntouched")
           | {{ $t('save') }}
-      
+
         el-button(
           type="success"
           icon="el-icon-plus"
           @click="openTaskFormDialog"
           :loading="taskFormDialogLoading")
           | {{ $t('tasks.add') }}
-      
+
         el-button(
           @click="openPasportDlg = true"
           icon="el-icon-paperclip"
           :disabled="!$perms.customers.view_passportinfo")
           | {{ $t('customers.passport') }}
-      
+
         el-button(@click="openPasswordDlg = true", icon="el-icon-lock")
           | {{ $t('customers.password') }}
-      
+
         el-button(
           v-if="$perms.is_superuser"
           @click="sitesDlg = true"
           icon="el-icon-lock")
           | {{ $t('customers.sites') }}
-      
+
         el-button(
           type="danger"
           :title="$t('customers.fullDelTitle')"
           icon="el-icon-close"
           @click="delCustomer")
           | {{ $t('del') }}
-  
+
     el-dialog(
       :title="$t('customers.passportLong')"
       :visible.sync="openPasportDlg"
       :close-on-press-escape="false"
       :close-on-click-modal="false")
       passport(v-on:done="openPasportDlg=false")
-  
+
     el-dialog(
       :title="$t('tasks.adding')"
       :visible.sync="taskFormDialog"
       :close-on-press-escape="false"
       :close-on-click-modal="false")
       task-form
-  
+
     el-dialog(
       :title="$t('customers.passwordLong')"
       :visible.sync="openPasswordDlg"
@@ -117,7 +117,7 @@
         :customerId="$store.state.customer.id"
         :initialPassw="$store.state.customer.raw_password"
         v-on:done="openPasswordDlg=false")
-  
+
     el-dialog(
       :title="$t('customers.sitesAccessory')"
       :visible.sync="sitesDlg"
@@ -170,13 +170,13 @@ export default class extends mixins(FormMixin) {
     username: [
       {
         required: true,
-        message: this.$t('customers.usernameRequiredValidatorErrText'),
+        message: this.$tc('customers.usernameRequiredValidatorErrText'),
         trigger: 'blur'
       },
       {
         validator: latinValidator,
         trigger: 'change',
-        message: this.$t('customers.usernameFilterValidatorErrText')
+        message: this.$tc('customers.usernameFilterValidatorErrText')
       }
     ],
     telephone: [
@@ -185,7 +185,7 @@ export default class extends mixins(FormMixin) {
     birth_day: [
       {
         required: true,
-        message: this.$t('customers.birthDayRequiredValidatorErrText'),
+        message: this.$tc('customers.birthDayRequiredValidatorErrText'),
         trigger: 'blur'
       }
     ]
@@ -224,26 +224,26 @@ export default class extends mixins(FormMixin) {
           const newDat = await CustomerModule.PatchCustomer(this.frmMod)
           this.$emit('done', newDat)
           this.$message.success(
-            this.$t('customers.customerSavedOk').toString()
+            this.$tc('customers.customerSavedOk').toString()
           )
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
 
   private delCustomer() {
     this.$confirm(
-      this.$t('customers.customerDeletionConfigmation').toString(),
-      this.$t('attention').toString()
+      this.$tc('customers.customerDeletionConfigmation').toString(),
+      this.$tc('attention').toString()
     ).then(async() => {
       const currLoc = this.$store.state.customer.address
       await CustomerModule.DelCustomer()
       this.$message.success(
-        this.$t('customers.accountRemovedOk').toString()
+        this.$tc('customers.accountRemovedOk').toString()
       )
       this.$router.push({ name: 'customerList', params: { addrId: currLoc.toString() } })
     })
@@ -273,7 +273,7 @@ export default class extends mixins(FormMixin) {
             params: { taskId: data.task_id.toString() }
           })
         } else {
-          this.$message.error(this.$t('idEcspectedRumBaccand'))
+          this.$message.error(this.$tc('idEcspectedRumBaccand'))
         }
       }
     } finally {
@@ -286,7 +286,7 @@ export default class extends mixins(FormMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$message.success(
-        this.$t('customers.siteAccessorySavedOk').toString()
+        this.$tc('customers.siteAccessorySavedOk').toString()
       )
     })
     this.sitesDlg = false

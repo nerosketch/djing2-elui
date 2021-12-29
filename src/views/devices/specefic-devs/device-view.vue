@@ -5,11 +5,11 @@
         :device="device"
         v-if="[3,6,7].includes(device.dev_type)"
         v-on:reqrefresh="getDevice")
-    
+
       pon-bdcom-olt(v-else-if="device.dev_type === 2", :device="device")
-    
+
       olt-zte(:device="device", v-else-if="device.dev_type === 5")
-    
+
       switch-view(:device="device", v-else)
 </template>
 
@@ -88,7 +88,7 @@ export default class extends Vue {
           path: '/devices',
           meta: {
             hidden: true,
-            title: this.$t('equipment')
+            title: this.$tc('equipment')
           }
         },
         {

@@ -62,26 +62,26 @@ export default class extends Vue {
     table: DataTableComp
   }
 
-  private dialogTitle = this.$t('payableLock')
+  private dialogTitle = this.$tc('payableLock')
   private dialogVisible = false
   private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'service_id',
-      label: this.$t('id'),
+      label: this.$tc('id'),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'servants',
-      label: this.$t('path')
+      label: this.$tc('path')
     },
     {
       prop: 'secret',
@@ -89,11 +89,11 @@ export default class extends Vue {
     },
     {
       prop: 'pay_count',
-      label: this.$t('numberOfPayments')
+      label: this.$tc('numberOfPayments')
     },
     {
       prop: 'oper',
-      label: this.$t('buttons'),
+      label: this.$tc('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -108,12 +108,12 @@ export default class extends Vue {
 
   private openEdit(gw: IPayAllTimeGateway) {
     PayAllTimeGatewayModule.SET_ALL_PAYGW(gw)
-    this.dialogTitle = this.$t('modifyThePlausibleLock')
+    this.dialogTitle = this.$tc('modifyThePlausibleLock')
     this.dialogVisible = true
   }
 
   private delPayGw(gw: IPayAllTimeGateway) {
-    this.$confirm(this.$t('removePayGWQuestion')).then(async() => {
+    this.$confirm(this.$tc('removePayGWQuestion')).then(async() => {
       await PayAllTimeGatewayModule.DelPayGroup(gw.id)
       this.$refs.table.LoadTableData()
     })
@@ -121,14 +121,14 @@ export default class extends Vue {
 
   private openNew() {
     PayAllTimeGatewayModule.RESET_ALL_PAYGW()
-    this.dialogTitle = this.$t('createAPayLock')
+    this.dialogTitle = this.$tc('createAPayLock')
     this.dialogVisible = true
   }
 
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.LoadTableData()
-    this.$message.success(this.$t('payableLockAdded'))
+    this.$message.success(this.$tc('payableLockAdded'))
   }
 
   // Breadcrumbs
@@ -138,7 +138,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('finance')
+          title: this.$tc('finance')
         }
       }
     ] as any)
@@ -150,7 +150,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
-      this.$message.success(this.$t('theContentOfThePayloadableSiteIsMaintained'))
+      this.$message.success(this.$tc('theContentOfThePayloadableSiteIsMaintained'))
     })
     this.sitesDlg = false
   }

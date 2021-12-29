@@ -3,7 +3,7 @@
     template(v-slot:header)
       .clearfix
         | {{ $t('customers.networking') }}
-  
+
     el-table(
       v-loading="loading"
       :data="leases"
@@ -13,29 +13,29 @@
         :label="$t('ipAddress')"
         min-width="110"
         prop="ip_address")
-    
+
       el-table-column(
         :label="$t('macAddress')"
         min-width="110"
         prop="mac_address")
-    
+
       el-table-column(
         :label="$t('customers.leaseTime')"
         min-width="110"
         prop="lease_time")
-    
+
       el-table-column(
         :label="$t('customers.sessionLastUpdate')"
         min-width="110"
         prop="last_update")
-    
+
       el-table-column(
         :label="$t('customers.auto')"
         align="center"
         width="50")
         template(v-slot:default="{row}")
           boolean-icon(v-model="row.is_dynamic")
-    
+
       el-table-column(
         label="#"
         align="center"
@@ -46,22 +46,22 @@
               type="danger"
               icon="el-icon-delete"
               @click="delLease(row)")
-          
+
             el-button(
               type="primary"
               icon="el-icon-edit"
               @click="editLease(row)")
-          
+
             lease-ping(:lease="row")
-          
+
             ip-session-detail(:lease="row")
-  
+
     el-button(
       type="success"
       icon="el-icon-plus"
       @click="addLease")
       | {{ $t('add') }}
-  
+
     el-dialog(
       :title="(isAddNewLease ? $t('add') : $t('change')) + ' ' + $t('customers.minASessionLease')"
       :visible.sync="editDialog"
@@ -134,14 +134,14 @@ export default class extends Vue {
   }
 
   public delLease(lease: ICustomerIpLease) {
-    this.$confirm(this.$t('customers.areUSure2DelIpLease').toString(), {
-      confirmButtonText: this.$t('yes').toString(),
-      cancelButtonText: this.$t('no').toString()
+    this.$confirm(this.$tc('customers.areUSure2DelIpLease').toString(), {
+      confirmButtonText: this.$tc('yes').toString(),
+      cancelButtonText: this.$tc('no').toString()
     }).then(async() => {
       try {
         await CustomerIpLeaseModule.DelLease(lease.id)
         this.$message.success(
-          this.$t('customers.ipLeaseSuccessfullyRemoved').toString()
+          this.$tc('customers.ipLeaseSuccessfullyRemoved').toString()
         )
         this.loadLeases()
       } catch (err) {

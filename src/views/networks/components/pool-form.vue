@@ -82,23 +82,23 @@ export default class extends mixins(FormMixin, VlanMixin) {
 
   private frmRules = {
     network: [
-      { required: true, message: this.$t('weNeedToSign'), trigger: 'blur' },
-      { validator: ipAddrMaskValidator, trigger: 'change', message: this.$t('example1921680024') }
+      { required: true, message: this.$tc('weNeedToSign'), trigger: 'blur' },
+      { validator: ipAddrMaskValidator, trigger: 'change', message: this.$tc('example1921680024') }
     ],
     description: [
-      { required: true, message: this.$t('iNeedADescription'), trigger: 'blur' }
+      { required: true, message: this.$tc('iNeedADescription'), trigger: 'blur' }
     ],
     ip_start: [
-      { required: true, message: this.$t('startPoint'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example192168023') }
+      { required: true, message: this.$tc('startPoint'), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('example192168023') }
     ],
     ip_end: [
-      { required: true, message: this.$t('finalNeedToBeIndicated'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('example192168023') }
+      { required: true, message: this.$tc('finalNeedToBeIndicated'), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('example192168023') }
     ],
     gateway: [
-      { required: true, message: this.$t('youNeedToPointOutTheLock'), trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: this.$t('exampleOfLock19216801') }
+      { required: true, message: this.$tc('youNeedToPointOutTheLock'), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('exampleOfLock19216801') }
     ]
   }
 
@@ -116,12 +116,12 @@ export default class extends mixins(FormMixin, VlanMixin) {
   }
 
   private networkPoolKinds = [
-    { val: 0, title: this.$t('notDefined') },
-    { val: 1, title: this.$t('internet') },
-    { val: 2, title: this.$t('hotel') },
-    { val: 3, title: this.$t('trustee') },
-    { val: 4, title: this.$t('route.devices') },
-    { val: 5, title: this.$t('administrative') }
+    { val: 0, title: this.$tc('notDefined') },
+    { val: 1, title: this.$tc('internet') },
+    { val: 2, title: this.$tc('hotel') },
+    { val: 3, title: this.$tc('trustee') },
+    { val: 4, title: this.$tc('route.devices') },
+    { val: 5, title: this.$tc('administrative') }
   ]
 
   @Watch('$store.state.netpool', { deep: true })
@@ -157,7 +157,7 @@ export default class extends mixins(FormMixin, VlanMixin) {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$t('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

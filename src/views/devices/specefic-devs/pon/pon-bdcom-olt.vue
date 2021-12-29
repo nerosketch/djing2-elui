@@ -162,7 +162,7 @@ export default class extends Vue {
 
   private frmDone(newOnu: IDevice) {
     this.dialogVisible = false
-    this.$message.success(this.$t('theNewONUIsSaved'))
+    this.$message.success(this.$tc('theNewONUIsSaved'))
     this.$router.push({
       name: 'device-view',
       params: {

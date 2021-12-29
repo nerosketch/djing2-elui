@@ -8,12 +8,12 @@
         :placeholder="$t('customers.passwordLong')")
         template(v-slot:append)
           el-button(@click="togglePwd", :icon="passwordType === 'password' ? 'el-icon-view' : 'el-icon-minus'")
-        
+
           el-button(
             @click="genPasw"
             :loading="passwLoading"
             icon="el-icon-refresh")
-  
+
     el-form-item
       el-button(
         type="primary"
@@ -51,7 +51,7 @@ export default class extends Vue {
       this.loading = true
       const { data } = await changeCustomer(this.customerId, this.frmMod)
       this.$message.success(
-        this.$t('customers.passwordUpdateOk').toString()
+        this.$tc('customers.passwordUpdateOk').toString()
       )
       this.$emit('done', data)
     } catch (err) {

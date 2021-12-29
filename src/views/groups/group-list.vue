@@ -90,13 +90,13 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$t('title'),
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: this.$t('buttons'),
+      label: this.$tc('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -119,11 +119,11 @@ export default class extends Vue {
   get dialogTitle() {
     let t
     if (this.groupIdGetter === 0) {
-      t = this.$t('add').toString()
+      t = this.$tc('add').toString()
     } else {
-      t = this.$t('change').toString()
+      t = this.$tc('change').toString()
     }
-    return `${t} ${this.$t('groups.minAGroup')}`
+    return `${t} ${this.$tc('groups.minAGroup')}`
   }
 
   get groupIdGetter() {
@@ -138,16 +138,16 @@ export default class extends Vue {
   }
 
   private delGroup(group: IGroup) {
-    this.$confirm(`${this.$t('areUSuretRemoveGroup')} ${group.title}?`).then(async() => {
+    this.$confirm(`${this.$tc('areUSuretRemoveGroup')} ${group.title}?`).then(async() => {
       await GroupModule.DelGroup(group.id)
-      this.$message.success(`${this.$t('groupRemoved')} ${group.title}`)
+      this.$message.success(`${this.$tc('groupRemoved')} ${group.title}`)
       this.$refs.grouptable.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success(this.$t('groupRetained'))
+    this.$message.success(this.$tc('groupRetained'))
     this.$refs.grouptable.LoadTableData()
   }
 
@@ -158,7 +158,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('route.groups')
+          title: this.$tc('route.groups')
         }
       }
     ] as any)
@@ -188,7 +188,7 @@ export default class extends Vue {
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.grouptable.LoadTableData()
-      this.$message.success(this.$t('theOwnershipOfThe'))
+      this.$message.success(this.$tc('theOwnershipOfThe'))
     })
     this.sitesDlg = false
   }

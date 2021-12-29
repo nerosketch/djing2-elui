@@ -104,7 +104,7 @@ export default class extends Vue {
 
   private pickerOptions = {
     shortcuts: [{
-      text: this.$t('lastWeek'),
+      text: this.$tc('lastWeek'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -112,7 +112,7 @@ export default class extends Vue {
         picker.$emit('pick', [start, end])
       }
     }, {
-      text: this.$t('lastMonth'),
+      text: this.$tc('lastMonth'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -120,7 +120,7 @@ export default class extends Vue {
         picker.$emit('pick', [start, end])
       }
     }, {
-      text: this.$t('last3Months'),
+      text: this.$tc('last3Months'),
       onClick(picker: Vue) {
         const end = new Date()
         const start = new Date()
@@ -140,14 +140,14 @@ export default class extends Vue {
         path: '/fin',
         meta: {
           hidden: true,
-          title: this.$t('finance')
+          title: this.$tc('finance')
         }
       },
       {
         path: '',
         meta: {
           hidden: true,
-          title: this.$t('incomeReport')
+          title: this.$tc('incomeReport')
         }
       }
     ] as any)
@@ -164,7 +164,7 @@ export default class extends Vue {
     try {
       const { data } = await getPayGateways() as any
       data.unshift({
-        title: this.$t('notSelected'),
+        title: this.$tc('notSelected'),
         id: 0
       })
       this.payGateways = data
@@ -175,7 +175,7 @@ export default class extends Vue {
 
   private downloadCsv() {
     const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
-    dat.unshift([this.$t('date'), this.$t('amount'), this.$t('paycount')])
+    dat.unshift([this.$tc('date'), this.$tc('amount'), this.$tc('paycount')])
     const sdat = dat.join('\n')
     save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
   }

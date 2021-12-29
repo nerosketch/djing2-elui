@@ -5,12 +5,12 @@
     border
     fit)
     el-table-column(:label="$t('customers.phoneOwner')" prop="owner_name")
-  
+
     el-table-column(:label="$t('customers.phone')")
       template(v-slot:default="{row}")
         el-link(:href="`tel:${row.telephone}`")
           | {{ row.telephone }}
-  
+
     el-table-column(
       :label="$t('del')"
       width="75"
@@ -53,11 +53,11 @@ export default class extends Vue {
 
   private delTel(tel: IAdditionalTelephone) {
     this.$confirm(
-      this.$t('customers.areUShure2DelAdditionalPhone').toString()
+      this.$tc('customers.areUShure2DelAdditionalPhone').toString()
     ).then(async() => {
       await AdditionalTelephoneModule.DelTelephone(tel.id)
       this.$message.success(
-        this.$t('deleted').toString()
+        this.$tc('deleted').toString()
       )
       this.loadTels()
     })

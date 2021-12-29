@@ -5,9 +5,9 @@
       :key="srv.id"
       :label="srv.title"
       v-model="srv.state")
-  
+
     el-divider
-  
+
     el-button(
       icon="el-icon-upload"
       type="primary"
@@ -81,7 +81,7 @@ export default class extends Vue {
     const res = selectedState.map(s => s.id)
     await CustomerModule.SetServiceGroupAccessory(res)
     this.$message.success(
-      this.$t('customers.groupsSuccessAttached').toString()
+      this.$tc('customers.groupsSuccessAttached').toString()
     )
     this.$emit('done')
   }

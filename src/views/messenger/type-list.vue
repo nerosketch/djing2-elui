@@ -31,7 +31,7 @@ export default class extends mixins(BotTypesMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$t('messengers')
+          title: this.$tc('messengers')
         }
       }
     ] as any)
