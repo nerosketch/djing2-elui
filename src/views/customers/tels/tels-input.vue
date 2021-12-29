@@ -1,37 +1,35 @@
 <template lang="pug">
-div
-  el-input(v-model="myTel")
-    template(v-slot:append)
-      el-button(
-        icon='el-icon-phone'
-        circle
-        @click="doCall"
-      )
-      el-button(
-        @click="openTelsDlg=true"
-        :disabled="!$perms.customers.view_additionaltelephone"
-        circle icon='el-icon-s-order'
-      )
-      el-button(
-        @click="openAddTels"
-        :disabled="!$perms.customers.add_additionaltelephone"
-        circle icon='el-icon-plus'
-      )
-  el-dialog(
-    title="Дополнительные телефоны"
-    :visible.sync="openTelsDlg"
-    :close-on-click-modal="false"
-  )
-    additional-tels(ref="additionaltels")
-  el-dialog(
-    title="Добавить телефон"
-    :visible.sync="openAddTelsDlg"
-    :close-on-click-modal="false"
-  )
-    tel-form(
-      :customer="$store.state.customer.id"
-      v-on:done="telsFormDone"
-    )
+  div
+    el-input(v-model="myTel")
+      template(#append)
+        el-button(
+          icon="el-icon-phone"
+          circle
+          @click="doCall")
+
+        el-button(
+          @click="openTelsDlg=true"
+          :disabled="!$perms.customers.view_additionaltelephone"
+          circle
+          icon="el-icon-s-order")
+
+        el-button(
+          @click="openAddTels"
+          :disabled="!$perms.customers.add_additionaltelephone"
+          circle
+          icon="el-icon-plus")
+
+    el-dialog(
+      :title="$t('customers.additionalPhones')"
+      :visible.sync="openTelsDlg"
+      :close-on-click-modal="false")
+      additional-tels(ref="additionaltels")
+
+    el-dialog(
+      :title="$t('customers.addPhone')"
+      :visible.sync="openAddTelsDlg"
+      :close-on-click-modal="false")
+      tel-form(:customer="$store.state.customer.id", v-on:done="telsFormDone")
 </template>
 
 <script lang="ts">
@@ -52,6 +50,7 @@ export default class extends Vue {
   public readonly $refs!: {
     additionaltels: AdditionalTels
   }
+
   private myTel = ''
   private openTelsDlg = false
   private openAddTelsDlg = false

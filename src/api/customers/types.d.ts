@@ -4,26 +4,19 @@ import {
   IDRFListResponse,
   IDRFRequestListParameters
 } from '@/api/types'
-import { IGroup } from '@/api/groups/types'
+import { IBaseAccount } from '@/api/base_account'
 import { IService } from '@/api/services/types'
 import { AxiosPromise } from 'axios'
 
 // ICustomer
-export interface ICustomer {
-  id: number
-  username: string
-  telephone: string
-  fio: string
-  birth_day: string
-  create_date: string
+export interface ICustomer extends IBaseAccount{
   group: number
   group_title?: string
+  address: number
+  address_title: string
   balance: number
   description: string
-  street: number
-  street_name?: string
   house: string
-  is_active: boolean
   gateway: number
   gateway_title?: string
   auto_renewal_service: boolean
@@ -33,13 +26,12 @@ export interface ICustomer {
   last_connected_service: number | null
   last_connected_service_title: string
   current_service: number | null
-  current_service__service__title?: string | null
+  current_service_title?: string | null
   service_id: number | null
   is_dynamic_ip: boolean
   full_name?: string
   raw_password?: string
   lease_count: number
-  sites: number[]
   traf_octs: number | null
   marker_icons: string[]
 }
@@ -54,20 +46,7 @@ export interface ICustomerOnPort {
   dev_port: number
   full_name: string
 }
-export type ICustomerOnPortAxoisPromise = AxiosPromise<ICustomerOnPort>
 export type ICustomersOnPortAxoisPromise = AxiosPromise<ICustomerOnPort[]>
-
-export interface IDRFRequestListParametersCustomer extends IDRFRequestListParameters {
-  group: number
-  street?: number
-}
-
-export interface ICustomerGroup extends IGroup {
-  usercount: number
-}
-export type ICustomerGroupList = IDRFListResponse<ICustomerGroup>
-export type ICustomerGroupAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerGroup>
-export type ICustomerGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerGroupList>
 
 export interface IServiceUser {
   id: number
@@ -76,7 +55,6 @@ export interface IServiceUser {
   fio: string
 }
 export type IServiceUserList = IServiceUser[]
-export type IServiceUserAxoisResponsePromise = IDRFAxiosResponsePromise<IServiceUser>
 export type IServiceUserListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceUserList>
 
 export interface ICustomerFrm {
@@ -85,7 +63,7 @@ export interface ICustomerFrm {
   fio: string
   birth_day: string | null
   group: number
-  street: number | null
+  address: number
   house: string
   is_active: boolean
   is_dynamic_ip: boolean
@@ -107,7 +85,6 @@ export interface IAdditionalTelephone {
   customer: number
 }
 export type IAdditionalTelephoneList = IDRFListResponse<IAdditionalTelephone>
-export type IAdditionalTelephoneAxoisResponsePromise = IDRFAxiosResponsePromise<IAdditionalTelephone>
 export type IAdditionalTelephoneListAxiosResponsePromise = IDRFAxiosResponsePromise<IAdditionalTelephoneList>
 
 // ICustomerLog
@@ -119,18 +96,6 @@ export interface ICustomerLog {
   comment: string
   date: string
 }
-export type ICustomerLogList = IDRFListResponse<ICustomerLog>
-export type ICustomerLogListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerLogList>
-
-// ICustomerStreet
-export interface ICustomerStreet {
-  id: number
-  name: string
-  group: number
-}
-export type ICustomerStreetList = IDRFListResponse<ICustomerStreet>
-export type ICustomerStreetAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerStreet>
-export type ICustomerStreetListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerStreetList>
 
 // ICustomerService
 export interface ICustomerService {
@@ -155,9 +120,6 @@ export interface IInvoice4Payment {
   customer: number
   author: number
 }
-export type IInvoice4PaymentList = IDRFListResponse<IInvoice4Payment>
-export type IInvoice4PaymentAxoisResponsePromise = IDRFAxiosResponsePromise<IInvoice4Payment>
-export type IInvoice4PaymentListAxiosResponsePromise = IDRFAxiosResponsePromise<IInvoice4PaymentList>
 export interface IDRFRequestListParametersInvoice extends IDRFRequestListParameters {
   customer: number
 }
@@ -170,8 +132,9 @@ export interface IPassportInfo {
   distributor: string
   date_of_acceptance: string
   division_code: string
+  registration_address: number
+  registration_address_title: string
 }
-export type IPassportInfoList = IDRFListResponse<IPassportInfo>
 export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
 
 // IBalanceAmountRequest
@@ -230,8 +193,7 @@ export interface IPeriodicPayForId {
 }
 export type IPeriodicPayForIdList = IDRFListResponse<IPeriodicPayForId>
 // export type IPeriodicPayForIdAxoisResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForId>
-export type IPeriodicPayForIdListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForIdList> | IDRFAxiosResponsePromise<IPeriodicPayForId[]>
-
+export type IPeriodicPayForIdListAxiosResponsePromise = IDRFAxiosResponsePromise<IPeriodicPayForIdList>
 
 export interface IBuyPayloadType {
   service_id: number,

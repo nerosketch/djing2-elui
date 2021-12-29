@@ -1,19 +1,16 @@
-<template>
-  <div
-    :class="classObj"
-    class="app-wrapper"
-  >
-    <div
+<template lang="pug">
+  .app-wrapper(:class="classObj")
+    .drawer-bg(
       v-if="classObj.mobile && sidebar.opened"
-      class="drawer-bg"
       @click="handleClickOutside"
-    />
-    <sidebar class="sidebar-container" />
-    <div class="main-container">
-      <navbar />
-      <app-main />
-    </div>
-  </div>
+    )
+
+    sidebar.sidebar-container
+
+    .main-container
+      navbar
+
+      app-main
 </template>
 
 <script lang="ts">

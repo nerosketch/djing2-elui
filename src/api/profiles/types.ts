@@ -1,28 +1,15 @@
 /* eslint-disable camelcase */
 import { IDRFListResponse, IDRFAxiosResponsePromise } from '@/api/types'
+import { IBaseAccount } from '@/api/base_account'
 
-export interface IUserProfile {
-  id: number
-  username: string
-  fio: string
-  birth_day: string
-  is_active: boolean
-  is_admin: boolean
-  telephone: string
+export interface IUserProfile extends IBaseAccount {
   avatar: string
   email: string
   full_name?: string
-  last_login?: string
-  is_superuser?: boolean
-  token: string
   user_permissions: number[]
-  groups: number[]
   access_level: number
-  sites?: number[]
 }
-export type IUserProfileList = IDRFListResponse<IUserProfile>
 export type IUserProfileAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfile>
-export type IUserProfileListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfileList>
 export type IUserProfilePlainListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfile[]>
 
 export enum IUSER_PROFILE_LOG_ACTION_TYPES {
@@ -43,7 +30,6 @@ export interface IUserProfileLog {
   action_date: string
 }
 export type IUserProfileLogList = IDRFListResponse<IUserProfileLog>
-export type IUserProfileLogAxoisResponsePromise = IDRFAxiosResponsePromise<IUserProfileLog>
 export type IUserProfileLogListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserProfileLogList>
 
 export interface IPasswordUpdateForm {
@@ -56,9 +42,6 @@ export interface IUserGroup {
   name: string
   permissions: number[]
 }
-export type IUserGroupList = IDRFListResponse<IUserGroup>
-export type IUserGroupAxoisResponsePromise = IDRFAxiosResponsePromise<IUserGroup>
-export type IUserGroupListAxiosResponsePromise = IDRFAxiosResponsePromise<IUserGroupList>
 
 export const DEFAULT_USER_AVA = '/img/user_ava_min.gif'
 

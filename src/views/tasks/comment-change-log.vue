@@ -1,11 +1,13 @@
 <template lang="pug">
   el-alert(
-    offset='2'
+    offset="2"
     show-icon
-    :closable='false'
-  )
-    b {{ log.who_name }}: 
-    small ({{ log.when }}) 
+    :closable="false")
+    b
+      | {{ log.who_name }}:
+
+    small
+      | ({{ log.when }})
     | {{ log.human_representation }}.
 </template>
 

@@ -10,7 +10,7 @@ const finRoutes: RouteConfig = {
       name: 'finGwList',
       component: () => import(/* webpackChunkName: "fin" */ '@/views/fin/gw-list.vue'),
       meta: {
-        title: 'Финансы',
+        title: 'finance',
         icon: 'el-icon-shopping-cart-full'
       }
     },

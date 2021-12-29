@@ -2,132 +2,156 @@
   el-card
     template(v-slot:header)
       .clearfix
-        span {{ device.comment || 'Коммутатор' }}
-        small {{ ` ${device.ip_address || device.mac_addr} ` }}
+        span
+          | {{ device.comment || 'Коммутатор' }}
+
+        small
+          | {{ ` ${device.ip_address || device.mac_addr} ` }}
+
         template(v-if="device.parent_dev_name")
-          | Родительское устр.:
-          router-link(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
-            el-link(type="primary") {{ device.parent_dev_name }}
+          | {{ $t('parentDev') }}
+
+          router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+            | {{ device.parent_dev_name }}
+
         el-button(
-          style="float: right; padding: 7px" circle icon='el-icon-edit' type='primary'
+          style="float: right; padding: 7px"
+          circle
+          icon="el-icon-edit"
+          type="primary"
           @click="openDevForm"
-          :disabled="!$perms.devices.change_device"
-        )
+          :disabled="!$perms.devices.change_device")
+
     el-table(
       :data="allPorts"
       :loading="loading"
       :row-class-name="tableRowClassName"
-      border fit
-    )
+      border
+      fit)
       el-table-column(
-        label="Порт"
+        :label="$t('port')"
         width="60"
-        align='center'
-      )
+        align="center")
         template(v-slot:default="{row}")
-          b {{ row.num }}
+          b
+            | {{ row.num }}
+
       el-table-column(
-        label="Вкл/Выкл"
+        :label="$t('bulk')"
         width="80"
-        align="center"
-      )
+        align="center")
         template(v-slot:default="{row}")
           switch-port-toggle-button(
             v-if="row.isdb && row.snmp_num > 0"
             :port="row"
-            :portId="row.id"
-          )
-          el-button(v-else icon='el-icon-close' circle disabled)
+            :portId="row.id")
+
+          el-button(
+            v-else
+            icon="el-icon-close"
+            circle
+            disabled)
+
       el-table-column(
-        label="Описание"
-        min-width='267'
-        prop='descr'
-      )
+        :label="$t('description')"
+        min-width="267"
+        prop="descr")
+
       el-table-column(
-        label="Абонов"
+        :label="$t('aborions')"
         width="70"
-        align='center'
+        align="center")
+        template(v-slot:default="{row}")
+          el-link(type="primary" @click="openPortView(row)")
+            | {{ row.user_count }}
+
+      el-table-column(
+        :label="$t('name')"
+        min-width="235"
       )
         template(v-slot:default="{row}")
-          el-link(type="primary" @click="openPortView(row)") {{ row.user_count }}
+          | {{ row.name || '-' }}
+
       el-table-column(
-        label="Имя"
-        min-width='235'
+        :label="$t('regime')"
+        min-width="78"
       )
-        template(v-slot:default="{row}") {{ row.name || '-' }}
+        template(v-slot:default="{row}")
+          | {{ row.speed ? portModesHuman(row.speed) : '-' }}
+
+      el-table-column(label="UpTime", min-width="176")
+        template(v-slot:default="{row}")
+          | {{ row.uptime || '-' }}
+
       el-table-column(
-        label="Режим"
-        min-width='78'
-      )
-        template(v-slot:default="{row}") {{ row.speed ? portModesHuman(row.speed) : '-' }}
-      el-table-column(
-        label="UpTime"
-        min-width='176'
-      )
-        template(v-slot:default="{row}") {{ row.uptime || '-' }}
-      el-table-column(
-        label="Кнопки"
-        align='center'
-        min-width='194'
-      )
+        :label="$t('buttons')"
+        align="center"
+        min-width="194")
         template(v-slot:default="{row}")
           el-button-group(v-if="row.isdb")
-            el-button(icon='el-icon-notebook-2' @click="openMacsDialog(row)")
-            el-button(icon='el-icon-view' @click="openVidsDialog(row)" :disabled="!$perms.devices.view_portvlanmembermodel")
-            el-button(type='danger' icon='el-icon-delete' @click="delPort(row)" :disabled="!$perms.devices.delete_port")
-            el-button(type='primary' icon='el-icon-edit' @click="openPortEdit(row)" :disabled="!$perms.devices.change_port")
+            el-button(icon="el-icon-notebook-2" @click="openMacsDialog(row)")
+
+            el-button(
+              icon="el-icon-view"
+              @click="openVidsDialog(row)"
+              :disabled="!$perms.devices.view_portvlanmembermodel")
+
+            el-button(
+              type="danger"
+              icon="el-icon-delete"
+              @click="delPort(row)"
+              :disabled="!$perms.devices.delete_port")
+
+            el-button(
+              type="primary"
+              icon="el-icon-edit"
+              @click="openPortEdit(row)"
+              :disabled="!$perms.devices.change_port")
+
           el-button(
-            v-else icon='el-icon-plus' circle
+            v-else
+            icon="el-icon-plus"
+            circle
             @click="openPortAdd(row)"
-            :disabled="!$perms.devices.add_port"
-          )
+            :disabled="!$perms.devices.add_port")
+
     el-dialog(
       :visible.sync="portViewDialog"
-      title="Абоненты на порту"
-      :close-on-click-modal="false"
-    )
-      switch-port-view(
-        :device="device"
-        :portId="currPortId"
-      )
+      :title="$t('portSubscribers')"
+      :close-on-click-modal="false")
+      switch-port-view(:device="device", :portId="currPortId")
+
     el-dialog(
       :visible.sync="portFormDialog"
-      title="Порт коммутатора"
-      :close-on-click-modal="false"
-    )
+      :title="$t('theSwitchboard')"
+      :close-on-click-modal="false")
       switch-port-form(
         :deviceId="device.id"
         :portId="currPortId"
         :initialNum="initialNum"
         v-on:editdone="editPortDone"
-        v-on:adddone="addPortDone"
-      )
+        v-on:adddone="addPortDone")
+
     el-dialog(
       :visible.sync="devFormDialog"
-      title="Информация устройства"
-      :close-on-click-modal="false"
-    )
-      dev-form(
-        v-on:done="devFrmDone"
-      )
+      :title="$t('informationOfTheDevice')"
+      :close-on-click-modal="false")
+      dev-form(v-on:done="devFrmDone")
+
     el-dialog(
       :visible.sync="vidsDialog"
-      title="Vlan'ы"
-      :close-on-click-modal="false"
-    )
+      :title="$t('vlanS')"
+      :close-on-click-modal="false")
       vids-view(
         :portId="currPortId"
         :portNum="initialNum"
-        @applydone="vidsDialog=false"
-      )
+        @applydone="vidsDialog=false")
+
     el-dialog(
       :visible.sync="macsDialog"
-      title="Таблица MAC адресов порта"
-      :close-on-click-modal="false"
-    )
-      port-mac-list(
-        :portId="currPortId"
-      )
+      :title="$t('tableOfPortAddresses')"
+      :close-on-click-modal="false")
+      port-mac-list(:portId="currPortId")
 </template>
 
 <script lang="ts">
@@ -217,27 +241,35 @@ export default class extends Vue {
 
   private async scanPorts() {
     if (this.device !== null) {
-      const { data } = await scanPorts(this.device.id)
-      for (const p of data) {
-        const pInd = this.allPorts.findIndex(fport => fport.num === p.num)
-        if (pInd > -1) {
-          this.allPorts[pInd].num = p.num
-          this.allPorts[pInd].snmp_num = p.snmp_num
-          this.allPorts[pInd].name = p.name
-          this.allPorts[pInd].status = p.status
-          this.allPorts[pInd].speed = p.speed
-          this.allPorts[pInd].uptime = p.uptime
+      try {
+        const { data } = await scanPorts(this.device.id)
+        if (data.status == 1) {
+          for (const p of data.ports) {
+            const pInd = this.allPorts.findIndex(fport => fport.num === p.num)
+            if (pInd > -1) {
+              this.allPorts[pInd].num = p.num
+              this.allPorts[pInd].snmp_num = p.snmp_num
+              this.allPorts[pInd].name = p.name
+              this.allPorts[pInd].status = p.status
+              this.allPorts[pInd].speed = p.speed
+              this.allPorts[pInd].uptime = p.uptime
+            } else {
+              this.allPorts.push({
+                num: p.num,
+                snmp_num: p.snmp_num,
+                name: p.name,
+                status: p.status,
+                speed: p.speed,
+                uptime: p.uptime,
+                isdb: false
+              } as IFinPort)
+            }
+          }
         } else {
-          this.allPorts.push({
-            num: p.num,
-            snmp_num: p.snmp_num,
-            name: p.name,
-            status: p.status,
-            speed: p.speed,
-            uptime: p.uptime,
-            isdb: false
-          } as IFinPort)
+          this.$message.error(data.text)
         }
+      } catch (err) {
+        this.$message.error(err)
       }
     }
   }
@@ -288,7 +320,7 @@ export default class extends Vue {
         delete this.allPorts[ind].user_count
         this.allPorts[ind].isdb = false
       }
-      this.$message.success('Порт успешно удалён')
+      this.$message.success(this.$tc('portSuccessfullyRemoved'))
     })
   }
 
@@ -306,9 +338,11 @@ export default class extends Vue {
   private editPortDone(port: IPort) {
     this.addEditPortDone(port, false)
   }
+
   private addPortDone(port: IPort) {
     this.addEditPortDone(port, true)
   }
+
   private addEditPortDone(port: IPort, isAdd: boolean) {
     this.portFormDialog = false
     const ind = this.allPorts.findIndex(el => el.num === port.num)
@@ -318,9 +352,9 @@ export default class extends Vue {
       this.allPorts[ind].isdb = true
     }
     if (isAdd) {
-      this.$message.success('Порт успешно сохранён')
+      this.$message.success(this.$tc('portHasBeenSuccessfullyStored'))
     } else {
-      this.$message.success('Порт успешно изменён')
+      this.$message.success(this.$tc('portSuccessfullyChanged'))
     }
   }
 
@@ -330,8 +364,8 @@ export default class extends Vue {
 
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
-    this.$message.success('Успешно сохранено')
-    this.$router.push({ name: 'devicesList', params: { groupId: device.group.toString() } })
+    this.$message.success(this.$tc('successfullyMaintained'))
+    this.$router.push({ name: 'devicesList', params: { addrId: device.address.toString() } })
   }
 
   private openVidsDialog(port: IPort) {

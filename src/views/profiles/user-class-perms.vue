@@ -1,33 +1,32 @@
 <template lang="pug">
-div
-  el-alert(
-    v-if="$store.state.userprofile.is_superuser"
-    title="Внимание!"
-    description='Пока учётная запись имеет статус суперпользователя, то изменение прав для неё не имеет смысла, т.к. у суперпользователей права не проверяются, им ВСЁ можно'
-    type="warning"
-    effect="dark"
-    :closable="false"
-    show-icon
-    center
-  )
-  el-transfer(
-    v-model="assignedPerms"
-    :props="prop"
-    :data="allPerms"
-    :left-default-checked="leftChecked"
-    :titles="['Все права', 'Назначенные права']"
-  )
-    template(v-slot:left-footer)
-      el-button.transfer-footer(
-        @click="selectReadonly"
-      ) Выделить права на чтение
-  el-button(
-    icon='el-icon-upload'
-    type="primary"
-    :loading="saveLoading"
-    :disabled="isUnTouched || !$perms.is_superuser"
-    @click="savePerms"
-  ) Сохранить
+  div
+    el-alert(
+      v-if="$store.state.userprofile.is_superuser"
+      :title="$t('attention')"
+      :description="$t('profiles.ifSupersuerRights')"
+      type="warning"
+      effect="dark"
+      :closable="false"
+      show-icon
+      center)
+
+    el-transfer(
+      v-model="assignedPerms"
+      :props="prop"
+      :data="allPerms"
+      :left-default-checked="leftChecked"
+      :titles="[$t('profiles.allRights'), $t('profiles.assignedRights')]")
+      template(v-slot:left-footer)
+        el-button.transfer-footer(@click="selectReadonly")
+          | {{ $t('giveReadingRights') }}
+
+    el-button(
+      icon="el-icon-upload"
+      type="primary"
+      :loading="saveLoading"
+      :disabled="isUnTouched || !$perms.is_superuser"
+      @click="savePerms")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -48,7 +47,7 @@ export default class extends mixins(PermMngMixin) {
       user_permissions: this.assignedPerms
     })
     this.saveLoading = false
-    this.$message.success('Права для пользователся сохранены')
+    this.$message.success(this.$tc('rightsRetained'))
   }
 
   @Watch('$store.state.userprofile.user_permissions')

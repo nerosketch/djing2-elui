@@ -5,12 +5,9 @@
     :on-remove="handleRemove"
     :before-remove="beforeRemove"
     :http-request="uploadReq"
-    :file-list="fileList"
-  )
-    el-button(
-      type="primary"
-      v-if="$perms.tasks.add_taskdocumentattachment"
-    ) Добавить документ
+    :file-list="fileList")
+    el-button(type="primary", v-if="$perms.tasks.add_taskdocumentattachment")
+      | {{ $t('addDocument') }}
 </template>
 
 <script lang="ts">
@@ -40,12 +37,14 @@ export default class extends Vue {
     if (!this.$perms.tasks.delete_taskdocumentattachment) return
     TaskAttachmentModule.DelAttachment(file.id)
   }
+
   private handlePreview(file: IFileItem) {
     window.open(file.url, '_blank')
   }
+
   private beforeRemove(file: IFileItem) {
     if (!this.$perms.tasks.delete_taskdocumentattachment) return false
-    return this.$confirm(`Удалить "${file.name}"?`)
+    return this.$confirm(this.$t('austRemoveDocument', [file.name]) as string)
   }
 
   private uploadReq(req: HttpRequestOptions) {

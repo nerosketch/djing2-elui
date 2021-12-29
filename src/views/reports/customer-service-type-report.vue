@@ -2,8 +2,7 @@
   pie-chart(
     :repLoading="repLoading"
     :chartInputData="customerServiceTypeReport"
-    seriesName="типы задач"
-  )
+    seriesName="типы задач")
 </template>
 
 <script lang="ts">
@@ -24,9 +23,9 @@ export default class extends Vue {
     this.repLoading = true
     try {
       const { data } = await customerServiceTypeReportRequest()
-      let admName = 'С административными услугами'
-      let zeroName = 'С бесплатными услугами'
-      let chartData = [{
+      const admName = this.$tc('withAdministrativeServices')
+      const zeroName = this.$tc('freeServices')
+      const chartData = [{
         value: data.admin_count,
         name: admName
       }, {
@@ -37,7 +36,7 @@ export default class extends Vue {
         name: i.service_descr
       })))
 
-      let otherLabels = data.calc_type_counts.map(i => i.service_descr)
+      const otherLabels = data.calc_type_counts.map(i => i.service_descr)
       this.customerServiceTypeReport = {
         labels: [
           admName,

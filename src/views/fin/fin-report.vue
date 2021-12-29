@@ -2,69 +2,60 @@
   .app-container
     el-date-picker(
       v-model="reportParams.time_range"
-      type='daterange'
+      type="daterange"
       start-placeholder="Дата начала"
       end-placeholder="Конечная дата"
       align="right"
       unlink-panels
       value-format="yyyy-MM-dd"
-      :picker-options="pickerOptions"
-    )
+      :picker-options="pickerOptions")
+
     el-select(
       v-model="reportParams.pay_gw"
-      placeholder="Платёжный шлюз"
+      :placeholder="$t('payableLock')"
       v-loading="gatewaysLoading"
-      :style="{width: '10%'}"
-    )
+      :style="{width: '10%'}")
       el-option(
         v-for="gw in payGateways"
         :key="gw.id"
         :label="gw.title"
-        :value="gw.id"
-      )
+        :value="gw.id")
 
-    el-radio(
-      v-model="reportParams.group_by"
-      :label="1"
-    ) Группировать по дню
-    el-radio(
-      v-model="reportParams.group_by"
-      :label="2"
-    ) Группировать по неделе
-    el-radio(
-      v-model="reportParams.group_by"
-      :label="3"
-    ) Группировать по месяцу
+    el-radio(v-model="reportParams.group_by", :label="1")
+      | {{ $t('groupByDay') }}
 
-    el-button(
-      @click='downloadCsv'
-    ) Скачать csv
+    el-radio(v-model="reportParams.group_by", :label="2")
+      | {{ $t('groupingNextWeek') }}
+
+    el-radio(v-model="reportParams.group_by", :label="3")
+      | {{ $t('groupMonthly') }}
+
+    el-button(@click="downloadCsv")
+      | {{ $t('screwingTheEye') }}
 
     el-table(
       v-loading="loading"
       :data="tableData"
-      border fit
-    )
+      border
+      fit)
       el-table-column(
-        label="Дата"
-        min-width='110'
-        prop='pay_date'
-      )
-      el-table-column(
-        label="Сумма"
-        min-width='110'
-        prop='summ'
-      )
-      el-table-column(
-        label="Колич. платежей"
-        min-width='110'
-        prop='pay_count'
-      )
+        :label="$t('date')"
+        min-width="110"
+        prop="pay_date")
 
+      el-table-column(
+        :label="$t('amount')"
+        min-width="110"
+        prop="summ")
+
+      el-table-column(
+        :label="$t('paycount')"
+        min-width="110"
+        prop="pay_count")
 </template>
 
 <script lang="ts">
-import { IPayAllTimeGateway, IPayReport, IPayReportParams } from '@/api/fin/types'
+import { IPayAllTimeGateway, IPayReport } from '@/api/fin/types'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getPayGateways, getPayReport } from '@/api/fin/req'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -101,7 +92,7 @@ export default class extends Vue {
   private reportParams = {
     time_range: ['2021-05-22', formatDate(new Date())],
     pay_gw: 0,
-    group_by: 3,
+    group_by: 3
   }
 
   @Watch('reportParams', { deep: true })
@@ -113,28 +104,28 @@ export default class extends Vue {
 
   private pickerOptions = {
     shortcuts: [{
-      text: 'Последняя неделя',
+      text: this.$tc('lastWeek'),
       onClick(picker: Vue) {
-        const end = new Date();
-        const start = new Date();
-        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-        picker.$emit('pick', [start, end]);
+        const end = new Date()
+        const start = new Date()
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+        picker.$emit('pick', [start, end])
       }
     }, {
-      text: 'Последний месяц',
+      text: this.$tc('lastMonth'),
       onClick(picker: Vue) {
-        const end = new Date();
-        const start = new Date();
-        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-        picker.$emit('pick', [start, end]);
+        const end = new Date()
+        const start = new Date()
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+        picker.$emit('pick', [start, end])
       }
     }, {
-      text: 'Последние 3 месяца',
+      text: this.$tc('last3Months'),
       onClick(picker: Vue) {
-        const end = new Date();
-        const start = new Date();
-        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-        picker.$emit('pick', [start, end]);
+        const end = new Date()
+        const start = new Date()
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+        picker.$emit('pick', [start, end])
       }
     }]
   }
@@ -149,17 +140,17 @@ export default class extends Vue {
         path: '/fin',
         meta: {
           hidden: true,
-          title: 'Финансы'
+          title: this.$tc('finance')
         }
       },
       {
         path: '',
         meta: {
           hidden: true,
-          title: 'Отчёт о поступлениях'
+          title: this.$tc('incomeReport')
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumb
 
@@ -173,7 +164,7 @@ export default class extends Vue {
     try {
       const { data } = await getPayGateways() as any
       data.unshift({
-        title: 'Не выбран',
+        title: this.$tc('notSelected'),
         id: 0
       })
       this.payGateways = data
@@ -184,7 +175,7 @@ export default class extends Vue {
 
   private downloadCsv() {
     const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
-    dat.unshift(['Дата', 'Сумма', 'Колич. платежей'])
+    dat.unshift([this.$tc('date'), this.$tc('amount'), this.$tc('paycount')])
     const sdat = dat.join('\n')
     save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
   }

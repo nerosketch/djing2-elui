@@ -1,10 +1,6 @@
-<template>
-  <div
-    :class="[{'is-active': isActive}]"
-    @click="toggleClick"
-  >
-    <i class="hamb el-icon-s-fold" />
-  </div>
+<template lang="pug">
+  div(:class="[{'is-active': isActive}]" @click="toggleClick")
+    i.hamb.el-icon-s-fold
 </template>
 
 <script lang="ts">

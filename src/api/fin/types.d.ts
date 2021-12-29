@@ -10,9 +10,6 @@ export interface IPayAllTimeGateway {
   pay_count: number
   sites?: number[]
 }
-export type IPayAllTimeGatewayList = IDRFListResponse<IPayAllTimeGateway>
-export type IPayAllTimeGatewayAxoisResponsePromise = IDRFAxiosResponsePromise<IPayAllTimeGateway>
-export type IPayAllTimeGatewayListAxiosResponsePromise = IDRFAxiosResponsePromise<IPayAllTimeGatewayList>
 
 export interface IAllTimePayLog {
   customer: number

@@ -6,9 +6,7 @@
     placeholder="Начни вводить имя абонента"
     trigger-on-focus
     @select="handleSelect"
-    value-key="full_name"
-  )
-
+    value-key="full_name")
 </template>
 
 <script lang="ts">

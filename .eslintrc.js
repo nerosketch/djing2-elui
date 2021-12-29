@@ -20,17 +20,18 @@ module.exports = {
     'vue/arrow-spacing': 'error',
     'vue/block-spacing': 'error',
     'vue/brace-style': 'error',
-    // 'vue/camelcase': 'error',
+    camelcase: 'off',
     'vue/comma-dangle': 'error',
     'vue/component-name-in-template-casing': 'error',
     'vue/eqeqeq': 'error',
     'vue/key-spacing': 'error',
     'vue/match-component-file-name': 'error',
     'vue/object-curly-spacing': 'error',
-	'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error'
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/camelcase': 'off'
   },
-  'extends': [
+  extends: [
     'eslint:recommended',
     'plugin:vue/recommended',
     '@vue/standard',

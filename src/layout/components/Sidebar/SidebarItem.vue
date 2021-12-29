@@ -1,62 +1,53 @@
-<template>
-  <div
+<template lang="pug">
+  div(
     v-if="!item.meta || !item.meta.hidden"
     :class="['menu-wrapper', isCollapse ? 'simple-mode' : 'full-mode', {'first-level': isFirstLevel}]"
-  >
-    <template v-if="theOnlyOneChild && !theOnlyOneChild.children">
-      <sidebar-item-link
+  )
+    template(v-if="theOnlyOneChild && !theOnlyOneChild.children")
+      sidebar-item-link(
         v-if="theOnlyOneChild.meta"
         :to="resolvePath(theOnlyOneChild.path)"
-      >
-        <el-menu-item
+      )
+        el-menu-item(
           :index="resolvePath(theOnlyOneChild.path)"
           :class="{'submenu-title-noDropdown': isFirstLevel}"
-        >
-          <i
+        )
+          i(
             v-if="theOnlyOneChild.meta.icon"
             :class="theOnlyOneChild.meta.icon"
-          />
-          <span
+          )
+
+          span(
             v-if="theOnlyOneChild.meta.title"
             slot="title"
-          >
-            {{ theOnlyOneChild.meta.title }}
-            <small
+          ) {{ translated(theOnlyOneChild.meta.title) }} &nbsp;
+            small.calc-place(
               v-if="childCalc"
-              class="calc-place"
-            >{{ childCalc }}</small>
-          </span>
-        </el-menu-item>
-      </sidebar-item-link>
-    </template>
-    <el-submenu
+            ) {{ childCalc }}
+
+    el-submenu(
       v-else
       :index="resolvePath(item.path)"
       popper-append-to-body
-    >
-      <template slot="title">
-        <i
+    )
+      template(slot="title")
+        i(
           v-if="item.meta && item.meta.icon"
           :class="item.meta.icon"
-        />
-        <span
+        )
+        span(
           v-if="item.meta && item.meta.title"
           slot="title"
-        >{{ item.meta.title }}</span>
-      </template>
-      <template v-if="item.children">
-        <sidebar-item
+        ) {{ translated(item.meta.title) }}
+
+      template(v-if="item.children")
+        sidebar-item.nest-menu(
           v-for="child in item.children"
           :key="child.path"
           :item="child"
           :is-collapse="isCollapse"
           :is-first-level="false"
-          :base-path="resolvePath(child.path)"
-          class="nest-menu"
-        />
-      </template>
-    </el-submenu>
-  </div>
+          :base-path="resolvePath(child.path)")
 </template>
 
 <script lang="ts">
@@ -99,7 +90,7 @@ export default class extends Vue {
       return null
     }
     if (this.item.children) {
-      for (let child of this.item.children) {
+      for (const child of this.item.children) {
         if (!child.meta || !child.meta.hidden) {
           return child
         }
@@ -111,7 +102,7 @@ export default class extends Vue {
   }
 
   get childCalc() {
-    let c = this.theOnlyOneChild
+    const c = this.theOnlyOneChild
     if (c && c.meta && c.meta.calc) {
       return c.meta.calc()
     }
@@ -126,6 +117,14 @@ export default class extends Vue {
       return this.basePath
     }
     return path.resolve(this.basePath, routePath)
+  }
+
+  private translated(title: string) {
+    const code = `route.${title}`
+    if (this.$te(code)) {
+      return this.$tc(code)
+    }
+    return title
   }
 }
 </script>

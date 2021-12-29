@@ -1,19 +1,22 @@
 import request from '@/utils/request'
 import {
+  addObjectDecorator,
+  delObjectDecorator
+} from '@/api/baseRequests'
+import {
   ICustomerComment,
-  ICustomerCommentAxiosResponse,
   ICustomerCommentList,
   ICustomerCommentListAxiosResponsePromise
 } from './type'
 
 // ICustomerComment
 export const getCustomerComments = (customer: number): ICustomerCommentListAxiosResponsePromise =>
-  request.get<ICustomerCommentList>('/customer_comments/', { params: {
-    customer
-  }})
+  request.get<ICustomerCommentList>('/customer_comments/', {
+    params: {
+      customer
+    }
+  })
 
-export const createCustomerComment = (newObject: object): ICustomerCommentAxiosResponse =>
-  request.post<ICustomerComment>('/customer_comments/', newObject)
-
-export const deleteCustomerComment = (commentId: number) =>
-  request.delete(`/customer_comments/${commentId}/`)
+const cutCommentsUrl = '/customer_comments/'
+export const createCustomerComment = addObjectDecorator<ICustomerComment>(cutCommentsUrl)
+export const deleteCustomerComment = delObjectDecorator<ICustomerComment>(cutCommentsUrl)

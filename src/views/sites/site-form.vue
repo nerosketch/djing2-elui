@@ -1,28 +1,23 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     label-width="100px"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-      prop='name'
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')" prop="name")
       el-input(v-model="frmMod.name")
-    el-form-item(
-      label="Домен"
-      prop='domain'
-    )
+
+    el-form-item(:label="$t('domain')" prop="domain")
       el-input(v-model="frmMod.domain")
+
     el-form-item
       el-button(
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -38,10 +33,10 @@ export default class extends Vue {
 
   private frmRules = {
     name: [
-      { required: true, message: 'Название домена надо указать', trigger: 'blur' }
+      { required: true, message: this.$tc('domainNameShouldBeIndicated'), trigger: 'blur' }
     ],
     domain: [
-      { required: true, message: 'Домен надо указать', trigger: 'blur' }
+      { required: true, message: this.$tc('domenShouldIndicate'), trigger: 'blur' }
     ]
   }
 
@@ -55,6 +50,7 @@ export default class extends Vue {
     name: '',
     domain: ''
   }
+
   get isNew() {
     return SiteModule.id === 0
   }
@@ -64,21 +60,21 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
         let newDat
         if (this.isNew) {
           newDat = await SiteModule.AddSite(this.frmMod)
-          this.$message.success('Домен изменён')
+          this.$message.success(this.$tc('changed'))
         } else {
           newDat = await SiteModule.PatchSite(this.frmMod)
-          this.$message.success('Новый домен создан')
+          this.$message.success(this.$tc('newDomain'))
         }
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

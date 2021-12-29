@@ -1,28 +1,34 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     label-width="100px"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='loading'
-  )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="loading")
     el-form-item(
       label="№ порта"
-      prop='num'
+      prop="num"
     )
-      el-input(v-model="frmMod.num" type='number')
+      el-input(
+        v-model="frmMod.num"
+        type="number"
+      )
+
     el-form-item(
-      label="Описание"
-      prop='descr'
+      :label="$t('description')"
+      prop="descr"
     )
       el-input(v-model="frmMod.descr")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
-        type="primary" @click="onSubmit" :loading="loading"
-        :disabled="!$perms.devices.change_port"
-      ) Сохранить
+        icon="el-icon-upload"
+        type="primary"
+        @click="onSubmit"
+        :loading="loading"
+        :disabled="!$perms.devices.change_port")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -41,7 +47,7 @@ export default class extends Vue {
 
   private frmRules = {
     descr: [
-      { required: true, message: 'Нужно как-то назвать порт', trigger: 'blur' }
+      { required: true, message: this.$tc('weNeedToNameThePort'), trigger: 'blur' }
     ]
   }
 
@@ -72,13 +78,14 @@ export default class extends Vue {
   private onDevPort() {
     this.loadPort()
   }
+
   @Watch('initialNum')
   private onInNumCh(initialNum: number) {
     this.frmMod.num = initialNum
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         let newPort
@@ -92,7 +99,7 @@ export default class extends Vue {
           this.$emit('adddone', newPort)
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

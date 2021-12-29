@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { AxiosResponse, AxiosPromise } from 'axios'
 
-export interface IDRFListResponse<T> {
+export type IDRFListResponse<T> = {
   count: number
   next: string | null
   previous: string | null
@@ -82,3 +82,11 @@ export interface PieChartReport {
   labels: string[]
   data: PieChartData[]
 }
+
+export type StringAxiosResponsePromise = IDRFAxiosResponsePromise<string>
+
+export interface IChoiceItemType {
+  value: number
+  label: string
+}
+export type IChoiceItemTypeListAxiosResponsePromise = IDRFAxiosResponsePromise<IChoiceItemType[]>

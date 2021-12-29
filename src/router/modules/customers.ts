@@ -7,27 +7,33 @@ const customerRoutes: RouteConfig = {
   children: [
     {
       path: '',
-      component: () => import(/* webpackChunkName: "customer-groups" */ '@/views/customers/customers-groups.vue'),
-      name: 'customersGroupList',
+      name: 'customersLink',
+      component: () => import(/* webpackChunkName: "customer-locations" */ '@/views/customers/customer-locations.vue'),
       meta: {
-        title: 'Абоненты',
+        title: 'customers',
         icon: 'el-icon-user-solid'
       }
     },
     {
-      path: 'g:groupId/',
-      name: 'customersList',
-      component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customers-list.vue'),
-      props: ({ params }) => ({ groupId: Number(params.groupId || 0) }),
+      path: 'bums/',
+      name: 'customerBums',
+      component: () => import(/* webpackChunkName: "customerBums" */ '@/views/customers/bums.vue'),
       meta: { hidden: true }
     },
     {
-      path: 'c:uid/',
+      path: 'a:addrId/',
+      name: 'customerList',
+      component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customer-list.vue'),
+      props: ({ params }) => ({ addrId: Number(params.addrId || 0) }),
+      meta: { hidden: true }
+    },
+    {
+      path: ':uid/',
       name: 'customerDetails',
       component: () => import(/* webpackChunkName: "customerdetails" */ '@/views/customers/customer-details.vue'),
       props: ({ params }) => ({ uid: Number(params.uid || 0) }),
       meta: { hidden: true }
-    }
+    },
   ]
 }
 

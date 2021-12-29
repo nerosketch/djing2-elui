@@ -4,47 +4,40 @@
       :columns="tableColumns"
       :getData="getAllProfiles"
       :tableRowClassName="rowColor"
-      :heightDiff='190'
-      widthStorageNamePrefix='profiles'
-      ref='tbl'
-    )
+      :heightDiff="190"
+      widthStorageNamePrefix="profiles"
+      ref="tbl")
       template(v-slot:avatar="{row}")
-        el-avatar(:src="row.avatar || defAvaConst" shape="square")
+        el-avatar(:src="row.avatar || defAvaConst", shape="square")
 
       template(v-slot:username="{row}")
-        router-link(
-          v-if="$perms.is_superuser"
-          :to="{name: 'profileDetail', params:{ profileUname: row.username }}"
-        )
-          el-link(
-            type="primary"
-            :icon="row.is_superuser ? 'el-icon-warning' : ''"
-          ) {{ row.username }}
-        span(v-else) {{ row.username }}
+        router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}")
+          el-link(type="primary", :icon="row.is_superuser ? 'el-icon-warning' : ''")
+            | {{ row.username }}
 
       template(v-slot:telephone="{row}")
-        el-link(type="primary" :href="`tel:${row.telephone}`") {{ row.telephone }}
+        el-link(type="primary", :href="`tel:${row.telephone}`")
+          | {{ row.telephone }}
 
       template(v-slot:btn="{row}")
         el-button(
           type="danger"
-          icon='el-icon-close' circle
+          icon="el-icon-close"
+          circle
           @click="delUserProfile(row)"
-          :disabled="!$perms.is_superuser"
-        )
+          :disabled="!$perms.is_superuser")
+
       el-button(
-        icon='el-icon-plus'
+        icon="el-icon-plus"
         @click="addNewProfile"
-        :disabled="!$perms.is_superuser"
-      ) Добавить
+        :disabled="!$perms.is_superuser")
+        | {{ $t('add') }}
+
     el-dialog(
-      title="Добавить учётку"
+      :title="$t('addTheCalculation')"
       :visible.sync="profileFormDialog"
-      :close-on-click-modal="false"
-    )
-      profile-form(
-        v-on:done="addProfileDone"
-      )
+      :close-on-click-modal="false")
+      profile-form(v-on:done="addProfileDone")
 </template>
 
 <script lang="ts">
@@ -66,7 +59,7 @@ interface ITableRowClassName {
 @Component({
   name: 'ProfileList',
   components: {
-    'datatable': DataTableComp,
+    datatable: DataTableComp,
     ProfileForm
   }
 })
@@ -74,6 +67,7 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+
   private profileFormDialog = false
 
   private defAvaConst = DEFAULT_USER_AVA
@@ -81,32 +75,32 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'avatar',
-      label: 'Фото',
+      label: this.$tc('photo'),
       'min-width': 60,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'username',
-      label: 'Логин'
+      label: this.$tc('login')
     },
     {
       prop: 'fio',
-      label: 'ФИО',
+      label: this.$tc('fio'),
       'min-width': 250
     },
     {
       prop: 'telephone',
-      label: 'Телефон',
+      label: this.$tc('telephone'),
       'min-width': 120
     },
     {
       prop: 'email',
-      label: 'Адрес электронной почты',
+      label: this.$tc('EMail'),
       'min-width': 250
     },
     {
       prop: 'btn',
-      label: '—',
+      label: '#',
       'min-width': 90,
       align: DataTableColumnAlign.CENTER
     }
@@ -114,7 +108,7 @@ export default class extends Vue {
 
   private getAllProfiles(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'avatar,username,fio,telephone,email,is_active,is_superuser'
+      params.fields = 'avatar,username,fio,telephone,email,is_active,is_superuser'
     }
     return getProfiles(params)
   }
@@ -134,9 +128,9 @@ export default class extends Vue {
   }
 
   private delUserProfile(usr: IUserProfile) {
-    this.$confirm('Удалить учётную запись?').then(async() => {
+    this.$confirm(this.$tc('removeAccountQuestion')).then(async() => {
       await delProfile(usr.username)
-      this.$message.success('Учётная запись удалена')
+      this.$message.success(this.$tc('recordsRemoved'))
     })
   }
 }

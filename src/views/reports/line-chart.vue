@@ -1,7 +1,5 @@
 <template lang="pug">
-  .chart(
-    :style="{height: height, width: width}"
-  )
+  .chart(:style="{height: height, width: width}")
 </template>
 
 <script lang="ts">
@@ -78,10 +76,10 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         legend: {
-          data: ['КБайты', 'Пакеты']
+          data: [this.$tc('kbytes'), this.$tc('outgoingPackets')]
         },
         series: [{
-          name: 'КБайты',
+          name: this.$tc('kbytes'),
           itemStyle: {
             color: '#FF005A',
             lineStyle: {
@@ -96,7 +94,7 @@ export default class extends mixins(ResizeMixin) {
           animationEasing: 'cubicInOut'
         },
         {
-          name: 'Пакеты',
+          name: this.$tc('outgoingPackets'),
           smooth: false,
           type: 'line',
           itemStyle: {

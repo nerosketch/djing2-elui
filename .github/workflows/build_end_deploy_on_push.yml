@@ -1,0 +1,52 @@
+name: Run build and deploy on push
+
+on:
+  push:
+    branches:
+      - devel
+      - master
+jobs:
+  run_tests:
+    runs-on: [ubuntu-latest]
+
+    # strategy:
+    #   matrix:
+    #     node-version: [10.24.1]
+
+    env:
+      VUE_APP_BASE_API: /api
+      NODE_ENV: production
+      SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+      SERVER_HOST: ${{secrets.SERVER_HOST}}
+      SERVER_USER: ${{secrets.SERVER_USER}}
+
+    steps:
+        # Чекаутим код
+      - uses: actions/checkout@master
+      - name: Creating env file
+        run: |
+          echo "VUE_APP_BASE_API=${VUE_APP_BASE_API}" > .env
+          echo "NODE_ENV=${NODE_ENV}" >> .env
+        shell: bash
+      - name: Build docker container
+        run: docker-compose --env-file .env up --build -d
+      - name: Install project
+        run: docker exec djing2-elui npm install
+      - name: Build project
+        run: docker exec djing2-elui npm run build
+      - name: Create SSH key
+        run: |
+          docker exec djing2-elui /bin/bash -c "mkdir -p ~/.ssh/ && echo \"${SSH_PRIVATE_KEY}\" > ~/.ssh/staging.key && chmod 600 ~/.ssh/staging.key"
+          docker exec djing2-elui /bin/bash -c "cat >>~/.ssh/config <<END
+          Host staging
+            HostName ${SERVER_HOST}
+            User ${SERVER_USER}
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END"
+        shell: bash
+      - name: Deploy to server
+        run: |
+          docker exec djing2-elui scp -r ./dist staging:
+          docker exec djing2-elui ssh staging "sudo /bin/bash ~/bin/apply_djing_ui.sh"
+        shell: bash

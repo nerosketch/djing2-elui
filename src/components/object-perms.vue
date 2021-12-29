@@ -1,33 +1,38 @@
 <template lang="pug">
   div
-    h4 Какие группы сотрудников будут иметь доступ
-    el-select(
-      v-model="selectedProfileGroup"
-    )
+    h4
+      | Какие группы сотрудников будут иметь доступ
+
+    el-select(v-model="selectedProfileGroup")
       el-option(
         v-for="grp in groups"
         :key="grp.id"
         :label="grp.name"
-        :value="grp.id"
-      )
-    h4 Какие права будет иметь выбранная группа сотрудников
+        :value="grp.id")
+
+    h4
+      | Какие права будет иметь выбранная группа сотрудников
+
     template(v-if="initialGroupPerms")
       el-checkbox(
         v-for="p in initialGroupPerms.availablePerms"
         :key="p.id"
         :label="p.name"
-        v-model="p.checked"
-      )
+        v-model="p.checked")
+
     span(v-else)
       i.el-icon-loading
-      |  Загрузка доступных прав...
+      | Загрузка доступных прав...
+
     el-divider
+
     el-button(
-      icon='el-icon-upload'
-      type="primary" @click="onSubmit"
+      icon="el-icon-upload"
+      type="primary"
+      @click="onSubmit"
       :disabled="!$perms.is_superuser"
-      :loading="oGroupsLoading"
-    ) Сохранить
+      :loading="oGroupsLoading")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -71,16 +76,14 @@ export default class extends Vue {
         fields: 'id,name'
       }) as any
       this.groups = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.oGroupsLoading = false
     }
   }
 
   private async onSubmit() {
-    let selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
-    let res: IObjectGroupPermsResultStruct = {
+    const selectedPerms = this.initialGroupPerms ? this.initialGroupPerms.availablePerms.filter(p => p.checked) : []
+    const res: IObjectGroupPermsResultStruct = {
       groupId: this.selectedProfileGroup,
       selectedPerms: selectedPerms.map(p => p.id)
     }
@@ -120,11 +123,9 @@ export default class extends Vue {
         this.oGroupsLoading = true
         const { data } = await this.getSelectedObjectPerms(this.objId, selectedGroupId)
         // data := selected perms
-        for (let ap of this.initialGroupPerms.availablePerms) {
+        for (const ap of this.initialGroupPerms.availablePerms) {
           this.$set(ap, 'checked', data.includes(ap.id))
         }
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.oGroupsLoading = false
       }

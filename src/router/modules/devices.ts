@@ -7,17 +7,17 @@ const deviceRoutes: RouteConfig = {
   children: [
     {
       path: '',
-      component: () => import(/* webpackChunkName: "device-groups" */ '@/views/devices/dev-group-list.vue'),
+      component: () => import(/* webpackChunkName: "device-locations" */ '@/views/devices/dev-loc-list.vue'),
       meta: {
-        title: 'Оборудование',
+        title: 'devices',
         icon: 'el-icon-coin'
       }
     },
     {
-      path: 'group:groupId',
+      path: 'location:addrId',
       component: () => import(/* webpackChunkName: "devices" */ '@/views/devices/dev-list.vue'),
       name: 'devicesList',
-      props: ({ params }) => ({ groupId: Number(params.groupId || 0) }),
+      props: ({ params }) => ({ addrId: Number(params.addrId || 0) }),
       meta: {
         hidden: true
       }

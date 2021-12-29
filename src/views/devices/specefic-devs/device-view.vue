@@ -4,15 +4,13 @@
       pon-onu(
         :device="device"
         v-if="[3,6,7].includes(device.dev_type)"
-        v-on:reqrefresh="getDevice"
-      )
-      pon-bdcom-olt(
-        v-else-if="device.dev_type === 2"
-        :device="device"
-      )
-      olt-zte(:device="device" v-else-if="device.dev_type === 5")
-      switch-view(:device="device" v-else)
+        v-on:reqrefresh="getDevice")
 
+      pon-bdcom-olt(v-else-if="device.dev_type === 2", :device="device")
+
+      olt-zte(:device="device", v-else-if="device.dev_type === 5")
+
+      switch-view(:device="device", v-else)
 </template>
 
 <script lang="ts">
@@ -23,8 +21,8 @@ import PonBdcomOlt from './pon/pon-bdcom-olt.vue'
 import SwitchView from './switch-view.vue'
 import PonOnu from './pon/pon-onu.vue'
 import OltZte from './pon/gpon/olt-zte.vue'
-import { GroupModule } from '@/store/modules/groups'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
+import { AddressModule } from '@/store/modules/addresses/address'
 
 @Component({
   name: 'DeviceView',
@@ -65,8 +63,8 @@ export default class extends Vue {
     this.getDevice().then(dev => {
       if (dev) {
         document.title = dev.comment || dev.ip_address
+        this.onLocCh(dev.address)
       }
-      this.onGrpCh(DeviceModule.group)
     })
     document.addEventListener('keydown', this.onKeyPress)
   }
@@ -81,23 +79,23 @@ export default class extends Vue {
   }
 
   // Breadcrumbs
-  @Watch('$store.state.devicemodule.group')
-  private async onGrpCh(grpId: number) {
-    if (grpId > 0) {
-      await GroupModule.GetGroup(grpId)
+  @Watch('$store.state.devicemodule.address')
+  private async onLocCh(addrId: number) {
+    if (addrId > 0) {
+      await AddressModule.GetAddress(addrId)
       await BreadcrumbsModule.SetCrumbs([
         {
           path: '/devices',
           meta: {
             hidden: true,
-            title: 'Оборудование'
+            title: this.$tc('equipment')
           }
         },
         {
-          path: { name: 'devicesList', params: { groupId: grpId } },
+          path: { name: 'devicesList', params: { addrId: addrId } },
           meta: {
             hidden: true,
-            title: this.grpName
+            title: this.$store.state.address.title
           }
         },
         {
@@ -107,11 +105,8 @@ export default class extends Vue {
             title: DeviceModule.comment
           }
         }
-      ] as any[])
+      ] as any)
     }
-  }
-  get grpName() {
-    return GroupModule.title
   }
   // End Breadcrumbs
 }

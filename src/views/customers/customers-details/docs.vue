@@ -6,11 +6,9 @@
     :before-remove="beforeRemove"
     :http-request="uploadReq"
     :file-list="fileList"
-    :disabled="!$perms.customers.view_customerattachment"
-  )
-    el-button(
-      type="primary"
-    ) Добавить документ
+    :disabled="!$perms.customers.view_customerattachment")
+    el-button(type="primary")
+      | {{ $t('addDocument') }}
 </template>
 
 <script lang="ts">
@@ -37,11 +35,13 @@ export default class extends Vue {
   private handleRemove(file: IFileItem) {
     CustomerAttachementModule.DelCustomerAttachment(file.id)
   }
+
   private handlePreview(file: IFileItem) {
     window.open(file.url, '_blank')
   }
+
   private beforeRemove(file: IFileItem) {
-    return this.$confirm(`Удалить "${file.name}"?`)
+    return this.$confirm(`${this.$tc('del')} "${file.name}"?`)
   }
 
   get customerId() {
@@ -73,11 +73,15 @@ export default class extends Vue {
         for (const el of data) {
           this.addFileListItem(el)
         }
-      } catch (err) {
-        this.$message.error(err)
+      } catch {
+        this.$message.error(
+          this.$tc('customers.docLoadFailed').toString()
+        )
       }
     } else {
-      this.$message.error('Не передан id абонента. Это к разработчику')
+      this.$message.error(
+        this.$tc('customers.customerIdNotPassed').toString()
+      )
     }
   }
 

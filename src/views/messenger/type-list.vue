@@ -1,23 +1,22 @@
 <template lang="pug">
-  el-table(
-    v-loading='messengerTypesLoading'
+  el-table.app-container(
+    v-loading="messengerTypesLoading"
     :data="messengerBotTypes"
-    border fit
-  )
+    border
+    fit)
     el-table-column(
-      label="Тип бота"
-      prop='text'
+      :label="$t('typeOfBean')"
+      prop="text"
     )
       template(v-slot:default="{row}")
-        router-link(:to="{ name: 'messengerList', params: { messengerTypeName: row.text } }") {{ row.text }}
-
+        router-link(:to="{ name: 'messengerList', params: { messengerTypeName: row.text } }")
+          | {{ row.text }}
 </template>
 
 <script lang="ts">
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { mixins } from 'vue-class-component'
 import { Component } from 'vue-property-decorator'
-import { RouteRecord } from 'vue-router'
 import BotTypesMixin from './bot_types_mixin'
 
 @Component({
@@ -32,10 +31,10 @@ export default class extends mixins(BotTypesMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Мессенжеры'
+          title: this.$tc('messengers')
         }
       }
-    ] as RouteRecord[])
+    ] as any)
   }
 }
 </script>

@@ -6,13 +6,13 @@ import {
   getModule
 } from 'vuex-module-decorators'
 import {
-  IMessenger,
+  IMessenger
 } from '@/api/messenger/types'
 import {
   getMessenger,
   addMessenger,
   patchMessenger,
-  deleteMessenger,
+  deleteMessenger
 } from '@/api/messenger/req'
 import store from '@/store'
 
@@ -55,7 +55,7 @@ class Messenger extends VuexModule implements IMessenger {
   }
 
   @Action
-  public async GetMessenger(info: { mId: number, typeName: string} ) {
+  public async GetMessenger(info: { mId: number, typeName: string}) {
     const { data } = await getMessenger(info.typeName, info.mId)
     this.SET_ALL_MESSENGER(data)
     return data

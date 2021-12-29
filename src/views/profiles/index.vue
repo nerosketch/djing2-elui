@@ -1,28 +1,26 @@
 <template lang="pug">
   .tab-container
-    el-tabs(
-      v-model="activeName"
-      type="border-card"
-    )
+    el-tabs(v-model="activeTabName" type="border-card")
       el-tab-pane(
-        label='Сотрудники'
-        name='profiles'
-        lazy
-      )
+        :label="$t('route.staff')"
+        name="profiles"
+        lazy)
         keep-alive
           profile-list
+
       el-tab-pane(
-        label='Группы сотрудников'
-        name='profilegroups'
+        :label="$t('profiles.profileGroups')"
+        name="profilegroups"
         lazy
-        v-if="$perms.is_superuser"
-      )
+        v-if="$perms.is_superuser")
         keep-alive
           group-list
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
+import TabMixin from '@/utils/tab-mixin'
 import ProfileList from './profile-list.vue'
 import GroupList from './group-list.vue'
 
@@ -33,23 +31,7 @@ import GroupList from './group-list.vue'
     GroupList
   }
 })
-export default class extends Vue {
-  private activeName = 'profiles'
-
-  @Watch('activeName')
-  private onActiveNameChange(value: string) {
-    const newPath = `${this.$route.path}?tab=${value}`
-    if (newPath !== this.$route.fullPath) {
-      this.$router.push(newPath)
-    }
-  }
-
-  created() {
-    // Init the default selected tab
-    const tab = this.$route.query.tab as string
-    if (tab) {
-      this.activeName = tab
-    }
-  }
+export default class extends mixins(TabMixin) {
+  protected activeTabName = 'profiles'
 }
 </script>

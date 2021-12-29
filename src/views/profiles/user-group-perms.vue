@@ -1,23 +1,22 @@
 <template lang="pug">
-div
-  el-transfer(
-    v-model="assignedPerms"
-    :props="prop"
-    :data="allPerms"
-    :left-default-checked="leftChecked"
-    :titles="['Все права', 'Назначенные права']"
-  )
-    template(v-slot:left-footer)
-      el-button.transfer-footer(
-        @click="selectReadonly"
-      ) Выделить права на чтение
-  el-button(
-    icon='el-icon-upload'
-    type="primary"
-    :loading="saveLoading"
-    :disabled="isUnTouched || !$perms.is_superuser"
-    @click="savePerms"
-  ) Сохранить
+  div
+    el-transfer(
+      v-model="assignedPerms"
+      :props="prop"
+      :data="allPerms"
+      :left-default-checked="leftChecked"
+      :titles="[$t('profiles.allRights'), $t('profiles.assignedRights')]")
+      template(v-slot:left-footer)
+        el-button.transfer-footer(@click="selectReadonly")
+          | {{ $t('giveReadingRights') }}
+
+    el-button(
+      icon="el-icon-upload"
+      type="primary"
+      :loading="saveLoading"
+      :disabled="isUnTouched || !$perms.is_superuser"
+      @click="savePerms")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -34,11 +33,11 @@ export default class extends mixins(PermMngMixin) {
 
   private async savePerms() {
     this.saveLoading = true
-    let updatedGroup = await UserGroupModule.PatchUserGroup({
+    const updatedGroup = await UserGroupModule.PatchUserGroup({
       permissions: this.assignedPerms
     })
     this.saveLoading = false
-    this.$message.success('Права для группы сохранены')
+    this.$message.success(this.$tc('groupRightsRetained'))
     this.$emit('done', updatedGroup)
   }
 

@@ -3,48 +3,39 @@
     datatable(
       :columns="tableColumns"
       :getData="loadPayGws"
-      widthStorageNamePrefix='gws'
-      ref='table'
-    )
+      widthStorageNamePrefix="gws"
+      ref="table")
       template(v-slot:title="{row}")
-        router-link(:to="{ name: 'finReport' }")
-          el-link(type='primary') {{ row.title }}
+        router-link.el-link.el-link--primary.is-underline(:to="{ name: 'finReport' }")
+          | {{ row.title }}
+
       template(v-slot:oper="{row}")
         el-button-group
-          el-button(
-            v-if="$perms.is_superuser"
-            @click="openSitesDlg(row)"
-          ) C
-          el-button(icon="el-icon-edit" @click="openEdit(row)")
-          el-button(
-            type="danger" icon="el-icon-delete" @click="delPayGw(row)"
-            :disabled="!$perms.fin_app.delete_payalltimegateway"
-          )
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
+            | C
 
-      el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-      ) Добавить шлюз
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
+
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delPayGw(row)"
+            :disabled="!$perms.fin_app.delete_payalltimegateway")
+
+      el-button(icon="el-icon-plus" @click="openNew")
+        | {{ $t('addALock') }}
 
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-    )
-      pay-gw-form(
-        v-on:done="frmDone"
-      )
+      :close-on-click-modal="false")
+      pay-gw-form(v-on:done="frmDone")
 
     el-dialog(
-      title="Принадлежность сайтам"
+      :title="$t('facilities')"
       :visible.sync="sitesDlg"
-      :close-on-click-modal="false"
-    )
-      sites-attach(
-        :selectedSiteIds="$store.state.payalltimegateway.sites"
-        v-on:save="payGwSitesSave"
-      )
-
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.payalltimegateway.sites", v-on:save="payGwSitesSave")
 </template>
 
 <script lang="ts">
@@ -63,33 +54,34 @@ class DataTableComp extends DataTable<IPayAllTimeGateway> {}
   name: 'GwList',
   components: {
     PayGwForm,
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
-  private dialogTitle = 'Платёжный шлюз'
+
+  private dialogTitle = this.$tc('payableLock')
   private dialogVisible = false
   private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'service_id',
-      label: 'Service ID',
+      label: this.$tc('id'),
       sortable: true,
       'min-width': 100
     },
     {
-      prop: 'slug',
-      label: 'путь'
+      prop: 'servants',
+      label: this.$tc('path')
     },
     {
       prop: 'secret',
@@ -97,11 +89,11 @@ export default class extends Vue {
     },
     {
       prop: 'pay_count',
-      label: 'Количество платежей'
+      label: this.$tc('numberOfPayments')
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 180,
       align: DataTableColumnAlign.CENTER
     }
@@ -109,31 +101,34 @@ export default class extends Vue {
 
   private loadPayGws(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,service_id,slug,secret,pay_count,sites'
+      params.fields = 'id,title,service_id,slug,secret,pay_count,sites'
     }
     return getPayGateways(params)
   }
 
   private openEdit(gw: IPayAllTimeGateway) {
     PayAllTimeGatewayModule.SET_ALL_PAYGW(gw)
-    this.dialogTitle = 'Изменить платёжный шлюз'
+    this.dialogTitle = this.$tc('modifyThePlausibleLock')
     this.dialogVisible = true
   }
+
   private delPayGw(gw: IPayAllTimeGateway) {
-    this.$confirm('Удалить платёжный шлюз?').then(async() => {
+    this.$confirm(this.$tc('removePayGWQuestion')).then(async() => {
       await PayAllTimeGatewayModule.DelPayGroup(gw.id)
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     })
   }
+
   private openNew() {
     PayAllTimeGatewayModule.RESET_ALL_PAYGW()
-    this.dialogTitle = 'Создать платёжный шлюз'
+    this.dialogTitle = this.$tc('createAPayLock')
     this.dialogVisible = true
   }
+
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
-    this.$message.success('Платёжный шлюз добавлен')
+    this.$refs.table.LoadTableData()
+    this.$message.success(this.$tc('payableLockAdded'))
   }
 
   // Breadcrumbs
@@ -143,10 +138,10 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Финансы'
+          title: this.$tc('finance')
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 
@@ -154,11 +149,12 @@ export default class extends Vue {
     PayAllTimeGatewayModule.PatchPayGw({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
-      this.$message.success('Принадлежность платёжного шлюза сайтам сохранена')
+      this.$refs.table.LoadTableData()
+      this.$message.success(this.$tc('theContentOfThePayloadableSiteIsMaintained'))
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(grp: IPayAllTimeGateway) {
     PayAllTimeGatewayModule.SET_ALL_PAYGW(grp)
     this.sitesDlg = true

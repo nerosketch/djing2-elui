@@ -1,72 +1,57 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     label-width="110px"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
-    el-form-item(
-      label="Название"
-    )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
+    el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
-    el-form-item(
-      label="Тип поля"
-    )
+
+    el-form-item(:label="$t('typeOfField')")
       el-select(v-model="frmMod.field_type")
         el-option(
           v-for="(t, i) in fieldTypeChoices"
           :key="i"
           :label="t.label"
-          :value="t.value"
-        )
-    el-form-item(
-      label="Группы"
-    )
-      el-select(v-model="frmMod.groups" multiple)
-        el-option(
-          v-for="(grp, i) in groups"
-          :key="i"
-          :label="grp.title"
-          :value="grp.id"
-        )
-    el-form-item(
-      label="Системный тэг"
-    )
-      system-tags-input(
-        v-model="frmMod.system_tag"
-      )
-    el-form-item(
-      label="Пользов. тэг"
-      prop="user_tag"
-    )
+          :value="t.value")
+
+    el-form-item(:label="$t('route.groups')")
+      groups-choice(v-model="frmMod.groups" multiple)
+
+    el-form-item(:label="$t('systemTag')")
+      system-tags-input(v-model="frmMod.system_tag")
+
+    el-form-item(:label="$t('use')" prop="user_tag")
       el-input(v-model="frmMod.user_tag")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import {DynamicFieldModule} from '@/store/modules/dynamicfields/dynamic-field'
-import { getGroups } from '@/api/groups/req'
-import { IGroup } from '@/api/groups/types'
-import { IDynamicField, IFieldChoiceType } from '@/api/dynamic-fields/types'
+import { DynamicFieldModule } from '@/store/modules/dynamicfields/dynamic-field'
+import { IDynamicField } from '@/api/dynamic-fields/types'
 import { getFieldTypeChoices } from '@/api/dynamic-fields/req'
 import SystemTagsInput from './system-tags-input.vue'
 import { regexpVal } from '@/utils/validate'
+import { IChoiceItemType } from '@/api/types'
+import GroupsChoice from '@/components/Groups/groups-choice.vue'
 
-export const _userTagsValidator = regexpVal(/^(\w+\,?)+$/s)
+export const _userTagsValidator = regexpVal(/^(\w+,?)+$/s)
 
 @Component({
   name: 'FieldForm',
   components: {
-    SystemTagsInput
+    SystemTagsInput,
+    GroupsChoice
   }
 })
 export default class extends Vue {
@@ -91,23 +76,11 @@ export default class extends Vue {
     this.frmMod.groups = field.groups
   }
 
-  private groups: IGroup[] = []
-
-  private fieldTypeChoices: IFieldChoiceType[] = []
+  private fieldTypeChoices: IChoiceItemType[] = []
 
   private async loadFieldTypeChoices() {
     const { data } = await getFieldTypeChoices()
     this.fieldTypeChoices = data
-  }
-
-  private async loadGroups() {
-    this.isLoading = true
-    try {
-      const { data } = await getGroups()
-      this.groups = data as IGroup[]
-    } finally {
-      this.isLoading = false
-    }
   }
 
   private get isNew() {
@@ -134,13 +107,12 @@ export default class extends Vue {
       {
         validator: _userTagsValidator,
         trigger: 'change',
-        message: 'Тэги должны содержать только буквы, цифры и знак подчёркивания (как [a-zA-Z0-9_]). И могут быть разделены запятой.'
+        message: this.$tc('fieldTagValidation')
       }
     ]
   }
 
   created() {
-    this.loadGroups()
     this.loadFieldTypeChoices()
     this.onChangedField(this.$store.state.dynamicfield)
   }

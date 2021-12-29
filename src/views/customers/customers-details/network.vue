@@ -1,74 +1,76 @@
 <template lang="pug">
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix Сетевое
+      .clearfix
+        | {{ $t('customers.networking') }}
+
     el-table(
-      v-loading='loading'
+      v-loading="loading"
       :data="leases"
-      border fit
-    )
+      border
+      fit)
       el-table-column(
-        label="IP Адрес"
-        min-width='110'
-        prop='ip_address'
-      )
+        :label="$t('ipAddress')"
+        min-width="110"
+        prop="ip_address")
+
       el-table-column(
-        label="MAC Адрес"
-        min-width='110'
-        prop='mac_address'
-      )
+        :label="$t('macAddress')"
+        min-width="110"
+        prop="mac_address")
+
       el-table-column(
-        label="Время аренды"
-        min-width='110'
-        prop='lease_time'
-      )
+        :label="$t('customers.leaseTime')"
+        min-width="110"
+        prop="lease_time")
+
       el-table-column(
-        label="Последнее обновление"
-        min-width='110'
-        prop='last_update'
-      )
+        :label="$t('customers.sessionLastUpdate')"
+        min-width="110"
+        prop="last_update")
+
       el-table-column(
-        label="Авто"
+        :label="$t('customers.auto')"
         align="center"
-        width="50"
-      )
+        width="50")
         template(v-slot:default="{row}")
-          i.el-icon-circle-check(v-if="row.is_dynamic")
+          boolean-icon(v-model="row.is_dynamic")
+
       el-table-column(
         label="#"
         align="center"
-        width="259"
-      )
+        width="259")
         template(v-slot:default="{row}")
           el-button-group
             el-button(
-              type='danger'
-              icon='el-icon-delete'
-              @click="delLease(row)"
-            )
+              type="danger"
+              icon="el-icon-delete"
+              @click="delLease(row)")
+
             el-button(
-              type='primary'
-              icon='el-icon-edit'
-              @click="editLease(row)"
-            )
+              type="primary"
+              icon="el-icon-edit"
+              @click="editLease(row)")
+
             lease-ping(:lease="row")
+
             ip-session-detail(:lease="row")
+
     el-button(
-      type='success' icon='el-icon-plus',
-      @click="addLease"
-    ) Добавить
+      type="success"
+      icon="el-icon-plus"
+      @click="addLease")
+      | {{ $t('add') }}
 
     el-dialog(
-      :title="(isAddNewLease ? 'Добавить' : 'Изменить') + ' аренду ip'"
-      :visible.sync='editDialog'
-      :close-on-click-modal="false"
-    )
+      :title="(isAddNewLease ? $t('add') : $t('change')) + ' ' + $t('customers.minASessionLease')"
+      :visible.sync="editDialog"
+      :close-on-click-modal="false")
       customer-lease-form(
         :isAddNewLease="isAddNewLease"
         v-on:done="leaseFrmDone"
         v-on:cancel="editDialog=false"
-        ref="customerleaseformref"
-      )
+        ref="customerleaseformref")
 </template>
 
 <script lang="ts">
@@ -80,13 +82,15 @@ import LeasePing from '@/components/MyButtons/leaseping.vue'
 import CustomerLeaseForm from './customer-lease-form.vue'
 import IpSessionDetail from './ip-session-detail.vue'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 @Component({
   name: 'Network',
   components: {
     LeasePing,
     CustomerLeaseForm,
-    IpSessionDetail
+    IpSessionDetail,
+    BooleanIcon
   }
 })
 export default class extends Vue {
@@ -130,13 +134,15 @@ export default class extends Vue {
   }
 
   public delLease(lease: ICustomerIpLease) {
-    this.$confirm('Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.', {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Нет'
+    this.$confirm(this.$tc('customers.areUSure2DelIpLease').toString(), {
+      confirmButtonText: this.$tc('yes').toString(),
+      cancelButtonText: this.$tc('no').toString()
     }).then(async() => {
       try {
         await CustomerIpLeaseModule.DelLease(lease.id)
-        this.$message.success('Аренда удалена')
+        this.$message.success(
+          this.$tc('customers.ipLeaseSuccessfullyRemoved').toString()
+        )
         this.loadLeases()
       } catch (err) {
         this.$message.error(err)
@@ -157,7 +163,7 @@ export default class extends Vue {
   }
 
   private onSignalUpdateLeases({ data }: IWsMessage) {
-    if (data['customer_id'] === this.$store.state.customer.id) {
+    if (data.customer_id === this.$store.state.customer.id) {
       this.loadLeases()
     }
   }

@@ -1,37 +1,23 @@
 import request from '@/utils/request'
 import { AxiosPromise } from 'axios'
 import {
-  IDRFRequestListParameters,
   ISimpleResponseResultAxiosResponsePromise,
   ISimpleResponseResult,
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise,
-  IObjectGroupPermsResultStruct
+  IObjectGroupPermsResultStruct,
+  IDRFAxiosResponsePromise
 } from '@/api/types'
 import {
-  ICustomerGroupList,
-  ICustomerGroupListAxiosResponsePromise,
   ICustomer, ICustomerList,
   ICustomerAxoisResponsePromise,
   ICustomerListAxiosResponsePromise,
-  IDRFRequestListParametersCustomer,
   IServiceUserList,
   IServiceUserListAxiosResponsePromise,
   IAdditionalTelephone,
   IAdditionalTelephoneList,
-  IAdditionalTelephoneAxoisResponsePromise,
   IAdditionalTelephoneListAxiosResponsePromise,
-  ICustomerStreet,
-  ICustomerStreetList,
-  ICustomerStreetAxoisResponsePromise,
-  ICustomerStreetListAxiosResponsePromise,
-  IDRFRequestListParametersInvoice,
   IInvoice4Payment,
-  IInvoice4PaymentAxoisResponsePromise,
-  IInvoice4PaymentList,
-  IInvoice4PaymentListAxiosResponsePromise,
-  ICustomerLogList,
-  ICustomerLogListAxiosResponsePromise,
   ICustomerServiceAxoisResponsePromise,
   ICustomerService,
   ICustomerOnPort,
@@ -51,32 +37,40 @@ import {
   IBuyPayloadType,
   ICustomerAfkItemListAxiosResponsePromise,
   ICustomerAfkItem,
-  ICustomerAfkItemParams
+  ICustomerAfkItemParams,
+  ICustomerLog
 } from './types'
-import { IDynamicContentFieldList, IDynamicContentFieldListAxiosResponsePromise } from '../dynamic-fields/types'
+import {
+  IDynamicContentFieldList,
+  IDynamicContentFieldListAxiosResponsePromise
+} from '@/api/dynamic-fields/types'
+import {
+  addObjectDecorator,
+  delObjectDecorator,
+  getObjectDecorator,
+  getObjectListDecorator,
+  patchObjectDecorator
+} from '@/api/baseRequests'
+import { IGroup } from '@/api/groups/types'
+import { IDRFRequestListAddrsParameters } from '../addresses/req'
+
 
 // ICustomer
 const custApiUrl = '/customers/'
-export const getCustomers = (params?: IDRFRequestListParametersCustomer): ICustomerListAxiosResponsePromise =>
-  request.get<ICustomerList>(custApiUrl, { params })
+export const getCustomers = getObjectListDecorator<ICustomer>(custApiUrl)
+export const getCustomer = getObjectDecorator<ICustomer>(custApiUrl)
+export const addCustomer = addObjectDecorator<ICustomer>(custApiUrl)
+export const changeCustomer = patchObjectDecorator<ICustomer>(custApiUrl)
+export const delCustomer = delObjectDecorator<ICustomer>(custApiUrl)
 
 export const findCustomers = (name: string): ICustomerListAxiosResponsePromise =>
-  request.get<ICustomerList>(custApiUrl, { params: { search: name } })
-
-export const getCustomer = (id: number): ICustomerAxoisResponsePromise =>
-  request.get<ICustomer>(`${custApiUrl}${id}/`)
+  request.get<ICustomerList>(custApiUrl, { params: {
+    search: name,
+    fields: 'id,full_name'
+  } })
 
 export const getCustomerFormInitial = (): ICustomerAxoisResponsePromise =>
   request.get<ICustomer>(`${custApiUrl}get_initial/`)
-
-export const addCustomer = (data: object): ICustomerAxoisResponsePromise =>
-  request.post<ICustomer>(custApiUrl, data)
-
-export const changeCustomer = (id: number, newData: object): ICustomerAxoisResponsePromise =>
-  request.patch<ICustomer>(`${custApiUrl}${id}/`, newData)
-
-export const delCustomer = (id: number) =>
-  request.delete(`${custApiUrl}${id}/`)
 
 export const pickService = (id: number, data: IBuyPayloadType) =>
   request.post(`${custApiUrl}${id}/pick_service/`, data)
@@ -126,66 +120,28 @@ export const setCustomerMarkers = (id: number, flags: string[]) =>
 export const getCustomersAfk = (params: ICustomerAfkItemParams): ICustomerAfkItemListAxiosResponsePromise =>
   request.get<ICustomerAfkItem[]>(`${custApiUrl}get_afk/`, { params })
 
-// ICustomerGroup
-export const getCustomerGroups = (params?: IDRFRequestListParameters): ICustomerGroupListAxiosResponsePromise =>
-  request.get<ICustomerGroupList>(`${custApiUrl}groups/`, { params })
+export const getCustomersBums = getObjectListDecorator<ICustomer>('/customers/bums/')
 
 // IAdditionalTelephone
 const telBaseUrl = '/customers/additional-telephone/'
 export const getTelephones = (customerId: number): IAdditionalTelephoneListAxiosResponsePromise =>
   request.get<IAdditionalTelephoneList>(telBaseUrl, { params: { customer: customerId } })
 
-export const getTelephone = (id: number): IAdditionalTelephoneAxoisResponsePromise =>
-  request.get<IAdditionalTelephone>(`${telBaseUrl}${id}/`)
+export const getTelephone = getObjectDecorator<IAdditionalTelephone>(telBaseUrl)
+export const addTelephone = addObjectDecorator<IAdditionalTelephone>(telBaseUrl)
+export const changeTelephone = patchObjectDecorator<IAdditionalTelephone>(telBaseUrl)
+export const delTelephone = delObjectDecorator<IAdditionalTelephone>(telBaseUrl)
 
-export const addTelephone = (data: object): IAdditionalTelephoneAxoisResponsePromise =>
-  request.post<IAdditionalTelephone>(telBaseUrl, data)
-
-export const changeTelephone = (id: number, newData: object): IAdditionalTelephoneAxoisResponsePromise =>
-  request.patch<IAdditionalTelephone>(`${telBaseUrl}${id}/`, newData)
-
-export const delTelephone = (id: number) =>
-  request.delete(`${telBaseUrl}${id}/`)
-
-// ICustomerStreet
-const streetBaseUrl = '/customers/streets/'
-
-export const getStreets = (params?: IDRFRequestListParametersCustomer): ICustomerStreetListAxiosResponsePromise =>
-  request.get<ICustomerStreetList>(streetBaseUrl, { params })
-
-export const getStreet = (id: number): ICustomerStreetAxoisResponsePromise =>
-  request.get<ICustomerStreet>(`${streetBaseUrl}${id}/`)
-
-export const addStreet = (street: object): ICustomerStreetAxoisResponsePromise =>
-  request.post<ICustomerStreet>(streetBaseUrl, street)
-
-export const changeStreet = (id: number, newData: object): ICustomerStreetAxoisResponsePromise =>
-  request.patch<ICustomerStreet>(`${streetBaseUrl}${id}/`, newData)
-
-export const delStreet = (id: number) =>
-  request.delete(`${streetBaseUrl}${id}/`)
-
-// IInvoice4Payment
+// IInvoice4Payment CRUD
 const invBaseUrl = '/customers/invoices/'
-
-export const getInvoices = (params?: IDRFRequestListParametersInvoice): IInvoice4PaymentListAxiosResponsePromise =>
-  request.get<IInvoice4PaymentList>(invBaseUrl, { params })
-
-export const getInvoice = (id: number): IInvoice4PaymentAxoisResponsePromise =>
-  request.get<IInvoice4Payment>(`${invBaseUrl}${id}/`)
-
-export const addInvoice = (inv: IInvoice4Payment): IInvoice4PaymentAxoisResponsePromise =>
-  request.post<IInvoice4Payment>(invBaseUrl, inv)
-
-export const changeInvoice = (id: number, newData: IInvoice4Payment): IInvoice4PaymentAxoisResponsePromise =>
-  request.patch<IInvoice4Payment>(`${invBaseUrl}${id}/`, newData)
-
-export const delInvoice = (id: number) =>
-  request.delete(`${invBaseUrl}${id}/`)
+export const getInvoices = getObjectListDecorator<IInvoice4Payment>(invBaseUrl)
+export const getInvoice = getObjectDecorator<IInvoice4Payment>(invBaseUrl)
+export const addInvoice = addObjectDecorator<IInvoice4Payment>(invBaseUrl)
+export const changeInvoice = patchObjectDecorator<IInvoice4Payment>(invBaseUrl)
+export const delInvoice = delObjectDecorator<IInvoice4Payment>(invBaseUrl)
 
 // CustomerLog
-export const getCustomerPayLog = (params?: IDRFRequestListParametersInvoice): ICustomerLogListAxiosResponsePromise =>
-  request.get<ICustomerLogList>('/customers/customer-log/', { params })
+export const getCustomerPayLog = getObjectListDecorator<ICustomerLog>('/customers/customer-log/')
 
 export const getPassportInfo = (customerId: number): IPassportInfoAxoisResponsePromise =>
   request.get<IPassportInfo>(`${custApiUrl}${customerId}/passport/`)
@@ -202,15 +158,14 @@ export const getAttachment = (id: number): ICustomerAttachementAxoisResponseProm
   request.get<ICustomerAttachement>(`${CustomerAttachmUrl}${id}/`)
 
 export const addAttachment = (newAtt: any): ICustomerAttachementAxoisResponsePromise => {
-  let formData = new FormData()
+  const formData = new FormData()
   formData.append('doc_file', newAtt.doc_file)
   formData.append('title', newAtt.title)
   formData.append('customer', newAtt.customer)
   return request.post<ICustomerAttachement>(CustomerAttachmUrl, formData)
 }
 
-export const delAttachment = (id: number) =>
-  request.delete(`${CustomerAttachmUrl}${id}/`)
+export const delAttachment = delObjectDecorator<any>(CustomerAttachmUrl)
 
 export const getCustomerObjectsPerms = (customerId: number): IObjectGroupPermsInitialAxiosResponsePromise =>
   request.get<IObjectGroupPermsInitial>(`/customers/${customerId}/get_object_perms/`)
@@ -232,15 +187,18 @@ const CustomerPPayUrl = '/customers/periodic-pay/'
 export const getAssignedPeriodicPays = (account: number): IPeriodicPayForIdListAxiosResponsePromise =>
   request.get<IPeriodicPayForIdList>(CustomerPPayUrl, { params: { account } })
 
-export const delAssignedPeriodicPay = (pid: number) =>
-  request.delete(`${CustomerPPayUrl}${pid}/`)
+export const delAssignedPeriodicPay = delObjectDecorator<any>(CustomerPPayUrl)
 
-
-//IDynamicContentField
+// IDynamicContentField
 export const getCombinedContentFields = (customerId: number): IDynamicContentFieldListAxiosResponsePromise =>
-request.get<IDynamicContentFieldList>('/customers/dynamic-fields/combine/', {params: {
-  customer: customerId
-}})
+  request.get<IDynamicContentFieldList>('/customers/dynamic-fields/combine/', {
+    params: {
+      customer: customerId
+    }
+  })
 
 export const changeContentFields = (info: IDynamicContentFieldList): IDynamicContentFieldListAxiosResponsePromise =>
-request.put<IDynamicContentFieldList>('/customers/dynamic-fields/update_all/', info)
+  request.put<IDynamicContentFieldList>('/customers/dynamic-fields/update_all/', info)
+
+export const getGroupsWithCustomers = (params?: IDRFRequestListAddrsParameters): IDRFAxiosResponsePromise<IGroup[]> =>
+  request.get<IGroup[]>('/customers/groups_with_customers/', { params })

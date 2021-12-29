@@ -1,57 +1,47 @@
 <template lang="pug">
   el-form(
-    ref='frm'
-    v-loading='frmLoading'
+    ref="frm"
+    v-loading="frmLoading"
     :label-width="$store.getters.isMobileView ? undefined : '100px'"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-  )
-    el-form-item(
-      label="IP Адрес"
-      prop='ip_address'
-    )
+    :rules="frmRules"
+    :model="frmMod")
+    el-form-item(:label="$t('ipAddress')" prop="ip_address")
       el-input(v-model="frmMod.ip_address")
         template(v-slot:append)
           el-button(
-            icon='el-icon-refresh'
+            icon="el-icon-refresh"
             @click="getFreeIp"
-            :loading='getFreeIpLoad'
-            :disabled="frmMod.pool === 0"
-          )
-    el-form-item(
-      label="IP Pool"
-      prop='pool'
-    )
+            :loading="getFreeIpLoad"
+            :disabled="frmMod.pool === 0")
+
+    el-form-item(:label="$t('customers.ipPool')" prop="pool")
       el-select(
         v-model="frmMod.pool"
         v-loading="poolsLoading"
-        :disabled="pools.length === 0"
-      )
+        :disabled="pools.length === 0")
         template(v-if="pools.length > 0")
           el-option(
             v-for="p in pools"
             :key="p.id"
             :label="`${p.network} - ${p.description}`"
-            :value="p.id"
-          )
+            :value="p.id")
+
         el-option(
           v-else
-          label="Нет пулов"
-          :value="null"
-        )
-    el-form-item(
-      label="MAC Адрес"
-      prop='mac_address'
-    )
+          :label="$t('customers.poolsNotExists')"
+          :value="null")
+
+    el-form-item(:label="$t('macAddress')" prop="mac_address")
       el-input(v-model="frmMod.mac_address")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
-        :loading="frmLoading"
-      ) Сохранить
+        :loading="frmLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -80,11 +70,11 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: 'IP не может быть пустым', trigger: 'blur' },
-      { validator: ipAddrValidator, trigger: 'change', message: 'Не правильный ip' }
+      { required: true, message: this.$tc('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
+      { validator: ipAddrValidator, trigger: 'change', message: this.$tc('customers.badIp') }
     ],
     mac_address: [
-      { validator: macAddrValidator, trigger: 'change', message: 'Не правильный mac' }
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc('customers.badMac') }
     ]
   }
 
@@ -92,11 +82,11 @@ export default class extends Vue {
     ip_address: '',
     pool: 0,
     customer: 0,
-    mac_address: '',
+    mac_address: ''
   }
 
   private onSubmit() {
-    (this.$refs['frm'] as Form).validate(async valid => {
+    (this.$refs.frm as Form).validate(async valid => {
       if (valid) {
         this.frmLoading = true
         try {
@@ -112,7 +102,7 @@ export default class extends Vue {
           this.frmLoading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
@@ -125,7 +115,9 @@ export default class extends Vue {
       if (ip) {
         this.frmMod.ip_address = ip
       } else {
-        this.$message.error('Не получилось подобрать ip :(')
+        this.$message.error(
+          this.$tc('customers.failedGettingFreeIp').toString()
+        )
       }
     } catch (err) {
       this.$message.error(err)
@@ -147,7 +139,7 @@ export default class extends Vue {
       ip_address: '',
       pool: 0,
       customer: CustomerModule.id,
-      mac_address: '',
+      mac_address: ''
     }
     if (this.pools.length === 0) {
       this.loadPools()

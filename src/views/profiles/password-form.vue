@@ -1,39 +1,49 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     status-icon
     :rules="frmRules"
     :model="frmMod"
-    v-loading="loading"
-  )
+    v-loading="loading")
     el-form-item(
-      label="Старый пароль"
-      prop='old_passw'
+      :label="$t('oldPassword')"
+      prop="old_passw"
       :error="frmErr.old_passw"
-      v-if="!this.$perms.is_superuser"
-    )
-      el-input(v-model="frmMod.old_passw" maxlength="128" type="password")
+      v-if="!this.$perms.is_superuser")
+      el-input(
+        v-model="frmMod.old_passw"
+        maxlength="128"
+        type="password")
+
     el-form-item(
-      label="Новый пароль"
-      prop='new_passw'
-      :error="frmErr.new_passw"
-    )
-      el-input(v-model="frmMod.new_passw" maxlength="128" type="password")
+      :label="$t('newPassword')"
+      prop="new_passw"
+      :error="frmErr.new_passw")
+      el-input(
+        v-model="frmMod.new_passw"
+        maxlength="128"
+        type="password")
+
     el-form-item(
-      label="Повтори пароль"
-      prop='retype_passw'
-      :error="frmErr.retype_passw"
-    )
-      el-input(v-model="frmMod.retype_passw" maxlength="128" type="password")
+      :label="$t('repeatThePassword')"
+      prop="retype_passw"
+      :error="frmErr.retype_passw")
+      el-input(
+        v-model="frmMod.retype_passw"
+        maxlength="128"
+        type="password")
+
     el-form-item
       el-button-group
         el-button(
           type="primary"
           @click="onSubmit"
           icon="el-icon-download"
-          :disabled="isEmpty"
-        ) Сохранить
-        el-button(@click="$emit('cancel')" icon="el-icon-close") Отмена
+          :disabled="isEmpty")
+          | {{ $t('save') }}
+
+        el-button(@click="$emit('cancel')", icon="el-icon-close")
+          | {{ $t('cancellation') }}
 </template>
 
 <script lang="ts">
@@ -53,17 +63,17 @@ export default class extends Vue {
 
   private frmRules = {
     old_passw: [
-      { required: !this.$perms.is_superuser, message: 'Надо указать старый пароль', trigger: 'blur' },
+      { required: !this.$perms.is_superuser, message: this.$tc('iNeedToPointOutTheOldPassword'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
+      { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     new_passw: [
-      { required: true, message: 'Надо указать новый пароль', trigger: 'blur' },
+      { required: true, message: this.$tc('weNeedANewPassword'), trigger: 'blur' },
       { validator: latinValidator, required: true, trigger: 'blur' },
-      { min: 6, message: 'Пароль состоит минимум из 6ти символов' }
+      { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     retype_passw: [
-      { required: true, trigger: 'blur', message: 'Нужно повторить новый пароль' },
+      { required: true, trigger: 'blur', message: this.$tc('weNeedANewPassword') },
       {
         validator: (rule: any, value: string, callback: Function) => {
           if (value === this.frmMod.new_passw) {
@@ -72,7 +82,7 @@ export default class extends Vue {
             callback(new Error(rule.message))
           }
         },
-        message: 'Пароли должны совпадать'
+        message: this.$tc('thePasswordsShouldMatch')
       }
     ]
   }
@@ -82,6 +92,7 @@ export default class extends Vue {
     new_passw: '',
     retype_passw: ''
   }
+
   private frmErr = {
     old_passw: '',
     new_passw: '',
@@ -96,7 +107,7 @@ export default class extends Vue {
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.loading = true
         try {
@@ -105,18 +116,18 @@ export default class extends Vue {
             new_passw: this.frmMod.retype_passw
           })
           this.$emit('done', changedUser)
-        } catch (err) {
+        } catch (err: any) {
           if (typeof err === 'object' && err.hasOwnProperty('response')) {
             const d = err.response.data
-            this.frmErr.old_passw = d['old_passw']
-            this.frmErr.new_passw = d['new_passw']
-            this.frmErr.retype_passw = d['retype_passw']
+            this.frmErr.old_passw = d.old_passw
+            this.frmErr.new_passw = d.new_passw
+            this.frmErr.retype_passw = d.retype_passw
           }
         } finally {
           this.loading = false
         }
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }

@@ -26,17 +26,3 @@ export interface IMessengerSubscriber {
   account: number
   account_name: string
 }
-export type IMessengerSubscriberList = IDRFListResponse<IMessengerSubscriber>
-export type IMessengerSubscriberAxoisResponsePromise = IDRFAxiosResponsePromise<IMessengerSubscriber>
-export type IMessengerSubscriberListAxiosResponsePromise = IDRFAxiosResponsePromise<IMessengerSubscriberList>
-
-export interface IOpt {
-  key: string
-  label: string
-  value: boolean
-}
-export interface IMessengerOptions {
-  notification_flags: IOpt[]
-  various_options: IOpt[]
-}
-export type IMessengerOptionsAxoisResponsePromise = IDRFAxiosResponsePromise<IMessengerOptions>

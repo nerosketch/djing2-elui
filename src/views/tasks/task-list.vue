@@ -1,43 +1,40 @@
 <template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadTasks"
-    :tableRowClassName="tableRowClassName"
-    :heightDiff='188'
-    :editFieldsVisible.sync="editFieldsVisible"
-    widthStorageNamePrefix='tasks'
-    ref='tbl'
-  )
-    template(v-slot:customer_full_name="{row}")
-      router-link(:to="{ name: 'customerDetails', params: {uid: row.customer } }")
-        el-link(type="primary") {{ row.customer_full_name }}
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadTasks"
+      :tableRowClassName="tableRowClassName"
+      :heightDiff="188"
+      :editFieldsVisible.sync="editFieldsVisible"
+      widthStorageNamePrefix="tasks"
+      ref="tbl")
+      template(v-slot:customer_full_name="{row}")
+        router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerDetails', params: {uid: row.customer } }")
+          | {{ row.customer_full_name }}
 
-    template(v-slot:id="{row}")
-      router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
+      template(v-slot:id="{row}")
+        router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
+          el-button(:type="row.comment_count > 0 ? 'success' : 'primary'")
+            span(v-if="row.comment_count > 0")
+              | {{ row.comment_count }}
+
+            i.el-icon-view(v-else)
+
+      el-button-group
         el-button(
-          :type="row.comment_count > 0 ? 'success' : 'primary'"
-        )
-          span(v-if="row.comment_count > 0") {{ row.comment_count }}
-          i.el-icon-view(v-else)
+          icon="el-icon-plus"
+          @click="openNew"
+          :disabled="!$perms.tasks.add_task")
+          | {{ $t('addTheTask') }}
 
-    el-button-group
-      el-button(
-        icon="el-icon-plus"
-        @click="openNew"
-        :disabled="!$perms.tasks.add_task"
-      ) Добавить задачу
-      el-button(
-        icon='el-icon-s-operation'
-        @click="editFieldsVisible=true"
-      ) Поля
+        el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
+          | {{ $t('field') }}
 
-  el-dialog(
-    title='Создание задачи'
-    :visible.sync='formDialog'
-    :close-on-click-modal="false"
-  )
-    task-form
+    el-dialog(
+      :title="$t('creatingTheChallenge')"
+      :visible.sync="formDialog"
+      :close-on-click-modal="false")
+      task-form
 </template>
 
 <script lang="ts">
@@ -54,13 +51,15 @@ class DataTableComp extends DataTable<ITask> {}
 
 @Component({
   name: 'TaskList',
-  components: { 'datatable': DataTableComp, TaskForm }
+  components: { datatable: DataTableComp, TaskForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+
   private formDialog = false
+
   private editFieldsVisible = false
 
   @Prop({ default: '' })
@@ -68,7 +67,7 @@ export default class extends Vue {
 
   @Watch('tabUrl')
   private onTabTypeChanged() {
-    this.$refs.tbl.GetTableData()
+    this.$refs.tbl.LoadTableData()
   }
 
   private tableRowClassName(r: any) {
@@ -88,37 +87,38 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_full_name',
-      label: 'Имя',
+      label: this.$tc('name'),
       'min-width': 250
     },
     {
       prop: 'customer_address',
-      label: 'Адрес',
-      'min-width': 300
+      label: this.$tc('addresses'),
+      'min-width': 300,
+      cutLeft: true
     },
     {
       prop: 'mode_str',
-      label: 'Характер поломки',
+      label: this.$tc('natureOfFracture'),
       'min-width': 150
     },
     {
       prop: 'descr',
-      label: 'Описание',
+      label: this.$tc('description'),
       'min-width': 400
     },
     {
       prop: 'state_str',
-      label: 'Состояние',
+      label: this.$tc('status'),
       'min-width': 100
     },
     {
       prop: 'time_of_create',
-      label: 'Дата создания',
+      label: this.$tc('dateOfEstablishment'),
       'min-width': 170
     },
     {
       prop: 'id',
-      label: 'Смотреть',
+      label: this.$tc('watch'),
       'min-width': 80,
       align: DataTableColumnAlign.CENTER
     }
@@ -131,7 +131,7 @@ export default class extends Vue {
 
   private loadTasks(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
+      params.fields = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
     }
     return getTasks(params, this.tabUrl)
   }
@@ -143,10 +143,10 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Задачи'
+          title: this.$tc('route.tasks')
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

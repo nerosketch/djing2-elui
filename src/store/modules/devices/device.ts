@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import {
-  IDevice, IDeviceInterace,
-  IDeviceTypeEnum
+  IDevice, IDeviceInterface,
 } from '@/api/devices/types'
 import {
   getDevice, delDevice,
@@ -12,22 +11,18 @@ import {
   scanUnitsUnregistered,
   getDeviceConfigChoices,
   removeFromOlt,
-  fixOnu
+  fixOnu,
+  getDeviceTypes
 } from '@/api/devices/req'
 import store from '@/store'
 
-export interface IDeviceTypeName {
-  nm: string,
-  v: IDeviceTypeEnum
-}
-
 @Module({ dynamic: true, store, name: 'devicemodule' })
-class Device extends VuexModule implements IDeviceInterace {
+class Device extends VuexModule implements IDeviceInterface {
   id = 0
   ip_address = ''
   mac_addr = ''
   comment = ''
-  dev_type = IDeviceTypeEnum.UNKNOWN
+  dev_type = 0
   dev_type_str = ''
   man_passw = ''
   group = 0
@@ -41,6 +36,8 @@ class Device extends VuexModule implements IDeviceInterace {
   code = ''
   sites?: number[] = []
   create_time = ''
+  address = 0
+  address_title = ''
   place = ''
 
   loadProgress = false
@@ -56,7 +53,7 @@ class Device extends VuexModule implements IDeviceInterace {
     this.ip_address = ''
     this.mac_addr = ''
     this.comment = ''
-    this.dev_type = IDeviceTypeEnum.UNKNOWN
+    this.dev_type = 0
     this.dev_type_str = ''
     this.man_passw = ''
     this.group = 0
@@ -69,6 +66,8 @@ class Device extends VuexModule implements IDeviceInterace {
     this.code = ''
     this.sites = []
     this.create_time = ''
+    this.address = 0
+    this.address_title = ''
     this.place = ''
     return this
   }
@@ -93,6 +92,8 @@ class Device extends VuexModule implements IDeviceInterace {
     this.code = data.code
     this.sites = data.sites
     this.create_time = data.create_time
+    this.address = data.address
+    this.address_title = data.address_title
     this.place = data.place
     return this
   }
@@ -199,22 +200,9 @@ class Device extends VuexModule implements IDeviceInterace {
   }
 
   @Action
-  public getDeviceTypeNames(): Promise<IDeviceTypeName[]> {
-    return [
-      { nm: 'Не выбрано', v: IDeviceTypeEnum.UNKNOWN },
-      { nm: 'Dlink DGS1100_10/ME', v: IDeviceTypeEnum.DlinkDGS1100_10ME },
-      { nm: 'BDCOM P3310C', v: IDeviceTypeEnum.BDCOM_P3310C },
-      { nm: 'EPON BDCOM FORA', v: IDeviceTypeEnum.EPON_BDCOM_FORA },
-      { nm: 'Eltex Switch', v: IDeviceTypeEnum.EltexSwitch },
-      { nm: 'ZTE C320', v: IDeviceTypeEnum.ZTE_C320 },
-      { nm: 'Onu ZTE F660', v: IDeviceTypeEnum.OnuZTE_F660 },
-      { nm: 'Onu ZTE F601', v: IDeviceTypeEnum.OnuZTE_F601 },
-      { nm: 'Huawei S2300', v: IDeviceTypeEnum.HuaweiS2300 },
-      { nm: 'Huawei S5300 10P LI AC', v: IDeviceTypeEnum.HuaweiS5300_10P_LI_ACInterface },
-      { nm: 'Dlink DGS_3120_24SC', v: IDeviceTypeEnum.DlinkDGS_3120_24SCSwitchInterface },
-      { nm: 'Dlink DGS_1100_06/ME', v: IDeviceTypeEnum.DlinkDGS_1100_06MESwitchInterface },
-      { nm: 'Dlink DGS_3627G', v: IDeviceTypeEnum.DlinkDGS_3627GSwitchInterface }
-    ] as any
+  public async getDeviceTypeNames() {
+    const { data } = await getDeviceTypes()
+    return data
   }
 
   public get isOnuRegistered() {
@@ -226,7 +214,7 @@ class Device extends VuexModule implements IDeviceInterace {
     if (!devId || devId === 0) {
       devId = this.id
     }
-    let { data } = await fixOnu(devId)
+    const { data } = await fixOnu(devId)
     this.SET_ALL_DEV(data.device)
     return data
   }

@@ -55,7 +55,6 @@ export interface ITask {
   activeTaskCount?: number
 }
 export type ITaskList = IDRFListResponse<ITask>
-export type ITaskAxoisResponsePromise = IDRFAxiosResponsePromise<ITask>
 export type ITaskListAxiosResponsePromise = IDRFAxiosResponsePromise<ITaskList>
 
 type IExtraCommentChangeLogType = 'comment' | 'log'
@@ -71,7 +70,6 @@ export interface IExtraComment {
   can_remove?: boolean
   type?: IExtraCommentChangeLogType
 }
-export type IExtraCommentListAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment[]>
 export type IExtraCommentAxoisResponsePromise = IDRFAxiosResponsePromise<IExtraComment>
 
 export interface IExtraCommentChangeLog {

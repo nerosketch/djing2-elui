@@ -1,24 +1,22 @@
 <template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadLog"
-    :heightDiff='202'
-    widthStorageNamePrefix='customerFin'
-    ref='fintbl'
-  )
-    template(v-slot:author_name="{row}") {{ row.author_name || 'Система' }}
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadLog"
+      :heightDiff="202"
+      widthStorageNamePrefix="customerFin"
+      ref="fintbl")
+      template(v-slot:author_name="{row}")
+        | {{ row.author_name || $t('customers.defaultAuthorName') }}
 
-    el-button(
-      @click="addCashDialog=true"
-    ) Пополнить счёт
+      el-button(@click="addCashDialog=true")
+        | {{ $t('customers.addCash2Account') }}
 
-  el-dialog(
-    title="Пополнить счёт"
-    :visible.sync="addCashDialog"
-    :close-on-click-modal="false"
-  )
-    add-cash(v-on:done="addCashDone")
+    el-dialog(
+      :title="$t('customers.addCash2Account')"
+      :visible.sync="addCashDialog"
+      :close-on-click-modal="false")
+      add-cash(v-on:done="addCashDone")
 </template>
 
 <script lang="ts">
@@ -34,43 +32,44 @@ class DataTableComp extends DataTable<ICustomerLog> {}
 
 @Component({
   name: 'Finance',
-  components: { AddCash, 'datatable': DataTableComp }
+  components: { AddCash, datatable: DataTableComp }
 })
 export default class extends Vue {
   public readonly $refs!: {
     fintbl: DataTableComp
   }
+
   private addCashDialog = false
 
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'from_balance',
-      label: 'Было',
+      label: this.$tc('customers.was').toString(),
       'min-width': 80
     },
     {
       prop: 'cost',
-      label: 'Сумма',
+      label: this.$tc('customers.sum').toString(),
       'min-width': 80
     },
     {
       prop: 'to_balance',
-      label: 'Стало',
+      label: this.$tc('customers.become').toString(),
       'min-width': 80
     },
     {
       prop: 'date',
-      label: 'Дата оплаты',
+      label: this.$tc('customers.payDate').toString(),
       'min-width': 160
     },
     {
       prop: 'author_name',
-      label: 'Назначил',
+      label: this.$tc('customers.payWho').toString(),
       'min-width': 180
     },
     {
       prop: 'comment',
-      label: 'Комментарий',
+      label: this.$tc('comment').toString(),
       'min-width': 300
     }
   ]
@@ -91,8 +90,8 @@ export default class extends Vue {
 
   private addCashDone(cost: number) {
     this.addCashDialog = false
-    this.$refs.fintbl.GetTableData()
-    this.$message.success(`Счёт пополнен на ${cost}`)
+    this.$refs.fintbl.LoadTableData()
+    this.$message.success(`${this.$tc('customers.accountHasAmounted')} ${cost}`)
   }
 }
 </script>

@@ -3,69 +3,60 @@
     datatable(
       :columns="tableColumns"
       :getData="loadGroups"
-      widthStorageNamePrefix='groups'
-      ref='grouptable'
+      widthStorageNamePrefix="groups"
+      ref="grouptable"
     )
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button-group
           el-button(
             v-if="$perms.is_superuser"
             @click="openSitesDlg(row)"
           ) C
+
           el-button(
-            icon='el-icon-lock'
+            icon="el-icon-lock"
             @click="openPermsDialog(row)"
-            v-if="$perms.is_superuser"
-          )
+            v-if="$perms.is_superuser")
+
           el-button(
             icon="el-icon-edit"
             @click="openEdit(row)"
-            :disabled="!$perms.groupapp.change_group"
-          )
+            :disabled="!$perms.groupapp.change_group")
+
           el-button(
-            type="danger" icon="el-icon-delete"
+            type="danger"
+            icon="el-icon-delete"
             @click="delGroup(row)"
-            :disabled="!$perms.groupapp.delete_group"
-          )
+            :disabled="!$perms.groupapp.delete_group")
 
       el-button(
-        icon='el-icon-plus'
-        @click='openNew'
-        :disabled="!$perms.groupapp.add_group"
-      ) Добавить группу
+        icon="el-icon-plus"
+        @click="openNew"
+        :disabled="!$perms.groupapp.add_group")
+        | {{ $t('addTheGroup') }}
 
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-    )
-      group-form(
-        v-on:done="frmDone"
-      )
+      :close-on-click-modal="false")
+      group-form(v-on:done="frmDone")
 
     el-dialog(
-      :title="`Кто имеет права на группу абонентов \"${GroupTitleGetter}\"`"
+      :title="`${$t('whoSEntitledToAGroupOfSubscribers')} \"${GroupTitleGetter}\"`"
       :visible.sync="permsDialog"
       top="5vh"
-      :close-on-click-modal="false"
-    )
+      :close-on-click-modal="false")
       object-perms(
         v-on:save="changeGroupObjectPerms"
         :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
         :getSelectedObjectPerms="groupGetSelectedObjectPerms"
-        :objId="groupIdGetter"
-      )
+        :objId="groupIdGetter")
 
     el-dialog(
-      title="Принадлежность сайтам"
+      :title="$t('facilities')"
       :visible.sync="sitesDlg"
-      :close-on-click-modal="false"
-    )
-      sites-attach(
-        :selectedSiteIds="$store.state.group.sites"
-        v-on:save="groupSitesSave"
-      )
-
+      :close-on-click-modal="false")
+      sites-attach(:selectedSiteIds="$store.state.group.sites", v-on:save="groupSitesSave")
 </template>
 
 <script lang="ts">
@@ -84,13 +75,14 @@ class DataTableComp extends DataTable<IGroup> {}
   name: 'GroupList',
   components: {
     GroupForm,
-    'datatable': DataTableComp
+    datatable: DataTableComp
   }
 })
 export default class extends Vue {
   public readonly $refs!: {
     grouptable: DataTableComp
   }
+
   private dialogVisible = false
   private permsDialog = false
   private sitesDlg = false
@@ -98,13 +90,13 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: 'Название',
+      label: this.$tc('title'),
       sortable: true,
       'min-width': 250
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 195,
       align: DataTableColumnAlign.CENTER
     }
@@ -118,17 +110,20 @@ export default class extends Vue {
     await GroupModule.SET_ALL_MGROUP(group)
     this.dialogVisible = true
   }
+
   private async openNew() {
     await GroupModule.RESET_ALL_MGROUP()
     this.dialogVisible = true
   }
 
   get dialogTitle() {
-    let t = 'Изменить'
+    let t
     if (this.groupIdGetter === 0) {
-      t = 'Создать'
+      t = this.$tc('add').toString()
+    } else {
+      t = this.$tc('change').toString()
     }
-    return `${t} группу`
+    return `${t} ${this.$tc('groups.minAGroup')}`
   }
 
   get groupIdGetter() {
@@ -137,23 +132,23 @@ export default class extends Vue {
 
   private loadGroups(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,title,sites'
+      params.fields = 'id,title,sites'
     }
     return getGroups(params)
   }
 
   private delGroup(group: IGroup) {
-    this.$confirm(`Действительно удалить группу "${group.title}"?`).then(async() => {
+    this.$confirm(`${this.$tc('areUSuretRemoveGroup')} ${group.title}?`).then(async() => {
       await GroupModule.DelGroup(group.id)
-      this.$message.success(`Группа "${group.title}" удалена`)
-      this.$refs.grouptable.GetTableData()
+      this.$message.success(`${this.$tc('groupRemoved')} ${group.title}`)
+      this.$refs.grouptable.LoadTableData()
     })
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$message.success('Группа сохранена')
-    this.$refs.grouptable.GetTableData()
+    this.$message.success(this.$tc('groupRetained'))
+    this.$refs.grouptable.LoadTableData()
   }
 
   // Breadcrumbs
@@ -163,10 +158,10 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: 'Группы'
+          title: this.$tc('route.groups')
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 
@@ -179,9 +174,11 @@ export default class extends Vue {
     await setGroupObjectsPerms(this.groupIdGetter, info)
     this.permsDialog = false
   }
+
   private getGroupObjectPermsFunc4Grp() {
     return getGroupObjectsPerms(this.groupIdGetter)
   }
+
   private groupGetSelectedObjectPerms(grpId: number, profileGroupId: number) {
     return getGroupSelectedObjectPerms(grpId, profileGroupId)
   }
@@ -190,11 +187,12 @@ export default class extends Vue {
     GroupModule.PatchGroup({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.grouptable.GetTableData()
-      this.$message.success('Принадлежность группы сайтам сохранена')
+      this.$refs.grouptable.LoadTableData()
+      this.$message.success(this.$tc('theOwnershipOfThe'))
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(grp: IGroup) {
     GroupModule.SET_ALL_MGROUP(grp)
     this.sitesDlg = true

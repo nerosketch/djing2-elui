@@ -1,34 +1,76 @@
 <template lang="pug">
   .app-container
-    span Баланс: 
-    small {{ $store.state.customer.balance }}. 
-    span Создан: 
-    small {{ $store.state.customer.create_date }}
-    el-tabs.border-card
-      el-tab-pane(label="Инфо" lazy)
-        keep-alive
-          info(v-if='loaded')
-      el-tab-pane(label="Тарифы" lazy :disabled="!$perms.customers.view_customerservice")
-        keep-alive
-          services(v-if='loaded')
-      el-tab-pane(label="Финансы" lazy :disabled="!$perms.customers.view_customerlog")
-        keep-alive
-          finance
-      el-tab-pane(label="История задач" lazy :disabled="!$perms.tasks.view_task")
-        keep-alive
-          customer-task-history
-      el-tab-pane(label="История трафика" lazy)
-        keep-alive
-          el-card
-            template(v-slot:header) История трафика
-            traf-report(
-              :customerId="uid"
-            )
+    slot(name="head")
+      span
+        | {{ $t('customers.balance') }}:
+
+      small
+        | {{ $store.state.customer.balance }}.
+
+      span
+        | {{ $t('startDate') }}:
+
+      small
+        | {{ $store.state.customer.create_date }}
+
+    el-tabs.border-card(v-model="activeTabName")
+      el-tab-pane(
+        :label="$t('customers.info')"
+        name="info"
+        lazy)
+        slot(name="info")
+          keep-alive
+            info(v-if="loaded")
+
+      el-tab-pane(
+        :label="$t('route.services')"
+        name="services"
+        :disabled="!$perms.customers.view_customerservice"
+        lazy)
+        slot(name="services")
+          keep-alive
+            services(v-if="loaded")
+
+      el-tab-pane(
+        :label="$t('route.finance')"
+        name="fin"
+        :disabled="!$perms.customers.view_customerlog"
+        lazy)
+        slot(name="fin")
+          keep-alive
+            finance(v-if="loaded")
+
+      el-tab-pane(
+        :label="$t('customers.taskHistory')"
+        name="history"
+        :disabled="!$perms.tasks.view_task"
+        lazy)
+        slot(name="history")
+          keep-alive
+            customer-task-history(v-if="loaded")
+
+      el-tab-pane(
+        :label="$t('customers.trafHistory')"
+        name="traf"
+        lazy)
+        slot(name="traf")
+          keep-alive
+            el-card(v-if="loaded")
+              template(#header)
+                | {{ $t('customers.trafHistory') }}
+
+              traf-report(:customerId="uid")
+
+      slot(name="additional_tabs")
+
+    slot
 </template>
 
 <script lang="ts">
 /* eslint-disable camelcase */
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
+import TabMixin from '@/utils/tab-mixin'
 import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
 import Finance from './customers-details/finance.vue'
@@ -52,10 +94,11 @@ interface ICustomerUpdateEventData {
     TrafReport
   }
 })
-export default class extends Vue {
+export default class extends mixins(TabMixin) {
   @Prop({ default: 0 }) private uid!: number
 
   private loaded = false
+  protected activeTabName = 'info'
 
   created() {
     // Subscribe for customer update event from server
@@ -71,9 +114,9 @@ export default class extends Vue {
   private async loadCustomer() {
     this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
-    this.setCrumbs(this.$store.state.customer.group)
     this.loaded = true
-    document.title = this.$store.state.customer.full_name || 'Абонент'
+    this.setCrumbs(this.$store.state.customer.address)
+    document.title = this.$store.state.customer.full_name || this.$tc('customers.customer').toString()
   }
 
   private onCustomerServerUpdate(msg: IWsMessage) {
@@ -83,23 +126,24 @@ export default class extends Vue {
     }
   }
 
-  private async setCrumbs(grpId: number) {
-    if (grpId === 0) return
+  // Breadcrumbs
+  private async setCrumbs(addrId: number) {
+    if (addrId === 0) return
     await BreadcrumbsModule.SetCrumbs([
       {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: 'Группы абонентов'
+          title: this.$tc('addrs.addresses').toString()
         }
       },
-      {
-        path: { name: 'customersList', params: { groupId: grpId } },
+      /* {
+        path: { name: 'customerList', params: { addrId: addrId } },
         meta: {
           hidden: true,
-          title: this.$store.state.customer.group_title || '-'
+          title: this.$store.state.customer.address_title || '-'
         }
-      },
+      },*/
       {
         path: '',
         meta: {
@@ -107,7 +151,7 @@ export default class extends Vue {
           title: this.$store.state.customer.full_name || '-'
         }
       }
-    ] as any[])
+    ] as any)
   }
   // End Breadcrumbs
 }

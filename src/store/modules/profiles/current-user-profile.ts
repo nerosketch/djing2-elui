@@ -1,7 +1,21 @@
 /* eslint-disable camelcase */
-import { Module, Mutation, Action, getModule, VuexModule } from 'vuex-module-decorators'
+import {
+  Module,
+  Mutation,
+  Action,
+  getModule
+} from 'vuex-module-decorators'
 import store from '@/store'
-import { getToken, setToken, removeToken } from '@/utils/cookies'
+import {
+  getToken,
+  setToken,
+  removeToken
+} from '@/utils/cookies'
+import {
+  BaseProfileVuexModule,
+  RESET_ALL_BASE_PROFILE,
+  SET_ALL_BASE_PROFILE
+} from './base-profile'
 import {
   getSelfProfile,
   login,
@@ -11,23 +25,13 @@ import {
 import { DEFAULT_USER_AVA, IUserProfile } from '@/api/profiles/types'
 
 @Module({ dynamic: true, store, name: 'currentuserprofile' })
-class CurrentUserProfile extends VuexModule implements IUserProfile {
-  public id = 0
+class CurrentUserProfile extends BaseProfileVuexModule implements IUserProfile {
   public token = getToken() || ''
-  public username = ''
-  public fio = ''
-  public birth_day = ''
-  public is_active = false
-  public is_admin = false
-  public telephone = ''
   public avatar = ''
   public email = ''
   public full_name = ''
-  public last_login = ''
-  public is_superuser = false
   public user_permissions: number[] = []
-  public groups: number[] = []
-  access_level = 0
+  public access_level = 0
 
   @Mutation
   public SET_TOKEN(token: string) {
@@ -36,39 +40,22 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
 
   @Mutation
   public SET_ALL_CURRENT_PROFILE(data: IUserProfile) {
-    this.id = data.id
-    this.username = data.username
-    this.fio = data.fio
-    this.birth_day = data.birth_day
-    this.is_active = data.is_active
-    this.is_admin = data.is_admin
-    this.telephone = data.telephone
+    SET_ALL_BASE_PROFILE(this, data)
     this.avatar = data.avatar
     this.email = data.email
     this.full_name = data.full_name!
-    this.last_login = data.last_login!
-    this.is_superuser = data.is_superuser!
     this.user_permissions = data.user_permissions
-    this.groups = data.groups
+    this.access_level = data.access_level
   }
 
   @Mutation
   public RESET_ALL_CURRENT_PROFILE() {
-    this.id = 0
-    this.token = ''
-    this.username = ''
-    this.fio = ''
-    this.birth_day = ''
-    this.is_active = false
-    this.is_admin = false
-    this.telephone = ''
+    RESET_ALL_BASE_PROFILE(this)
     this.avatar = ''
     this.email = ''
     this.full_name = ''
-    this.last_login = ''
-    this.is_superuser = false
     this.user_permissions = []
-    this.groups = []
+    this.access_level = 0
   }
 
   public get getCurrentAvatar(): string {
@@ -122,7 +109,7 @@ class CurrentUserProfile extends VuexModule implements IUserProfile {
   @Action
   public async PatchPermissions(info: object) {
     const { data } = await changeProfile(this.username, info)
-    this.SET_ALL_CURRENT_PROFILE(data as IUserProfile)
+    this.SET_ALL_CURRENT_PROFILE(data)
     return data
   }
 

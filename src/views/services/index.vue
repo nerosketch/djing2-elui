@@ -1,26 +1,28 @@
 <template lang="pug">
   .tab-container
     el-tabs(
-      v-model="activeName"
+      v-model="activeTabName"
       type="border-card"
     )
       el-tab-pane(
-        label='Тарифы'
-        name='services'
+        :label="$t('tariffs')"
+        name="services"
         lazy
       )
         keep-alive
           service-list
+
       el-tab-pane(
-        label='Периодические платежи'
-        name='periodicpays'
+        :label="$t('recurrentPayments')"
+        name="periodicpays"
         lazy
       )
         keep-alive
           periodic-pay-list
+
       el-tab-pane(
-        label='Единоразовые платежи'
-        name='shots'
+        :label="$t('singlePayments')"
+        name="shots"
         lazy
       )
         keep-alive
@@ -28,7 +30,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
+import { mixins } from 'vue-class-component'
+import TabMixin from '@/utils/tab-mixin'
 import ServiceList from './services-list.vue'
 import ShotList from './shot-list.vue'
 import PeriodicPayList from './periodicpay-list.vue'
@@ -41,23 +45,7 @@ import PeriodicPayList from './periodicpay-list.vue'
     PeriodicPayList
   }
 })
-export default class extends Vue {
-  private activeName = 'services'
-
-  @Watch('activeName')
-  private onActiveNameChange(value: string) {
-    let allurl = `${this.$route.path}?tab=${value}`
-    if (this.$route.fullPath !== allurl) {
-      this.$router.push(allurl)
-    }
-  }
-
-  created() {
-    // Init the default selected tab
-    const tab = this.$route.query.tab as string
-    if (tab) {
-      this.activeName = tab
-    }
-  }
+export default class extends mixins(TabMixin) {
+  protected activeTabName = 'services'
 }
 </script>

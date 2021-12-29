@@ -3,8 +3,8 @@
     :type="btnType"
     :disabled="pingDisabled || !$perms.customers.can_ping"
     @click="pingProfile"
-    :loading="pingLoading"
-  ) {{ isCustomerNotHere ? 'Не передан абонент' : btnText }}
+    :loading="pingLoading")
+    | {{ isCustomerNotHere ? $t('customers.notPassed') : btnText }}
 </template>
 
 <script lang="ts">
@@ -18,25 +18,30 @@ import { ICustomer } from '@/api/customers/types'
 export default class extends Vue {
   @Prop({ default: null }) private customer!: ICustomer | null
   private pingLoading = false
-  private btnText = 'Ping'
+  private btnText = this.$tc('ping')
   private btnType = 'primary'
 
   private async pingProfile() {
     if (!this.customer || this.isCustomerNotHere) {
-      this.$message.error('Не передан абонент')
+      this.$message.error(
+        this.$tc('customers.notPassed').toString()
+      )
       return
     }
     this.pingLoading = true
-    let { data } = await pingAllIps(this.customer.id)
-    if (data.status) {
-      this.$message.success(data.text)
-      this.btnType = 'success'
-    } else {
-      this.$message.error(data.text)
-      this.btnType = 'danger'
+    try {
+      const { data } = await pingAllIps(this.customer.id)
+      if (data.status) {
+        this.$message.success(data.text)
+        this.btnType = 'success'
+      } else {
+        this.$message.error(data.text)
+        this.btnType = 'danger'
+      }
+      this.btnText = data.text
+    } finally {
+      this.pingLoading = false
     }
-    this.btnText = data.text
-    this.pingLoading = false
   }
 
   get pingDisabled() {

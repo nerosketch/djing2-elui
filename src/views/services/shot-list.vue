@@ -1,48 +1,44 @@
 <template lang="pug">
-div
-  datatable(
-    :columns="tableColumns"
-    :getData="loadShots"
-    :heightDiff='189'
-    widthStorageNamePrefix='shots'
-    ref='table'
-  )
-    template(v-slot:oper="{row}")
-      el-button-group
-        el-button(
-          v-if="$perms.is_superuser"
-          @click="openSitesDlg(row)"
-        ) C
-        el-button(icon="el-icon-edit" @click="openEdit(row)")
-        el-button(
-          type="danger" icon="el-icon-delete"
-          @click="delShot(row)"
-          :disabled="!$perms.services.delete_oneshotpay"
-        )
+  div
+    datatable(
+      :columns="tableColumns"
+      :getData="loadShots"
+      :heightDiff="189"
+      widthStorageNamePrefix="shots"
+      ref="table")
+      template(v-slot:oper="{row}")
+        el-button-group
+          el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
+            | C
 
-    el-button(
-      icon='el-icon-plus'
-      type='success'
-      @click="openNew"
-    ) Добавить
+          el-button(icon="el-icon-edit" @click="openEdit(row)")
 
-  el-dialog(
-    :title="(isNew ? 'Создание' : 'Изменение') + ' одноразового платежа'"
-    :visible.sync="dialogVisible"
-    :close-on-click-modal="false"
-  )
-    shot-form(
-      v-on:done="frmDone"
-    )
-  el-dialog(
-    title="Принадлежность сайтам"
-    :visible.sync="sitesDlg"
-    :close-on-click-modal="false"
-  )
-    sites-attach(
-      :selectedSiteIds="$store.state.oneshotpay.sites"
-      v-on:save="serviceSitesSave"
-    )
+          el-button(
+            type="danger"
+            icon="el-icon-delete"
+            @click="delShot(row)"
+            :disabled="!$perms.services.delete_oneshotpay")
+
+      el-button(
+        icon="el-icon-plus"
+        type="success"
+        @click="openNew")
+        | {{ $t('add') }}
+
+    el-dialog(
+      :title="$t('services.doPP', [(isNew ? 'Создание' : 'Изменение')])"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false")
+      shot-form(v-on:done="frmDone")
+
+    el-dialog(
+      :title="$t('facilities')"
+      :visible.sync="sitesDlg"
+      :close-on-click-modal="false")
+      sites-attach(
+        :selectedSiteIds="$store.state.oneshotpay.sites"
+        v-on:save="serviceSitesSave"
+      )
 </template>
 
 <script lang="ts">
@@ -58,31 +54,33 @@ class DataTableComp extends DataTable<IOneShotPay> {}
 
 @Component({
   name: 'ShotList',
-  components: { 'datatable': DataTableComp, ShotForm }
+  components: { datatable: DataTableComp, ShotForm }
 })
 export default class extends Vue {
   public readonly $refs!: {
     table: DataTableComp
   }
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'name',
-      label: 'Название платежа',
+      label: this.$tc('nameOfPayment'),
       'min-width': 200
     },
     {
       prop: 'cost',
-      label: 'Стоимость',
+      label: this.$tc('value'),
       'min-width': 150,
       align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'oper',
-      label: 'Кнопки',
+      label: this.$tc('buttons'),
       'min-width': 130,
       align: DataTableColumnAlign.CENTER
     }
   ]
+
   private shots: IOneShotPay[] = []
   private dialogVisible = false
   private sitesDlg = false
@@ -98,22 +96,22 @@ export default class extends Vue {
   }
 
   private async delShot(shot: IOneShotPay) {
-    if (confirm(`Действительно удалить платёж "${shot.name}"?`)) {
+    if (confirm(this.$t('austRemoveShotPay', [shot.name]) as string)) {
       await OneShotPayModule.DelOneShotPay(shot.id)
-      this.$refs.table.GetTableData()
+      this.$refs.table.LoadTableData()
     }
   }
 
   private loadShots(params?: IDRFRequestListParameters) {
     if (params) {
-      params['fields'] = 'id,name,cost,sites'
+      params.fields = 'id,name,cost,sites'
     }
     return getOneShotPays(params)
   }
 
   private frmDone() {
     this.dialogVisible = false
-    this.$refs.table.GetTableData()
+    this.$refs.table.LoadTableData()
   }
 
   get isNew(): boolean {
@@ -124,11 +122,12 @@ export default class extends Vue {
     OneShotPayModule.PatchOneShotPay({
       sites: selectedSiteIds
     }).then(() => {
-      this.$refs.table.GetTableData()
-      this.$message.success('Принадлежность вида платежей сайтам сохранена')
+      this.$refs.table.LoadTableData()
+      this.$message.success(this.$tc('theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained'))
     })
     this.sitesDlg = false
   }
+
   private openSitesDlg(srv: IOneShotPay) {
     OneShotPayModule.SET_ALL_OSPAY(srv)
     this.sitesDlg = true

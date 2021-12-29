@@ -1,16 +1,18 @@
 <template lang="pug">
-comment-list(
-  :comments="comments"
-  @send="onSendComment"
-  @delete="delComment"
-)
+  comment-list(
+    :comments="comments"
+    @send="onSendComment"
+    @delete="delComment")
 </template>
 
 <script lang="ts">
-import { createCustomerComment, getCustomerComments } from '@/api/customer_comments/req'
+import {
+  createCustomerComment,
+  getCustomerComments,
+  deleteCustomerComment
+} from '@/api/customer_comments/req'
 import { ICustomerComment } from '@/api/customer_comments/type'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { deleteCustomerComment } from '@/api/customer_comments/req'
 
 import CommentList from '@/components/comments/list.vue'
 
@@ -45,7 +47,9 @@ export default class extends Vue {
 
   private async delComment(commentId: number) {
     await deleteCustomerComment(commentId)
-    this.$message.success('Комментарий удалён')
+    this.$message.success(
+      this.$tc('customers.commentRemoved').toString()
+    )
     this.loadComments()
   }
 

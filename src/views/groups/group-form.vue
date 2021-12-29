@@ -1,24 +1,24 @@
 <template lang="pug">
   el-form(
-    ref='form'
+    ref="form"
     label-width="100px"
     status-icon
-    :rules='frmRules'
-    :model='frmMod'
-    v-loading='isLoading'
-  )
+    :rules="frmRules"
+    :model="frmMod"
+    v-loading="isLoading")
     el-form-item(
-      label="Название"
-      prop='title'
+      :label="$t('title')"
+      prop="title"
     )
       el-input(v-model="frmMod.title")
+
     el-form-item
       el-button(
-        icon='el-icon-upload'
+        icon="el-icon-upload"
         type="primary"
         @click="onSubmit"
-        :loading="isLoading"
-      ) Сохранить
+        :loading="isLoading")
+        | {{ $t('save') }}
 </template>
 
 <script lang="ts">
@@ -27,35 +27,36 @@ import { GroupModule } from '@/store/modules/groups/index'
 import { Form } from 'element-ui'
 
 @Component({
-  name: 'group-form'
+  name: 'GroupForm'
 })
 export default class extends Vue {
   private isLoading = false
 
   private frmRules = {
     title: [
-      { required: true, message: 'Название группы надо указать', trigger: 'blur' }
+      { required: true, message: this.$tc('nameOfGroup'), trigger: 'blur' }
     ]
   }
 
-  @Watch('$store.state.group.id')
-  private onChangeGroup() {
-    this.frmMod.title = GroupModule.title
+  @Watch('$store.state.group.title')
+  private onChangeGroup(title: string) {
+    this.frmMod.title = title
   }
 
   private frmMod = {
     title: ''
   }
+
   get isNew() {
     return GroupModule.id === 0
   }
 
   created() {
-    this.onChangeGroup()
+    this.onChangeGroup(this.$store.state.group.title)
   }
 
   private onSubmit() {
-    (this.$refs['form'] as Form).validate(async valid => {
+    (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.isLoading = true
         let newDat
@@ -67,7 +68,7 @@ export default class extends Vue {
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error('Исправь ошибки в форме')
+        this.$message.error(this.$tc('fixFormErrs').toString())
       }
     })
   }
