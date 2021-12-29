@@ -3,7 +3,7 @@
     el-col.mt5(:lg="12" :sm='24')
       el-card(shadow="never")
         template(v-slot:header)
-          .clearfix {{ $t('redaktirovat-zadachu-taskid', [taskId]) }}
+          .clearfix {{ $t('tasks.edit', [taskId]) }}
         task-form(v-if='taskReady' :recipients="potentialRecipients")
     el-col.mt5(:lg='12' :sm='24')
       task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")

@@ -232,6 +232,7 @@ export default {
   tasks: {
     add: "Add the task",
     adding: "Creating the task",
+    edit: 'Edit task "{0}"',
     austRemoveDocument: 'Are you sure to remove file "{0}"?',
     taskCustomerDocTitle: 'Задача по "${0}"',
     austRemoveShotPay: 'Are you sure to remove pay "{0}"?',
