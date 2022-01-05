@@ -375,7 +375,7 @@ export default {
   domenShouldIndicate: "Домен надо указать",
   snmpInfo: "Доп. инфо для snmp",
   supplementary: "Дополнительное",
-  trustee: "Доверенный",
+  trusted: "Доверенный",
   other: "другое",
   singlePayments: "Единоразовые платежи",
   email: "ЭПочта",

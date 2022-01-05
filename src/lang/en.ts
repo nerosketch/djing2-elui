@@ -306,6 +306,7 @@ export default {
   },
   messenger: {
     botRemoved: 'Messenger "{0}" has been removed',
+    austRemove: 'Are you sure to remove the messenger "{0}"?',
   },
   services: {
     doPP: '{0} one-time pay',
@@ -374,7 +375,7 @@ export default {
   domenShouldIndicate: "Domen should indicate",
   snmpInfo: "snmp info",
   supplementary: "Supplementary",
-  trustee: "Trustee",
+  trusted: "Trusted",
   other: "Other",
   singlePayments: "Single payments",
   email: "Email",

@@ -29,7 +29,7 @@
         el-option(
           v-for="v in vlans"
           :key="v.id"
-          :label="$t('v-vid-v-title', [v.vid, v.title])"
+          :label="`[${v.vid}] ${v.title}`"
           :value="v.id")
 
     el-form-item(:label="$t('typeOfNetwork')")
@@ -119,7 +119,7 @@ export default class extends mixins(FormMixin, VlanMixin) {
     { val: 0, title: this.$tc('notDefined') },
     { val: 1, title: this.$tc('internet') },
     { val: 2, title: this.$tc('hotel') },
-    { val: 3, title: this.$tc('trustee') },
+    { val: 3, title: this.$tc('trusted') },
     { val: 4, title: this.$tc('route.devices') },
     { val: 5, title: this.$tc('administrative') }
   ]
