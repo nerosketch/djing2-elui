@@ -13,6 +13,7 @@ export default {
   no: "Не, не надо",
   sno: "Нет",
   comment: "Комментарий",
+  comments: "Комментарии",
   fixFormErrs: "Исправь ошибки в форме",
   ipAddress: "IP Адрес",
   macAddress: "MAC Адрес",
@@ -54,8 +55,7 @@ export default {
     attachServices2Groups: "Привязать услуги к этой группе",
     belongingServices2Groups: "Принадлежность услуг к группам",
     buyService: "Купить услугу",
-    customerNotEnoughMoneyDoConnectItQuestion:
-      "У абонента не достаточно средств для включения услуги, включить её в минус?",
+    customerNotEnoughMoneyDoConnectItQuestion: "У абонента не достаточно средств для включения услуги, включить её в минус?",
     buyServiceCancellation: "Отмена покупки услуги",
     buyServiceOk: "Услуга успешно куплена",
     howMuchAddition: "Укажи сколько денег надо положить на счёт",
@@ -97,8 +97,7 @@ export default {
     leaseTime: "Время аренды",
     auto: "Авто",
     minASessionLease: "аренду ip",
-    areUSure2DelIpLease:
-      "Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.",
+    areUSure2DelIpLease: "Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.",
     services4Buy: "Услуги для заказа",
     currentCustomerService: "Текущая услуга абонента",
     serviceStartDate: "Дата начала",
@@ -143,12 +142,10 @@ export default {
     passportLong: "Паспортные данные",
     passportSerial: "Серия пас.",
     passportSerialRequiredMsg: "Укажи серию паспорта",
-    passportSrialValidationMsg:
-      "Серия паспорта не должна быть больше 4х символов",
+    passportSrialValidationMsg: "Серия паспорта не должна быть больше 4х символов",
     passportNum: "Номер пас.",
     passportNumRequiredMsg: "Укажи номер паспорта",
-    passportNumValidatationMsg:
-      "Номер паспорта не должен быть больше 6ти символов",
+    passportNumValidatationMsg: "Номер паспорта не должен быть больше 6ти символов",
     passportDistributor: "Кем выдан",
     passportDistributorRequiredMsg: "Укажи кем выдан паспорт",
     passportDivisionCode: "Код подразделения",
@@ -162,13 +159,11 @@ export default {
     siteAccessorySavedOk: "Принадлежность абонента сайтам сохранена",
     customerSitesAccessory: "Принадлежность выбранных абонентов сайтам",
     usernameRequiredValidatorErrText: "Логин абонента обязателен",
-    usernameFilterValidatorErrText:
-      "Логин может содержать латинские символы и цифры",
+    usernameFilterValidatorErrText: "Логин может содержать латинские символы и цифры",
     birthDayRequiredValidatorErrText: "Нужно указать дату рождения",
     customerSavedOk: "Абонент сохранён",
     customerAddedOk: "Абонент добавлен",
-    customerDeletionConfigmation:
-      "Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.",
+    customerDeletionConfigmation: "Точно удалить учётку абонента? Вместе с ней удалится вся история следов пребывания учётки в билинге.",
     accountRemovedOk: "Учётка удалена",
     streets: "Улицы",
     withoutAddrs: "Абоненты без адреса",
@@ -179,7 +174,7 @@ export default {
     docLoadFailed: "Ошибка загрузки документов",
     fullDelTitle: "Полное удаление учётной записи абонента из билинга",
     isActive: "Активный",
-    dhcpDynamic: "Динамические настройки по dhcp",
+    dhcpDynamic: "Динамические настройки по DHCP",
     clearDevQuestion: "Действительно очистить устройство абонента?",
     login: "Логин",
     loginFieldRequiredMsg: "Логин абонента обязателен",
@@ -191,7 +186,9 @@ export default {
       s: "Номер договора",
       required: "Номер договора обязателен",
       unique: "Номер договора(уникальный)"
-    }
+    },
+    commentText: "Текст комментария",
+    extraFields: "Дополнительные данные"
   },
   customersLegal: {
     branch: "Филиал (абонент)",

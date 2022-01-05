@@ -1,8 +1,7 @@
 <template lang="pug">
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix
-        | Дополнительные данные
+      .clearfix {{ $ct('customers.extraFields') }}
 
     el-form
       template(v-if="localContents.length > 0")

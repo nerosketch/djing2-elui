@@ -5,10 +5,10 @@
         | {{ $t('customers.balance') }}:
 
       small
-        | {{ $store.state.customer.balance }}.
+        |  {{ $store.state.customer.balance }}.
 
       span
-        | {{ $t('startDate') }}:
+        |  {{ $t('startDate') }}:
 
       small
         | {{ $store.state.customer.create_date }}

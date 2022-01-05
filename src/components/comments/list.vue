@@ -13,7 +13,10 @@
             @delete="onCommentDelete")
 
     el-form
-      el-form-item(label="Текст комментария" prop="currentComment")
+      el-form-item(
+        :label="customers.commentText"
+        prop="currentComment"
+      )
         el-input(
           v-model="currentComment"
           type="textarea"
@@ -34,6 +37,7 @@
 import { IComment } from './types'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import CommentItem from './comment-item.vue'
+import i18n from '@/lang'
 
 @Component({
   name: 'CommentList',
@@ -45,7 +49,7 @@ export default class extends Vue {
   @Prop({ default: () => ([]) })
   private comments!: IComment[]
 
-  @Prop({ default: 'Комментарии' })
+  @Prop({ default: i18n.tc('comments') })
   private defaultCardTitle!: string
 
   private loading = false
@@ -57,8 +61,6 @@ export default class extends Vue {
     try {
       this.$emit('send', this.currentComment)
       this.currentComment = ''
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.sendLoading = false
     }
