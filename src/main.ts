@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import 'normalize.css'
+// import 'normalize.css'
 import ElementUI from 'element-ui'
 import i18n from '@/lang'
 import { CurrentPermissionsModule } from '@/store/current-user-permissions'
@@ -15,7 +15,6 @@ import store from '@/store'
 import router from '@/router'
 import '@/permission'
 import PushNotificationsClass from './utils/notifications'
-import VueI18n from 'vue-i18n'
 
 Vue.use(ElementUI, {
   size: 'mini',
@@ -25,7 +24,7 @@ Vue.use(ElementUI, {
 Vue.component('ObjectPerms', ObjectPerms)
 Vue.component('SitesAttach', SitesAttach)
 
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 
 Vue.prototype.$perms = CurrentPermissionsModule
 
@@ -33,7 +32,6 @@ declare module 'vue/types/vue' {
   interface Vue {
     $eventHub: Vue,
     $messagingMng: PushNotificationsClass,
-    // $t: (key: VueI18n.Path, values?: VueI18n.Values) => string
   }
 }
 

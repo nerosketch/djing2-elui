@@ -68,7 +68,7 @@ export default {
     author: "Author",
     state: "Status",
     type: "Type",
-    addCash2Account: "Fill the bill.",
+    addCash2Account: "Top up the account",
     was: "It was.",
     become: "Stalo",
     payDate: "Date of payment",

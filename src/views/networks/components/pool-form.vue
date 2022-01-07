@@ -151,8 +151,6 @@ export default class extends mixins(FormMixin, VlanMixin) {
             newDat = await NetworkIpPoolModule.PatchPool(this.frmMod)
           }
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
