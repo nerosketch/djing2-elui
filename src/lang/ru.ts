@@ -181,6 +181,7 @@ export default {
     loginValidationMessage: "Логин может содержать латинские символы и цифры",
     birthDayValidationMessage: "Нужно указать дату рождения",
     notPassed: "Не передан абонент",
+    searchBy: "Поиск по: {0}",
     contractNum: {
       validation: "Нужно указать когда начал действовать договор",
       s: "Номер договора",

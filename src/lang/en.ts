@@ -181,6 +181,7 @@ export default {
     loginValidationMessage: "Lagin can contain Latin symbols and figures",
     birthDayValidationMessage: "I need to indicate the date of birth.",
     notPassed: "Not transmitted",
+    searchBy: "Search by: {0}",
     contractNum: {
       validation: "You need to specify when the contract began to take effect",
       s: "Contract number",
