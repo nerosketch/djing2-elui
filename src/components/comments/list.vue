@@ -14,7 +14,7 @@
 
     el-form
       el-form-item(
-        :label="customers.commentText"
+        :label="$tc('customers.commentText')"
         prop="currentComment"
       )
         el-input(

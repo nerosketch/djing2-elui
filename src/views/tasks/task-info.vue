@@ -16,7 +16,7 @@
     b {{ $t('dateOfEstablishment') }}
     span {{ $store.state.task.time_of_create }}
     br
-    b {{ $t('timeLeft:') }}
+    b {{ $t('timeLeft') }}
     span {{ $store.state.task.task_time_diff }}
     br
     b {{ $t('natureOfFracture') }}

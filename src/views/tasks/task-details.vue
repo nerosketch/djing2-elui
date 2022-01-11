@@ -43,7 +43,7 @@ export default class extends mixins(taskMixin) {
       return
     }
     await TaskModule.GetTask(this.taskId)
-    document.title = this.$t('taskCustomerDocTitle', [TaskModule.customer_full_name]) as string
+    document.title = this.$t('tasks.taskCustomerDocTitle', [TaskModule.customer_full_name]) as string
   }
 
   async created() {

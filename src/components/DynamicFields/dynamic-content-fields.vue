@@ -1,7 +1,7 @@
 <template lang="pug">
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix {{ $ct('customers.extraFields') }}
+      .clearfix {{ $tc('customers.extraFields') }}
 
     el-form
       template(v-if="localContents.length > 0")
@@ -40,7 +40,7 @@
           icon="el-icon-upload"
           type="primary"
           @click="saveData")
-          | {{ $t('save') }}
+          | {{ $tc('save') }}
 </template>
 
 <script lang="ts">
