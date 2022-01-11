@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-// import 'normalize.css'
+import 'normalize.css'
 import ElementUI from 'element-ui'
 import i18n from '@/lang'
 import { CurrentPermissionsModule } from '@/store/current-user-permissions'
