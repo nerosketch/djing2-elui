@@ -10,7 +10,7 @@ USER node
 ARG APP_DIR=/home/node/app
 ARG NODE_ENV=${NODE_ENV}
 
-RUN mkdir ${APP_DIR} && chown -Rv node. /home/node
+RUN mkdir ${APP_DIR} && chown -Rv node. /home/node && ls -lh /home/node /home/node/app
 
 WORKDIR ${APP_DIR}
 
