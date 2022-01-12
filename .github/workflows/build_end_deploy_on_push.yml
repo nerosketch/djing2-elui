@@ -30,8 +30,10 @@ jobs:
         shell: bash
       - name: Build docker container
         run: docker-compose --env-file .env up --build -d
+      - name: Install project
+        run: docker exec djing2-elui npm install
       - name: Build project
-        run: docker exec djing2-elui npm install --unsafe-perm && npm run build
+        run: docker exec djing2-elui npm run build
       - name: Create SSH key
         run: |
           docker exec djing2-elui /bin/bash -c "mkdir -p ~/.ssh/ && echo \"${SSH_PRIVATE_KEY}\" > ~/.ssh/staging.key && chmod 600 ~/.ssh/staging.key"
