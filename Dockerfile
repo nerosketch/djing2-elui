@@ -15,8 +15,8 @@ WORKDIR ${APP_DIR}
 
 COPY . .
 
-RUN chown -Rv node. /home/node
+#RUN chown -Rv node. /home/node
 
-USER node
+#USER node
 
 CMD npm install && exec npm run serve
