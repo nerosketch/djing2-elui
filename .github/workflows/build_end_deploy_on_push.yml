@@ -22,29 +22,34 @@ jobs:
 
     steps:
         # Чекаутим код
-      - uses: actions/checkout@master
-      - name: Creating env file
-        run: |
-          echo "VUE_APP_BASE_API=${VUE_APP_BASE_API}" > .env
-          echo "NODE_ENV=${NODE_ENV}" >> .env
-        shell: bash
-      - name: Build docker container
-        run: docker-compose --env-file .env up --build -d
-      - name: Build project
-        run: docker exec djing2-elui npm run build
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '10.24.1'
+      # - name: Creating env file
+      #   run: |
+      #     echo "VUE_APP_BASE_API=${VUE_APP_BASE_API}" > .env
+      #     echo "NODE_ENV=${NODE_ENV}" >> .env
+      #   shell: bash
+      - name: Install
+        run: npm install
+      - name: build
+        run: npm run build
       - name: Create SSH key
         run: |
-          docker exec djing2-elui /bin/bash -c "mkdir -p ~/.ssh/ && echo \"${SSH_PRIVATE_KEY}\" > ~/.ssh/staging.key && chmod 600 ~/.ssh/staging.key"
-          docker exec djing2-elui /bin/bash -c "cat >>~/.ssh/config <<END
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
           Host staging
-            HostName ${SERVER_HOST}
-            User ${SERVER_USER}
+            HostName $SERVER_HOST
+            User $SERVER_USER
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
-          END"
+          END
         shell: bash
       - name: Deploy to server
         run: |
-          docker exec djing2-elui scp -r ./dist staging:
-          docker exec djing2-elui ssh staging "sudo /bin/bash ~/bin/apply_djing_ui.sh"
+          scp -r ./dist staging:
+          ssh staging "sudo /bin/bash ~/bin/apply_djing_ui.sh"
         shell: bash
