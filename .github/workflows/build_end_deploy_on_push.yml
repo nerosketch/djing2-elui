@@ -31,6 +31,8 @@ jobs:
       #     echo "VUE_APP_BASE_API=${VUE_APP_BASE_API}" > .env
       #     echo "NODE_ENV=${NODE_ENV}" >> .env
       #   shell: bash
+      - name: Install vue cli
+        run: npm install -g @vue/cli
       - name: Install
         run: npm install
       - name: build
