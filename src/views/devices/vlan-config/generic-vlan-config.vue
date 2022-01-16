@@ -6,7 +6,7 @@
           el-option(
             v-for="v in vlans"
             :key="v.id"
-            :label="$t('v-title-v-vid', [v.title, v.vid])"
+            :label="`${v.title} [${v.vid}]`"
             :value="v.vid")
 
         el-divider
