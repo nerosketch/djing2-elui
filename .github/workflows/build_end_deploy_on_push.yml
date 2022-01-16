@@ -9,28 +9,22 @@ jobs:
   run_tests:
     runs-on: [ubuntu-latest]
 
-    # strategy:
-    #   matrix:
-    #     node-version: [10.24.1]
+    strategy:
+      matrix:
+        node-version: [10.24.1]
 
     env:
       VUE_APP_BASE_API: /api
-      NODE_ENV: production
+      # NODE_ENV: production
       SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
       SERVER_HOST: ${{secrets.SERVER_HOST}}
       SERVER_USER: ${{secrets.SERVER_USER}}
 
     steps:
-        # Чекаутим код
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '10.24.1'
-      # - name: Creating env file
-      #   run: |
-      #     echo "VUE_APP_BASE_API=${VUE_APP_BASE_API}" > .env
-      #     echo "NODE_ENV=${NODE_ENV}" >> .env
-      #   shell: bash
       - name: Install vue cli
         run: npm install -g @vue/cli
       - name: Install
