@@ -12,6 +12,6 @@ services:
       - VUE_APP_BASE_API
       - NODE_ENV
     volumes:
+      - .:/home/node/app
       - /tmp:/tmp
       - /etc/localtime:/etc/localtime
-
