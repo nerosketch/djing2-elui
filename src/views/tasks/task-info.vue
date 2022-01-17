@@ -34,7 +34,6 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { TaskModule } from '@/store/modules/tasks/tasks'
 import { IUserProfile } from '@/api/profiles/types'
 import TaskDocs from './task-docs.vue'
 
@@ -53,13 +52,13 @@ export default class extends Vue {
     return {
       name: 'customerDetails',
       params: {
-        uid: TaskModule.customer
+        uid: this.$store.state.task.customer
       }
     }
   }
 
   get taskRecipients() {
-    const recipIds = TaskModule.recipients
+    const recipIds = this.$store.state.task.recipients
     return this.recipients.filter(r => recipIds.includes(r.id))
   }
 }
