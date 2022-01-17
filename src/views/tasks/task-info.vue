@@ -2,8 +2,8 @@
   el-card(shadow="never")
     template(v-slot:header)
       .clearfix {{ $t('targets') }}
-    p {{ $t('opisanie-store-state-task-descr', [$store.state.task.descr]) }}
-    p {{ $t('avtor-zadachi', [$store.state.task.author_full_name]) }}
+    p {{ $t('tasks.description', [$store.state.task.descr]) }}
+    p {{ $t('tasks.author', [$store.state.task.author_full_name]) }}
     div {{ $t('implementers') }}
       ul
         li(v-for="rec in taskRecipients" :key='rec.id') {{ rec.full_name || rec.username }}
@@ -27,7 +27,7 @@
     br
     b {{ $t('customer') }}
     router-link(:to="taskCustomerLink")
-      el-link(type="primary") {{ $store.state.task.customer_full_name }}
+      el-link(type="primary") :&nbsp; {{ $store.state.task.customer_full_name }}
     el-divider
     task-docs(:taskId="taskId")
 </template>
@@ -45,6 +45,7 @@ import TaskDocs from './task-docs.vue'
 export default class extends Vue {
   @Prop({ default: [] })
   private recipients!: IUserProfile[]
+
   @Prop({ default: 0 })
   private taskId!: number
 
