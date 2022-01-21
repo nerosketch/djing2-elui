@@ -371,7 +371,6 @@ export default {
   addTheTask: "Добавить задачу",
   addendum: "Добавление",
   onlyNumber: "Должно содержать только число",
-  "house(Old)": "Дом (устар)",
   houseNum: "№ дома",
   domain: "Домен",
   changed: "Домен изменён",
@@ -495,7 +494,6 @@ export default {
   low: "Низкий",
   contractCanContainLatinAndDigits:
     "Номер договора может содержать латинские символы и цифры",
-  houseNumber: "Номер дома(уст.)",
   telephoneNumber: "Номер телефона",
   phoneNumberIsRequired: "Номер телефона обязательно",
   new: "Новая",

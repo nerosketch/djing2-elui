@@ -69,7 +69,6 @@ export default class extends Vue {
     birth_day: null,
     group: 0,
     address: this.selectedAddress,
-    house: '',
     is_active: false,
     is_dynamic_ip: false,
     gateway: 0,
@@ -115,7 +114,6 @@ export default class extends Vue {
       birth_day: frm.birth_day!,
       group: frm.group || 0,
       address: frm.address || this.selectedAddress || 0,
-      house: frm.house,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
       gateway: frm.gateway,
@@ -136,8 +134,6 @@ export default class extends Vue {
         try {
           const newDat = await CustomerModule.AddCustomer(this.frmMod)
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.loading = false
         }

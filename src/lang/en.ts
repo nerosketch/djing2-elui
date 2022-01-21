@@ -371,7 +371,6 @@ export default {
   addTheTask: "Add the task",
   addendum: "Addendum",
   onlyNumber: "Only number",
-  "house(Old)": "House (old)",
   houseNum: "House num",
   domain: "Domain",
   changed: "Changed",
@@ -494,7 +493,6 @@ export default {
   low: "Low",
   contractCanContainLatinAndDigits:
     "The contract number may contain Latin symbols and figures",
-  houseNumber: "House number",
   telephoneNumber: "Telephone number",
   phoneNumberIsRequired: "The phone number is mandatory.",
   new: "New",

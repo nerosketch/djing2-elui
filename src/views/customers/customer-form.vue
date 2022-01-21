@@ -14,13 +14,6 @@
     el-form-item(:label="$t('customers.phone')" prop="telephone")
       tels-input(v-model="frmMod.telephone")
 
-    el-form-item(:label="$t('house(Old)')")
-      el-input(
-        v-model="frmMod.house"
-        :maxlength="12"
-        readonly
-        disabled)
-
     el-form-item(:label="$t('customers.birthDay')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
@@ -207,7 +200,6 @@ export default class extends mixins(FormMixin) {
       birth_day: frm.birth_day!,
       group: frm.group,
       address: frm.address,
-      house: frm.house,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
       gateway: frm.gateway,

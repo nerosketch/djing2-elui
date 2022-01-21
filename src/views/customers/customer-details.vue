@@ -8,7 +8,7 @@
         |  {{ $store.state.customer.balance }}.
 
       span
-        |  {{ $t('startDate') }}:
+        |  {{ $t('dateOfEstablishment') }}
 
       small
         | {{ $store.state.customer.create_date }}
