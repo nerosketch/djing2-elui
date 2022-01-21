@@ -1,6 +1,6 @@
 <template lang="pug">
   el-select(v-model="selectedPort")
-    el-option(label="Не выбрано", :value="0")
+    el-option(label="Не выбрано" :value="0")
 
     template(v-if="devPorts && devPorts.length > 0")
       el-option(
@@ -55,18 +55,14 @@ export default class extends Vue {
 
   private async loadDevPorts(devId: number) {
     if (typeof devId === 'number' && devId > 0) {
-      try {
-        const { data } = await getPorts(devId)
-        this.devPorts = data
+      const { data } = await getPorts(devId)
+      this.devPorts = data
 
-        const fnd = this.devPorts.find(dp => dp.id === this.selectedPort)
-        if (fnd) {
-          this.selectedPort = fnd.id
-        } else {
-          this.selectedPort = 0
-        }
-      } catch (err) {
-        this.$message.error(err)
+      const fnd = this.devPorts.find(dp => dp.id === this.selectedPort)
+      if (fnd) {
+        this.selectedPort = fnd.id
+      } else {
+        this.selectedPort = 0
       }
     } else {
       this.devPorts = []

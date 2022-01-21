@@ -1,7 +1,7 @@
 <template lang="pug">
   el-row.mt5.mb5
     el-col(:span="1")
-      el-popover(width="400", trigger="click")
+      el-popover(width="400" trigger="click")
         el-select(v-model="addVlanFrmMod.vid")
           el-option(
             v-for="v in vlans"

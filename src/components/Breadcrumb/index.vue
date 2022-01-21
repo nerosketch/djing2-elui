@@ -3,7 +3,7 @@
     el-breadcrumb-item
       i.el-icon-s-home
 
-    el-breadcrumb-item(v-for="(item, index) in breadcrumbs", :key="index")
+    el-breadcrumb-item(v-for="(item, index) in breadcrumbs" :key="index")
       span.no-redirect(v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1")
         | {{ item.meta.title }}
 

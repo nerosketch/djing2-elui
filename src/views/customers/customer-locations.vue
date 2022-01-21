@@ -6,7 +6,7 @@
       :heightDiff="heightDiff"
       widthStorageNamePrefix="customerLocations")
       template(#title="{row}")
-        slot(name="title", :row="row")
+        slot(name="title" :row="row")
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerList', params:{ addrId: row.id }}")
             | {{ row.title }}
 

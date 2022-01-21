@@ -5,7 +5,10 @@
         template(v-slot:header)
           | {{ $t('customers.services4Buy') }}
 
-        services-list(v-on:buydone="loadCurrentService", :isServiceAvailable="isServiceAvailable")
+        services-list(
+          v-on:buydone="loadCurrentService"
+          :isServiceAvailable="isServiceAvailable"
+        )
 
     el-col(:sm="24" :md="12")
       el-card(
@@ -126,8 +129,6 @@ export default class extends Vue {
       } else {
         this.currentService = null
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.serviceBlockLoad = false
     }

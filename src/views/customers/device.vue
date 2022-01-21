@@ -22,7 +22,10 @@
           | {{ $t('devices.port') }}
 
         el-col(:span="16")
-          selected-dev-port(v-model="frmMod.dev_port", :deviceId="frmMod.device")
+          selected-dev-port(
+            v-model="frmMod.dev_port"
+            :deviceId="frmMod.device"
+          )
 
       el-row
         el-col

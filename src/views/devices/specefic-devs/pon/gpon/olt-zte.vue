@@ -24,7 +24,7 @@
         :xs="12"
         v-for="(p, i) in allPorts"
         :key="i")
-        olt-zte-port(:devId="devPk", :port="p")
+        olt-zte-port(:devId="devPk" :port="p")
 
     el-divider
 

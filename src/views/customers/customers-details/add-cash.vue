@@ -12,7 +12,7 @@
         max="15000")
 
     el-form-item(:label="$t('comment')" prop="comment")
-      el-input(v-model="frmMod.comment", :maxlength="128")
+      el-input(v-model="frmMod.comment" :maxlength="128")
 
     el-form-item
       el-button(

@@ -22,9 +22,9 @@
 
     el-form-item(:label="$t('likeUs')")
       el-select(v-model="frmMod.gw_type")
-        el-option(:label="$t('mikrotik')", :value="0")
+        el-option(:label="$t('mikrotik')" :value="0")
 
-        el-option(label="Linux", :value="1")
+        el-option(label="Linux" :value="1")
 
     el-form-item(:label="$t('default')")
       el-checkbox(v-model="frmMod.is_default")

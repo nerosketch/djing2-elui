@@ -12,10 +12,10 @@
       el-input(v-model="frmMod.number" type="number")
 
     el-form-item(:label="$t('customers.passportDistributor')" prop="distributor")
-      el-input(v-model="frmMod.distributor", :maxlength="64")
+      el-input(v-model="frmMod.distributor" :maxlength="64")
 
     el-form-item(:label="$t('customers.passportDivisionCode')" prop="division_code")
-      el-input(v-model="frmMod.division_code", :maxlength="64")
+      el-input(v-model="frmMod.division_code" :maxlength="64")
 
     el-form-item(:label="$t('customers.passportDateOfAcceptance')" prop="date_of_acceptance")
       el-date-picker(
@@ -79,7 +79,7 @@ export default class extends Vue {
       {
         max: 4,
         trigger: 'change',
-        message: this.$tc('customers.passportSerialValidationMsg'),
+        message: this.$tc('customers.passportSerialValidationMsg')
       }
     ],
     number: [

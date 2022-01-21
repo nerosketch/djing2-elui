@@ -24,7 +24,7 @@
             :data="fiber.onuList"
             border
             fit)
-            el-table-column(label="#", width="50")
+            el-table-column(label="#" width="50")
               template(v-slot:default="{row}")
                 i.el-icon-success.el-alert--success.is-light(v-if="row.status")
 
@@ -66,7 +66,7 @@
                   @click="openSaveOnu(row)"
                   :disabled="!$perms.devices.add_device")
 
-    el-progress.progress_disable_animations(v-else, :percentage="loadPercent")
+    el-progress.progress_disable_animations(v-else :percentage="loadPercent")
 
     el-dialog(
       :title="$t('addIt')"

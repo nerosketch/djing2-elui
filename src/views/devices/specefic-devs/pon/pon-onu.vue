@@ -4,7 +4,10 @@
       :lg="12"
       :sm="24"
       v-if="device")
-      el-card(shadow="never", body-style="padding: 10px;")
+      el-card(
+        shadow="never"
+        body-style="padding: 10px;"
+      )
         template(v-slot:header)
           | {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }}
 
@@ -52,7 +55,10 @@
             | {{ ab.full_name }}
 
         el-button-group
-          delete-from-olt-btn(:devId="device.id", v-on:done="getDetails")
+          delete-from-olt-btn(
+            :devId="device.id"
+            v-on:done="getDetails"
+          )
 
           el-button(
             type="danger"
@@ -62,7 +68,10 @@
             | {{ $t('del') }}
 
     el-col(:lg="12" :sm="24")
-      el-card(shadow="never", body-style="padding: 10px;")
+      el-card(
+        shadow="never"
+        body-style="padding: 10px;"
+      )
         template(v-slot:header)
           | {{ $t('status') }}
 
@@ -71,7 +80,9 @@
             icon="el-icon-refresh"
             @click="refreshDev")
 
-        p(type="flex", v-if="$store.getters.isOnuRegistered && macsNotEqual")
+        p(
+          v-if="$store.getters.isOnuRegistered && macsNotEqual"
+        )
           b
             | {{ $t('attention') }}!
 
@@ -79,7 +90,10 @@
             | Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить". Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
             |              Так же можно проверить место на "глазе" olt, может он заполнен.
 
-        el-row(type="flex", v-else-if="$store.getters.isOnuRegistered")
+        el-row(
+          type="flex"
+          v-else-if="$store.getters.isOnuRegistered"
+        )
           el-col(style="width: 128px;")
             i.icon-big(:class="iconStatusClass")
 
@@ -106,7 +120,10 @@
         fix-onu-btn(v-if="$store.getters.isOnuRegistered && macsNotEqual")
 
     el-col(:lg="12" :sm="24")
-      onu-vlan-form(:disabled="$store.getters.isOnuRegistered && macsNotEqual", :style="{'margin-top': '5px'}")
+      onu-vlan-form(
+        :disabled="$store.getters.isOnuRegistered && macsNotEqual"
+        :style="{'margin-top': '5px'}"
+      )
 
     el-dialog(
       :visible.sync="devFormDialog"

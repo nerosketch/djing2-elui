@@ -42,7 +42,10 @@
           :disabled="isEmpty")
           | {{ $t('save') }}
 
-        el-button(@click="$emit('cancel')", icon="el-icon-close")
+        el-button(
+          @click="$emit('cancel')"
+          icon="el-icon-close"
+        )
           | {{ $t('cancellation') }}
 </template>
 

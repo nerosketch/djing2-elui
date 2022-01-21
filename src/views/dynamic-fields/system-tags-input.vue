@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="selectedTag", :loading="loading")
+  el-select(v-model="selectedTag" :loading="loading")
     el-option(
       v-for="(t, i) in tags"
       :key="i"

@@ -64,7 +64,10 @@
           @click="openDocsDialog")
           | {{ $t('customers.docs') }}
 
-    el-dialog(:title="$t('customers.docs')", :visible.sync="docsDialogVisible")
+    el-dialog(
+      :title="$t('customers.docs')"
+      :visible.sync="docsDialogVisible"
+    )
       contract-docs(:contract="contract")
 </template>
 
@@ -116,10 +119,10 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     contract_number: [
-      { required: true, message: this.$tc('customers.contractNum.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customers.contractNum.required'), trigger: 'blur' }
     ],
     start_service_time: [
-      { required: true, message: this.$tc('customers.contractNum.validation'), trigger: 'blur' },
+      { required: true, message: this.$tc('customers.contractNum.validation'), trigger: 'blur' }
     ]
   }
 

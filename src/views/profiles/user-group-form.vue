@@ -1,7 +1,7 @@
 <template lang="pug">
-  el-form(:model="frmMod", v-loading="loading")
+  el-form(:model="frmMod" v-loading="loading")
     el-form-item(:label="$t('title')" prop="name")
-      el-input(v-model="frmMod.name", maxlength="150")
+      el-input(v-model="frmMod.name" maxlength="150")
 
     el-form-item
       el-button-group
@@ -12,7 +12,7 @@
           :disabled="isEmpty || !$perms.is_superuser")
           | {{ $t('save') }}
 
-        el-button(@click="$emit('cancel')", icon="el-icon-close")
+        el-button(@click="$emit('cancel')" icon="el-icon-close")
           | {{ $t('cancellation') }}
 </template>
 

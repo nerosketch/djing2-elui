@@ -2,7 +2,10 @@
   el-collapse(v-model="collapse")
     el-collapse-item
       template(slot="title")
-        el-form-item(:label="$t('customers.fio')", style="margin-bottom: 0")
+        el-form-item(
+          :label="$t('customers.fio')"
+          style="margin-bottom: 0"
+        )
           b {{ origValue }}
 
       el-form(

@@ -6,10 +6,16 @@
     :model="frmMod"
     v-loading="loading")
     el-form-item(:label="$t('description')" prop="descr")
-      el-input(v-model="frmMod.descr", maxlength="128")
+      el-input(
+        v-model="frmMod.descr"
+        maxlength="128"
+      )
 
     el-form-item(:label="$t('implementers')" prop="recipients")
-      el-select(v-model="frmMod.recipients", multiple)
+      el-select(
+        v-model="frmMod.recipients"
+        multiple
+      )
         el-option(
           v-for="rec in potentialRecipients"
           :key="rec.id"
@@ -44,10 +50,16 @@
       :label="$t('customer')"
       prop="customer"
     )
-      customer-field(v-model="frmMod.customer", :defaultName="$store.state.task.customer_full_name")
+      customer-field(
+        v-model="frmMod.customer"
+        :defaultName="$store.state.task.customer_full_name"
+      )
 
     el-form-item(:label="$t('relevance')" prop="out_date")
-      el-tooltip(content="дата, до которой нужно завершить задачу", placement="right")
+      el-tooltip(
+        content="дата, до которой нужно завершить задачу"
+        placement="right"
+      )
         el-date-picker(
           v-model="frmMod.out_date"
           type="date"

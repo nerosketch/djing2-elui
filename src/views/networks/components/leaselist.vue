@@ -7,7 +7,7 @@
       widthStorageNamePrefix="leases"
       ref="table")
       template(v-slot:is_dynamic="{row}")
-        el-checkbox(v-model="row.is_dynamic", disabled)
+        el-checkbox(v-model="row.is_dynamic" disabled)
           | {{ row.is_dynamic ? 'Да' : 'Нет' }}
 
       template(v-slot:oper="{row}")

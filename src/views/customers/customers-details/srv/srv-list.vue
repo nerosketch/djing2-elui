@@ -35,7 +35,10 @@
       :title="$t('customers.belongingServices2Groups')"
       :visible.sync="srvAccDialog"
       :close-on-click-modal="false")
-      service-accessory(v-on:done="srvAccDone", :groupId="$store.state.customer.group")
+      service-accessory(
+        v-on:done="srvAccDone"
+        :groupId="$store.state.customer.group"
+      )
 
     el-dialog(
       :title="$t('customers.buyService')"
@@ -81,8 +84,6 @@ export default class extends Vue {
         groups: CustomerModule.group
       })
       this.services = data as IService[]
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

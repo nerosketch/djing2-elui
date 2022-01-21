@@ -29,7 +29,10 @@
       groups-choice(v-model="frmMod.group")
 
     el-form-item(:label="$t('theDevice')")
-      device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="initialParentDevName")
+      device-autocomplete-field(
+        v-model="frmMod.parent_dev"
+        :defaultName="initialParentDevName"
+      )
 
     el-form-item(:label="$t('effectiveDate')")
       datetime-counter(v-model="frmMod.create_time")

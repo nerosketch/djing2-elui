@@ -43,7 +43,7 @@
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.netpool.sites", v-on:save="netpoolSitesSave")
+      sites-attach(:selectedSiteIds="$store.state.netpool.sites" v-on:save="netpoolSitesSave")
 </template>
 
 <script lang="ts">

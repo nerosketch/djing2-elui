@@ -71,7 +71,10 @@
           :disabled="!$perms.customers.view_passportinfo")
           | {{ $t('customers.passport') }}
 
-        el-button(@click="openPasswordDlg = true", icon="el-icon-lock")
+        el-button(
+          @click="openPasswordDlg = true"
+          icon="el-icon-lock"
+        )
           | {{ $t('customers.password') }}
 
         el-button(
@@ -115,7 +118,9 @@
       :title="$t('customers.sitesAccessory')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.customer.sites", v-on:save="customerSitesSave")
+      sites-attach(
+        :selectedSiteIds="$store.state.customer.sites"
+        v-on:save="customerSitesSave")
 </template>
 
 <script lang="ts">
