@@ -17,7 +17,7 @@
     el-form-item(:label="$t('customers.passportDivisionCode')" prop="division_code")
       el-input(v-model="frmMod.division_code", :maxlength="64")
 
-    el-form-item(:label="$t('customers.passportDivisionCode')" prop="date_of_acceptance")
+    el-form-item(:label="$t('customers.passportDateOfAcceptance')" prop="date_of_acceptance")
       el-date-picker(
         v-model="frmMod.date_of_acceptance"
         type="date"
