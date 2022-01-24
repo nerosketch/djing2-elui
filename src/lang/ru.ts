@@ -400,7 +400,6 @@ export default {
   groupMonthly: "Группировать по месяцу",
   groupingNextWeek: "Группировать по неделе",
   userGroups: "Группы пользователей",
-  staff: "Сотрудники",
   equipmentNotTransferred: "Id оборудования не передан",
   name: "Имя",
   nameAndFatherhood: "Имя и отчество",
