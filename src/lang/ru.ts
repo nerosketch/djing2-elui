@@ -236,10 +236,14 @@ export default {
     austRemoveService: 'Действительно удалить услугу "{0}"?',
     austRemovePP: 'Действительно удалить квитанцию "{0}"?',
     author: 'Автор задачи: {0}',
+    relevance: "Актуальность",
+    relevanceTooltip: 'дата, до которой нужно завершить задачу',
+    taskStatus: 'Состояние задачи',
   },
   devices: {
     dev: "Устройство",
-    port: "Порт"
+    port: "Порт",
+    status: "Состояние ONU: ",
   },
   route: {
     staff: "Cотрудники",
@@ -332,7 +336,6 @@ export default {
   accelerationOfSubscribers: "Активность абонентов",
   active: "Активные",
   activeCustomersCount: "Активных абон.",
-  relevance: "Актуальность",
   allRatesReserve: "All rights reserved",
   allocadeBudget: "Allocated Budget",
   ipLeases: "Аренды ip",
@@ -650,7 +653,6 @@ export default {
   snmNom: "SNMP Ном.",
   safe: "Сохранить",
   keepHimSafe: "Сохранить ONU",
-  status: "Состояние ONU: ",
   creatingTheChallenge: "Создание задачи",
   createAMassenger: "Создать messenger",
   createAPayLock: "Создать платёжный шлюз",

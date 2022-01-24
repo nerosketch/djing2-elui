@@ -22,7 +22,7 @@
     b {{ $t('natureOfFracture') }}
     span {{ $store.state.task.mode_str }}
     br
-    b {{ $t('status') }}
+    b {{ $t('tasks.taskStatus') }}
     span {{ $store.state.task.state_str }}
     br
     b {{ $t('customer') }}

@@ -186,7 +186,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'status',
-      label: this.$tc('status')
+      label: this.$tc('devices.status')
     },
     {
       prop: 'is_noticeable',

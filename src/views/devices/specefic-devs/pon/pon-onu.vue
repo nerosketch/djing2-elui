@@ -73,7 +73,7 @@
         body-style="padding: 10px;"
       )
         template(v-slot:header)
-          | {{ $t('status') }}
+          | {{ $t('devices.status') }}
 
           el-link(
             style="float: right"

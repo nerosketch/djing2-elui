@@ -236,10 +236,14 @@ export default {
     austRemoveService: 'Are you sure to remove service "{0}"?',
     austRemovePP: 'Are you sure to remove receipt "{0}"?',
     author: 'Task author: {0}',
+    relevance: "Relevance",
+    relevanceTooltip: 'the date by which the task needs to be completed',
+    taskStatus: 'Task state',
   },
   devices: {
     dev: "Device",
-    port: "Port"
+    port: "Port",
+    status: "ONU state: ",
   },
   route: {
     staff: "Staff",
@@ -332,7 +336,6 @@ export default {
   accelerationOfSubscribers: "Acceleration of subscribers",
   active: "Active",
   activeCustomersCount: "Active bon.",
-  relevance: "Relevance",
   allRatesReserve: "All Rates Reserve",
   allocadeBudget: "Allocade Budget",
   ipLeases: "IP leases",

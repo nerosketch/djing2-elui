@@ -38,7 +38,7 @@
           :label="tt.nm"
           :value="tt.v")
 
-    el-form-item(:label="$t('status')" prop="task_state")
+    el-form-item(:label="$t('tasks.taskStatus')" prop="task_state")
       el-select(v-model="frmMod.task_state")
         el-option(
           v-for="tt in taskStates"
@@ -55,9 +55,9 @@
         :defaultName="$store.state.task.customer_full_name"
       )
 
-    el-form-item(:label="$t('relevance')" prop="out_date")
+    el-form-item(:label="$t('tasks.relevance')" prop="out_date")
       el-tooltip(
-        content="дата, до которой нужно завершить задачу"
+        :content="$t('tasks.relevanceTooltip')"
         placement="right"
       )
         el-date-picker(
