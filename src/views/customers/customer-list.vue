@@ -67,7 +67,7 @@
                 | {{ $t('customers.sites') }}
 
               el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
-                | {{ $t('route.forms') }}
+                | {{ $t('field') }}
 
               slot(name="additional_button")
 
