@@ -231,7 +231,7 @@ export default {
     edit: 'Редактировать задачу: "{0}"',
     description: 'Описание задачи: {0}',
     austRemoveDocument: 'Действительно удалить файл "{0}"?',
-    taskCustomerDocTitle: 'Задача по "${0}"',
+    taskCustomerDocTitle: 'Задача по "{0}"',
     austRemoveShotPay: 'Действительно удалить платёж "{0}"?',
     austRemoveService: 'Действительно удалить услугу "{0}"?',
     austRemovePP: 'Действительно удалить квитанцию "{0}"?',
