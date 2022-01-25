@@ -1,273 +1,130 @@
 <template lang="pug">
-  .wscn-http404-container
-    .wscn-http404
-      .pic-404
-        img.pic-404__parent(
-          src="@/assets/404-images/404.png"
-          alt="404"
-        )
-        img.pic-404__child.left(
-          src="@/assets/404-images/404-cloud.png"
-          alt="404"
-        )
-        img.pic-404__child.mid(
-          src="@/assets/404-images/404-cloud.png"
-          alt="404"
-        )
-        img.pic-404__child.right(
-          src="@/assets/404-images/404-cloud.png"
-          alt="404"
-        )
-
-      .text-404
-        .text-404__oops OOPS!
-
-        .text-404__info {{ $t('allRatesReserve') }}
-          a(
-            style="color:#20a0ff"
-            href="https://wallstreetcn.com"
-            target="_blank"
-          ) wallstreetcn
-
-        .text-404__headline {{ message }}
-
-        .text-404__info
-          | {{ $t('iMSureYouReRight') }}
-
-        a.text-404__return-home(
-          href=""
-        ) {{ $t('toHome') }}
+#allblack
+  figure
+    .sad-mac
+    figcaption
+      span.sr-text Error 404: Not Found
+      span.e
+      span.r
+      span.r
+      span.o
+      span.r
+      span._4
+      span._0
+      span._4
+      span.n
+      span.o
+      span.t
+      span.f
+      span.o
+      span.u
+      span.n
+      span.d
 </template>
 
-<script lang="ts">
-  import i18n from '@/lang'
-  import { Component, Vue } from 'vue-property-decorator'
-
-  @Component({
-    name: 'Page404'
-  })
-  export default class extends Vue {
-    private message = i18n.t('404nf')
-  }
-</script>
-
-<style lang="scss" scoped>
-.wscn-http404-container {
-  transform: translate(-50%,-50%);
-  position: absolute;
-  top: 40%;
-  left: 50%;
+<style scoped>
+#allblack {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+body {
+	background: currentColor;
+}
+/* I. Containers */
+figure {
+	font-size: 6px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 64em;
+}
+figcaption {
+	color: #fff;
+	display: flex;
+	align-content: space-between;
+	flex-wrap: wrap;
+	height: 17em;
+}
+figcaption span:before, .sad-mac:before {
+	content: "";
+	display: block;
+	width: 1em;
+	height: 1em;
+	transform: translate(-1em,-1em);
+} 
+figcaption span {
+	display: inline-block;
+	margin: 0 2em;
+	width: 4em;
+	height: 6em;
+}
+.sr-text {
+	overflow: hidden;
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+/* II. Sprites */
+/* 1. Sad Mac */
+.sad-mac {
+	background: #fff;
+	margin: 0 auto 7em auto;
+	width: 23em;
+	height: 30em;
+}
+.sad-mac:before {
+	box-shadow: 1em 1em, 23em 1em, 4em 3em, 5em 3em, 6em 3em, 7em 3em, 8em 3em, 9em 3em, 10em 3em, 11em 3em, 12em 3em, 13em 3em, 14em 3em, 15em 3em, 16em 3em, 17em 3em, 18em 3em, 19em 3em, 20em 3em, 3em 4em, 21em 4em, 3em 5em, 21em 5em, 3em 6em, 7em 6em, 9em 6em, 15em 6em, 17em 6em, 21em 6em, 3em 7em, 8em 7em, 16em 7em, 21em 7em, 3em 8em, 7em 8em, 9em 8em, 15em 8em, 17em 8em, 21em 8em, 3em 9em, 21em 9em, 3em 10em, 10em 10em, 13em 10em, 21em 10em, 3em 11em, 11em 11em, 12em 11em, 21em 11em, 3em 12em, 21em 12em, 3em 13em, 10em 13em, 11em 13em, 12em 13em, 13em 13em, 14em 13em, 21em 13em, 3em 14em, 9em 14em, 15em 14em, 16em 14em, 21em 14em, 3em 15em, 17em 15em, 21em 15em, 3em 16em, 21em 16em, 4em 17em, 5em 17em, 6em 17em, 7em 17em, 8em 17em, 9em 17em, 10em 17em, 11em 17em, 12em 17em, 13em 17em, 14em 17em, 15em 17em, 16em 17em, 17em 17em, 18em 17em, 19em 17em, 20em 17em, 3em 22em, 4em 22em, 5em 22em, 14em 22em, 15em 22em, 16em 22em, 17em 22em, 18em 22em, 19em 22em, 20em 22em, 1em 27em, 2em 27em, 3em 27em, 4em 27em, 5em 27em, 6em 27em, 7em 27em, 8em 27em, 9em 27em, 10em 27em, 11em 27em, 12em 27em, 13em 27em, 14em 27em, 15em 27em, 16em 27em, 17em 27em, 18em 27em, 19em 27em, 20em 27em, 21em 27em, 22em 27em, 23em 27em, 1em 28em, 23em 28em, 1em 29em, 23em 29em, 1em 30em, 23em 30em;
+}
+/* 2. Letters */
+._0:before {
+	box-shadow: 2em 1em, 3em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 2em 4em, 3em 3em, 2em 6em, 3em 6em;
+}
+._4:before {
+	box-shadow: 1em 1em, 1em 2em, 1em 3em, 1em 4em, 4em 1em, 4em 2em, 4em 3em, 4em 4em, 2em 4em, 3em 4em, 4em 5em, 4em 6em;
+}
+.d:before {
+	box-shadow: 1em 1em, 2em 1em, 3em 1em, 1em 2em, 4em 2em, 1em 3em, 4em 3em, 1em 4em, 4em 4em, 1em 5em, 4em 5em, 1em 6em, 2em 6em, 3em 6em;
+}
+.e:before {
+	box-shadow: 1em 1em, 2em 1em, 3em 1em, 4em 1em, 1em 2em, 1em 3em, 2em 3em, 3em 3em, 1em 4em, 1em 5em, 1em 6em, 2em 6em, 3em 6em, 4em 6em;
+}
+.f:before {
+	box-shadow: 1em 1em, 2em 1em, 3em 1em, 4em 1em, 1em 2em, 1em 3em, 2em 3em, 3em 3em, 1em 4em, 1em 5em, 1em 6em;
+}
+.n:before {
+	box-shadow: 1em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 1em 6em, 4em 1em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 4em 6em, 2em 3em, 3em 4em;
+}
+.o:before {
+	box-shadow: 2em 1em, 3em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 2em 6em, 3em 6em;
+}
+.r:before {
+	box-shadow: 1em 1em, 2em 1em, 3em 1em, 4em 2em, 1em 2em, 1em 3em, 1em 4em, 2em 3em, 3em 3em, 1em 5em, 1em 6em, 4em 4em, 4em 5em, 4em 6em;
+}
+.t:before {
+	box-shadow: 1em 1em, 2em 1em, 3em 1em, 2em 2em, 2em 3em, 2em 4em, 2em 5em, 2em 6em;
+}
+.u:before {
+	box-shadow: 1em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 4em 1em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 2em 6em, 3em 6em;
+}
+/* III. Responsiveness */
+/* This cannot be smoothly done using viewport units; sprite pixels will look divided when font size is a floating point. */
+@media screen and (min-width: 720px) {
+	figure {
+	    font-size: 7px;
+	}
+}
+@media screen and (min-width: 1440px) {
+	figure {
+	    font-size: 8px;
+	}
 }
 
-.wscn-http404 {
-  position: relative;
-  width: 1200px;
-  padding: 0 50px;
-  overflow: hidden;
-
-  .pic-404 {
-    position: relative;
-    float: left;
-    width: 600px;
-    overflow: hidden;
-
-    &__parent {
-      width: 100%;
-    }
-
-    &__child {
-      position: absolute;
-
-      &.left {
-        width: 80px;
-        top: 17px;
-        left: 220px;
-        opacity: 0;
-        animation-name: cloudLeft;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        animation-delay: 1s;
-      }
-
-      &.mid {
-        width: 46px;
-        top: 10px;
-        left: 420px;
-        opacity: 0;
-        animation-name: cloudMid;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        animation-delay: 1.2s;
-      }
-
-      &.right {
-        width: 62px;
-        top: 100px;
-        left: 500px;
-        opacity: 0;
-        animation-name: cloudRight;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        animation-delay: 1s;
-      }
-
-      @keyframes cloudLeft {
-        0% {
-          top: 17px;
-          left: 220px;
-          opacity: 0;
-        }
-
-        20% {
-          top: 33px;
-          left: 188px;
-          opacity: 1;
-        }
-
-        80% {
-          top: 81px;
-          left: 92px;
-          opacity: 1;
-        }
-
-        100% {
-          top: 97px;
-          left: 60px;
-          opacity: 0;
-        }
-      }
-
-      @keyframes cloudMid {
-        0% {
-          top: 10px;
-          left: 420px;
-          opacity: 0;
-        }
-
-        20% {
-          top: 40px;
-          left: 360px;
-          opacity: 1;
-        }
-
-        70% {
-          top: 130px;
-          left: 180px;
-          opacity: 1;
-        }
-
-        100% {
-          top: 160px;
-          left: 120px;
-          opacity: 0;
-        }
-      }
-
-      @keyframes cloudRight {
-        0% {
-          top: 100px;
-          left: 500px;
-          opacity: 0;
-        }
-
-        20% {
-          top: 120px;
-          left: 460px;
-          opacity: 1;
-        }
-
-        80% {
-          top: 180px;
-          left: 340px;
-          opacity: 1;
-        }
-
-        100% {
-          top: 200px;
-          left: 300px;
-          opacity: 0;
-        }
-      }
-    }
-  }
-
-  .text-404 {
-    position: relative;
-    float: left;
-    width: 300px;
-    padding: 30px 0;
-    overflow: hidden;
-
-    &__oops {
-      font-size: 32px;
-      font-weight: bold;
-      line-height: 40px;
-      color: #1482f0;
-      opacity: 0;
-      margin-bottom: 20px;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-fill-mode: forwards;
-    }
-
-    &__headline {
-      font-size: 20px;
-      line-height: 24px;
-      color: #222;
-      font-weight: bold;
-      opacity: 0;
-      margin-bottom: 10px;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-delay: 0.1s;
-      animation-fill-mode: forwards;
-    }
-
-    &__info {
-      font-size: 13px;
-      line-height: 21px;
-      color: grey;
-      opacity: 0;
-      margin-bottom: 30px;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-delay: 0.2s;
-      animation-fill-mode: forwards;
-    }
-
-    &__return-home {
-      display: block;
-      float: left;
-      width: 110px;
-      height: 36px;
-      background: #1482f0;
-      border-radius: 100px;
-      text-align: center;
-      color: #ffffff;
-      opacity: 0;
-      font-size: 14px;
-      line-height: 36px;
-      cursor: pointer;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-delay: 0.3s;
-      animation-fill-mode: forwards;
-    }
-
-    @keyframes slideUp {
-      0% {
-        transform: translateY(60px);
-        opacity: 0;
-      }
-
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-  }
-}
 </style>

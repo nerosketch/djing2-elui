@@ -28,7 +28,6 @@ export default {
   fieldTagValidation:
     "Тэги должны содержать только буквы, цифры и знак подчёркивания (как [a-zA-Z0-9_]). И могут быть разделены запятой.",
   telValidation: "+[7,8,9,3] и 10,11 цифр",
-  "404nf": "404 Page Not Found",
   customer: "Абонент",
   search: 'Поиск',
   aus2delIpPool: 'Действительно удалить IP пул "{0}"?',
@@ -336,10 +335,9 @@ export default {
   accelerationOfSubscribers: "Активность абонентов",
   active: "Активные",
   activeCustomersCount: "Активных абон.",
-  allRatesReserve: "All rights reserved",
+  allRightsReserved: "Все права защищены",
   allocadeBudget: "Allocated Budget",
   ipLeases: "Аренды ip",
-  toHome: "Back to home",
   balance: "Баланс",
   baseCalcFunction: "Базовый расчётный функционал",
   browser: "Браузер",
@@ -555,8 +553,6 @@ export default {
   ping: "Ping",
   payableLock: "Платёжный шлюз",
   payableLockAdded: "Платёжный шлюз добавлен",
-  iMSureYouReRight:
-    "Please check that the URL you entered is correct, or click the button below to return to the homepage.",
   default: "По умолчанию",
   postalAddress: "Почтовый адрес",
   postalIndex: "Почтовый индекс",
