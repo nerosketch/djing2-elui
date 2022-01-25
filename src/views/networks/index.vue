@@ -16,7 +16,7 @@
           pool-list
 
       el-tab-pane(
-        :label="$t('vlanS')"
+        :label="$t('devices.vlanS')"
         name="vlans"
         lazy)
         keep-alive

@@ -31,7 +31,7 @@
                 i.el-icon-error.el-alert--error.is-light(v-else)
 
             el-table-column(
-              :label="$t('snmNom')"
+              :label="$t('devices.snmpNum')"
               min-width="97"
               prop="number")
 
@@ -41,17 +41,17 @@
               prop="title")
 
             el-table-column(
-              :label="$t('mac')"
+              :label="$t('devices.mac')"
               min-width="123"
               prop="mac_addr")
 
             el-table-column(
-              :label="$t('ur')"
+              :label="$t('devices.level')"
               min-width="92"
               prop="signal")
 
             el-table-column(
-              :label="$t('uptime')"
+              :label="$t('devices.uptime')"
               min-width="151"
               prop="uptime")
 

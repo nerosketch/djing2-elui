@@ -23,30 +23,25 @@
           | {{ $t('ipAddress', [device.ip_address || '-']) }}
 
         .text.item.list-item
-          b
-            | {{ $t('mac') }}
+          b {{ $t('devices.mac') }}
           | {{ device.mac_addr }}
 
         .text.item.list-item
-          b
-            | {{ $t('description') }}
+          b {{ $t('description') }}
           | {{ device.comment }}
 
         .text.item.list-item
-          b
-            | {{ $t('parentDev') }}
+          b {{ $t('parentDev') }}
 
           router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
             | {{ device.parent_dev_name }}
 
         .text.item.list-item(v-if="device.iface_name")
-          b
-            | {{ $t('interface') }}
+          b {{ $t('interface') }}
           | {{ device.iface_name }}
 
         .text.item.list-item
-          b
-            | {{ $t('affixedSubscribers') }}
+          b {{ $t('devices.affixedSubscribers') }}
 
           router-link.el-link.el-link--primary.is-underline(
             v-for="(ab, i) in device.attached_users"

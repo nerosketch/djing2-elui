@@ -28,8 +28,7 @@
 
     el-divider
 
-    h4
-      | {{ $t('unregisteredYouth') }}
+    h4 {{ $t('devices.unregisteredUnits') }}
 
     el-table(
       :data="unregistered"
@@ -38,7 +37,7 @@
       border
       fit)
       el-table-column(
-        :label="$t('mac')"
+        :label="$t('devices.mac')"
         min-width="150"
         prop="mac")
 

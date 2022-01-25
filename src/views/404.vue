@@ -47,7 +47,7 @@ figure {
 	width: 64em;
 }
 figcaption {
-	color: #fff;
+	color: white;
 	display: flex;
 	align-content: space-between;
 	flex-wrap: wrap;
@@ -75,7 +75,7 @@ figcaption span {
 /* II. Sprites */
 /* 1. Sad Mac */
 .sad-mac {
-	background: #fff;
+	background: white;
 	margin: 0 auto 7em auto;
 	width: 23em;
 	height: 30em;

@@ -3,7 +3,7 @@
     template(v-slot:header)
       .clearfix
         span
-          | {{ device.comment || 'Коммутатор' }}
+          | {{ device.comment || $t('devices.switch') }}
 
         small
           | {{ ` ${device.ip_address || device.mac_addr} ` }}
@@ -29,7 +29,7 @@
       border
       fit)
       el-table-column(
-        :label="$t('port')"
+        :label="$t('devices.port')"
         width="60"
         align="center")
         template(v-slot:default="{row}")
@@ -117,13 +117,13 @@
 
     el-dialog(
       :visible.sync="portViewDialog"
-      :title="$t('portSubscribers')"
+      :title="$t('devices.portSubscribers')"
       :close-on-click-modal="false")
       switch-port-view(:device="device" :portId="currPortId")
 
     el-dialog(
       :visible.sync="portFormDialog"
-      :title="$t('theSwitchboard')"
+      :title="$t('devices.theSwitchboard')"
       :close-on-click-modal="false")
       switch-port-form(
         :deviceId="device.id"
@@ -134,13 +134,13 @@
 
     el-dialog(
       :visible.sync="devFormDialog"
-      :title="$t('informationOfTheDevice')"
+      :title="$t('devices.informationOfTheDevice')"
       :close-on-click-modal="false")
       dev-form(v-on:done="devFrmDone")
 
     el-dialog(
       :visible.sync="vidsDialog"
-      :title="$t('vlanS')"
+      :title="$t('devices.vlanS')"
       :close-on-click-modal="false")
       vids-view(
         :portId="currPortId"
@@ -149,7 +149,7 @@
 
     el-dialog(
       :visible.sync="macsDialog"
-      :title="$t('tableOfPortAddresses')"
+      :title="$t('devices.tableOfPortAddresses')"
       :close-on-click-modal="false")
       port-mac-list(:portId="currPortId")
 </template>

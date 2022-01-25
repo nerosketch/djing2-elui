@@ -23,7 +23,7 @@
 
             dt
               b
-                | {{ $t('port') }}
+                | {{ $t('gateways.port') }}
 
             dd
               | {{ gw.ip_port }}
