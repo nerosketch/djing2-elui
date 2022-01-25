@@ -179,46 +179,46 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'username',
-      label: this.$tc('customers.username').toString(),
+      label: this.$tc('customers.username'),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'fio',
-      label: this.$tc('customers.fio').toString(),
+      label: this.$tc('customers.fio'),
       'min-width': 300,
       sortable: true
     },
     {
       prop: 'address_title',
-      label: this.$tc('addrs.full').toString(),
+      label: this.$tc('addrs.full'),
       sortable: true,
       'min-width': 110,
       cutLeft: true
     },
     {
       prop: 'telephone',
-      label: this.$tc('customers.phone').toString(),
+      label: this.$tc('customers.phone'),
       'min-width': 140
     },
     {
       prop: 'current_service_title',
-      label: this.$tc('customers.service').toString(),
+      label: this.$tc('customers.service'),
       'min-width': 240
     },
     {
       prop: 'balance',
-      label: this.$tc('customers.balance').toString(),
+      label: this.$tc('customers.balance'),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'group_title',
-      label: this.$tc('groups.group').toString()
+      label: this.$tc('groups.group')
     },
     {
       prop: 'marker_icons',
-      label: this.$tc('customers.marker').toString()
+      label: this.$tc('customers.marker')
     },
     {
       prop: 'ping',
@@ -253,13 +253,13 @@ export default class extends mixins(TableWithAddrMixin) {
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
     this.$message.success(
-      this.$tc('customers.customerAddedOk').toString()
+      this.$tc('customers.customerAddedOk')
     )
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
   created() {
-    document.title = this.$tc('customers.customersList').toString()
+    document.title = this.$tc('customers.customersList')
     this.setCrumbs()
   }
 
@@ -273,7 +273,7 @@ export default class extends mixins(TableWithAddrMixin) {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: this.$tc('addrs.addresses').toString()
+          title: this.$tc('addrs.addresses')
         }
       },
       {

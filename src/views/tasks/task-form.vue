@@ -227,7 +227,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         }
         this.loading = false
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

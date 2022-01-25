@@ -135,16 +135,16 @@ export default class extends Vue {
   }
 
   onStopService() {
-    this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule').toString(), {
-      confirmButtonText: this.$tc('yes').toString(),
-      cancelButtonText: this.$tc('no').toString(),
+    this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule'), {
+      confirmButtonText: this.$tc('yes'),
+      cancelButtonText: this.$tc('no'),
       type: 'info'
     }).then(async() => {
       await CustomerModule.StopService()
       await CustomerModule.UpdateCustomer()
       await this.loadCurrentService()
       this.$message.success(
-        this.$tc('customers.serviceStoppedAheadOfSheduleOk').toString()
+        this.$tc('customers.serviceStoppedAheadOfSheduleOk')
       )
     })
   }

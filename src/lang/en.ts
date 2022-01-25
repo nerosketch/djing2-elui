@@ -248,7 +248,7 @@ export default {
     informationOfTheDevice: "Information of the device",
     vlanS: "Vlan's",
     tableOfPortAddresses: "Table of port addresses",
-    switch: 'Коммутатор',
+    switch: 'Switch',
     serial: "Serial",
     unregisteredUnits: "Unregistered units",
     mac: "Mac addr ",

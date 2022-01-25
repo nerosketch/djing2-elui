@@ -138,7 +138,7 @@ export default class extends Vue {
           this.$emit('err', err)
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

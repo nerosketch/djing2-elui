@@ -138,9 +138,9 @@ export default class extends Vue {
   get dialogTitle() {
     let w
     if (NetworkIpPoolModule.id === 0) {
-      w = this.$tc('add').toString()
+      w = this.$tc('add')
     } else {
-      w = this.$tc('change').toString()
+      w = this.$tc('change')
     }
     return this.$t('networks.tPool', [w])
   }

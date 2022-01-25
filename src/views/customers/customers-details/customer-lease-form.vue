@@ -70,7 +70,7 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: this.$tc('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
+      { required: true, message: this.$tc('nets.ipMustNotBeEmpty'), trigger: 'blur' },
       { validator: ipAddrValidator, trigger: 'change', message: this.$tc('customers.badIp') }
     ],
     mac_address: [
@@ -102,7 +102,7 @@ export default class extends Vue {
           this.frmLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }
@@ -116,11 +116,9 @@ export default class extends Vue {
         this.frmMod.ip_address = ip
       } else {
         this.$message.error(
-          this.$tc('customers.failedGettingFreeIp').toString()
+          this.$tc('customers.failedGettingFreeIp')
         )
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.getFreeIpLoad = false
     }
@@ -153,8 +151,6 @@ export default class extends Vue {
         groups: CustomerModule.group
       }) as any
       this.pools = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.poolsLoading = false
     }

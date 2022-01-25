@@ -54,7 +54,7 @@ export default class extends Vue {
       this.loading = true
       const { data } = await changeCustomer(this.customerId, this.frmMod)
       this.$message.success(
-        this.$tc('customers.passwordUpdateOk').toString()
+        this.$tc('customers.passwordUpdateOk')
       )
       this.$emit('done', data)
     } finally {

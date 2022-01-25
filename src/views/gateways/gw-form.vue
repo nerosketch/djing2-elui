@@ -142,7 +142,7 @@ export default class extends mixins(FormMixin) {
           this.$emit('err', err)
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

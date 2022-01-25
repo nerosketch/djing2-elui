@@ -42,7 +42,7 @@ export default class extends Vue {
   private innerTableColumns: IDataTableColumn[] = this.tableColumns || [
     {
       prop: 'title',
-      label: this.$tc('title').toString(),
+      label: this.$tc('title'),
       'min-width': 250
     }
   ]

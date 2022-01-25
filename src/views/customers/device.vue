@@ -96,7 +96,7 @@ export default class extends Vue {
 
   private onClearDevice() {
     this.$confirm(
-      this.$tc('customers.clearDevQuestion').toString()
+      this.$tc('customers.clearDevQuestion')
     ).then(async() => {
       this.isLoading = true
       const { data } = await CustomerModule.ClearDevice()

@@ -45,14 +45,14 @@ export default class extends Vue {
     owner_name: [
       {
         required: true,
-        message: this.$tc('customers.contactNameRequired').toString(),
+        message: this.$tc('customers.contactNameRequired'),
         trigger: 'blur'
       }
     ],
     telephone: [
       {
         required: true,
-        message: this.$tc('customers.contactPhoneRequired').toString(),
+        message: this.$tc('customers.contactPhoneRequired'),
         trigger: 'blur'
       },
       { validator: telephoneValidator, trigger: 'change' }
@@ -73,12 +73,12 @@ export default class extends Vue {
           if (this.isNew) {
             tel = await AdditionalTelephoneModule.AddTelephone(dat)
             this.$message.success(
-              this.$tc('customers.contactPhoneSaved').toString()
+              this.$tc('customers.contactPhoneSaved')
             )
           } else {
             tel = await AdditionalTelephoneModule.PatchTelephone(dat)
             this.$message.success(
-              this.$tc('customers.contactPhoneChanged').toString()
+              this.$tc('customers.contactPhoneChanged')
             )
           }
           this.$emit('done', tel)
@@ -86,7 +86,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

@@ -101,7 +101,7 @@ export default class extends Vue {
   @Watch('frmMod.fias_address_type')
   private onChangeFiasAddrType(fiasAddressType: number) {
     // Пробуем автоматически подставлять типы адреса по типу из фиаса
-    if ([803, 902, 903, 907, 910, 911, 913 ].includes(fiasAddressType)) {
+    if ([803, 902, 903, 907, 910, 911, 913].includes(fiasAddressType)) {
       this.frmMod.address_type = IAddressEnumTypes.HOUSE
     } else if (fiasAddressType === 904) {
       this.frmMod.address_type = IAddressEnumTypes.OFFICE_NUM
@@ -163,7 +163,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

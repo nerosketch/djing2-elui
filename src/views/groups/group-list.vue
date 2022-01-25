@@ -119,9 +119,9 @@ export default class extends Vue {
   get dialogTitle() {
     let t
     if (this.groupIdGetter === 0) {
-      t = this.$tc('add').toString()
+      t = this.$tc('add')
     } else {
-      t = this.$tc('change').toString()
+      t = this.$tc('change')
     }
     return `${t} ${this.$tc('groups.minAGroup')}`
   }

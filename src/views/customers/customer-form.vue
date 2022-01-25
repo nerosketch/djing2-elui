@@ -221,26 +221,26 @@ export default class extends mixins(FormMixin) {
           const newDat = await CustomerModule.PatchCustomer(this.frmMod)
           this.$emit('done', newDat)
           this.$message.success(
-            this.$tc('customers.customerSavedOk').toString()
+            this.$tc('customers.customerSavedOk')
           )
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }
 
   private delCustomer() {
     this.$confirm(
-      this.$tc('customers.customerDeletionConfigmation').toString(),
-      this.$tc('attention').toString()
+      this.$tc('customers.customerDeletionConfigmation'),
+      this.$tc('attention')
     ).then(async() => {
       const currLoc = this.$store.state.customer.address
       await CustomerModule.DelCustomer()
       this.$message.success(
-        this.$tc('customers.accountRemovedOk').toString()
+        this.$tc('customers.accountRemovedOk')
       )
       this.$router.push({ name: 'customerList', params: { addrId: currLoc.toString() } })
     })
@@ -283,7 +283,7 @@ export default class extends mixins(FormMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$message.success(
-        this.$tc('customers.siteAccessorySavedOk').toString()
+        this.$tc('customers.siteAccessorySavedOk')
       )
     })
     this.sitesDlg = false
