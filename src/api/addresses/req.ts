@@ -45,6 +45,9 @@ export const getAddrTypes = (): IAddressTypeListAxiosResponsePromise =>
 export const getStreets = (parent_addr?: number): IAddressModelListAxiosResponsePromise =>
   request.get<IAddressModelList>('/addrs/get_streets/', { params: { parent_addr }})
 
+export const getHouses = (parent_addr?: number): IAddressModelListAxiosResponsePromise =>
+  request.get<IAddressModelList>('/addrs/get_houses/', { params: { parent_addr }})
+
 export const getAddrParent = (id: number): IDRFAxiosResponsePromise<IAddressModel | null> =>
   request.get<IAddressModel | null>(`/addrs/${id}/get_parent/`)
 
