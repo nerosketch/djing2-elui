@@ -189,6 +189,8 @@ export default {
     },
     commentText: 'Текст комментария',
     houses: 'Дома',
+    // house: 'Дом',
+    // street: 'Улица',
     addressFitlers: 'Адресные фильтры',
     extraFields: 'Дополнительные данные'
   },

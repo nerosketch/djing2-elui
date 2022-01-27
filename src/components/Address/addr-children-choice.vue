@@ -2,6 +2,7 @@
   el-select(
     v-model="localValue"
     :loading="loading"
+    :disabled="!parentAddrId"
     clearable)
     el-option(
       v-for="item in items"
@@ -70,6 +71,13 @@ export default class extends Vue {
   private onChAddr() {
     this.loadAddrs()
   }
+
+  // private onElCh(addrId: number) {
+  //   const adr = this.items.filter(a => a.id === addrId)
+  //   if (adr && adr.length > 0) {
+  //     this.$emit('select', adr[0])
+  //   }
+  // }
 }
 </script>
 

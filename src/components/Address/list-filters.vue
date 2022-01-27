@@ -2,6 +2,9 @@
 el-collapse
   el-collapse-item
     template(slot="title") {{ $t('customers.addressFitlers') }}
+      //- span(v-if="streetLabelVal") {{ $t('customers.street') }}: {{ streetLabelVal }}.&nbsp;
+      //- span(v-if="houseLabelVal") {{ $t('customers.house') }}: {{ houseLabelVal }}.&nbsp;
+      //- span(v-if="groupLabelVal") {{ $t('groups.group') }}: {{ groupLabelVal }}.
 
     el-form(inline)
       el-form-item(:label="$t('customers.streets')")
@@ -50,8 +53,11 @@ export default class extends Vue {
   private fetchGroups!: (params: IDRFRequestListParameters) => void
 
   private streetVal = this.street
+  // private streetLabelVal = ''
   private groupVal = this.group
+  // private groupLabelVal = ''
   private houseVal = this.house
+  // private houseLabelVal = ''
 
   private streetAddrType = IAddressEnumTypes.STREET
   private streetParentAddrType = IAddressEnumTypes.LOCALITY
@@ -71,5 +77,15 @@ export default class extends Vue {
   private onChHouse(v: number) {
     this.$emit('update:house', v)
   }
+
+  // private onStreetSelect(addr: IAddressModel) {
+  //   this.streetLabelVal = addr.title
+  // }
+  // private onHouseSelect(addr: IAddressModel) {
+  //   this.houseLabelVal = addr.title
+  // }
+  // private onGroupSelect(grp: IGroup) {
+  //   this.groupLabelVal = grp.title
+  // }
 }
 </script>

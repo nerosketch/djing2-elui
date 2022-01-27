@@ -189,6 +189,8 @@ export default {
     },
     commentText: "Comment text",
     houses: 'Houses',
+    // house: 'House',
+    // street: 'Street',
     addressFitlers: 'Address filters',
     extraFields: "Extra data"
   },
