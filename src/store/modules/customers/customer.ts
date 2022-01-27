@@ -17,7 +17,11 @@ import {
   setCustomerMarkers
 } from '@/api/customers/req'
 import store from '@/store'
-import { BaseProfileVuexModule, RESET_ALL_BASE_PROFILE, SET_ALL_BASE_PROFILE } from '@/store/modules/profiles/base-profile'
+import {
+  BaseProfileVuexModule,
+  RESET_ALL_BASE_PROFILE,
+  SET_ALL_BASE_PROFILE
+} from '@/store/modules/profiles/base-profile'
 
 @Module({ dynamic: true, store, name: 'customer' })
 class Customer extends BaseProfileVuexModule implements ICustomer {

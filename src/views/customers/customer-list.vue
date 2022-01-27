@@ -203,8 +203,10 @@ export default class extends mixins(TableWithAddrMixin) {
       'min-width': 140
     },
     {
-      prop: 'current_service_title',
+      prop: 'current_service__service__title',
       label: this.$tc('customers.service'),
+      backendProp: 'current_service_title',
+      sortable: true,
       'min-width': 240
     },
     {
@@ -235,7 +237,7 @@ export default class extends mixins(TableWithAddrMixin) {
     if (params) {
       let newParams: IDRFRequestListFilterParameters = Object.assign(params, {
         address: this.addrId,
-        fields: 'id,username,fio,address_title,telephone,current_service_title,balance,group_title,is_active,lease_count,marker_icons'
+        fields: 'id,username,fio,address_title,telephone,current_service_title,current_service,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (group) {
         newParams.group = Number(group)
