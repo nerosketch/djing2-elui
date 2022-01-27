@@ -188,6 +188,8 @@ export default {
       unique: "Contract number(unique)"
     },
     commentText: "Comment text",
+    houses: 'Houses',
+    addressFitlers: 'Address filters',
     extraFields: "Extra data"
   },
   customersLegal: {

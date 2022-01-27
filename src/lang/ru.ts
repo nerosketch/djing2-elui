@@ -188,6 +188,8 @@ export default {
       unique: 'Номер договора(уникальный)'
     },
     commentText: 'Текст комментария',
+    houses: 'Дома',
+    addressFitlers: 'Адресные фильтры',
     extraFields: 'Дополнительные данные'
   },
   customersLegal: {
