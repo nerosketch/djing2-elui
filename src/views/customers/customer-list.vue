@@ -193,7 +193,7 @@ export default class extends mixins(TableWithAddrMixin) {
     {
       prop: 'address_title',
       label: this.$tc('addrs.full'),
-      sortable: true,
+      sortable: false,
       'min-width': 110,
       cutLeft: true
     },
