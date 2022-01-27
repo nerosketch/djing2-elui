@@ -7,6 +7,7 @@
             :addrId="addrId"
             :group.sync="filterForm.group"
             :street.sync="filterForm.street"
+            :house.sync="filterForm.house"
             :fetchGroups="fetchGroups")
 
       el-col(:lg="24" :md="20")
@@ -232,16 +233,15 @@ export default class extends mixins(TableWithAddrMixin) {
     let r
     const fetchFn = (this.fetchFunc === null ? getCustomers : this.fetchFunc)
     if (params) {
-      const newParams: IDRFRequestListFilterParameters = Object.assign(params, {
+      let newParams: IDRFRequestListFilterParameters = Object.assign(params, {
         address: this.addrId,
         fields: 'id,username,fio,address_title,telephone,current_service_title,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (group) {
         newParams.group = Number(group)
       }
-      const street = this.$route.query.street
-      if (street) {
-        newParams.street = Number(street)
+      if (this.$route.query) {
+        newParams = Object.assign(newParams, this.$route.query)
       }
       r = await fetchFn(newParams)
     } else {

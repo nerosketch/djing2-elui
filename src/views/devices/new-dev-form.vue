@@ -120,7 +120,6 @@ export default class extends Vue {
     snmp_extra: this.initialSnmpSxtra,
     create_time: '',
     address: this.initialAddress,
-    place: ''
   }
 
   private onSubmit() {

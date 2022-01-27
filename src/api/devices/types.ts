@@ -201,7 +201,6 @@ export interface IDevice {
   create_time: string
   address: number
   address_title: string
-  place: string
 }
 export interface IDeviceInterace extends IDevice {
   ScanAllDevVlans(devId: number): Promise<IDevVlan[]>

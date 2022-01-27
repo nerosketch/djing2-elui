@@ -10,6 +10,7 @@ class DataTableAnyType extends DataTable<any> {}
     :addrId="addrId"
     :group.sync="filterForm.group"
     :street.sync="filterForm.street"
+    :house.sync="filterForm.house"
     :fetchGroups="fetchGroups"
   )
  *
@@ -25,7 +26,8 @@ export default class extends Vue {
 
   protected filterForm = {
     group: Number(this.$route.query.group) || null,
-    street: Number(this.$route.query.street) || null
+    street: Number(this.$route.query.street) || null,
+    house: Number(this.$route.query.house) || null
   }
 
   @Watch('filterForm.group')
@@ -55,6 +57,22 @@ export default class extends Vue {
         qr.street = streetId
       } else {
         delete qr.street
+      }
+    }
+    this.$router.push({ path: this.$route.path, query: qr })
+  }
+
+  @Watch('filterForm.house')
+  private onHouseChange(houseId: number | null) {
+    const qr = Object.assign({}, this.$route.query) as Record<string, any>
+    const qhouse = qr.house
+    delete qr.house
+
+    if (houseId != qhouse) {
+      if (houseId && houseId > 0) {
+        qr.house = houseId
+      } else {
+        delete qr.house
       }
     }
     this.$router.push({ path: this.$route.path, query: qr })
