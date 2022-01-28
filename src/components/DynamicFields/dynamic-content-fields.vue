@@ -28,7 +28,7 @@
             value-format="yyyy-MM-dd HH:mm"
             format="d.MM.yyyy HH:mm")
 
-          el-switch(v-else-if="f.field_type == 7", v-model="f.content")
+          el-switch(v-else-if="f.field_type == 7" v-model="f.content")
 
           el-input(v-else, v-model="f.content")
 

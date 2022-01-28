@@ -177,7 +177,7 @@ ul {
 
 /* Collapse */
 .el-collapse-item__content {
-  padding-bottom: 14px;
+  padding-bottom: 0;
 }
 .el-collapse-item__header {
   height: 37px;
@@ -201,4 +201,10 @@ ul {
 .card_del_btn {
   float: right;
   padding: 3px 0;
+}
+
+
+
+.el-form-item--mini.el-form-item {
+  margin-bottom: 5px;
 }

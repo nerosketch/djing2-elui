@@ -5,7 +5,10 @@
         template(v-slot:header)
           | {{ $t('customers.services4Buy') }}
 
-        services-list(v-on:buydone="loadCurrentService", :isServiceAvailable="isServiceAvailable")
+        services-list(
+          v-on:buydone="loadCurrentService"
+          :isServiceAvailable="isServiceAvailable"
+        )
 
     el-col(:sm="24" :md="12")
       el-card(
@@ -126,24 +129,22 @@ export default class extends Vue {
       } else {
         this.currentService = null
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.serviceBlockLoad = false
     }
   }
 
   onStopService() {
-    this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule').toString(), {
-      confirmButtonText: this.$tc('yes').toString(),
-      cancelButtonText: this.$tc('no').toString(),
+    this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule'), {
+      confirmButtonText: this.$tc('yes'),
+      cancelButtonText: this.$tc('no'),
       type: 'info'
     }).then(async() => {
       await CustomerModule.StopService()
       await CustomerModule.UpdateCustomer()
       await this.loadCurrentService()
       this.$message.success(
-        this.$tc('customers.serviceStoppedAheadOfSheduleOk').toString()
+        this.$tc('customers.serviceStoppedAheadOfSheduleOk')
       )
     })
   }

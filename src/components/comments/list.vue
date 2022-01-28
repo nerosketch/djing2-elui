@@ -1,12 +1,12 @@
 <template lang="pug">
-  el-card(shadow="never", :loading="loading")
+  el-card(shadow="never" :loading="loading")
     template(v-slot:header)
       .clearfix
         | {{ defaultCardTitle }}
 
     div
       template(v-for="c in comments")
-        slot(name="comment_item", v-bind:comment="c")
+        slot(name="comment_item" v-bind:comment="c")
           comment-item.mt5(
             :key="c.id"
             :comment="c"

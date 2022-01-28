@@ -6,7 +6,7 @@
     widthStorageNamePrefix="sessions"
     ref="table")
     template(v-slot:closed="{row}")
-      el-checkbox(v-model="row.closed", disabled)
+      el-checkbox(v-model="row.closed" disabled)
         | {{ row.closed ? 'Да' : 'Нет' }}
 
     template(v-slot:oper="{row}")

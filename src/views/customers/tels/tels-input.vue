@@ -29,7 +29,10 @@
       :title="$t('customers.addPhone')"
       :visible.sync="openAddTelsDlg"
       :close-on-click-modal="false")
-      tel-form(:customer="$store.state.customer.id", v-on:done="telsFormDone")
+      tel-form(
+        :customer="$store.state.customer.id"
+        v-on:done="telsFormDone"
+      )
 </template>
 
 <script lang="ts">

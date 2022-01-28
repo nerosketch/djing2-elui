@@ -53,11 +53,11 @@ export default class extends Vue {
 
   private delTel(tel: IAdditionalTelephone) {
     this.$confirm(
-      this.$tc('customers.areUShure2DelAdditionalPhone').toString()
+      this.$tc('customers.areUShure2DelAdditionalPhone')
     ).then(async() => {
       await AdditionalTelephoneModule.DelTelephone(tel.id)
       this.$message.success(
-        this.$tc('deleted').toString()
+        this.$tc('deleted')
       )
       this.loadTels()
     })

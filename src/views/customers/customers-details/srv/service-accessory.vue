@@ -43,8 +43,6 @@ export default class extends Vue {
     try {
       const { data } = await getServices() as any
       this.services = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.servicesLoading = false
     }
@@ -81,7 +79,7 @@ export default class extends Vue {
     const res = selectedState.map(s => s.id)
     await CustomerModule.SetServiceGroupAccessory(res)
     this.$message.success(
-      this.$tc('customers.groupsSuccessAttached').toString()
+      this.$tc('customers.groupsSuccessAttached')
     )
     this.$emit('done')
   }

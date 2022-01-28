@@ -138,9 +138,9 @@ export default class extends Vue {
   }
 
   public delLease(lease: ICustomerIpLease) {
-    this.$confirm(this.$tc('customers.areUSure2DelIpLease').toString(), {
-      confirmButtonText: this.$tc('yes').toString(),
-      cancelButtonText: this.$tc('no').toString()
+    this.$confirm(this.$tc('customers.areUSure2DelIpLease'), {
+      confirmButtonText: this.$tc('yes'),
+      cancelButtonText: this.$tc('no')
     }).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
       this.$message.success(

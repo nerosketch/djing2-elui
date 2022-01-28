@@ -7,7 +7,10 @@
         :type="passwordType"
         :placeholder="$t('customers.passwordLong')")
         template(v-slot:append)
-          el-button(@click="togglePwd", :icon="passwordType === 'password' ? 'el-icon-view' : 'el-icon-minus'")
+          el-button(
+            @click="togglePwd"
+            :icon="passwordType === 'password' ? 'el-icon-view' : 'el-icon-minus'"
+          )
 
           el-button(
             @click="genPasw"
@@ -51,11 +54,9 @@ export default class extends Vue {
       this.loading = true
       const { data } = await changeCustomer(this.customerId, this.frmMod)
       this.$message.success(
-        this.$tc('customers.passwordUpdateOk').toString()
+        this.$tc('customers.passwordUpdateOk')
       )
       this.$emit('done', data)
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }
@@ -75,7 +76,6 @@ export default class extends Vue {
       const { data } = await generateCustomerPassword()
       this.frmMod.password = data
     } catch (err) {
-      this.$message.error(err)
       this.frmMod.password = ''
     } finally {
       this.passwLoading = false

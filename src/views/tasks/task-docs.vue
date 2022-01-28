@@ -6,7 +6,10 @@
     :before-remove="beforeRemove"
     :http-request="uploadReq"
     :file-list="fileList")
-    el-button(type="primary", v-if="$perms.tasks.add_taskdocumentattachment")
+    el-button(
+      type="primary"
+      v-if="$perms.tasks.add_taskdocumentattachment"
+    )
       | {{ $t('addDocument') }}
 </template>
 

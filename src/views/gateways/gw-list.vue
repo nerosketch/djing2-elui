@@ -1,6 +1,6 @@
 <template lang="pug">
   .app-container
-    el-row(v-loading="loadingGws", :gutter="10")
+    el-row(v-loading="loadingGws" :gutter="10")
       el-col(
         :xs="24"
         :md="12"
@@ -23,7 +23,7 @@
 
             dt
               b
-                | {{ $t('port') }}
+                | {{ $t('gateways.port') }}
 
             dd
               | {{ gw.ip_port }}
@@ -130,7 +130,7 @@
       :visible.sync="gwFormDialog"
       :title="$t('modifyAccessLock')"
       :close-on-click-modal="false")
-      gw-form(v-on:done="gwFrmDone", v-on:err="gwFormDialog=false")
+      gw-form(v-on:done="gwFrmDone" v-on:err="gwFormDialog=false")
 </template>
 
 <script lang="ts">

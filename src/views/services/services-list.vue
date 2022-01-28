@@ -8,7 +8,7 @@
       widthStorageNamePrefix="services"
       ref="table")
       template(v-slot:isadm="{row}")
-        el-checkbox(v-model="row.is_admin", disabled)
+        el-checkbox(v-model="row.is_admin" disabled)
           | {{ row.is_admin ? 'Да' : 'Нет'}}
 
       template(v-slot:oper="{row}")
@@ -65,7 +65,10 @@
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.service.sites", v-on:save="serviceSitesSave")
+      sites-attach(
+        :selectedSiteIds="$store.state.service.sites"
+        v-on:save="serviceSitesSave"
+      )
 
     el-dialog(
       :title="$t('serviceUsers')"

@@ -59,16 +59,16 @@ export default class extends Vue {
 
   private frmRules = {
     title: [
-      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' }
     ],
     bank_code: [
-      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' }
     ],
     correspondent_account: [
-      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' }
     ],
     settlement_account: [
-      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' },
+      { required: true, message: this.$tc('customersLegal.bank.required'), trigger: 'blur' }
     ]
   }
 
@@ -112,7 +112,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

@@ -17,7 +17,11 @@ import {
   setCustomerMarkers
 } from '@/api/customers/req'
 import store from '@/store'
-import { BaseProfileVuexModule, RESET_ALL_BASE_PROFILE, SET_ALL_BASE_PROFILE } from '@/store/modules/profiles/base-profile'
+import {
+  BaseProfileVuexModule,
+  RESET_ALL_BASE_PROFILE,
+  SET_ALL_BASE_PROFILE
+} from '@/store/modules/profiles/base-profile'
 
 @Module({ dynamic: true, store, name: 'customer' })
 class Customer extends BaseProfileVuexModule implements ICustomer {
@@ -27,7 +31,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
   address_title = ''
   balance = 0.0
   description = ''
-  house = ''
   gateway = 0
   gateway_title = ''
   auto_renewal_service = false
@@ -60,7 +63,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.address_title = data.address_title
     this.balance = data.balance
     this.description = data.description
-    this.house = data.house
     this.gateway = data.gateway
     this.gateway_title = data.gateway_title!
     this.auto_renewal_service = data.auto_renewal_service
@@ -90,7 +92,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.address_title = ''
     this.balance = 0.0
     this.description = ''
-    this.house = ''
     this.gateway = 0
     this.gateway_title = ''
     this.auto_renewal_service = false

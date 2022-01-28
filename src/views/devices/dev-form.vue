@@ -29,19 +29,16 @@
       groups-choice(v-model="frmMod.group")
 
     el-form-item(:label="$t('theDevice')")
-      device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="$store.state.devicemodule.parent_dev_name")
+      device-autocomplete-field(
+        v-model="frmMod.parent_dev"
+        :defaultName="$store.state.devicemodule.parent_dev_name"
+      )
 
     el-form-item(:label="$t('effectiveDate')")
       datetime-counter(v-model="frmMod.create_time")
 
     el-form-item(:label="$t('addresses')")
       addr-field-input(v-model="frmMod.address")
-
-    el-form-item(:label="$t('houseNum')")
-      el-input(
-        v-model="frmMod.place"
-        disabled
-        readonly)
 
     el-form-item(:label="$t('snmpInfo')")
       el-input(v-model="frmMod.snmp_extra")
@@ -125,7 +122,6 @@ export default class extends mixins(FormMixin) {
       snmp_extra: m.snmp_extra,
       create_time: m.create_time,
       address: m.address,
-      place: m.place
     }
   }
 
@@ -152,7 +148,7 @@ export default class extends mixins(FormMixin) {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

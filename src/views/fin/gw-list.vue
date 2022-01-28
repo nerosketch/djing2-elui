@@ -35,7 +35,10 @@
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.payalltimegateway.sites", v-on:save="payGwSitesSave")
+      sites-attach(
+        :selectedSiteIds="$store.state.payalltimegateway.sites"
+        v-on:save="payGwSitesSave"
+      )
 </template>
 
 <script lang="ts">

@@ -44,32 +44,32 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'from_balance',
-      label: this.$tc('customers.was').toString(),
+      label: this.$tc('customers.was'),
       'min-width': 80
     },
     {
       prop: 'cost',
-      label: this.$tc('customers.sum').toString(),
+      label: this.$tc('customers.sum'),
       'min-width': 80
     },
     {
       prop: 'to_balance',
-      label: this.$tc('customers.become').toString(),
+      label: this.$tc('customers.become'),
       'min-width': 80
     },
     {
       prop: 'date',
-      label: this.$tc('customers.payDate').toString(),
+      label: this.$tc('customers.payDate'),
       'min-width': 160
     },
     {
       prop: 'author_name',
-      label: this.$tc('customers.payWho').toString(),
+      label: this.$tc('customers.payWho'),
       'min-width': 180
     },
     {
       prop: 'comment',
-      label: this.$tc('comment').toString(),
+      label: this.$tc('comment'),
       'min-width': 300
     }
   ]

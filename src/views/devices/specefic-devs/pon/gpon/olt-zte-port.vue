@@ -15,14 +15,14 @@
           @click="onuListDialog=true"
           :disabled="port.fb_onu_num === 0")
 
-        el-button(icon="el-icon-lock", disabled)
+        el-button(icon="el-icon-lock" disabled)
 
     el-dialog(
       top="5vh"
       :title="$t('heSInTheEye')"
       :visible.sync="onuListDialog"
       :close-on-click-modal="false")
-      onu-on-fiber(:devId="devId", :fiberAddr="port.fb_id")
+      onu-on-fiber(:devId="devId" :fiberAddr="port.fb_id")
 </template>
 
 <script lang="ts">
