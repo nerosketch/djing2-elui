@@ -38,6 +38,7 @@ import VlanList from './components/vlanlist.vue'
 import LeaseList from './components/leaselist.vue'
 import PoolList from './components/poollist.vue'
 import SessionList from './components/session-list.vue'
+import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 @Component({
   name: 'NetworksIndex',
@@ -50,5 +51,23 @@ import SessionList from './components/session-list.vue'
 })
 export default class extends mixins(TabMixin) {
   protected activeTabName = 'sessions'
+
+  // Breadcrumbs
+  private async buildBreadcrumb() {
+    await BreadcrumbsModule.SetCrumbs([
+      {
+        path: '',
+        meta: {
+          hidden: true,
+          title: this.$tc('route.network')
+        }
+      }
+    ] as any)
+  }
+  // End Breadcrumbs
+
+  created() {
+    this.buildBreadcrumb()
+  }
 }
 </script>
