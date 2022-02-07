@@ -7,6 +7,7 @@
     el-table(
       v-loading="loading"
       :data="leases"
+      :row-class-name="leaseStatus"
       border
       fit)
       el-table-column(
@@ -84,6 +85,11 @@ import IpSessionDetail from './ip-session-detail.vue'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 import BooleanIcon from '@/components/boolean-icon.vue'
 
+interface ITableRowClassName {
+  row: ICustomerIpLease
+  rowIndex: number
+}
+
 @Component({
   name: 'Network',
   components: {
@@ -159,6 +165,12 @@ export default class extends Vue {
   private onSignalUpdateLeases({ data }: IWsMessage) {
     if (data.customer_id === this.$store.state.customer.id) {
       this.loadLeases()
+    }
+  }
+
+  private leaseStatus({ row }: ITableRowClassName) {
+    if (!row.pool) {
+      return 'error-row'
     }
   }
 }

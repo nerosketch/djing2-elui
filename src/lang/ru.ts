@@ -216,7 +216,8 @@ export default {
   },
   nets: {
     ipMustNotBeEmpty: 'IP не может быть пустым',
-    ipLeaseSuccessfullyRemoved: 'Аренда IP удалена'
+    ipLeaseSuccessfullyRemoved: 'Аренда IP удалена',
+    poolRequiredMsg: 'Ip пул обязателен',
   },
   groups: {
     minAGroup: 'группу',

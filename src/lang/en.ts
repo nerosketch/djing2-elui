@@ -95,7 +95,7 @@ export default {
     networking: "Network",
     leaseTime: "Wet time",
     auto: "Road",
-    minASessionLease: "hire",
+    minASessionLease: "ip lease",
     areUSure2DelIpLease: "Remove the hip? The subscriber will no longer be able to get a service through this hip.",
     services4Buy: "Order services",
     currentCustomerService: "Current subscription service",
@@ -216,7 +216,8 @@ export default {
   },
   nets: {
     ipMustNotBeEmpty: "IP can't be empty.",
-    ipLeaseSuccessfullyRemoved: "IP lease removed"
+    ipLeaseSuccessfullyRemoved: "IP lease removed",
+    poolRequiredMsg: 'Pool is required',
   },
   groups: {
     minAGroup: "group",

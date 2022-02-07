@@ -21,13 +21,6 @@
         lazy)
         keep-alive
           vlan-list
-
-      el-tab-pane(
-        :label="$t('ipLeases')"
-        name="leases"
-        lazy)
-        keep-alive
-          lease-list
 </template>
 
 <script lang="ts">
@@ -35,7 +28,6 @@ import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import TabMixin from '@/utils/tab-mixin'
 import VlanList from './components/vlanlist.vue'
-import LeaseList from './components/leaselist.vue'
 import PoolList from './components/poollist.vue'
 import SessionList from './components/session-list.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -44,7 +36,6 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
   name: 'NetworksIndex',
   components: {
     VlanList,
-    LeaseList,
     PoolList,
     SessionList
   }
