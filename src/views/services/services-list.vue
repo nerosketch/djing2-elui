@@ -30,8 +30,11 @@
             :disabled="!$perms.services.delete_service")
 
       template(v-slot:usercount="{row}")
-        el-button(@click="openCustomerServiceListDialog(row.id)")
-          | {{ row.usercount }}
+        el-button(
+          @click="openCustomerServiceListDialog(row.id)"
+          v-if="row.usercount > 0"
+        ) {{ row.usercount }}
+        span(v-else) {{ row.usercount }}
 
       el-button-group
         el-button(
