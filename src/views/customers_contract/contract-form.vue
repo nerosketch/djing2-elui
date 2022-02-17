@@ -30,11 +30,12 @@
         format="d.MM.yyyy HH:mm:ss")
 
     el-form-item(:label="$t('contractDocs.dateEnd')")
-      el-date-picker(
-        v-model="frmMod.end_service_time"
-        type="datetime"
-        value-format="yyyy-MM-dd HH:mm:ss"
-        format="d.MM.yyyy HH:mm:ss")
+      | {{ frmMod.end_service_time || '—' }}
+      //- el-date-picker(
+      //-   v-model="frmMod.end_service_time"
+      //-   type="datetime"
+      //-   value-format="yyyy-MM-dd HH:mm:ss"
+      //-   format="d.MM.yyyy HH:mm:ss")
 
     el-form-item(:label="$t('contractDocs.activity')")
       boolean-icon(v-model="frmMod.is_active")
