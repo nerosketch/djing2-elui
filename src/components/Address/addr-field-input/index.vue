@@ -4,8 +4,8 @@ div
     v-if="required"
     @click="dialogActivate"
   ) {{ fullTitleFromServer }}
-  el-button-group(v-else)
-    el-button(
+  el-button-group.addrgrp(v-else)
+    el-button.addrtext(
       @click="dialogActivate"
     ) {{ fullTitleFromServer }}
     slot(name='buttons')
@@ -105,3 +105,13 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.addrtext {
+  direction: rtl;
+  overflow: hidden;
+}
+.addrgrp {
+  display: flex;
+}
+</style>

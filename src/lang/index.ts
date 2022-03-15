@@ -4,7 +4,7 @@ import VueI18n from 'vue-i18n'
 import { getLanguage } from '@/utils/cookies'
 
 // element-ui built-in lang
-import elementEnLocale from 'element-ui/lib/locale/lang/en'
+// import elementEnLocale from 'element-ui/lib/locale/lang/en'
 import elementRuLocale from 'element-ui/lib/locale/lang/ru-RU'
 // import elementZhLocale from 'element-ui/lib/locale/lang/zh-CN'
 // import elementEsLocale from 'element-ui/lib/locale/lang/es'
@@ -13,7 +13,7 @@ import elementRuLocale from 'element-ui/lib/locale/lang/ru-RU'
 // import elementItLocale from 'element-ui/lib/locale/lang/it'
 
 // User defined lang
-import enLocale from './en'
+// import enLocale from './en'
 import ruLocale from './ru'
 // import zhLocale from './zh'
 // import esLocale from './es'
@@ -24,10 +24,10 @@ import ruLocale from './ru'
 Vue.use(VueI18n)
 
 const messages = {
-  en: {
-    ...enLocale,
-    ...elementEnLocale
-  },
+  // en: {
+  //   ...enLocale,
+  //   ...elementEnLocale
+  // },
   ru: {
     ...ruLocale,
     ...elementRuLocale

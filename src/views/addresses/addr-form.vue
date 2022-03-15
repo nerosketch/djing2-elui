@@ -8,11 +8,17 @@
     el-form-item(:label="$t('title')" prop="title")
       el-input(v-model="frmMod.title")
 
-    el-form-item(:label="$t('fiasLevel')" prop="fias_address_level")
+    el-form-item(
+      :label="$t('fiasLevel')"
+      prop="fias_address_level"
+    )
       fias-level-choice(v-model="frmMod.fias_address_level")
 
     el-form-item(:label="$t('typeOfFiasAddress')" prop="fias_address_type")
-      fias-type-choice(v-model="frmMod.fias_address_type", :level="frmMod.fias_address_level")
+      fias-type-choice(
+        v-model="frmMod.fias_address_type"
+        :level="frmMod.fias_address_level"
+      )
 
     el-form-item(:label="$t('typeOfAddressObject')" prop="address_type")
       address-type-choice(v-model="frmMod.address_type")
@@ -36,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { AddressModule } from '@/store/modules/addresses/address'
 import AddressTypeChoice from '@/components/Address/type-choice.vue'
@@ -95,7 +101,7 @@ export default class extends Vue {
   @Watch('frmMod.fias_address_type')
   private onChangeFiasAddrType(fiasAddressType: number) {
     // Пробуем автоматически подставлять типы адреса по типу из фиаса
-    if ([803, 902, 903, 907, 910, 911, 913 ].includes(fiasAddressType)) {
+    if ([803, 902, 903, 907, 910, 911, 913].includes(fiasAddressType)) {
       this.frmMod.address_type = IAddressEnumTypes.HOUSE
     } else if (fiasAddressType === 904) {
       this.frmMod.address_type = IAddressEnumTypes.OFFICE_NUM
@@ -157,7 +163,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

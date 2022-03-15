@@ -58,5 +58,6 @@ export type AddrTreeNode = TreeNode<number, IAddressModel>
 export interface IDRFRequestListFilterParameters extends IDRFRequestListParameters {
   address: number | null
   street?: number
+  house?: number
   group?: number
 }

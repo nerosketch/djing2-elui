@@ -58,13 +58,11 @@ export default class extends Vue {
             newDat = await OneShotPayModule.PatchOneShotPay(this.frmMod)
           }
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

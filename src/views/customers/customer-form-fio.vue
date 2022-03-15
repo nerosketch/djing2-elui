@@ -2,7 +2,10 @@
   el-collapse(v-model="collapse")
     el-collapse-item
       template(slot="title")
-        el-form-item(:label="$t('customers.fio')", style="margin-bottom: 0")
+        el-form-item(
+          :label="$t('customers.fio')"
+          style="margin-bottom: 0"
+        )
           b {{ origValue }}
 
       el-form(
@@ -26,7 +29,7 @@ import i18n from '@/lang'
 import { regexpVal } from '@/utils/validate'
 
 const nameValidator = regexpVal(/^[A-Za-zА-Яа-яЁё-]{1,250}$/i)
-const errText = i18n.t('customers.formValidatorErrText').toString()
+const errText = i18n.t('customers.formValidatorErrText')
 
 @Component({
   name: 'CustomerFormFio'

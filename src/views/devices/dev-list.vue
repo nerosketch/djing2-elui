@@ -2,11 +2,13 @@
   .app-container
     el-row(:gutter="10")
       el-col(:col="24")
-        list-filters(
-          :addrId="addrId"
-          :group.sync="filterForm.group"
-          :street.sync="filterForm.street"
-          :fetchGroups="fetchGroups")
+        slot(name="filters")
+          list-filters(
+            :addrId="addrId"
+            :group.sync="filterForm.group"
+            :street.sync="filterForm.street"
+            :house.sync="filterForm.house"
+            :fetchGroups="fetchGroups")
 
       el-col(:lg="24" :md="20")
         datatable(
@@ -64,7 +66,7 @@
               | {{ $t('field') }}
 
     el-dialog(
-      :title="$t('iron')"
+      :title="$t('device')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")
@@ -186,15 +188,11 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'status',
-      label: this.$tc('status')
+      label: this.$tc('devices.status')
     },
     {
       prop: 'is_noticeable',
       label: this.$tc('notices')
-    },
-    {
-      prop: 'place',
-      label: this.$tc('houseNum')
     },
     {
       prop: 'create_time',
@@ -219,17 +217,16 @@ export default class extends mixins(TableWithAddrMixin) {
   }
 
   private loadDevs(params: IDRFRequestListParametersDevGroup) {
-    const newPrms: IDRFRequestListFilterParameters = Object.assign(params, {
+    let newPrms: IDRFRequestListFilterParameters = Object.assign(params, {
       address: this.addrId,
-      fields: 'id,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group,create_time,place'
+      fields: 'id,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group,create_time'
     })
     const group = this.$route.query.group
     if (group) {
       newPrms.group = Number(group)
     }
-    const street = this.$route.query.street
-    if (street) {
-      newPrms.street = Number(street)
+    if (this.$route.query) {
+      newPrms = Object.assign(newPrms, this.$route.query)
     }
     return getDevices(newPrms)
   }

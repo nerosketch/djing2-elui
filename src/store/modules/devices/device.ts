@@ -38,7 +38,6 @@ class Device extends VuexModule implements IDeviceInterface {
   create_time = ''
   address = 0
   address_title = ''
-  place = ''
 
   loadProgress = false
 
@@ -68,7 +67,6 @@ class Device extends VuexModule implements IDeviceInterface {
     this.create_time = ''
     this.address = 0
     this.address_title = ''
-    this.place = ''
     return this
   }
 
@@ -94,7 +92,6 @@ class Device extends VuexModule implements IDeviceInterface {
     this.create_time = data.create_time
     this.address = data.address
     this.address_title = data.address_title
-    this.place = data.place
     return this
   }
 

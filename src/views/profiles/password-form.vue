@@ -42,7 +42,10 @@
           :disabled="isEmpty")
           | {{ $t('save') }}
 
-        el-button(@click="$emit('cancel')", icon="el-icon-close")
+        el-button(
+          @click="$emit('cancel')"
+          icon="el-icon-close"
+        )
           | {{ $t('cancellation') }}
 </template>
 
@@ -127,7 +130,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

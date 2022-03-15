@@ -21,13 +21,13 @@
         :label="gw.title"
         :value="gw.id")
 
-    el-radio(v-model="reportParams.group_by", :label="1")
+    el-radio(v-model="reportParams.group_by" :label="1")
       | {{ $t('groupByDay') }}
 
-    el-radio(v-model="reportParams.group_by", :label="2")
+    el-radio(v-model="reportParams.group_by" :label="2")
       | {{ $t('groupingNextWeek') }}
 
-    el-radio(v-model="reportParams.group_by", :label="3")
+    el-radio(v-model="reportParams.group_by" :label="3")
       | {{ $t('groupMonthly') }}
 
     el-button(@click="downloadCsv")

@@ -14,13 +14,6 @@
     el-form-item(:label="$t('customers.phone')" prop="telephone")
       tels-input(v-model="frmMod.telephone")
 
-    el-form-item(:label="$t('house(Old)')")
-      el-input(
-        v-model="frmMod.house"
-        :maxlength="12"
-        readonly
-        disabled)
-
     el-form-item(:label="$t('customers.birthDay')" prop="birth_day")
       el-date-picker(
         v-model="frmMod.birth_day"
@@ -78,7 +71,10 @@
           :disabled="!$perms.customers.view_passportinfo")
           | {{ $t('customers.passport') }}
 
-        el-button(@click="openPasswordDlg = true", icon="el-icon-lock")
+        el-button(
+          @click="openPasswordDlg = true"
+          icon="el-icon-lock"
+        )
           | {{ $t('customers.password') }}
 
         el-button(
@@ -122,7 +118,9 @@
       :title="$t('customers.sitesAccessory')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.customer.sites", v-on:save="customerSitesSave")
+      sites-attach(
+        :selectedSiteIds="$store.state.customer.sites"
+        v-on:save="customerSitesSave")
 </template>
 
 <script lang="ts">
@@ -207,7 +205,6 @@ export default class extends mixins(FormMixin) {
       birth_day: frm.birth_day!,
       group: frm.group,
       address: frm.address,
-      house: frm.house,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
       gateway: frm.gateway,
@@ -224,26 +221,26 @@ export default class extends mixins(FormMixin) {
           const newDat = await CustomerModule.PatchCustomer(this.frmMod)
           this.$emit('done', newDat)
           this.$message.success(
-            this.$tc('customers.customerSavedOk').toString()
+            this.$tc('customers.customerSavedOk')
           )
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }
 
   private delCustomer() {
     this.$confirm(
-      this.$tc('customers.customerDeletionConfigmation').toString(),
-      this.$tc('attention').toString()
+      this.$tc('customers.customerDeletionConfigmation'),
+      this.$tc('attention')
     ).then(async() => {
       const currLoc = this.$store.state.customer.address
       await CustomerModule.DelCustomer()
       this.$message.success(
-        this.$tc('customers.accountRemovedOk').toString()
+        this.$tc('customers.accountRemovedOk')
       )
       this.$router.push({ name: 'customerList', params: { addrId: currLoc.toString() } })
     })
@@ -286,7 +283,7 @@ export default class extends mixins(FormMixin) {
       sites: selectedSiteIds
     }).then(() => {
       this.$message.success(
-        this.$tc('customers.siteAccessorySavedOk').toString()
+        this.$tc('customers.siteAccessorySavedOk')
       )
     })
     this.sitesDlg = false

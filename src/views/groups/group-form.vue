@@ -68,7 +68,7 @@ export default class extends Vue {
         this.isLoading = false
         this.$emit('done', newDat)
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

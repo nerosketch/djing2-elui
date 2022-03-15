@@ -44,7 +44,7 @@ export default class extends Vue {
     })
     this.serviceBlockLoad = false
     this.$message.success(
-      this.$tc('customers.autoContinuationSaved').toString()
+      this.$tc('customers.autoContinuationSaved')
     )
   }
 

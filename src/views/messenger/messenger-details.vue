@@ -17,10 +17,10 @@
           | {{ $store.state.messenger.current_webhook }}
 
       el-button-group
-        el-button(@click="setWebhook", :loading="setWebhookLoading")
+        el-button(@click="setWebhook" :loading="setWebhookLoading")
           | {{ $t('sendWebHoseUrn') }}
 
-        el-button(@click="stopWebhook", :loading="stopWebhookLoading")
+        el-button(@click="stopWebhook" :loading="stopWebhookLoading")
           | {{ $t('stopTheWebSite') }}
 </template>
 
@@ -62,9 +62,8 @@ export default class extends Vue {
       })
       this.isReady = true
       this.onMessengerIdCh(msg)
-    } catch (err) {
+    } finally {
       this.isReady = false
-      this.$message.error(err)
     }
   }
 

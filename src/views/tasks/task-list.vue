@@ -108,7 +108,7 @@ export default class extends Vue {
     },
     {
       prop: 'state_str',
-      label: this.$tc('status'),
+      label: this.$tc('tasks.taskStatus'),
       'min-width': 100
     },
     {

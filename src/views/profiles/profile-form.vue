@@ -54,14 +54,14 @@
           | {{ isNew ? $t('add') : $t('save') }}
 
         template(v-if="!isNew")
-          el-button(@click="openPasswordForm", icon="el-icon-lock")
+          el-button(@click="openPasswordForm" icon="el-icon-lock")
             | {{ $t('password') }}
 
           template(v-if="$perms.is_superuser")
-            el-button(@click="openGroupsForm", icon="el-icon-lock")
+            el-button(@click="openGroupsForm" icon="el-icon-lock")
               | {{ $t('userGroups') }}
 
-            el-button(@click="sitesDlg = true", icon="el-icon-lock")
+            el-button(@click="sitesDlg = true" icon="el-icon-lock")
               | {{ $t('sites.site') }}
 
     el-dialog(
@@ -83,7 +83,7 @@
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.userprofile.sites", v-on:save="profileSitesSave")
+      sites-attach(:selectedSiteIds="$store.state.userprofile.sites" v-on:save="profileSitesSave")
 </template>
 
 <script lang="ts">
@@ -174,7 +174,7 @@ export default class extends Vue {
           this.loading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

@@ -12,12 +12,12 @@
         prop="onu_type")
 
       el-table-column(
-        :label="$t('port')"
+        :label="$t('devices.port')"
         min-width="90"
         prop="onu_port")
 
       el-table-column(
-        :label="$t('serial')"
+        :label="$t('devices.serial')"
         min-width="90"
         prop="onu_sn")
 </template>

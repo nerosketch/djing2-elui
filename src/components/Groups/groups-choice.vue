@@ -44,8 +44,6 @@ export default class extends Vue {
         fields: 'id,title'
       }) as any
       this.groups = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }
@@ -64,5 +62,12 @@ export default class extends Vue {
   created() {
     this.loadGroups()
   }
+
+  // private onSel(grpId: number) {
+  //   const fl = this.groups.filter(g => g.id === grpId)
+  //   if (fl && fl.length > 0) {
+  //     this.$emit('select', fl[0])
+  //   }
+  // }
 }
 </script>

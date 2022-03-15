@@ -14,7 +14,7 @@
         :key="i"
         :class="{'active': clickStates[i]}"
         v-on:click="itemClick(it, i)")
-        slot(name="item", v-bind:obj="it")
+        slot(name="item" v-bind:obj="it")
           | {{ it[itemText] }}
 
     slot(name="footer")

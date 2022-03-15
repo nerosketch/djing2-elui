@@ -36,7 +36,10 @@
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.periodicpay.sites", v-on:save="serviceSitesSave")
+      sites-attach(
+        :selectedSiteIds="$store.state.periodicpay.sites"
+        v-on:save="serviceSitesSave"
+      )
 </template>
 
 <script lang="ts">

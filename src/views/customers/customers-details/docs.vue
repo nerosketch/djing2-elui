@@ -75,12 +75,12 @@ export default class extends Vue {
         }
       } catch {
         this.$message.error(
-          this.$tc('customers.docLoadFailed').toString()
+          this.$tc('customers.docLoadFailed')
         )
       }
     } else {
       this.$message.error(
-        this.$tc('customers.customerIdNotPassed').toString()
+        this.$tc('customers.customerIdNotPassed')
       )
     }
   }

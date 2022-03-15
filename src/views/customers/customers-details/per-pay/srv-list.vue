@@ -61,8 +61,6 @@ export default class extends Vue {
         this.$store.state.customer.id
       )
       this.pservices = data as unknown as IPeriodicPayForId[]
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }
@@ -75,12 +73,12 @@ export default class extends Vue {
 
   private delP4IdPay(pay: IPeriodicPayForId) {
     this.$confirm(
-      this.$tc('customers.areUSure2DelPeriodicPay').toString()
+      this.$tc('customers.areUSure2DelPeriodicPay')
     ).then(async() => {
       await delAssignedPeriodicPay(pay.id)
       this.loadPIdServices()
       this.$message.success(
-        this.$tc('deleted').toString()
+        this.$tc('deleted')
       )
     })
   }

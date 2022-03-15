@@ -59,13 +59,11 @@ export default class extends Vue {
             newDat = await PeriodicPayModule.PatchPeriodicPay(this.frmMod)
           }
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

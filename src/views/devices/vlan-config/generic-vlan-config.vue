@@ -1,12 +1,12 @@
 <template lang="pug">
   el-row.mt5.mb5
     el-col(:span="1")
-      el-popover(width="400", trigger="click")
+      el-popover(width="400" trigger="click")
         el-select(v-model="addVlanFrmMod.vid")
           el-option(
             v-for="v in vlans"
             :key="v.id"
-            :label="$t('v-title-v-vid', [v.title, v.vid])"
+            :label="`${v.title} [${v.vid}]`"
             :value="v.vid")
 
         el-divider

@@ -13,7 +13,7 @@
             icon="el-icon-refresh"
             @click="getFreeIp"
             :loading="getFreeIpLoad"
-            :disabled="frmMod.pool === 0")
+            :disabled="!frmMod.pool")
 
     el-form-item(:label="$t('customers.ipPool')" prop="pool")
       el-select(
@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
 import { NetworkIpPoolModule } from '@/store/modules/networks/netw_pool'
@@ -60,6 +60,10 @@ import {
   name: 'CustomerLeaseForm'
 })
 export default class extends Vue {
+  public readonly $refs!: {
+    frm: Form
+  }
+
   private frmLoading = false
   private getFreeIpLoad = false
   private pools: INetworkIpPool[] = []
@@ -70,23 +74,36 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: this.$tc('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
+      { required: true, message: this.$tc('nets.ipMustNotBeEmpty'), trigger: 'blur' },
       { validator: ipAddrValidator, trigger: 'change', message: this.$tc('customers.badIp') }
     ],
     mac_address: [
       { validator: macAddrValidator, trigger: 'change', message: this.$tc('customers.badMac') }
+    ],
+    pool: [
+      { required: true, message: this.$tc('nets.poolRequiredMsg').toString(), trigger: 'blur' },
     ]
   }
 
-  private frmMod = {
+  private frmMod: {
+    ip_address: string,
+    pool: number | null,
+    customer: number,
+    mac_address: string
+  } = {
     ip_address: '',
-    pool: 0,
+    pool: null,
     customer: 0,
     mac_address: ''
   }
 
+  @Watch('frmMod', { deep: true })
+  private onChFrmMod() {
+    this.$refs.frm.validate()
+  }
+
   private onSubmit() {
-    (this.$refs.frm as Form).validate(async valid => {
+    this.$refs.frm.validate(async valid => {
       if (valid) {
         this.frmLoading = true
         try {
@@ -102,12 +119,13 @@ export default class extends Vue {
           this.frmLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }
 
   private async getFreeIp() {
+    if(!this.frmMod.pool) return
     this.getFreeIpLoad = true
     NetworkIpPoolModule.SET_ID(this.frmMod.pool)
     try {
@@ -116,11 +134,9 @@ export default class extends Vue {
         this.frmMod.ip_address = ip
       } else {
         this.$message.error(
-          this.$tc('customers.failedGettingFreeIp').toString()
+          this.$tc('customers.failedGettingFreeIp')
         )
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.getFreeIpLoad = false
     }
@@ -137,7 +153,7 @@ export default class extends Vue {
   public async addLease() {
     this.frmMod = {
       ip_address: '',
-      pool: 0,
+      pool: null,
       customer: CustomerModule.id,
       mac_address: ''
     }
@@ -153,11 +169,13 @@ export default class extends Vue {
         groups: CustomerModule.group
       }) as any
       this.pools = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.poolsLoading = false
     }
+  }
+
+  mounted() {
+    this.$refs.frm.validate()
   }
 }
 </script>

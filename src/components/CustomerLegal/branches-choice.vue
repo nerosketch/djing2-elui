@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="localValue", multiple)
+  el-select(v-model="localValue" multiple)
     el-option(
       v-for="o in opts"
       :key="o.id"

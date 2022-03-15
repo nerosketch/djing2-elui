@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="localValue", :loading="loading")
+  el-select(v-model="localValue" :loading="loading")
     el-option(
       v-for="(type, i) in fiasTypes"
       :key="i"

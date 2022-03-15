@@ -29,12 +29,8 @@ export default class extends Vue {
   private comments: ICustomerComment[] = []
 
   private async loadComments() {
-    try {
-      const { data } = await getCustomerComments(this.customerId)
-      this.comments = data
-    } catch (err) {
-      this.$message.error(err)
-    }
+    const { data } = await getCustomerComments(this.customerId)
+    this.comments = data
   }
 
   private async onSendComment(commentText: string) {
@@ -48,7 +44,7 @@ export default class extends Vue {
   private async delComment(commentId: number) {
     await deleteCustomerComment(commentId)
     this.$message.success(
-      this.$tc('customers.commentRemoved').toString()
+      this.$tc('customers.commentRemoved')
     )
     this.loadComments()
   }
