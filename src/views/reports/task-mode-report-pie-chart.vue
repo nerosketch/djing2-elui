@@ -31,8 +31,6 @@ export default class extends Vue {
         labels: labels,
         data: chartData
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.repLoading = false
     }
