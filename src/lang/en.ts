@@ -257,6 +257,15 @@ export default {
       added: 'New task mode created',
       changed: 'Task mode changed',
     },
+    finishDoc: {
+      code: 'Code',
+      actNum: 'Act number',
+      createTime: 'Create time',
+      finish_time: 'End time',
+      cost: 'Cost',
+      added: 'Act created',
+      changed: 'Act changed',
+    }
   },
   devices: {
     dev: "Device",

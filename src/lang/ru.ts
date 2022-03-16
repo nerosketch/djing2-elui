@@ -256,6 +256,15 @@ export default {
       add: 'Добавить тип задачи',
       added: 'Новый тип задач добавлен',
       changed: 'Тип задачи изменён',
+    },
+    finishDoc: {
+      code: 'Код акта',
+      actNum: 'Номер акта',
+      createTime: 'Время начала',
+      finish_time: 'Время завершения',
+      cost: 'Стоимость',
+      added: 'Акт создан',
+      changed: 'Акт изменён',
     }
   },
   devices: {

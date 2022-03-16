@@ -20,7 +20,7 @@ class TaskMode extends VuexModule implements ITaskMode {
     this.title = ''
   }
 
-  @Mutation
+  @Action
   public async GetTaskMode(id: number) {
     const { data } = await getMode(id)
     this.SET_ALL_TASK_MODE(data)

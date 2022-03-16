@@ -9,7 +9,8 @@
       task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
     el-col.mt5(:lg='12' :sm='24')
       comments(v-if='taskReady')
-
+    el-col.mt5(:lg='12' :sm='24')
+      finish-doc-index
 </template>
 
 <script lang="ts">
@@ -20,13 +21,14 @@ import { TaskModule } from '@/store/modules/tasks/tasks'
 import TaskForm from './task-form.vue'
 import TaskInfo from './task-info.vue'
 import Comments from './comments.vue'
-import taskMixin from './task-mixin'
 import {
   IWsMessage,
   IWsMessageEventTypeEnum
 } from '@/layout/mixin/ws'
-// import TaskFinishing from './task-finishing/index.vue'
 import TabMixin from '@/utils/tab-mixin'
+import FinishDocIndex from './finish_doc/index.vue'
+import { getActiveProfiles } from '@/api/profiles/req'
+import { IUserProfile } from '@/api/profiles/types'
 
 interface ITaskEventData {
   task_id: number
@@ -38,15 +40,17 @@ interface ITaskEventData {
     TaskForm,
     TaskInfo,
     Comments,
-    // TaskFinishing
+    FinishDocIndex
   }
 })
-export default class extends mixins(taskMixin, TabMixin) {
+export default class extends mixins(TabMixin) {
   @Prop({ default: 0 })
   private taskId!: number
 
   private taskReady = false
   protected activeTabName = 'details'
+
+  private potentialRecipients: IUserProfile[] = []
 
   private async loadTask() {
     if (this.taskId === 0) {
@@ -65,6 +69,15 @@ export default class extends mixins(taskMixin, TabMixin) {
 
     // Subscribe for task update event from server
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
+  }
+
+  protected async loadPotentialRecipients() {
+    const { data } = await getActiveProfiles({
+      page: 1,
+      page_size: 0,
+      fields: 'id,full_name,username'
+    })
+    this.potentialRecipients = data
   }
 
   beforeDestroy() {

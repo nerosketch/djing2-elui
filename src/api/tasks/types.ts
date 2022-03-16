@@ -106,3 +106,17 @@ export interface ITaskMode {
   title: string
 }
 export type ITaskModeList = IDRFAxiosResponsePromise<ITaskMode[]>
+
+export interface ITaskFinishDocument {
+  id: number
+  code: string
+  act_num: string | null
+  author: number
+  task: number
+  create_time: string
+  finish_time: string
+  cost: number
+  task_mode: number
+  recipients: number[]
+}
+export type ITaskFinishDocumentAxoisResponsePromise = IDRFAxiosResponsePromise<ITaskFinishDocument>

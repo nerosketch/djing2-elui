@@ -14,7 +14,8 @@ import {
   TaskStatePercentReportAxoisResponsePromise,
   TaskModeReport,
   TaskModeReportAxoisResponsePromise,
-  ITaskMode
+  ITaskMode,
+  ITaskFinishDocument,
 } from './types'
 import {
   addObjectDecorator,
@@ -95,3 +96,11 @@ export const getModes = getObjectListDecorator<ITaskMode>(modeBaseUrl)
 export const addMode = addObjectDecorator<ITaskMode>(modeBaseUrl)
 export const changeMode = patchObjectDecorator<ITaskMode>(modeBaseUrl)
 // export const delMode = delObjectDecorator<ITaskMode>(modeBaseUrl)
+
+const taskFinishDocBaseUrl = '/tasks/finish_document/'
+export const getTaskFinishDoc = getObjectDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)
+// export const getTaskFinishDoc = (taskId: number): ITaskFinishDocumentAxoisResponsePromise =>
+//   request.get<ITaskFinishDocument>(taskFinishDocBaseUrl)
+export const getTaskFinishDocs = getObjectListDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)
+export const addTaskFinishDoc = addObjectDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)
+export const changeTaskFinishDoc = patchObjectDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)

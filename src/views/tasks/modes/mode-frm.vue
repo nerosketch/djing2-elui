@@ -1,6 +1,5 @@
 <template lang="pug">
   el-form(
-    ref='frm'
     :model="frmMod"
     v-loading="loading"
   )
@@ -31,7 +30,7 @@ export default class extends Vue {
   private frmMod = {
     title: this.$store.state.taskmode.title
   }
-  
+
   @Watch('$store.state.taskmode.title')
   private onChTitle(title: string) {
     this.frmMod.title = title
@@ -41,9 +40,6 @@ export default class extends Vue {
 
   private async onSubmit() {
     this.loading = true
-
-    console.log(this.$store.state.taskmode)
-
     try {
       if (this.isNewMode) {
         const newMode = await TaskModeModule.AddTaskMode(this.frmMod.title)

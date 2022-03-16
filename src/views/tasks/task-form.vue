@@ -12,15 +12,10 @@
       )
 
     el-form-item(:label="$t('implementers')" prop="recipients")
-      el-select(
+      recipients-field-choice(
+        :recipients="recipients"
         v-model="frmMod.recipients"
-        multiple
       )
-        el-option(
-          v-for="rec in potentialRecipients"
-          :key="rec.id"
-          :label="rec.full_name || rec.username"
-          :value="rec.id")
 
     el-form-item(:label="$t('natureOfFracture')")
       task-modes-field-choice(
@@ -99,17 +94,18 @@ import { Form } from 'element-ui'
 import { IUserProfile } from '@/api/profiles/types'
 import FormMixin from '@/utils/forms'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import TaskMixin from './task-mixin'
 import TaskModesFieldChoice from './modes/modes_field_choice.vue'
+import RecipientsFieldChoice from './recipients-field-choice.vue'
 
 @Component({
   name: 'TaskForm',
   components: {
     CustomerField,
-    TaskModesFieldChoice
+    TaskModesFieldChoice,
+    RecipientsFieldChoice
   }
 })
-export default class extends mixins(FormMixin, TaskMixin) {
+export default class extends mixins(FormMixin) {
   @Prop({ default: () => [] })
   private recipients!: IUserProfile[]
 
@@ -163,11 +159,6 @@ export default class extends mixins(FormMixin, TaskMixin) {
   }
 
   created() {
-    if (this.recipients.length < 1) {
-      this.loadPotentialRecipients()
-    } else {
-      this.potentialRecipients = this.recipients
-    }
     this.frmInitial = Object.assign({}, this.frmMod)
 
     // Breadcrumbs
