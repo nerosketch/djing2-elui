@@ -36,6 +36,7 @@
         keep-alive
           slot(name="tasklistallnew")
             task-list(tabUrl="get_all_new")
+      slot(name='othertabs')
 
 </template>
 

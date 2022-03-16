@@ -9,14 +9,16 @@
       widthStorageNamePrefix="tasks"
       ref="tbl")
       template(v-slot:customer_full_name="{row}")
-        router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerDetails', params: {uid: row.customer } }")
-          | {{ row.customer_full_name }}
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{ name: 'customerDetails', params: {uid: row.customer } }"
+        ) {{ row.customer_full_name }}
 
       template(v-slot:id="{row}")
         router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
           el-button(:type="row.comment_count > 0 ? 'success' : 'primary'")
-            span(v-if="row.comment_count > 0")
-              | {{ row.comment_count }}
+            span(
+              v-if="row.comment_count > 0"
+            ) {{ row.comment_count }}
 
             i.el-icon-view(v-else)
 
