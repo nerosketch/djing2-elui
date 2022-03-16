@@ -19,6 +19,11 @@ interface GetNewTaskInitialInputParams {
   customerId: number
 }
 
+// const taskFields = ['id', 'author_full_name', 'customer_full_name',
+//   'priority_name', 'time_of_create', 'time_diff', 'mode_str',
+//   'state_str', 'recipients', 'descr', 'priority', 'out_date',
+//   'task_state', 'mode', 'author', 'customer', 'activeTaskCount']
+
 @Module({ dynamic: true, store, name: 'task' })
 class Task extends VuexModule implements ITask {
   id = 0

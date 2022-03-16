@@ -116,3 +116,9 @@ export interface TaskStatePercentReport {
   state_percent: number
 }
 export type TaskStatePercentReportAxoisResponsePromise = IDRFAxiosResponsePromise<TaskStatePercentReport>
+
+export interface ITaskMode {
+  id: number
+  title: string
+}
+export type ITaskModeList = IDRFAxiosResponsePromise<ITaskMode[]>

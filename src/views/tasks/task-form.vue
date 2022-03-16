@@ -215,7 +215,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         this.loading = true
         if (this.isNewTask) {
           const newTask = await TaskModule.AddTask(this.frmMod)
-          this.$message.success(this.$tc('targetAdded'))
+          this.$message.success(this.$tc('tasks.targetAdded'))
           this.$router.push({
             name: 'taskDetails',
             params: { taskId: newTask.id.toString() }
@@ -223,7 +223,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         } else {
           await TaskModule.PatchTask(this.frmMod)
           this.frmInitial = this.fromTaskModule
-          this.$message.success(this.$tc('targetRetained'))
+          this.$message.success(this.$tc('tasks.targetRetained'))
         }
         this.loading = false
       } else {

@@ -13,12 +13,14 @@ import {
   TaskStatePercentReport,
   TaskStatePercentReportAxoisResponsePromise,
   TaskModeReport,
-  TaskModeReportAxoisResponsePromise
+  TaskModeReportAxoisResponsePromise,
+  ITaskMode
 } from './types'
 import {
   addObjectDecorator,
   delObjectDecorator,
   getObjectDecorator,
+  getObjectListDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
 
@@ -86,3 +88,10 @@ export const taskStatePercentReport = (stateNum: number): TaskStatePercentReport
 
 export const taskModeReportRequest = (): TaskModeReportAxoisResponsePromise =>
   request.get<TaskModeReport>('/tasks/task_mode_report/')
+
+const modeBaseUrl = '/tasks/modes/'
+export const getMode = getObjectDecorator<ITaskMode>(modeBaseUrl)
+export const getModes = getObjectListDecorator<ITaskMode>(modeBaseUrl)
+export const addMode = addObjectDecorator<ITaskMode>(modeBaseUrl)
+export const changeMode = patchObjectDecorator<ITaskMode>(modeBaseUrl)
+// export const delMode = delObjectDecorator<ITaskMode>(modeBaseUrl)
