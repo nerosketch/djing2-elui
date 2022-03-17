@@ -30,6 +30,7 @@ export default class extends Vue {
   @Watch('value')
   private onChValue(v: string | null) {
     if (v) {
+      // FIXME: counter stops after first sec
       this.stopTimer()
     }
     this.localVal = v

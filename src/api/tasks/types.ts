@@ -13,22 +13,6 @@ export enum ITaskState {
   COMPLETED = 2
 }
 
-export enum ITaskType {
-  NOT_CHOSEN = 0,
-  IP_CONFLICT = 1,
-  YELLOW_TRIANGLE = 2,
-  RED_CROSS = 3,
-  WEAK_SPEED = 4,
-  CABLE_BREAK = 5,
-  CONNECTION = 6,
-  PERIODIC_DISAPPEARANCE = 7,
-  ROUTER_SETUP = 8,
-  CONFIGURE_ONU = 9,
-  CRIMP_CABLE = 10,
-  // INTERNET_CRASH = 11,
-  OTHER = 12
-}
-
 export interface ITask {
   id: number
   author_full_name?: string
@@ -48,7 +32,7 @@ export interface ITask {
   priority: ITaskPriority
   out_date: string
   task_state: ITaskState
-  mode: ITaskType
+  task_mode: number | null
   author: number
   customer?: number
   is_expired?: boolean
@@ -116,3 +100,22 @@ export interface TaskStatePercentReport {
   state_percent: number
 }
 export type TaskStatePercentReportAxoisResponsePromise = IDRFAxiosResponsePromise<TaskStatePercentReport>
+
+export interface ITaskMode {
+  id: number
+  title: string
+}
+export type ITaskModeList = IDRFAxiosResponsePromise<ITaskMode[]>
+
+export interface ITaskFinishDocument {
+  id: number
+  code: string
+  act_num: string | null
+  author: number
+  task: number
+  create_time: string
+  finish_time: string
+  cost: number
+  task_mode: number
+  recipients: number[]
+}
