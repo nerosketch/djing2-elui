@@ -250,6 +250,8 @@ export default {
     allUncompleted: 'Все незавершённые',
     targetAdded: 'Задача добавлена',
     targetRetained: 'Задача сохранена',
+    weHaveToChooseOnePerpetrator: 'Надо выбрать хотябы одного исполнителя',
+    natureOfFracture: 'Характер поломки: ',
     modes: {
       title: 'Тип задачи',
       titlePlural: 'Типы задач',
@@ -258,6 +260,7 @@ export default {
       changed: 'Тип задачи изменён',
     },
     finishDoc: {
+      title: 'Акт задачи',
       code: 'Код акта',
       actNum: 'Номер акта',
       createTime: 'Время начала',
@@ -265,7 +268,7 @@ export default {
       cost: 'Стоимость',
       added: 'Акт создан',
       changed: 'Акт изменён',
-    }
+    },
   },
   devices: {
     dev: 'Устройство',
@@ -469,7 +472,6 @@ export default {
   iNeedADescription: 'Какое-то описание нужно.',
   someOtherProgress: 'Какой-то другой прогресс',
   kbytes: 'КБайты',
-  natureOfFracture: 'Характер поломки: ',
   classOfLock: 'Класс шлюза',
   buttons: 'Кнопки',
   userCnt: 'Кол.польз.',
@@ -505,7 +507,6 @@ export default {
   startIp: 'Нач. ip',
   weNeedANewPassword: 'Нужно повторить новый пароль',
   iNeedToPointOutTheOldPassword: 'Надо указать старый пароль',
-  weHaveToChooseOnePerpetrator: 'Надо выбрать хотябы одного исполнителя',
   onuConfig: 'настройка onu',
   routeConstruction: 'настройка роутера',
   vlanSettingNotAcceptedBySelectedConfiguration:

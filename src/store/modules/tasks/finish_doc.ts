@@ -44,11 +44,21 @@ class TaskFinishDocument extends VuexModule implements ITaskFinishDocument {
     this.recipients = []
   }
 
+  @Mutation
+  public SET_TASK_FIN_DOC_TASK_ID(taskId: number) {
+    this.task = taskId
+  }
+
   @Action
   public async GetFinishDoc(taskId: number) {
-    const { data } = await getTaskFinishDoc(taskId)
-    this.SET_ALL_TASK_FINISH_DOC(data)
-    return data
+    const doc = await getTaskFinishDoc(taskId)
+    if (doc) {
+      this.SET_ALL_TASK_FINISH_DOC(doc)
+    } else {
+      this.RESET_ALL_TASK_FINISH_DOC()
+      this.SET_TASK_FIN_DOC_TASK_ID(taskId)
+      return doc
+    }
   }
 
   @Action

@@ -17,7 +17,7 @@
         v-model="frmMod.recipients"
       )
 
-    el-form-item(:label="$t('natureOfFracture')")
+    el-form-item(:label="$t('tasks.natureOfFracture')")
       task-modes-field-choice(
         v-model="frmMod.task_mode"
       )
@@ -145,7 +145,7 @@ export default class extends mixins(FormMixin) {
 
   private frmRules = {
     recipients: [
-      { required: true, message: this.$tc('weHaveToChooseOnePerpetrator'), trigger: 'blur' }
+      { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
     customer: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }

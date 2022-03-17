@@ -1,11 +1,14 @@
 <template lang="pug">
   el-form(
     ref='frm'
+    status-icon
+    :rules="frmRules"
     :model="frmMod"
     v-loading="loading"
   )
     el-form-item(
       :label="$t('tasks.finishDoc.code')"
+      prop="code"
     )
       el-input(
         v-model="frmMod.code"
@@ -20,12 +23,14 @@
       )
     el-form-item(
       :label="$t('tasks.finishDoc.createTime')"
+      prop="create_time"
     )
       datetime-counter(
         v-model="frmMod.create_time"
       )
     el-form-item(
       :label="$t('tasks.finishDoc.finish_time')"
+      prop="finish_time"
     )
       el-date-picker(
         v-model="frmMod.finish_time"
@@ -35,16 +40,23 @@
       )
     el-form-item(
       :label="$t('tasks.finishDoc.cost')"
+      prop="cost"
     )
       el-input(
         v-model="frmMod.cost"
         type='number'
       )
     el-form-item(
-      :label="$t('tasks.modes.title')"
+      :label="$t('tasks.natureOfFracture')"
+      prop="task_mode"
     )
       task-modes-field-choice(
         v-model="frmMod.task_mode"
+      )
+    el-form-item(:label="$t('implementers')" prop="recipients")
+      recipients-field-choice(
+        :recipients="recipients"
+        v-model="frmMod.recipients"
       )
     el-form-item
       el-button-group
@@ -52,16 +64,31 @@
           :type="isNewDoc ? 'success' : 'primary'"
           @click="onSubmit"
           icon="el-icon-upload"
-        ) {{ $t('save') }}
+        ) {{ isNewDoc ? $t('add') : $t('save') }}
 
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Form } from 'element-ui'
 import DatetimeCounter from '@/components/datetime-counter.vue'
 import TaskModesFieldChoice from '@/views/tasks/modes/modes_field_choice.vue'
 import RecipientsFieldChoice from '@/views/tasks/recipients-field-choice.vue'
 import { TaskFinishDocumentModule } from '@/store/modules/tasks/finish_doc'
+import { ITaskFinishDocument } from '@/api/tasks/types'
+import { positiveNumberValueAvailable } from '@/utils/validate'
+import { IUserProfile } from '@/api/profiles/types'
+
+interface IFrmMod {
+  code: string
+  act_num: string | null
+  task: number
+  create_time: string
+  finish_time: string
+  cost: number
+  task_mode: number
+  recipients: number[]
+}
 
 @Component({
   name: 'ActFrm',
@@ -72,37 +99,85 @@ import { TaskFinishDocumentModule } from '@/store/modules/tasks/finish_doc'
   }
 })
 export default class extends Vue {
-  private loading = false
-
-  private frmMod = {
-    code: '',
-    act_num: null,
-    create_time: null,
-    finish_time: null,
-    cost: 0,
-    task_mode: 0,
-    recipients: []
+  public readonly $refs!: {
+    frm: Form
   }
 
-  private async onSubmit() {
-    this.loading = true
-    try {
-      if (this.isNewDoc) {
-        const newDoc = await TaskFinishDocumentModule.AddFinishDoc(this.frmMod)
-        this.$message.success(this.$tc('tasks.finishDoc.added'))
-        this.$emit('created', newDoc)
+  @Prop({ default: [] })
+  private recipients!: IUserProfile[]
+
+  private loading = false
+
+  private frmMod: IFrmMod = {
+    code: this.$store.state.taskfinishdoc.code,
+    act_num: this.$store.state.taskfinishdoc.act_num,
+    task: this.$store.state.taskfinishdoc.task,
+    create_time: this.$store.state.taskfinishdoc.create_time,
+    finish_time: this.$store.state.taskfinishdoc.finish_time,
+    cost: this.$store.state.taskfinishdoc.cost,
+    task_mode: this.$store.state.taskfinishdoc.task_mode,
+    recipients: this.$store.state.taskfinishdoc.recipients
+  }
+
+  @Watch('$store.state.taskfinishdoc', { deep: true })
+  private onChFinDoc(finDoc: ITaskFinishDocument) {
+    const fm = this.frmMod
+    fm.code = finDoc.code
+    fm.act_num = finDoc.act_num
+    fm.task = finDoc.task
+    fm.create_time = finDoc.create_time
+    fm.finish_time = finDoc.finish_time
+    fm.cost = finDoc.cost
+    fm.task_mode = finDoc.task_mode
+    fm.recipients = finDoc.recipients
+  }
+
+  private onSubmit() {
+    this.$refs.frm.validate(async valid => {
+      if (valid) {
+        this.loading = true
+        try {
+          if (this.isNewDoc) {
+            const newDoc = await TaskFinishDocumentModule.AddFinishDoc(this.frmMod)
+            this.$message.success(this.$tc('tasks.finishDoc.added'))
+            this.$emit('created', newDoc)
+          } else {
+            const doc = await TaskFinishDocumentModule.PatchFinishDoc(this.frmMod)
+            this.$message.success(this.$tc('tasks.finishDoc.changed'))
+            this.$emit('changed', doc)
+          }
+        } finally {
+          this.loading = false
+        }
       } else {
-        const doc = await TaskFinishDocumentModule.PatchFinishDoc(this.frmMod)
-        this.$message.success(this.$tc('tasks.finishDoc.changed'))
-        this.$emit('changed', doc)
+        this.$message.error(this.$tc('fixFormErrs'))
       }
-    } finally {
-      this.loading = false
-    }
+    })
   }
 
   private get isNewDoc() {
     return this.$store.state.taskfinishdoc.id === 0
+  }
+
+  private frmRules = {
+    code: [
+      { required: true, trigger: 'blur' }
+    ],
+    create_time: [
+      { required: true, trigger: 'blur' }
+    ],
+    finish_time: [
+      { required: true, trigger: 'blur' }
+    ],
+    cost: [
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'blur' }
+    ],
+    recipients: [
+      { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }
+    ],
+    task_mode: [
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'blur' }
+    ]
   }
 }
 </script>

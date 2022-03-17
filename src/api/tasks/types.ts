@@ -119,4 +119,3 @@ export interface ITaskFinishDocument {
   task_mode: number
   recipients: number[]
 }
-export type ITaskFinishDocumentAxoisResponsePromise = IDRFAxiosResponsePromise<ITaskFinishDocument>

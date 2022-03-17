@@ -100,7 +100,7 @@ export default class extends Vue {
     },
     {
       prop: 'mode_str',
-      label: this.$tc('natureOfFracture'),
+      label: this.$tc('tasks.natureOfFracture'),
       'min-width': 150
     },
     {

@@ -3,9 +3,9 @@
     template(v-slot:header)
       .clearfix {{ $t('targets') }}
     p
-      b {{ $t('tasks.description') }} 
+      b {{ $t('tasks.description') }}
       | {{ $store.state.task.descr }}
-    p 
+    p
       b {{ $t('tasks.author') }}
       | {{ $store.state.task.author_full_name }}
     p
@@ -24,7 +24,7 @@
     b {{ $t('timeLeft') }}
     span {{ $store.state.task.time_diff }}
     br
-    b {{ $t('natureOfFracture') }}
+    b {{ $t('tasks.natureOfFracture') }}
     span {{ $store.state.task.mode_str }}
     br
     b {{ $t('tasks.taskStatus') }}:&nbsp;

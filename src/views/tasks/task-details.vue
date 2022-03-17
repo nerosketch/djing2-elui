@@ -4,13 +4,22 @@
       el-card(shadow="never")
         template(v-slot:header)
           .clearfix {{ $t('tasks.edit', [taskId]) }}
-        task-form(v-if='taskReady' :recipients="potentialRecipients")
+        task-form(
+          v-if='taskReady'
+          :recipients="potentialRecipients"
+        )
     el-col.mt5(:lg='12' :sm='24')
-      task-info(v-if='taskReady' :recipients="potentialRecipients" :taskId="taskId")
+      task-info(
+        v-if='taskReady'
+        :recipients="potentialRecipients"
+        :taskId="taskId"
+      )
     el-col.mt5(:lg='12' :sm='24')
       comments(v-if='taskReady')
     el-col.mt5(:lg='12' :sm='24')
-      finish-doc-index
+      finish-doc-index(
+        :recipients="potentialRecipients"
+      )
 </template>
 
 <script lang="ts">

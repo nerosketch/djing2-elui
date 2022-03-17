@@ -250,6 +250,8 @@ export default {
     allUncompleted: "All uncompleted",
     targetAdded: "Target added",
     targetRetained: "Target retained",
+    weHaveToChooseOnePerpetrator: "We have to choose one perpetrator.",
+    natureOfFracture: "Nature of fracture",
     modes: {
       title: 'Task mode',
       titlePlural: 'Task modes',
@@ -258,6 +260,7 @@ export default {
       changed: 'Task mode changed',
     },
     finishDoc: {
+      title: 'Task finish document',
       code: 'Code',
       actNum: 'Act number',
       createTime: 'Create time',
@@ -469,7 +472,6 @@ export default {
   iNeedADescription: "I need a description.",
   someOtherProgress: "Some other progress",
   kbytes: "Bytes",
-  natureOfFracture: "Nature of fracture",
   classOfLock: "Class of lock: ",
   buttons: "Buttons",
   userCnt: "User cnt",
@@ -505,7 +507,6 @@ export default {
   startIp: "Start ip",
   weNeedANewPassword: "We need a new password.",
   iNeedToPointOutTheOldPassword: "I need to point out the old password.",
-  weHaveToChooseOnePerpetrator: "We have to choose one perpetrator.",
   onuConfig: "Onu config",
   routeConstruction: "Route construction",
   vlanSettingNotAcceptedBySelectedConfiguration:
