@@ -267,6 +267,7 @@ export default {
       cost: 'Cost',
       added: 'Act created',
       changed: 'Act changed',
+      dateTimeReq: 'Time is required',
     }
   },
   devices: {

@@ -267,6 +267,7 @@ export default {
       cost: 'Стоимость',
       added: 'Акт создан',
       changed: 'Акт изменён',
+      dateTimeReq: 'Время обязательно',
     },
   },
   devices: {

@@ -51,12 +51,13 @@ export default class extends Vue {
   public readonly $refs!: {
     tbl: DataTableComp
   }
+
   private addDialogVisible = false
 
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'title',
-      label: this.$tc('tasks.modes.title'),
+      label: this.$tc('tasks.modes.title')
     },
     {
       prop: 'btn',
