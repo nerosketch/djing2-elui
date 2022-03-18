@@ -76,7 +76,7 @@ import TaskModesFieldChoice from '@/views/tasks/modes/modes_field_choice.vue'
 import RecipientsFieldChoice from '@/views/tasks/recipients-field-choice.vue'
 import { TaskFinishDocumentModule } from '@/store/modules/tasks/finish_doc'
 import { ITaskFinishDocument } from '@/api/tasks/types'
-import { positiveNumberValueAvailable } from '@/utils/validate'
+import { positiveNumberValueAvailable, positiveValidator } from '@/utils/validate'
 import { IUserProfile } from '@/api/profiles/types'
 
 interface IFrmMod {
@@ -170,7 +170,7 @@ export default class extends Vue {
       { required: true, trigger: 'blur' }
     ],
     cost: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'blur' }
+      { required: true, validator: positiveValidator, trigger: 'blur' }
     ],
     recipients: [
       { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }
