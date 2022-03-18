@@ -261,7 +261,6 @@ export default {
     },
     finishDoc: {
       title: 'Акт задачи',
-      code: 'Код акта',
       actNum: 'Номер акта',
       createTime: 'Время начала',
       finish_time: 'Время завершения',

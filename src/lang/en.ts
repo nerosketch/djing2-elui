@@ -261,7 +261,6 @@ export default {
     },
     finishDoc: {
       title: 'Task finish document',
-      code: 'Code',
       actNum: 'Act number',
       createTime: 'Create time',
       finish_time: 'End time',

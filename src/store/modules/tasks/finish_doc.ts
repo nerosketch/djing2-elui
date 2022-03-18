@@ -7,7 +7,7 @@ import { addTaskFinishDoc, changeTaskFinishDoc, getTaskFinishDoc } from '@/api/t
 class TaskFinishDocument extends VuexModule implements ITaskFinishDocument {
   id = 0
   code = ''
-  act_num: string | null = null
+  // act_num: string | null = null
   author = 0
   task = 0
   create_time = ''
@@ -20,7 +20,7 @@ class TaskFinishDocument extends VuexModule implements ITaskFinishDocument {
   public SET_ALL_TASK_FINISH_DOC(doc: ITaskFinishDocument) {
     this.id = doc.id
     this.code = doc.code
-    this.act_num = doc.act_num
+    // this.act_num = doc.act_num
     this.author = doc.author
     this.task = doc.task
     this.create_time = doc.create_time
@@ -34,7 +34,7 @@ class TaskFinishDocument extends VuexModule implements ITaskFinishDocument {
   public RESET_ALL_TASK_FINISH_DOC() {
     this.id = 0
     this.code = ''
-    this.act_num = null
+    // this.act_num = null
     this.author = 0
     this.task = 0
     this.create_time = ''
