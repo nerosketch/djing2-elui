@@ -261,13 +261,13 @@ export default {
     },
     finishDoc: {
       title: 'Task finish document',
-      code: 'Code',
       actNum: 'Act number',
       createTime: 'Create time',
       finish_time: 'End time',
       cost: 'Cost',
       added: 'Act created',
       changed: 'Act changed',
+      dateTimeReq: 'Time is required',
     }
   },
   devices: {

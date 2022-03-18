@@ -261,13 +261,13 @@ export default {
     },
     finishDoc: {
       title: 'Акт задачи',
-      code: 'Код акта',
       actNum: 'Номер акта',
       createTime: 'Время начала',
       finish_time: 'Время завершения',
       cost: 'Стоимость',
       added: 'Акт создан',
       changed: 'Акт изменён',
+      dateTimeReq: 'Время обязательно',
     },
   },
   devices: {

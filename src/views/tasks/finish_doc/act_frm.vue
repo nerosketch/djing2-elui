@@ -7,20 +7,20 @@
     v-loading="loading"
   )
     el-form-item(
-      :label="$t('tasks.finishDoc.code')"
+      :label="$t('tasks.finishDoc.actNum')"
       prop="code"
     )
       el-input(
         v-model="frmMod.code"
         maxlength="64"
       )
-    el-form-item(
-      :label="$t('tasks.finishDoc.actNum')"
-    )
-      el-input(
-        v-model="frmMod.act_num"
-        maxlength="64"
-      )
+    //- el-form-item(
+    //-   :label="$t('')"
+    //- )
+    //-   el-input(
+    //-     v-model="frmMod.act_num"
+    //-     maxlength="64"
+    //-   )
     el-form-item(
       :label="$t('tasks.finishDoc.createTime')"
       prop="create_time"
@@ -76,12 +76,16 @@ import TaskModesFieldChoice from '@/views/tasks/modes/modes_field_choice.vue'
 import RecipientsFieldChoice from '@/views/tasks/recipients-field-choice.vue'
 import { TaskFinishDocumentModule } from '@/store/modules/tasks/finish_doc'
 import { ITaskFinishDocument } from '@/api/tasks/types'
-import { positiveNumberValueAvailable } from '@/utils/validate'
+import {
+  positiveNumberValueAvailable,
+  positiveValidator,
+  datetimeTimeValidator
+} from '@/utils/validate'
 import { IUserProfile } from '@/api/profiles/types'
 
 interface IFrmMod {
   code: string
-  act_num: string | null
+  // act_num: string | null
   task: number
   create_time: string
   finish_time: string
@@ -110,7 +114,7 @@ export default class extends Vue {
 
   private frmMod: IFrmMod = {
     code: this.$store.state.taskfinishdoc.code,
-    act_num: this.$store.state.taskfinishdoc.act_num,
+    // act_num: this.$store.state.taskfinishdoc.act_num,
     task: this.$store.state.taskfinishdoc.task,
     create_time: this.$store.state.taskfinishdoc.create_time,
     finish_time: this.$store.state.taskfinishdoc.finish_time,
@@ -123,7 +127,7 @@ export default class extends Vue {
   private onChFinDoc(finDoc: ITaskFinishDocument) {
     const fm = this.frmMod
     fm.code = finDoc.code
-    fm.act_num = finDoc.act_num
+    // fm.act_num = finDoc.act_num
     fm.task = finDoc.task
     fm.create_time = finDoc.create_time
     fm.finish_time = finDoc.finish_time
@@ -164,13 +168,15 @@ export default class extends Vue {
       { required: true, trigger: 'blur' }
     ],
     create_time: [
-      { required: true, trigger: 'blur' }
+      { required: true, trigger: 'blur' },
+      { trigger: 'change', message: this.$tc('tasks.finishDoc.dateTimeReq'), validator: datetimeTimeValidator }
     ],
     finish_time: [
-      { required: true, trigger: 'blur' }
+      { required: true, trigger: 'blur' },
+      { trigger: 'change', message: this.$tc('tasks.finishDoc.dateTimeReq'), validator: datetimeTimeValidator }
     ],
     cost: [
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'blur' }
+      { required: true, validator: positiveValidator, trigger: 'blur' }
     ],
     recipients: [
       { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }

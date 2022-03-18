@@ -110,7 +110,7 @@ export type ITaskModeList = IDRFAxiosResponsePromise<ITaskMode[]>
 export interface ITaskFinishDocument {
   id: number
   code: string
-  act_num: string | null
+  // act_num: string | null
   author: number
   task: number
   create_time: string
