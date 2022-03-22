@@ -5,7 +5,15 @@ const description = 'Админка Djing2'
 module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
-
+  devServer: {
+    port: process.env.PORT || 8080,
+    proxy: {
+      '/api/*': {
+        target: 'http://djing2_app:3031/api/',
+        secure: false
+      }
+    },
+  },
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {

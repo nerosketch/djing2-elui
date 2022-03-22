@@ -1,19 +1,45 @@
-FROM node:10
+# ------------------------- BUILD -------------------------------
+FROM node:10 AS uibuild
 
-EXPOSE 8080
-
-ENV VUE_APP_BASE_API=http://localhost:8000/api
-ENV NODE_ENV=development
+ENV VUE_APP_BASE_API=/api
 
 USER node
 
 ARG APP_DIR=/home/node/app
-ARG NODE_ENV=${NODE_ENV}
 
-RUN mkdir ${APP_DIR} && chown -Rv node. /home/node
+RUN mkdir -p ${APP_DIR}
+WORKDIR ${APP_DIR}
+COPY . .
+
+RUN npm install
+RUN npm run build --production
+
+# ------------------------- RELEASE -----------------------------
+FROM nginx:alpine AS uiprod
+EXPOSE 80
+
+ENV NGINX_SERVER_NAME=localhost
+
+RUN mkdir -p /var/www
+
+COPY ["browsersupp.conf", "expires-hdrs.conf", "/etc/nginx/"]
+COPY ["bad_browser.html", "/var/www/"]
+
+COPY --from=0 --chown=nginx:nginx ["/home/node/app/dist", "/var/www/app"]
+RUN mkdir -p /var/www/app/media
+
+COPY ["nginx_site.conf", "/etc/nginx/conf.d/default.conf"]
+
+# ------------------------- DEVEL -----------------------------
+FROM uibuild AS uidevel
+
+ENV PORT=80
+
+EXPOSE ${PORT}
+
+ENV NODE_ENV=development
 
 WORKDIR ${APP_DIR}
 
-COPY . .
+CMD ["npm", "run", "serve"]
 
-CMD npm install && exec npm run serve

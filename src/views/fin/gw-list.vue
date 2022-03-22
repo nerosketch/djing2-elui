@@ -83,7 +83,7 @@ export default class extends Vue {
       'min-width': 100
     },
     {
-      prop: 'servants',
+      prop: 'slug',
       label: this.$tc('path')
     },
     {
