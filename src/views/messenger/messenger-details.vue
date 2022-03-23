@@ -1,27 +1,23 @@
 <template lang="pug">
   el-row.app-container(:gutter="5")
-    el-col.mt5(:lg="12" :sm="24")
-      el-card(shadow="never")
-        template(v-slot:header)
-          .clearfix
-            | {{ $t('bottomDetails') }} "{{ $store.state.messenger.title }}"
+    el-col(:lg="12" :sm="24")
+      el-card
+        template(v-slot:header) {{ $t('bottomDetails') }} "{{ $store.state.messenger.title }}"
 
         messenger-form(v-if="isReady")
 
-    el-col.mt5(:lg="12" :sm="24")
-      div
-        b
-          | {{ $t('currentWebHook') }}
+    el-col(:lg="12" :sm="24")
+      el-card
+        template(v-slot:header) {{ $t('currentWebHook') }} {{ $store.state.messenger.current_webhook }}
 
-        span
-          | {{ $store.state.messenger.current_webhook }}
+        el-button-group.mt5.mb5
+          el-button(
+            @click="setWebhook" :loading="setWebhookLoading"
+          ) {{ $t('sendWebHoseUrn') }}
 
-      el-button-group
-        el-button(@click="setWebhook" :loading="setWebhookLoading")
-          | {{ $t('sendWebHoseUrn') }}
-
-        el-button(@click="stopWebhook" :loading="stopWebhookLoading")
-          | {{ $t('stopTheWebSite') }}
+          el-button(
+            @click="stopWebhook" :loading="stopWebhookLoading"
+          ) {{ $t('stopTheWebSite') }}
 </template>
 
 <script lang="ts">
@@ -62,7 +58,7 @@ export default class extends Vue {
       })
       this.isReady = true
       this.onMessengerIdCh(msg)
-    } finally {
+    } catch {
       this.isReady = false
     }
   }
