@@ -222,7 +222,8 @@ export default {
   groups: {
     minAGroup: "group",
     group_required: "Name of group is required",
-    group: "Group"
+    group: "Group",
+    failed2GetGroups: "Failed 2 get groups",
   },
   addrs: {
     addresses: "Localities",
@@ -319,6 +320,8 @@ export default {
     assignedRights: 'Assigned rights',
     isActive: "Is active",
     readRightsNotFound: "Read rights not found",
+    responsibilityForGroups: "Responsibility for groups",
+    groupResponsibilityRetained: "Group responsibility retained",
   },
   sites: {
     doDomain: '{0} domain',
@@ -501,7 +504,6 @@ export default {
   notTransferred: "Not transferred",
   doesnTSoundLikeEMailAddress: "Doesn't sound like an e-mail address.",
   notRemoved: "Not removed, it looks like someone's already removed.",
-  notAvailable: "Not available",
   notSelected: "Not selected",
   insufficientRights: "Insufficient rights",
   network: "Network",
@@ -551,8 +553,6 @@ export default {
   allReports: "All reports",
   cancellation: "Cancellation",
   sendWebHoseUrn: "Send web hose urn",
-  responsibilityForGroups: "Responsibility for groups",
-  groupResponsibilityRetained: "Group responsibility retained",
   parametersRiver: "Parameters river",
   password: "password",
   inletPassword: "Inlet password",
