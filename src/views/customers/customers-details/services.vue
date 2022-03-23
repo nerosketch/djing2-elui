@@ -20,54 +20,40 @@
 
         template(v-if="!serviceBlockLoad")
           div(v-if="isServiceAvailable")
-            h3
-              | {{ currentService.service.title }}
+            h3 {{ currentService.service.title }}
 
-            i
-              | {{ currentService.service.descr }}
+            i {{ currentService.service.descr }}
 
             dl
               dt
-                b
-                  | {{ $t('customers.sum') }}
+                b {{ $t('customers.sum') }}
 
-              dd
-                | {{ currentService.service.cost }} {{ $t('defaultCurrencySymbol') }}
+              dd {{ currentService.service.cost }} {{ $t('defaultCurrencySymbol') }}
 
               dt
-                b
-                  | {{ $t('customers.inSpeed') }}
+                b {{ $t('customers.inSpeed') }}
 
-              dd
-                | {{ currentService.service.speed_in }}
+              dd {{ currentService.service.speed_in }}
 
               dt
-                b
-                  | {{ $t('customers.outSpeed') }}
+                b {{ $t('customers.outSpeed') }}
 
-              dd
-                | {{ currentService.service.speed_out }}
+              dd {{ currentService.service.speed_out }}
 
               dt
-                b
-                  | {{ $t('customers.burst') }}
+                b {{ $t('customers.burst') }}
 
-              dd
-                | {{ currentService.service.speed_burst }}
+              dd {{ currentService.service.speed_burst }}
 
               dt
-                b
-                  | {{ $t('customers.serviceStartDate') }}
+                b {{ $t('customers.serviceStartDate') }}
 
-              dd
-                | {{ currentService.start_time }}
+              dd {{ currentService.start_time }}
 
               dt
-                b
-                  | {{ $t('customers.serviceWorksUntil') }}
+                b {{ $t('customers.serviceWorksUntil') }}
 
-              dd
-                | {{ currentService.deadline }}
+              dd {{ currentService.deadline }}
 
             el-button(
               type="danger"

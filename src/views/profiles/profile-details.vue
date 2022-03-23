@@ -11,7 +11,7 @@
               profile-form(v-if="ready")
 
             el-tab-pane(
-              :label="$t('responsibilityForGroups')"
+              :label="$t('profiles.responsibilityForGroups')"
               name="activity"
               lazy)
               group-responsibility(:profileUname="profileUname")

@@ -222,7 +222,8 @@ export default {
   groups: {
     minAGroup: 'группу',
     group_required: 'Название группы надо указать',
-    group: 'Группа'
+    group: 'Группа',
+    failed2GetGroups: 'Не удалось получить группы',
   },
   addrs: {
     addresses: 'Населённые пункты',
@@ -348,6 +349,8 @@ export default {
     assignedRights: 'Назначенные права',
     isActive: 'Включён',
     readRightsNotFound: 'Не нашёл права на чтение',
+    responsibilityForGroups: 'Ответственность за группы',
+    groupResponsibilityRetained: 'Ответственность за группы сохранена',
   },
   sites: {
     doDomain: '{0} домен',
@@ -528,7 +531,6 @@ export default {
   notTransferred: 'Не передан ID задачи',
   doesnTSoundLikeEMailAddress: 'Не похоже на адрес почты',
   notRemoved: 'Не удалили, похоже уже кто-то удалил',
-  notAvailable: 'Не удалось получить группы',
   notSelected: 'Не выбрано',
   insufficientRights: 'Недостаточно прав',
   network: 'Network',
@@ -577,8 +579,6 @@ export default {
   allReports: 'Отчёты всякие',
   cancellation: 'Отмена',
   sendWebHoseUrn: 'Отправить webhook url',
-  responsibilityForGroups: 'Ответственность за группы',
-  groupResponsibilityRetained: 'Ответственность за группы сохранена',
   parametersRiver: 'Parameters required',
   password: 'пароль',
   inletPassword: 'Пароль для входа',
