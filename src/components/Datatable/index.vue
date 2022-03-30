@@ -28,7 +28,7 @@
             v-bind="col")
             template(v-slot:default="{row}")
               slot(:name="col.prop" :row="row")
-                | {{ row[col.prop] }}
+                | {{ row[col.backendProp || col.prop] }}
 
     slot(name="default")
 
@@ -63,6 +63,7 @@ export interface IDataTableColumn {
   width?: number
   'min-width'?: number
   cutLeft?: boolean
+  backendProp?: string
 }
 
 export interface ILocalDataTableColumn extends IDataTableColumn {
@@ -160,8 +161,6 @@ export default class <T> extends Vue {
     try {
       this.intLoading = true
       await this.loadRemoteData(params, otherParams)
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.intLoading = false
     }
@@ -254,8 +253,6 @@ export default class <T> extends Vue {
       this.loadBusy = true
       this.page++
       await this.loadRemoteData()
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loadBusy = false
     }

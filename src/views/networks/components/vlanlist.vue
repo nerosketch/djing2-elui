@@ -47,7 +47,7 @@
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.vlan.sites", v-on:save="vlanSitesSave")
+      sites-attach(:selectedSiteIds="$store.state.vlan.sites" v-on:save="vlanSitesSave")
 </template>
 
 <script lang="ts">

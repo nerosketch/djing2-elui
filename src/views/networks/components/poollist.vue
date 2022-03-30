@@ -27,7 +27,7 @@
         el-button(
           icon="el-icon-plus"
           @click="openNew"
-          :disabled="!$perms.networks.add_networkippool")
+          disabled)
           | {{ $t('add') }}
 
         el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
@@ -43,7 +43,7 @@
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.netpool.sites", v-on:save="netpoolSitesSave")
+      sites-attach(:selectedSiteIds="$store.state.netpool.sites" v-on:save="netpoolSitesSave")
 </template>
 
 <script lang="ts">
@@ -138,9 +138,9 @@ export default class extends Vue {
   get dialogTitle() {
     let w
     if (NetworkIpPoolModule.id === 0) {
-      w = this.$tc('add').toString()
+      w = this.$tc('add')
     } else {
-      w = this.$tc('change').toString()
+      w = this.$tc('change')
     }
     return this.$t('networks.tPool', [w])
   }

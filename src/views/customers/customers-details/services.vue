@@ -5,7 +5,10 @@
         template(v-slot:header)
           | {{ $t('customers.services4Buy') }}
 
-        services-list(v-on:buydone="loadCurrentService", :isServiceAvailable="isServiceAvailable")
+        services-list(
+          v-on:buydone="loadCurrentService"
+          :isServiceAvailable="isServiceAvailable"
+        )
 
     el-col(:sm="24" :md="12")
       el-card(
@@ -17,54 +20,40 @@
 
         template(v-if="!serviceBlockLoad")
           div(v-if="isServiceAvailable")
-            h3
-              | {{ currentService.service.title }}
+            h3 {{ currentService.service.title }}
 
-            i
-              | {{ currentService.service.descr }}
+            i {{ currentService.service.descr }}
 
             dl
               dt
-                b
-                  | {{ $t('customers.sum') }}
+                b {{ $t('customers.sum') }}
 
-              dd
-                | {{ currentService.service.cost }} {{ $t('defaultCurrencySymbol') }}
+              dd {{ currentService.service.cost }} {{ $t('defaultCurrencySymbol') }}
 
               dt
-                b
-                  | {{ $t('customers.inSpeed') }}
+                b {{ $t('customers.inSpeed') }}
 
-              dd
-                | {{ currentService.service.speed_in }}
+              dd {{ currentService.service.speed_in }}
 
               dt
-                b
-                  | {{ $t('customers.outSpeed') }}
+                b {{ $t('customers.outSpeed') }}
 
-              dd
-                | {{ currentService.service.speed_out }}
+              dd {{ currentService.service.speed_out }}
 
               dt
-                b
-                  | {{ $t('customers.burst') }}
+                b {{ $t('customers.burst') }}
 
-              dd
-                | {{ currentService.service.speed_burst }}
+              dd {{ currentService.service.speed_burst }}
 
               dt
-                b
-                  | {{ $t('customers.serviceStartDate') }}
+                b {{ $t('customers.serviceStartDate') }}
 
-              dd
-                | {{ currentService.start_time }}
+              dd {{ currentService.start_time }}
 
               dt
-                b
-                  | {{ $t('customers.serviceWorksUntil') }}
+                b {{ $t('customers.serviceWorksUntil') }}
 
-              dd
-                | {{ currentService.deadline }}
+              dd {{ currentService.deadline }}
 
             el-button(
               type="danger"
@@ -126,24 +115,22 @@ export default class extends Vue {
       } else {
         this.currentService = null
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.serviceBlockLoad = false
     }
   }
 
   onStopService() {
-    this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule').toString(), {
-      confirmButtonText: this.$tc('yes').toString(),
-      cancelButtonText: this.$tc('no').toString(),
+    this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule'), {
+      confirmButtonText: this.$tc('yes'),
+      cancelButtonText: this.$tc('no'),
       type: 'info'
     }).then(async() => {
       await CustomerModule.StopService()
       await CustomerModule.UpdateCustomer()
       await this.loadCurrentService()
       this.$message.success(
-        this.$tc('customers.serviceStoppedAheadOfSheduleOk').toString()
+        this.$tc('customers.serviceStoppedAheadOfSheduleOk')
       )
     })
   }

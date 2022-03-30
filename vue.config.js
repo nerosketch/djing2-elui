@@ -5,7 +5,9 @@ const description = 'Админка Djing2'
 module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
-
+  devServer: {
+    port: process.env.PORT || 8080
+  },
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {

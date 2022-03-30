@@ -1,8 +1,8 @@
 {
   "name": "djing2-elui",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "author": "Chong Guo <armourcy@gmail.com>",
+  "author": "Dmitry Novikov <nerosketch@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

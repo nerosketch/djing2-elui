@@ -1,4 +1,5 @@
-import { getVapidPublicKey, pushSendNotifications } from '@/api/push/req'
+// import { getVapidPublicKey, pushSendNotifications } from '@/api/push/req'
+import { getVapidPublicKey } from '@/api/push/req'
 import { AxiosPromise, AxiosResponse } from 'axios'
 
 type SubscribeResponseCallback = (v: AxiosResponse) => AxiosResponse | AxiosPromise | void
@@ -195,12 +196,13 @@ export default class PushNotificationsClass {
   }
 
   private postSubscribeObj(statusType: string, subscription: PushSubscription, callback: SubscribeResponseCallback) {
+    return
     // Send the information to the server with fetch API.
     // the type of the request, the name of the user subscribing,
     // and the push subscription endpoint + key the server needs
     // to send push messages
 
-    let browser: string | null = null
+    /*let browser: string | null = null
     const rt = navigator.userAgent.match(/(firefox|msie|chrome|safari|trident)/ig)
     if (rt) {
       browser = rt[0].toLowerCase()
@@ -213,6 +215,6 @@ export default class PushNotificationsClass {
       group: 'group_name'
     }
 
-    pushSendNotifications(data).then(callback)
+    pushSendNotifications(data).then(callback)*/
   }
 }

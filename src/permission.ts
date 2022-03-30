@@ -2,6 +2,7 @@ import router from './router'
 // import NProgress from 'nprogress'
 // import 'nprogress/nprogress.css'
 import { Route } from 'vue-router'
+import i18n from '@/lang'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 
 // NProgress.configure({ showSpinner: false })
@@ -39,5 +40,11 @@ router.afterEach((to: Route) => {
   // NProgress.done()
 
   // set page title
-  document.title = to.meta?.title || '...'
+  const tx = to.meta?.title || '...'
+  const code = `route.${tx}`
+  if (i18n.te(code)) {
+    document.title = i18n.tc(code)
+  } else {
+    document.title = tx
+  }
 })

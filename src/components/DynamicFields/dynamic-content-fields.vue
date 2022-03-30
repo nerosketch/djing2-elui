@@ -1,8 +1,7 @@
 <template lang="pug">
   el-card(shadow="never")
     template(v-slot:header)
-      .clearfix
-        | Дополнительные данные
+      .clearfix {{ $tc('customers.extraFields') }}
 
     el-form
       template(v-if="localContents.length > 0")
@@ -29,7 +28,7 @@
             value-format="yyyy-MM-dd HH:mm"
             format="d.MM.yyyy HH:mm")
 
-          el-switch(v-else-if="f.field_type == 7", v-model="f.content")
+          el-switch(v-else-if="f.field_type == 7" v-model="f.content")
 
           el-input(v-else, v-model="f.content")
 
@@ -41,7 +40,7 @@
           icon="el-icon-upload"
           type="primary"
           @click="saveData")
-          | {{ $t('save') }}
+          | {{ $tc('save') }}
 </template>
 
 <script lang="ts">

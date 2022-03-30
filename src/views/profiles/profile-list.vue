@@ -8,15 +8,24 @@
       widthStorageNamePrefix="profiles"
       ref="tbl")
       template(v-slot:avatar="{row}")
-        el-avatar(:src="row.avatar || defAvaConst", shape="square")
+        el-avatar(
+          :src="row.avatar || defAvaConst"
+          shape="square"
+        )
 
       template(v-slot:username="{row}")
         router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}")
-          el-link(type="primary", :icon="row.is_superuser ? 'el-icon-warning' : ''")
+          el-link(
+            type="primary"
+            :icon="row.is_superuser ? 'el-icon-warning' : ''"
+          )
             | {{ row.username }}
 
       template(v-slot:telephone="{row}")
-        el-link(type="primary", :href="`tel:${row.telephone}`")
+        el-link(
+          type="primary"
+          :href="`tel:${row.telephone}`"
+        )
           | {{ row.telephone }}
 
       template(v-slot:btn="{row}")

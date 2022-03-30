@@ -99,7 +99,7 @@ export default class extends Vue {
           this.$emit('adddone', newPort)
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

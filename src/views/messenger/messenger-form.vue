@@ -122,7 +122,7 @@ export default class extends mixins(BotTypesMixin) {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

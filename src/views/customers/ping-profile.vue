@@ -24,7 +24,7 @@ export default class extends Vue {
   private async pingProfile() {
     if (!this.customer || this.isCustomerNotHere) {
       this.$message.error(
-        this.$tc('customers.notPassed').toString()
+        this.$tc('customers.notPassed')
       )
       return
     }

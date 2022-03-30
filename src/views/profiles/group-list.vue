@@ -31,7 +31,10 @@
       :title="dialogTitle"
       :visible.sync="ugFormDialog"
       :close-on-click-modal="false")
-      user-group-form(v-on:done="frmDone", v-on:cancel="ugFormDialog=false")
+      user-group-form(
+        v-on:done="frmDone"
+        v-on:cancel="ugFormDialog=false"
+      )
 
     el-dialog(
       :title="$t('modifyTheRightsOfTheGroup')"

@@ -31,3 +31,6 @@ export const addContractDoc = (newAtt: any): IDRFAxiosResponsePromise<ICustomerC
 }
 export const delContractDoc = delObjectDecorator<ICustomerContractAttachment>(baseAttachmentUrl)
 export const changeContractDoc = patchObjectDecorator<ICustomerContractAttachment>(baseAttachmentUrl)
+
+export const finishCustomerContract = (uid: number): IDRFAxiosResponsePromise<ICustomerContract> =>
+  request.put<ICustomerContract>(`${baseUrl}${uid}/finish/`)

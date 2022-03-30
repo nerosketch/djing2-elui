@@ -1,11 +1,13 @@
 version: '3.5'
 services:
   ui:
-    build: .
+    build:
+      context: djing2-elui/
+      dockerfile: Dockerfile_release
     container_name: djing2-elui
     stop_grace_period: 1m
     ports:
-      - 8080:8080
+      - 80:80
     stdin_open: true
     tty: true
     environment:
@@ -15,4 +17,12 @@ services:
       - .:/home/node/app
       - /tmp:/tmp
       - /etc/localtime:/etc/localtime
+      - media-data:/var/www/app/media
+      - staticfiles:/var/www/app/static
+
+
+volumes:
+  media-data:
+  staticfiles:
+
 
