@@ -39,5 +39,12 @@ export const positiveNumberValueAvailable = (rule: any, value: number, callback:
   }
 }
 
-// Old, expired
 export const isExternal = (path: string) => /^(https?:|mailto:|tel:)/.test(path)
+
+export const datetimeTimeValidator = (rule: any, value: string, callback: Function) => {
+  if (!value || value.endsWith('00:00:00')) {
+    callback(new Error(rule.message))
+  } else {
+    callback()
+  }
+}

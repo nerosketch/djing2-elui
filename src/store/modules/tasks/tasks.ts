@@ -6,7 +6,7 @@ import {
 import store from '@/store'
 import {
   ITask, ITaskPriority,
-  ITaskState, ITaskType
+  ITaskState
 } from '@/api/tasks/types'
 import {
   getTask, addTask, changeTask, delTask,
@@ -18,6 +18,11 @@ interface GetNewTaskInitialInputParams {
   groupId: number
   customerId: number
 }
+
+// const taskFields = ['id', 'author_full_name', 'customer_full_name',
+//   'priority_name', 'time_of_create', 'time_diff', 'mode_str',
+//   'state_str', 'recipients', 'descr', 'priority', 'out_date',
+//   'task_state', 'mode', 'author', 'customer', 'activeTaskCount']
 
 @Module({ dynamic: true, store, name: 'task' })
 class Task extends VuexModule implements ITask {
@@ -34,7 +39,7 @@ class Task extends VuexModule implements ITask {
   priority = ITaskPriority.LOW
   out_date = ''
   task_state = ITaskState.NEW
-  mode = ITaskType.NOT_CHOSEN
+  task_mode: number | null = null
   author = 0
   customer = 0
   activeTaskCount = 0
@@ -55,7 +60,7 @@ class Task extends VuexModule implements ITask {
     this.out_date = data.out_date
     this.task_state = data.task_state
     this.task_state = data.task_state
-    this.mode = data.mode
+    this.task_mode = data.task_mode
     this.author = data.author
     this.customer = data.customer!
   }
@@ -75,7 +80,7 @@ class Task extends VuexModule implements ITask {
     this.priority = ITaskPriority.LOW
     this.out_date = ''
     this.task_state = ITaskState.NEW
-    this.mode = ITaskType.NOT_CHOSEN
+    this.task_mode = null
     this.author = 0
     this.customer = 0
   }

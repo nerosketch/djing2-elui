@@ -30,15 +30,16 @@
         format="d.MM.yyyy HH:mm:ss")
 
     el-form-item(:label="$t('contractDocs.dateEnd')")
-      el-date-picker(
-        v-model="frmMod.end_service_time"
-        type="datetime"
-        value-format="yyyy-MM-dd HH:mm:ss"
-        format="d.MM.yyyy HH:mm:ss")
+      | {{ frmMod.end_service_time || '—' }}
+      //- el-date-picker(
+      //-   v-model="frmMod.end_service_time"
+      //-   type="datetime"
+      //-   value-format="yyyy-MM-dd HH:mm:ss"
+      //-   format="d.MM.yyyy HH:mm:ss")
 
     el-form-item(:label="$t('contractDocs.activity')")
-      el-checkbox(v-model="frmMod.is_active")
-        | - {{ $t('contractDocs.activeContract') }}: {{ frmMod.is_active ? $t('yes') : $t('sno') }}
+      boolean-icon(v-model="frmMod.is_active")
+      |  {{ frmMod.is_active ? $t('contractDocs.activeContract') : $t('contractDocs.inactiveContract') }}
 
     el-form-item(:label="$t('contractDocs.additional')")
       el-input(
@@ -64,6 +65,12 @@
           @click="openDocsDialog")
           | {{ $t('customers.docs') }}
 
+        el-button(
+          icon="el-icon-finished"
+          @click="finishContractDialog"
+          type='danger'
+        ) {{ $t('contractDocs.finishBtn') }}
+
     el-dialog(
       :title="$t('customers.docs')"
       :visible.sync="docsDialogVisible"
@@ -78,13 +85,15 @@ import FormMixin from '@/utils/forms'
 import { ICustomer } from '@/api/customers/types'
 import { ICustomerContract } from './api/types'
 import { Form } from 'element-ui'
-import { addContract, changeContract } from './api/reqs'
+import { addContract, changeContract, finishCustomerContract } from './api/reqs'
 import ContractDocs from './contract-docs.vue'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 @Component({
   name: 'ContractForm',
   components: {
-    ContractDocs
+    ContractDocs,
+    BooleanIcon
   }
 })
 export default class extends mixins(FormMixin) {
@@ -188,6 +197,25 @@ export default class extends mixins(FormMixin) {
 
   private openDocsDialog() {
     this.docsDialogVisible = true
+  }
+
+  private finishContractDialog() {
+    this.$confirm(
+      this.$tc('contractDocs.finishAlert'),
+      {
+        type: 'error',
+        title: this.$tc('attention')
+      }
+    ).then(() => {
+      this.finishContract()
+    })
+  }
+
+  private async finishContract() {
+    if (this.contract && this.contract.id) {
+      const { data } = await finishCustomerContract(this.contract.id)
+      this.fillFrmModFromVar(data)
+    }
   }
 }
 </script>

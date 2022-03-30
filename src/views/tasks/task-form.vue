@@ -5,32 +5,24 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="loading")
-    el-form-item(:label="$t('description')" prop="descr")
+    el-form-item(:label="$t('description')")
       el-input(
         v-model="frmMod.descr"
         maxlength="128"
       )
 
     el-form-item(:label="$t('implementers')" prop="recipients")
-      el-select(
+      recipients-field-choice(
+        :recipients="recipients"
         v-model="frmMod.recipients"
-        multiple
       )
-        el-option(
-          v-for="rec in potentialRecipients"
-          :key="rec.id"
-          :label="rec.full_name || rec.username"
-          :value="rec.id")
 
-    el-form-item(:label="$t('natureOfFracture')" prop="mode")
-      el-select(v-model="frmMod.mode")
-        el-option(
-          v-for="tt in taskTypes"
-          :key="tt.v"
-          :label="tt.nm"
-          :value="tt.v")
+    el-form-item(:label="$t('tasks.natureOfFracture')")
+      task-modes-field-choice(
+        v-model="frmMod.task_mode"
+      )
 
-    el-form-item(:label="$t('priority')" prop="priority")
+    el-form-item(:label="$t('priority')")
       el-select(v-model="frmMod.priority")
         el-option(
           v-for="tt in taskPriorities"
@@ -38,7 +30,7 @@
           :label="tt.nm"
           :value="tt.v")
 
-    el-form-item(:label="$t('tasks.taskStatus')" prop="task_state")
+    el-form-item(:label="$t('tasks.taskStatus')")
       el-select(v-model="frmMod.task_state")
         el-option(
           v-for="tt in taskStates"
@@ -55,7 +47,7 @@
         :defaultName="$store.state.task.customer_full_name"
       )
 
-    el-form-item(:label="$t('tasks.relevance')" prop="out_date")
+    el-form-item(:label="$t('tasks.relevance')")
       el-tooltip(
         :content="$t('tasks.relevanceTooltip')"
         placement="right"
@@ -94,7 +86,7 @@
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { ITaskPriority, ITaskState, ITaskType } from '@/api/tasks/types'
+import { ITaskPriority, ITaskState } from '@/api/tasks/types'
 import CustomerField from '@/components/CustomerField/index.vue'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 import { positiveNumberValueAvailable } from '@/utils/validate'
@@ -102,33 +94,22 @@ import { Form } from 'element-ui'
 import { IUserProfile } from '@/api/profiles/types'
 import FormMixin from '@/utils/forms'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import TaskMixin from './task-mixin'
+import TaskModesFieldChoice from './modes/modes_field_choice.vue'
+import RecipientsFieldChoice from './recipients-field-choice.vue'
 
 @Component({
   name: 'TaskForm',
-  components: { CustomerField }
+  components: {
+    CustomerField,
+    TaskModesFieldChoice,
+    RecipientsFieldChoice
+  }
 })
-export default class extends mixins(FormMixin, TaskMixin) {
+export default class extends mixins(FormMixin) {
   @Prop({ default: () => [] })
   private recipients!: IUserProfile[]
 
   private loading = false
-
-  private taskTypes = [
-    { nm: this.$tc('notSelected'), v: ITaskType.NOT_CHOSEN },
-    { nm: this.$tc('conflict'), v: ITaskType.IP_CONFLICT },
-    { nm: this.$tc('yellowTriangle'), v: ITaskType.YELLOW_TRIANGLE },
-    { nm: this.$tc('redCross'), v: ITaskType.RED_CROSS },
-    { nm: this.$tc('weakSpeed'), v: ITaskType.WEAK_SPEED },
-    { nm: this.$tc('cableBreaking'), v: ITaskType.CABLE_BREAK },
-    { nm: this.$tc('connection'), v: ITaskType.CONNECTION },
-    { nm: this.$tc('periodicMissing'), v: ITaskType.PERIODIC_DISAPPEARANCE },
-    { nm: this.$tc('routeConstruction'), v: ITaskType.ROUTER_SETUP },
-    { nm: this.$tc('onuConfig'), v: ITaskType.CONFIGURE_ONU },
-    { nm: this.$tc('cable'), v: ITaskType.CRIMP_CABLE },
-    // { nm: 'нет интернета', v: ITaskType.INTERNET_CRASH },
-    { nm: this.$tc('other'), v: ITaskType.OTHER }
-  ]
 
   private taskPriorities = [
     { nm: this.$tc('low'), v: ITaskPriority.LOW },
@@ -150,7 +131,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
       descr: TaskModule.descr,
       priority: TaskModule.priority,
       task_state: TaskModule.task_state,
-      mode: TaskModule.mode,
+      task_mode: TaskModule.task_mode,
       customer: TaskModule.customer,
       out_date: TaskModule.out_date || this.initialDate
     }
@@ -164,7 +145,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
 
   private frmRules = {
     recipients: [
-      { required: true, message: this.$tc('weHaveToChooseOnePerpetrator'), trigger: 'blur' }
+      { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
     customer: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }
@@ -178,11 +159,6 @@ export default class extends mixins(FormMixin, TaskMixin) {
   }
 
   created() {
-    if (this.recipients.length < 1) {
-      this.loadPotentialRecipients()
-    } else {
-      this.potentialRecipients = this.recipients
-    }
     this.frmInitial = Object.assign({}, this.frmMod)
 
     // Breadcrumbs
@@ -215,7 +191,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         this.loading = true
         if (this.isNewTask) {
           const newTask = await TaskModule.AddTask(this.frmMod)
-          this.$message.success(this.$tc('targetAdded'))
+          this.$message.success(this.$tc('tasks.targetAdded'))
           this.$router.push({
             name: 'taskDetails',
             params: { taskId: newTask.id.toString() }
@@ -223,7 +199,7 @@ export default class extends mixins(FormMixin, TaskMixin) {
         } else {
           await TaskModule.PatchTask(this.frmMod)
           this.frmInitial = this.fromTaskModule
-          this.$message.success(this.$tc('targetRetained'))
+          this.$message.success(this.$tc('tasks.targetRetained'))
         }
         this.loading = false
       } else {
