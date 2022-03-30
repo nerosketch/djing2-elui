@@ -5,8 +5,8 @@ import { getMode, changeMode, addMode } from '@/api/tasks/req'
 
 @Module({ dynamic: true, store, name: 'taskmode' })
 class TaskMode extends VuexModule implements ITaskMode {
-  id = 0
-  title = ''
+  public id = 0
+  public title = ''
 
   @Mutation
   public SET_ALL_TASK_MODE(data: ITaskMode) {
