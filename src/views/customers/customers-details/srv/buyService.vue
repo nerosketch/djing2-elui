@@ -73,15 +73,13 @@ export default class extends Vue {
     this.loading = true
     if (this.frmMod.service_id === 0) {
       this.$message.error(
-        this.$tc('customers.chooseServiceNecessary').toString()
+        this.$tc('customers.chooseServiceNecessary')
       )
       return
     }
     try {
       await CustomerModule.PickService(this.frmMod)
       this.$emit('done')
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

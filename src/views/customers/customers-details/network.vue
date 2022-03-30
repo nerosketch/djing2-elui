@@ -7,6 +7,7 @@
     el-table(
       v-loading="loading"
       :data="leases"
+      :row-class-name="leaseStatus"
       border
       fit)
       el-table-column(
@@ -84,6 +85,11 @@ import IpSessionDetail from './ip-session-detail.vue'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 import BooleanIcon from '@/components/boolean-icon.vue'
 
+interface ITableRowClassName {
+  row: ICustomerIpLease
+  rowIndex: number
+}
+
 @Component({
   name: 'Network',
   components: {
@@ -108,8 +114,6 @@ export default class extends Vue {
     try {
       const { data } = await getCustomerIpLeases(undefined, this.$store.state.customer.id)
       this.leases = data as ICustomerIpLease[]
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }
@@ -134,19 +138,15 @@ export default class extends Vue {
   }
 
   public delLease(lease: ICustomerIpLease) {
-    this.$confirm(this.$tc('customers.areUSure2DelIpLease').toString(), {
-      confirmButtonText: this.$tc('yes').toString(),
-      cancelButtonText: this.$tc('no').toString()
+    this.$confirm(this.$tc('customers.areUSure2DelIpLease'), {
+      confirmButtonText: this.$tc('yes'),
+      cancelButtonText: this.$tc('no')
     }).then(async() => {
-      try {
-        await CustomerIpLeaseModule.DelLease(lease.id)
-        this.$message.success(
-          this.$tc('customers.ipLeaseSuccessfullyRemoved').toString()
-        )
-        this.loadLeases()
-      } catch (err) {
-        this.$message.error(err)
-      }
+      await CustomerIpLeaseModule.DelLease(lease.id)
+      this.$message.success(
+        this.$tc('customers.ipLeaseSuccessfullyRemoved')
+      )
+      this.loadLeases()
     })
   }
 
@@ -165,6 +165,12 @@ export default class extends Vue {
   private onSignalUpdateLeases({ data }: IWsMessage) {
     if (data.customer_id === this.$store.state.customer.id) {
       this.loadLeases()
+    }
+  }
+
+  private leaseStatus({ row }: ITableRowClassName) {
+    if (!row.pool) {
+      return 'error-row'
     }
   }
 }

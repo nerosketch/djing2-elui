@@ -48,7 +48,7 @@ export default class extends Vue {
 
   private frmRules = {
     ip_address: [
-      { required: true, message: this.$tc('nets.ipMustNotBeEmpty').toString(), trigger: 'blur' },
+      { required: true, message: this.$tc('nets.ipMustNotBeEmpty'), trigger: 'blur' },
       { validator: ipAddrValidator, trigger: 'change', message: this.$tc('example192168023') }
     ],
     mac_address: [
@@ -87,7 +87,7 @@ export default class extends Vue {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

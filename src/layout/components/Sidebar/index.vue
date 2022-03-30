@@ -9,7 +9,7 @@
       :collapse-transition="false"
       mode="vertical")
       sidebar-item(
-        v-for="route in routes"
+        v-for="route in $router.options.routes"
         :key="route.path"
         :item="route"
         :base-path="route.path"
@@ -35,10 +35,6 @@ interface IHightPriorityTaskEventData {
   }
 })
 export default class extends Vue {
-  get routes() {
-    return (this.$router as any).options.routes
-  }
-
   get variables() {
     return variables
   }

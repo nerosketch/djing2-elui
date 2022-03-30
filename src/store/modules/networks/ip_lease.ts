@@ -11,7 +11,7 @@ import { ICustomerIpLease } from '@/api/networks/types'
 class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   id = 0
   ip_address = ''
-  pool = 0
+  pool: number | null = null
   customer = 0
   lease_time = ''
   last_update = ''
@@ -22,7 +22,7 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   public RESET_ALL_LEASE() {
     this.id = 0
     this.ip_address = ''
-    this.pool = 0
+    this.pool = null
     this.customer = 0
     this.lease_time = ''
     this.last_update = ''

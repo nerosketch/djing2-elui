@@ -63,19 +63,19 @@ export default class extends Vue {
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'customer_uname',
-      label: this.$tc('customers.username').toString()
+      label: this.$tc('customers.username')
     },
     {
       prop: 'customer_fio',
-      label: this.$tc('customers.fio').toString()
+      label: this.$tc('customers.fio')
     },
     {
       prop: 'last_date',
-      label: this.$tc('customers.afkLastDate').toString()
+      label: this.$tc('customers.afkLastDate')
     },
     {
       prop: 'timediff',
-      label: this.$tc('customers.afkDuration').toString()
+      label: this.$tc('customers.afkDuration')
     }
   ]
 
@@ -90,7 +90,7 @@ export default class extends Vue {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$tc('customers.afkFilter').toString()
+          title: this.$tc('customers.afkFilter')
         }
       }
     ] as any)

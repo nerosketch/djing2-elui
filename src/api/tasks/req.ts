@@ -13,12 +13,15 @@ import {
   TaskStatePercentReport,
   TaskStatePercentReportAxoisResponsePromise,
   TaskModeReport,
-  TaskModeReportAxoisResponsePromise
+  TaskModeReportAxoisResponsePromise,
+  ITaskMode,
+  ITaskFinishDocument
 } from './types'
 import {
   addObjectDecorator,
   delObjectDecorator,
   getObjectDecorator,
+  getObjectListDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
 
@@ -86,3 +89,25 @@ export const taskStatePercentReport = (stateNum: number): TaskStatePercentReport
 
 export const taskModeReportRequest = (): TaskModeReportAxoisResponsePromise =>
   request.get<TaskModeReport>('/tasks/task_mode_report/')
+
+const modeBaseUrl = '/tasks/modes/'
+export const getMode = getObjectDecorator<ITaskMode>(modeBaseUrl)
+export const getModes = getObjectListDecorator<ITaskMode>(modeBaseUrl)
+export const addMode = addObjectDecorator<ITaskMode>(modeBaseUrl)
+export const changeMode = patchObjectDecorator<ITaskMode>(modeBaseUrl)
+// export const delMode = delObjectDecorator<ITaskMode>(modeBaseUrl)
+
+const taskFinishDocBaseUrl = '/tasks/finish_document/'
+export const getTaskFinishDoc = async(taskId: number): Promise<ITaskFinishDocument | null> => {
+  const r = await request.get<ITaskFinishDocument[]>(taskFinishDocBaseUrl, {
+    params: { task: taskId }
+  })
+  if (r.status === 200 && r.data.length > 0) {
+    return r.data[0]
+  } else {
+    return null
+  }
+}
+export const getTaskFinishDocs = getObjectListDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)
+export const addTaskFinishDoc = addObjectDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)
+export const changeTaskFinishDoc = patchObjectDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)

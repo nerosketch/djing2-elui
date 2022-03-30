@@ -7,6 +7,7 @@
             :addrId="addrId"
             :group.sync="filterForm.group"
             :street.sync="filterForm.street"
+            :house.sync="filterForm.house"
             :fetchGroups="fetchGroups")
 
       el-col(:lg="24" :md="20")
@@ -67,7 +68,7 @@
                 | {{ $t('customers.sites') }}
 
               el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
-                | {{ $t('route.forms') }}
+                | {{ $t('field') }}
 
               slot(name="additional_button")
 
@@ -179,51 +180,48 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'username',
-      label: this.$tc('customers.username').toString(),
+      label: this.$tc('customers.username'),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'fio',
-      label: this.$tc('customers.fio').toString(),
+      label: this.$tc('customers.fio'),
       'min-width': 300,
       sortable: true
     },
     {
       prop: 'address_title',
-      label: this.$tc('addrs.full').toString(),
-      sortable: true,
+      label: this.$tc('addrs.full'),
+      sortable: false,
       'min-width': 110,
       cutLeft: true
     },
     {
-      prop: 'house',
-      label: this.$tc('houseNumber'),
-      sortable: true
-    },
-    {
       prop: 'telephone',
-      label: this.$tc('customers.phone').toString(),
+      label: this.$tc('customers.phone'),
       'min-width': 140
     },
     {
-      prop: 'current_service_title',
-      label: this.$tc('customers.service').toString(),
+      prop: 'current_service__service__title',
+      label: this.$tc('customers.service'),
+      backendProp: 'current_service_title',
+      sortable: true,
       'min-width': 240
     },
     {
       prop: 'balance',
-      label: this.$tc('customers.balance').toString(),
+      label: this.$tc('customers.balance'),
       sortable: true,
       'min-width': 100
     },
     {
       prop: 'group_title',
-      label: this.$tc('groups.group').toString()
+      label: this.$tc('groups.group')
     },
     {
       prop: 'marker_icons',
-      label: this.$tc('customers.marker').toString()
+      label: this.$tc('customers.marker')
     },
     {
       prop: 'ping',
@@ -237,16 +235,15 @@ export default class extends mixins(TableWithAddrMixin) {
     let r
     const fetchFn = (this.fetchFunc === null ? getCustomers : this.fetchFunc)
     if (params) {
-      const newParams: IDRFRequestListFilterParameters = Object.assign(params, {
+      let newParams: IDRFRequestListFilterParameters = Object.assign(params, {
         address: this.addrId,
-        fields: 'id,username,fio,address_title,telephone,current_service_title,balance,group_title,is_active,lease_count,marker_icons,house'
+        fields: 'id,username,fio,address_title,telephone,current_service_title,current_service,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (group) {
         newParams.group = Number(group)
       }
-      const street = this.$route.query.street
-      if (street) {
-        newParams.street = Number(street)
+      if (this.$route.query) {
+        newParams = Object.assign(newParams, this.$route.query)
       }
       r = await fetchFn(newParams)
     } else {
@@ -258,13 +255,13 @@ export default class extends mixins(TableWithAddrMixin) {
   private addFrmDone(newCustomer: ICustomer) {
     this.addCustomerDialog = false
     this.$message.success(
-      this.$tc('customers.customerAddedOk').toString()
+      this.$tc('customers.customerAddedOk')
     )
     this.$router.push({ name: 'customerDetails', params: { uid: newCustomer.id.toString() } })
   }
 
   created() {
-    document.title = this.$tc('customers.customersList').toString()
+    document.title = this.$tc('customers.customersList')
     this.setCrumbs()
   }
 
@@ -278,7 +275,7 @@ export default class extends mixins(TableWithAddrMixin) {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: this.$tc('addrs.addresses').toString()
+          title: this.$tc('addrs.addresses')
         }
       },
       {

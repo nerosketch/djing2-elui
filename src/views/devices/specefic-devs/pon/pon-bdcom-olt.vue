@@ -24,14 +24,14 @@
             :data="fiber.onuList"
             border
             fit)
-            el-table-column(label="#", width="50")
+            el-table-column(label="#" width="50")
               template(v-slot:default="{row}")
                 i.el-icon-success.el-alert--success.is-light(v-if="row.status")
 
                 i.el-icon-error.el-alert--error.is-light(v-else)
 
             el-table-column(
-              :label="$t('snmNom')"
+              :label="$t('devices.snmpNum')"
               min-width="97"
               prop="number")
 
@@ -41,17 +41,17 @@
               prop="title")
 
             el-table-column(
-              :label="$t('mac')"
+              :label="$t('devices.mac')"
               min-width="123"
               prop="mac_addr")
 
             el-table-column(
-              :label="$t('ur')"
+              :label="$t('devices.level')"
               min-width="92"
               prop="signal")
 
             el-table-column(
-              :label="$t('uptime')"
+              :label="$t('devices.uptime')"
               min-width="151"
               prop="uptime")
 
@@ -66,7 +66,7 @@
                   @click="openSaveOnu(row)"
                   :disabled="!$perms.devices.add_device")
 
-    el-progress.progress_disable_animations(v-else, :percentage="loadPercent")
+    el-progress.progress_disable_animations(v-else :percentage="loadPercent")
 
     el-dialog(
       :title="$t('addIt')"

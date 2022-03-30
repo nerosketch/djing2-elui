@@ -16,7 +16,6 @@ export interface ICustomer extends IBaseAccount{
   address_title: string
   balance: number
   description: string
-  house: string
   gateway: number
   gateway_title?: string
   auto_renewal_service: boolean
@@ -64,7 +63,6 @@ export interface ICustomerFrm {
   birth_day: string | null
   group: number
   address: number
-  house: string
   is_active: boolean
   is_dynamic_ip: boolean
   gateway: number

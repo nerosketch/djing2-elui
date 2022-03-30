@@ -39,7 +39,7 @@ export type INetworkIpPoolListAxiosResponsePromise = IDRFAxiosResponsePromise<IN
 export interface ICustomerIpLease {
   id: number
   ip_address: string
-  pool: number
+  pool: number | null
   customer: number
   lease_time: string
   last_update: string

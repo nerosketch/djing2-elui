@@ -3,7 +3,7 @@
     template(v-slot:header)
       .clearfix
         span
-          | {{ device.comment || 'Коммутатор' }}
+          | {{ device.comment || $t('devices.switch') }}
 
         small
           | {{ ` ${device.ip_address || device.mac_addr} ` }}
@@ -29,7 +29,7 @@
       border
       fit)
       el-table-column(
-        :label="$t('port')"
+        :label="$t('devices.port')"
         width="60"
         align="center")
         template(v-slot:default="{row}")
@@ -79,7 +79,7 @@
         template(v-slot:default="{row}")
           | {{ row.speed ? portModesHuman(row.speed) : '-' }}
 
-      el-table-column(label="UpTime", min-width="176")
+      el-table-column(label="UpTime" min-width="176")
         template(v-slot:default="{row}")
           | {{ row.uptime || '-' }}
 
@@ -117,13 +117,13 @@
 
     el-dialog(
       :visible.sync="portViewDialog"
-      :title="$t('portSubscribers')"
+      :title="$t('devices.portSubscribers')"
       :close-on-click-modal="false")
-      switch-port-view(:device="device", :portId="currPortId")
+      switch-port-view(:device="device" :portId="currPortId")
 
     el-dialog(
       :visible.sync="portFormDialog"
-      :title="$t('theSwitchboard')"
+      :title="$t('devices.theSwitchboard')"
       :close-on-click-modal="false")
       switch-port-form(
         :deviceId="device.id"
@@ -134,13 +134,13 @@
 
     el-dialog(
       :visible.sync="devFormDialog"
-      :title="$t('informationOfTheDevice')"
+      :title="$t('devices.informationOfTheDevice')"
       :close-on-click-modal="false")
       dev-form(v-on:done="devFrmDone")
 
     el-dialog(
       :visible.sync="vidsDialog"
-      :title="$t('vlanS')"
+      :title="$t('devices.vlanS')"
       :close-on-click-modal="false")
       vids-view(
         :portId="currPortId"
@@ -149,7 +149,7 @@
 
     el-dialog(
       :visible.sync="macsDialog"
-      :title="$t('tableOfPortAddresses')"
+      :title="$t('devices.tableOfPortAddresses')"
       :close-on-click-modal="false")
       port-mac-list(:portId="currPortId")
 </template>
@@ -224,52 +224,44 @@ export default class extends Vue {
 
   private async loadPorts() {
     if (this.device !== null) {
-      try {
-        const { data } = await getPorts(this.device.id)
-        this.allPorts = data.map(p => ({
-          id: p.id,
-          num: p.num,
-          descr: p.descr,
-          user_count: p.user_count,
-          isdb: true
-        }))
-      } catch (err) {
-        this.$message.error(err)
-      }
+      const { data } = await getPorts(this.device.id)
+      this.allPorts = data.map(p => ({
+        id: p.id,
+        num: p.num,
+        descr: p.descr,
+        user_count: p.user_count,
+        isdb: true
+      }))
     }
   }
 
   private async scanPorts() {
     if (this.device !== null) {
-      try {
-        const { data } = await scanPorts(this.device.id)
-        if (data.status == 1) {
-          for (const p of data.ports) {
-            const pInd = this.allPorts.findIndex(fport => fport.num === p.num)
-            if (pInd > -1) {
-              this.allPorts[pInd].num = p.num
-              this.allPorts[pInd].snmp_num = p.snmp_num
-              this.allPorts[pInd].name = p.name
-              this.allPorts[pInd].status = p.status
-              this.allPorts[pInd].speed = p.speed
-              this.allPorts[pInd].uptime = p.uptime
-            } else {
-              this.allPorts.push({
-                num: p.num,
-                snmp_num: p.snmp_num,
-                name: p.name,
-                status: p.status,
-                speed: p.speed,
-                uptime: p.uptime,
-                isdb: false
-              } as IFinPort)
-            }
+      const { data } = await scanPorts(this.device.id)
+      if (data.status == 1) {
+        for (const p of data.ports) {
+          const pInd = this.allPorts.findIndex(fport => fport.num === p.num)
+          if (pInd > -1) {
+            this.allPorts[pInd].num = p.num
+            this.allPorts[pInd].snmp_num = p.snmp_num
+            this.allPorts[pInd].name = p.name
+            this.allPorts[pInd].status = p.status
+            this.allPorts[pInd].speed = p.speed
+            this.allPorts[pInd].uptime = p.uptime
+          } else {
+            this.allPorts.push({
+              num: p.num,
+              snmp_num: p.snmp_num,
+              name: p.name,
+              status: p.status,
+              speed: p.speed,
+              uptime: p.uptime,
+              isdb: false
+            } as IFinPort)
           }
-        } else {
-          this.$message.error(data.text)
         }
-      } catch (err) {
-        this.$message.error(err)
+      } else {
+        this.$message.error(data.text)
       }
     }
   }

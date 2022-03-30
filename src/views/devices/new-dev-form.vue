@@ -29,7 +29,10 @@
       groups-choice(v-model="frmMod.group")
 
     el-form-item(:label="$t('theDevice')")
-      device-autocomplete-field(v-model="frmMod.parent_dev", :defaultName="initialParentDevName")
+      device-autocomplete-field(
+        v-model="frmMod.parent_dev"
+        :defaultName="initialParentDevName"
+      )
 
     el-form-item(:label="$t('effectiveDate')")
       datetime-counter(v-model="frmMod.create_time")
@@ -117,7 +120,6 @@ export default class extends Vue {
     snmp_extra: this.initialSnmpSxtra,
     create_time: '',
     address: this.initialAddress,
-    place: ''
   }
 
   private onSubmit() {
@@ -135,7 +137,7 @@ export default class extends Vue {
           this.$emit('err', err)
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

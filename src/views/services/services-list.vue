@@ -8,7 +8,7 @@
       widthStorageNamePrefix="services"
       ref="table")
       template(v-slot:isadm="{row}")
-        el-checkbox(v-model="row.is_admin", disabled)
+        el-checkbox(v-model="row.is_admin" disabled)
           | {{ row.is_admin ? 'Да' : 'Нет'}}
 
       template(v-slot:oper="{row}")
@@ -30,8 +30,11 @@
             :disabled="!$perms.services.delete_service")
 
       template(v-slot:usercount="{row}")
-        el-button(@click="openCustomerServiceListDialog(row.id)")
-          | {{ row.usercount }}
+        el-button(
+          @click="openCustomerServiceListDialog(row.id)"
+          v-if="row.usercount > 0"
+        ) {{ row.usercount }}
+        span(v-else) {{ row.usercount }}
 
       el-button-group
         el-button(
@@ -65,7 +68,10 @@
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
-      sites-attach(:selectedSiteIds="$store.state.service.sites", v-on:save="serviceSitesSave")
+      sites-attach(
+        :selectedSiteIds="$store.state.service.sites"
+        v-on:save="serviceSitesSave"
+      )
 
     el-dialog(
       :title="$t('serviceUsers')"

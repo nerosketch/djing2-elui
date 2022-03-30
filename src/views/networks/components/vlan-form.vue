@@ -82,13 +82,11 @@ export default class extends Vue {
             newVlan = await VlanIfModule.PatchVlan(this.frmMod)
           }
           this.$emit('done', newVlan)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }
       } else {
-        this.$message.error(this.$tc('fixFormErrs').toString())
+        this.$message.error(this.$tc('fixFormErrs'))
       }
     })
   }

@@ -1,5 +1,8 @@
 <template lang="pug">
-  el-card(shadow="never", v-if="currentConfig.vlanConfig.length > 0")
+  el-card(
+    shadow="never"
+    v-if="currentConfig.vlanConfig.length > 0"
+  )
     template(v-slot:header)
       span
         | {{ $t('ONUConfigurationOptions') }}
@@ -30,9 +33,12 @@
             @click="delVlanPort(portVlanConf.port)")
           | Vlan на порт №{{ portVlanConf.port }}
 
-        generic-vlan-config(:portVlanConf.sync="portVlanConf", :allVlans="vlans")
+        generic-vlan-config(
+          :portVlanConf.sync="portVlanConf"
+          :allVlans="vlans"
+        )
 
-    el-card(shadow="never", v-else)
+    el-card(shadow="never" v-else)
       | {{ $t('vlanSettingNotAcceptedBySelectedConfiguration') }}
 
     el-button(

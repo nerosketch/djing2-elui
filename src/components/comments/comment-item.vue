@@ -14,7 +14,7 @@
           v-if="comment.can_remove"
           @click="delComment")
 
-    el-avatar(shape="square", :src="comment.author_avatar")
+    el-avatar(shape="square" :src="comment.author_avatar")
 
     span
       | {{ comment.text }}

@@ -6,11 +6,17 @@
         v-if="[3,6,7].includes(device.dev_type)"
         v-on:reqrefresh="getDevice")
 
-      pon-bdcom-olt(v-else-if="device.dev_type === 2", :device="device")
+      pon-bdcom-olt(
+        v-else-if="device.dev_type === 2"
+        :device="device"
+      )
 
-      olt-zte(:device="device", v-else-if="device.dev_type === 5")
+      olt-zte(
+        :device="device"
+        v-else-if="device.dev_type === 5"
+      )
 
-      switch-view(:device="device", v-else)
+      switch-view(:device="device" v-else)
 </template>
 
 <script lang="ts">
@@ -45,8 +51,6 @@ export default class extends Vue {
       const { data } = await DeviceModule.GetDevice(this.devId)
       this.device = data
       return data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.ready = true
     }

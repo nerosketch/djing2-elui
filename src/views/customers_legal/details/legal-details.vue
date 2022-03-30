@@ -13,7 +13,7 @@
       | {{ $store.state.customerlegal.create_date }}
 
     el-tabs.border-card(v-model="activeTabName")
-      el-tab-pane(:label="$t('customers.info')", name="info")
+      el-tab-pane(:label="$t('customers.info')" name="info")
         el-row(:gutter="5")
           el-col.col_vert_space(:sm="24" :md="12")
             el-card(shadow="never")
@@ -27,7 +27,7 @@
               template(v-slot:header)
                 | {{ $t('customersLegal.bank.requisites') }}
 
-              legal-bank-info(v-if="ready", :uid="uid")
+              legal-bank-info(v-if="ready" :uid="uid")
 
       el-tab-pane(
         :label="$t('customersLegal.branches')"
@@ -108,6 +108,5 @@ export default class extends mixins(TabMixin) {
     ] as any)
   }
   // End Breadcrumbs
-
 }
 </script>

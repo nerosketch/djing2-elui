@@ -5,10 +5,10 @@
         | {{ $t('customers.balance') }}:
 
       small
-        | {{ $store.state.customer.balance }}.
+        |  {{ $store.state.customer.balance }}.
 
       span
-        | {{ $t('startDate') }}:
+        |  {{ $t('dateOfEstablishment') }}
 
       small
         | {{ $store.state.customer.create_date }}
@@ -116,7 +116,7 @@ export default class extends mixins(TabMixin) {
     await CustomerModule.GetCustomer(this.uid)
     this.loaded = true
     this.setCrumbs(this.$store.state.customer.address)
-    document.title = this.$store.state.customer.full_name || this.$tc('customers.customer').toString()
+    document.title = this.$store.state.customer.full_name || this.$tc('customers.customer')
   }
 
   private onCustomerServerUpdate(msg: IWsMessage) {
@@ -134,7 +134,7 @@ export default class extends mixins(TabMixin) {
         path: '/customers/',
         meta: {
           hidden: true,
-          title: this.$tc('addrs.addresses').toString()
+          title: this.$tc('addrs.addresses')
         }
       },
       /* {
