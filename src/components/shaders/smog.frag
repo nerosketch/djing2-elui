@@ -28,8 +28,7 @@ void main(void)
   float dd=1.-length(uv);
   uv.x+=sin(u_time*.00003); // speed
   uv.y+=sin(uv.x*1.4)*.2;
-  uv.x*=1.;     // size
-  float c=snow(uv,30.)*.3;
+  float c=snow(uv,90.)*.3;
   c+=snow(uv,25.)*.5;
   c+=snow(uv,15.)*.8;
   c+=snow(uv,10.);
