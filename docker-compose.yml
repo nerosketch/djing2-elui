@@ -15,7 +15,6 @@ services:
       - NODE_ENV
     volumes:
       - .:/home/node/app
-      - /tmp:/tmp
       - /etc/localtime:/etc/localtime
       - media-data:/var/www/app/media
       - staticfiles:/var/www/app/static
