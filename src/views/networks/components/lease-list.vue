@@ -9,21 +9,19 @@
       el-checkbox(v-model="row.closed" disabled)
         | {{ row.closed ? 'Да' : 'Нет' }}
 
-    template(v-slot:oper="{row}")
-      el-button(icon="el-icon-delete-solid" @click="shutdownSesion(row)")
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
-import { IUserSession } from '@/api/sessions/types'
 import { IDRFRequestListParameters } from '@/api/types'
-import { delSession, getSessionList, getGuestSessionList } from '@/api/sessions/req'
+import { ICustomerIpLease } from '@/api/networks/types'
+import { getCustomerIpLeases } from '@/api/networks/req'
 
-class DataTableComp extends DataTable<IUserSession> {}
+class DataTableComp extends DataTable<ICustomerIpLease> {}
 
 @Component({
-  name: 'SessionList',
+  name: 'LeaseList',
   components: { datatable: DataTableComp }
 })
 export default class extends Vue {
@@ -88,18 +86,9 @@ export default class extends Vue {
       params.fields = 'id,assign_time,session_duration,ip_lease_ip,ip_lease_mac,closed,h_input_octets,h_output_octets,h_input_packets,h_output_packets'
     }
     if (this.uid === null) {
-      return getGuestSessionList(params)
+      return getCustomerIpLeases(params)
     }
-    return getSessionList(Object.assign(params, { customer: this.uid }))
-  }
-
-  private shutdownSesion(ses: IUserSession) {
-    this.$confirm(this.$tc('areYSureFinishSession')).then(async() => {
-      await delSession(ses.id)
-      this.$refs.table.LoadTableData()
-    }).catch(err => {
-      this.$message.error(err)
-    })
+    return getCustomerIpLeases(Object.assign(params, { customer: this.uid }))
   }
 }
 </script>

@@ -16,49 +16,47 @@
           @click="isDisplay=false"
           :underline="false")
 
-      template(v-if="ses")
-        template(v-if="lease")
-          b {{ lease.ip_address }}
-
-          i <{{ lease.mac_address }}>
-
+      template(v-if="lease")
         dl
           dt
             b {{ $t('customers.sessionStartTime') }}
-
-          dd {{ ses.assign_time || '-----' }}
-
-          dt
-            b {{ $t('customers.sessionDuration') }}
-
-          dd {{ ses.session_duration || '-----' }}
+          dd {{ defVal(lease.lease_time) }}
 
           dt
             b {{ $t('customers.sessionLastUpdate') }}
-
-          dd {{ ses.last_event_time || '-----' }}
+          dd {{ defVal(lease.last_update) }}
 
           dt
             b {{ $t('customers.sessionInTraf') }}
-
-          dd {{ ses.h_input_octets || '-----' }}
+          dd {{ defVal(lease.h_input_octets) }}
 
           dt
             b {{ $t('customers.sessionOutTraf') }}
-
-          dd {{ ses.h_output_octets || '-----' }}
+          dd {{ defVal(lease.h_output_octets) }}
 
           dt
             b {{ $t('customers.sessionInPkts') }}
-
-          dd {{ ses.h_input_packets || '-----' }}
+          dd {{ defVal(lease.h_input_packets) }}
 
           dt
             b {{ $t('customers.sessionOutPkts') }}
+          dd {{ defVal(lease.h_output_packets) }}
 
-          dd {{ ses.h_output_packets || '-----' }}
+          dt
+            b CVID
+          dd {{ defVal(lease.cvid) }}
 
-        free-session-button(:sessionId="ses.id")
+          dt
+            b SVID
+          dd {{ defVal(lease.svid) }}
+
+          dt
+            b SessionID
+          dd {{ defVal(lease.session_id) }}
+
+          dt
+            b RADIUS username
+          dd {{ defVal(lease.radius_username) }}
 
       div(v-else) {{ $t('customers.sessionNotFound') }}
 
@@ -71,37 +69,36 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { getSessionByLease } from '@/api/sessions/req'
-import { IUserSession } from '@/api/sessions/types'
 import { ICustomerIpLease } from '@/api/networks/types'
-import FreeSessionButton from './free-session-button.vue'
+import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 
 @Component({
-  name: 'IpSessionDetail',
-  components: { FreeSessionButton }
+  name: 'IpLeaseDetail'
 })
 export default class extends Vue {
-  @Prop({ required: true })
+  @Prop({ default: null })
   private lease!: ICustomerIpLease
 
   private detailLoading = false
   private isDisplay = false
-  private ses: IUserSession | null = null
 
-  private async loadSession(leaseId: number) {
+  private async loadLease(leaseId: number) {
     this.detailLoading = true
     try {
-      const { data } = await getSessionByLease(leaseId)
-      this.ses = data
+      await CustomerIpLeaseModule.GetLease(leaseId)
     } finally {
       this.detailLoading = false
     }
   }
 
+  private defVal(val: any) {
+    return val || '-----'
+  }
+
   @Watch('isDisplay')
   private isChDisp(isDisplay: boolean) {
-    if (isDisplay && this.lease.id > 0) {
-      this.loadSession(this.lease.id)
+    if (isDisplay && this.lease && this.lease.id > 0) {
+      this.loadLease(this.lease.id)
     }
   }
 }

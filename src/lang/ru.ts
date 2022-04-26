@@ -82,7 +82,7 @@ export default {
     session: 'Сессия',
     sessionStartTime: 'Время старта',
     sessionDuration: 'Продолжительность',
-    sessionLastUpdate: 'последнее обновление',
+    sessionLastUpdate: 'Последнее обновление',
     sessionInTraf: 'Вход. траф.',
     sessionInPkts: 'Вход. пакеты',
     sessionOutTraf: 'Исход. траф.',
