@@ -58,6 +58,10 @@
             b RADIUS username
           dd {{ defVal(lease.radius_username) }}
 
+        free-session-button(
+          :leaseId="lease.id"
+          :disabled="!Boolean(lease.radius_username)"
+        )
       div(v-else) {{ $t('customers.sessionNotFound') }}
 
     el-button(
@@ -71,9 +75,13 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { ICustomerIpLease } from '@/api/networks/types'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
+import FreeSessionButton from './free-session-button.vue'
 
 @Component({
-  name: 'IpLeaseDetail'
+  name: 'IpLeaseDetail',
+  components: {
+    FreeSessionButton
+  }
 })
 export default class extends Vue {
   @Prop({ default: null })
