@@ -132,8 +132,9 @@ export default class extends Vue {
             this.$emit('done', newDat)
           }
         } catch (err) {
-          this.loading = false
           this.$emit('err', err)
+        } finally {
+          this.loading = false
         }
       } else {
         this.$message.error(this.$tc('fixFormErrs'))

@@ -45,15 +45,11 @@ export default class extends Vue {
       page_size: 0,
       fields: 'id,name'
     }
-    try {
-      const { data } = await getUserGroups(p) as any
-      const existingGIds = UserProfileModule.groups
-      this.groups = data.map((g: IUserGroup) => Object.assign({
-        checked: existingGIds.includes(g.id)
-      }, g))
-    } catch (err) {
-      this.$message.error(err)
-    }
+    const { data } = await getUserGroups(p) as any
+    const existingGIds = UserProfileModule.groups
+    this.groups = data.map((g: IUserGroup) => Object.assign({
+      checked: existingGIds.includes(g.id)
+    }, g))
   }
 
   created() {
@@ -69,8 +65,6 @@ export default class extends Vue {
         groups: grpids
       })
       this.$emit('done', r)
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loading = false
     }

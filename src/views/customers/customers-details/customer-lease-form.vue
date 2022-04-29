@@ -113,7 +113,7 @@ export default class extends Vue {
             await CustomerIpLeaseModule.PatchLease(this.frmMod)
           }
           this.$emit('done')
-        } catch (err) {
+        } catch {
           return false
         } finally {
           this.frmLoading = false

@@ -61,7 +61,7 @@ export default class extends mixins(TabMixin) {
     try {
       await CustomerLegalModule.getCustomerLegal(uid)
       this.ready = true
-    } catch (err) {
+    } catch {
       this.ready = false
     }
   }
