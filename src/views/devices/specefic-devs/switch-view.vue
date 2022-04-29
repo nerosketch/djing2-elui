@@ -2,11 +2,9 @@
   el-card
     template(v-slot:header)
       .clearfix
-        span
-          | {{ device.comment || $t('devices.switch') }}
+        span {{ device.comment || $t('devices.switch') }}
 
-        small
-          | {{ ` ${device.ip_address || device.mac_addr} ` }}
+        small {{ ` ${device.ip_address || device.mac_addr} ` }}
 
         template(v-if="device.parent_dev_name")
           | {{ $t('parentDev') }}
@@ -33,8 +31,7 @@
         width="60"
         align="center")
         template(v-slot:default="{row}")
-          b
-            | {{ row.num }}
+          b {{ row.num }}
 
       el-table-column(
         :label="$t('bulk')"

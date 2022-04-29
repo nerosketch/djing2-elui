@@ -2,11 +2,9 @@
   el-card(shadow="hover" :body-style="defCardStyle")
     template(v-slot:header)
       .clearfix
-        span
-          | {{ comment.author_name }}
+        span {{ comment.author_name }}
 
-        small
-          | {{ comment.date_create }}
+        small {{ comment.date_create }}
 
         el-button.card_del_btn(
           type="text"
@@ -16,8 +14,7 @@
 
     el-avatar(shape="square" :src="comment.author_avatar")
 
-    span
-      | {{ comment.text }}
+    span {{ comment.text }}
 </template>
 
 <script lang="ts">

@@ -1,17 +1,13 @@
 <template lang="pug">
   .app-container
     slot(name="head")
-      span
-        | {{ $t('customers.balance') }}:
+      span {{ $t('customers.balance') }}:
 
-      small
-        |  {{ $store.state.customer.balance }}.
+      small  {{ $store.state.customer.balance }}.
 
-      span
-        |  {{ $t('dateOfEstablishment') }}
+      span  {{ $t('dateOfEstablishment') }}
 
-      small
-        | {{ $store.state.customer.create_date }}
+      small {{ $store.state.customer.create_date }}
 
     el-tabs.border-card(v-model="activeTabName")
       el-tab-pane(

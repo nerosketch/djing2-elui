@@ -1,7 +1,6 @@
 <template lang="pug">
   div
-    p
-      | Поля, отмеченные галками, будут видны.
+    p Поля, отмеченные галками, будут видны.
 
     template(v-if="colsLoc.length > 0")
       el-checkbox(

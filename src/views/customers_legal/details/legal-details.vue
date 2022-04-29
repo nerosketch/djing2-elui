@@ -1,16 +1,12 @@
 <template lang="pug">
   .app-container
-    span
-      | {{ $t('customers.balance') }}:
+    span {{ $t('customers.balance') }}:
 
-    small
-      | {{ $store.state.customerlegal.balance }}.
+    small {{ $store.state.customerlegal.balance }}.
 
-    span
-      | {{ $t('createDate') }}:
+    span {{ $t('createDate') }}:
 
-    small
-      | {{ $store.state.customerlegal.create_date }}
+    small {{ $store.state.customerlegal.create_date }}
 
     el-tabs.border-card(v-model="activeTabName")
       el-tab-pane(:label="$t('customers.info')" name="info")

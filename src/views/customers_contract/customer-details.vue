@@ -26,8 +26,7 @@
 
                 contract-form(:contract="c")
 
-        span(v-else)
-          | {{ $t('contractDocs.noContracts') }}
+        span(v-else) {{ $t('contractDocs.noContracts') }}
 
         el-button(@click="newContractFormVisible=true")
           | {{ $t('add') }}

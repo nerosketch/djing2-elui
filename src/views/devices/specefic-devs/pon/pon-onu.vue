@@ -11,8 +11,7 @@
         template(v-slot:header)
           | {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }}
 
-          small
-            | {{ `${device.ip_address || device.mac_addr}` }}
+          small {{ `${device.ip_address || device.mac_addr}` }}
 
           el-link(
             style="float: right"
@@ -78,11 +77,9 @@
         p(
           v-if="$store.getters.isOnuRegistered && macsNotEqual"
         )
-          b
-            | {{ $t('attention') }}!
+          b {{ $t('attention') }}!
 
-          span
-            | Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить". Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
+          span Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить". Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
             |              Так же можно проверить место на "глазе" olt, может он заполнен.
 
         el-row(
@@ -94,13 +91,11 @@
 
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
-              b
-                | {{ $t('signalLevel') }}
+              b {{ $t('signalLevel') }}
               | {{ onuDetails.signal }}
 
             .text.item.list-item
-              b
-                | {{ $t('macAddrFromOLT') }}
+              b  {{ $t('macAddrFromOLT') }}
               | {{ macFromOlt }}
 
             template(v-for="(inf, i) in onuDetails.info" v-if="inf[1]")

@@ -3,11 +3,9 @@
     p(v-if="lastConnectedExists")
       | {{ $t('customers.serviceLastConnected') }} -
 
-      b
-        | {{ lastConnectedTitle }}
+      b {{ lastConnectedTitle }}
 
-    p
-      | {{ $t('customers.serviceAutocontinuation') }} -
+    p {{ $t('customers.serviceAutocontinuation') }} -
 
       el-checkbox(
         v-loading="serviceBlockLoad"

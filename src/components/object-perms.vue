@@ -1,7 +1,6 @@
 <template lang="pug">
   div
-    h4
-      | Какие группы сотрудников будут иметь доступ
+    h4 Какие группы сотрудников будут иметь доступ
 
     el-select(v-model="selectedProfileGroup")
       el-option(
@@ -10,8 +9,7 @@
         :label="grp.name"
         :value="grp.id")
 
-    h4
-      | Какие права будет иметь выбранная группа сотрудников
+    h4 Какие права будет иметь выбранная группа сотрудников
 
     template(v-if="initialGroupPerms")
       el-checkbox(

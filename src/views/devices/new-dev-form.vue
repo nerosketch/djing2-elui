@@ -44,8 +44,7 @@
       el-checkbox(v-model="frmMod.is_noticeable")
         | {{ $t('monitoringEventAlerts') }}:&nbsp;
 
-        b
-          | {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
+        b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
 
     el-form-item
       el-button(
