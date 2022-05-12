@@ -166,7 +166,8 @@ export default class extends Vue {
     this.poolsLoading = true
     try {
       const { data } = await getNetworkIpPools({
-        groups: CustomerModule.group
+        groups: CustomerModule.group,
+        is_dynamic: false
       }) as any
       this.pools = data
     } finally {
