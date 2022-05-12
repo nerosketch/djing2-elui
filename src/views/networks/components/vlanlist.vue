@@ -145,7 +145,7 @@ export default class extends mixins(VlanMixin) {
         path: '/',
         meta: {
           hidden: true,
-          title: this.$tc('network')
+          title: this.$tc('networks.network')
         }
       }
     ] as any)

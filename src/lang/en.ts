@@ -359,6 +359,8 @@ export default {
   networks: {
     tPool: '{0} ip pool',
     austRemoveLease: 'Are you sure to remove lease "{0}"?',
+    isDynamic: "Is dynamic",
+    network: "Network",
   },
   messenger: {
     botRemoved: 'Messenger "{0}" has been removed',
@@ -533,7 +535,6 @@ export default {
   notRemoved: "Not removed, it looks like someone's already removed.",
   notSelected: "Not selected",
   insufficientRights: "Insufficient rights",
-  network: "Network",
   low: "Low",
   contractCanContainLatinAndDigits:
     "The contract number may contain Latin symbols and figures",
@@ -647,7 +648,6 @@ export default {
   theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained:
     "The ownership of the type of payments to websites is maintained",
   priority: "Priority: ",
-  durationOfTheSession: "Duration of the session",
   loss: "Loss",
   path: "Path",
   distributionOfServicesBySubscribers:
@@ -771,7 +771,6 @@ export default {
   theTaskWillBeRemovedNowCarefully: "The task will be removed now, carefully.",
   targetRemoved: "Target removed",
   targetCompleted: "Target completed",
-  closed: "Closed",
   complete: "Complete",
   areYSureFinishSession: "Are y sure you want to finish the session?",
   device: "Device.",

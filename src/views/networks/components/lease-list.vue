@@ -5,9 +5,8 @@
     :heightDiff="160"
     widthStorageNamePrefix="sessions"
     ref="table")
-    template(v-slot:closed="{row}")
-      el-checkbox(v-model="row.closed" disabled)
-        | {{ row.closed ? 'Да' : 'Нет' }}
+    template(v-slot:is_dynamic="{row}")
+      boolean-icon(v-model="row.is_dynamic")
 
 </template>
 
@@ -17,12 +16,16 @@ import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/
 import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomerIpLease } from '@/api/networks/types'
 import { getCustomerIpLeases } from '@/api/networks/req'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 class DataTableComp extends DataTable<ICustomerIpLease> {}
 
 @Component({
   name: 'LeaseList',
-  components: { datatable: DataTableComp }
+  components: {
+    datatable: DataTableComp,
+    BooleanIcon
+  }
 })
 export default class extends Vue {
   @Prop({ default: null }) private uid!: number | null
@@ -33,29 +36,25 @@ export default class extends Vue {
 
   private tableColumns: IDataTableColumn[] = [
     {
-      prop: 'assign_time',
+      prop: 'lease_time',
       label: this.$tc('startTime'),
       'min-width': 130
     },
     {
-      prop: 'session_duration',
-      label: this.$tc('durationOfTheSession'),
-      'min-width': 200
-    },
-    {
-      prop: 'ip_lease_ip',
+      prop: 'ip_address',
       label: 'ip',
       'min-width': 200
     },
     {
-      prop: 'ip_lease_mac',
+      prop: 'mac_address',
       label: this.$tc('macAddress'),
       sortable: true,
       'min-width': 150
     },
     {
-      prop: 'closed',
-      label: this.$tc('closed')
+      prop: 'is_dynamic',
+      label: this.$tc('networks.isDynamic'),
+      align: DataTableColumnAlign.CENTER
     },
     {
       prop: 'h_input_octets',
@@ -83,7 +82,7 @@ export default class extends Vue {
 
   private loadSessions(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,assign_time,session_duration,ip_lease_ip,ip_lease_mac,closed,h_input_octets,h_output_octets,h_input_packets,h_output_packets'
+      params.fields = 'id,lease_time,ip_address,mac_address,h_input_octets,h_output_octets,h_input_packets,h_output_packets'
     }
     if (this.uid === null) {
       return getCustomerIpLeases(params)

@@ -359,6 +359,8 @@ export default {
   networks: {
     tPool: '{0} подсеть',
     austRemoveLease: 'Действительно удалить сессию "{0}"?',
+    isDynamic: "Динамический",
+    network: 'Сеть',
   },
   messenger: {
     botRemoved: 'Чат бот "{0}" удалён',
@@ -533,7 +535,6 @@ export default {
   notRemoved: 'Не удалили, похоже уже кто-то удалил',
   notSelected: 'Не выбрано',
   insufficientRights: 'Недостаточно прав',
-  network: 'Network',
   low: 'Низкий',
   contractCanContainLatinAndDigits:
     'Номер договора может содержать латинские символы и цифры',
@@ -646,7 +647,6 @@ export default {
   theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained:
     'Принадлежность вида платежей сайтам сохранена',
   priority: 'Приоритет: ',
-  durationOfTheSession: 'Продолжительность сессии',
   loss: 'Провалена',
   path: 'путь',
   distributionOfServicesBySubscribers:
@@ -769,7 +769,6 @@ export default {
   theTaskWillBeRemovedNowCarefully: 'Задача сейчас будет удалена, внимательно',
   targetRemoved: 'Задача удалена',
   targetCompleted: 'Задача завершена',
-  closed: 'Закрыт',
   complete: 'Завершить',
   areYSureFinishSession: 'Завершить сессию?',
   device: 'Железка',
