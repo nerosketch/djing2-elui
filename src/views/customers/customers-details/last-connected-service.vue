@@ -1,9 +1,9 @@
 <template lang="pug">
   div(v-loading)
-    p(v-if="lastConnectedExists")
+    p(v-if="lastConnectedExists()")
       | {{ $t('customers.serviceLastConnected') }} -
 
-      b {{ lastConnectedTitle }}
+      b {{ $store.state.customer.last_connected_service_title }}
 
     p {{ $t('customers.serviceAutocontinuation') }} -
 
@@ -46,11 +46,7 @@ export default class extends Vue {
     )
   }
 
-  get lastConnectedTitle() {
-    return CustomerModule.last_connected_service_title
-  }
-
-  get lastConnectedExists() {
+  private lastConnectedExists() {
     return CustomerModule.last_connected_service > 0
   }
 }

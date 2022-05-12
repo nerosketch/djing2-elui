@@ -44,7 +44,7 @@ export default class extends Vue {
     return this.$confirm(`${this.$tc('del')} "${file.name}"?`)
   }
 
-  get customerId() {
+  private customerId() {
     return CustomerModule.id
   }
 
@@ -52,7 +52,7 @@ export default class extends Vue {
     CustomerAttachementModule.AddCustomerAttachment({
       title: req.file.name,
       doc_file: req.file,
-      customer: this.customerId
+      customer: this.customerId()
     }).then(newAtt => {
       this.addFileListItem(newAtt)
     })
@@ -67,9 +67,9 @@ export default class extends Vue {
   }
 
   private async loadFileList() {
-    if (this.customerId && this.customerId > 0) {
+    if (this.customerId() && this.customerId() > 0) {
       try {
-        const { data } = await getAttachments(this.customerId)
+        const { data } = await getAttachments(this.customerId())
         for (const el of data) {
           this.addFileListItem(el)
         }

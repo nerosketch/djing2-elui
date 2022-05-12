@@ -139,10 +139,6 @@ export default class extends Vue {
     fias_address_type: null
   }
 
-  get isNew() {
-    return this.$store.state.address.id === 0
-  }
-
   created() {
     this.onChangeLoc(this.$store.state.address)
   }
@@ -152,7 +148,7 @@ export default class extends Vue {
       if (valid) {
         this.isLoading = true
         try {
-          if (this.isNew) {
+          if (this.$store.state.address.id === 0) {
             const addr = await AddressModule.AddAddress(this.frmMod)
             this.$emit('added', addr)
           } else {
