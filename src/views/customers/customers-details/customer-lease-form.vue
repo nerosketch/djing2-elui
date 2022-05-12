@@ -81,7 +81,7 @@ export default class extends Vue {
       { validator: macAddrValidator, trigger: 'change', message: this.$tc('customers.badMac') }
     ],
     pool: [
-      { required: true, message: this.$tc('nets.poolRequiredMsg').toString(), trigger: 'blur' },
+      { required: true, message: this.$tc('nets.poolRequiredMsg').toString(), trigger: 'blur' }
     ]
   }
 
@@ -125,7 +125,7 @@ export default class extends Vue {
   }
 
   private async getFreeIp() {
-    if(!this.frmMod.pool) return
+    if (!this.frmMod.pool) return
     this.getFreeIpLoad = true
     NetworkIpPoolModule.SET_ID(this.frmMod.pool)
     try {

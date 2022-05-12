@@ -217,13 +217,13 @@ export default {
   nets: {
     ipMustNotBeEmpty: 'IP не может быть пустым',
     ipLeaseSuccessfullyRemoved: 'Аренда IP удалена',
-    poolRequiredMsg: 'Ip пул обязателен',
+    poolRequiredMsg: 'Ip пул обязателен'
   },
   groups: {
     minAGroup: 'группу',
     group_required: 'Название группы надо указать',
     group: 'Группа',
-    failed2GetGroups: 'Не удалось получить группы',
+    failed2GetGroups: 'Не удалось получить группы'
   },
   addrs: {
     addresses: 'Населённые пункты',
@@ -258,7 +258,7 @@ export default {
       titlePlural: 'Типы задач',
       add: 'Добавить тип задачи',
       added: 'Новый тип задач добавлен',
-      changed: 'Тип задачи изменён',
+      changed: 'Тип задачи изменён'
     },
     finishDoc: {
       title: 'Акт задачи',
@@ -268,8 +268,8 @@ export default {
       cost: 'Стоимость',
       added: 'Акт создан',
       changed: 'Акт изменён',
-      dateTimeReq: 'Время обязательно',
-    },
+      dateTimeReq: 'Время обязательно'
+    }
   },
   devices: {
     dev: 'Устройство',
@@ -287,7 +287,7 @@ export default {
     affixedSubscribers: 'Прикреплённые абоненты: ',
     snmpNum: 'SNMP Ном.',
     level: 'Ур. сигнала',
-    uptime: 'В сети',
+    uptime: 'В сети'
   },
   route: {
     staff: 'Cотрудники',
@@ -350,24 +350,24 @@ export default {
     isActive: 'Включён',
     readRightsNotFound: 'Не нашёл права на чтение',
     responsibilityForGroups: 'Ответственность за группы',
-    groupResponsibilityRetained: 'Ответственность за группы сохранена',
+    groupResponsibilityRetained: 'Ответственность за группы сохранена'
   },
   sites: {
     doDomain: '{0} домен',
-    site: 'Сайты',
+    site: 'Сайты'
   },
   networks: {
     tPool: '{0} подсеть',
     austRemoveLease: 'Действительно удалить сессию "{0}"?',
-    isDynamic: "Динамический",
-    network: 'Сеть',
+    isDynamic: 'Динамический',
+    network: 'Сеть'
   },
   messenger: {
     botRemoved: 'Чат бот "{0}" удалён',
-    austRemove: 'Действительно удалить чат бот "{0}"?',
+    austRemove: 'Действительно удалить чат бот "{0}"?'
   },
   services: {
-    doPP: '{0} ',
+    doPP: '{0} '
   },
   noSubscribersFoundOnThePort: 'Абоненты на порту не найдены',
   noSubscribersFound: 'Абоненты не найдены',
