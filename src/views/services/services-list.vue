@@ -8,8 +8,7 @@
       widthStorageNamePrefix="services"
       ref="table")
       template(v-slot:isadm="{row}")
-        el-checkbox(v-model="row.is_admin" disabled)
-          | {{ row.is_admin ? 'Да' : 'Нет'}}
+        boolean-icon(v-model="row.is_admin")
 
       template(v-slot:oper="{row}")
         el-button-group
@@ -91,6 +90,7 @@ import { ServiceModule } from '@/store/modules/services/service'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import ServiceForm from './service-form.vue'
 import CustomerServiceList from './customer-service-list.vue'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 class DataTableComp extends DataTable<IService> {}
 
@@ -99,7 +99,8 @@ class DataTableComp extends DataTable<IService> {}
   components: {
     datatable: DataTableComp,
     ServiceForm,
-    CustomerServiceList
+    CustomerServiceList,
+    BooleanIcon
   }
 })
 export default class extends Vue {
@@ -121,20 +122,15 @@ export default class extends Vue {
     },
     {
       prop: 'speed_in',
-      label: this.$tc('comeIn'),
+      label: this.$tc('services.speedIn'),
       'min-width': 110,
       sortable: true
     },
     {
       prop: 'speed_out',
-      label: this.$tc('exodus'),
+      label: this.$tc('services.speedOut'),
       'min-width': 110,
       sortable: true
-    },
-    {
-      prop: 'speed_burst',
-      label: this.$tc('burst'),
-      'min-width': 100
     },
     {
       prop: 'cost',
@@ -191,7 +187,7 @@ export default class extends Vue {
 
   private loadServices(params?: IDRFRequestListParametersService) {
     if (params) {
-      params.fields = 'id,title,descr,speed_in,speed_out,speed_burst,cost,is_admin,usercount,calc_type,sites'
+      params.fields = 'id,title,descr,speed_in,speed_out,cost,is_admin,usercount,calc_type,sites'
     }
     return getServices(params)
   }

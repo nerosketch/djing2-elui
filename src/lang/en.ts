@@ -368,6 +368,8 @@ export default {
   },
   services: {
     doPP: '{0} one-time pay',
+    speedIn: 'Input speed',
+    speedOut: 'Output speed'
   },
   noSubscribersFoundOnThePort: "No subscribers found on the port",
   noSubscribersFound: "No subscribers found",
@@ -392,7 +394,6 @@ export default {
   balance: "Balance",
   baseCalcFunction: "Base account function",
   browser: "Browser",
-  burst: "Burst",
   price: "Price",
   thePriceShallBePositiveOr0: "The price shall be positive or 0",
   thePriceShallBeSpecified: "The price shall be specified",
@@ -463,8 +464,6 @@ export default {
   internet: "Internet",
   conflict: "conflict",
   andGoIn: "and go in",
-  exodus: "Out speed",
-  speed: "Speed.",
   basedOnByte: "Based on Byte",
   implementers: "Implementers",
   correctFormsOfError: "Correct forms of error",

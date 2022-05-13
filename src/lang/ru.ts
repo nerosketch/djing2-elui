@@ -367,7 +367,9 @@ export default {
     austRemove: 'Действительно удалить чат бот "{0}"?'
   },
   services: {
-    doPP: '{0} '
+    doPP: '{0} ',
+    speedIn: 'Вход. скорость',
+    speedOut: 'Исход. скорость'
   },
   noSubscribersFoundOnThePort: 'Абоненты на порту не найдены',
   noSubscribersFound: 'Абоненты не найдены',
@@ -392,7 +394,6 @@ export default {
   balance: 'Баланс',
   baseCalcFunction: 'Базовый расчётный функционал',
   browser: 'Браузер',
-  burst: 'Бурст',
   price: 'Цена',
   thePriceShallBePositiveOr0: 'Цена должна быть положительной или 0',
   thePriceShallBeSpecified: 'Цена должна быть указана',
@@ -463,8 +464,6 @@ export default {
   internet: 'Интернет',
   conflict: 'ip конфликт',
   andGoIn: 'Ip входа',
-  exodus: 'Исход.ск.',
-  speed: 'Исход. скорость',
   basedOnByte: 'Исходящих байт',
   implementers: 'Исполнители',
   correctFormsOfError: 'Исправь ошибки формы',
