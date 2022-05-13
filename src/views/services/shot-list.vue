@@ -96,7 +96,7 @@ export default class extends Vue {
   }
 
   private async delShot(shot: IOneShotPay) {
-    if (confirm(this.$t('austRemoveShotPay', [shot.name]) as string)) {
+    if (confirm(this.$tc('tasks.austRemoveShotPay', 1, [shot.name]))) {
       await OneShotPayModule.DelOneShotPay(shot.id)
       this.$refs.table.LoadTableData()
     }

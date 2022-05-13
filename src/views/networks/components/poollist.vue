@@ -142,7 +142,7 @@ export default class extends Vue {
     } else {
       w = this.$tc('change')
     }
-    return this.$t('networks.tPool', [w])
+    return this.$tc('networks.tPool', 1, [w])
   }
 
   private async openEdit(pool: INetworkIpPool) {
@@ -156,7 +156,7 @@ export default class extends Vue {
   }
 
   private delPool(pool: INetworkIpPool) {
-    this.$confirm(this.$t('aus2delIpPool', [pool.network]) as string).then(async() => {
+    this.$confirm(this.$tc('aus2delIpPool', 1, [pool.network])).then(async() => {
       await NetworkIpPoolModule.DelPool(pool.id)
       this.$message.success(this.$tc('substanceRemoved'))
       this.$refs.table.LoadTableData()
