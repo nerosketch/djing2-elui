@@ -5,6 +5,14 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
+
+    el-alert(
+      v-if="isNew"
+      title="Внимание на дату начала действия договора"
+      description="После её создания нельзя будет эту дату изменить. Так что у вас ОДНА попытка, удачи :)"
+      type="info"
+      show-icon
+    )
     el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
 
@@ -149,6 +157,7 @@ export default class extends mixins(FormMixin) {
     if (this.contract) {
       this.fillFrmModFromVar(this.contract)
     }
+    this.doCopyFromUsername()
   }
 
   private get isNew() {
