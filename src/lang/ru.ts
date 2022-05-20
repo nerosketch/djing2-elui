@@ -181,6 +181,7 @@ export default {
     birthDayValidationMessage: 'Нужно указать дату рождения',
     notPassed: 'Не передан абонент',
     searchBy: 'Поиск по: {0}',
+    phoneCreateTime: 'Время создания',
     contractNum: {
       validation: 'Нужно указать когда начал действовать договор',
       s: 'Номер договора',

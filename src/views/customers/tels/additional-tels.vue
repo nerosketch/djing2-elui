@@ -11,6 +11,9 @@
         el-link(:href="`tel:${row.telephone}`")
           | {{ row.telephone }}
 
+    el-table-column(:label="$t('customers.phoneCreateTime')" prop="create_time")
+      template(v-slot:default="{row}") {{ row.create_time }}
+
     el-table-column(
       :label="$t('del')"
       width="75"
