@@ -10,8 +10,7 @@
         template(v-slot:default="{row}")
           router-link.el-link.el-link--primary.is-underline(
             :to="{name: 'customerDetails', params:{uid: row.id }}"
-          )
-            | {{ row.username }}
+          ) {{ row.username }}
 
       el-table-column(:label="$t('customersLegal.fname')" prop="full_name")
 
@@ -98,11 +97,9 @@ export default class extends Vue {
 
   private delBranch(customer: ICustomer) {
     this.$confirm(`${this.$tc('customersLegal.delBranch')} "${customer.full_name}"?`).then(async() => {
-      const branches = CustomerLegalModule.branches
-      const br = branches.findIndex(b => b === customer.id)
-      if (br > -1) {
-        branches.splice(br, 1)
-        await CustomerLegalModule.updateCustomerLegal({ branches })
+      const newBranches = CustomerLegalModule.branches.filter(b => b !== customer.id)
+      if (newBranches.length > 0) {
+        await CustomerLegalModule.updateCustomerLegal({ branches: newBranches })
         this.loadBranches(this.customerId)
         this.$message.success(
           this.$tc('customersLegal.branchDeleted')
