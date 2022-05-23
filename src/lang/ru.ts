@@ -196,14 +196,14 @@ export default {
     extraFields: 'Дополнительные данные'
   },
   customersLegal: {
-    branch: 'Филиал (абонент)',
-    branches: 'Филиалы',
-    branchNotAttached: 'Филиалы не назначены',
+    branch: 'Подразделение (абонент)',
+    branches: 'Подразделения',
+    branchNotAttached: 'Подразделения не назначены',
     fname: 'Имя физ лица',
     tel: 'Номер телефона',
-    addBranch: 'Добавить филиал',
-    delBranch: 'Удалить филиал',
-    branchDeleted: 'Филиал отвязан',
+    addBranch: 'Добавить подразделение',
+    delBranch: 'Удалить подразделение',
+    branchDeleted: 'Подразделение отвязано',
     bank: {
       title: 'Название банка',
       bik: 'БИК',
