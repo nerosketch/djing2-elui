@@ -51,6 +51,11 @@
           dd {{ defVal(lease.svid) }}
 
           dt
+            b State
+          dd
+            boolean-icon(v-model="lease.state")
+
+          dt
             b SessionID
           dd {{ defVal(lease.session_id) }}
 
@@ -76,11 +81,13 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { ICustomerIpLease } from '@/api/networks/types'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import FreeSessionButton from './free-session-button.vue'
+import BooleanIcon from '@/components/boolean-icon.vue'
 
 @Component({
   name: 'IpLeaseDetail',
   components: {
-    FreeSessionButton
+    FreeSessionButton,
+    BooleanIcon
   }
 })
 export default class extends Vue {
