@@ -144,7 +144,7 @@ export default class extends Vue {
     }).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
       this.$message.success(
-        this.$tc('customers.ipLeaseSuccessfullyRemoved')
+        this.$tc('nets.ipLeaseSuccessfullyRemoved')
       )
       this.loadLeases()
     })
