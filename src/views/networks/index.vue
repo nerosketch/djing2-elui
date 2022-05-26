@@ -41,7 +41,7 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
   }
 })
 export default class extends mixins(TabMixin) {
-  protected activeTabName = 'sessions'
+  protected activeTabName = 'pools'
 
   // Breadcrumbs
   private async buildBreadcrumb() {
