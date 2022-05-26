@@ -27,7 +27,7 @@
         el-button(
           icon="el-icon-plus"
           @click="openNew"
-          disabled)
+        )
           | {{ $t('add') }}
 
         el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
