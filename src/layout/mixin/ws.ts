@@ -55,6 +55,9 @@ export default class extends Vue {
     if (this.wsInstance) {
       this.wsInstance.close()
     }
+    if (this.audioInstance) {
+      this.audioInstance.remove()
+    }
   }
 
   protected onMsg(msg: IWsMessage) {
