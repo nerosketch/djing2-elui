@@ -66,7 +66,7 @@ export default class extends Vue {
 
   public playNotify() {
     if (!this.audioInstance) {
-      this.audioInstance = new Audio(require('@/assets/mario.mp3'))
+      this.audioInstance = new Audio('/audio/mario.mp3')
     }
     this.audioInstance.play()
   }
