@@ -102,8 +102,8 @@ export default class extends mixins(FormMixin, VlanMixin) {
     ]
   }
 
-  private frmMod: INetworkIpPool = {
-    id: NetworkIpPoolModule.id,
+  private frmMod = {
+    id: NetworkIpPoolModule.id || undefined,
     network: NetworkIpPoolModule.network,
     description: NetworkIpPoolModule.description,
     groups: NetworkIpPoolModule.groups,
@@ -126,7 +126,7 @@ export default class extends mixins(FormMixin, VlanMixin) {
 
   @Watch('$store.state.netpool', { deep: true })
   private async onNetwCh(nstate: INetworkIpPool) {
-    this.frmMod = { ...nstate }
+    this.frmMod = { ...nstate } as any
     this.frmInitial = { ...nstate }
   }
 
@@ -140,7 +140,7 @@ export default class extends mixins(FormMixin, VlanMixin) {
   }
 
   private onSubmit() {
-    (this.$refs.poolfrm as Form).validate(async valid => {
+    (this.$refs.poolfrm as Form).validate(async(valid: boolean) => {
       if (valid) {
         this.isLoading = true
         let newDat
