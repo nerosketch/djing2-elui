@@ -55,6 +55,9 @@ export default class extends Vue {
     if (this.wsInstance) {
       this.wsInstance.close()
     }
+    if (this.audioInstance) {
+      this.audioInstance.remove()
+    }
   }
 
   protected onMsg(msg: IWsMessage) {
@@ -63,7 +66,7 @@ export default class extends Vue {
 
   public playNotify() {
     if (!this.audioInstance) {
-      this.audioInstance = new Audio(require('@/assets/mario.mp3'))
+      this.audioInstance = new Audio('/audio/mario.mp3')
     }
     this.audioInstance.play()
   }
