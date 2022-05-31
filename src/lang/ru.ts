@@ -95,7 +95,7 @@ export default {
     networking: 'Сетевое',
     leaseTime: 'Время аренды',
     auto: 'Авто',
-    minASessionLease: 'аренду ip',
+    sessionLease: 'аренду ip',
     areUSure2DelIpLease: 'Удалить аренду ip? Абонент больше не сможет получать услугу через этот ip.',
     services4Buy: 'Услуги для заказа',
     currentCustomerService: 'Текущая услуга абонента',
@@ -217,7 +217,8 @@ export default {
   },
   nets: {
     ipMustNotBeEmpty: 'IP не может быть пустым',
-    ipLeaseSuccessfullyRemoved: 'Аренда IP удалена',
+    ipLeaseSuccessfullyRemoved: '{0} аренд IP удалено',
+    ipLeaseNotFound: 'Аренда ip не найдена',
     poolRequiredMsg: 'Ip пул обязателен'
   },
   groups: {
