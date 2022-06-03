@@ -16,7 +16,7 @@ import {
 } from '@/api/baseRequests'
 
 
-const pgwUrl = '/fin/'
+const pgwUrl = '/fin/alltime/'
 export const getPayGateways = getObjectListDecorator<IPayAllTimeGateway>(pgwUrl)
 export const getPayGateway = getObjectDecorator<IPayAllTimeGateway>(pgwUrl)
 export const addPayGateway = addObjectDecorator<IPayAllTimeGateway>(pgwUrl)
