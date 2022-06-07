@@ -62,6 +62,7 @@ export interface ICustomerIpLease {
 export type ICustomerIpLeaseList = IDRFListResponse<ICustomerIpLease>
 export type ICustomerIpLeasePlainListResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLease[]>
 export type ICustomerIpLeaseListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLeaseList>
+export type ICustomerIpLeaseMixList = ICustomerIpLeaseListAxiosResponsePromise | ICustomerIpLeasePlainListResponsePromise
 
 export interface ICustomerIpLeasePingResponse {
   text: string

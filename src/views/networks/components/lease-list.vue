@@ -1,7 +1,7 @@
 <template lang="pug">
   datatable(
     :columns="tableColumns"
-    :getData="loadSessions"
+    :getData="loadLeases"
     :heightDiff="160"
     widthStorageNamePrefix="sessions"
     ref="table")
@@ -15,7 +15,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomerIpLease } from '@/api/networks/types'
-import { getCustomerIpLeases } from '@/api/networks/req'
+import { getCustomerIpLeases, getGlobalGuestLeases } from '@/api/networks/req'
 import BooleanIcon from '@/components/boolean-icon.vue'
 
 class DataTableComp extends DataTable<ICustomerIpLease> {}
@@ -80,14 +80,8 @@ export default class extends Vue {
     }
   ]
 
-  private loadSessions(params?: IDRFRequestListParameters) {
-    if (params) {
-      params.fields = 'id,lease_time,ip_address,mac_address,h_input_octets,h_output_octets,h_input_packets,h_output_packets'
-    }
-    if (this.uid === null) {
-      return getCustomerIpLeases(params)
-    }
-    return getCustomerIpLeases(Object.assign(params, { customer: this.uid }))
+  private loadLeases(params?: IDRFRequestListParameters) {
+    return getGlobalGuestLeases(params)
   }
 }
 </script>

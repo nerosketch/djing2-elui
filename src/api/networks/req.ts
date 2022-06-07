@@ -6,9 +6,8 @@ import {
   INetworkIpPoolList,
   INetworkIpPoolListAxiosResponsePromise,
   ICustomerIpLease, ICustomerIpLeaseList,
-  ICustomerIpLeaseListAxiosResponsePromise,
   ICustomerIpLeasePingAxoisResponsePromise,
-  ICustomerIpLeasePlainListResponsePromise
+  ICustomerIpLeaseMixList
 } from './types'
 import {
   addObjectDecorator,
@@ -49,7 +48,7 @@ export const getFreeIP = (id: number) =>
 const baseLeaseUrl = '/networks/lease/'
 
 // CustomerIpLease
-export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseListAxiosResponsePromise | ICustomerIpLeasePlainListResponsePromise => {
+export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseMixList => {
   if (customer) {
     params = Object.assign({ customer }, params)
   }
@@ -68,3 +67,6 @@ export const pingIcmpIpLease = (leaseId: number): ICustomerIpLeasePingAxoisRespo
 
 export const freeLeaseSession = (leaseId: number): IDRFAxiosResponsePromise<string> =>
   request.get(`${baseLeaseUrl}${leaseId}/free_session/`)
+
+export const getGlobalGuestLeases = (params?: IDRFRequestListParameters): ICustomerIpLeaseMixList =>
+  request.get<ICustomerIpLeaseList>(`${baseLeaseUrl}guest_list/`, {params})
