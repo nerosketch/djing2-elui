@@ -33,9 +33,9 @@
     el-form-item(:label="$t('contractDocs.dateBegin')" prop="start_service_time")
       el-date-picker(
         v-model="frmMod.start_service_time"
-        type="datetime"
+        type="date"
         value-format="yyyy-MM-dd HH:mm:ss"
-        format="d.MM.yyyy HH:mm:ss")
+        format="d.MM.yyyy")
 
     el-form-item(:label="$t('contractDocs.dateEnd')")
       | {{ frmMod.end_service_time || '—' }}
