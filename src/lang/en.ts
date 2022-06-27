@@ -330,6 +330,7 @@ export default {
     noContracts: "No treaty",
     addCustomerContract: "Add the contract to the subscriber",
     delQuestion: "Remove the contract with the subscriber?",
+    finishSuccessText: 'Customer contract successfully finished',
     delOk: "Successfully removed"
   },
   optMenu: {
