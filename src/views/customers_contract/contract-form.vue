@@ -76,6 +76,7 @@
         el-button(
           icon="el-icon-finished"
           @click="finishContractDialog"
+          :disabled="finishBtnDisabled"
           type='danger'
         ) {{ $t('contractDocs.finishBtn') }}
 
@@ -226,6 +227,10 @@ export default class extends mixins(FormMixin) {
       const { data } = await finishCustomerContract(this.contract.id)
       this.fillFrmModFromVar(data)
     }
+  }
+
+  private get finishBtnDisabled() {
+    return this.frmMod.end_service_time !== null
   }
 }
 </script>
