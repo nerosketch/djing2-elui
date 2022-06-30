@@ -50,8 +50,6 @@ import { ElTree } from 'element-ui/types/tree'
 import { Component, Vue } from 'vue-property-decorator'
 import AddressForm from './addr-form.vue'
 
-type TreeDropType = 'none' | 'before' | 'after' | 'inner'
-
 @Component({
   name: 'AddrsTree',
   components: {
