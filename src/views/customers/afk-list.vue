@@ -1,7 +1,6 @@
 <template lang="pug">
   .app-container
-    span
-      | {{ $t('customers.afkReferenceDate') }}:
+    span {{ $t('customers.afkReferenceDate') }}:
 
     el-date-picker(
       v-model="reqParams.date_limit"
@@ -10,8 +9,7 @@
       format="d.MM.yyyy HH:mm"
       :placeholder="$t('customers.afkReferenceDate')")
 
-    span
-      | {{ $t('customers.afkOutLimit') }}:
+    span {{ $t('customers.afkOutLimit') }}:
 
     el-input(
       :placeholder="$t('customers.afkOutLimit')"

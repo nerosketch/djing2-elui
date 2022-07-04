@@ -11,10 +11,10 @@
     el-form-item(:label="$t('description')" prop="descr")
       el-input(v-model="frmMod.descr")
 
-    el-form-item(:label="$t('comeIn')" prop="speed_in")
+    el-form-item(:label="$t('services.speedIn')" prop="speed_in")
       el-input(v-model="frmMod.speed_in" type="number")
 
-    el-form-item(:label="$t('speed.')" prop="speed_out")
+    el-form-item(:label="$t('services.speedOut')" prop="speed_out")
       el-input(v-model="frmMod.speed_out" type="number")
 
     el-form-item(:label="$t('acceleration')" prop="speed_burst")

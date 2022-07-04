@@ -44,8 +44,6 @@ export default class extends Vue {
         ].concat(otherLabels),
         data: chartData
       }
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.repLoading = false
     }

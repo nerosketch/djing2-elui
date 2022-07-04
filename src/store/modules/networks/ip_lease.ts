@@ -17,6 +17,19 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
   last_update = ''
   mac_address = ''
   is_dynamic = false
+  input_octets = 0
+  output_octets = 0
+  input_packets = 0
+  output_packets = 0
+  h_input_octets = ''
+  h_output_octets = ''
+  h_input_packets = ''
+  h_output_packets = ''
+  cvid = 0
+  svid = 0
+  lease_state: boolean | null = null
+  session_id: string | null = null
+  radius_username: string | null = null
 
   @Mutation
   public RESET_ALL_LEASE() {
@@ -28,6 +41,15 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
     this.last_update = ''
     this.mac_address = ''
     this.is_dynamic = false
+    this.input_octets = 0
+    this.output_octets = 0
+    this.input_packets = 0
+    this.output_packets = 0
+    this.cvid = 0
+    this.svid = 0
+    this.lease_state = null
+    this.session_id = null
+    this.radius_username = null
     return this
   }
 
@@ -41,6 +63,15 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
     this.last_update = data.last_update
     this.mac_address = data.mac_address
     this.is_dynamic = data.is_dynamic
+    this.input_octets = data.input_octets
+    this.output_octets = data.output_octets
+    this.input_packets = data.input_packets
+    this.output_packets = data.output_packets
+    this.cvid = data.cvid
+    this.svid = data.svid
+    this.lease_state = data.lease_state
+    this.session_id = data.session_id
+    this.radius_username = data.radius_username
     return this
   }
 
@@ -56,35 +87,6 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
     const { data } = await addCustomerIpLease(newLease)
     this.SET_ALL_LEASE(data)
     return data
-  }
-
-  @Action
-  public async SaveLease() {
-    const r = await changeCustomerIpLease(this.id, <ICustomerIpLease>{
-      ip_address: this.ip_address,
-      lease_time: this.lease_time,
-      last_update: this.last_update,
-      mac_address: this.mac_address,
-      pool: this.pool,
-      customer: this.customer,
-      is_dynamic: this.is_dynamic
-    })
-    this.SET_ALL_LEASE(r.data)
-    return r
-  }
-
-  @Action
-  public async GetAllLeaseState() {
-    return {
-      id: this.id,
-      ip_address: this.ip_address,
-      pool: this.pool,
-      customer: this.customer,
-      lease_time: this.lease_time,
-      last_update: this.last_update,
-      mac_address: this.mac_address,
-      is_dynamic: this.is_dynamic
-    }
   }
 
   @Action

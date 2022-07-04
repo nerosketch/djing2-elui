@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    | Порт №{{ portNum }}
+  div Порт №{{ portNum }}
 
     el-table(
       :data="deviceVlans"

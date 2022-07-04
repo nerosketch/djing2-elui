@@ -1,11 +1,9 @@
 <template lang="pug">
   .port
     .content(:class="{'port-available': port.fb_onu_num > 0}")
-      span
-        | {{ port.fb_name }}
+      span {{ port.fb_name }}
 
-      b
-        | {{ port.fb_onu_num }}
+      b {{ port.fb_onu_num }}
 
       port-svg-icon
 

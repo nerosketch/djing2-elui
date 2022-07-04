@@ -54,11 +54,10 @@ export default class extends Vue {
         periodic_pay_id: this.pserviceId,
         next_pay: this.deadline
       })
-      this.loading = false
       this.$message.success(data)
       this.$emit('done')
-    } catch (err) {
-      this.$message.error(err)
+    } finally {
+      this.loading = false
     }
   }
 

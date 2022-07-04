@@ -35,8 +35,8 @@ export default class extends Vue {
           this.defType = 'danger'
           this.defIcon = 'el-icon-error'
         }
-      } catch (err) {
-        this.$message.error(err)
+      } finally {
+        this.loading = false
       }
       const tv = setTimeout(() => {
         this.btnText = 'Ping'
@@ -44,7 +44,6 @@ export default class extends Vue {
         this.defIcon = 'el-icon-mouse'
         clearTimeout(tv)
       }, 10000)
-      this.loading = false
     } else {
       this.$message.warning('Не передана аренда ip')
     }

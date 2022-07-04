@@ -9,7 +9,6 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
@@ -56,7 +55,8 @@ export default class extends Vue {
 
   private startCounter () {
     const fnc = () => {
-      this.localVal = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+      const now = new Date()
+      this.localVal = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
     }
     this.localTimer = setInterval(fnc, 1000)
     fnc()

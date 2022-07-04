@@ -30,8 +30,8 @@
 
         boolean-icon(v-model="frmMod.is_active")
 
-      el-checkbox(v-model="frmMod.is_dynamic_ip")
-        | - {{ $t('customers.dhcpDynamic') }}:
+      //- el-checkbox(v-model="frmMod.is_dynamic_ip")
+        | - { { $t('customers.dhcpDynamic') }}:
 
         boolean-icon(v-model="frmMod.is_dynamic_ip")
 

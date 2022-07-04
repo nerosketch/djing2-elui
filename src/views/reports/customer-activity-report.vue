@@ -30,8 +30,6 @@ export default class extends Vue {
         data.active_count,
         data.commercial_customers
       ]
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.cloading = false
     }

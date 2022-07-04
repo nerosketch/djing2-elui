@@ -21,14 +21,12 @@
     el-form-item(:label="$t('profiles.isActive')")
       el-switch(v-model="frmMod.is_active")
 
-      small
-        | {{ frmMod.is_active ? '' : ' ' + $t('profiles.ifNotActive') }}
+      small {{ frmMod.is_active ? '' : ' ' + $t('profiles.ifNotActive') }}
 
     el-form-item(:label="$t('profiles.isSuperuser')")
       el-switch(v-model="frmMod.is_superuser")
 
-      small
-        | {{ frmMod.is_superuser ? ' ' + $t('profiles.ifSuperuser') : '' }}
+      small {{ frmMod.is_superuser ? ' ' + $t('profiles.ifSuperuser') : '' }}
 
     el-form-item(:label="$t('telephoneNumber')" prop="telephone")
       el-input(v-model="frmMod.telephone")

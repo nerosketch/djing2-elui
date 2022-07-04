@@ -59,9 +59,9 @@
     el-form-item(:label="$t('contractDocs.dateBegin')")
       el-date-picker(
         v-model="frmMod.actual_start_time"
-        type="datetime"
+        type="date"
         value-format="yyyy-MM-dd HH:mm"
-        format="d.MM.yyyy HH:mm")
+        format="d.MM.yyyy")
 
     el-form-item(:label="$t('description')")
       el-input(

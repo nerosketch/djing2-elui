@@ -39,12 +39,25 @@ export type INetworkIpPoolListAxiosResponsePromise = IDRFAxiosResponsePromise<IN
 export interface ICustomerIpLease {
   id: number
   ip_address: string
+  mac_address: string
   pool: number | null
   customer: number
+  is_dynamic: boolean
+  input_octets: number
+  output_octets: number
+  input_packets: number
+  output_packets: number
+  h_input_octets: string
+  h_output_octets: string
+  h_input_packets: string
+  h_output_packets: string
+  cvid: number
+  svid: number
+  lease_state: boolean | null
   lease_time: string
   last_update: string
-  mac_address: string
-  is_dynamic: boolean
+  session_id: string | null
+  radius_username: string | null
 }
 export type ICustomerIpLeaseList = IDRFListResponse<ICustomerIpLease>
 export type ICustomerIpLeasePlainListResponsePromise = IDRFAxiosResponsePromise<ICustomerIpLease[]>

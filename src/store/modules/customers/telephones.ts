@@ -13,6 +13,7 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
   telephone = ''
   owner_name = ''
   customer = 0
+  create_time = ''
 
   @Mutation
   public RESET_ALL_TEL() {

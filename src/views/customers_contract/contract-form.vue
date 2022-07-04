@@ -5,6 +5,14 @@
     :rules="frmRules"
     :model="frmMod"
     v-loading="isLoading")
+
+    el-alert(
+      v-if="isNew"
+      title="Внимание на дату начала действия договора"
+      description="После её создания нельзя будет эту дату изменить. Так что у вас ОДНА попытка, удачи :)"
+      type="info"
+      show-icon
+    )
     el-form-item(:label="$t('title')")
       el-input(v-model="frmMod.title")
 
@@ -25,9 +33,9 @@
     el-form-item(:label="$t('contractDocs.dateBegin')" prop="start_service_time")
       el-date-picker(
         v-model="frmMod.start_service_time"
-        type="datetime"
+        type="date"
         value-format="yyyy-MM-dd HH:mm:ss"
-        format="d.MM.yyyy HH:mm:ss")
+        format="d.MM.yyyy")
 
     el-form-item(:label="$t('contractDocs.dateEnd')")
       | {{ frmMod.end_service_time || '—' }}
@@ -68,6 +76,7 @@
         el-button(
           icon="el-icon-finished"
           @click="finishContractDialog"
+          :disabled="finishBtnDisabled"
           type='danger'
         ) {{ $t('contractDocs.finishBtn') }}
 
@@ -149,6 +158,7 @@ export default class extends mixins(FormMixin) {
     if (this.contract) {
       this.fillFrmModFromVar(this.contract)
     }
+    this.doCopyFromUsername()
   }
 
   private get isNew() {
@@ -206,8 +216,9 @@ export default class extends mixins(FormMixin) {
         type: 'error',
         title: this.$tc('attention')
       }
-    ).then(() => {
-      this.finishContract()
+    ).then(async () => {
+      await this.finishContract()
+      this.$message.success(this.$tc('contractDocs.finishSuccessText'))
     })
   }
 
@@ -216,6 +227,10 @@ export default class extends mixins(FormMixin) {
       const { data } = await finishCustomerContract(this.contract.id)
       this.fillFrmModFromVar(data)
     }
+  }
+
+  private get finishBtnDisabled() {
+    return this.frmMod.end_service_time !== null
   }
 }
 </script>

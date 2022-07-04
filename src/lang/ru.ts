@@ -82,7 +82,7 @@ export default {
     session: 'Сессия',
     sessionStartTime: 'Время старта',
     sessionDuration: 'Продолжительность',
-    sessionLastUpdate: 'последнее обновление',
+    sessionLastUpdate: 'Последнее обновление',
     sessionInTraf: 'Вход. траф.',
     sessionInPkts: 'Вход. пакеты',
     sessionOutTraf: 'Исход. траф.',
@@ -181,6 +181,7 @@ export default {
     birthDayValidationMessage: 'Нужно указать дату рождения',
     notPassed: 'Не передан абонент',
     searchBy: 'Поиск по: {0}',
+    phoneCreateTime: 'Время создания',
     contractNum: {
       validation: 'Нужно указать когда начал действовать договор',
       s: 'Номер договора',
@@ -195,14 +196,14 @@ export default {
     extraFields: 'Дополнительные данные'
   },
   customersLegal: {
-    branch: 'Филиал (абонент)',
-    branches: 'Филиалы',
-    branchNotAttached: 'Филиалы не назначены',
+    branch: 'Подразделение (абонент)',
+    branches: 'Подразделения',
+    branchNotAttached: 'Подразделения не назначены',
     fname: 'Имя физ лица',
     tel: 'Номер телефона',
-    addBranch: 'Добавить филиал',
-    delBranch: 'Удалить филиал',
-    branchDeleted: 'Филиал отвязан',
+    addBranch: 'Добавить подразделение',
+    delBranch: 'Удалить подразделение',
+    branchDeleted: 'Подразделение отвязано',
     bank: {
       title: 'Название банка',
       bik: 'БИК',
@@ -217,13 +218,13 @@ export default {
   nets: {
     ipMustNotBeEmpty: 'IP не может быть пустым',
     ipLeaseSuccessfullyRemoved: 'Аренда IP удалена',
-    poolRequiredMsg: 'Ip пул обязателен',
+    poolRequiredMsg: 'Ip пул обязателен'
   },
   groups: {
     minAGroup: 'группу',
     group_required: 'Название группы надо указать',
     group: 'Группа',
-    failed2GetGroups: 'Не удалось получить группы',
+    failed2GetGroups: 'Не удалось получить группы'
   },
   addrs: {
     addresses: 'Населённые пункты',
@@ -258,7 +259,7 @@ export default {
       titlePlural: 'Типы задач',
       add: 'Добавить тип задачи',
       added: 'Новый тип задач добавлен',
-      changed: 'Тип задачи изменён',
+      changed: 'Тип задачи изменён'
     },
     finishDoc: {
       title: 'Акт задачи',
@@ -268,8 +269,8 @@ export default {
       cost: 'Стоимость',
       added: 'Акт создан',
       changed: 'Акт изменён',
-      dateTimeReq: 'Время обязательно',
-    },
+      dateTimeReq: 'Время обязательно'
+    }
   },
   devices: {
     dev: 'Устройство',
@@ -287,7 +288,7 @@ export default {
     affixedSubscribers: 'Прикреплённые абоненты: ',
     snmpNum: 'SNMP Ном.',
     level: 'Ур. сигнала',
-    uptime: 'В сети',
+    uptime: 'В сети'
   },
   route: {
     staff: 'Cотрудники',
@@ -329,6 +330,7 @@ export default {
     noContracts: 'Нет договоров',
     addCustomerContract: 'Добавить договор абоненту',
     delQuestion: 'Удалить договор с абонентом?',
+    finishSuccessText: 'Договор абонента успешно завершён',
     delOk: 'Договор успешно удалён'
   },
   optMenu: {
@@ -350,22 +352,26 @@ export default {
     isActive: 'Включён',
     readRightsNotFound: 'Не нашёл права на чтение',
     responsibilityForGroups: 'Ответственность за группы',
-    groupResponsibilityRetained: 'Ответственность за группы сохранена',
+    groupResponsibilityRetained: 'Ответственность за группы сохранена'
   },
   sites: {
     doDomain: '{0} домен',
-    site: 'Сайты',
+    site: 'Сайты'
   },
   networks: {
     tPool: '{0} подсеть',
     austRemoveLease: 'Действительно удалить сессию "{0}"?',
+    isDynamic: 'Динамический',
+    network: 'Сеть'
   },
   messenger: {
     botRemoved: 'Чат бот "{0}" удалён',
-    austRemove: 'Действительно удалить чат бот "{0}"?',
+    austRemove: 'Действительно удалить чат бот "{0}"?'
   },
   services: {
     doPP: '{0} ',
+    speedIn: 'Вход. скорость',
+    speedOut: 'Исход. скорость'
   },
   noSubscribersFoundOnThePort: 'Абоненты на порту не найдены',
   noSubscribersFound: 'Абоненты не найдены',
@@ -390,7 +396,6 @@ export default {
   balance: 'Баланс',
   baseCalcFunction: 'Базовый расчётный функционал',
   browser: 'Браузер',
-  burst: 'Бурст',
   price: 'Цена',
   thePriceShallBePositiveOr0: 'Цена должна быть положительной или 0',
   thePriceShallBeSpecified: 'Цена должна быть указана',
@@ -461,8 +466,6 @@ export default {
   internet: 'Интернет',
   conflict: 'ip конфликт',
   andGoIn: 'Ip входа',
-  exodus: 'Исход.ск.',
-  speed: 'Исход. скорость',
   basedOnByte: 'Исходящих байт',
   implementers: 'Исполнители',
   correctFormsOfError: 'Исправь ошибки формы',
@@ -533,7 +536,6 @@ export default {
   notRemoved: 'Не удалили, похоже уже кто-то удалил',
   notSelected: 'Не выбрано',
   insufficientRights: 'Недостаточно прав',
-  network: 'Network',
   low: 'Низкий',
   contractCanContainLatinAndDigits:
     'Номер договора может содержать латинские символы и цифры',
@@ -646,7 +648,6 @@ export default {
   theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained:
     'Принадлежность вида платежей сайтам сохранена',
   priority: 'Приоритет: ',
-  durationOfTheSession: 'Продолжительность сессии',
   loss: 'Провалена',
   path: 'путь',
   distributionOfServicesBySubscribers:
@@ -769,7 +770,6 @@ export default {
   theTaskWillBeRemovedNowCarefully: 'Задача сейчас будет удалена, внимательно',
   targetRemoved: 'Задача удалена',
   targetCompleted: 'Задача завершена',
-  closed: 'Закрыт',
   complete: 'Завершить',
   areYSureFinishSession: 'Завершить сессию?',
   device: 'Железка',

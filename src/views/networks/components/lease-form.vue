@@ -37,7 +37,6 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { ipAddrValidator, macAddrValidator } from '@/utils/validate'
-import { ICustomerIpLease } from '@/api/networks/types'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 
 @Component({
@@ -57,7 +56,7 @@ export default class extends Vue {
     ]
   }
 
-  private frmMod: ICustomerIpLease = {
+  private frmMod = {
     id: CustomerIpLeaseModule.id,
     ip_address: CustomerIpLeaseModule.ip_address,
     pool: CustomerIpLeaseModule.pool,
@@ -70,7 +69,15 @@ export default class extends Vue {
 
   @Watch('$store.state.iplease.id')
   private async onNetwCh() {
-    this.frmMod = await CustomerIpLeaseModule.GetAllLeaseState()
+    const s = CustomerIpLeaseModule
+    this.frmMod.id = s.id
+    this.frmMod.ip_address = s.ip_address
+    this.frmMod.pool = s.pool
+    this.frmMod.customer = s.customer
+    this.frmMod.lease_time = s.lease_time
+    this.frmMod.last_update = s.last_update
+    this.frmMod.mac_address = s.mac_address
+    this.frmMod.is_dynamic = s.is_dynamic
   }
 
   private onSubmit() {
@@ -78,11 +85,8 @@ export default class extends Vue {
       if (valid) {
         this.isLoading = true
         try {
-          await CustomerIpLeaseModule.SET_ALL_LEASE(this.frmMod)
-          const newDat = await CustomerIpLeaseModule.SaveLease()
+          const newDat = await CustomerIpLeaseModule.PatchLease(this.frmMod)
           this.$emit('done', newDat)
-        } catch (err) {
-          this.$message.error(err)
         } finally {
           this.isLoading = false
         }

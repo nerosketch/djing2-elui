@@ -47,7 +47,7 @@ export default class extends Vue {
 
   private beforeRemove(file: IFileItem) {
     if (!this.$perms.tasks.delete_taskdocumentattachment) return false
-    return this.$confirm(this.$t('austRemoveDocument', [file.name]) as string)
+    return this.$confirm(this.$tc('austRemoveDocument', 1, [file.name]))
   }
 
   private uploadReq(req: HttpRequestOptions) {
