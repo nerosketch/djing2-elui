@@ -34,11 +34,10 @@ export default class extends Vue {
 
   private async onSubmit() {
     if (this.frmMod.branch) {
-      const branches = CustomerLegalModule.branches
-      branches.push(this.frmMod.branch)
+      const newBranches = CustomerLegalModule.branches.concat([this.frmMod.branch])
       this.loading = true
       try {
-        const customerLegal = await CustomerLegalModule.updateCustomerLegal({ branches })
+        const customerLegal = await CustomerLegalModule.updateCustomerLegal({ branches: newBranches })
         this.$message.success(this.$tc('saved'))
         this.$emit('done', customerLegal)
       } finally {

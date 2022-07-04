@@ -15,8 +15,7 @@
       el-checkbox(v-model="frmMod.is_management")
         | {{ $t('itSAMoronOfControl') }}
 
-        b
-          | {{ frmMod.is_management ? 'Да' : 'Нет' }}
+        b {{ frmMod.is_management ? 'Да' : 'Нет' }}
 
     el-form-item
       el-button(

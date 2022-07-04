@@ -18,8 +18,6 @@ export default class extends Vue {
         fields
       }) as any
       this.gwlist = data
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.loadingGws = false
     }

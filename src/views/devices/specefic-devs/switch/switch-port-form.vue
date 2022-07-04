@@ -63,8 +63,6 @@ export default class extends Vue {
         const { data } = await PortModule.GetPort(this.portId)
         this.frmMod.num = data.num
         this.frmMod.descr = data.descr
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.loading = false
       }

@@ -2,8 +2,7 @@
   div(v-loading="loading")
     line-chart(:chartData="chartDat")
 
-    span
-      | {{ $tc('temporaryCut') }}
+    span {{ $tc('temporaryCut') }}
 
     el-date-picker(
       v-model="timerange"

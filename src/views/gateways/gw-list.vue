@@ -15,95 +15,71 @@
 
           dl
             dt
-              b
-                | {{ $t('ipAddress') }}
+              b {{ $t('ipAddress') }}
 
-            dd
-              | {{ gw.ip_address }}
+            dd {{ gw.ip_address }}
 
             dt
-              b
-                | {{ $t('gateways.port') }}
+              b {{ $t('gateways.port') }}
 
-            dd
-              | {{ gw.ip_port }}
+            dd {{ gw.ip_port }}
 
             dt
-              b
-                | {{ $t('inletLogin') }}
+              b {{ $t('inletLogin') }}
 
-            dd
-              | {{ gw.auth_login }}
+            dd {{ gw.auth_login }}
 
             dt
-              b
-                | {{ $t('inletPassword') }}
+              b {{ $t('inletPassword') }}
 
-            dd
-              | {{ gw.auth_passw }}
+            dd {{ gw.auth_passw }}
 
             dt
-              b
-                | {{ $t('likeUs') }}
+              b {{ $t('likeUs') }}
 
-            dd
-              | {{ gw.gw_type_str }}
+            dd {{ gw.gw_type_str }}
 
             dt
-              b
-                | {{ $t('default') }}
+              b {{ $t('default') }}
 
             dd
-              i
-                | {{ gw.is_default ? 'Да' : 'Нет' }}
+              i {{ gw.is_default ? 'Да' : 'Нет' }}
 
             dt
-              b
-                | {{ $t('included') }}
+              b {{ $t('included') }}
 
             dd
-              i
-                | {{ gw.enabled ? 'Да' : 'Нет' }}
+              i {{ gw.enabled ? 'Да' : 'Нет' }}
 
             dt
-              b
-                | {{ $t('itSABonus') }}
+              b {{ $t('itSABonus') }}
 
             dd
-              i
-                | {{ gw.customer_count }}
+              i {{ gw.customer_count }}
 
             dt
-              b
-                | {{ $t('activeCustomersCount') }}
+              b {{ $t('activeCustomersCount') }}
 
             dd
-              i
-                | {{ gw.customer_count_active }}
+              i {{ gw.customer_count_active }}
 
             dt
-              b
-                | {{ $t('service') }}
+              b {{ $t('service') }}
 
             dd
-              i
-                | {{ gw.customer_count_w_service }}
+              i  {{ gw.customer_count_w_service }}
 
             dt
-              b
-                | {{ $t('dateOfEstablishment') }}
+              b {{ $t('dateOfEstablishment') }}
 
             dd
-              i
-                | {{ gw.create_time }}
+              i {{ gw.create_time }}
 
             dt
-              b
-                | {{ $t('addresses') }}
+              b {{ $t('addresses') }}
 
             dd
-              i
-                | {{ gw.place || ' - ' }}
+              i {{ gw.place || ' - ' }}
 
           el-button-group
             el-button(

@@ -83,10 +83,6 @@ export default class extends Vue {
     }
   }
 
-  get groupId() {
-    return CustomerModule.group
-  }
-
   private async onSubmit() {
     this.isLoading = true
     const newDat = await CustomerModule.PatchCustomer(this.frmMod)

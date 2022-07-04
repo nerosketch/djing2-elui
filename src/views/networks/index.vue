@@ -6,7 +6,7 @@
         name="sessions"
         lazy)
         keep-alive
-          session-list
+          lease-list
 
       el-tab-pane(
         :label="$t('subnets')"
@@ -29,7 +29,7 @@ import { mixins } from 'vue-class-component'
 import TabMixin from '@/utils/tab-mixin'
 import VlanList from './components/vlanlist.vue'
 import PoolList from './components/poollist.vue'
-import SessionList from './components/session-list.vue'
+import LeaseList from './components/lease-list.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 @Component({
@@ -37,7 +37,7 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
   components: {
     VlanList,
     PoolList,
-    SessionList
+    LeaseList,
   }
 })
 export default class extends mixins(TabMixin) {

@@ -1,7 +1,6 @@
 <template lang="pug">
   div
-    h4
-      | В каких сайтах будет доступно
+    h4 В каких сайтах будет доступно
 
     template(v-if="sitesList.length > 0")
       el-checkbox(

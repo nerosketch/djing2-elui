@@ -3,11 +3,9 @@
     offset="2"
     show-icon
     :closable="false")
-    b
-      | {{ log.who_name }}:
+    b {{ log.who_name }}:
 
-    small
-      | ({{ log.when }})
+    small ({{ log.when }})
     | {{ log.human_representation }}.
 </template>
 

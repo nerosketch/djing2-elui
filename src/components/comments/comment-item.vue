@@ -1,12 +1,10 @@
 <template lang="pug">
-  el-card(shadow="hover" :body-style="defCardStyle")
+  el-card(shadow="hover" :body-style="{ padding: '10px 13px' }")
     template(v-slot:header)
       .clearfix
-        span
-          | {{ comment.author_name }}
+        span {{ comment.author_name }}
 
-        small
-          | {{ comment.date_create }}
+        small {{ comment.date_create }}
 
         el-button.card_del_btn(
           type="text"
@@ -16,8 +14,7 @@
 
     el-avatar(shape="square" :src="comment.author_avatar")
 
-    span
-      | {{ comment.text }}
+    span {{ comment.text }}
 </template>
 
 <script lang="ts">
@@ -30,10 +27,6 @@ import { IComment } from './types'
 export default class extends Vue {
   @Prop({ required: true })
   private comment!: IComment
-
-  get defCardStyle() {
-    return { padding: '10px 13px' }
-  }
 
   private delComment() {
     this.$confirm('Удалить комментарий?', {

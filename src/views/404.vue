@@ -59,7 +59,7 @@ figcaption span:before, .sad-mac:before {
   width: 1em;
   height: 1em;
   transform: translate(-1em,-1em);
-} 
+}
 figcaption span {
   display: inline-block;
   margin: 0 2em;

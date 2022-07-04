@@ -2,6 +2,7 @@
 FROM node:10 AS uibuild
 
 ENV VUE_APP_BASE_API=/api
+ENV DEFAULT_LANG=ru
 
 USER node
 
@@ -21,7 +22,9 @@ EXPOSE 80
 ENV NGINX_PORT=80
 ENV NGINX_HOST=localhost
 
-RUN ["mkdir", "-p", "/var/www/app/media"]
+RUN ["mkdir", "-p", "/var/www/media"]
+RUN ["chown", "-R", "nginx.", "/var/www/media"]
+RUN ["chmod", "777", "/var/www/media"]
 
 COPY ["nginx/browsersupp.conf", "nginx/expires-hdrs.conf", "nginx/root_serve.conf", "/etc/nginx/"]
 COPY ["nginx/bad_browser.html", "/var/www/"]

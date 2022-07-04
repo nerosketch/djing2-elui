@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { IDRFRequestListParameters } from '@/api/types'
+import { IDRFAxiosResponsePromise, IDRFRequestListParameters } from '@/api/types'
 import {
   IVlanIf,
   INetworkIpPool,
@@ -63,3 +63,6 @@ export const delCustomerIpLease = delObjectDecorator<ICustomerIpLease>(baseLease
 
 export const pingIcmpIpLease = (leaseId: number): ICustomerIpLeasePingAxoisResponsePromise =>
   request.get(`${baseLeaseUrl}${leaseId}/ping_ip/`)
+
+export const freeLeaseSession = (leaseId: number): IDRFAxiosResponsePromise<string> =>
+  request.get(`${baseLeaseUrl}${leaseId}/free_session/`)

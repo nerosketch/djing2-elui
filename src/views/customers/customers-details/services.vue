@@ -98,11 +98,11 @@ export default class extends Vue {
   private serviceBlockLoad = false
   private currentService: ICustomerService | null = null
 
-  async created() {
+  public created() {
     this.loadCurrentService()
   }
 
-  get isServiceAvailable() {
+  private get isServiceAvailable() {
     return this.currentService !== null
   }
 
@@ -120,14 +120,14 @@ export default class extends Vue {
     }
   }
 
-  onStopService() {
+  private onStopService() {
     this.$confirm(this.$tc('customers.doFinishServiceAheadOfShedule'), {
       confirmButtonText: this.$tc('yes'),
       cancelButtonText: this.$tc('no'),
       type: 'info'
     }).then(async() => {
       await CustomerModule.StopService()
-      await CustomerModule.UpdateCustomer()
+      CustomerModule.UpdateCustomer()
       await this.loadCurrentService()
       this.$message.success(
         this.$tc('customers.serviceStoppedAheadOfSheduleOk')

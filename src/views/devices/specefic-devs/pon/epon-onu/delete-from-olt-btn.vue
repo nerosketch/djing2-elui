@@ -35,8 +35,6 @@ export default class extends mixins(BtnShareMixin) {
         } else {
           this.setResState(data.text, 'danger')
         }
-      } catch (err) {
-        this.$message.error(err)
       } finally {
         this.loading = false
       }

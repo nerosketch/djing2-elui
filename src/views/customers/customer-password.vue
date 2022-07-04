@@ -75,7 +75,7 @@ export default class extends Vue {
     try {
       const { data } = await generateCustomerPassword()
       this.frmMod.password = data
-    } catch (err) {
+    } catch {
       this.frmMod.password = ''
     } finally {
       this.passwLoading = false

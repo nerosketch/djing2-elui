@@ -4,11 +4,9 @@
     v-if="currentConfig.vlanConfig.length > 0"
   )
     template(v-slot:header)
-      span
-        | {{ $t('ONUConfigurationOptions') }}
+      span {{ $t('ONUConfigurationOptions') }}
 
-    span
-      | {{ $t('onuConfigTemplate') }}
+    span {{ $t('onuConfigTemplate') }}
 
     el-select(
       v-model="currentConfig.configTypeCode"

@@ -27,8 +27,6 @@ export default class extends Vue {
       const r = await getVlans(params)
       this.vlans = r.data.results
       return r
-    } catch (err) {
-      this.$message.error(err)
     } finally {
       this.vlanLoading = false
     }

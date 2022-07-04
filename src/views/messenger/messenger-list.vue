@@ -102,9 +102,9 @@ export default class extends Vue {
   }
 
   private delMessenger(m: IMessenger) {
-    this.$confirm(this.$t('messenger.austRemove', [m.title]) as string).then(async() => {
+    this.$confirm(this.$tc('messenger.austRemove', 1, [m.title])).then(async() => {
       await MessengerModule.DelMessenger(m.id)
-      this.$message.success(this.$t('messenger.botRemoved', [m.title]) as string)
+      this.$message.success(this.$tc('messenger.botRemoved', 1, [m.title]))
       this.$refs.table.LoadTableData()
     })
   }

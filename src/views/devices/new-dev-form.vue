@@ -44,8 +44,7 @@
       el-checkbox(v-model="frmMod.is_noticeable")
         | {{ $t('monitoringEventAlerts') }}:&nbsp;
 
-        b
-          | {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
+        b {{ frmMod.is_noticeable ? 'Да' : 'Нет' }}
 
     el-form-item
       el-button(
@@ -133,8 +132,9 @@ export default class extends Vue {
             this.$emit('done', newDat)
           }
         } catch (err) {
-          this.loading = false
           this.$emit('err', err)
+        } finally {
+          this.loading = false
         }
       } else {
         this.$message.error(this.$tc('fixFormErrs'))

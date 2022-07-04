@@ -181,6 +181,7 @@ export default {
     birthDayValidationMessage: "I need to indicate the date of birth.",
     notPassed: "Not transmitted",
     searchBy: "Search by: {0}",
+    phoneCreateTime: 'Create time',
     contractNum: {
       validation: "You need to specify when the contract began to take effect",
       s: "Contract number",
@@ -329,6 +330,7 @@ export default {
     noContracts: "No treaty",
     addCustomerContract: "Add the contract to the subscriber",
     delQuestion: "Remove the contract with the subscriber?",
+    finishSuccessText: 'Customer contract successfully finished',
     delOk: "Successfully removed"
   },
   optMenu: {
@@ -359,6 +361,8 @@ export default {
   networks: {
     tPool: '{0} ip pool',
     austRemoveLease: 'Are you sure to remove lease "{0}"?',
+    isDynamic: "Is dynamic",
+    network: "Network",
   },
   messenger: {
     botRemoved: 'Messenger "{0}" has been removed',
@@ -366,6 +370,8 @@ export default {
   },
   services: {
     doPP: '{0} one-time pay',
+    speedIn: 'Input speed',
+    speedOut: 'Output speed'
   },
   noSubscribersFoundOnThePort: "No subscribers found on the port",
   noSubscribersFound: "No subscribers found",
@@ -390,7 +396,6 @@ export default {
   balance: "Balance",
   baseCalcFunction: "Base account function",
   browser: "Browser",
-  burst: "Burst",
   price: "Price",
   thePriceShallBePositiveOr0: "The price shall be positive or 0",
   thePriceShallBeSpecified: "The price shall be specified",
@@ -461,8 +466,6 @@ export default {
   internet: "Internet",
   conflict: "conflict",
   andGoIn: "and go in",
-  exodus: "Out speed",
-  speed: "Speed.",
   basedOnByte: "Based on Byte",
   implementers: "Implementers",
   correctFormsOfError: "Correct forms of error",
@@ -533,7 +536,6 @@ export default {
   notRemoved: "Not removed, it looks like someone's already removed.",
   notSelected: "Not selected",
   insufficientRights: "Insufficient rights",
-  network: "Network",
   low: "Low",
   contractCanContainLatinAndDigits:
     "The contract number may contain Latin symbols and figures",
@@ -647,7 +649,6 @@ export default {
   theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained:
     "The ownership of the type of payments to websites is maintained",
   priority: "Priority: ",
-  durationOfTheSession: "Duration of the session",
   loss: "Loss",
   path: "Path",
   distributionOfServicesBySubscribers:
@@ -771,7 +772,6 @@ export default {
   theTaskWillBeRemovedNowCarefully: "The task will be removed now, carefully.",
   targetRemoved: "Target removed",
   targetCompleted: "Target completed",
-  closed: "Closed",
   complete: "Complete",
   areYSureFinishSession: "Are y sure you want to finish the session?",
   device: "Device.",

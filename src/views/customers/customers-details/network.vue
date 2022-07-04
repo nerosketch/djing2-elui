@@ -55,7 +55,7 @@
 
             lease-ping(:lease="row")
 
-            ip-session-detail(:lease="row")
+            ip-lease-detail(:lease="row")
 
     el-button(
       type="success"
@@ -81,7 +81,7 @@ import { getCustomerIpLeases } from '@/api/networks/req'
 import { CustomerIpLeaseModule } from '@/store/modules/networks/ip_lease'
 import LeasePing from '@/components/MyButtons/leaseping.vue'
 import CustomerLeaseForm from './customer-lease-form.vue'
-import IpSessionDetail from './ip-session-detail.vue'
+import IpLeaseDetail from './ip-lease-detail.vue'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 import BooleanIcon from '@/components/boolean-icon.vue'
 
@@ -95,7 +95,7 @@ interface ITableRowClassName {
   components: {
     LeasePing,
     CustomerLeaseForm,
-    IpSessionDetail,
+    IpLeaseDetail,
     BooleanIcon
   }
 })
@@ -144,7 +144,7 @@ export default class extends Vue {
     }).then(async() => {
       await CustomerIpLeaseModule.DelLease(lease.id)
       this.$message.success(
-        this.$tc('customers.ipLeaseSuccessfullyRemoved')
+        this.$tc('nets.ipLeaseSuccessfullyRemoved')
       )
       this.loadLeases()
     })

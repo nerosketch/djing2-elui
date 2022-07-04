@@ -1,11 +1,9 @@
 <template lang="pug">
   el-card
     template(v-slot:header)
-      .clearfix
-        | {{ device.comment || 'BDCOM' }}
+      .clearfix {{ device.comment || 'BDCOM' }}
 
-        small
-          | {{ ` ${device.ip_address || device.mac_addr} ` }}
+        small {{ ` ${device.ip_address || device.mac_addr} ` }}
 
         router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
           | [{{ device.parent_dev_name }}]

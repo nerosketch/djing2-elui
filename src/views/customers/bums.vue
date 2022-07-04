@@ -15,7 +15,6 @@ import { IDRFRequestListParameters } from '@/api/types'
   }
 })
 export default class extends Vue {
-
   private fetchBumCustomers(params?: IDRFRequestListParameters) {
     return getCustomersBums(params)
   }

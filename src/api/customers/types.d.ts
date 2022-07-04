@@ -81,6 +81,7 @@ export interface IAdditionalTelephone {
   telephone: string
   owner_name: string
   customer: number
+  create_time: string
 }
 export type IAdditionalTelephoneList = IDRFListResponse<IAdditionalTelephone>
 export type IAdditionalTelephoneListAxiosResponsePromise = IDRFAxiosResponsePromise<IAdditionalTelephoneList>
