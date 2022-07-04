@@ -7,10 +7,7 @@
     node-key="id"
     ref="etree"
     lazy
-    draggable
-    :allow-drop="allowDrop"
     :default-expanded-keys="addrIdHierarchy"
-    @node-drop="handleDrop"
     @node-expand="onNodeExpand"
   )
     span.custom-tree-node(slot-scope="{ node, data }")
@@ -45,15 +42,13 @@
 </template>
 
 <script lang="ts">
-import { changeAddress, getAddresses, getAddrIdHierarchy } from '@/api/addresses/req'
+import { getAddresses, getAddrIdHierarchy } from '@/api/addresses/req'
 import { AddrTreeNode, IAddressModel } from '@/api/addresses/types'
 import { AddressModule } from '@/store/modules/addresses/address'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { ElTree } from 'element-ui/types/tree'
 import { Component, Vue } from 'vue-property-decorator'
 import AddressForm from './addr-form.vue'
-
-type TreeDropType = 'none' | 'before' | 'after' | 'inner'
 
 @Component({
   name: 'AddrsTree',
@@ -90,8 +85,8 @@ export default class extends Vue {
     resolve(r)
   }
 
-  private async openEdit(loc: AddrTreeNode) {
-    await AddressModule.SET_ALL_ADDR(loc.data)
+  private openEdit(loc: AddrTreeNode) {
+    AddressModule.SET_ALL_ADDR(loc.data)
     this.tmpAddrTreeNode = loc
     this.dialogVisible = true
   }
@@ -103,8 +98,8 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private async addAbsoluteNode() {
-    await AddressModule.RESET_ALL_ADDR()
+  private addAbsoluteNode() {
+    AddressModule.RESET_ALL_ADDR()
     this.dialogVisible = true
   }
 
@@ -161,18 +156,6 @@ export default class extends Vue {
     this.loadAddrHierarchyIfExists()
   }
   // End Breadcrumbs
-
-  private allowDrop(node: AddrTreeNode, dropNode: AddrTreeNode, type: TreeDropType) {
-    return type === 'inner'
-  }
-
-  private handleDrop(draggingNode: AddrTreeNode, dropNode: AddrTreeNode, dropType: TreeDropType) {
-    if (dropType === 'inner') {
-      changeAddress(draggingNode.data.id, {
-        parent_addr: dropNode.data.id
-      })
-    }
-  }
 
   private onNodeExpand(openedNode: IAddressModel, node: AddrTreeNode, nodeSelf: AddrTreeNode) {
     localStorage.setItem('addrTreeLastId', openedNode.id.toString())

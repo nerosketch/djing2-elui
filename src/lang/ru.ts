@@ -331,6 +331,7 @@ export default {
     noContracts: 'Нет договоров',
     addCustomerContract: 'Добавить договор абоненту',
     delQuestion: 'Удалить договор с абонентом?',
+    finishSuccessText: 'Договор абонента успешно завершён',
     delOk: 'Договор успешно удалён'
   },
   optMenu: {

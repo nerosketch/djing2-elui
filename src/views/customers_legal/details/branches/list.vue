@@ -98,13 +98,11 @@ export default class extends Vue {
   private delBranch(customer: ICustomer) {
     this.$confirm(`${this.$tc('customersLegal.delBranch')} "${customer.full_name}"?`).then(async() => {
       const newBranches = CustomerLegalModule.branches.filter(b => b !== customer.id)
-      if (newBranches.length > 0) {
-        await CustomerLegalModule.updateCustomerLegal({ branches: newBranches })
-        this.loadBranches(this.customerId)
-        this.$message.success(
-          this.$tc('customersLegal.branchDeleted')
-        )
-      }
+      await CustomerLegalModule.updateCustomerLegal({ branches: newBranches })
+      this.loadBranches(this.customerId)
+      this.$message.success(
+        this.$tc('customersLegal.branchDeleted')
+      )
     })
   }
 }
