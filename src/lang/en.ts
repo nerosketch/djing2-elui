@@ -301,7 +301,7 @@ export default {
     tasks: "Tasks",
     groups: "Groups",
     services: "Services",
-    sorm: 'СОРМ',
+    sorm: 'Invalid',
     network: "Network",
     gateways: "Gateways"
   },

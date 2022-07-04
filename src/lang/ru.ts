@@ -301,7 +301,7 @@ export default {
     tasks: 'Задачи',
     groups: 'Группы',
     services: 'Тарифы',
-    sorm: 'СОРМ',
+    sorm: 'Невалиды',
     network: 'Сеть',
     gateways: 'Шлюзы'
   },
