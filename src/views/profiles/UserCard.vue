@@ -2,7 +2,7 @@
 el-card(style='margin-bottom:20px;')
   template(v-slot:header)
     .clearfix
-      span {{ $t('info') }}
+      span {{ $t('profiles.info') }}
   .user-profile
     .box-center
       pan-thumb(
@@ -48,7 +48,7 @@ el-card(style='margin-bottom:20px;')
     .user-skills.user-bio-section
       .user-bio-section-body
         .progress-item
-          span {{ $t('levelOfAccess') }}
+          span {{ $t('profiles.levelOfAccess') }}
           el-progress(
             :percentage='$store.state.userprofile.access_level'
             :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'

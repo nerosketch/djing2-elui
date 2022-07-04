@@ -358,6 +358,8 @@ export default {
     nameAndFatherhood: 'Имя и отчество',
     lastLogin: 'Последняя авторизация',
     lastUpdate: 'Последнее обновление',
+    levelOfAccess: 'Уровень доступа',
+    info: 'Инфо',
     groupResponsibilityRetained: 'Ответственность за группы сохранена'
   },
   sites: {
@@ -466,7 +468,6 @@ export default {
   userGroups: 'Группы пользователей',
   equipmentNotTransferred: 'Id оборудования не передан',
   name: 'Имя',
-  info: 'Info',
   technologists: 'Information Technology',
   inn: 'ИНН',
   insNeedsToBeFilled: 'ИНН нужно заполнить',
@@ -734,7 +735,6 @@ export default {
   speedIn: 'Укажи входящую скорость',
   iDid: 'Управл.',
   office: 'Управление',
-  levelOfAccess: 'Уровень доступа',
   fiasLevel: 'Уровень ФИАС',
   signalLevel: 'Уровень сигнала: ',
   acceleration: 'Ускорение',
