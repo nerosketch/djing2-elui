@@ -301,6 +301,7 @@ export default {
     tasks: "Tasks",
     groups: "Groups",
     services: "Services",
+    sorm: 'СОРМ',
     network: "Network",
     gateways: "Gateways"
   },
@@ -372,6 +373,10 @@ export default {
     doPP: '{0} one-time pay',
     speedIn: 'Input speed',
     speedOut: 'Output speed'
+  },
+  sorm: {
+    withoutPassports: 'Without passports',
+    withoutContracts: 'Without contracts',
   },
   noSubscribersFoundOnThePort: "No subscribers found on the port",
   noSubscribersFound: "No subscribers found",

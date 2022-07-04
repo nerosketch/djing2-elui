@@ -301,6 +301,7 @@ export default {
     tasks: 'Задачи',
     groups: 'Группы',
     services: 'Тарифы',
+    sorm: 'СОРМ',
     network: 'Сеть',
     gateways: 'Шлюзы'
   },
@@ -372,6 +373,10 @@ export default {
     doPP: '{0} ',
     speedIn: 'Вход. скорость',
     speedOut: 'Исход. скорость'
+  },
+  sorm: {
+    withoutPassports: 'Без паспортов',
+    withoutContracts: 'Без договоров',
   },
   noSubscribersFoundOnThePort: 'Абоненты на порту не найдены',
   noSubscribersFound: 'Абоненты не найдены',
