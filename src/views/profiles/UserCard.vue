@@ -21,13 +21,19 @@ el-card(style='margin-bottom:20px;')
       .user-bio-section-body
         dl
           dt
-            b {{ $t('telephone') }}
+            b {{ $t('profiles.telephone') }}
           dd {{ $store.state.userprofile.telephone }}
           dt
             b {{ $t('login') }}
           dd {{ $store.state.userprofile.username }}
           dt
-            b {{ $t('nameAndFatherhood') }}
+            b {{ $t('profiles.lastLogin') }}
+          dd {{ $store.state.userprofile.last_login || '-' }}
+          dt
+            b {{ $t('profiles.lastUpdate') }}
+          dd {{ $store.state.userprofile.last_update_time || '-' }}
+          dt
+            b {{ $t('profiles.nameAndFatherhood') }}
           dd {{ $store.state.userprofile.fio }}
           dt
             b {{ $t('profiles.isActive') }}
