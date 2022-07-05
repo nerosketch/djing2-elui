@@ -28,13 +28,13 @@
     el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
 
-    el-form-item(:label="$t('theDevice')")
+    el-form-item(:label="$t('devices.parentDevice')")
       device-autocomplete-field(
         v-model="frmMod.parent_dev"
         :defaultName="$store.state.devicemodule.parent_dev_name"
       )
 
-    el-form-item(:label="$t('effectiveDate')")
+    el-form-item(:label="$t('devices.createTime')")
       datetime-counter(v-model="frmMod.create_time")
 
     el-form-item(:label="$t('addresses')")
@@ -92,7 +92,7 @@ export default class extends mixins(FormMixin) {
     ],
     mac_addr: [
       { required: true, message: this.$tc('macCanTBeEmpty'), trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: this.$tc('example:0A:0B:Cc:Dd:Ee:Ff') }
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc(exampleMac) }
     ],
     comment: [
       { required: true, message: this.$tc('giveTheDeviceAName'), trigger: 'blur' }
