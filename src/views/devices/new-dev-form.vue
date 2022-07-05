@@ -95,7 +95,7 @@ export default class extends Vue {
     ],
     mac_addr: [
       { required: true, message: this.$tc('macCanTBeEmpty'), trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: this.$tc(exampleMac) }
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc('exampleMac') }
     ],
     comment: [
       { required: true, message: this.$tc('giveTheDeviceAName'), trigger: 'blur' }

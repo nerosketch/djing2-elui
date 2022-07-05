@@ -52,7 +52,7 @@ export default class extends Vue {
     ],
     mac_address: [
       { required: true, message: this.$tc('weDonTHaveToLeaveTheMobEmpty'), trigger: 'blur' },
-      { validator: macAddrValidator, trigger: 'change', message: this.$tc(exampleMac) }
+      { validator: macAddrValidator, trigger: 'change', message: this.$tc('exampleMac') }
     ]
   }
 
