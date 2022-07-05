@@ -291,6 +291,8 @@ export default {
     uptime: 'В сети',
     parentDevice: 'Родит. устройство',
     createTime: 'Дата введения в эксплуатацию',
+    specifyTheTypeOfDevice: 'Нужно указать тип устройства',
+    specifyParentDevice: 'Нужно указать родительское устройство',
   },
   route: {
     staff: 'Cотрудники',
@@ -556,7 +558,6 @@ export default {
   newPassword: 'Новый пароль',
   needsLoginFromLatinSymbolsAndFigures: 'Нужен логин из латинских символов и цифр',
   weNeedToNameThePort: 'Нужно как-то назвать порт',
-  specifyTheTypeOfDevice: 'Нужно указать тип устройства',
   weNeedALegalAddress: 'Нужно указать юридический адрес',
   weNeedToPickASubscription: 'Нужно выбрать абонента',
   weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues: 'Нужно выбрать из списка значений подходящий тип юрлица',

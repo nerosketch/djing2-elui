@@ -291,6 +291,8 @@ export default {
     uptime: "Uptime",
     parentDevice: 'Parent device',
     createTime: 'Create time',
+    specifyTheTypeOfDevice: "Specify the type of device",
+    specifyParentDevice: 'Specify parent device',
   },
   route: {
     staff: "Staff",
@@ -560,7 +562,6 @@ export default {
   needsLoginFromLatinSymbolsAndFigures:
     "Needs login from Latin symbols and figures.",
   weNeedToNameThePort: "We need to name the port.",
-  specifyTheTypeOfDevice: "Specify the type of device",
   weNeedALegalAddress: "We need a legal address.",
   weNeedToPickASubscription: "We need to pick a subscription.",
   weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues:

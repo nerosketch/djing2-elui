@@ -28,7 +28,7 @@
     el-form-item(:label="$t('group')")
       groups-choice(v-model="frmMod.group")
 
-    el-form-item(:label="$t('devices.parentDevice')")
+    el-form-item(:label="$t('devices.parentDevice')" prop="parent_dev")
       device-autocomplete-field(
         v-model="frmMod.parent_dev"
         :defaultName="initialParentDevName"
@@ -101,7 +101,11 @@ export default class extends Vue {
       { required: true, message: this.$tc('giveTheDeviceAName'), trigger: 'blur' }
     ],
     dev_type: [
-      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('specifyTheTypeOfDevice') }
+      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('devices.specifyTheTypeOfDevice') }
+    ],
+    parent_dev: [
+      { required: true, message: this.$tc('devices.specifyParentDevice'), trigger: 'blur' },
+      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('devices.specifyParentDevice') }
     ]
   }
 
