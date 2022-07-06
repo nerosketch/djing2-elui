@@ -388,6 +388,7 @@ export default {
   sorm: {
     withoutPassports: 'Without passports',
     withoutContracts: 'Without contracts',
+    tooOld: 'Bad birth day',
   },
   noSubscribersFoundOnThePort: "No subscribers found on the port",
   noSubscribersFound: "No subscribers found",

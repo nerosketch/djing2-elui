@@ -11,12 +11,18 @@
       name="contract"
     )
       customer-without-contract-list
+    el-tab-pane(
+      :label="$t('sorm.tooOld')"
+      name="tooold"
+    )
+      customer-too-old-list
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 import CustomerWithoutPassportList from './customer-without-passport-list.vue'
 import CustomerWithoutContractList from './customer-without-contract-list.vue'
+import CustomerTooOldList from './customer-too-old.vue'
 import tabMixin from '@/utils/tab-mixin'
 import { mixins } from 'vue-class-component'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -25,7 +31,8 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
   name: 'SormIndex',
   components: {
     CustomerWithoutPassportList,
-    CustomerWithoutContractList
+    CustomerWithoutContractList,
+    CustomerTooOldList,
   }
 })
 export default class extends mixins(tabMixin) {

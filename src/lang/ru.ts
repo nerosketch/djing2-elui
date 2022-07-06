@@ -388,6 +388,7 @@ export default {
   sorm: {
     withoutPassports: 'Без паспортов',
     withoutContracts: 'Без договоров',
+    tooOld: 'Дата рождения',
   },
   noSubscribersFoundOnThePort: 'Абоненты на порту не найдены',
   noSubscribersFound: 'Абоненты не найдены',
