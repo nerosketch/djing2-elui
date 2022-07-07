@@ -20,7 +20,6 @@ FROM nginx:alpine AS frontprod
 EXPOSE 80
 
 ENV NGINX_PORT=80
-ENV NGINX_HOST=localhost
 
 RUN ["mkdir", "-p", "/var/www/media"]
 RUN ["chown", "-R", "nginx.", "/var/www/media"]
