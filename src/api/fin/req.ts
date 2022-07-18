@@ -27,4 +27,4 @@ export const getPayLog = (): IAllTimePayLogListAxiosResponsePromise =>
   request.get<IAllTimePayLogList>(`${pgwUrl}log/`)
 
 export const getPayReport = (params: IPayReportParams): IPayReportList =>
-  request.get<IPayReport[]>('/fin/pays_report/', { params })
+  request.get<IPayReport[]>(`${pgwUrl}pays_report/`, { params })
