@@ -2,7 +2,7 @@
 el-card(style='margin-bottom:20px;')
   template(v-slot:header)
     .clearfix
-      span {{ $t('info') }}
+      span {{ $t('profiles.info') }}
   .user-profile
     .box-center
       pan-thumb(
@@ -21,13 +21,19 @@ el-card(style='margin-bottom:20px;')
       .user-bio-section-body
         dl
           dt
-            b {{ $t('telephone') }}
+            b {{ $t('profiles.telephone') }}
           dd {{ $store.state.userprofile.telephone }}
           dt
             b {{ $t('login') }}
           dd {{ $store.state.userprofile.username }}
           dt
-            b {{ $t('nameAndFatherhood') }}
+            b {{ $t('profiles.lastLogin') }}
+          dd {{ $store.state.userprofile.last_login || '-' }}
+          dt
+            b {{ $t('profiles.lastUpdate') }}
+          dd {{ $store.state.userprofile.last_update_time || '-' }}
+          dt
+            b {{ $t('profiles.nameAndFatherhood') }}
           dd {{ $store.state.userprofile.fio }}
           dt
             b {{ $t('profiles.isActive') }}
@@ -42,7 +48,7 @@ el-card(style='margin-bottom:20px;')
     .user-skills.user-bio-section
       .user-bio-section-body
         .progress-item
-          span {{ $t('levelOfAccess') }}
+          span {{ $t('profiles.levelOfAccess') }}
           el-progress(
             :percentage='$store.state.userprofile.access_level'
             :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'

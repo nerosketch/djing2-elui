@@ -8,7 +8,7 @@
     el-form-item(:label="$t('login')" prop="username")
       el-input(v-model="frmMod.username")
 
-    el-form-item(:label="$t('fio')" prop="fio")
+    el-form-item(:label="$t('profiles.fio')" prop="fio")
       el-input(v-model="frmMod.fio")
 
     el-form-item(:label="$t('birthday')" prop="birth_day")

@@ -4,7 +4,7 @@
     type="datetime"
     value-format="yyyy-MM-dd HH:mm:ss"
     format="d.MM.yyyy HH:mm:ss"
-    @change="stopTimer"
+    @change="chDateTime"
     @focus="stopTimer")
 </template>
 
@@ -21,18 +21,17 @@ export default class extends Vue {
   private localVal = this.value
   private localTimer?: NodeJS.Timeout
 
-  @Watch('localVal')
-  private onChangeLocalVal(v: string | null) {
-    this.$emit('input', v)
-  }
-
   @Watch('value')
   private onChValue(v: string | null) {
     if (v) {
-      // FIXME: counter stops after first sec
       this.stopTimer()
     }
     this.localVal = v
+  }
+
+  private chDateTime(val: string) {
+    this.stopTimer()
+    this.$emit('input', val)
   }
 
   private stopTimer() {
@@ -44,9 +43,8 @@ export default class extends Vue {
   created() {
     if (this.value) {
       this.stopTimer()
-    } else {
-      this.startCounter()
     }
+    this.startCounter()
   }
 
   beforeDestroy() {
@@ -54,9 +52,10 @@ export default class extends Vue {
   }
 
   private startCounter () {
+    const fm = (s: number) => `0${s}`.slice(-2)
     const fnc = () => {
-      const now = new Date()
-      this.localVal = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
+      const d = new Date()
+      this.localVal = `${d.getFullYear()}-${fm(d.getMonth()+1)}-${fm(d.getDate())} ${fm(d.getHours())}:${fm(d.getMinutes())}:${fm(d.getSeconds())}`
     }
     this.localTimer = setInterval(fnc, 1000)
     fnc()
