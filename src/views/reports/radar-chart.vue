@@ -62,7 +62,7 @@ export default class extends mixins(ResizeMixin) {
           { name: this.$tc('sáles'), max: 10000 },
           { name: this.$tc('administration'), max: 20000 },
           { name: this.$tc('technologists'), max: 20000 },
-          { name: this.$tc('soupport'), max: 20000 },
+          { name: this.$tc('support'), max: 20000 },
           { name: this.$tc('development'), max: 20000 },
           { name: this.$tc('marketing'), max: 20000 }
         ]

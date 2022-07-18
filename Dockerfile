@@ -16,11 +16,10 @@ RUN npm install
 RUN npm run build --production
 
 # ------------------------- RELEASE -----------------------------
-FROM nginx:alpine AS uiprod
+FROM nginx:alpine AS frontprod
 EXPOSE 80
 
 ENV NGINX_PORT=80
-ENV NGINX_HOST=localhost
 
 RUN ["mkdir", "-p", "/var/www/media"]
 RUN ["chown", "-R", "nginx.", "/var/www/media"]
@@ -34,7 +33,7 @@ COPY --from=uibuild --chown=nginx:nginx ["/home/node/app/dist", "/var/www/app"]
 COPY ["nginx/nginx_site.conf", "/etc/nginx/templates/default.conf.template"]
 
 # ------------------------- NGINX DEVEL -----------------------------
-FROM uiprod AS frontdev
+FROM frontprod AS frontdev
 
 COPY ["nginx/root_serve_dev.conf", "/etc/nginx/root_serve.conf"]
 
