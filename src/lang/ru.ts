@@ -41,7 +41,7 @@ export default {
     nextPay: 'Следующий платёж',
     calcType: 'Тип расчёта',
     cost: 'Цена',
-    sum: 'Сумма',
+    amount: 'Сумма',
     addPeriodicPay: 'Добавить периодический платёж',
     areUSure2DelPeriodicPay: 'Удалить периодическое снятие средств?',
     service: 'Услуга',

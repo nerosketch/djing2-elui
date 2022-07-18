@@ -15,7 +15,7 @@ export interface IAllTimePayLog {
   customer: number
   pay_id: string
   date_add: string
-  sum: number
+  amount: number
   trade_point: string
   receipt_num: number
   pay_gw: number

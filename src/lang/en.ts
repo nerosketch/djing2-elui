@@ -41,7 +41,7 @@ export default {
     nextPay: "Next paycheck",
     calcType: "Type of calculation",
     cost: "Price",
-    sum: "Amount",
+    amount: "Amount",
     addPeriodicPay: "Add periodic pay",
     areUSure2DelPeriodicPay: "Remove the periodic withdrawal?",
     service: "Servicing",

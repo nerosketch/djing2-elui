@@ -49,7 +49,7 @@ export default class extends Vue {
     },
     {
       prop: 'cost',
-      label: this.$tc('customers.sum'),
+      label: this.$tc('customers.amount'),
       'min-width': 80
     },
     {
