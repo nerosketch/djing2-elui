@@ -686,7 +686,7 @@ export default {
   speedShallBePositive: "Speed shall be positive",
   scream: "Scream",
   weakSpeed: "weak speed",
-  servants: "servants",
+  slug: "Slug",
   watch: "Watch",
   community: "Community",
   safe: "Safe.",

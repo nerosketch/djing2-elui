@@ -676,7 +676,7 @@ export default {
   speedShallBePositive: 'Скорость должна быть положительной',
   scream: 'Скрипт',
   weakSpeed: 'слабая скорость',
-  servants: 'Slug',
+  slug: 'Slug',
   watch: 'Смотреть',
   community: 'SNMP Community',
   safe: 'Сохранить',

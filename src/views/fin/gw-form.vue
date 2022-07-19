@@ -12,7 +12,7 @@
     el-form-item(:label="$t('id')" prop="service_id")
       el-input(v-model="frmMod.service_id")
 
-    el-form-item(:label="$t('servants')" prop="slug")
+    el-form-item(:label="$t('slug')" prop="slug")
       el-input(v-model="frmMod.slug")
 
     el-form-item(:label="$t('secret')" prop="secret")

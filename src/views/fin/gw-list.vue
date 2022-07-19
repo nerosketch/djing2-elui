@@ -77,18 +77,8 @@ export default class extends Vue {
       'min-width': 250
     },
     {
-      prop: 'service_id',
-      label: this.$tc('id'),
-      sortable: true,
-      'min-width': 100
-    },
-    {
       prop: 'slug',
       label: this.$tc('path')
-    },
-    {
-      prop: 'secret',
-      label: 'secret'
     },
     {
       prop: 'pay_count',
@@ -104,7 +94,7 @@ export default class extends Vue {
 
   private loadPayGws(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,title,service_id,slug,secret,pay_count,sites'
+      params.fields = 'id,title,slug,pay_count,sites'
     }
     return getPayGateways(params)
   }
