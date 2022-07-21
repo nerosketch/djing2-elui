@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { IPayAllTimeGateway, IPayReport } from '@/api/fin/types'
+import { IPayBaseGateway, IPayReport } from '@/api/fin/types'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getPayGateways, getPayReport } from '@/api/fin/req'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -71,7 +71,7 @@ export default class extends Vue {
 
   private tableData: IPayReport[] = []
 
-  private payGateways: IPayAllTimeGateway[] = []
+  private payGateways: IPayBaseGateway[] = []
 
   private async loadReport() {
     this.loading = true

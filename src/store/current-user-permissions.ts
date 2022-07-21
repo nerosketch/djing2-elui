@@ -137,10 +137,10 @@ export class CurrentPermissions extends VuexModule {
   }
 
   public fin_app = {
-    add_payalltimegateway: false,
-    view_payalltimegateway: false,
-    change_payalltimegateway: false,
-    delete_payalltimegateway: false
+    add_basepaymentmodel: false,
+    view_basepaymentmodel: false,
+    change_basepaymentmodel: false,
+    delete_basepaymentmodel: false,
   }
 
   public gateways = {
