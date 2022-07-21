@@ -22,16 +22,16 @@
         :value="gw.id")
 
     el-radio(v-model="reportParams.group_by" :label="1")
-      | {{ $t('groupByDay') }}
+      | {{ $t('fin.groupByDay') }}
 
     el-radio(v-model="reportParams.group_by" :label="2")
-      | {{ $t('groupingNextWeek') }}
+      | {{ $t('fin.groupByWeek') }}
 
     el-radio(v-model="reportParams.group_by" :label="3")
-      | {{ $t('groupMonthly') }}
+      | {{ $t('fin.groupByMonth') }}
 
     el-button(@click="downloadCsv")
-      | {{ $t('screwingTheEye') }}
+      | {{ $t('fin.downloadCsv') }}
 
     el-table(
       v-loading="loading"
