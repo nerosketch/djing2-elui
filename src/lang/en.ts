@@ -364,6 +364,8 @@ export default {
     lastUpdate: 'Last update',
     levelOfAccess: "Level of access",
     info: "Info",
+    selectAll: 'Select all',
+    deselectAll: 'Delesect all',
     groupResponsibilityRetained: "Group responsibility retained",
   },
   sites: {

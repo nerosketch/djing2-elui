@@ -364,6 +364,8 @@ export default {
     lastUpdate: 'Последнее обновление',
     levelOfAccess: 'Уровень доступа',
     info: 'Инфо',
+    selectAll: 'Выбрать всё',
+    deselectAll: 'Снять выделение',
     groupResponsibilityRetained: 'Ответственность за группы сохранена'
   },
   sites: {
