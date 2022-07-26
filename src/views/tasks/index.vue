@@ -7,7 +7,7 @@ tabs(
     task-list(tabUrl="get_new")
   template(#tfin)
     task-list(tabUrl="get_finished")
-  template(#tfin)
+  template(#tf)
     task-list(tabUrl="get_failed")
   template(#tall)
     task-list(tabUrl="get_all")
