@@ -63,7 +63,7 @@
         min-width="110"
       )
         template(v-slot:default="{row}")
-          | {{ row.data.val }}
+          | {{ otherValues(row) }}
 
       el-table-column(
         :label="$t('amount')"
@@ -91,7 +91,7 @@ export default class extends Vue {
   private loading = false
   private gatewaysLoading = false
 
-  private limitItems = [20, 50, 100, 150, 200, 250, 400, 600]
+  private limitItems = [20, 50, 100, 150, 200, 250, 400, 600, 999999]
 
   private tableData: IPayReport[] = []
 
@@ -207,11 +207,15 @@ export default class extends Vue {
     this.loading = true
     try {
       const { data } = await getPayReport(this.getReportParams(), 'text/csv')
-      // application/xlsx
       save2file(data, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
     } finally {
       this.loading = false
     }
+  }
+
+  private otherValues(row: IPayReport) {
+    const {summ, pay_count, ...o} = row
+    return Object.entries(o).map(([k, val]) => val).join(', ')
   }
 }
 </script>
