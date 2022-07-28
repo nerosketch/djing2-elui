@@ -22,7 +22,7 @@
         :value="gw.id")
 
     el-select(
-      v-model="elsLimit"
+      v-model="reportParams.limit"
       placeholder="Limit"
       :style="{width: '10%'}"
     )
@@ -91,13 +91,7 @@ export default class extends Vue {
   private loading = false
   private gatewaysLoading = false
 
-  private elsLimit = 20
   private limitItems = [20, 50, 100, 150, 200, 250, 400, 600]
-
-  @Watch('elsLimit')
-  private onChLimit() {
-    this.loadReport()
-  }
 
   private tableData: IPayReport[] = []
 
@@ -106,24 +100,29 @@ export default class extends Vue {
   private async loadReport() {
     this.loading = true
     try {
-      const rp = this.reportParams
-      const { data } = await getPayReport({
-        from_time: rp.time_range[0],
-        to_time: rp.time_range[1],
-        pay_gw: rp.pay_gw,
-        group_by: rp.group_by,
-        limit: this.elsLimit
-      })
+      const { data } = await getPayReport(this.getReportParams())
       this.tableData = data
     } finally {
       this.loading = false
     }
   }
 
+  private getReportParams() {
+    const rp = this.reportParams
+    return {
+      from_time: rp.time_range[0],
+      to_time: rp.time_range[1],
+      pay_gw: rp.pay_gw,
+      group_by: rp.group_by,
+      limit: rp.limit
+    }
+  }
+
   private reportParams = {
     time_range: ['2021-05-22', formatDate(new Date())],
     pay_gw: 0,
-    group_by: 3
+    group_by: 3,
+    limit: this.limitItems[0]
   }
 
   @Watch('reportParams', { deep: true })
@@ -204,11 +203,15 @@ export default class extends Vue {
     }
   }
 
-  private downloadCsv() {
-    const dat = this.tableData.map(td => ([JSON.stringify(td.data.val), td.summ, td.pay_count]))
-    dat.unshift([this.$tc('data'), this.$tc('amount'), this.$tc('paycount')])
-    const sdat = dat.join('\n')
-    save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
+  private async downloadCsv() {
+    this.loading = true
+    try {
+      const { data } = await getPayReport(this.getReportParams(), 'text/csv')
+      // application/xlsx
+      save2file(data, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
+    } finally {
+      this.loading = false
+    }
   }
 }
 </script>

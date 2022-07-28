@@ -40,5 +40,10 @@ export const delRNCBPayGateway = delObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
 export const getPayLog = (): IAllTimePayLogListAxiosResponsePromise =>
   request.get<IAllTimePayLogList>(`${pgwUrl}log/`)
 
-export const getPayReport = (params: IPayReportParams): IPayReportList =>
-  request.get<IPayReport[]>(`${pgwUrl}pays_report/`, { params })
+export const getPayReport = (params: IPayReportParams, mimeType='application/json'): IPayReportList =>
+  request.get<IPayReport[]>(`${pgwUrl}pays_report/`, {
+    params,
+    headers: {
+      Accept: mimeType
+    }
+ })
