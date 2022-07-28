@@ -21,6 +21,18 @@
         :label="gw.title"
         :value="gw.id")
 
+    el-select(
+      v-model="elsLimit"
+      placeholder="Limit"
+      :style="{width: '10%'}"
+    )
+      el-option(
+        v-for="(l, i) in limitItems"
+        :key="i"
+        :label="l.toString()"
+        :value="l"
+      )
+
     el-radio(
       v-model="reportParams.group_by"
       :label="1"
@@ -79,6 +91,14 @@ export default class extends Vue {
   private loading = false
   private gatewaysLoading = false
 
+  private elsLimit = 20
+  private limitItems = [20, 50, 100, 150, 200, 250, 400, 600]
+
+  @Watch('elsLimit')
+  private onChLimit() {
+    this.loadReport()
+  }
+
   private tableData: IPayReport[] = []
 
   private payGateways: IPayBaseGateway[] = []
@@ -91,7 +111,8 @@ export default class extends Vue {
         from_time: rp.time_range[0],
         to_time: rp.time_range[1],
         pay_gw: rp.pay_gw,
-        group_by: rp.group_by
+        group_by: rp.group_by,
+        limit: this.elsLimit
       })
       this.tableData = data
     } finally {

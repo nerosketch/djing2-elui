@@ -48,4 +48,5 @@ export interface IPayReportParams {
   to_time: string,
   pay_gw: number,
   group_by: number,
+  limit: number
 }
