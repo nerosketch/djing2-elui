@@ -205,7 +205,7 @@ export default class extends Vue {
   }
 
   private downloadCsv() {
-    const dat = this.tableData.map(td => ([td.data.val, td.summ, td.pay_count]))
+    const dat = this.tableData.map(td => ([JSON.stringify(td.data.val), td.summ, td.pay_count]))
     dat.unshift([this.$tc('data'), this.$tc('amount'), this.$tc('paycount')])
     const sdat = dat.join('\n')
     save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
