@@ -71,7 +71,7 @@ export default class extends Vue {
     table: DataTableComp
   }
 
-  private dialogTitle = this.$tc('payableLock')
+  private dialogTitle = this.$tc('fin.paymentGateway')
   private dialogVisible = false
   private sitesDlg = false
   private frmComponent: any = null
@@ -141,7 +141,7 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.LoadTableData()
-    this.$message.success(this.$tc('payableLockAdded'))
+    this.$message.success(this.$tc('fin.paymentGatewayAdded'))
   }
 
   // Breadcrumbs

@@ -17,7 +17,7 @@ const finRoutes: RouteConfig = {
     {
       path: 'report',
       name: 'finReport',
-      component: () => import(/* webpackChunkName: "finreport" */ '@/views/fin/fin-report.vue'),
+      component: () => import(/* webpackChunkName: "finreport" */ '@/views/fin/fin-gw.vue'),
       meta: { hidden: true }
     }
   ]
