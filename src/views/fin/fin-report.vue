@@ -25,16 +25,18 @@
       v-model="reportParams.group_by"
       :label="1"
     ) {{ $t('fin.groupByDay') }}
-
     el-radio(
       v-model="reportParams.group_by"
       :label="2"
     ) {{ $t('fin.groupByWeek') }}
-
     el-radio(
       v-model="reportParams.group_by"
       :label="3"
     ) {{ $t('fin.groupByMonth') }}
+    el-radio(
+      v-model="reportParams.group_by"
+      :label="4"
+    ) {{ $t('fin.groupByCustomer') }}
 
     el-button(@click="downloadCsv")
       | {{ $t('fin.downloadCsv') }}
@@ -45,9 +47,11 @@
       border
       fit)
       el-table-column(
-        :label="$t('date')"
+        label="DATA"
         min-width="110"
-        prop="pay_date")
+      )
+        template(v-slot:default="{row}")
+          | {{ row.data.val }}
 
       el-table-column(
         :label="$t('amount')"
@@ -180,8 +184,8 @@ export default class extends Vue {
   }
 
   private downloadCsv() {
-    const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
-    dat.unshift([this.$tc('date'), this.$tc('amount'), this.$tc('paycount')])
+    const dat = this.tableData.map(td => ([td.data.val, td.summ, td.pay_count]))
+    dat.unshift([this.$tc('data'), this.$tc('amount'), this.$tc('paycount')])
     const sdat = dat.join('\n')
     save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
   }

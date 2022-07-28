@@ -34,8 +34,11 @@ export type IAllTimePayLogList = IDRFListResponse<IAllTimePayLog>
 export type IAllTimePayLogListAxiosResponsePromise = IDRFAxiosResponsePromise<IAllTimePayLogList>
 
 export interface IPayReport {
+  data: {
+    name: string
+    val: string
+  }
   summ: number
-  pay_date: string
   pay_count: number
 }
 export type IPayReportList = IDRFAxiosResponsePromise<IPayReport[]>
