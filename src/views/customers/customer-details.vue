@@ -24,7 +24,10 @@ tabs(
 
       traf-report(:customerId="uid")
 
-  slot(name="additional_tabs")
+  template(#additional_tabs)
+    slot(name="additional_tabs") def
+
+  slot
 
 </template>
 

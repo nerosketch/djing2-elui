@@ -1,7 +1,7 @@
 <template lang="pug">
 div(:class="{'tab-container': !dense}")
   slot(name='head')
-  el-tabs(v-model="activeTabName" type="border-card")
+  el-tabs(v-model="localActiveTab" type="border-card")
     el-tab-pane(
       v-for="t in tabs"
       :label="t.title"
@@ -10,7 +10,9 @@ div(:class="{'tab-container': !dense}")
     )
       slot(:name="t.name")
 
-  slot(name="additional_tabs")
+    slot(name="additional_tabs")
+
+  slot
 </template>
 
 <script lang="ts">
@@ -37,7 +39,9 @@ export default class extends Vue {
   @Prop({ default: false })
   private dense!: boolean
 
-  @Watch('activeTabName')
+  private localActiveTab: string = ''
+
+  @Watch('localActiveTab')
   private onActiveNameChange(value: string) {
     const newPath = `${this.$route.path}?tab=${value}`
     if (newPath !== this.$route.fullPath) {
@@ -47,16 +51,18 @@ export default class extends Vue {
 
   @Watch('$route.query')
   private onChangedQuery({ tab }: Dictionary<string>) {
-    if (tab && tab !== this.activeTabName) {
-      this.activeTabName = tab
+    if (tab && tab !== this.localActiveTab) {
+      this.localActiveTab = tab
     }
   }
 
   created() {
+    this.localActiveTab = this.activeTabName
+
     // Init the default selected tab
     const tab = this.$route.query.tab as string
     if (tab) {
-      this.activeTabName = tab
+      this.localActiveTab = tab
     }
   }
 }
