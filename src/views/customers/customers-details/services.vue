@@ -26,7 +26,7 @@
 
             dl
               dt
-                b {{ $t('customers.sum') }}
+                b {{ $t('customers.amount') }}
 
               dd {{ currentService.service.cost }} {{ $t('defaultCurrencySymbol') }}
 

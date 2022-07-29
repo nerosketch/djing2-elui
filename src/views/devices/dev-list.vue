@@ -196,7 +196,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'create_time',
-      label: this.$tc('effectiveDate')
+      label: this.$tc('devices.createTime')
     },
     {
       prop: 'oper',

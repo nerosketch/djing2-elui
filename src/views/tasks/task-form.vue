@@ -174,7 +174,7 @@ export default class extends mixins(FormMixin) {
         path: '',
         meta: {
           hidden: true,
-          title: this.$tc('editorial')
+          title: this.$tc('edit')
         }
       }
     ] as any)

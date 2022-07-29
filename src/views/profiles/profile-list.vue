@@ -94,12 +94,12 @@ export default class extends Vue {
     },
     {
       prop: 'fio',
-      label: this.$tc('fio'),
+      label: this.$tc('profiles.fio'),
       'min-width': 250
     },
     {
       prop: 'telephone',
-      label: this.$tc('telephone'),
+      label: this.$tc('profiles.telephone'),
       'min-width': 120
     },
     {

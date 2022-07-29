@@ -1,8 +1,8 @@
 <template lang="pug">
-el-card(style='margin-bottom:20px;')
+el-card(style='padding-bottom:20px;')
   template(v-slot:header)
     .clearfix
-      span {{ $t('info') }}
+      span {{ $t('profiles.info') }}
   .user-profile
     .box-center
       pan-thumb(
@@ -17,45 +17,49 @@ el-card(style='margin-bottom:20px;')
       .user-role.text-center.text-muted
         | {{ $store.state.userprofile.fio }}
   .user-bio
-    .user-education.user-bio-section
-      .user-bio-section-body
-        dl
-          dt
-            b {{ $t('telephone') }}
-          dd {{ $store.state.userprofile.telephone }}
-          dt
-            b {{ $t('login') }}
-          dd {{ $store.state.userprofile.username }}
-          dt
-            b {{ $t('nameAndFatherhood') }}
-          dd {{ $store.state.userprofile.fio }}
-          dt
-            b {{ $t('profiles.isActive') }}
-          dd
-            i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
-            i.el-icon-circle-close(v-else)
-          dt
-            b {{ $t('profiles.isSuperuser') }}
-          dd
-            i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
-            i.el-icon-circle-close(v-else)
-    .user-skills.user-bio-section
-      .user-bio-section-body
-        .progress-item
-          span {{ $t('levelOfAccess') }}
-          el-progress(
-            :percentage='$store.state.userprofile.access_level'
-            :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'
-          )
-        .progress-item
-          span {{ $t('someOtherProgress') }}
-          el-progress(:percentage='45')
-        .progress-item
-          span {{ $t('somethingElse') }}
-          el-progress(:percentage='4')
-        .progress-item
-          span {{ $t('somethingFinished') }}
-          el-progress(:percentage='100' status='success')
+    .user-bio-section
+      dl
+        dt
+          b {{ $t('profiles.telephone') }}
+        dd {{ $store.state.userprofile.telephone }}
+        dt
+          b {{ $t('login') }}
+        dd {{ $store.state.userprofile.username }}
+        dt
+          b {{ $t('profiles.lastLogin') }}
+        dd {{ $store.state.userprofile.last_login || '-' }}
+        dt
+          b {{ $t('profiles.lastUpdate') }}
+        dd {{ $store.state.userprofile.last_update_time || '-' }}
+        dt
+          b {{ $t('profiles.nameAndFatherhood') }}
+        dd {{ $store.state.userprofile.fio }}
+        dt
+          b {{ $t('profiles.isActive') }}
+        dd
+          i.el-icon-circle-check(v-if="$store.state.userprofile.is_active")
+          i.el-icon-circle-close(v-else)
+        dt
+          b {{ $t('profiles.isSuperuser') }}
+        dd
+          i.el-icon-circle-check(v-if="$store.state.userprofile.is_superuser")
+          i.el-icon-circle-close(v-else)
+    .user-bio-section
+      .progress-item
+        span {{ $t('profiles.levelOfAccess') }}
+        el-progress(
+          :percentage='$store.state.userprofile.access_level'
+          :status='$store.state.userprofile.access_level === 100 ? "success" : undefined'
+        )
+      .progress-item
+        span {{ $t('someOtherProgress') }}
+        el-progress(:percentage='45')
+      .progress-item
+        span {{ $t('somethingElse') }}
+        el-progress(:percentage='4')
+      .progress-item
+        span {{ $t('somethingFinished') }}
+        el-progress(:percentage='100' status='success')
 
 </template>
 
@@ -102,17 +106,6 @@ export default class extends Vue {
     font-size: 14px;
   }
 
-  .box-social {
-    padding-top: 30px;
-
-    .el-table {
-      border-top: 1px solid #dfe6ec;
-    }
-  }
-
-  .user-follow {
-    padding-top: 20px;
-  }
 }
 
 .user-bio {

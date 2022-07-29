@@ -14,6 +14,7 @@ import addrRoutes from './modules/addrs'
 import dfRoutes from './modules/dynamicfields'
 import mapsRoutes from './modules/maps'
 import customerLegalRoutes from './modules/customers_legal'
+import sormRoutes from './modules/sorm'
 
 Vue.use(Router)
 
@@ -140,6 +141,7 @@ export const constantRoutes: RouteConfig [] = [
   addrRoutes,
   mapsRoutes,
   dfRoutes,
+  sormRoutes,
   {
     path: '/afk',
     component: Layout,
