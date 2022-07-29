@@ -1,19 +1,28 @@
 <template lang="pug">
-  div
+  .app-container
     el-checkbox(
       v-for="grp in groups"
       :key="grp.id"
       :label="grp.title"
       v-model="grp.state")
 
-    br
-    el-button(
-      icon="el-icon-upload"
-      type="primary"
-      @click="saveResp"
-      :loading="loading"
-      :disabled="!$perms.is_superuser"
-    ) {{ $t('save') }}
+    el-divider
+    el-button-group
+      el-button(
+        icon="el-icon-upload"
+        type="primary"
+        @click="saveResp"
+        :loading="loading"
+        :disabled="!$perms.is_superuser"
+      ) {{ $t('save') }}
+      el-button(
+        icon='el-icon-plus'
+        @click="selectAll(true)"
+      ) {{ $t('profiles.selectAll') }}
+      el-button(
+        icon='el-icon-minus'
+        @click="selectAll(false)"
+      ) {{ $t('profiles.deselectAll') }}
 </template>
 
 <script lang="ts">
@@ -68,6 +77,12 @@ export default class extends Vue {
     this.$message.success(this.$tc('profiles.groupResponsibilityRetained'))
     this.loading = false
     this.$emit('done')
+  }
+
+  private selectAll(v: boolean) {
+    this.groups.forEach(g => {
+      g.state = v
+    })
   }
 }
 </script>

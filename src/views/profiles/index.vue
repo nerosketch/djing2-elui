@@ -1,37 +1,34 @@
 <template lang="pug">
-  .tab-container
-    el-tabs(v-model="activeTabName" type="border-card")
-      el-tab-pane(
-        :label="$t('route.staff')"
-        name="profiles"
-        lazy)
-        keep-alive
-          profile-list
+tabs(
+  :tabs="tabItems"
+  activeTabName="profiles"
+)
+  template(#profiles)
+    profile-list
+  template(v-if="$perms.is_superuser" #profilegroups)
+    group-list
 
-      el-tab-pane(
-        :label="$t('profiles.profileGroups')"
-        name="profilegroups"
-        lazy
-        v-if="$perms.is_superuser")
-        keep-alive
-          group-list
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
-import TabMixin from '@/utils/tab-mixin'
+import { Component, Vue } from 'vue-property-decorator'
 import ProfileList from './profile-list.vue'
 import GroupList from './group-list.vue'
+import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
 
 @Component({
   name: 'ProfilesIndex',
   components: {
     ProfileList,
+    Tabs,
     GroupList
   }
 })
-export default class extends mixins(TabMixin) {
-  protected activeTabName = 'profiles'
+export default class extends Vue {
+
+  private tabItems: ICustomTabItem[] = [
+    { title: this.$t('route.staff'), name: 'profiles' },
+    { title: this.$t('profiles.profileGroups'), name: 'profilegroups' },
+  ]
 }
 </script>

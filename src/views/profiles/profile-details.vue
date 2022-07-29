@@ -5,44 +5,39 @@
         user-card
 
       el-col(:span="18" :xs="24")
-        el-card
-          el-tabs(v-model="activeTabName")
-            el-tab-pane(:label="$t('change')" name="account")
-              profile-form(v-if="ready")
+        tabs(
+          :tabs="tabItems"
+          activeTabName="account"
+          :dense="true"
+        )
+          template(#account)
+            profile-form(v-if="ready")
 
-            el-tab-pane(
-              :label="$t('profiles.responsibilityForGroups')"
-              name="activity"
-              lazy)
-              group-responsibility(:profileUname="profileUname")
+          template(#activity)
+            group-responsibility(:profileUname="profileUname")
 
-            el-tab-pane(
-              :label="$t('rightsToClassesOfAction')"
-              v-if="$store.state.currentuserprofile.is_superuser"
-              name="classperms"
-              lazy)
-              keep-alive(v-if="ready")
-                user-class-perms
+          template(
+            #classperms
+            v-if="$store.state.currentuserprofile.is_superuser"
+          )
+            user-class-perms
 
-            el-tab-pane(
-              :label="$t('actionLog')"
-              name="timeline"
-              lazy)
-              keep-alive(v-if="ready")
-                profile-log
+          template(
+            #timeline
+            v-if="ready"
+          )
+            profile-log
 
-            el-tab-pane(
-              :label="$t('authorizationLogs')"
-              name="authlog"
-              lazy)
-              keep-alive(v-if="ready")
-                profile-auth-log
+          template(
+            #authlog
+            v-if="ready"
+          )
+            profile-auth-log
+
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
-import TabMixin from '@/utils/tab-mixin'
+import { Component, Prop, Watch, Vue } from 'vue-property-decorator'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import ProfileForm from './profile-form.vue'
 import UserCard from './UserCard.vue'
@@ -50,6 +45,7 @@ import GroupResponsibility from './group-responsibility.vue'
 import ProfileLog from './profile-log.vue'
 import UserClassPerms from './user-class-perms.vue'
 import ProfileAuthLog from './profile-auth-log.vue'
+import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
 
 @Component({
   name: 'ProfileDetails',
@@ -59,14 +55,22 @@ import ProfileAuthLog from './profile-auth-log.vue'
     GroupResponsibility,
     ProfileLog,
     UserClassPerms,
+    Tabs,
     ProfileAuthLog
   }
 })
-export default class extends mixins(TabMixin) {
+export default class extends Vue {
   @Prop({ default: '' }) private profileUname!: string
 
-  protected activeTabName = 'account'
   private ready = false
+
+  private tabItems: ICustomTabItem[] = [
+    { name: 'account', title: this.$t('change') },
+    { name: 'activity', title: this.$t('profiles.responsibilityForGroups') },
+    { name: 'classperms', title: this.$t('rightsToClassesOfAction') },
+    { name: 'timeline', title: this.$t('actionLog') },
+    { name: 'authlog', title: this.$t('authorizationLogs') },
+  ]
 
   created() {
     this.loadProfile(this.profileUname)
