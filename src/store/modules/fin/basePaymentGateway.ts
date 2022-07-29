@@ -1,27 +1,31 @@
 /* eslint-disable camelcase */
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
+import {
+  VuexModule, Module, Action,
+  Mutation, getModule
+} from 'vuex-module-decorators'
 import store from '@/store'
-import { IPayAllTimeGateway } from '@/api/fin/types'
-import { getPayGateway, addPayGateway, changePayGateway, delPayGateway } from '@/api/fin/req'
+import { IPayBaseGateway } from '@/api/fin/types'
+import {
+  getPayGateway, addPayGateway,
+  changePayGateway, delPayGateway
+} from '@/api/fin/req'
 
-@Module({ dynamic: true, store, name: 'payalltimegateway' })
-class PayAllTimeGateway extends VuexModule implements IPayAllTimeGateway {
+@Module({ dynamic: true, store, name: 'basepaymentmodel' })
+class PayBaseGateway extends VuexModule implements IPayBaseGateway {
   public id = 0
   public title = ''
-  public secret = ''
-  public service_id = ''
   public slug = ''
   public pay_count = 0
+  public payment_type = 0
   public sites?: number[] = []
 
   @Mutation
-  public SET_ALL_PAYGW(data: IPayAllTimeGateway) {
+  public SET_ALL_PAYGW(data: IPayBaseGateway) {
     this.id = data.id
     this.title = data.title
-    this.secret = data.secret
-    this.service_id = data.service_id
     this.slug = data.slug
     this.pay_count = data.pay_count
+    this.payment_type = data.payment_type
     this.sites = data.sites
     return this
   }
@@ -30,10 +34,9 @@ class PayAllTimeGateway extends VuexModule implements IPayAllTimeGateway {
   public RESET_ALL_PAYGW() {
     this.id = 0
     this.title = ''
-    this.secret = ''
-    this.service_id = ''
     this.slug = ''
     this.pay_count = 0
+    this.payment_type = 0
     this.sites = []
     return this
   }
@@ -66,4 +69,4 @@ class PayAllTimeGateway extends VuexModule implements IPayAllTimeGateway {
   }
 }
 
-export const PayAllTimeGatewayModule = getModule(PayAllTimeGateway)
+export const PayBaseGatewayModule = getModule(PayBaseGateway)

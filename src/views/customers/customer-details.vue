@@ -1,80 +1,49 @@
 <template lang="pug">
-  .app-container
-    slot(name="head")
-      span {{ $t('customers.balance') }}:
+tabs(
+  :tabs="tabItems"
+  activeTabName="info"
+)
+  template(#head)
+    span {{ $t('customers.balance') }}:
+    small  {{ $store.state.customer.balance }}.
+    span  {{ $t('dateOfEstablishment') }}
+    small {{ $store.state.customer.create_date }}
 
-      small  {{ $store.state.customer.balance }}.
+  template(#info)
+    info(v-if="loaded")
+  template(#services)
+    services(v-if="loaded")
+  template(#fin)
+    finance(v-if="loaded")
+  template(#history)
+    customer-task-history(v-if="loaded")
+  template(#traf)
+    el-card(v-if="loaded")
+      template(#header)
+        | {{ $t('customers.trafHistory') }}
 
-      span  {{ $t('dateOfEstablishment') }}
+      traf-report(:customerId="uid")
 
-      small {{ $store.state.customer.create_date }}
+  template(#additional_tabs)
+    slot(name="additional_tabs") def
 
-    el-tabs.border-card(v-model="activeTabName")
-      el-tab-pane(
-        :label="$t('customers.info')"
-        name="info"
-        lazy)
-        slot(name="info")
-          keep-alive
-            info(v-if="loaded")
+  slot
 
-      el-tab-pane(
-        :label="$t('route.services')"
-        name="services"
-        :disabled="!$perms.customers.view_customerservice"
-        lazy)
-        slot(name="services")
-          keep-alive
-            services(v-if="loaded")
-
-      el-tab-pane(
-        :label="$t('route.finance')"
-        name="fin"
-        :disabled="!$perms.customers.view_customerlog"
-        lazy)
-        slot(name="fin")
-          keep-alive
-            finance(v-if="loaded")
-
-      el-tab-pane(
-        :label="$t('customers.taskHistory')"
-        name="history"
-        :disabled="!$perms.tasks.view_task"
-        lazy)
-        slot(name="history")
-          keep-alive
-            customer-task-history(v-if="loaded")
-
-      el-tab-pane(
-        :label="$t('customers.trafHistory')"
-        name="traf"
-        lazy)
-        slot(name="traf")
-          keep-alive
-            el-card(v-if="loaded")
-              template(#header)
-                | {{ $t('customers.trafHistory') }}
-
-              traf-report(:customerId="uid")
-
-      slot(name="additional_tabs")
-
-    slot
 </template>
 
 <script lang="ts">
 /* eslint-disable camelcase */
-import { Component, Prop } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
-import TabMixin from '@/utils/tab-mixin'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
 import Finance from './customers-details/finance.vue'
 import CustomerTaskHistory from './customers-details/customer-task-history.vue'
 import TrafReport from './customers-details/traf-report.vue'
+import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
+import { CurrentPermissions } from '@/store/current-user-permissions'
 
 interface ICustomerUpdateEventData {
   customer_id: number
@@ -87,14 +56,16 @@ interface ICustomerUpdateEventData {
     Services,
     Finance,
     CustomerTaskHistory,
+    Tabs,
     TrafReport
   }
 })
-export default class extends mixins(TabMixin) {
+export default class extends Vue {
+  private $perms!: CurrentPermissions
+
   @Prop({ default: 0 }) private uid!: number
 
   private loaded = false
-  protected activeTabName = 'info'
 
   created() {
     // Subscribe for customer update event from server
@@ -115,6 +86,14 @@ export default class extends mixins(TabMixin) {
     document.title = this.$store.state.customer.full_name || this.$tc('customers.customer')
   }
 
+  private tabItems: ICustomTabItem[] = [
+    { title: this.$t('customers.info'), name: 'info' },
+    { title: this.$t('route.services'), name: 'services', disabled: !this.$perms.customers.view_customerservice },
+    { title: this.$t('route.finance'), name: 'fin', disabled: !this.$perms.customers.view_customerlog },
+    { title: this.$t('customers.taskHistory'), name: 'history', disabled: !this.$perms.tasks.view_task },
+    { title: this.$t('customers.trafHistory'), name: 'traf' },
+  ]
+
   private onCustomerServerUpdate(msg: IWsMessage) {
     const dat = msg.data as ICustomerUpdateEventData
     if (dat.customer_id === this.uid) {
@@ -123,9 +102,9 @@ export default class extends mixins(TabMixin) {
   }
 
   // Breadcrumbs
-  private async setCrumbs(addrId: number) {
+  private setCrumbs(addrId: number) {
     if (addrId === 0) return
-    await BreadcrumbsModule.SetCrumbs([
+    BreadcrumbsModule.SetCrumbs([
       {
         path: '/customers/',
         meta: {

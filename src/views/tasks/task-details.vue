@@ -24,8 +24,7 @@
 
 <script lang="ts">
 /* eslint-disable camelcase */
-import { Component, Prop } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { TaskModule } from '@/store/modules/tasks/tasks'
 import TaskForm from './task-form.vue'
 import TaskInfo from './task-info.vue'
@@ -34,7 +33,6 @@ import {
   IWsMessage,
   IWsMessageEventTypeEnum
 } from '@/layout/mixin/ws'
-import TabMixin from '@/utils/tab-mixin'
 import FinishDocIndex from './finish_doc/index.vue'
 import { getActiveProfiles } from '@/api/profiles/req'
 import { IUserProfile } from '@/api/profiles/types'
@@ -52,12 +50,11 @@ interface ITaskEventData {
     FinishDocIndex
   }
 })
-export default class extends mixins(TabMixin) {
+export default class extends Vue {
   @Prop({ default: 0 })
   private taskId!: number
 
   private taskReady = false
-  protected activeTabName = 'details'
 
   private potentialRecipients: IUserProfile[] = []
 

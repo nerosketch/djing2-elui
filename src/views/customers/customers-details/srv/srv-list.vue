@@ -19,7 +19,7 @@
 
       el-table-column(:label="$t('customers.service')" prop="title")
 
-      el-table-column(:label="$t('customers.sum')" prop="cost")
+      el-table-column(:label="$t('customers.amount')" prop="cost")
 
       el-table-column(:label="$t('customers.inSpeed')" prop="speed_in")
 

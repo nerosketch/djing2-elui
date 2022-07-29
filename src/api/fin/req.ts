@@ -1,11 +1,13 @@
 import request from '@/utils/request'
 import {
-  IPayAllTimeGateway,
+  IPayBaseGateway,
   IAllTimePayLogList,
   IAllTimePayLogListAxiosResponsePromise,
   IPayReportList,
   IPayReport,
-  IPayReportParams
+  IPayReportParams,
+  IPayAllTimeGateway,
+  IPayRNCBGateway
 } from './types'
 import {
   addObjectDecorator,
@@ -16,15 +18,32 @@ import {
 } from '@/api/baseRequests'
 
 
-const pgwUrl = '/fin/alltime/'
-export const getPayGateways = getObjectListDecorator<IPayAllTimeGateway>(pgwUrl)
-export const getPayGateway = getObjectDecorator<IPayAllTimeGateway>(pgwUrl)
-export const addPayGateway = addObjectDecorator<IPayAllTimeGateway>(pgwUrl)
-export const changePayGateway = patchObjectDecorator<IPayAllTimeGateway>(pgwUrl)
-export const delPayGateway = delObjectDecorator<IPayAllTimeGateway>(pgwUrl)
+const pgwUrl = '/fin/base/'
+export const getPayGateways = getObjectListDecorator<IPayBaseGateway>(pgwUrl)
+export const getPayGateway = getObjectDecorator<IPayBaseGateway>(pgwUrl)
+export const addPayGateway = addObjectDecorator<IPayBaseGateway>(pgwUrl)
+export const changePayGateway = patchObjectDecorator<IPayBaseGateway>(pgwUrl)
+export const delPayGateway = delObjectDecorator<IPayBaseGateway>(pgwUrl)
+
+const pgwATUrl = '/fin/alltime/'
+export const getATPayGateway = getObjectDecorator<IPayAllTimeGateway>(pgwATUrl)
+export const addATPayGateway = addObjectDecorator<IPayAllTimeGateway>(pgwATUrl)
+export const changeATPayGateway = patchObjectDecorator<IPayBaseGateway>(pgwATUrl)
+export const delATPayGateway = delObjectDecorator<IPayBaseGateway>(pgwATUrl)
+
+const pgwRNCBUrl = '/fin/rncb/'
+export const getRNCBPayGateway = getObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
+export const addRNCBPayGateway = addObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
+export const changeRNCBPayGateway = patchObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
+export const delRNCBPayGateway = delObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
 
 export const getPayLog = (): IAllTimePayLogListAxiosResponsePromise =>
   request.get<IAllTimePayLogList>(`${pgwUrl}log/`)
 
-export const getPayReport = (params: IPayReportParams): IPayReportList =>
-  request.get<IPayReport[]>('/fin/pays_report/', { params })
+export const getPayReport = (params: IPayReportParams, mimeType='application/json'): IPayReportList =>
+  request.get<IPayReport[]>(`${pgwUrl}pays_report/`, {
+    params,
+    headers: {
+      Accept: mimeType
+    }
+ })

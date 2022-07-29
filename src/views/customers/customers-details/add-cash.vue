@@ -5,7 +5,7 @@
     status-icon
     :rules="frmRules"
     :model="frmMod")
-    el-form-item(:label="$t('customers.sum')" prop="cost")
+    el-form-item(:label="$t('customers.amount')" prop="cost")
       el-input(
         v-model="frmMod.cost"
         type="number"

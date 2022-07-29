@@ -20,23 +20,28 @@
             type="danger"
             icon="el-icon-delete"
             @click="delPayGw(row)"
-            :disabled="!$perms.fin_app.delete_payalltimegateway")
+            :disabled="!$perms.fin_app.delete_basepaymentmodel")
 
       el-button(icon="el-icon-plus" @click="openNew")
-        | {{ $t('addALock') }}
+        | {{ $t('fin.addGateway') }}
 
     el-dialog(
       :title="dialogTitle"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false")
-      pay-gw-form(v-on:done="frmDone")
+      template(v-if="frmComponent")
+        component(
+          :is="frmComponent"
+          v-on:done="frmDone"
+        )
+      h2(v-else) formError: not selected type
 
     el-dialog(
       :title="$t('facilities')"
       :visible.sync="sitesDlg"
       :close-on-click-modal="false")
       sites-attach(
-        :selectedSiteIds="$store.state.payalltimegateway.sites"
+        :selectedSiteIds="$store.state.basepaymentmodel.sites"
         v-on:save="payGwSitesSave"
       )
 </template>
@@ -46,17 +51,18 @@ import { Component, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { getPayGateways } from '@/api/fin/req'
-import { IPayAllTimeGateway } from '@/api/fin/types'
+import { IPayBaseGateway } from '@/api/fin/types'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { PayAllTimeGatewayModule } from '@/store/modules/fin'
-import PayGwForm from './gw-form.vue'
+import { PayBaseGatewayModule } from '@/store/modules/fin/basePaymentGateway'
+import AlltimeGwForm from './forms/alltime-form.vue'
+import RncbGwForm from './forms/rncb-form.vue'
+import NewGwForm from './new-gw-form.vue'
 
-class DataTableComp extends DataTable<IPayAllTimeGateway> {}
+class DataTableComp extends DataTable<IPayBaseGateway> {}
 
 @Component({
   name: 'GwList',
   components: {
-    PayGwForm,
     datatable: DataTableComp
   }
 })
@@ -65,9 +71,10 @@ export default class extends Vue {
     table: DataTableComp
   }
 
-  private dialogTitle = this.$tc('payableLock')
+  private dialogTitle = this.$tc('fin.paymentGateway')
   private dialogVisible = false
   private sitesDlg = false
+  private frmComponent: any = null
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -77,18 +84,12 @@ export default class extends Vue {
       'min-width': 250
     },
     {
-      prop: 'service_id',
-      label: this.$tc('id'),
-      sortable: true,
-      'min-width': 100
-    },
-    {
       prop: 'slug',
       label: this.$tc('path')
     },
     {
-      prop: 'secret',
-      label: 'secret'
+      prop: 'payment_type_text',
+      label: 'type'
     },
     {
       prop: 'pay_count',
@@ -104,26 +105,35 @@ export default class extends Vue {
 
   private loadPayGws(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,title,service_id,slug,secret,pay_count,sites'
+      params.fields = 'id,title,slug,pay_count,payment_type_text,payment_type,sites'
     }
     return getPayGateways(params)
   }
 
-  private openEdit(gw: IPayAllTimeGateway) {
-    PayAllTimeGatewayModule.SET_ALL_PAYGW(gw)
-    this.dialogTitle = this.$tc('modifyThePlausibleLock')
+  private openEdit(gw: IPayBaseGateway) {
+    switch (gw.payment_type) {
+      case 3:
+        this.frmComponent = AlltimeGwForm
+        break
+      case 2:
+        this.frmComponent = RncbGwForm
+        break
+    }
+    PayBaseGatewayModule.SET_ALL_PAYGW(gw)
+    this.dialogTitle = this.$tc('fin.modifyThePaymentGateway')
     this.dialogVisible = true
   }
 
-  private delPayGw(gw: IPayAllTimeGateway) {
+  private delPayGw(gw: IPayBaseGateway) {
     this.$confirm(this.$tc('removePayGWQuestion')).then(async() => {
-      await PayAllTimeGatewayModule.DelPayGroup(gw.id)
+      await PayBaseGatewayModule.DelPayGroup(gw.id)
       this.$refs.table.LoadTableData()
     })
   }
 
   private openNew() {
-    PayAllTimeGatewayModule.RESET_ALL_PAYGW()
+    this.frmComponent = NewGwForm
+    PayBaseGatewayModule.RESET_ALL_PAYGW()
     this.dialogTitle = this.$tc('createAPayLock')
     this.dialogVisible = true
   }
@@ -131,7 +141,7 @@ export default class extends Vue {
   private frmDone() {
     this.dialogVisible = false
     this.$refs.table.LoadTableData()
-    this.$message.success(this.$tc('payableLockAdded'))
+    this.$message.success(this.$tc('fin.paymentGatewayAdded'))
   }
 
   // Breadcrumbs
@@ -149,7 +159,7 @@ export default class extends Vue {
   // End Breadcrumbs
 
   private payGwSitesSave(selectedSiteIds: number[]) {
-    PayAllTimeGatewayModule.PatchPayGw({
+    PayBaseGatewayModule.PatchPayGw({
       sites: selectedSiteIds
     }).then(() => {
       this.$refs.table.LoadTableData()
@@ -158,8 +168,8 @@ export default class extends Vue {
     this.sitesDlg = false
   }
 
-  private openSitesDlg(grp: IPayAllTimeGateway) {
-    PayAllTimeGatewayModule.SET_ALL_PAYGW(grp)
+  private openSitesDlg(grp: IPayBaseGateway) {
+    PayBaseGatewayModule.SET_ALL_PAYGW(grp)
     this.sitesDlg = true
   }
 }

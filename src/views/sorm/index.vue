@@ -1,30 +1,23 @@
 <template lang="pug">
-.tab-container
-  el-tabs(v-model="activeTabName" type="border-card")
-    el-tab-pane(
-      :label="$t('sorm.withoutPassports')"
-      name="passport"
-    )
-      customer-without-passport-list
-    el-tab-pane(
-      :label="$t('sorm.withoutContracts')"
-      name="contract"
-    )
-      customer-without-contract-list
-    el-tab-pane(
-      :label="$t('sorm.tooOld')"
-      name="tooold"
-    )
-      customer-too-old-list
+tabs(
+  :tabs="tabItems"
+  activeTabName="passport"
+)
+  template(#passport)
+    customer-without-passport-list
+  template(#contract)
+    customer-without-contract-list
+  template(#tooold)
+    customer-too-old-list
+
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import CustomerWithoutPassportList from './customer-without-passport-list.vue'
 import CustomerWithoutContractList from './customer-without-contract-list.vue'
 import CustomerTooOldList from './customer-too-old.vue'
-import tabMixin from '@/utils/tab-mixin'
-import { mixins } from 'vue-class-component'
+import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 
 @Component({
@@ -33,10 +26,16 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
     CustomerWithoutPassportList,
     CustomerWithoutContractList,
     CustomerTooOldList,
+    Tabs,
   }
 })
-export default class extends mixins(tabMixin) {
-  protected activeTabName = 'passport'
+export default class extends Vue {
+
+  private tabItems: ICustomTabItem[] = [
+    { name: 'passport', title: this.$t('sorm.withoutPassports') },
+    { name: 'contract', title: this.$t('sorm.withoutContracts') },
+    { name: 'tooold', title: this.$t('sorm.tooOld') },
+  ]
 
   // Breadcrumbs
   created() {

@@ -3,8 +3,8 @@
     el-date-picker(
       v-model="reportParams.time_range"
       type="daterange"
-      start-placeholder="Дата начала"
-      end-placeholder="Конечная дата"
+      :start-placeholder="$t('beginTime')"
+      :end-placeholder="$t('endDate')"
       align="right"
       unlink-panels
       value-format="yyyy-MM-dd"
@@ -12,7 +12,7 @@
 
     el-select(
       v-model="reportParams.pay_gw"
-      :placeholder="$t('payableLock')"
+      :placeholder="$t('fin.paymentGateway')"
       v-loading="gatewaysLoading"
       :style="{width: '10%'}")
       el-option(
@@ -21,17 +21,37 @@
         :label="gw.title"
         :value="gw.id")
 
-    el-radio(v-model="reportParams.group_by" :label="1")
-      | {{ $t('groupByDay') }}
+    el-select(
+      v-model="reportParams.limit"
+      placeholder="Limit"
+      :style="{width: '10%'}"
+    )
+      el-option(
+        v-for="(l, i) in limitItems"
+        :key="i"
+        :label="l.toString()"
+        :value="l"
+      )
 
-    el-radio(v-model="reportParams.group_by" :label="2")
-      | {{ $t('groupingNextWeek') }}
-
-    el-radio(v-model="reportParams.group_by" :label="3")
-      | {{ $t('groupMonthly') }}
+    el-radio(
+      v-model="reportParams.group_by"
+      :label="1"
+    ) {{ $t('fin.groupByDay') }}
+    el-radio(
+      v-model="reportParams.group_by"
+      :label="2"
+    ) {{ $t('fin.groupByWeek') }}
+    el-radio(
+      v-model="reportParams.group_by"
+      :label="3"
+    ) {{ $t('fin.groupByMonth') }}
+    el-radio(
+      v-model="reportParams.group_by"
+      :label="4"
+    ) {{ $t('fin.groupByCustomer') }}
 
     el-button(@click="downloadCsv")
-      | {{ $t('screwingTheEye') }}
+      | {{ $t('fin.downloadCsv') }}
 
     el-table(
       v-loading="loading"
@@ -39,9 +59,11 @@
       border
       fit)
       el-table-column(
-        :label="$t('date')"
+        label="DATA"
         min-width="110"
-        prop="pay_date")
+      )
+        template(v-slot:default="{row}")
+          | {{ otherValues(row) }}
 
       el-table-column(
         :label="$t('amount')"
@@ -55,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import { IPayAllTimeGateway, IPayReport } from '@/api/fin/types'
+import { IPayBaseGateway, IPayReport } from '@/api/fin/types'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getPayGateways, getPayReport } from '@/api/fin/req'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -69,30 +91,38 @@ export default class extends Vue {
   private loading = false
   private gatewaysLoading = false
 
+  private limitItems = [20, 50, 100, 150, 200, 250, 400, 600, 999999]
+
   private tableData: IPayReport[] = []
 
-  private payGateways: IPayAllTimeGateway[] = []
+  private payGateways: IPayBaseGateway[] = []
 
   private async loadReport() {
     this.loading = true
     try {
-      const rp = this.reportParams
-      const { data } = await getPayReport({
-        from_time: rp.time_range[0],
-        to_time: rp.time_range[1],
-        pay_gw: rp.pay_gw,
-        group_by: rp.group_by
-      })
+      const { data } = await getPayReport(this.getReportParams())
       this.tableData = data
     } finally {
       this.loading = false
     }
   }
 
+  private getReportParams() {
+    const rp = this.reportParams
+    return {
+      from_time: rp.time_range[0],
+      to_time: rp.time_range[1],
+      pay_gw: rp.pay_gw,
+      group_by: rp.group_by,
+      limit: rp.limit
+    }
+  }
+
   private reportParams = {
     time_range: ['2021-05-22', formatDate(new Date())],
     pay_gw: 0,
-    group_by: 3
+    group_by: 3,
+    limit: this.limitItems[0]
   }
 
   @Watch('reportParams', { deep: true })
@@ -147,7 +177,7 @@ export default class extends Vue {
         path: '',
         meta: {
           hidden: true,
-          title: this.$tc('incomeReport')
+          title: this.$tc('fin.incomeReport')
         }
       }
     ] as any)
@@ -173,11 +203,19 @@ export default class extends Vue {
     }
   }
 
-  private downloadCsv() {
-    const dat = this.tableData.map(td => ([td.pay_date, td.summ, td.pay_count]))
-    dat.unshift([this.$tc('date'), this.$tc('amount'), this.$tc('paycount')])
-    const sdat = dat.join('\n')
-    save2file(sdat, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
+  private async downloadCsv() {
+    this.loading = true
+    try {
+      const { data } = await getPayReport(this.getReportParams(), 'text/csv')
+      save2file(data, 'text/csv', `fin_report_${this.reportParams.time_range[0]}.csv`)
+    } finally {
+      this.loading = false
+    }
+  }
+
+  private otherValues(row: IPayReport) {
+    const {summ, pay_count, ...o} = row
+    return Object.entries(o).map(([k, val]) => val).join(', ')
   }
 }
 </script>

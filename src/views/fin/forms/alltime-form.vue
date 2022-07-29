@@ -12,7 +12,7 @@
     el-form-item(:label="$t('id')" prop="service_id")
       el-input(v-model="frmMod.service_id")
 
-    el-form-item(:label="$t('servants')" prop="slug")
+    el-form-item(:label="$t('slug')" prop="slug")
       el-input(v-model="frmMod.slug")
 
     el-form-item(:label="$t('secret')" prop="secret")
@@ -24,17 +24,18 @@
         type="primary"
         @click="onSubmit"
         :loading="isLoading"
-        :disabled="!$perms.fin_app.change_payalltimegateway")
+        :disabled="!$perms.fin_app.change_basepaymentmodel")
         | {{ $t('save') }}
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { PayAllTimeGatewayModule } from '@/store/modules/fin/index'
+import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
+import { addATPayGateway, changeATPayGateway, getATPayGateway } from '@/api/fin/req'
+import { IPayAllTimeGateway } from '@/api/fin/types'
 
 @Component({
-  name: 'PayGwForm'
+  name: 'AlltimeGwForm'
 })
 export default class extends Vue {
   private isLoading = false
@@ -54,12 +55,11 @@ export default class extends Vue {
     ]
   }
 
-  @Watch('$store.state.payalltimegateway.id')
-  private onChangeGw() {
-    this.frmMod.title = PayAllTimeGatewayModule.title
-    this.frmMod.service_id = PayAllTimeGatewayModule.service_id
-    this.frmMod.slug = PayAllTimeGatewayModule.slug
-    this.frmMod.secret = PayAllTimeGatewayModule.secret
+  private changeGw(dat: IPayAllTimeGateway) {
+    this.frmMod.title = dat.title
+    this.frmMod.service_id = dat.service_id
+    this.frmMod.slug = dat.slug
+    this.frmMod.secret = dat.secret
   }
 
   private frmMod = {
@@ -70,11 +70,18 @@ export default class extends Vue {
   }
 
   get isNew() {
-    return PayAllTimeGatewayModule.id === 0
+    return this.$store.state.basepaymentmodel.id === 0
   }
 
   created() {
-    this.onChangeGw()
+    this.fetchGw()
+  }
+
+  private async fetchGw() {
+    if (!this.isNew) {
+      const { data } = await getATPayGateway(this.$store.state.basepaymentmodel.id)
+      this.changeGw(data)
+    }
   }
 
   private onSubmit() {
@@ -84,9 +91,12 @@ export default class extends Vue {
         let newDat
         try {
           if (this.isNew) {
-            newDat = await PayAllTimeGatewayModule.AddPayGw(this.frmMod)
+            newDat = await addATPayGateway(this.frmMod)
           } else {
-            newDat = await PayAllTimeGatewayModule.PatchPayGw(this.frmMod)
+            newDat = await changeATPayGateway(
+              this.$store.state.basepaymentmodel.id,
+              this.frmMod
+            )
           }
           this.isLoading = false
           this.$emit('done', newDat)
