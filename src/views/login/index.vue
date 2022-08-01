@@ -7,7 +7,7 @@
       autocomplete="on"
       label-position="left"
     )
-      my-smog(id="smogblock" width="518" height="227")
+      space-shader-box(id="smogblock" width="518" height="227")
         //- h3.title Войти
 
       el-form-item(prop="username")
@@ -55,7 +55,7 @@ import { latinValidator } from '@/utils/validate'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 import { IUserProfile } from '@/api/profiles/types'
 import { CurrentPermissions } from '@/store/current-user-permissions'
-import '@/components/shaders/smog.js'
+import 'space-shader-box'
 
 @Component({
   name: 'Login',
