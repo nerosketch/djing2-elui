@@ -94,7 +94,7 @@ import FormMixin from '@/utils/forms'
 import { ICustomer } from '@/api/customers/types'
 import { ICustomerContract } from './api/types'
 import { Form } from 'element-ui'
-import { addContract, changeContract, finishCustomerContract } from './api/reqs'
+import { addContract, changeContract, finishCustomerContract, getContractInitials } from './api/reqs'
 import ContractDocs from './contract-docs.vue'
 import BooleanIcon from '@/components/boolean-icon.vue'
 
@@ -157,6 +157,10 @@ export default class extends mixins(FormMixin) {
   created() {
     if (this.contract) {
       this.fillFrmModFromVar(this.contract)
+    } else {
+      getContractInitials().then((contr) => {
+        this.fillFrmModFromVar(contr.data)
+      })
     }
     this.doCopyFromUsername()
   }
