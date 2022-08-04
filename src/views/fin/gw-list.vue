@@ -134,7 +134,7 @@ export default class extends Vue {
   private openNew() {
     this.frmComponent = NewGwForm
     PayBaseGatewayModule.RESET_ALL_PAYGW()
-    this.dialogTitle = this.$tc('createAPayLock')
+    this.dialogTitle = this.$tc('fin.createAPayLock')
     this.dialogVisible = true
   }
 
