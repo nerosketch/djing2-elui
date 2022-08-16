@@ -211,8 +211,8 @@ export default class extends mixins(TableWithAddrMixin) {
     this.dialogVisible = true
   }
 
-  private async openNew() {
-    await DeviceModule.RESET_ALL_DEV()
+  private openNew() {
+    DeviceModule.RESET_ALL_DEV()
     this.dialogNewDev = true
   }
 
@@ -265,7 +265,7 @@ export default class extends mixins(TableWithAddrMixin) {
   private async onGrpLoc(locId: number) {
     if (locId > 0) {
       await AddressModule.GetAddress(locId)
-      await BreadcrumbsModule.SetCrumbs([
+      BreadcrumbsModule.SetCrumbs([
         {
           path: '/devices',
           meta: {
