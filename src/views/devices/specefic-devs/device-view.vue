@@ -28,7 +28,8 @@ import SwitchView from './switch-view.vue'
 import PonOnu from './pon/pon-onu.vue'
 import OltZte from './pon/gpon/olt-zte.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
-import { AddressModule } from '@/store/modules/addresses/address'
+import { IAddressModel } from '@/api/addresses/types'
+import { getAddressByType } from '@/api/addresses/req'
 
 @Component({
   name: 'DeviceView',
@@ -44,6 +45,8 @@ export default class extends Vue {
 
   private device: IDevice | null = null
   private ready = false
+
+  private localityDetail: IAddressModel | null = null
 
   private async getDevice() {
     this.ready = false
@@ -63,11 +66,24 @@ export default class extends Vue {
     }
   }
 
+  @Watch('localityDetail')
+  private onChLocDet(lc: IAddressModel | null) {
+    this.setCrumbs(lc)
+  }
+  @Watch('$store.state.devicemodule.address')
+  private onChCustomerAddr(addrId: number) {
+    this.loadLocalityDetail(addrId, 4)
+  }
+  private async loadLocalityDetail(addrId: number, addrType: number) {
+    const { data } = await getAddressByType(addrId, addrType)
+    this.localityDetail = data
+  }
+
   created() {
     this.getDevice().then(dev => {
       if (dev) {
         document.title = dev.comment || dev.ip_address
-        this.onLocCh(dev.address)
+        this.loadLocalityDetail(dev.address, 4)
       }
     })
     document.addEventListener('keydown', this.onKeyPress)
@@ -83,34 +99,36 @@ export default class extends Vue {
   }
 
   // Breadcrumbs
-  @Watch('$store.state.devicemodule.address')
-  private async onLocCh(addrId: number) {
-    if (addrId > 0) {
-      await AddressModule.GetAddress(addrId)
-      await BreadcrumbsModule.SetCrumbs([
-        {
-          path: '/devices',
-          meta: {
-            hidden: true,
-            title: this.$tc('equipment')
-          }
-        },
-        {
-          path: { name: 'devicesList', params: { addrId: addrId } },
-          meta: {
-            hidden: true,
-            title: this.$store.state.address.title
-          }
-        },
-        {
-          path: '',
-          meta: {
-            hidden: true,
-            title: DeviceModule.comment
-          }
+  private setCrumbs(addr: IAddressModel | null) {
+    BreadcrumbsModule.SetCrumbs([
+      {
+        path: '/devices',
+        meta: {
+          hidden: true,
+          title: this.$tc('equipment')
         }
-      ] as any)
-    }
+      },
+      addr ? {
+        path: { name: 'devicesList', params: { addrId: addr.id } },
+        meta: {
+          hidden: true,
+          title: addr.title
+        }
+      } : {
+        path: '',
+        meta: {
+          hidden: true,
+          title: '-'
+        }
+      },
+      {
+        path: '',
+        meta: {
+          hidden: true,
+          title: DeviceModule.comment
+        }
+      }
+    ] as any)
   }
   // End Breadcrumbs
 }
