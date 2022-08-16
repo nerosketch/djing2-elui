@@ -65,3 +65,6 @@ export const getAddrFullTitle = (addrId: number): StringAxiosResponsePromise =>
 
 export const getAddrIdHierarchy = (addrId: number): IDRFAxiosResponsePromise<number[]> =>
   request.get<number[]>(`/addrs/${addrId}/get_id_hierarchy/`)
+
+export const getAddressByType = (addrId: number, addrType: number): IDRFAxiosResponsePromise<IAddressModel | null> =>
+  request.get<IAddressModel | null>(`/addrs/${addrId}/get_address_by_type/?addr_type=${addrType}`)

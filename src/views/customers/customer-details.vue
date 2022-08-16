@@ -33,7 +33,7 @@ tabs(
 
 <script lang="ts">
 /* eslint-disable camelcase */
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
 import Finance from './customers-details/finance.vue'
@@ -44,6 +44,8 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { IWsMessage, IWsMessageEventTypeEnum } from '@/layout/mixin/ws'
 import { CurrentPermissions } from '@/store/current-user-permissions'
+import { getAddressByType } from '@/api/addresses/req'
+import { IAddressModel } from '@/api/addresses/types'
 
 interface ICustomerUpdateEventData {
   customer_id: number
@@ -67,11 +69,31 @@ export default class extends Vue {
 
   private loaded = false
 
+  private localityDetail: IAddressModel | null = null
+
+  private async loadLocalityDetail(addrId: number, addrType: number) {
+    const { data } = await getAddressByType(addrId, addrType)
+    this.localityDetail = data
+  }
+
   created() {
     // Subscribe for customer update event from server
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER, this.onCustomerServerUpdate)
 
     this.loadCustomer()
+
+    this.loadLocalityDetail(this.$store.state.customer.address, 4)
+  }
+
+  @Watch('localityDetail')
+  private onChLocDet(lc: IAddressModel | null) {
+    if (lc) {
+      this.setCrumbs(lc.id)
+    }
+  }
+  @Watch('$store.state.customer.address')
+  private onChCustomerAddr(addrId: number) {
+    this.loadLocalityDetail(addrId, 4)
   }
 
   beforeDestroy() {
@@ -112,13 +134,19 @@ export default class extends Vue {
           title: this.$tc('addrs.addresses')
         }
       },
-      /* {
-        path: { name: 'customerList', params: { addrId: addrId } },
+      this.localityDetail ? {
+        path: { name: 'customerList', params: { addrId: this.localityDetail.id } },
         meta: {
           hidden: true,
-          title: this.$store.state.customer.address_title || '-'
+          title: this.localityDetail.title
         }
-      },*/
+      } : {
+        path: '',
+        meta: {
+          hidden: true,
+          title: '-'
+        }
+      },
       {
         path: '',
         meta: {
