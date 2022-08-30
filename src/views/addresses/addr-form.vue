@@ -120,7 +120,7 @@ export default class extends Vue {
   private onChangeLoc(addr: IAddressModel) {
     this.frmMod.title = addr.title
     this.frmMod.address_type = addr.address_type
-    this.frmMod.parent_addr = addr.parent_addr!
+    this.frmMod.parent_addr_id = addr.parent_addr_id!
     this.frmMod.fias_address_level = addr.fias_address_level
     this.frmMod.fias_address_type = addr.fias_address_type
   }
@@ -128,13 +128,13 @@ export default class extends Vue {
   private frmMod: {
     title: string,
     address_type: number,
-    parent_addr: number | null,
+    parent_addr_id: number | null,
     fias_address_level: number | null,
     fias_address_type: number | null
   } = {
     title: '',
     address_type: 0,
-    parent_addr: null,
+    parent_addr_id: null,
     fias_address_level: null,
     fias_address_type: null
   }
