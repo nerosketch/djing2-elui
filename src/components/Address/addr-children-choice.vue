@@ -45,7 +45,7 @@ export default class extends Vue {
           this.addrType,
           this.parentAddrId,
           this.parentAddrType
-        ) as any
+        )
         this.items = data
       } finally {
         this.loading = false

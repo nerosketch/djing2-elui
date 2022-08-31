@@ -42,8 +42,8 @@ export const changeAddress = patchObjectDecorator<IAddressModel>(addrsUrl)
 export const getAddrTypes = (): IAddressTypeListAxiosResponsePromise =>
   request.get<IAddressType[]>('/addrs/get_addr_types/')
 
-export const getAllChildren = (addr_type: number, parent_addr_id?: number, parent_type?: number): IAddressModelListAxiosResponsePromise =>
-  request.get<IAddressModelList>('/addrs/get_all_children/', { params: { addr_type, parent_addr_id, parent_type }})
+export const getAllChildren = (addr_type: number, parent_addr_id?: number, parent_type?: number): IAddressModelPlainListAxiosResponsePromise =>
+  request.get<IAddressModel[]>('/addrs/get_all_children/', { params: { addr_type, parent_addr_id, parent_type }})
 
 export const getAddrParent = (id: number): IDRFAxiosResponsePromise<IAddressModel | null> =>
   request.get<IAddressModel | null>(`/addrs/${id}/get_parent/`)
