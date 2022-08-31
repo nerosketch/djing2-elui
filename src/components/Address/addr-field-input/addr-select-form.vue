@@ -56,7 +56,7 @@ export default class extends Vue {
         parent_addr_id: parent || 0,
         // fields: 'id,title,parent_addr_id'
       })
-      return data as unknown as IAddressModel[]
+      return data.results
     } finally {
       this.isLoading = false
     }
