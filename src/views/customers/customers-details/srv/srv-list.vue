@@ -100,20 +100,14 @@ export default class extends Vue {
 
   buyOpen(s: IService) {
     if (s.cost > CustomerModule.balance) {
-      this.$confirm(
-        this.$tc('customers.customerNotEnoughMoneyDoConnectItQuestion'), {
-          confirmButtonText: this.$tc('yes'),
-          cancelButtonText: this.$tc('no'),
-          type: 'warning'
-        }
-      ).then(() => {
+      if(confirm(this.$tc('customers.customerNotEnoughMoneyDoConnectItQuestion'))) {
         this.selectedServiceId = s.id
         this.buyDialog = true
-      }).catch(() => {
+      } else {
         this.$message.info(
           this.$tc('customers.buyServiceCancellation')
         )
-      })
+      }
     } else {
       this.selectedServiceId = s.id
       this.buyDialog = true
