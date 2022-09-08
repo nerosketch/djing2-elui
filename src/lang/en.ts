@@ -33,8 +33,9 @@ export default {
   aus2delIpPool: "Are you sure to delete IP pool \"{0}\"?",
   aus2delVlan: 'Are you sure to remove vlan "{0}"?',
   beginTime: 'Begin time',
+  download: 'Download',
   customers: {
-    afkFilter: "Filter AFK",
+    afkFilter: "Not active users",
     ipPool: "IP Pool",
     periodicPay: "Periodic pay",
     dateNextPay: "Next payment date",

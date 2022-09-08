@@ -211,4 +211,5 @@ export type ICustomerAfkItemListAxiosResponsePromise = IDRFAxiosResponsePromise<
 export interface ICustomerAfkItemParams {
   date_limit: string | null
   out_limit: number
+  locality: number
 }

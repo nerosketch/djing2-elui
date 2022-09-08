@@ -33,8 +33,9 @@ export default {
   aus2delIpPool: 'Действительно удалить IP пул "{0}"?',
   aus2delVlan: 'Действительно удалить vlan "{0}"?',
   beginTime: 'Дата начала',
+  download: 'Скачать',
   customers: {
-    afkFilter: 'Фильтр afk',
+    afkFilter: 'Не пользующиеся',
     ipPool: 'IP Pool',
     periodicPay: 'Периодический платёж',
     dateNextPay: 'Дата следующего платежа',
