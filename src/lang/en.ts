@@ -175,6 +175,7 @@ export default {
     docLoadFailed: "Erroneous download of documents",
     fullDelTitle: "Complete disposal of the Blingonent &apos; s account",
     isActive: "Active",
+    showIsActive: 'Display only active',
     dhcpDynamic: "DHCP",
     clearDevQuestion: "Do you really clean up the subscriber?",
     login: "Login",

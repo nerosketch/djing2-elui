@@ -175,6 +175,7 @@ export default {
     docLoadFailed: 'Ошибка загрузки документов',
     fullDelTitle: 'Полное удаление учётной записи абонента из билинга',
     isActive: 'Активный',
+    showIsActive: 'Отображать активных',
     dhcpDynamic: 'Динамические настройки по DHCP',
     clearDevQuestion: 'Действительно очистить устройство абонента?',
     login: 'Логин',

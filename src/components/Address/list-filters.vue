@@ -30,6 +30,16 @@ el-collapse
           v-model="groupVal"
           :fetchFunction="fetchGroups"
         )
+
+      el-form-item(
+        :label="$t('customers.showIsActive')"
+      )
+        el-select(
+          v-model="localDisplayActive"
+        )
+          el-option(:value="false" label="Отображать не активных")
+          el-option(:value="true" label="Отображать активных")
+          el-option(:value="null" label="Отображать всех")
 </template>
 
 <script lang="ts">
@@ -53,6 +63,7 @@ export default class extends Vue {
   @Prop({ default: 0 }) private house!: number
   @Prop({ required: true })
   private fetchGroups!: (params: IDRFRequestListParameters) => void
+  @Prop({ default: null }) private displayActive!: boolean | null
 
   private streetVal = this.street
   // private streetLabelVal = ''
@@ -60,6 +71,8 @@ export default class extends Vue {
   // private groupLabelVal = ''
   private houseVal = this.house
   // private houseLabelVal = ''
+
+  private localDisplayActive = this.displayActive
 
   private streetAddrType = IAddressEnumTypes.STREET
   private streetParentAddrType = IAddressEnumTypes.LOCALITY
@@ -78,6 +91,11 @@ export default class extends Vue {
   @Watch('houseVal')
   private onChHouse(v: number) {
     this.$emit('update:house', v)
+  }
+
+  @Watch('localDisplayActive')
+  private onChangeDisplayActive(v: boolean | null) {
+    this.$emit('update:displayActive', v)
   }
 
   // private onStreetSelect(addr: IAddressModel) {
