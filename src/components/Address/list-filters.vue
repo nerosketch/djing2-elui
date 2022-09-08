@@ -13,6 +13,7 @@ el-collapse
           :addrType="streetAddrType"
           :parentAddrType="streetParentAddrType"
           v-model="streetVal"
+          :disabled="!addrId"
         )
 
       el-form-item(:label="$t('customers.houses')")
@@ -20,6 +21,7 @@ el-collapse
           :parentAddrId="streetVal"
           :addrType="houseAddrType"
           :parentAddrType="streetAddrType"
+          :disabled="!streetVal"
           v-model="houseVal"
         )
 

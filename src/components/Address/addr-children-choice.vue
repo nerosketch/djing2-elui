@@ -2,8 +2,8 @@
   el-select(
     v-model="localValue"
     :loading="loading"
-    :disabled="!parentAddrId"
-    clearable)
+    clearable
+    v-bind="$attrs")
     el-option(
       v-for="item in items"
       :key="item.id"
@@ -32,24 +32,25 @@ export default class extends Vue {
   @Prop({ default: undefined })
   private parentAddrType?: IAddressEnumTypes
 
+  @Prop({ default: false })
+  private disabled!: true
+
   private items: IAddressModel[] = []
 
   private localValue = this.value || null
   private loading = false
 
   private async loadAddrs() {
-    if (this.parentAddrId) {
-      this.loading = true
-      try {
-        const { data } = await getAllChildren(
-          this.addrType,
-          this.parentAddrId,
-          this.parentAddrType
-        )
-        this.items = data
-      } finally {
-        this.loading = false
-      }
+    this.loading = true
+    try {
+      const { data } = await getAllChildren(
+        this.addrType,
+        this.parentAddrId,
+        this.parentAddrType
+      )
+      this.items = data
+    } finally {
+      this.loading = false
     }
   }
 
