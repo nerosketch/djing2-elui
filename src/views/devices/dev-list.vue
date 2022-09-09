@@ -232,7 +232,7 @@ export default class extends mixins(TableWithAddrMixin) {
   }
 
   private async delDevice(dev: IDevice) {
-    this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
+    this.$confirm(this.$tc('devices.aus2DelDevice', 1, [dev.comment])).then(async() => {
       await DeviceModule.DelDevice(dev.id)
       this.$message.success(this.$tc('deleted'))
       this.$refs.tbl.LoadTableData()

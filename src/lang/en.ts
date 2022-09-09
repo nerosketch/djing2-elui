@@ -297,6 +297,7 @@ export default {
     createTime: 'Create time',
     specifyTheTypeOfDevice: "Specify the type of device",
     specifyParentDevice: 'Specify parent device',
+    aus2DelDevice: 'Are you sure to remove device "{0}"?'
   },
   route: {
     staff: "Staff",

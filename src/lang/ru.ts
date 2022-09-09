@@ -297,6 +297,7 @@ export default {
     createTime: 'Дата введения в эксплуатацию',
     specifyTheTypeOfDevice: 'Нужно указать тип устройства',
     specifyParentDevice: 'Нужно указать родительское устройство',
+    aus2DelDevice: 'Действительно удалить устройство "{0}"?'
   },
   route: {
     staff: 'Cотрудники',
