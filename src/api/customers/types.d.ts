@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { AxiosPromise } from 'axios'
 import {
   IDRFAxiosResponsePromise,
   IDRFListResponse,
@@ -6,7 +7,7 @@ import {
 } from '@/api/types'
 import { IBaseAccount } from '@/api/base_account'
 import { IService } from '@/api/services/types'
-import { AxiosPromise } from 'axios'
+import { IDRFRequestListFilterParameters } from '@/api/addresses/types'
 
 // ICustomer
 export interface ICustomer extends IBaseAccount{
@@ -212,4 +213,8 @@ export interface ICustomerAfkItemParams {
   date_limit: string | null
   out_limit: number
   locality: number
+}
+
+export interface IDRFRequestListIsActiveFilterParameters extends IDRFRequestListFilterParameters {
+  is_active: boolean | null
 }

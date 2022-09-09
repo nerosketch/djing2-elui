@@ -195,7 +195,7 @@ export default {
     houses: 'Дома',
     // house: 'Дом',
     // street: 'Улица',
-    addressFitlers: 'Адресные фильтры',
+    addressFitlers: 'Фильтры',
     extraFields: 'Дополнительные данные'
   },
   customersLegal: {

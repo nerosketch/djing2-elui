@@ -60,5 +60,4 @@ export interface IDRFRequestListFilterParameters extends IDRFRequestListParamete
   street?: number
   house?: number
   group?: number
-  is_active: boolean | null
 }

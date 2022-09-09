@@ -125,7 +125,7 @@ import {
   IObjectGroupPermsResultStruct
 } from '@/api/types'
 import {
-  ICustomer
+  ICustomer, IDRFRequestListIsActiveFilterParameters
 } from '@/api/customers/types'
 import {
   getCustomers,
@@ -142,7 +142,6 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { AddressModule } from '@/store/modules/addresses/address'
 import ListFilters from '@/components/Address/list-filters.vue'
 import TableWithAddrMixin from '@/components/Address/table-w-addr-mixin'
-import { IDRFRequestListFilterParameters } from '@/api/addresses/types'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -261,7 +260,7 @@ export default class extends mixins(TableWithAddrMixin) {
     let r
     const fetchFn = (this.fetchFunc === null ? getCustomers : this.fetchFunc)
     if (params) {
-      let newParams: IDRFRequestListFilterParameters = Object.assign(params, {
+      let newParams: IDRFRequestListIsActiveFilterParameters = Object.assign(params, {
         address: this.addrId,
         is_active: this.displayOnlyActive,
         fields: 'id,username,fio,address_title,telephone,current_service_title,current_service,balance,group_title,is_active,lease_count,marker_icons'

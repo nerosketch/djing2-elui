@@ -195,7 +195,7 @@ export default {
     houses: 'Houses',
     // house: 'House',
     // street: 'Street',
-    addressFitlers: 'Address filters',
+    addressFitlers: 'Filters',
     extraFields: "Extra data"
   },
   customersLegal: {
