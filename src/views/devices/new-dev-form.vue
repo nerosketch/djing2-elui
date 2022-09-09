@@ -25,7 +25,7 @@
     el-form-item(:label="$t('community')")
       el-input(v-model="frmMod.man_passw")
 
-    el-form-item(:label="$t('group')")
+    el-form-item(:label="$t('group')" prop='group')
       groups-choice(v-model="frmMod.group")
 
     el-form-item(:label="$t('devices.parentDevice')" prop="parent_dev")
@@ -101,11 +101,16 @@ export default class extends Vue {
       { required: true, message: this.$tc('giveTheDeviceAName'), trigger: 'blur' }
     ],
     dev_type: [
+      { required: true, message: this.$tc('devices.specifyTheTypeOfDevice'), trigger: 'blur' },
       { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('devices.specifyTheTypeOfDevice') }
     ],
     parent_dev: [
       { required: true, message: this.$tc('devices.specifyParentDevice'), trigger: 'blur' },
       { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('devices.specifyParentDevice') }
+    ],
+    group: [
+      { required: true, message: this.$tc('groups.groupIsRequired'), trigger: 'blur' },
+      { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('groups.groupIsRequired') }
     ]
   }
 
@@ -121,7 +126,7 @@ export default class extends Vue {
     man_passw: this.initialManPassw,
     parent_dev: this.initialParentDev,
     snmp_extra: this.initialSnmpSxtra,
-    create_time: '',
+    create_time: null,
     address: this.initialAddress,
   }
 

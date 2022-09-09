@@ -228,6 +228,7 @@ export default {
     group_required: "Name of group is required",
     group: "Group",
     failed2GetGroups: "Failed 2 get groups",
+    groupIsRequired: 'Group is required'
   },
   addrs: {
     addresses: "Localities",
