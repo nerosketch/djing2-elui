@@ -35,7 +35,7 @@ export default class extends Vue {
 
   private async onSendComment(commentText: string) {
     await createCustomerComment({
-      customer: this.customerId,
+      customer_id: this.customerId,
       text: commentText
     })
     this.loadComments()
