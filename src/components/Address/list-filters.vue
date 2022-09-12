@@ -2,9 +2,6 @@
 el-collapse
   el-collapse-item
     template(slot="title") {{ $t('customers.addressFitlers') }}
-      //- span(v-if="streetLabelVal") {{ $t('customers.street') }}: {{ streetLabelVal }}.&nbsp;
-      //- span(v-if="houseLabelVal") {{ $t('customers.house') }}: {{ houseLabelVal }}.&nbsp;
-      //- span(v-if="groupLabelVal") {{ $t('groups.group') }}: {{ groupLabelVal }}.
 
     el-form(inline)
       el-form-item(:label="$t('customers.streets')")
@@ -37,9 +34,12 @@ el-collapse
         el-select(
           v-model="localDisplayActive"
         )
-          el-option(:value="false" label="Отображать не активных")
-          el-option(:value="true" label="Отображать активных")
-          el-option(:value="null" label="Отображать всех")
+          el-option(
+            v-for="(v, i) in localDisplayVals"
+            :key="i"
+            :value="v.value"
+            :label="v.title"
+          )
 </template>
 
 <script lang="ts">
@@ -77,6 +77,12 @@ export default class extends Vue {
   private streetAddrType = IAddressEnumTypes.STREET
   private streetParentAddrType = IAddressEnumTypes.LOCALITY
   private houseAddrType = IAddressEnumTypes.HOUSE
+
+  private localDisplayVals = [
+    {value: false, title: 'Отображать не активных'},
+    {value: true, title: 'Отображать активных'},
+    {value: null, title: 'Отображать всех'}
+  ]
 
   @Watch('streetVal')
   private onChStreetVal(v: number) {
