@@ -3,6 +3,7 @@
     v-model="localValue"
     :loading="loading"
     clearable
+    :disabled="disabled"
     v-bind="$attrs")
     el-option(
       v-for="item in items"
@@ -55,7 +56,9 @@ export default class extends Vue {
   }
 
   created() {
-    this.loadAddrs()
+    if (!this.disabled) {
+      this.loadAddrs()
+    }
   }
 
   @Watch('localValue')
@@ -81,4 +84,3 @@ export default class extends Vue {
   // }
 }
 </script>
-
