@@ -125,7 +125,7 @@ export default class extends Vue {
   private async loadAddresses(parent?: number): Promise<IAddressModel[]> {
     const { data } = await getAddresses({
       page: 1,
-      page_size: 0,
+      page_size: 100,
       parent_addr_id: parent || 0
       // fields: 'id,title,parent_addr_id'
     })
