@@ -120,7 +120,7 @@ export default class extends mixins(FormMixin) {
     start_service_time: '',
     end_service_time: null,
     is_active: true,
-    contract_number: '',
+    contract_number: this.$store.state.customer.username,
     note: ''
   }
 
@@ -154,15 +154,14 @@ export default class extends mixins(FormMixin) {
     this.fillFrmModFromVar(contract)
   }
 
-  created() {
+  async created() {
     if (this.contract) {
       this.fillFrmModFromVar(this.contract)
     } else {
-      getContractInitials().then((contr) => {
-        this.fillFrmModFromVar(contr.data)
-      })
+      const contr = await getContractInitials()
+      this.fillFrmModFromVar(contr.data)
+      this.doCopyFromUsername()
     }
-    this.doCopyFromUsername()
   }
 
   private get isNew() {
