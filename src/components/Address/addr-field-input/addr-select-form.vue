@@ -52,7 +52,7 @@ export default class extends Vue {
     try {
       const { data } = await getAddresses({
         page: 1,
-        page_size: 0,
+        page_size: 500,
         parent_addr_id: parent || 0,
         // fields: 'id,title,parent_addr_id'
       })

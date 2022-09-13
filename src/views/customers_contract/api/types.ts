@@ -1,6 +1,6 @@
 export interface ICustomerContract {
   id?: number
-  customer?: number
+  customer_id?: number
   title: string
   start_service_time: string
   end_service_time: string | null

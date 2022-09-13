@@ -116,7 +116,7 @@ export default class extends mixins(FormMixin) {
   private frmMod: ICustomerContract = {
     id: undefined,
     title: '',
-    customer: this.$store.state.customer.id,
+    customer_id: this.$store.state.customer.id,
     start_service_time: '',
     end_service_time: null,
     is_active: true,
@@ -127,7 +127,7 @@ export default class extends mixins(FormMixin) {
   private fillFrmModFromVar(contract: ICustomerContract) {
     this.frmMod.id = contract.id
     this.frmMod.title = contract.title
-    this.frmMod.customer = contract.customer || this.$store.state.customer.id
+    this.frmMod.customer_id = contract.customer_id || this.$store.state.customer.id
     this.frmMod.start_service_time = contract.start_service_time
     this.frmMod.end_service_time = contract.end_service_time || null
     this.frmMod.is_active = contract.is_active
