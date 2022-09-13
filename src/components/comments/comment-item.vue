@@ -1,20 +1,19 @@
 <template lang="pug">
-  el-card(shadow="hover" :body-style="{ padding: '10px 13px' }")
+  el-card(shadow="hover" :body-style="{ padding: '6px 5px', display: 'flex', 'flex-direction': 'row' }")
     template(v-slot:header)
-      .clearfix
-        span {{ comment.author_name }}
+      span {{ comment.author_name }}
 
-        small {{ comment.date_create }}
+      small  {{ comment.date_create }}
 
-        el-button.card_del_btn(
-          type="text"
-          icon="el-icon-close"
-          v-if="comment.can_remove"
-          @click="delComment")
+      el-button.card_del_btn(
+        type="text"
+        icon="el-icon-close"
+        v-if="comment.can_remove"
+        @click="delComment")
 
-    el-avatar(shape="square" :src="comment.author_avatar")
+    el-avatar.ava(shape="square" :src="comment.author_avatar")
 
-    span {{ comment.text }}
+    pre.content {{ comment.text }}
 </template>
 
 <script lang="ts">
@@ -38,3 +37,15 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.ava {
+  margin-right: 9px;
+}
+pre.content {
+  margin: 0;
+  white-space: pre-wrap;
+  flex-basis: fit-content;
+  align-items: flex-start;
+}
+</style>
