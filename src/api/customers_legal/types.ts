@@ -6,17 +6,17 @@ import { IBaseAccount } from '../base_account'
 
 // CustomerLegalModel
 export interface ICustomerLegal extends IBaseAccount {
-  group: number
+  group_id: number
   branches: number[]
   balance: number
-  address: number
+  address_id: number
   post_index: string
 
-  delivery_address: number
+  delivery_address_id: number
   delivery_address_post_index: string
 
   post_post_index: string
-  post_address: number
+  post_address_id: number
 
   legal_type: number
 
@@ -43,7 +43,7 @@ export interface ICustomerLegalPost {
   id: number
   legal_customer: number
   post_index: string
-  address: number
+  address_id: number
 }
 export type ICustomerLegalPostAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalPost>
 
@@ -51,7 +51,7 @@ export type ICustomerLegalPostAxoisResponsePromise = IDRFAxiosResponsePromise<IC
 export interface ICustomerLegalDeliveryAddress {
   id: number
   legal_customer: number
-  address: number
+  address_id: number
 }
 export type ICustomerLegalDeliveryAddressAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddress>
 

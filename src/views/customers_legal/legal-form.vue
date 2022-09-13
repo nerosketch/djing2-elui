@@ -15,19 +15,19 @@
       el-input(v-model="frmMod.fio")
 
     el-form-item(:label="$t('group')")
-      groups-choice(v-model="frmMod.group")
+      groups-choice(v-model="frmMod.group_id")
 
     el-form-item(:label="$t('typeOfLegal')" prop="legal_type")
       legal-type-choice(v-model="frmMod.legal_type")
 
-    el-form-item(:label="$t('legalAddress')" prop="address")
-      addr-field-input(v-model="frmMod.address")
+    el-form-item(:label="$t('legalAddress')" prop="address_id")
+      addr-field-input(v-model="frmMod.address_id")
 
     el-form-item(:label="$t('postalLegalAddressIndex')" prop="post_index")
       el-input(v-model="frmMod.post_index")
 
     el-form-item(:label="$t('accountDeliveryAddress')")
-      addr-field-input(v-model="frmMod.delivery_address")
+      addr-field-input(v-model="frmMod.delivery_address_id")
 
     el-form-item(:label="$t('postalAccountDeliveryAddressIndex')" prop="delivery_address_post_index")
       el-input(v-model="frmMod.delivery_address_post_index")
@@ -39,7 +39,7 @@
           :disabled="addrCopyDisabled")
 
     el-form-item(:label="$t('postalAddress')")
-      addr-field-input(v-model="frmMod.post_address")
+      addr-field-input(v-model="frmMod.post_address_id")
 
     el-form-item(:label="$t('postalAddressIndex')" prop="post_post_index")
       el-input(v-model="frmMod.post_post_index")
@@ -111,13 +111,13 @@ export default class extends Vue {
     title: string,
     fio: string,
     description: string,
-    group: number | null,
-    address: number,
+    group_id: number | null,
+    address_id: number,
     post_index: string,
-    delivery_address: number | null,
+    delivery_address_id: number | null,
     delivery_address_post_index: string,
     post_post_index: string,
-    post_address: number | null,
+    post_address_id: number | null,
     legal_type: number,
     tax_number: string,
     state_level_reg_number: string,
@@ -127,13 +127,13 @@ export default class extends Vue {
     title: '',
     fio: '',
     description: '',
-    group: null,
-    address: 0,
+    group_id: null,
+    address_id: 0,
     post_index: '',
-    delivery_address: null,
+    delivery_address_id: null,
     delivery_address_post_index: '',
     post_post_index: '',
-    post_address: null,
+    post_address_id: null,
     legal_type: 0,
     tax_number: '',
     state_level_reg_number: '',
@@ -150,13 +150,13 @@ export default class extends Vue {
     this.frmMod.title = profile.title
     this.frmMod.fio = profile.fio
     this.frmMod.description = profile.description
-    this.frmMod.group = profile.group || null
-    this.frmMod.address = profile.address
+    this.frmMod.group_id = profile.group_id || null
+    this.frmMod.address_id = profile.address_id
     this.frmMod.post_index = profile.post_index
-    this.frmMod.delivery_address = profile.delivery_address
+    this.frmMod.delivery_address_id = profile.delivery_address_id
     this.frmMod.delivery_address_post_index = profile.delivery_address_post_index
     this.frmMod.post_post_index = profile.post_post_index
-    this.frmMod.post_address = profile.post_address
+    this.frmMod.post_address_id = profile.post_address_id
     this.frmMod.legal_type = profile.legal_type
     this.frmMod.tax_number = profile.tax_number
     this.frmMod.state_level_reg_number = profile.state_level_reg_number
@@ -186,7 +186,7 @@ export default class extends Vue {
     tax_number: [
       { required: true, message: this.$tc('insNeedsToBeFilled'), trigger: 'blur' },
     ],
-    address: [
+    address_id: [
       { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedALegalAddress') }
     ],
     state_level_reg_number: [
@@ -231,16 +231,16 @@ export default class extends Vue {
 
   private copyDeliveryAddrFromLegalAddr() {
     if (this.addrCopyDisabled) return
-    this.frmMod.delivery_address = this.frmMod.address
+    this.frmMod.delivery_address_id = this.frmMod.address_id
     this.frmMod.delivery_address_post_index = this.frmMod.post_index
   }
   private copyPostAddrFromLegalAddr() {
     if (this.addrCopyDisabled) return
-    this.frmMod.post_address = this.frmMod.address
+    this.frmMod.post_address_id = this.frmMod.address_id
     this.frmMod.post_post_index = this.frmMod.post_index
   }
   get addrCopyDisabled() {
-    return !this.frmMod.address || !this.frmMod.post_index
+    return !this.frmMod.address_id || !this.frmMod.post_index
   }
 }
 </script>

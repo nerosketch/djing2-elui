@@ -19,15 +19,15 @@ import {
 class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
   title = ''
   description = ''
-  group = 0
+  group_id = 0
   branches: number[] = []
   balance = 0
-  address = 0
+  address_id = 0
   post_index = ''
-  delivery_address = 0
+  delivery_address_id = 0
   delivery_address_post_index = ''
   post_post_index = ''
-  post_address = 0
+  post_address_id = 0
   legal_type = 0
   tax_number = ''
   state_level_reg_number = ''
@@ -39,15 +39,15 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
     SET_ALL_BASE_PROFILE(this, customer)
     this.title = customer.title
     this.description = customer.description
-    this.group = customer.group
+    this.group_id = customer.group_id
     this.branches = customer.branches
     this.balance = customer.balance
-    this.address = customer.address
+    this.address_id = customer.address_id
     this.post_index = customer.post_index
-    this.delivery_address = customer.delivery_address
+    this.delivery_address_id = customer.delivery_address_id
     this.delivery_address_post_index = customer.delivery_address_post_index
     this.post_post_index = customer.post_post_index
-    this.post_address = customer.post_address
+    this.post_address_id = customer.post_address_id
     this.legal_type = customer.legal_type
     this.tax_number = customer.tax_number
     this.state_level_reg_number = customer.state_level_reg_number
@@ -60,15 +60,15 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
     RESET_ALL_BASE_PROFILE(this)
     this.title = ''
     this.description = ''
-    this.group = 0
+    this.group_id = 0
     this.branches = []
     this.balance = 0
-    this.address = 0
+    this.address_id = 0
     this.post_index = ''
-    this.delivery_address = 0
+    this.delivery_address_id = 0
     this.delivery_address_post_index = ''
     this.post_post_index = ''
-    this.post_address = 0
+    this.post_address_id = 0
     this.legal_type = 0
     this.tax_number = ''
     this.state_level_reg_number = ''
