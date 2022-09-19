@@ -30,8 +30,9 @@ el-row
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { ICompareItem, IFilterData } from "./types";
-import { compares, conditionComponents, customerFields } from './filters'
+import { CustomerField, ICompareItem, IFilterData } from "./api/types";
+import { compares, conditionComponents } from './filters'
+import { getCustomerFields } from './api/req'
 
 
 @Component({
@@ -40,7 +41,12 @@ import { compares, conditionComponents, customerFields } from './filters'
 export default class extends Vue {
   @Prop({ required: true }) private value!: IFilterData
 
-  private customerFields = customerFields
+  private customerFields: CustomerField[] = []
+
+  async created() {
+    const { data } = await getCustomerFields()
+    this.customerFields = data
+  }
 
   private compareOpts: ICompareItem[] = [
     { v: 0, l: 'Not Selected' },
@@ -57,7 +63,7 @@ export default class extends Vue {
   @Watch('localFilter.fieldType')
   private onChFieldType(fieldType: number) {
     if (!fieldType) return
-    const metaFound = customerFields.filter(field => field.v === fieldType)
+    const metaFound = this.customerFields.filter(field => field.v === fieldType)
     if (metaFound.length === 0) return
     const meta = metaFound[0]
 

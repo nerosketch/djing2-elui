@@ -25,7 +25,7 @@ el-card(shadow="never")
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import FilterItem from './filter-item.vue'
-import { IFilterData } from './types'
+import { IFilterData } from './api/types'
 
 interface ILocFiltCopy {
   un: number
