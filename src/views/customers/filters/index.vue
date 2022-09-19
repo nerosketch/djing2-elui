@@ -5,13 +5,12 @@
 
       el-row
         el-col(:span="8")
-          filters
+          aggregations
         el-col(:span="8")
-          h1 Annotations
+          filters
 
     el-col
       el-button(@click="display=true") Show
-
 
     el-drawer(
       title="Results"
@@ -34,6 +33,7 @@ import { IDRFRequestListParameters } from '@/api/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import Filters from './filters.vue'
+import Aggregations from './aggregates.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -41,7 +41,8 @@ class DataTableComp extends DataTable<ICustomer> {}
   name: 'CustomerFilters',
   components: {
     datatable: DataTableComp,
-    Filters
+    Filters,
+    Aggregations,
   }
 })
 export default class extends Vue {

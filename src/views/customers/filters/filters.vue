@@ -23,7 +23,7 @@ el-card(shadow="never")
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import FilterItem from './filter-item.vue'
 import { IFilterData } from './api/types'
 

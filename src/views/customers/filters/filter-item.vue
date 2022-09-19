@@ -1,16 +1,9 @@
 <template lang="pug">
 el-row
   el-col(:span='8')
-    el-select(v-model="localFilter.fieldType")
-      el-option(
-        v-for="f in customerFields"
-        :key="f.v"
-        :value='f.v'
-        :label="f.l"
-      )
-
+    customer-fields(v-model="localFilter.fieldType" ref='cf')
   el-col(:span='7')
-    el-select(v-model="localFilter.compareOperator" required)
+    el-select(v-model="localFilter.compareOperator")
       el-option(
         v-for="f in compareOpts"
         :key="f.v"
@@ -30,23 +23,22 @@ el-row
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { CustomerField, ICompareItem, IFilterData } from "./api/types";
+import { ICompareItem, IFilterData } from "./api/types";
 import { compares, conditionComponents } from './filters'
-import { getCustomerFields } from './api/req'
+import CustomerFields from './customerFields.vue'
 
 
 @Component({
-  name: 'FilterItem'
+  name: 'FilterItem',
+  components: {
+    CustomerFields
+  }
 })
 export default class extends Vue {
-  @Prop({ required: true }) private value!: IFilterData
-
-  private customerFields: CustomerField[] = []
-
-  async created() {
-    const { data } = await getCustomerFields()
-    this.customerFields = data
+  public readonly $refs!: {
+    cf: CustomerFields
   }
+  @Prop({ required: true }) private value!: IFilterData
 
   private compareOpts: ICompareItem[] = [
     { v: 0, l: 'Not Selected' },
@@ -63,7 +55,7 @@ export default class extends Vue {
   @Watch('localFilter.fieldType')
   private onChFieldType(fieldType: number) {
     if (!fieldType) return
-    const metaFound = this.customerFields.filter(field => field.v === fieldType)
+    const metaFound = this.$refs.cf.customerFields.filter(field => field.v === fieldType)
     if (metaFound.length === 0) return
     const meta = metaFound[0]
 
