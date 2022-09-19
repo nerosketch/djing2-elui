@@ -18,6 +18,8 @@
           el-button(icon="el-icon-user-solid" @click="go2Bums")
             | {{ $t('customers.withoutAddrs') }}
 
+          router-link(type='primary' :to="{name: 'customerFilters'}") Filters
+
     slot
 </template>
 

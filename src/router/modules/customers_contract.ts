@@ -21,6 +21,12 @@ const customerContractRoutes: RouteConfig = {
       meta: { hidden: true }
     },
     {
+      path: 'filters/',
+      name: 'customerFilters',
+      component: () => import(/* webpackChunkName: "customer-filters" */ '@/views/customers/filters/index.vue'),
+      meta: { hidden: true }
+    },
+    {
       path: 'a:addrId/',
       name: 'customerList',
       component: () => import(/* webpackChunkName: "customers" */ '@/views/customers/customer-list.vue'),

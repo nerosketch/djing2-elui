@@ -1,7 +1,7 @@
 <template lang="pug">
   .app-container
     el-row(:gutter="10")
-      el-col(:col="24")
+      el-col
         slot(name="filters")
           list-filters(
             :addrId="addrId"
@@ -70,6 +70,8 @@
 
               el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
                 | {{ $t('field') }}
+
+              router-link(type='primary' :to="{name: 'customerFilters'}") Filters
 
               slot(name="additional_button")
 
