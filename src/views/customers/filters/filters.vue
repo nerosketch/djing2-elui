@@ -18,6 +18,8 @@ el-card(shadow="never")
   el-button filter customers
   el-button Save filter
 
+  slot
+
 </template>
 
 <script lang="ts">

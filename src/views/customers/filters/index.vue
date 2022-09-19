@@ -2,12 +2,26 @@
 .app-container
   el-row
     el-col
-      filter-panel
-    el-col(:lg="24" :md="20")
+
+      el-row
+        el-col(:span="8")
+          filters
+        el-col(:span="8")
+          h1 Annotations
+
+    el-col
+      el-button(@click="display=true") Show
+
+
+    el-drawer(
+      title="Results"
+      :visible.sync="display"
+      direction='rtl'
+      size="50%"
+    )
       datatable(
         :columns="tableColumns"
         :getData="filterCustomers"
-        :heightDiff="65"
         widthStorageNamePrefix="customersfilter"
         :selectable="$perms.is_superuser"
       )
@@ -19,18 +33,20 @@ import { ICustomer } from '@/api/customers/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import FilterPanel from './filter-panel.vue'
+import Filters from './filters.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
 @Component({
   name: 'CustomerFilters',
   components: {
-    FilterPanel,
-    datatable: DataTableComp
+    datatable: DataTableComp,
+    Filters
   }
 })
 export default class extends Vue {
+  private display = false
+
   private tableColumns: IDataTableColumn[] = [
     {
       prop: 'id',
@@ -42,11 +58,6 @@ export default class extends Vue {
       label: this.$tc('customers.username'),
       sortable: true,
       'min-width': 100
-    },
-    {
-      prop: 'ping',
-      label: this.$tc('ping'),
-      'min-width': 150
     }
   ]
 
