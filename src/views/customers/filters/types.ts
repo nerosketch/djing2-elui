@@ -23,3 +23,9 @@ export interface IAllCompares {
 export interface IConditionComponents {
   [fieldType: string]: any
 }
+
+export interface IFilterData {
+  fieldType: number
+  compareOperator: number
+  conditionValue: any
+}

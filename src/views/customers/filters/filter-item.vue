@@ -1,7 +1,7 @@
 <template lang="pug">
 el-row
   el-col(:span='8')
-    el-select(v-model="selectedFieldType")
+    el-select(v-model="localFilter.fieldType")
       el-option(
         v-for="f in customerFields"
         :key="f.v"
@@ -9,8 +9,8 @@ el-row
         :label="f.l"
       )
 
-  el-col(:span='8')
-    el-select(v-model="selectedCompareOperator" required)
+  el-col(:span='7')
+    el-select(v-model="localFilter.compareOperator" required)
       el-option(
         v-for="f in compareOpts"
         :key="f.v"
@@ -18,35 +18,45 @@ el-row
         :label="f.l"
       )
 
-  el-col(:span='8')
+  el-col(:span='7')
     component(
       :is="conditionComponent"
-      v-model="conditionValue"
+      v-model="localFilter.conditionValue"
     )
+
+  el-col(:span='2')
+    slot
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { ICompareItem } from "./types";
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { ICompareItem, IFilterData } from "./types";
 import { compares, conditionComponents, customerFields } from './filters'
+
 
 @Component({
   name: 'FilterItem'
 })
 export default class extends Vue {
-  private selectedFieldType = 0
+  @Prop({ required: true }) private value!: IFilterData
+
   private customerFields = customerFields
 
-  private selectedCompareOperator = 0
   private compareOpts: ICompareItem[] = [
     { v: 0, l: 'Not Selected' },
   ]
 
-  private conditionValue = null
   private conditionComponent = conditionComponents.stringField
 
-  @Watch('selectedFieldType')
+  private localFilter: IFilterData = {
+    fieldType: this.value.fieldType,
+    compareOperator: this.value.compareOperator,
+    conditionValue: this.value.conditionValue
+  }
+
+  @Watch('localFilter.fieldType')
   private onChFieldType(fieldType: number) {
+    if (!fieldType) return
     const metaFound = customerFields.filter(field => field.v === fieldType)
     if (metaFound.length === 0) return
     const meta = metaFound[0]
@@ -56,13 +66,23 @@ export default class extends Vue {
     const cmps = compares[fieldTypeName]
     // cmps.push({ v: 0, l: 'not Selected' })
     this.$set(this, 'compareOpts', cmps)
-    this.selectedCompareOperator = cmps[0].v
+    this.localFilter.compareOperator = cmps[0].v
 
     // Fill condition
     const cCompon = conditionComponents[fieldTypeName]
-    this.conditionValue = null
+    this.localFilter.conditionValue = null
     this.conditionComponent = cCompon
   }
 
+  @Watch('localFilter', { deep: true })
+  private onChFilter(f: IFilterData) {
+    this.$emit('change', f)
+  }
+
+  @Watch('value', { deep: true })
+  private onChValue(v: IFilterData) {
+    if (!v.fieldType && !v.compareOperator && !v.conditionValue) return
+    this.$set(this, 'localFilter', v)
+  }
 }
 </script>
