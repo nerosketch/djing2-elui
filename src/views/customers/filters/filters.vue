@@ -23,7 +23,7 @@ el-card(shadow="never")
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import FilterItem from './filter-item.vue'
 import { IFilterData } from './api/types'
 
@@ -41,8 +41,15 @@ interface ILocFiltCopy {
 export default class extends Vue {
   private unCounter = 0
 
-  private filters: ILocFiltCopy[] = [
-    { un: ++this.unCounter, o: { fieldType: 0, compareOperator: 0, conditionValue: null} },
+  public filters: ILocFiltCopy[] = [
+    {
+      un: ++this.unCounter,
+      o: {
+        fieldType: 0,
+        compareOperator: 0,
+        conditionValue: null
+      }
+    }
   ]
 
   private closeIt(uniq: number) {
@@ -55,7 +62,11 @@ export default class extends Vue {
   private addFilter() {
     this.filters.push({
       un: ++this.unCounter,
-      o: { fieldType: 0, compareOperator: 0, conditionValue: null }
+      o: {
+        fieldType: 0,
+        compareOperator: 0,
+        conditionValue: null
+      }
     })
   }
 }
