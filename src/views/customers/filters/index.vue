@@ -4,18 +4,26 @@
     el-col
 
       el-row(:gutter="10")
-        el-col(:span="8")
+        el-col(:span="12")
           aggregates(
             v-model="aggregations"
             ref='aggr'
           )
-          el-button(@click="addAggr") +
-        el-col(:span="8")
+            el-button(
+              @click="addAggr"
+              icon='el-icon-plus'
+              circle
+            )
+        el-col(:span="12")
           filters(
             v-model="fieldFilters"
             ref='filts'
           )
-          el-button(@click="addFilter") +
+            el-button(
+              @click="addFilter"
+              icon='el-icon-plus'
+              circle
+            )
 
     el-col
       el-button(@click="display=true") Show

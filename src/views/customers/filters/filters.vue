@@ -15,6 +15,7 @@ el-card(shadow="never")
         @click="closeIt(v.un)"
       )
 
+  slot
 </template>
 
 <script lang="ts">

@@ -1,12 +1,12 @@
 <template lang="pug">
 el-row(:gutter="5")
-  el-col(:span='8')
+  el-col(:span='10')
     customer-fields(
       v-model="localFilter.field"
       ref='cf'
     )
 
-  el-col(:span='8')
+  el-col(:span='4')
     el-select(
       v-model="localFilter.compareOperator"
       :disabled="localFilter.compareOperator===0"
@@ -18,7 +18,7 @@ el-row(:gutter="5")
         :label="f.l"
       )
 
-  el-col(:span='8')
+  el-col(:span='10')
     component(
       v-if="conditionComponent"
       :is="conditionComponent"

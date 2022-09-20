@@ -11,6 +11,8 @@ el-card(shadow="never")
       icon='el-icon-close'
       @click="closeIt(v.un)"
     )
+
+  slot
 </template>
 
 <script lang="ts">
