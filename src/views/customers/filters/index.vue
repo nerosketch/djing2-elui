@@ -3,7 +3,7 @@
   el-row
     el-col
 
-      el-row
+      el-row(:gutter="10")
         el-col(:span="8")
           aggregations
         el-col(:span="8")
@@ -34,6 +34,7 @@ import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import Filters from './filters.vue'
 import Aggregations from './aggregates.vue'
+import CustomerFiltersStoreModule from '@/store/modules/customers/filters'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -62,9 +63,13 @@ export default class extends Vue {
     }
   ]
 
-  private async filterCustomers(params?: IDRFRequestListParameters) {
-    let r = await getCustomers(params)
-    return r
+  created() {
+    CustomerFiltersStoreModule.LoadCustomerFields()
+    CustomerFiltersStoreModule.LoadCustomerFkFields()
+  }
+
+  private filterCustomers(params?: IDRFRequestListParameters) {
+    return getCustomers(params)
   }
 }
 </script>

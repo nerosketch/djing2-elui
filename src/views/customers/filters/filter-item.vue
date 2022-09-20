@@ -1,9 +1,16 @@
 <template lang="pug">
-el-row
+el-row(:gutter="5")
   el-col(:span='8')
-    customer-fields(v-model="localFilter.fieldType" ref='cf')
+    customer-fields(
+      v-model="localFilter.field"
+      ref='cf'
+    )
+
   el-col(:span='7')
-    el-select(v-model="localFilter.compareOperator")
+    el-select(
+      v-model="localFilter.compareOperator"
+      :disabled="localFilter.compareOperator===0"
+    )
       el-option(
         v-for="f in compareOpts"
         :key="f.v"
@@ -13,9 +20,11 @@ el-row
 
   el-col(:span='7')
     component(
+      v-if="conditionComponent"
       :is="conditionComponent"
       v-model="localFilter.conditionValue"
     )
+    span(v-else) —
 
   el-col(:span='2')
     slot
@@ -23,10 +32,9 @@ el-row
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { ICompareItem, IFilterData } from "./api/types";
+import { ICompareItem, IFilterData } from "@/api/customers/types"
 import { compares, conditionComponents } from './filters'
 import CustomerFields from './customerFields.vue'
-
 
 @Component({
   name: 'FilterItem',
@@ -44,18 +52,18 @@ export default class extends Vue {
     { v: 0, l: 'Not Selected' },
   ]
 
-  private conditionComponent = conditionComponents.stringField
+  private conditionComponent = null
 
   private localFilter: IFilterData = {
-    fieldType: this.value.fieldType,
+    field: this.value.field,
     compareOperator: this.value.compareOperator,
     conditionValue: this.value.conditionValue
   }
 
-  @Watch('localFilter.fieldType')
-  private onChFieldType(fieldType: number) {
-    if (!fieldType) return
-    const metaFound = this.$refs.cf.customerFields.filter(field => field.v === fieldType)
+  @Watch('localFilter.field')
+  private onChFieldType(field: number) {
+    if (!field) return
+    const metaFound = this.$refs.cf.customerFields.filter(f => f.v === field)
     if (metaFound.length === 0) return
     const meta = metaFound[0]
 
@@ -69,7 +77,11 @@ export default class extends Vue {
     // Fill condition
     const cCompon = conditionComponents[fieldTypeName]
     this.localFilter.conditionValue = null
-    this.conditionComponent = cCompon
+    if (cCompon) {
+      this.conditionComponent = cCompon
+    } else {
+      this.conditionComponent = null
+    }
   }
 
   @Watch('localFilter', { deep: true })
@@ -79,7 +91,7 @@ export default class extends Vue {
 
   @Watch('value', { deep: true })
   private onChValue(v: IFilterData) {
-    if (!v.fieldType && !v.compareOperator && !v.conditionValue) return
+    if (!v.field && !v.compareOperator && !v.conditionValue) return
     this.$set(this, 'localFilter', v)
   }
 }

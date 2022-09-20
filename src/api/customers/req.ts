@@ -38,7 +38,8 @@ import {
   ICustomerAfkItemListAxiosResponsePromise,
   ICustomerAfkItem,
   ICustomerAfkItemParams,
-  ICustomerLog
+  ICustomerLog,
+  CustomerField
 } from './types'
 import {
   IDynamicContentFieldList,
@@ -202,3 +203,14 @@ export const changeContentFields = (info: IDynamicContentFieldList): IDynamicCon
 
 export const getGroupsWithCustomers = (params?: IDRFRequestListAddrsParameters): IDRFAxiosResponsePromise<IGroup[]> =>
   request.get<IGroup[]>('/customers/groups_with_customers/', { params })
+
+
+// -----------------------------------------------------
+// Customer Filters
+// -----------------------------------------------------
+
+export const getCustomerFields = (): AxiosPromise<CustomerField[]> =>
+  request.get<CustomerField[]>('/customers/filters/fields/')
+
+export const getCustomerFkFields = (): AxiosPromise<CustomerField[]> =>
+  request.get<CustomerField[]>('/customers/filters/fk_fields/')

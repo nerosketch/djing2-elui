@@ -1,4 +1,4 @@
-import { IAllCompares, IConditionComponents } from "./api/types"
+import { IAllCompares, IConditionComponents } from "@/api/customers/types"
 import { Input, InputNumber, DatePicker, Select, Switch } from 'element-ui'
 
 export const compares: IAllCompares = {
@@ -8,6 +8,8 @@ export const compares: IAllCompares = {
     { v: 3, l: 'icontains' },
     { v: 4, l: 'empty' },
     { v: 5, l: 'null' },
+    { v: 6, l: 'starts with ...' },
+    { v: 7, l: '... ends with' },
   ],
   numberField: [
     { v: 1, l: 'gte' },

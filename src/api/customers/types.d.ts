@@ -218,3 +218,44 @@ export interface ICustomerAfkItemParams {
 export interface IDRFRequestListIsActiveFilterParameters extends IDRFRequestListFilterParameters {
   is_active: boolean | null
 }
+
+// -----------------------------------------------------
+// Customer Filters
+// -----------------------------------------------------
+
+export interface IItemType {
+  v: number
+  l: string
+}
+
+
+export interface ICompareItem extends IItemType {
+}
+
+
+export interface CustomerFieldMeta {
+  fieldType: string
+}
+
+export interface CustomerField extends IItemType {
+  m: CustomerFieldMeta
+}
+
+export interface IAllCompares {
+  [fieldType: string]: ICompareItem[]
+}
+
+export interface IConditionComponents {
+  [fieldType: string]: any
+}
+
+export interface IFilterData {
+  field: number
+  compareOperator: number
+  conditionValue: any
+}
+
+export interface ICustomerFiltersStore {
+  customerFields: CustomerField[]
+  customerFkFields: CustomerField[]
+}

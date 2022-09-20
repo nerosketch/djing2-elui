@@ -25,7 +25,7 @@ el-card(shadow="never")
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import FilterItem from './filter-item.vue'
-import { IFilterData } from './api/types'
+import { IFilterData } from '@/api/customers/types'
 
 interface ILocFiltCopy {
   un: number
@@ -45,7 +45,7 @@ export default class extends Vue {
     {
       un: ++this.unCounter,
       o: {
-        fieldType: 0,
+        field: 0,
         compareOperator: 0,
         conditionValue: null
       }
@@ -63,7 +63,7 @@ export default class extends Vue {
     this.filters.push({
       un: ++this.unCounter,
       o: {
-        fieldType: 0,
+        field: 0,
         compareOperator: 0,
         conditionValue: null
       }
