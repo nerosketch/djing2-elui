@@ -34,7 +34,7 @@ export default class extends Vue {
 
   @Watch('localValue')
   private onChLocVal(v: number) {
-    this.$emit('change', v)
+    this.$emit('input', v)
   }
 }
 </script>

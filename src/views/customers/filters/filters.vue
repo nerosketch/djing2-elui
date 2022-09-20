@@ -2,28 +2,23 @@
 el-card(shadow="never")
   template(v-slot:header) Filters
 
-  filter-item(
+  el-row(
     v-for="v in filters"
     :key="v.un"
-    v-model="v.o"
   )
+    el-col(:span='22')
+      filter-item(v-model="v.o")
+    el-col(:span='2')
       el-button(
+        type='link'
         icon='el-icon-close'
         @click="closeIt(v.un)"
       )
 
-  el-divider
-
-  el-button(@click="addFilter") +
-  el-button filter customers
-  el-button Save filter
-
-  slot
-
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import FilterItem from './filter-item.vue'
 import { IFilterData } from '@/api/customers/types'
 
@@ -39,18 +34,14 @@ interface ILocFiltCopy {
   }
 })
 export default class extends Vue {
+  @Prop({ required:true }) private value!: IFilterData[]
+
   private unCounter = 0
 
-  public filters: ILocFiltCopy[] = [
-    {
-      un: ++this.unCounter,
-      o: {
-        field: 0,
-        compareOperator: 0,
-        conditionValue: null
-      }
-    }
-  ]
+  private filters: ILocFiltCopy[] = this.value.map(v => ({
+    un: ++this.unCounter,
+    o: v
+  }))
 
   private closeIt(uniq: number) {
     const e = this.filters.findIndex(v => v.un === uniq)
@@ -59,15 +50,18 @@ export default class extends Vue {
     }
   }
 
-  private addFilter() {
+  public addFilter(f: IFilterData) {
+    console.log('Add Filter', f)
     this.filters.push({
       un: ++this.unCounter,
-      o: {
-        field: 0,
-        compareOperator: 0,
-        conditionValue: null
-      }
+      o: f
     })
+  }
+
+  @Watch('filters', { deep: true })
+  private onChFilters(fl: ILocFiltCopy[]) {
+    const plainVals = fl.map(v => v.o)
+    this.$emit('input', plainVals)
   }
 }
 </script>

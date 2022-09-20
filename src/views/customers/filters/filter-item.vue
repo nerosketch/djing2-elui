@@ -6,7 +6,7 @@ el-row(:gutter="5")
       ref='cf'
     )
 
-  el-col(:span='7')
+  el-col(:span='8')
     el-select(
       v-model="localFilter.compareOperator"
       :disabled="localFilter.compareOperator===0"
@@ -18,16 +18,13 @@ el-row(:gutter="5")
         :label="f.l"
       )
 
-  el-col(:span='7')
+  el-col(:span='8')
     component(
       v-if="conditionComponent"
       :is="conditionComponent"
       v-model="localFilter.conditionValue"
     )
     span(v-else) —
-
-  el-col(:span='2')
-    slot
 </template>
 
 <script lang="ts">
@@ -86,7 +83,7 @@ export default class extends Vue {
 
   @Watch('localFilter', { deep: true })
   private onChFilter(f: IFilterData) {
-    this.$emit('change', f)
+    this.$emit('input', f)
   }
 
   @Watch('value', { deep: true })

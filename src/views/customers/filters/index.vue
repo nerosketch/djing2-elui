@@ -5,12 +5,20 @@
 
       el-row(:gutter="10")
         el-col(:span="8")
-          aggregations
+          aggregates(
+            v-model="aggregations"
+          )
         el-col(:span="8")
-          filters
+          filters(
+            v-model="fieldFilters"
+            ref='filts'
+          )
+          el-button(@click="addFilter") +
 
     el-col
       el-button(@click="display=true") Show
+      el-button filter customers
+      el-button Save filter
 
     el-drawer(
       title="Results"
@@ -28,12 +36,12 @@
 
 <script lang="ts">
 import { getCustomers } from '@/api/customers/req'
-import { ICustomer } from '@/api/customers/types'
+import { IAggregateFilter, ICustomer, IFilterData } from '@/api/customers/types'
 import { IDRFRequestListParameters } from '@/api/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import Filters from './filters.vue'
-import Aggregations from './aggregates.vue'
+import Aggregates from './aggregates.vue'
 import CustomerFiltersStoreModule from '@/store/modules/customers/filters'
 
 class DataTableComp extends DataTable<ICustomer> {}
@@ -43,10 +51,14 @@ class DataTableComp extends DataTable<ICustomer> {}
   components: {
     datatable: DataTableComp,
     Filters,
-    Aggregations,
+    Aggregates,
   }
 })
 export default class extends Vue {
+  public readonly $refs!: {
+    filts: Filters
+  }
+
   private display = false
 
   private tableColumns: IDataTableColumn[] = [
@@ -63,6 +75,33 @@ export default class extends Vue {
     }
   ]
 
+  private aggregations: IAggregateFilter[] = [
+    {
+      aggr: 0,
+      filter: {
+        field: 0,
+        compareOperator: 0,
+        conditionValue: null
+      }
+    },
+    {
+      aggr: 0,
+      filter: {
+        field: 0,
+        compareOperator: 0,
+        conditionValue: null
+      }
+    }
+  ]
+
+  private fieldFilters: IFilterData[] = [
+    {
+      field: 0,
+      compareOperator: 0,
+      conditionValue: null
+    }
+  ]
+
   created() {
     CustomerFiltersStoreModule.LoadCustomerFields()
     CustomerFiltersStoreModule.LoadCustomerFkFields()
@@ -70,6 +109,14 @@ export default class extends Vue {
 
   private filterCustomers(params?: IDRFRequestListParameters) {
     return getCustomers(params)
+  }
+
+  private addFilter() {
+    this.$refs.filts.addFilter({
+      field: 0,
+      compareOperator: 0,
+      conditionValue: null
+    })
   }
 }
 </script>

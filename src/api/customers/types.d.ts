@@ -259,3 +259,8 @@ export interface ICustomerFiltersStore {
   customerFields: CustomerField[]
   customerFkFields: CustomerField[]
 }
+
+export interface IAggregateFilter {
+  aggr: number
+  filter: IFilterData
+}
