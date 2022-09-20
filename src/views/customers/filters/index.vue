@@ -7,7 +7,9 @@
         el-col(:span="8")
           aggregates(
             v-model="aggregations"
+            ref='aggr'
           )
+          el-button(@click="addAggr") +
         el-col(:span="8")
           filters(
             v-model="fieldFilters"
@@ -57,6 +59,7 @@ class DataTableComp extends DataTable<ICustomer> {}
 export default class extends Vue {
   public readonly $refs!: {
     filts: Filters
+    aggr: Aggregates
   }
 
   private display = false
@@ -116,6 +119,17 @@ export default class extends Vue {
       field: 0,
       compareOperator: 0,
       conditionValue: null
+    })
+  }
+
+  private addAggr() {
+    this.$refs.aggr.addAggregation({
+      aggr: 0,
+      filter: {
+        field: 0,
+        compareOperator: 0,
+        conditionValue: null
+      }
     })
   }
 }

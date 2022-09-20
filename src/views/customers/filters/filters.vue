@@ -39,7 +39,7 @@ export default class extends Vue {
   private unCounter = 0
 
   private filters: ILocFiltCopy[] = this.value.map(v => ({
-    un: ++this.unCounter,
+    un: this.unCounter++,
     o: v
   }))
 
@@ -51,9 +51,8 @@ export default class extends Vue {
   }
 
   public addFilter(f: IFilterData) {
-    console.log('Add Filter', f)
     this.filters.push({
-      un: ++this.unCounter,
+      un: this.unCounter++,
       o: f
     })
   }

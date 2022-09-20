@@ -2,7 +2,6 @@
 el-card(shadow="never")
   template(v-slot:header) Aggregations
 
-  p localAggrs {{ localAggrs }}
   aggregate-item(
     v-for="v in localAggrs"
     :key="v.un"
@@ -16,7 +15,7 @@ el-card(shadow="never")
 
 <script lang="ts">
 import { IAggregateFilter } from '@/api/customers/types'
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import AggregateItem from './aggragate-item.vue'
 
 interface ILocAggrCopy {
@@ -36,21 +35,22 @@ export default class extends Vue {
   private unCounter = 0
 
   private localAggrs: ILocAggrCopy[] = this.value.map(a => ({
-    un: ++this.unCounter,
+    un: this.unCounter++,
     o: a
   }))
 
   public addAggregation(f: IAggregateFilter) {
     this.localAggrs.push({
-      un: ++this.unCounter,
+      un: this.unCounter++,
       o: f
     })
   }
 
-  @Watch('localAggrs', { deep: true })
-  private onChLocAggrs(la: ILocAggrCopy[]) {
-    const plainVals = la.map(v => v.o)
-    this.$emit('change', plainVals)
+  private closeIt(uniq: number) {
+    const e = this.localAggrs.findIndex(v => v.un === uniq)
+    if (e >= 0) {
+      this.localAggrs.splice(e, 1)
+    }
   }
 }
 </script>
