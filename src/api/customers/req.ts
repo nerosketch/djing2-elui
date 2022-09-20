@@ -6,7 +6,8 @@ import {
   IObjectGroupPermsInitial,
   IObjectGroupPermsInitialAxiosResponsePromise,
   IObjectGroupPermsResultStruct,
-  IDRFAxiosResponsePromise
+  IDRFAxiosResponsePromise,
+  IDRFRequestListParameters,
 } from '@/api/types'
 import {
   ICustomer, ICustomerList,
@@ -39,7 +40,8 @@ import {
   ICustomerAfkItem,
   ICustomerAfkItemParams,
   ICustomerLog,
-  CustomerField
+  CustomerField,
+  IAllFilterData
 } from './types'
 import {
   IDynamicContentFieldList,
@@ -214,3 +216,6 @@ export const getCustomerFields = (): AxiosPromise<CustomerField[]> =>
 
 export const getCustomerFkFields = (): AxiosPromise<CustomerField[]> =>
   request.get<CustomerField[]>('/customers/filters/fk_fields/')
+
+export const getFilteredCustomers = (filters: IAllFilterData, params?: IDRFRequestListParameters): ICustomerListAxiosResponsePromise =>
+  request.post<ICustomerList>('/customers/filters/filter/', filters, {params})

@@ -31,8 +31,7 @@
     span {{ $store.state.task.state_str }}
     br
     b {{ $t('customer') }}:&nbsp;
-    router-link(:to="taskCustomerLink")
-      el-link(type="primary") {{ $store.state.task.customer_full_name }}
+    router-link(:to="taskCustomerLink") {{ $store.state.task.customer_full_name }}
     el-divider
     task-docs(:taskId="taskId")
 </template>

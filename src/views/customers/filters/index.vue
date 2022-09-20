@@ -6,7 +6,7 @@
       el-row(:gutter="10")
         el-col(:span="12")
           aggregates(
-            v-model="aggregations"
+            v-model="allDat.aggregations"
             ref='aggr'
           )
             el-button(
@@ -16,7 +16,7 @@
             )
         el-col(:span="12")
           filters(
-            v-model="fieldFilters"
+            v-model="allDat.fieldFilters"
             ref='filts'
           )
             el-button(
@@ -26,7 +26,7 @@
             )
 
     el-col
-      el-button(@click="display=true") Show
+      el-button(@click="updateList") Show
       el-button filter customers
       el-button Save filter
 
@@ -40,19 +40,24 @@
         :columns="tableColumns"
         :getData="filterCustomers"
         widthStorageNamePrefix="customersfilter"
-        :selectable="$perms.is_superuser"
+        ref='tbl'
       )
+        template(#username="{row}")
+          slot(name="username" :row="row")
+            router-link(
+              :to="{name: 'customerDetails', params:{uid: row.id }}"
+            ) | {{ row.username }}
 </template>
 
 <script lang="ts">
-import { getCustomers } from '@/api/customers/req'
-import { IAggregateFilter, ICustomer, IFilterData } from '@/api/customers/types'
-import { IDRFRequestListParameters } from '@/api/types'
+import { getFilteredCustomers } from '@/api/customers/req'
+import { IAllFilterData, ICustomer } from '@/api/customers/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import Filters from './filters.vue'
 import Aggregates from './aggregates.vue'
 import CustomerFiltersStoreModule from '@/store/modules/customers/filters'
+import { IDRFRequestListParameters } from '@/api/types'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -68,6 +73,7 @@ export default class extends Vue {
   public readonly $refs!: {
     filts: Filters
     aggr: Aggregates
+    tbl: DataTableComp
   }
 
   private display = false
@@ -81,37 +87,42 @@ export default class extends Vue {
     {
       prop: 'username',
       label: this.$tc('customers.username'),
-      sortable: true,
       'min-width': 100
-    }
-  ]
-
-  private aggregations: IAggregateFilter[] = [
-    {
-      aggr: 0,
-      filter: {
-        field: 0,
-        compareOperator: 0,
-        conditionValue: null
-      }
     },
     {
-      aggr: 0,
-      filter: {
+      prop: 'fio',
+      label: this.$tc('customers.fio'),
+      'min-width': 300,
+    },
+  ]
+
+  private allDat: IAllFilterData = {
+    aggregations: [
+      {
+        aggr: 0,
+        filter: {
+          field: 0,
+          compareOperator: 0,
+          conditionValue: null
+        }
+      },
+      {
+        aggr: 0,
+        filter: {
+          field: 0,
+          compareOperator: 0,
+          conditionValue: null
+        }
+      }
+    ],
+    fieldFilters: [
+      {
         field: 0,
         compareOperator: 0,
         conditionValue: null
       }
-    }
-  ]
-
-  private fieldFilters: IFilterData[] = [
-    {
-      field: 0,
-      compareOperator: 0,
-      conditionValue: null
-    }
-  ]
+    ]
+  }
 
   created() {
     CustomerFiltersStoreModule.LoadCustomerFields()
@@ -119,7 +130,7 @@ export default class extends Vue {
   }
 
   private filterCustomers(params?: IDRFRequestListParameters) {
-    return getCustomers(params)
+    return getFilteredCustomers(this.allDat, params)
   }
 
   private addFilter() {
@@ -139,6 +150,13 @@ export default class extends Vue {
         conditionValue: null
       }
     })
+  }
+
+  private updateList() {
+    if (this.$refs.tbl) {
+      this.$refs.tbl.LoadTableData()
+    }
+    this.display=true
   }
 }
 </script>

@@ -264,3 +264,8 @@ export interface IAggregateFilter {
   aggr: number
   filter: IFilterData
 }
+
+export interface IAllFilterData {
+  aggregations: IAggregateFilter[]
+  fieldFilters: IFilterData[]
+}
