@@ -29,7 +29,7 @@ el-row(:gutter="5")
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { ICompareItem, IFilterData } from "@/api/customers/types"
+import { CustomerField, ICompareItem, IFilterData } from "@/api/customers/types"
 import { compares, conditionComponents } from './filters'
 import CustomerFields from './customerFields.vue'
 
@@ -58,9 +58,9 @@ export default class extends Vue {
   }
 
   @Watch('localFilter.field')
-  private onChFieldType(field: number) {
+  private onChFieldType(field: string) {
     if (!field) return
-    const metaFound = this.$refs.cf.customerFields.filter(f => f.v === field)
+    const metaFound = (this.$store.getters.allCustomerFields as CustomerField[]).filter(f => f.l === field)
     if (metaFound.length === 0) return
     const meta = metaFound[0]
 

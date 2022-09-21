@@ -1,39 +1,31 @@
 <template lang="pug">
 el-select(v-model="localValue")
   el-option(
-    v-for="f in customerFields"
-    :key="f.v"
-    :value='f.v'
+    v-for="f in $store.getters.allCustomerFields"
+    :key="f.l"
+    :value='f.l'
     :label="f.l"
   )
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { CustomerField } from '@/api/customers/types'
 
 @Component({
   name: 'CustomerFields'
 })
 export default class extends Vue {
-  @Prop({ required: true }) private value!: number
-
-  public customerFields: CustomerField[] = this.$store.state.customerfilters.customerFields
+  @Prop({ required: true }) private value!: string
 
   private localValue = this.value
 
-  @Watch('$store.state.customerfilters.customerFields')
-  private onChCusFields(cf: CustomerField[]) {
-    this.customerFields = cf
-  }
-
   @Watch('value')
-  private onChVal(v: number) {
+  private onChVal(v: string) {
     this.localValue = v
   }
 
   @Watch('localValue')
-  private onChLocVal(v: number) {
+  private onChLocVal(v: string) {
     this.$emit('input', v)
   }
 }

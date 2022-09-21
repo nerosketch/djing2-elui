@@ -51,13 +51,14 @@
 
 <script lang="ts">
 import { getFilteredCustomers } from '@/api/customers/req'
-import { IAllFilterData, ICustomer } from '@/api/customers/types'
+import { IAggregateFilter, IAllFilterData, ICustomer } from '@/api/customers/types'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import Filters from './filters.vue'
 import Aggregates from './aggregates.vue'
 import CustomerFiltersStoreModule from '@/store/modules/customers/filters'
 import { IDRFRequestListParameters } from '@/api/types'
+import { fieldsFromAggrs } from './filters'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -101,7 +102,7 @@ export default class extends Vue {
       {
         aggr: 0,
         filter: {
-          field: 0,
+          field: '',
           compareOperator: 0,
           conditionValue: null
         }
@@ -109,7 +110,7 @@ export default class extends Vue {
       {
         aggr: 0,
         filter: {
-          field: 0,
+          field: '',
           compareOperator: 0,
           conditionValue: null
         }
@@ -117,7 +118,7 @@ export default class extends Vue {
     ],
     fieldFilters: [
       {
-        field: 0,
+        field: '',
         compareOperator: 0,
         conditionValue: null
       }
@@ -126,7 +127,6 @@ export default class extends Vue {
 
   created() {
     CustomerFiltersStoreModule.LoadCustomerFields()
-    CustomerFiltersStoreModule.LoadCustomerFkFields()
   }
 
   private filterCustomers(params?: IDRFRequestListParameters) {
@@ -135,7 +135,7 @@ export default class extends Vue {
 
   private addFilter() {
     this.$refs.filts.addFilter({
-      field: 0,
+      field: '',
       compareOperator: 0,
       conditionValue: null
     })
@@ -145,7 +145,7 @@ export default class extends Vue {
     this.$refs.aggr.addAggregation({
       aggr: 0,
       filter: {
-        field: 0,
+        field: '',
         compareOperator: 0,
         conditionValue: null
       }
@@ -157,6 +157,12 @@ export default class extends Vue {
       this.$refs.tbl.LoadTableData()
     }
     this.display=true
+  }
+
+  @Watch('allDat.aggregations', { deep: true })
+  private onChAggrs(aggrs: IAggregateFilter[]) {
+    const newCFs = fieldsFromAggrs(aggrs)
+    CustomerFiltersStoreModule.SET_ANNOTATION_FIELDS(newCFs)
   }
 }
 </script>

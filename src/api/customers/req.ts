@@ -214,8 +214,5 @@ export const getGroupsWithCustomers = (params?: IDRFRequestListAddrsParameters):
 export const getCustomerFields = (): AxiosPromise<CustomerField[]> =>
   request.get<CustomerField[]>('/customers/filters/fields/')
 
-export const getCustomerFkFields = (): AxiosPromise<CustomerField[]> =>
-  request.get<CustomerField[]>('/customers/filters/fk_fields/')
-
 export const getFilteredCustomers = (filters: IAllFilterData, params?: IDRFRequestListParameters): ICustomerListAxiosResponsePromise =>
   request.post<ICustomerList>('/customers/filters/filter/', filters, {params})

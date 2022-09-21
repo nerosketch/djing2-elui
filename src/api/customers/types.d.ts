@@ -224,12 +224,13 @@ export interface IDRFRequestListIsActiveFilterParameters extends IDRFRequestList
 // -----------------------------------------------------
 
 export interface IItemType {
-  v: number
   l: string
 }
 
 
 export interface ICompareItem extends IItemType {
+  v: number
+  l: string
 }
 
 
@@ -250,14 +251,20 @@ export interface IConditionComponents {
 }
 
 export interface IFilterData {
-  field: number
+  field: string
   compareOperator: number
   conditionValue: any
 }
 
 export interface ICustomerFiltersStore {
   customerFields: CustomerField[]
-  customerFkFields: CustomerField[]
+  annotationFields: CustomerField[]
+}
+
+export interface IAggregate {
+  v: number
+  l: string
+  postfix: string | null
 }
 
 export interface IAggregateFilter {
