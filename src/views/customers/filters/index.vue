@@ -45,8 +45,8 @@
         template(#username="{row}")
           slot(name="username" :row="row")
             router-link(
-              :to="{name: 'customerDetails', params:{uid: row.id }}"
-            ) | {{ row.username }}
+              :to="{name: 'customerDetails', params:{ uid: row.id }}"
+            ) {{ row.username }}
 </template>
 
 <script lang="ts">

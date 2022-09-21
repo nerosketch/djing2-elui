@@ -70,7 +70,7 @@ export const aggregates = [
   { v: 2, l: 'Sum'      },
   { v: 3, l: 'Max'      },
   { v: 4, l: 'Min'      },
-  { v: 5, l: 'ArrayAgg' },
+  // { v: 5, l: 'ArrayAgg' },
   { v: 6, l: 'Avg'      },
   { v: 7, l: 'StdDev'   },
 ]
