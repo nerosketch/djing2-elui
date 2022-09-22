@@ -58,10 +58,12 @@ export default class extends Vue {
     })
   }
 
-  @Watch('filters', { deep: true })
-  private onChFilters(fl: ILocFiltCopy[]) {
-    const plainVals = fl.map(v => v.o)
-    this.$emit('input', plainVals)
+  @Watch('value')
+  private onChVal(v: IFilterData[]) {
+    this.filters = v.map(f => ({
+      un: this.unCounter++,
+      o: f
+    }))
   }
 }
 </script>

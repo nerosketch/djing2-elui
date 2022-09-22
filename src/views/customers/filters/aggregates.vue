@@ -17,7 +17,7 @@ el-card(shadow="never")
 
 <script lang="ts">
 import { IAggregateFilter } from '@/api/customers/types'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import AggregateItem from './aggragate-item.vue'
 
 interface ILocAggrCopy {
@@ -46,6 +46,15 @@ export default class extends Vue {
       un: this.unCounter++,
       o: f
     })
+  }
+
+  @Watch('value')
+  private onChVal(v: IAggregateFilter[]) {
+    console.log('OnChVal', v)
+    this.localAggrs = v.map(a => ({
+      un: this.unCounter++,
+      o: a
+    }))
   }
 
   private closeIt(uniq: number) {

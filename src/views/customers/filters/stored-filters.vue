@@ -8,6 +8,13 @@ el-card(shadow="never")
     :heightDiff="560"
     ref="tbl"
   )
+    template(#btns="{row}")
+      el-button(
+        icon='el-icon-view'
+        circle
+        @click="displayIt(row)"
+      )
+
     slot
 </template>
 
@@ -37,15 +44,20 @@ export default class extends Vue {
     {
       prop: 'title',
       label: 'title',
-      'min-width': 100
     },
+    {
+      prop: 'btns',
+      label: '',
+      width: 50
+    }
   ]
 
   private loadComplexFilters(params?: IDRFRequestListParameters) {
-    if (params) {
-      params.fields = 'id,title'
-    }
     return getComplexFilters(params)
+  }
+
+  private displayIt(storedFilter: IStoredFilter) {
+    this.$emit('display', storedFilter)
   }
 }
 </script>
