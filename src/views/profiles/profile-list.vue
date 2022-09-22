@@ -7,13 +7,13 @@
       :heightDiff="190"
       widthStorageNamePrefix="profiles"
       ref="tbl")
-      template(v-slot:avatar="{row}")
+      template(#avatar="{row}")
         el-avatar(
           :src="row.avatar || defAvaConst"
           shape="square"
         )
 
-      template(v-slot:username="{row}")
+      template(#username="{row}")
         router-link(:to="{name: 'profileDetail', params:{ profileUname: row.username }}")
           el-link(
             type="primary"
@@ -21,14 +21,14 @@
           )
             | {{ row.username }}
 
-      template(v-slot:telephone="{row}")
+      template(#telephone="{row}")
         el-link(
           type="primary"
           :href="`tel:${row.telephone}`"
         )
           | {{ row.telephone }}
 
-      template(v-slot:btn="{row}")
+      template(#btn="{row}")
         el-button(
           type="danger"
           icon="el-icon-close"

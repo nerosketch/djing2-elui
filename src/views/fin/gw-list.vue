@@ -5,11 +5,11 @@
       :getData="loadPayGws"
       widthStorageNamePrefix="gws"
       ref="table")
-      template(v-slot:title="{row}")
+      template(#title="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{ name: 'finReport' }")
           | {{ row.title }}
 
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C

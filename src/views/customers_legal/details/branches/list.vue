@@ -7,7 +7,7 @@
       border
       fit)
       el-table-column(:label="$t('customers.contractNum.s')" prop="username")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           router-link.el-link.el-link--primary.is-underline(
             :to="{name: 'customerDetails', params:{uid: row.id }}"
           ) {{ row.username }}
@@ -17,14 +17,14 @@
       el-table-column(:label="$t('customersLegal.tel')" prop="telephone")
 
       el-table-column(label="#" width="50")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           el-button(
             icon="el-icon-close"
             type="danger"
             circle
             @click="delBranch(row)")
 
-      template(v-slot:append)
+      template(#append)
         el-button(
           type="success"
           icon="el-icon-plus"

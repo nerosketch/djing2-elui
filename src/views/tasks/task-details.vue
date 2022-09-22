@@ -2,7 +2,7 @@
   el-row.app-container(:gutter="5")
     el-col.mt5(:lg="12" :sm='24')
       el-card(shadow="never")
-        template(v-slot:header)
+        template(#header)
           .clearfix {{ $t('tasks.edit', [taskId]) }}
         task-form(
           v-if='taskReady'

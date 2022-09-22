@@ -6,7 +6,7 @@
         maxlength="128"
         :type="passwordType"
         :placeholder="$t('customers.passwordLong')")
-        template(v-slot:append)
+        template(#append)
           el-button(
             @click="togglePwd"
             :icon="passwordType === 'password' ? 'el-icon-view' : 'el-icon-minus'"

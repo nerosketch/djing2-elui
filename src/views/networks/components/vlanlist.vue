@@ -7,11 +7,11 @@
       :editFieldsVisible.sync="editFieldsVisible"
       widthStorageNamePrefix="vlans"
       ref="table")
-      template(v-slot:ismng="{row}")
+      template(#ismng="{row}")
         boolean-icon(v-model="row.is_management")
           | &nbsp;{{ row.is_management ? $t('yes') : $t('sno') }}
 
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C

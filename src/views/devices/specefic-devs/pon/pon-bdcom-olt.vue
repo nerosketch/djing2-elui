@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card
-    template(v-slot:header)
+    template(#header)
       .clearfix {{ device.comment || 'BDCOM' }}
 
         small {{ ` ${device.ip_address || device.mac_addr} ` }}
@@ -14,7 +14,7 @@
         v-for="(fiber, i) in fibers"
         :key="i")
         el-card(shadow="never")
-          template(v-slot:header)
+          template(#header)
             .clearfix
               | {{ fiber.fb_name }} ({{ fiber.fb_active_onu }}/{{ fiber.fb_onu_num }})
 
@@ -23,7 +23,7 @@
             border
             fit)
             el-table-column(label="#" width="50")
-              template(v-slot:default="{row}")
+              template(#default="{row}")
                 i.el-icon-success.el-alert--success.is-light(v-if="row.status")
 
                 i.el-icon-error.el-alert--error.is-light(v-else)
@@ -57,7 +57,7 @@
               label="#"
               width="60"
               align="center")
-              template(v-slot:default="{row}")
+              template(#default="{row}")
                 el-button(
                   icon="el-icon-plus"
                   circle

@@ -28,7 +28,7 @@
       :getData="loadAfk"
       widthStorageNamePrefix="usersafk"
       ref="afktbl")
-      template(v-slot:customer_uname="{row}")
+      template(#customer_uname="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: row.customer_id }}")
           | {{ row.customer_uname }}
 </template>

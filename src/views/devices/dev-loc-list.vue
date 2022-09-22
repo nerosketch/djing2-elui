@@ -5,7 +5,7 @@
       :getData="loadDevAddresses"
       :heightDiff="96"
       widthStorageNamePrefix="devAddresses")
-      template(v-slot:title="{row}")
+      template(#title="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{name: 'devicesList', params:{ addrId: row.id }}")
           | {{ row.fias_address_type_name }} {{ row.title }}
 </template>
