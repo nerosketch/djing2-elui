@@ -9,7 +9,7 @@
         :key="i"
         style="margin-bottom: 10px;")
         el-card(shadow="hover")
-          template(v-slot:header)
+          template(#header)
             .clearfix
               | {{ gw.title }}
 

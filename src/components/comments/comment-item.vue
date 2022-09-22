@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card(shadow="hover" :body-style="{ padding: '6px 5px', display: 'flex', 'flex-direction': 'row' }")
-    template(v-slot:header)
+    template(#header)
       span {{ comment.author_name }}
 
       small  {{ comment.date_create }}

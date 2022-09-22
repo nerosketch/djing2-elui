@@ -7,10 +7,10 @@
       :editFieldsVisible.sync="editFieldsVisible"
       widthStorageNamePrefix="services"
       ref="table")
-      template(v-slot:isadm="{row}")
+      template(#isadm="{row}")
         boolean-icon(v-model="row.is_admin")
 
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
@@ -28,7 +28,7 @@
             @click="delSrv(row)"
             :disabled="!$perms.services.delete_service")
 
-      template(v-slot:usercount="{row}")
+      template(#usercount="{row}")
         el-button(
           @click="openCustomerServiceListDialog(row.id)"
           v-if="row.usercount > 0"

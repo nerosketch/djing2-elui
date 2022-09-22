@@ -14,7 +14,7 @@
       :label="$t('name')"
       prop="fio"
     )
-      template(v-slot:default="{row}")
+      template(#default="{row}")
         router-link.el-link.el-link--primary.is-underline(
           :to="{name: 'customerDetails', params:{uid: row.id }}"
         ) {{ row.fio }}

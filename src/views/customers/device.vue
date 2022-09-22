@@ -4,7 +4,7 @@
     v-loading="isLoading"
     :label-width="$store.getters.isMobileView ? undefined : '100px'")
     el-card(shadow="never")
-      template(v-slot:header)
+      template(#header)
         | {{ $t('route.devices') }}
 
       el-row

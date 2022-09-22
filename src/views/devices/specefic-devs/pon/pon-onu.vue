@@ -8,7 +8,7 @@
         shadow="never"
         body-style="padding: 10px;"
       )
-        template(v-slot:header)
+        template(#header)
           | {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }}
 
           small {{ `${device.ip_address || device.mac_addr}` }}
@@ -66,7 +66,7 @@
         shadow="never"
         body-style="padding: 10px;"
       )
-        template(v-slot:header)
+        template(#header)
           | {{ $t('devices.status') }}
 
           el-link(

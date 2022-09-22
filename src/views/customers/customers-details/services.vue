@@ -2,7 +2,7 @@
   el-row(:gutter="5")
     el-col(:sm="24" :md="12")
       el-card(shadow="never")
-        template(v-slot:header)
+        template(#header)
           | {{ $t('customers.services4Buy') }}
 
         services-list(
@@ -15,7 +15,7 @@
         shadow="never"
         :loading="serviceBlockLoad"
         style="font-size: small;")
-        template(v-slot:header)
+        template(#header)
           | {{ $t('customers.currentCustomerService') }}
 
         template(v-if="!serviceBlockLoad")
@@ -72,7 +72,7 @@
 
     el-col(:sm="24" :md="12")
       el-card(shadow="never")
-        template(v-slot:header)
+        template(#header)
           | {{ $t('customers.attachedPeriodicPays') }}
 
         periodic-services-list

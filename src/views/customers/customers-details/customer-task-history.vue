@@ -5,7 +5,7 @@
     :heightDiff="167"
     widthStorageNamePrefix="customerTaskHistory"
     ref="tlogtbl")
-    template(v-slot:viewbtn="{row}")
+    template(#viewbtn="{row}")
       router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
         el-button(:type="row.comment_count > 0 ? 'success' : 'primary'")
           template(v-if="row.comment_count > 0")

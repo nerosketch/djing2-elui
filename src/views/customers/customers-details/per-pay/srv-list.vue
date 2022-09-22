@@ -16,7 +16,7 @@
       el-table-column(:label="$t('customers.cost')" prop="service_amount")
 
       el-table-column(:label="$t('del')")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           el-button(
             icon="el-icon-close"
             circle

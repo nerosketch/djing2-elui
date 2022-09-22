@@ -3,7 +3,7 @@
     shadow="never"
     v-if="currentConfig.vlanConfig.length > 0"
   )
-    template(v-slot:header)
+    template(#header)
       span {{ $t('ONUConfigurationOptions') }}
 
     span {{ $t('onuConfigTemplate') }}
@@ -23,7 +23,7 @@
         shadow="never"
         v-for="portVlanConf in currentConfig.vlanConfig"
         :key="portVlanConf.port")
-        template(v-slot:header)
+        template(#header)
           el-link(
             style="float: right"
             icon="el-icon-close"

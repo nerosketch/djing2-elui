@@ -5,7 +5,7 @@
       :getData="loadFields"
       widthStorageNamePrefix="dfl"
       ref="fieldtable")
-      template(v-slot:btn="{row}")
+      template(#btn="{row}")
         el-button-group
           el-button(icon="el-icon-edit" @click="editField(row)")
 

@@ -6,7 +6,7 @@
       :heightDiff="189"
       widthStorageNamePrefix="perpay"
       ref="table")
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C

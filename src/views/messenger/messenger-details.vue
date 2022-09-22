@@ -2,13 +2,13 @@
   el-row.app-container(:gutter="5")
     el-col(:lg="12" :sm="24")
       el-card
-        template(v-slot:header) {{ $t('bottomDetails') }} "{{ $store.state.messenger.title }}"
+        template(#header) {{ $t('bottomDetails') }} "{{ $store.state.messenger.title }}"
 
         messenger-form(v-if="isReady")
 
     el-col(:lg="12" :sm="24")
       el-card
-        template(v-slot:header) {{ $t('currentWebHook') }} {{ $store.state.messenger.current_webhook }}
+        template(#header) {{ $t('currentWebHook') }} {{ $store.state.messenger.current_webhook }}
 
         el-button-group.mt5.mb5
           el-button(

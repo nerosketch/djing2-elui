@@ -6,7 +6,7 @@
         :sm="24"
         :lg="8")
         el-card
-          template(v-slot:header)
+          template(#header)
             .clearfix
               | {{ $t('frequencyOfPerformance') }}
 
@@ -20,7 +20,7 @@
         :sm="24"
         :lg="8")
         el-card
-          template(v-slot:header)
+          template(#header)
             .clearfix
               | {{ $t('distributionOfServicesBySubscribers') }}
 
@@ -34,7 +34,7 @@
         :sm="24"
         :lg="8")
         el-card
-          template(v-slot:header)
+          template(#header)
             .clearfix
               | {{ $t('accelerationOfSubscribers') }}
 

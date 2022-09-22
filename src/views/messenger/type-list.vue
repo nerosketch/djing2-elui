@@ -8,7 +8,7 @@
       :label="$t('typeOfBean')"
       prop="text"
     )
-      template(v-slot:default="{row}")
+      template(#default="{row}")
         router-link(:to="{ name: 'messengerList', params: { messengerTypeName: row.text } }")
           | {{ row.text }}
 </template>

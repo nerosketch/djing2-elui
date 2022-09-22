@@ -3,7 +3,7 @@
     v-loading="loading"
     shadow="never"
     body-style="padding: 10px;")
-    template(v-slot:header)
+    template(#header)
       slot(name="header")
         .clearfix(v-if="title")
           | {{ title }}

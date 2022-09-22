@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card
-    template(v-slot:header)
+    template(#header)
       .clearfix
         span zte -
 
@@ -65,7 +65,7 @@
         :label="$t('safe')"
         min-width="70"
       )
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           el-button(icon="el-icon-plus" @click="onSaveOnu(row)")
 
     el-dialog(

@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card(shadow="never" :loading="loading")
-    template(v-slot:header)
+    template(#header)
       .clearfix
         | {{ defaultCardTitle }}
 
