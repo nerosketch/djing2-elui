@@ -276,3 +276,9 @@ export interface IAllFilterData {
   aggregations: IAggregateFilter[]
   fieldFilters: IFilterData[]
 }
+
+export interface IStoredFilter {
+  id?: number
+  title: string
+  filterSchema: IAllFilterData
+}

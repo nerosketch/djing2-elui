@@ -41,7 +41,8 @@ import {
   ICustomerAfkItemParams,
   ICustomerLog,
   CustomerField,
-  IAllFilterData
+  IAllFilterData,
+  IStoredFilter
 } from './types'
 import {
   IDynamicContentFieldList,
@@ -216,3 +217,11 @@ export const getCustomerFields = (): AxiosPromise<CustomerField[]> =>
 
 export const getFilteredCustomers = (filters: IAllFilterData, params?: IDRFRequestListParameters): ICustomerListAxiosResponsePromise =>
   request.post<ICustomerList>('/customers/filters/filter/', filters, {params})
+
+// Stored filters
+const storeFieldsApiUrl = '/complex_filter/'
+export const getComplexFilters = getObjectListDecorator<IStoredFilter>(storeFieldsApiUrl)
+export const getComplexFilter = getObjectDecorator<IStoredFilter>(storeFieldsApiUrl)
+export const addComplexFilter = addObjectDecorator<IStoredFilter>(storeFieldsApiUrl)
+export const changeComplexFilter = patchObjectDecorator<IStoredFilter>(storeFieldsApiUrl)
+export const delComplexFilter = delObjectDecorator<IStoredFilter>(storeFieldsApiUrl)

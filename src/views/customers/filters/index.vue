@@ -4,7 +4,7 @@
     el-col
 
       el-row(:gutter="10")
-        el-col(:span="12")
+        el-col.col_vert_space(:span="12")
           aggregates(
             v-model="allDat.aggregations"
             ref='aggr'
@@ -14,13 +14,20 @@
               icon='el-icon-plus'
               circle
             )
-        el-col(:span="12")
+        el-col.col_vert_space(:span="12")
           filters(
             v-model="allDat.fieldFilters"
             ref='filts'
           )
             el-button(
               @click="addFilter"
+              icon='el-icon-plus'
+              circle
+            )
+
+        el-col.col_vert_space(:span="12")
+          stored-filters
+            el-button(
               icon='el-icon-plus'
               circle
             )
@@ -50,15 +57,16 @@
 </template>
 
 <script lang="ts">
-import { getFilteredCustomers } from '@/api/customers/req'
-import { IAggregateFilter, IAllFilterData, ICustomer } from '@/api/customers/types'
-import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import { IDRFRequestListParameters } from '@/api/types'
+import { IAggregateFilter, IAllFilterData, ICustomer } from '@/api/customers/types'
+import { getFilteredCustomers } from '@/api/customers/req'
+import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
+import CustomerFiltersStoreModule from '@/store/modules/customers/filters'
+import { fieldsFromAggrs } from './filters'
 import Filters from './filters.vue'
 import Aggregates from './aggregates.vue'
-import CustomerFiltersStoreModule from '@/store/modules/customers/filters'
-import { IDRFRequestListParameters } from '@/api/types'
-import { fieldsFromAggrs } from './filters'
+import StoredFilters from './stored-filters.vue'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
@@ -68,6 +76,7 @@ class DataTableComp extends DataTable<ICustomer> {}
     datatable: DataTableComp,
     Filters,
     Aggregates,
+    StoredFilters,
   }
 })
 export default class extends Vue {
