@@ -1,6 +1,6 @@
 <template lang="pug">
 el-card(shadow="never")
-  template(v-slot:header) Aggregations
+  template(#header) Aggregations
 
   aggregate-item(
     v-for="v in localAggrs"

@@ -1,6 +1,6 @@
 <template lang="pug">
 el-card(shadow="never")
-  template(v-slot:header) Filters
+  template(#header) Filters
 
   el-row(
     v-for="v in filters"
