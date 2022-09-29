@@ -45,7 +45,7 @@
       @click="onSubmit"
       :loading="vlanLoading"
       :disabled="!$perms.devices.can_apply_onu_config || disabled")
-      | {{ $t('applicable') }}
+      | {{ $t('apply') }}
 </template>
 
 <script lang="ts">
@@ -97,7 +97,7 @@ export default class extends mixins(VlanMixin) {
             showClose: true
           })
         }
-        DeviceModule.GetDevice(this.$store.state.devicemodule.id)
+        this.$emit('update')
       } finally {
         this.vlanLoading = false
       }

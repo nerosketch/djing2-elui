@@ -646,7 +646,7 @@ export default {
   groupRightsRetained: 'Права для группы сохранены',
   rightsRetained: 'Права для пользователся сохранены',
   rightsToClassesOfAction: 'Права на классы действий',
-  applicable: 'Применить',
+  apply: 'Применить',
   example192168023: 'Пример ip: 192.168.0.23',
   exampleMac: 'Пример mac: 0a:0b:cc:dd::ee:ff',
   example1921680024: 'Пример подсети: 192.168.0.0/24',

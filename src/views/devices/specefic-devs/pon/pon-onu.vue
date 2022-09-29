@@ -11,7 +11,7 @@
         template(#header)
           | {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }}
 
-          small {{ `${device.ip_address || device.mac_addr}` }}
+          small  {{ `${device.ip_address || device.mac_addr}` }}
 
           el-link(
             style="float: right"
@@ -113,6 +113,7 @@
       onu-vlan-form(
         :disabled="$store.getters.isOnuRegistered && macsNotEqual"
         :style="{'margin-top': '5px'}"
+        @update="refreshDev"
       )
 
     el-dialog(

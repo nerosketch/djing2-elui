@@ -3,7 +3,7 @@
     template(v-if="ready")
       pon-onu(
         :device="device"
-        v-if="[3,6,7].includes(device.dev_type)"
+        v-if="[3,6,7,14].includes(device.dev_type)"
         v-on:reqrefresh="getDevice")
 
       pon-bdcom-olt(

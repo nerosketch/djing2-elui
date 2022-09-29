@@ -656,7 +656,7 @@ export default {
   groupRightsRetained: "Group rights retained",
   rightsRetained: "Rights retained",
   rightsToClassesOfAction: "Rights to classes of action",
-  applicable: "Applicable",
+  apply: "Apply",
   example192168023: "Example: 192.168.0.23",
   exampleMac: "Example: 0a:0b:cc:dd:ee:ff",
   example1921680024: "Example: 192.168.0.0/24",
