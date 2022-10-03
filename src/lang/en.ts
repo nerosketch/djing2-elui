@@ -302,6 +302,8 @@ export default {
     firmwareVersion: "Firmware version",
     fiberAddrRequired: 'fiberAddr required.',
     fiber: 'Fiber',
+    signalLevel: "Signal level: ",
+    onuStateDescr: 'Onu state',
   },
   route: {
     staff: "Staff",
@@ -750,7 +752,6 @@ export default {
   iDid: "I did.",
   office: "Office",
   fiasLevel: "FIAS level",
-  signalLevel: "Signal level: ",
   acceleration: "Acceleration",
   serviceChanged: "Service changed",
   serviceEstablished: "Service established",

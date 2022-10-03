@@ -74,12 +74,11 @@
             icon="el-icon-refresh"
             @click="refreshDev")
 
-        p(
-          v-if="$store.getters.isOnuRegistered && macsNotEqual"
-        )
+        p(v-if="$store.getters.isOnuRegistered && macsNotEqual")
           b {{ $t('attention') }}!
 
-          span Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить". Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
+          span Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить".
+            | Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
             |              Так же можно проверить место на "глазе" olt, может он заполнен.
 
         el-row(
@@ -91,8 +90,12 @@
 
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
-              b {{ $t('signalLevel') }}
+              b {{ $t('devices.signalLevel') }}
               | {{ onuDetails.signal }}
+
+            .text.item.list-item
+              b {{ $t('devices.onuStateDescr') }}:
+              |  {{ onuDetails.status }}
 
             .text.item.list-item
               b  {{ $t('macAddrFromOLT') }}
@@ -158,11 +161,13 @@ export default class extends Vue {
   }
 
   get isStatusSuccess() {
-    return this.onuDetails !== null && this.onuDetails.status === IOnuDetailsStatus.UP
+    if (this.onuDetails === null) return false
+    if (this.onuDetails.status === IOnuDetailsStatus.WORKING) return true
+    return false
   }
 
   get isStatusError() {
-    return this.onuDetails !== null && this.onuDetails.status === IOnuDetailsStatus.DOWN
+    return this.onuDetails !== null && this.onuDetails.status !== IOnuDetailsStatus.WORKING
   }
 
   get isStatusUnknown() {

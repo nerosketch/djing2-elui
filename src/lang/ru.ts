@@ -302,6 +302,8 @@ export default {
     firmwareVersion: 'Версия прошивки',
     fiberAddrRequired: 'fiberAddr нужен',
     fiber: 'Глаз',
+    signalLevel: 'Уровень сигнала: ',
+    onuStateDescr: 'Состояние onu',
   },
   route: {
     staff: 'Cотрудники',
@@ -738,7 +740,6 @@ export default {
   iDid: 'Управл.',
   office: 'Управление',
   fiasLevel: 'Уровень ФИАС',
-  signalLevel: 'Уровень сигнала: ',
   acceleration: 'Ускорение',
   serviceChanged: 'Услуга изменена',
   serviceEstablished: 'Услуга создана',

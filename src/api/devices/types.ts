@@ -95,8 +95,13 @@ export type IScannedZTEONUListAxiosPromise = AxiosPromise<IScannedZTEONU[]>
 
 export enum IOnuDetailsStatus {
   UNKNOWN = 'unknown',
-  UP = 'ok',
-  DOWN = 'down'
+  LOGGING = "logging",
+  LOS = "los",
+  SYNC_MIB = "syncMib",
+  WORKING = "working",
+  DYING_GASP = "dyinggasp",
+  AUTH_FAILED = "authFailed",
+  OFFLINE = "offline"
 }
 export interface IOnuDetails {
   status: IOnuDetailsStatus
