@@ -32,13 +32,6 @@
         | {{ $t('save') }}
 
       el-divider(direction="vertical")
-
-      el-link(
-        href="https://github.com/hflabs/socrbase/blob/master/socrbase.csv"
-        target="_blank"
-        type="info"
-        icon="el-icon-thumb")
-        | {{ $t('repertoireOfAddresses') }}
 </template>
 
 <script lang="ts">

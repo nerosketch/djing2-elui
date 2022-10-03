@@ -711,7 +711,6 @@ export default {
   creatingTheChallenge: "Creating the challenge",
   createAMassenger: "Create a Massenger",
   heSInTheEye: "He's in the eye.",
-  repertoireOfAddresses: "Repertoire of addresses",
   average: "Average",
   startPoint: "Start point",
   oldPassword: "Old password",

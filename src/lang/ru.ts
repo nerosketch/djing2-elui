@@ -700,7 +700,6 @@ export default {
   creatingTheChallenge: 'Создание задачи',
   createAMassenger: 'Создать messenger',
   heSInTheEye: 'Список ONU на глазу',
-  repertoireOfAddresses: 'Справочник адресных объектов',
   average: 'Средний',
   startPoint: 'Стартовый ip надо указать',
   oldPassword: 'Старый пароль',
