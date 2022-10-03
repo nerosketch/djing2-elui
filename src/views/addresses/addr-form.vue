@@ -94,13 +94,13 @@ export default class extends Vue {
   @Watch('frmMod.fias_address_type')
   private onChangeFiasAddrType(fiasAddressType: number) {
     // Пробуем автоматически подставлять типы адреса по типу из фиаса
-    if ([803, 902, 903, 907, 910, 911, 913].includes(fiasAddressType)) {
+    if ([601, 809, 902, 905, 906, 907, 909].includes(fiasAddressType)) {
       this.frmMod.address_type = IAddressEnumTypes.HOUSE
     } else if (fiasAddressType === 904) {
       this.frmMod.address_type = IAddressEnumTypes.OFFICE_NUM
-    } else if ([729, 714, 719, 722, 762, 798, 799].includes(fiasAddressType)) {
+    } else if (fiasAddressType === 529) {
       this.frmMod.address_type = IAddressEnumTypes.STREET
-    } else if ([811, 805, 810].includes(fiasAddressType)) {
+    } else if (fiasAddressType === 525) {
       this.frmMod.address_type = IAddressEnumTypes.BUILDING
     } else if (fiasAddressType === 806) {
       this.frmMod.address_type = IAddressEnumTypes.CORPUS
