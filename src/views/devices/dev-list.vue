@@ -66,7 +66,7 @@
               | {{ $t('field') }}
 
     el-dialog(
-      :title="$t('device')"
+      :title="$t('devices.device')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")

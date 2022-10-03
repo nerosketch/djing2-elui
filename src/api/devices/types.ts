@@ -110,6 +110,7 @@ export interface IUnitUnregistered {
   firmware_ver?: string
   loid_passw?: string
   loid?: string
+  fiber: string
   sn: string
 }
 export type IUnitUnregisteredListAxiosPromise = AxiosPromise<IUnitUnregistered[]>

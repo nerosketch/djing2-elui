@@ -42,7 +42,7 @@
         prop="mac")
 
       el-table-column(
-        :label="$t('livingVersion')"
+        :label="$t('devices.firmwareVersion')"
         min-width="150"
         prop="firmware_ver")
 
@@ -55,6 +55,11 @@
         label="LOID"
         min-width="150"
         prop="loid")
+
+      el-table-column(
+        :label="$t('devices.fiber')"
+        min-width="150"
+        prop="fiber")
 
       el-table-column(
         label="sn"

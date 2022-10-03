@@ -297,7 +297,11 @@ export default {
     createTime: 'Create time',
     specifyTheTypeOfDevice: "Specify the type of device",
     specifyParentDevice: 'Specify parent device',
-    aus2DelDevice: 'Are you sure to remove device "{0}"?'
+    aus2DelDevice: 'Are you sure to remove device "{0}"?',
+    device: "Device.",
+    firmwareVersion: "Firmware version",
+    fiberAddrRequired: 'fiberAddr required.',
+    fiber: 'Fiber',
   },
   route: {
     staff: "Staff",
@@ -473,7 +477,6 @@ export default {
   email: "Email",
   somethingElse: "Something else.",
   spectaped: "Spectaped",
-  pyberaddreRequired: "Pyberaddre Required.",
   finance: "Finance",
   fioDirector: "Director's name",
   directorSFioIsRequired: "Director's fig.",
@@ -756,7 +759,6 @@ export default {
   noDeviceTransmittedToTheButton: "No device transmitted to the button",
   ONUConfigurationOptions: "ONU configuration options",
   eternalService10Years: '"Eternal" service (10 years)',
-  livingVersion: "Living version",
   entry: "Entry",
   comeIn: "Come in.",
   incomingByte: "Incoming Byte",
@@ -789,6 +791,5 @@ export default {
   targetCompleted: "Target completed",
   complete: "Complete",
   areYSureFinishSession: "Are y sure you want to finish the session?",
-  device: "Device.",
   yellowTriangle: "yellow triangle"
 };

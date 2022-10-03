@@ -297,7 +297,11 @@ export default {
     createTime: 'Дата введения в эксплуатацию',
     specifyTheTypeOfDevice: 'Нужно указать тип устройства',
     specifyParentDevice: 'Нужно указать родительское устройство',
-    aus2DelDevice: 'Действительно удалить устройство "{0}"?'
+    aus2DelDevice: 'Действительно удалить устройство "{0}"?',
+    device: 'Железка',
+    firmwareVersion: 'Версия прошивки',
+    fiberAddrRequired: 'fiberAddr нужен',
+    fiber: 'Глаз',
   },
   route: {
     staff: 'Cотрудники',
@@ -473,7 +477,6 @@ export default {
   email: 'ЭПочта',
   somethingElse: 'ещё что-то.',
   spectaped: 'Expected Spending',
-  pyberaddreRequired: 'fiberAddr required.',
   finance: 'Финансы',
   fioDirector: 'Фио директора',
   directorSFioIsRequired: 'Фио директора обязательно.',
@@ -744,7 +747,6 @@ export default {
   noDeviceTransmittedToTheButton: 'В кнопку не передано устройство',
   ONUConfigurationOptions: 'Варианты конфигурации на ONU',
   eternalService10Years: '"Вечная" услуга (10 лет)',
-  livingVersion: 'Версия прошивки',
   entry: 'Вход',
   comeIn: 'Войти',
   incomingByte: 'Входящих байт',
@@ -778,6 +780,5 @@ export default {
   targetCompleted: 'Задача завершена',
   complete: 'Завершить',
   areYSureFinishSession: 'Завершить сессию?',
-  device: 'Железка',
   yellowTriangle: 'жёлтый треугольник'
 }
