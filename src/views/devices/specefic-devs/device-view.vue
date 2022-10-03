@@ -83,7 +83,9 @@ export default class extends Vue {
     this.getDevice().then(dev => {
       if (dev) {
         document.title = dev.comment || dev.ip_address
-        this.loadLocalityDetail(dev.address, 4)
+        if (dev.address) {
+          this.loadLocalityDetail(dev.address, 4)
+        }
       }
     })
     document.addEventListener('keydown', this.onKeyPress)

@@ -202,7 +202,7 @@ export interface IDevice {
   code: string
   sites?: number[]
   create_time: string
-  address: number
+  address: number | null
   address_title: string
 }
 export interface IDeviceInterace extends IDevice {

@@ -36,7 +36,7 @@ class Device extends VuexModule implements IDeviceInterface {
   code = ''
   sites?: number[] = []
   create_time = ''
-  address = 0
+  address: number | null = null
   address_title = ''
 
   loadProgress = false
@@ -65,7 +65,7 @@ class Device extends VuexModule implements IDeviceInterface {
     this.code = ''
     this.sites = []
     this.create_time = ''
-    this.address = 0
+    this.address = null
     this.address_title = ''
     return this
   }
