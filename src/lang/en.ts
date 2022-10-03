@@ -233,7 +233,10 @@ export default {
   addrs: {
     addresses: "Localities",
     addr: "Address",
-    full: "Full address"
+    full: "Full address",
+    typeOfFiasAddress: "Type of FIAS address",
+    fiasLevel: "FIAS level",
+    aoType: "Type of address object",
   },
   tasks: {
     add: "Add the task",
@@ -721,8 +724,6 @@ export default {
   idEcspectedRumBaccand: "Id ecspected rum baccand",
   currentWebHook: "current web hook:",
   type: "Type",
-  typeOfFiasAddress: "Type of FIAS address",
-  typeOfAddressObject: "Type of address object",
   typeOfBean: "Type of bean",
   likeUs: "Like us.",
   typeOfEquipment: "Type of equipment",
@@ -750,7 +751,6 @@ export default {
   speedIn: "Speed in.",
   iDid: "I did.",
   office: "Office",
-  fiasLevel: "FIAS level",
   acceleration: "Acceleration",
   serviceChanged: "Service changed",
   serviceEstablished: "Service established",

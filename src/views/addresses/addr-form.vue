@@ -9,29 +9,26 @@
       el-input(v-model="frmMod.title")
 
     el-form-item(
-      :label="$t('fiasLevel')"
+      :label="$t('addrs.fiasLevel')"
       prop="fias_address_level"
     )
       fias-level-choice(v-model="frmMod.fias_address_level")
 
-    el-form-item(:label="$t('typeOfFiasAddress')" prop="fias_address_type")
+    el-form-item(:label="$t('addrs.typeOfFiasAddress')" prop="fias_address_type")
       fias-type-choice(
         v-model="frmMod.fias_address_type"
         :level="frmMod.fias_address_level"
       )
 
-    el-form-item(:label="$t('typeOfAddressObject')" prop="address_type")
+    el-form-item(:label="$t('addrs.taoType')" prop="address_type")
       address-type-choice(v-model="frmMod.address_type")
 
-    el-form-item
-      el-button(
-        icon="el-icon-upload"
-        type="primary"
-        @click="onSubmit"
-        :loading="isLoading")
-        | {{ $t('save') }}
-
-      el-divider(direction="vertical")
+    el-button(
+      icon="el-icon-upload"
+      type="primary"
+      @click="onSubmit"
+      :loading="isLoading")
+      | {{ $t('save') }}
 </template>
 
 <script lang="ts">

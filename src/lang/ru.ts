@@ -233,7 +233,10 @@ export default {
   addrs: {
     addresses: 'Населённые пункты',
     addr: 'Адрес',
-    full: 'Полный адрес'
+    full: 'Полный адрес',
+    typeOfFiasAddress: 'Тип адреса ФИАС',
+    fiasLevel: 'Уровень ФИАС',
+    aoType: 'Тип адресного объекта',
   },
   tasks: {
     add: 'Добавить задачу',
@@ -710,8 +713,6 @@ export default {
   idEcspectedRumBaccand: 'Task id expected from backend',
   currentWebHook: 'Текущий webhook url:',
   type: 'Тип',
-  typeOfFiasAddress: 'Тип адреса ФИАС',
-  typeOfAddressObject: 'Тип адресного объекта',
   typeOfBean: 'Тип бота',
   likeUs: 'Тип NAS',
   typeOfEquipment: 'Тип оборудования',
@@ -738,7 +739,6 @@ export default {
   speedIn: 'Укажи входящую скорость',
   iDid: 'Управл.',
   office: 'Управление',
-  fiasLevel: 'Уровень ФИАС',
   acceleration: 'Ускорение',
   serviceChanged: 'Услуга изменена',
   serviceEstablished: 'Услуга создана',
