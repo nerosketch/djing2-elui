@@ -25,11 +25,7 @@
           icon="el-icon-edit"
           @click="openEdit(node)"
         )
-  el-button(
-    icon='el-icon-plus'
-    type='success'
-    @click="addAbsoluteNode"
-  ) {{ $t('add') }}
+
   el-dialog(
     :title="dialogTitle"
     :visible.sync="dialogVisible"
@@ -95,11 +91,6 @@ export default class extends Vue {
     AddressModule.RESET_ALL_ADDR()
     AddressModule.SET_ADDR_PARENT(node.data.id)
     this.parentTitle = `${node.data.fias_address_type_name} ${node.data.title}`
-    this.dialogVisible = true
-  }
-
-  private addAbsoluteNode() {
-    AddressModule.RESET_ALL_ADDR()
     this.dialogVisible = true
   }
 
