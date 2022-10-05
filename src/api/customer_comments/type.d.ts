@@ -5,7 +5,7 @@ import {
 
 export interface ICustomerComment {
   id: number
-  customer: number
+  customer_id: number
   // customer_name: string
   author_id: number
   author_name: string

@@ -94,7 +94,7 @@ import FormMixin from '@/utils/forms'
 import { ICustomer } from '@/api/customers/types'
 import { ICustomerContract } from './api/types'
 import { Form } from 'element-ui'
-import { addContract, changeContract, finishCustomerContract } from './api/reqs'
+import { addContract, changeContract, finishCustomerContract, getContractInitials } from './api/reqs'
 import ContractDocs from './contract-docs.vue'
 import BooleanIcon from '@/components/boolean-icon.vue'
 
@@ -116,18 +116,18 @@ export default class extends mixins(FormMixin) {
   private frmMod: ICustomerContract = {
     id: undefined,
     title: '',
-    customer: this.$store.state.customer.id,
+    customer_id: this.$store.state.customer.id,
     start_service_time: '',
     end_service_time: null,
     is_active: true,
-    contract_number: '',
+    contract_number: this.$store.state.customer.username,
     note: ''
   }
 
   private fillFrmModFromVar(contract: ICustomerContract) {
     this.frmMod.id = contract.id
     this.frmMod.title = contract.title
-    this.frmMod.customer = contract.customer || this.$store.state.customer.id
+    this.frmMod.customer_id = contract.customer_id || this.$store.state.customer.id
     this.frmMod.start_service_time = contract.start_service_time
     this.frmMod.end_service_time = contract.end_service_time || null
     this.frmMod.is_active = contract.is_active
@@ -154,11 +154,14 @@ export default class extends mixins(FormMixin) {
     this.fillFrmModFromVar(contract)
   }
 
-  created() {
+  async created() {
     if (this.contract) {
       this.fillFrmModFromVar(this.contract)
+    } else {
+      const contr = await getContractInitials()
+      this.fillFrmModFromVar(contr.data)
+      this.doCopyFromUsername()
     }
-    this.doCopyFromUsername()
   }
 
   private get isNew() {

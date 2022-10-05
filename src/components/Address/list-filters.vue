@@ -2,9 +2,6 @@
 el-collapse
   el-collapse-item
     template(slot="title") {{ $t('customers.addressFitlers') }}
-      //- span(v-if="streetLabelVal") {{ $t('customers.street') }}: {{ streetLabelVal }}.&nbsp;
-      //- span(v-if="houseLabelVal") {{ $t('customers.house') }}: {{ houseLabelVal }}.&nbsp;
-      //- span(v-if="groupLabelVal") {{ $t('groups.group') }}: {{ groupLabelVal }}.
 
     el-form(inline)
       el-form-item(:label="$t('customers.streets')")
@@ -13,6 +10,7 @@ el-collapse
           :addrType="streetAddrType"
           :parentAddrType="streetParentAddrType"
           v-model="streetVal"
+          :disabled="!addrId"
         )
 
       el-form-item(:label="$t('customers.houses')")
@@ -20,6 +18,7 @@ el-collapse
           :parentAddrId="streetVal"
           :addrType="houseAddrType"
           :parentAddrType="streetAddrType"
+          :disabled="!streetVal"
           v-model="houseVal"
         )
 
@@ -28,6 +27,19 @@ el-collapse
           v-model="groupVal"
           :fetchFunction="fetchGroups"
         )
+
+      el-form-item(
+        :label="$t('customers.showIsActive')"
+      )
+        el-select(
+          v-model="localDisplayActive"
+        )
+          el-option(
+            v-for="(v, i) in localDisplayVals"
+            :key="i"
+            :value="v.value"
+            :label="v.title"
+          )
 </template>
 
 <script lang="ts">
@@ -51,6 +63,7 @@ export default class extends Vue {
   @Prop({ default: 0 }) private house!: number
   @Prop({ required: true })
   private fetchGroups!: (params: IDRFRequestListParameters) => void
+  @Prop({ default: null }) private displayActive!: boolean | null
 
   private streetVal = this.street
   // private streetLabelVal = ''
@@ -59,9 +72,17 @@ export default class extends Vue {
   private houseVal = this.house
   // private houseLabelVal = ''
 
+  private localDisplayActive = this.displayActive
+
   private streetAddrType = IAddressEnumTypes.STREET
   private streetParentAddrType = IAddressEnumTypes.LOCALITY
   private houseAddrType = IAddressEnumTypes.HOUSE
+
+  private localDisplayVals = [
+    {value: false, title: 'Отображать не активных'},
+    {value: true, title: 'Отображать активных'},
+    {value: null, title: 'Отображать всех'}
+  ]
 
   @Watch('streetVal')
   private onChStreetVal(v: number) {
@@ -76,6 +97,11 @@ export default class extends Vue {
   @Watch('houseVal')
   private onChHouse(v: number) {
     this.$emit('update:house', v)
+  }
+
+  @Watch('localDisplayActive')
+  private onChangeDisplayActive(v: boolean | null) {
+    this.$emit('update:displayActive', v)
   }
 
   // private onStreetSelect(addr: IAddressModel) {

@@ -20,10 +20,12 @@ div
 import { Component, Vue } from 'vue-property-decorator'
 import AlltimeGwForm from './forms/alltime-form.vue'
 import RncbGwForm from './forms/rncb-form.vue'
+import PaymeGwForm from './forms/payme-form.vue'
 
 const frmMap = new Map()
 frmMap.set(2, RncbGwForm)
 frmMap.set(3, AlltimeGwForm)
+frmMap.set(4, PaymeGwForm)
 
 @Component({
   name: 'NewGwForm'
@@ -35,6 +37,7 @@ export default class extends Vue {
     {val: 0, title: 'Не выбран'},
     {val: 2, title: 'RNCB'},
     {val: 3, title: 'All time'},
+    {val: 4, title: 'PayMe'},
   ]
 
   private get frmComponentGetter() {

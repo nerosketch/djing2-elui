@@ -7,7 +7,7 @@
       autocomplete="on"
       label-position="left"
     )
-      glsl-smog-effect(id="smogblock" :width="518" :height="231")
+      space-shader-box(id="smogblock" width="518" height="227")
         //- h3.title Войти
 
       el-form-item(prop="username")
@@ -55,11 +55,10 @@ import { latinValidator } from '@/utils/validate'
 import { CurrentUserProfileModule } from '@/store/modules/profiles/current-user-profile'
 import { IUserProfile } from '@/api/profiles/types'
 import { CurrentPermissions } from '@/store/current-user-permissions'
-import GlslSmogEffect from '@/components/shaders/glsl-smog-effect.vue'
+import 'space-shader-box'
 
 @Component({
   name: 'Login',
-  components: { GlslSmogEffect }
 })
 export default class extends Vue {
   private $perms!: CurrentPermissions
@@ -75,7 +74,6 @@ export default class extends Vue {
     ],
     password: [
       { required: true, message: this.$tc('thePasswordCannotBeEmpty'), trigger: 'blur' },
-      { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ]
   }
@@ -247,8 +245,6 @@ export default class extends Vue {
 #smogblock {
   position: fixed;
   margin: -35px 0 0 -35px;
-  width: 518px;
-  height: 227px;
 }
 #loginbtn {
   position: relative;

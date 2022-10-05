@@ -25,11 +25,7 @@
           icon="el-icon-edit"
           @click="openEdit(node)"
         )
-  el-button(
-    icon='el-icon-plus'
-    type='success'
-    @click="addAbsoluteNode"
-  ) {{ $t('add') }}
+
   el-dialog(
     :title="dialogTitle"
     :visible.sync="dialogVisible"
@@ -98,17 +94,12 @@ export default class extends Vue {
     this.dialogVisible = true
   }
 
-  private addAbsoluteNode() {
-    AddressModule.RESET_ALL_ADDR()
-    this.dialogVisible = true
-  }
-
   private frmAddDone(addr: IAddressModel) {
     this.dialogVisible = false
     this.$message.success(this.$tc('addressObjectAdded'))
 
-    if (addr.parent_addr) {
-      this.$refs.etree.append(addr, addr.parent_addr)
+    if (addr.parent_addr_id) {
+      this.$refs.etree.append(addr, addr.parent_addr_id)
     }
   }
 
@@ -125,11 +116,11 @@ export default class extends Vue {
   private async loadAddresses(parent?: number): Promise<IAddressModel[]> {
     const { data } = await getAddresses({
       page: 1,
-      page_size: 0,
-      parent_addr: parent || 0
-      // fields: 'id,title,parent_addr'
+      page_size: 100,
+      parent_addr_id: parent || 0
+      // fields: 'id,title,parent_addr_id'
     })
-    return data as unknown as IAddressModel[]
+    return data.results
   }
 
   get dialogTitle() {

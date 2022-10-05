@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card
-    template(v-slot:header)
+    template(#header)
       .clearfix
         span {{ device.comment || $t('devices.switch') }}
 
@@ -30,14 +30,14 @@
         :label="$t('devices.port')"
         width="60"
         align="center")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           b {{ row.num }}
 
       el-table-column(
         :label="$t('bulk')"
         width="80"
         align="center")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           switch-port-toggle-button(
             v-if="row.isdb && row.snmp_num > 0"
             :port="row"
@@ -58,7 +58,7 @@
         :label="$t('aborions')"
         width="70"
         align="center")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           el-link(type="primary" @click="openPortView(row)")
             | {{ row.user_count }}
 
@@ -66,25 +66,25 @@
         :label="$t('name')"
         min-width="235"
       )
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           | {{ row.name || '-' }}
 
       el-table-column(
         :label="$t('regime')"
         min-width="78"
       )
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           | {{ row.speed ? portModesHuman(row.speed) : '-' }}
 
       el-table-column(label="UpTime" min-width="176")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           | {{ row.uptime || '-' }}
 
       el-table-column(
         :label="$t('buttons')"
         align="center"
         min-width="194")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           el-button-group(v-if="row.isdb")
             el-button(icon="el-icon-notebook-2" @click="openMacsDialog(row)")
 
@@ -354,7 +354,9 @@ export default class extends Vue {
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
     this.$message.success(this.$tc('successfullyMaintained'))
-    this.$router.push({ name: 'devicesList', params: { addrId: device.address.toString() } })
+    if (device.address) {
+      this.$router.push({ name: 'devicesList', params: { addrId: device.address.toString() } })
+    }
   }
 
   private openVidsDialog(port: IPort) {

@@ -7,10 +7,10 @@
       :editFieldsVisible.sync="editFieldsVisible"
       widthStorageNamePrefix="pools"
       ref="table")
-      template(v-slot:is_dynamic="{row}")
+      template(#is_dynamic="{row}")
         boolean-icon(v-model="row.is_dynamic")
 
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C

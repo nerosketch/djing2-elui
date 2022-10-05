@@ -47,3 +47,5 @@ export interface IPayReportParams {
   group_by: number,
   limit: number
 }
+
+export type IPayPaymeGateway = IPayBaseGateway

@@ -26,7 +26,7 @@ import {
 
 export interface IDRFRequestListAddrsParameters extends IDRFRequestListParameters {
   address_type?: number
-  parent_addr?: number
+  parent_addr_id?: number
 }
 
 const addrsUrl = '/addrs/'
@@ -42,8 +42,12 @@ export const changeAddress = patchObjectDecorator<IAddressModel>(addrsUrl)
 export const getAddrTypes = (): IAddressTypeListAxiosResponsePromise =>
   request.get<IAddressType[]>('/addrs/get_addr_types/')
 
-export const getAllChildren = (addr_type: number, parent_addr?: number, parent_type?: number): IAddressModelListAxiosResponsePromise =>
-  request.get<IAddressModelList>('/addrs/get_all_children/', { params: { addr_type, parent_addr, parent_type }})
+export const getAllChildren = (addr_type: number, parent_addr_id?: number, parent_type?: number): IAddressModelPlainListAxiosResponsePromise =>
+  request.get<IAddressModel[]>('/addrs/get_all_children/', { params: {
+    addr_type,
+    parent_addr_id: parent_addr_id || undefined,
+    parent_type
+  }})
 
 export const getAddrParent = (id: number): IDRFAxiosResponsePromise<IAddressModel | null> =>
   request.get<IAddressModel | null>(`/addrs/${id}/get_parent/`)
@@ -65,3 +69,6 @@ export const getAddrFullTitle = (addrId: number): StringAxiosResponsePromise =>
 
 export const getAddrIdHierarchy = (addrId: number): IDRFAxiosResponsePromise<number[]> =>
   request.get<number[]>(`/addrs/${addrId}/get_id_hierarchy/`)
+
+export const getAddressByType = (addrId: number, addrType: number): IDRFAxiosResponsePromise<IAddressModel | null> =>
+  request.get<IAddressModel | null>(`/addrs/${addrId}/get_address_by_type/?addr_type=${addrType}`)

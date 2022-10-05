@@ -6,7 +6,7 @@
       :heightDiff="190"
       widthStorageNamePrefix="upg"
       ref="tbl")
-      template(v-slot:btn="{row}")
+      template(#btn="{row}")
         el-button-group
           el-button(
             icon="el-icon-lock"

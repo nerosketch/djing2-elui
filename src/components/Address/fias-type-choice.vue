@@ -54,5 +54,9 @@ export default class extends Vue {
       this.loadAddrTypes()
     }
   }
+
+  created() {
+    this.loadAddrTypes()
+  }
 }
 </script>

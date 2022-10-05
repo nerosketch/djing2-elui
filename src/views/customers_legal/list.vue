@@ -6,13 +6,13 @@
       :heightDiff="118"
       widthStorageNamePrefix="legalcustomers"
       ref="table")
-      template(v-slot:btn="{row}")
+      template(#btn="{row}")
         el-button(
           icon="el-icon-edit"
           @click="openEdit(row)"
           :disabled="!$perms.customers_legal.change_customerlegalmodel")
 
-      template(v-slot:username="{row}")
+      template(#username="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerLegalDetail', params: { uid: row.id } }")
           | {{ row.username }}
 

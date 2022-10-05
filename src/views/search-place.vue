@@ -3,7 +3,7 @@
     el-card(
       shadow="never"
     )
-      template(v-slot:header)
+      template(#header)
         .clearfix {{ $t('customers.searchBy', [$store.state.search.searchStr]) }}
       el-row(:gutter='5')
         el-col(:sm='24' :md='12')

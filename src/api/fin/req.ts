@@ -7,7 +7,8 @@ import {
   IPayReport,
   IPayReportParams,
   IPayAllTimeGateway,
-  IPayRNCBGateway
+  IPayRNCBGateway,
+  IPayPaymeGateway
 } from './types'
 import {
   addObjectDecorator,
@@ -36,6 +37,12 @@ export const getRNCBPayGateway = getObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
 export const addRNCBPayGateway = addObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
 export const changeRNCBPayGateway = patchObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
 export const delRNCBPayGateway = delObjectDecorator<IPayRNCBGateway>(pgwRNCBUrl)
+
+const pgwPaymeUrl = '/fin/payme/'
+export const getPaymePayGateway = getObjectDecorator<IPayPaymeGateway>(pgwPaymeUrl)
+export const addPaymePayGateway = addObjectDecorator<IPayPaymeGateway>(pgwPaymeUrl)
+export const changePaymePayGateway = patchObjectDecorator<IPayPaymeGateway>(pgwPaymeUrl)
+export const delPaymePayGateway = delObjectDecorator<IPayPaymeGateway>(pgwPaymeUrl)
 
 export const getPayLog = (): IAllTimePayLogListAxiosResponsePromise =>
   request.get<IAllTimePayLogList>(`${pgwUrl}log/`)

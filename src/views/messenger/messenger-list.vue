@@ -5,14 +5,14 @@
       :getData="loadMessengers"
       widthStorageNamePrefix="messengers"
       ref="table")
-      template(v-slot:title="{row}")
+      template(#title="{row}")
         el-link(
           type="primary"
           :href="row.global_link"
           target="_blank")
           | {{ row.title }}
 
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button-group
           el-button(
             type="danger"

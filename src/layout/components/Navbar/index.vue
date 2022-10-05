@@ -13,7 +13,7 @@
         :placeholder="$t('search')"
         prefix-icon="el-icon-search"
       )
-        template(v-slot:append)
+        template(#append)
           el-button(
             icon="el-icon-search"
             @click="doSearch"
@@ -31,7 +31,7 @@
           )
           span(v-else) {{ profileUname }}
           i.el-icon-caret-bottom
-        template(v-slot:dropdown)
+        template(#dropdown)
           el-dropdown-menu
             router-link(to="/customers")
               el-dropdown-item(icon='el-icon-s-home') {{ $t('optMenu.home') }}

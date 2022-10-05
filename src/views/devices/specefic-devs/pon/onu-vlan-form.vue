@@ -3,7 +3,7 @@
     shadow="never"
     v-if="currentConfig.vlanConfig.length > 0"
   )
-    template(v-slot:header)
+    template(#header)
       span {{ $t('ONUConfigurationOptions') }}
 
     span {{ $t('onuConfigTemplate') }}
@@ -23,7 +23,7 @@
         shadow="never"
         v-for="portVlanConf in currentConfig.vlanConfig"
         :key="portVlanConf.port")
-        template(v-slot:header)
+        template(#header)
           el-link(
             style="float: right"
             icon="el-icon-close"
@@ -45,7 +45,7 @@
       @click="onSubmit"
       :loading="vlanLoading"
       :disabled="!$perms.devices.can_apply_onu_config || disabled")
-      | {{ $t('applicable') }}
+      | {{ $t('apply') }}
 </template>
 
 <script lang="ts">
@@ -97,7 +97,7 @@ export default class extends mixins(VlanMixin) {
             showClose: true
           })
         }
-        DeviceModule.GetDevice(this.$store.state.devicemodule.id)
+        this.$emit('update')
       } finally {
         this.vlanLoading = false
       }

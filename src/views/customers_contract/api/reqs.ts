@@ -18,6 +18,8 @@ export const getContract = getObjectDecorator<ICustomerContract>(baseUrl)
 export const addContract = addObjectDecorator<ICustomerContract>(baseUrl)
 export const delContract = delObjectDecorator<ICustomerContract>(baseUrl)
 export const changeContract = patchObjectDecorator<ICustomerContract>(baseUrl)
+export const getContractInitials = (): IDRFAxiosResponsePromise<ICustomerContract> =>
+  request.get<ICustomerContract>(`${baseUrl}get_initial/`)
 
 const baseAttachmentUrl = '/customer_contract/docs/'
 export const getContractDocs = getObjectListDecorator<ICustomerContractAttachment>(baseAttachmentUrl)

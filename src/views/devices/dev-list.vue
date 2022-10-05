@@ -18,7 +18,7 @@
           :editFieldsVisible.sync="editFieldsVisible"
           widthStorageNamePrefix="devs"
           ref="tbl")
-          template(v-slot:comment="{row}")
+          template(#comment="{row}")
             router-link.el-link.el-link--primary.is-underline(
               v-if="$perms.devices.view_device"
               :to="{name: 'device-view', params: { devId: row.id }}"
@@ -26,15 +26,15 @@
 
             span(v-else) {{ row.comment }}
 
-          template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
+          template(#ip_address="{row}") {{ row.ip_address || '-' }}
 
-          template(v-slot:status="{row}")
+          template(#status="{row}")
             boolean-icon(v-model="row.status")
 
-          template(v-slot:is_noticeable="{row}")
+          template(#is_noticeable="{row}")
             boolean-icon(v-model="row.is_noticeable")
 
-          template(v-slot:oper="{row}")
+          template(#oper="{row}")
             el-button-group
               el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
                 | C
@@ -66,7 +66,7 @@
               | {{ $t('field') }}
 
     el-dialog(
-      :title="$t('device')"
+      :title="$t('devices.device')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")
@@ -211,8 +211,8 @@ export default class extends mixins(TableWithAddrMixin) {
     this.dialogVisible = true
   }
 
-  private async openNew() {
-    await DeviceModule.RESET_ALL_DEV()
+  private openNew() {
+    DeviceModule.RESET_ALL_DEV()
     this.dialogNewDev = true
   }
 
@@ -232,7 +232,7 @@ export default class extends mixins(TableWithAddrMixin) {
   }
 
   private async delDevice(dev: IDevice) {
-    this.$confirm(`Действительно удалить устройство "${dev.comment}"?`).then(async() => {
+    this.$confirm(this.$tc('devices.aus2DelDevice', 1, [dev.comment])).then(async() => {
       await DeviceModule.DelDevice(dev.id)
       this.$message.success(this.$tc('deleted'))
       this.$refs.tbl.LoadTableData()
@@ -265,7 +265,7 @@ export default class extends mixins(TableWithAddrMixin) {
   private async onGrpLoc(locId: number) {
     if (locId > 0) {
       await AddressModule.GetAddress(locId)
-      await BreadcrumbsModule.SetCrumbs([
+      BreadcrumbsModule.SetCrumbs([
         {
           path: '/devices',
           meta: {

@@ -22,7 +22,7 @@ export interface IAddressModel {
   title: string
   address_type: IAddressEnumTypes
   address_type_name?: string
-  parent_addr?: number
+  parent_addr_id?: number
   parent_addr_title?: string
   fias_address_level: number
   fias_address_level_name?: string

@@ -53,7 +53,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { UserProfileModule } from '@/store/modules/profiles/user-profile'
 import { Form } from 'element-ui'
-import { latinValidator } from '@/utils/validate'
 import { CurrentPermissions } from '@/store/current-user-permissions'
 
 @Component({
@@ -67,12 +66,10 @@ export default class extends Vue {
   private frmRules = {
     old_passw: [
       { required: !this.$perms.is_superuser, message: this.$tc('iNeedToPointOutTheOldPassword'), trigger: 'blur' },
-      { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     new_passw: [
       { required: true, message: this.$tc('weNeedANewPassword'), trigger: 'blur' },
-      { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ],
     retype_passw: [

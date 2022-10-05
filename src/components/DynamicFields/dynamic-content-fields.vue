@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card(shadow="never")
-    template(v-slot:header)
+    template(#header)
       .clearfix {{ $tc('customers.extraFields') }}
 
     el-form

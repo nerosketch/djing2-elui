@@ -5,11 +5,11 @@
       :getData="loadPayGws"
       widthStorageNamePrefix="gws"
       ref="table")
-      template(v-slot:title="{row}")
+      template(#title="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{ name: 'finReport' }")
           | {{ row.title }}
 
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button-group
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
@@ -134,7 +134,7 @@ export default class extends Vue {
   private openNew() {
     this.frmComponent = NewGwForm
     PayBaseGatewayModule.RESET_ALL_PAYGW()
-    this.dialogTitle = this.$tc('createAPayLock')
+    this.dialogTitle = this.$tc('fin.createAPayLock')
     this.dialogVisible = true
   }
 

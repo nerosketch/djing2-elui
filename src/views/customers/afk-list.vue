@@ -17,12 +17,18 @@
       type="number"
       v-model="reqParams.out_limit")
 
+    span {{ $t('addrs.addresses') }}:
+    addr-children-choice(
+      :style="{width: '150px'}"
+      v-model="reqParams.locality"
+    )
+
     datatable(
       :columns="tableColumns"
       :getData="loadAfk"
       widthStorageNamePrefix="usersafk"
       ref="afktbl")
-      template(v-slot:customer_uname="{row}")
+      template(#customer_uname="{row}")
         router-link.el-link.el-link--primary.is-underline(:to="{name: 'customerDetails', params:{uid: row.customer_id }}")
           | {{ row.customer_uname }}
 </template>
@@ -34,13 +40,15 @@ import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import { ICustomerAfkItem, ICustomerAfkItemParams } from '@/api/customers/types'
 import { getCustomersAfk } from '@/api/customers/req'
+import AddrChildrenChoice from '@/components/Address/addr-children-choice.vue'
 
 class DataTableComp extends DataTable<ICustomerAfkItem> {}
 
 @Component({
   name: 'AfkList',
   components: {
-    datatable: DataTableComp
+    datatable: DataTableComp,
+    AddrChildrenChoice
   }
 })
 export default class extends Vue {
@@ -50,7 +58,8 @@ export default class extends Vue {
 
   private reqParams: ICustomerAfkItemParams = {
     date_limit: null,
-    out_limit: 50
+    out_limit: 50,
+    locality: 0
   }
 
   @Watch('reqParams', { deep: true })

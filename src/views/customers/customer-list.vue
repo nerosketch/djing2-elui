@@ -8,6 +8,7 @@
             :group.sync="filterForm.group"
             :street.sync="filterForm.street"
             :house.sync="filterForm.house"
+            :displayActive.sync="displayOnlyActive"
             :fetchGroups="fetchGroups")
 
       el-col(:lg="24" :md="20")
@@ -114,7 +115,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import {
   IDRFAxiosResponsePromise,
@@ -124,7 +125,7 @@ import {
   IObjectGroupPermsResultStruct
 } from '@/api/types'
 import {
-  ICustomer
+  ICustomer, IDRFRequestListIsActiveFilterParameters
 } from '@/api/customers/types'
 import {
   getCustomers,
@@ -141,13 +142,30 @@ import { CustomerModule } from '@/store/modules/customers/customer'
 import { AddressModule } from '@/store/modules/addresses/address'
 import ListFilters from '@/components/Address/list-filters.vue'
 import TableWithAddrMixin from '@/components/Address/table-w-addr-mixin'
-import { IDRFRequestListFilterParameters } from '@/api/addresses/types'
 
 class DataTableComp extends DataTable<ICustomer> {}
 
 interface ITableRowClassName {
   row: ICustomer
   rowIndex: number
+}
+
+const ONLY_ACTIVE_STOR_KEY = 'displayOnlyActive'
+
+function getOnlyActive() {
+  const d = localStorage.getItem(ONLY_ACTIVE_STOR_KEY)
+  if (d === null) {
+    return null
+  } else {
+    return d === '1'
+  }
+}
+function setOnlyActive(v: boolean | null) {
+  if (v === null) {
+    localStorage.removeItem(ONLY_ACTIVE_STOR_KEY)
+  } else {
+    localStorage.setItem(ONLY_ACTIVE_STOR_KEY, v ? '1' : '0')
+  }
 }
 
 @Component({
@@ -171,6 +189,7 @@ export default class extends mixins(TableWithAddrMixin) {
   private sitesDlgProgress = false
   private sitesProgress = 0
   private editFieldsVisible = false
+  private displayOnlyActive: boolean | null = getOnlyActive()
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -230,13 +249,20 @@ export default class extends mixins(TableWithAddrMixin) {
     }
   ]
 
+  @Watch('displayOnlyActive')
+  private onChangeDisplayActive(v: boolean | null) {
+    setOnlyActive(v)
+    this.$refs.tbl.LoadTableData()
+  }
+
   private async getAllCustomers(params?: IDRFRequestListParameters) {
     const group = this.$route.query.group
     let r
     const fetchFn = (this.fetchFunc === null ? getCustomers : this.fetchFunc)
     if (params) {
-      let newParams: IDRFRequestListFilterParameters = Object.assign(params, {
+      let newParams: IDRFRequestListIsActiveFilterParameters = Object.assign(params, {
         address: this.addrId,
+        is_active: this.displayOnlyActive,
         fields: 'id,username,fio,address_title,telephone,current_service_title,current_service,balance,group_title,is_active,lease_count,marker_icons'
       })
       if (group) {

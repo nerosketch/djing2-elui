@@ -149,7 +149,6 @@ export default class extends Vue {
     ],
     password: [
       { required: true, message: this.$tc('thePasswordCannotBeEmpty'), trigger: 'blur' },
-      { validator: latinValidator, required: true, trigger: 'blur' },
       { min: 6, message: this.$tc('thePasswordConsistsOfAMinimumOf6Symbols') }
     ]
   }

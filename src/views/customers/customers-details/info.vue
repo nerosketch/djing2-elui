@@ -2,7 +2,7 @@
   el-row(:gutter="5")
     el-col.col_vert_space(:sm="24" :md="12")
       el-card(shadow="never")
-        template(v-slot:header)
+        template(#header)
           | {{ $t('customers.customerChange') }}
 
         customer-form
@@ -15,14 +15,14 @@
 
     el-col.col_vert_space(:sm="24" :md="12")
       el-card(shadow="never")
-        template(v-slot:header)
+        template(#header)
           | {{ $t('customers.flags') }}
 
         markers
 
     el-col.col_vert_space(:sm="24" :md="12")
       el-card(shadow="never")
-        template(v-slot:header)
+        template(#header)
           | {{ $t('customers.docs') }}
 
         customer-docs

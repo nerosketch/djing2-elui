@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card(shadow="never")
-    template(v-slot:header)
+    template(#header)
       .clearfix
         | {{ $t('customers.networking') }}
 
@@ -34,14 +34,14 @@
         :label="$t('customers.auto')"
         align="center"
         width="50")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           boolean-icon(v-model="row.is_dynamic")
 
       el-table-column(
         label="#"
         align="center"
         width="259")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           el-button-group
             el-button(
               type="danger"
