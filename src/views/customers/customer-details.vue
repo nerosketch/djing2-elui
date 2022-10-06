@@ -17,12 +17,6 @@ tabs(
     finance(v-if="loaded")
   template(#history)
     customer-task-history(v-if="loaded")
-  template(#traf)
-    el-card(v-if="loaded")
-      template(#header)
-        | {{ $t('customers.trafHistory') }}
-
-      traf-report(:customerId="uid")
 
   template(#additional_tabs)
     slot(name="additional_tabs") def
@@ -38,7 +32,6 @@ import Info from './customers-details/info.vue'
 import Services from './customers-details/services.vue'
 import Finance from './customers-details/finance.vue'
 import CustomerTaskHistory from './customers-details/customer-task-history.vue'
-import TrafReport from './customers-details/traf-report.vue'
 import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -59,7 +52,6 @@ interface ICustomerUpdateEventData {
     Finance,
     CustomerTaskHistory,
     Tabs,
-    TrafReport
   }
 })
 export default class extends Vue {
@@ -113,7 +105,6 @@ export default class extends Vue {
     { title: this.$t('route.services'), name: 'services', disabled: !this.$perms.customers.view_customerservice },
     { title: this.$t('route.finance'), name: 'fin', disabled: !this.$perms.customers.view_customerlog },
     { title: this.$t('customers.taskHistory'), name: 'history', disabled: !this.$perms.tasks.view_task },
-    { title: this.$t('customers.trafHistory'), name: 'traf' },
   ]
 
   private onCustomerServerUpdate(msg: IWsMessage) {
