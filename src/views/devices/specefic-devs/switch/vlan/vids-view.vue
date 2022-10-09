@@ -18,11 +18,11 @@
         prop="vid")
 
       el-table-column(label="native")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           boolean-icon(v-model="row.native")
 
       el-table-column(:label="$t('office')")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           boolean-icon(v-model="row.is_management")
 </template>
 

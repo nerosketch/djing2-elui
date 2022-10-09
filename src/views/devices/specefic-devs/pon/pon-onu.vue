@@ -8,10 +8,10 @@
         shadow="never"
         body-style="padding: 10px;"
       )
-        template(v-slot:header)
+        template(#header)
           | {{ `${device.comment} - ${device.dev_type_str || 'PON ONU'}` }}
 
-          small {{ `${device.ip_address || device.mac_addr}` }}
+          small  {{ `${device.ip_address || device.mac_addr}` }}
 
           el-link(
             style="float: right"
@@ -66,7 +66,7 @@
         shadow="never"
         body-style="padding: 10px;"
       )
-        template(v-slot:header)
+        template(#header)
           | {{ $t('devices.status') }}
 
           el-link(
@@ -74,12 +74,11 @@
             icon="el-icon-refresh"
             @click="refreshDev")
 
-        p(
-          v-if="$store.getters.isOnuRegistered && macsNotEqual"
-        )
+        p(v-if="$store.getters.isOnuRegistered && macsNotEqual")
           b {{ $t('attention') }}!
 
-          span Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить". Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
+          span Мак адрес в билинге не совпадает с мак адресом, полученным с OLT. Можно попробовать воспользоваться кнопкой ниже "Исправить".
+            | Если и она не помогает, "ONU не найдена на OLT" то это значит что нет связи между ONU и OLT, и конфигурации этой ONU на OLT тоже нет.
             |              Так же можно проверить место на "глазе" olt, может он заполнен.
 
         el-row(
@@ -91,8 +90,12 @@
 
           el-col(v-if="onuDetails !== null")
             .text.item.list-item
-              b {{ $t('signalLevel') }}
+              b {{ $t('devices.signalLevel') }}
               | {{ onuDetails.signal }}
+
+            .text.item.list-item
+              b {{ $t('devices.onuStateDescr') }}:
+              |  {{ onuDetails.status }}
 
             .text.item.list-item
               b  {{ $t('macAddrFromOLT') }}
@@ -113,6 +116,7 @@
       onu-vlan-form(
         :disabled="$store.getters.isOnuRegistered && macsNotEqual"
         :style="{'margin-top': '5px'}"
+        @update="refreshDev"
       )
 
     el-dialog(
@@ -157,11 +161,13 @@ export default class extends Vue {
   }
 
   get isStatusSuccess() {
-    return this.onuDetails !== null && this.onuDetails.status === IOnuDetailsStatus.UP
+    if (this.onuDetails === null) return false
+    if (this.onuDetails.status === IOnuDetailsStatus.WORKING) return true
+    return false
   }
 
   get isStatusError() {
-    return this.onuDetails !== null && this.onuDetails.status === IOnuDetailsStatus.DOWN
+    return this.onuDetails !== null && this.onuDetails.status !== IOnuDetailsStatus.WORKING
   }
 
   get isStatusUnknown() {
@@ -181,7 +187,7 @@ export default class extends Vue {
       }
       await DeviceModule.DelDevice(this.device.id)
       this.$message.success(this.$tc('deleted'))
-      if (this.device.group) {
+      if (this.device.group && this.device.address) {
         this.$router.push({ name: 'devicesList', params: { addrId: this.device.address.toString() } })
       } else {
         this.$router.push('/devices')

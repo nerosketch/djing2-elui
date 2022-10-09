@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card
-    template(v-slot:header)
+    template(#header)
       .clearfix
         span zte -
 
@@ -42,7 +42,7 @@
         prop="mac")
 
       el-table-column(
-        :label="$t('livingVersion')"
+        :label="$t('devices.firmwareVersion')"
         min-width="150"
         prop="firmware_ver")
 
@@ -57,6 +57,11 @@
         prop="loid")
 
       el-table-column(
+        :label="$t('devices.fiber')"
+        min-width="150"
+        prop="fiber")
+
+      el-table-column(
         label="sn"
         min-width="150"
         prop="sn")
@@ -65,7 +70,7 @@
         :label="$t('safe')"
         min-width="70"
       )
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           el-button(icon="el-icon-plus" @click="onSaveOnu(row)")
 
     el-dialog(

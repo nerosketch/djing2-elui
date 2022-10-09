@@ -20,7 +20,9 @@ export enum IDeviceTypeEnum {
   DlinkDGS_3120_24SCSwitchInterface = 9,
   DlinkDGS_1100_06MESwitchInterface = 10,
   DlinkDGS_3627GSwitchInterface = 11,
-  HuaweiS5300_10P_LI_ACInterface = 12
+  HuaweiS5300_10P_LI_ACInterface = 12,
+  EltexMes5324 = 13,
+  XponOnuFD511G = 14,
 }
 
 export interface IDeviceInterface extends IDevice {
@@ -93,8 +95,13 @@ export type IScannedZTEONUListAxiosPromise = AxiosPromise<IScannedZTEONU[]>
 
 export enum IOnuDetailsStatus {
   UNKNOWN = 'unknown',
-  UP = 'ok',
-  DOWN = 'down'
+  LOGGING = "logging",
+  LOS = "los",
+  SYNC_MIB = "syncMib",
+  WORKING = "working",
+  DYING_GASP = "dyinggasp",
+  AUTH_FAILED = "authFailed",
+  OFFLINE = "offline"
 }
 export interface IOnuDetails {
   status: IOnuDetailsStatus
@@ -108,6 +115,7 @@ export interface IUnitUnregistered {
   firmware_ver?: string
   loid_passw?: string
   loid?: string
+  fiber: string
   sn: string
 }
 export type IUnitUnregisteredListAxiosPromise = AxiosPromise<IUnitUnregistered[]>
@@ -199,7 +207,7 @@ export interface IDevice {
   code: string
   sites?: number[]
   create_time: string
-  address: number
+  address: number | null
   address_title: string
 }
 export interface IDeviceInterace extends IDevice {

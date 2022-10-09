@@ -7,18 +7,18 @@
     el-table-column(:label="$t('customers.phoneOwner')" prop="owner_name")
 
     el-table-column(:label="$t('customers.phone')")
-      template(v-slot:default="{row}")
+      template(#default="{row}")
         el-link(:href="`tel:${row.telephone}`")
           | {{ row.telephone }}
 
     el-table-column(:label="$t('customers.phoneCreateTime')" prop="create_time")
-      template(v-slot:default="{row}") {{ row.create_time }}
+      template(#default="{row}") {{ row.create_time }}
 
     el-table-column(
       :label="$t('del')"
       width="75"
       align="center")
-      template(v-slot:default="{row}")
+      template(#default="{row}")
         el-button(
           icon="el-icon-close"
           type="text"

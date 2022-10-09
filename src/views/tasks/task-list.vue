@@ -8,12 +8,12 @@
       :editFieldsVisible.sync="editFieldsVisible"
       widthStorageNamePrefix="tasks"
       ref="tbl")
-      template(v-slot:customer_full_name="{row}")
+      template(#customer_full_name="{row}")
         router-link.el-link.el-link--primary.is-underline(
           :to="{ name: 'customerDetails', params: {uid: row.customer } }"
         ) {{ row.customer_full_name }}
 
-      template(v-slot:id="{row}")
+      template(#id="{row}")
         router-link(:to="{name: 'taskDetails', params: { taskId: row.id }}")
           el-button(:type="row.comment_count > 0 ? 'success' : 'primary'")
             span(

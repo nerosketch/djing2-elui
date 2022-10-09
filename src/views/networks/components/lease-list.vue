@@ -5,7 +5,7 @@
     :heightDiff="160"
     widthStorageNamePrefix="sessions"
     ref="table")
-    template(v-slot:is_dynamic="{row}")
+    template(#is_dynamic="{row}")
       boolean-icon(v-model="row.is_dynamic")
 
 </template>

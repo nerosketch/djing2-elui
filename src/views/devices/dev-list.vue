@@ -18,7 +18,7 @@
           :editFieldsVisible.sync="editFieldsVisible"
           widthStorageNamePrefix="devs"
           ref="tbl")
-          template(v-slot:comment="{row}")
+          template(#comment="{row}")
             router-link.el-link.el-link--primary.is-underline(
               v-if="$perms.devices.view_device"
               :to="{name: 'device-view', params: { devId: row.id }}"
@@ -26,15 +26,15 @@
 
             span(v-else) {{ row.comment }}
 
-          template(v-slot:ip_address="{row}") {{ row.ip_address || '-' }}
+          template(#ip_address="{row}") {{ row.ip_address || '-' }}
 
-          template(v-slot:status="{row}")
+          template(#status="{row}")
             boolean-icon(v-model="row.status")
 
-          template(v-slot:is_noticeable="{row}")
+          template(#is_noticeable="{row}")
             boolean-icon(v-model="row.is_noticeable")
 
-          template(v-slot:oper="{row}")
+          template(#oper="{row}")
             el-button-group
               el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
                 | C
@@ -66,7 +66,7 @@
               | {{ $t('field') }}
 
     el-dialog(
-      :title="$t('device')"
+      :title="$t('devices.device')"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       top="1%")

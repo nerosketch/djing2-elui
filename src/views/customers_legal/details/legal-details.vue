@@ -13,14 +13,14 @@ tabs(
     el-row(:gutter="5")
       el-col.col_vert_space(:sm="24" :md="12")
         el-card(shadow="never")
-          template(v-slot:header)
+          template(#header)
             | {{ $t('customersLegal.changeInfo') }}
 
           legal-form(v-if="ready")
 
       el-col.col_vert_space(:sm="24" :md="12")
         el-card(shadow="never")
-          template(v-slot:header)
+          template(#header)
             | {{ $t('customersLegal.bank.requisites') }}
 
           legal-bank-info(v-if="ready" :uid="uid")

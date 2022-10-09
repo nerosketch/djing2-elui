@@ -9,7 +9,7 @@
         align="center"
         :label="$t('customers.orderShortText')"
         width="60")
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           el-button(
             type="primary"
             @click="buyOpen(row)"

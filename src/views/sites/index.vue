@@ -5,7 +5,7 @@
       :getData="loadSites"
       widthStorageNamePrefix="sites"
       ref="sitestable")
-      template(v-slot:oper="{row}")
+      template(#oper="{row}")
         el-button(
           icon="el-icon-edit"
           @click="openEdit(row)"

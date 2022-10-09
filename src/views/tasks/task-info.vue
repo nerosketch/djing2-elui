@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card(shadow="never")
-    template(v-slot:header)
+    template(#header)
       .clearfix {{ $t('targets') }}
     p
       b {{ $t('tasks.description') }}

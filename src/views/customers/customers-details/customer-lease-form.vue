@@ -8,7 +8,7 @@
     :model="frmMod")
     el-form-item(:label="$t('ipAddress')" prop="ip_address")
       el-input(v-model="frmMod.ip_address")
-        template(v-slot:append)
+        template(#append)
           el-button(
             icon="el-icon-refresh"
             @click="getFreeIp"

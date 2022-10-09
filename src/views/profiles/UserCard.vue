@@ -1,6 +1,6 @@
 <template lang="pug">
 el-card(style='padding-bottom:20px;')
-  template(v-slot:header)
+  template(#header)
     .clearfix
       span {{ $t('profiles.info') }}
   .user-profile

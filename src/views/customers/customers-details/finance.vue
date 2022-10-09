@@ -6,7 +6,7 @@
       :heightDiff="202"
       widthStorageNamePrefix="customerFin"
       ref="fintbl")
-      template(v-slot:author_name="{row}")
+      template(#author_name="{row}")
         | {{ row.author_name || $t('customers.defaultAuthorName') }}
 
       el-button(@click="addCashDialog=true")

@@ -3,7 +3,7 @@
     template(v-if="ready")
       pon-onu(
         :device="device"
-        v-if="[3,6,7].includes(device.dev_type)"
+        v-if="[3,6,7,14].includes(device.dev_type)"
         v-on:reqrefresh="getDevice")
 
       pon-bdcom-olt(
@@ -83,7 +83,9 @@ export default class extends Vue {
     this.getDevice().then(dev => {
       if (dev) {
         document.title = dev.comment || dev.ip_address
-        this.loadLocalityDetail(dev.address, 4)
+        if (dev.address) {
+          this.loadLocalityDetail(dev.address, 4)
+        }
       }
     })
     document.addEventListener('keydown', this.onKeyPress)

@@ -62,7 +62,7 @@
         label="DATA"
         min-width="110"
       )
-        template(v-slot:default="{row}")
+        template(#default="{row}")
           | {{ otherValues(row) }}
 
       el-table-column(

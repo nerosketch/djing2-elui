@@ -7,7 +7,7 @@
       shadow="never"
       style="font-size: small;"
       v-loading="detailLoading")
-      template(v-slot:header)
+      template(#header)
         | {{ $t('customers.session') }}
 
         el-link(

@@ -48,7 +48,7 @@ export default class extends Vue {
 
   private async loadFibers() {
     if (!this.fiberAddr || this.fiberAddr === 0) {
-      this.$message.error(this.$tc('pyberaddreRequired'))
+      this.$message.error(this.$tc('devices.fiberAddrRequired'))
       return
     }
     if (this.devId < 1 || !this.devId) {
