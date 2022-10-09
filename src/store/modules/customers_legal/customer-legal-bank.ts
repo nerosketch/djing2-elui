@@ -11,7 +11,7 @@ import { ICustomerLegalBank } from '@/api/customers_legal/types'
 @Module({ dynamic: true, store, name: 'legalbank' })
 class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
   id = 0
-  legal_customer = 0
+  legal_customer_id = 0
   title = ''
   bank_code = ''
   correspondent_account = ''
@@ -19,13 +19,13 @@ class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
 
   @Mutation
   public SET_LEGAL_BANK_CUSTOMER(uid: number) {
-    this.legal_customer = uid
+    this.legal_customer_id = uid
   }
 
   @Mutation
   public SET_ALL_LEGAL_BANK(bank: ICustomerLegalBank) {
     this.id = bank.id
-    this.legal_customer = bank.legal_customer
+    this.legal_customer_id = bank.legal_customer_id
     this.title = bank.title
     this.bank_code = bank.bank_code
     this.correspondent_account = bank.correspondent_account
@@ -35,7 +35,7 @@ class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
   @Mutation
   public RESET_LEGAL_BANK() {
     this.id = 0
-    this.legal_customer = 0
+    this.legal_customer_id = 0
     this.title = ''
     this.bank_code = ''
     this.correspondent_account = ''
@@ -44,7 +44,7 @@ class CustomerLegalBank extends VuexModule implements ICustomerLegalBank {
 
   @Action
   public async getLegalBank(customerId?: number) {
-    const { data } = await getLegalBanks(customerId || this.legal_customer)
+    const { data } = await getLegalBanks(customerId || this.legal_customer_id)
     if (data.length > 0) {
       this.SET_ALL_LEGAL_BANK(data[0])
       return data[0]

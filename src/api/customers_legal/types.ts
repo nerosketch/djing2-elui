@@ -31,7 +31,7 @@ export type ICustomerLegalAxoisResponsePromise = IDRFAxiosResponsePromise<ICusto
 
 export interface ICustomerLegalBank {
   id: number
-  legal_customer: number
+  legal_customer_id: number
   title: string                  // Название банка
   bank_code: string              // БИК
   correspondent_account: string  // корреспондентский счёт
@@ -41,7 +41,7 @@ export interface ICustomerLegalBank {
 
 export interface ICustomerLegalPost {
   id: number
-  legal_customer: number
+  legal_customer_id: number
   post_index: string
   address_id: number
 }
@@ -50,7 +50,7 @@ export type ICustomerLegalPostAxoisResponsePromise = IDRFAxiosResponsePromise<IC
 
 export interface ICustomerLegalDeliveryAddress {
   id: number
-  legal_customer: number
+  legal_customer_id: number
   address_id: number
 }
 export type ICustomerLegalDeliveryAddressAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddress>
@@ -58,7 +58,7 @@ export type ICustomerLegalDeliveryAddressAxoisResponsePromise = IDRFAxiosRespons
 
 export interface ICustomerLegalTelephoneNumber {
   id: number
-  legal_customer: number
+  legal_customer_id: number
   telephone: string
   owner_name: string
   create_time: string

@@ -74,8 +74,10 @@ export default class extends Vue {
   }
 
   @Watch('localValue')
-  private onChLocVal(val: number) {
-    this.fetchFullName(val)
+  private onChLocVal(val: number | null) {
+    if (val) {
+      this.fetchFullName(val)
+    }
     this.$emit('input', val)
   }
 

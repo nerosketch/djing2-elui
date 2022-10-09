@@ -45,13 +45,13 @@ export default class extends Vue {
 
   private frmMod: {
     title: string,
-    legal_customer: number,
+    legal_customer_id: number,
     bank_code: string,
     correspondent_account: string,
     settlement_account: string
   } = {
     title: '',
-    legal_customer: this.uid,
+    legal_customer_id: this.uid,
     bank_code: '',
     correspondent_account: '',
     settlement_account: ''
@@ -86,13 +86,13 @@ export default class extends Vue {
 
   @Watch('uid')
   private onChUid(uid: number) {
-    this.frmMod.legal_customer = uid
+    this.frmMod.legal_customer_id = uid
     CustomerLegalBankModule.getLegalBank(uid)
   }
 
   created() {
     if (this.uid) {
-      this.frmMod.legal_customer = this.uid
+      this.frmMod.legal_customer_id = this.uid
       CustomerLegalBankModule.getLegalBank(this.uid)
     }
   }
