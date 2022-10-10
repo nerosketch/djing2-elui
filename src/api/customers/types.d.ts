@@ -32,7 +32,6 @@ export interface ICustomer extends IBaseAccount{
   full_name?: string
   raw_password?: string
   lease_count: number
-  traf_octs: number | null
   marker_icons: string[]
 }
 export type ICustomerList = IDRFListResponse<ICustomer>

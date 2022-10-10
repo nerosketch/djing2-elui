@@ -46,7 +46,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
   full_name = ''
   raw_password = ''
   lease_count = 0
-  traf_octs = 0
   marker_icons: string[] = []
 
   @Mutation
@@ -78,7 +77,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.full_name = data.full_name!
     this.raw_password = data.raw_password!
     this.lease_count = data.lease_count
-    this.traf_octs = data.traf_octs!
     this.marker_icons = data.marker_icons
     return this
   }
@@ -107,7 +105,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.full_name = ''
     this.raw_password = ''
     this.lease_count = 0
-    this.traf_octs = 0
     this.marker_icons = []
     return this
   }
