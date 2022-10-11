@@ -200,5 +200,5 @@ export const getCombinedContentFields = (customerId: number): IDynamicContentFie
 export const changeContentFields = (info: IDynamicContentFieldList): IDynamicContentFieldListAxiosResponsePromise =>
   request.put<IDynamicContentFieldList>('/customers/dynamic-fields/update_all/', info)
 
-export const getGroupsWithCustomers = (params?: IDRFRequestListAddrsParameters): IDRFAxiosResponsePromise<IGroup[]> =>
-  request.get<IGroup[]>('/customers/groups_with_customers/', { params })
+export const getGroupsWithCustomers = (): IDRFAxiosResponsePromise<IGroup[]> =>
+  request.get<IGroup[]>('/customers/groups_with_customers/')
