@@ -64,13 +64,13 @@ export default class extends Vue {
   private isLoading = false
 
   private frmMod = {
-    device: CustomerModule.device,
-    dev_port: CustomerModule.dev_port
+    device: CustomerModule.device_id,
+    dev_port: CustomerModule.dev_port_id
   }
 
   private get devComm() {
     return {
-      id: CustomerModule.device,
+      id: CustomerModule.device_id,
       comment: CustomerModule.device_comment
     }
   }
@@ -78,8 +78,8 @@ export default class extends Vue {
   @Watch('$store.state.customer.id')
   private onChangedId() {
     this.frmMod = {
-      device: CustomerModule.device,
-      dev_port: CustomerModule.dev_port
+      device: CustomerModule.device_id,
+      dev_port: CustomerModule.dev_port_id
     }
   }
 
@@ -96,8 +96,8 @@ export default class extends Vue {
     ).then(async() => {
       this.isLoading = true
       const { data } = await CustomerModule.ClearDevice()
-      this.frmMod.device = data.device
-      this.frmMod.dev_port = data.dev_port
+      this.frmMod.device = data.device_id
+      this.frmMod.dev_port = data.dev_port_id
       this.$emit('done', data)
       this.isLoading = false
     })

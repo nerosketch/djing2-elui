@@ -65,7 +65,7 @@ export default class extends Vue {
     distributor: '',
     date_of_acceptance: '',
     division_code: '',
-    registration_address: 0,
+    registration_address_id: 0,
     registration_address_title: ''
   }
 
@@ -141,7 +141,7 @@ export default class extends Vue {
   }
 
   private copyFromCustomerAddr() {
-    this.frmMod.registration_address = CustomerModule.address
+    this.frmMod.registration_address_id = CustomerModule.address_id
   }
 }
 </script>

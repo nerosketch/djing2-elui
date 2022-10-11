@@ -11,21 +11,21 @@ import { IDRFRequestListFilterParameters } from '@/api/addresses/types'
 
 // ICustomer
 export interface ICustomer extends IBaseAccount{
-  group: number
+  group_id: number
   group_title?: string
-  address: number
+  address_id: number
   address_title: string
   balance: number
   description: string
-  gateway: number
+  gateway_id: number
   gateway_title?: string
   auto_renewal_service: boolean
-  device: number
+  device_id: number
   device_comment?: string
-  dev_port: number
-  last_connected_service: number | null
+  dev_port_id: number
+  last_connected_service_id: number | null
   last_connected_service_title: string
-  current_service: number | null
+  current_service_id: number | null
   current_service_title?: string | null
   service_id: number | null
   is_dynamic_ip: boolean
@@ -41,8 +41,8 @@ export type ICustomerListAxiosResponsePromise = IDRFAxiosResponsePromise<ICustom
 export interface ICustomerOnPort {
   id: number
   telephone: string
-  group: number
-  dev_port: number
+  group_id: number
+  dev_port_id: number
   full_name: string
 }
 export type ICustomersOnPortAxoisPromise = AxiosPromise<ICustomerOnPort[]>
@@ -61,11 +61,11 @@ export interface ICustomerFrm {
   telephone: string
   fio: string
   birth_day: string | null
-  group: number
-  address: number
+  group_id: number
+  address_id: number
   is_active: boolean
   is_dynamic_ip: boolean
-  gateway: number
+  gateway_id: number
   description: string
 }
 
@@ -80,7 +80,7 @@ export interface IAdditionalTelephone {
   id: number
   telephone: string
   owner_name: string
-  customer: number
+  customer_id: number
   create_time: string
 }
 export type IAdditionalTelephoneList = IDRFListResponse<IAdditionalTelephone>
@@ -88,9 +88,9 @@ export type IAdditionalTelephoneListAxiosResponsePromise = IDRFAxiosResponseProm
 
 // ICustomerLog
 export interface ICustomerLog {
-  customer: number
+  customer_id: number
   cost: number
-  author: number | null
+  author_id: number | null
   author_name?: string
   comment: string
   date: string
@@ -99,7 +99,7 @@ export interface ICustomerLog {
 // ICustomerService
 export interface ICustomerService {
   id: number
-  service: IService
+  service_id: IService
   start_time: string
   deadline: string
   last_connected_service_title?: string
@@ -116,11 +116,11 @@ export interface IInvoice4Payment {
   comment: string
   date_create: string
   date_pay: string | null
-  customer: number
-  author: number
+  customer_id: number
+  author_id: number
 }
 export interface IDRFRequestListParametersInvoice extends IDRFRequestListParameters {
-  customer: number
+  customer_id: number
 }
 
 // IPassportInfo
@@ -131,7 +131,7 @@ export interface IPassportInfo {
   distributor: string
   date_of_acceptance: string
   division_code: string
-  registration_address: number
+  registration_address_id: number
   registration_address_title: string
 }
 export type IPassportInfoAxoisResponsePromise = IDRFAxiosResponsePromise<IPassportInfo>
@@ -147,10 +147,10 @@ export interface ICustomerAttachement {
   id: number
   title: string
   doc_file: string
-  customer: number
+  customer_id: number
   customer_name: string
   create_time?: string
-  author?: number
+  author_id?: number
   author_name?: string
 }
 export type ICustomerAttachementAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerAttachement>
@@ -183,7 +183,7 @@ export interface IPeriodicPayForIdRequest {
 
 export interface IPeriodicPayForId {
   id: number
-  periodic_pay: number
+  periodic_pay_id: number
   last_pay: string
   next_pay: string
   service_name: string

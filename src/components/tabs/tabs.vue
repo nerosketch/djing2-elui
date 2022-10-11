@@ -3,9 +3,10 @@ div(:class="{'tab-container': !dense}")
   slot(name='head')
   el-tabs(v-model="localActiveTab" type="border-card")
     el-tab-pane(
-      v-for="t in tabs"
+      v-for="(t, i) in tabs"
       :label="t.title"
       :name="t.name"
+      :key="i"
       lazy
     )
       slot(:name="t.name")

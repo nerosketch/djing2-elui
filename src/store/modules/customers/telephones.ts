@@ -12,7 +12,7 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
   id = 0
   telephone = ''
   owner_name = ''
-  customer = 0
+  customer_id = 0
   create_time = ''
 
   @Mutation
@@ -20,7 +20,7 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
     this.id = 0
     this.telephone = ''
     this.owner_name = ''
-    this.customer = 0
+    this.customer_id = 0
   }
 
   @Mutation
@@ -28,7 +28,7 @@ class AdditionalTelephone extends VuexModule implements IAdditionalTelephone {
     this.id = tel.id
     this.telephone = tel.telephone
     this.owner_name = tel.owner_name
-    this.customer = tel.customer
+    this.customer_id = tel.customer_id
   }
 
   @Action

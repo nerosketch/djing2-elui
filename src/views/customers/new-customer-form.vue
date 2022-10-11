@@ -67,11 +67,11 @@ export default class extends Vue {
     telephone: '',
     fio: '',
     birth_day: null,
-    group: 0,
-    address: this.selectedAddress,
+    group_id: 0,
+    address_id: this.selectedAddress,
     is_active: false,
     is_dynamic_ip: false,
-    gateway: 0,
+    gateway_id: 0,
     description: ''
   }
 
@@ -112,11 +112,11 @@ export default class extends Vue {
       telephone: frm.telephone,
       fio: frm.fio,
       birth_day: frm.birth_day!,
-      group: frm.group || 0,
-      address: frm.address || this.selectedAddress || 0,
+      group_id: frm.group_id || 0,
+      address_id: frm.address_id || this.selectedAddress || 0,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
-      gateway: frm.gateway,
+      gateway_id: frm.gateway_id,
       description: frm.description
     }
   }

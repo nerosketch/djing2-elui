@@ -203,11 +203,11 @@ export default class extends mixins(FormMixin) {
       telephone: frm.telephone,
       fio: frm.fio,
       birth_day: frm.birth_day!,
-      group: frm.group,
-      address: frm.address,
+      group_id: frm.group_id,
+      address_id: frm.address_id,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
-      gateway: frm.gateway,
+      gateway_id: frm.gateway_id,
       description: frm.description
     }
     this.frmInitial = Object.assign({}, this.frmMod) as ICustomerFrm

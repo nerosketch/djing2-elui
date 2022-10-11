@@ -47,7 +47,7 @@ export default class extends Vue {
   }
 
   private lastConnectedExists() {
-    return CustomerModule.last_connected_service > 0
+    return CustomerModule.last_connected_service_id > 0
   }
 }
 </script>
