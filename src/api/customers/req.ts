@@ -52,7 +52,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 import { IGroup } from '@/api/groups/types'
-import { IDRFRequestListAddrsParameters } from '../addresses/req'
 
 
 // ICustomer
