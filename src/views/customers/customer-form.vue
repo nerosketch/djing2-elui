@@ -22,7 +22,7 @@
         format="d.MM.yyyy")
 
     el-form-item(:label="$t('groups.group')")
-      groups-choice(v-model="frmMod.group")
+      groups-choice(v-model="frmMod.group_id")
 
     el-form-item(:label="$t('customers.options')")
       el-checkbox(v-model="frmMod.is_active")
@@ -36,10 +36,10 @@
         boolean-icon(v-model="frmMod.is_dynamic_ip")
 
     el-form-item(:label="$t('addrs.addr')")
-      addr-field-input(v-model="frmMod.address")
+      addr-field-input(v-model="frmMod.address_id")
 
     el-form-item(:label="$t('customers.gateway')")
-      gws-selectfield(v-model="frmMod.gateway")
+      gws-selectfield(v-model="frmMod.gateway_id")
 
     el-form-item(:label="$t('customers.additionalInfo')")
       el-input(
@@ -237,7 +237,7 @@ export default class extends mixins(FormMixin) {
       this.$tc('customers.customerDeletionConfigmation'),
       this.$tc('attention')
     ).then(async() => {
-      const currLoc = this.$store.state.customer.address
+      const currLoc = this.$store.state.customer.address_id
       await CustomerModule.DelCustomer()
       this.$message.success(
         this.$tc('customers.accountRemovedOk')
@@ -250,7 +250,7 @@ export default class extends mixins(FormMixin) {
     this.taskFormDialogLoading = true
     try {
       const { data } = await TaskModule.GetNewTaskInitial({
-        groupId: this.$store.state.customer.group,
+        groupId: this.$store.state.customer.group_id,
         customerId: this.$store.state.customer.id
       })
       if (data.status > 0) {

@@ -14,7 +14,7 @@
         el-col(:span="16")
           device-select(
             v-model="frmMod.device"
-            :addrId="$store.state.customer.address"
+            :addrId="$store.state.customer.address_id"
             :initialDevice="devComm")
 
       el-row

@@ -74,7 +74,7 @@ export default class extends Vue {
 
     this.loadCustomer()
 
-    this.loadLocalityDetail(this.$store.state.customer.address, 4)
+    this.loadLocalityDetail(this.$store.state.customer.address_id, 4)
   }
 
   @Watch('localityDetail')
@@ -83,7 +83,7 @@ export default class extends Vue {
       this.setCrumbs(lc.id)
     }
   }
-  @Watch('$store.state.customer.address')
+  @Watch('$store.state.customer.address_id')
   private onChCustomerAddr(addrId: number) {
     this.loadLocalityDetail(addrId, 4)
   }
@@ -96,7 +96,7 @@ export default class extends Vue {
     this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
     this.loaded = true
-    this.setCrumbs(this.$store.state.customer.address)
+    this.setCrumbs(this.$store.state.customer.address_id)
     document.title = this.$store.state.customer.full_name || this.$tc('customers.customer')
   }
 
