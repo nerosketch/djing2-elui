@@ -193,7 +193,7 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
 
   @Action
   public SetServiceGroupAccessory(services: number[]) {
-    return setServiceGroupAccessory(this.id, this.group_id, services)
+    return setServiceGroupAccessory(this.group_id, services)
   }
 
   @Action

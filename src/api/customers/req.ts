@@ -89,8 +89,8 @@ export const addBalance = (id: number, dat: IBalanceAmountRequest) =>
 export const getCurrentService = (id: number): ICustomerServiceAxoisResponsePromise =>
   request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)
 
-export const setServiceGroupAccessory = (id: number, groupId: number, services: number[]) =>
-  request.post(`${custApiUrl}${id}/set_service_group_accessory/`, {
+export const setServiceGroupAccessory = (groupId: number, services: number[]) =>
+  request.post(`${custApiUrl}/set_service_group_accessory/`, {
     group_id: groupId,
     services
   })
