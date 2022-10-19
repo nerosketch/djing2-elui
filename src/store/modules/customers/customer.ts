@@ -185,7 +185,7 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
   public async ClearDevice() {
     const r = await changeCustomer(this.id, {
       device: null,
-      dev_port: null
+      dev_port_id: null
     })
     this.SET_ALL_CUSTOMER(r.data)
     return r

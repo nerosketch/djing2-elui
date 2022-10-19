@@ -23,7 +23,7 @@
 
         el-col(:span="16")
           selected-dev-port(
-            v-model="frmMod.dev_port"
+            v-model="frmMod.dev_port_id"
             :deviceId="frmMod.device"
           )
 
@@ -65,7 +65,7 @@ export default class extends Vue {
 
   private frmMod = {
     device: CustomerModule.device_id,
-    dev_port: CustomerModule.dev_port_id
+    dev_port_id: CustomerModule.dev_port_id
   }
 
   private get devComm() {
@@ -79,7 +79,7 @@ export default class extends Vue {
   private onChangedId() {
     this.frmMod = {
       device: CustomerModule.device_id,
-      dev_port: CustomerModule.dev_port_id
+      dev_port_id: CustomerModule.dev_port_id
     }
   }
 
@@ -97,7 +97,7 @@ export default class extends Vue {
       this.isLoading = true
       const { data } = await CustomerModule.ClearDevice()
       this.frmMod.device = data.device_id
-      this.frmMod.dev_port = data.dev_port_id
+      this.frmMod.dev_port_id = data.dev_port_id
       this.$emit('done', data)
       this.isLoading = false
     })
