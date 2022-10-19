@@ -33,7 +33,7 @@ export default class extends mixins(ResizeMixin) {
     return {
       hideSidebar: !this.sidebar.opened,
       openSidebar: this.sidebar.opened,
-      // withoutAnimation: this.sidebar.withoutAnimation,
+      withoutAnimation: this.sidebar.withoutAnimation,
       mobile: AppModule.IsMobileDevice
     }
   }
@@ -64,14 +64,14 @@ export default class extends mixins(ResizeMixin) {
 
 .main-container {
   min-height: 100%;
-  transition: margin-left .14s;
+  // transition: margin-left .14s;
   margin-left: $sideBarWidth;
   position: relative;
   background-color: #f3f8fd;
 }
 
 .sidebar-container {
-  transition: width 0.14s;
+  // transition: width 0.14s;
   width: $sideBarWidth !important;
   height: 100%;
   position: fixed;
@@ -100,7 +100,7 @@ export default class extends mixins(ResizeMixin) {
   }
 
   .sidebar-container {
-    transition: transform .14s;
+    // transition: transform .14s;
     width: $sideBarWidth !important;
   }
 
@@ -112,16 +112,16 @@ export default class extends mixins(ResizeMixin) {
   &.hideSidebar {
     .sidebar-container {
       pointer-events: none;
-      transition-duration: 0.3s;
+      // transition-duration: 0.3s;
       transform: translate3d(-$sideBarWidth, 0, 0);
     }
   }
 }
 
-// .withoutAnimation {
-//   .main-container,
-//   .sidebar-container {
-//     transition: none;
-//   }
-// }
+.withoutAnimation {
+  .main-container,
+  .sidebar-container {
+    transition: none;
+  }
+}
 </style>

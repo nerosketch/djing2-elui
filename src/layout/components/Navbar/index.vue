@@ -155,7 +155,7 @@ export default class extends mixins(Ws) {
     float: left;
     padding: 0 15px;
     cursor: pointer;
-    transition: background .3s;
+    // transition: background .3s;
     -webkit-tap-highlight-color:transparent;
 
     &:hover {
@@ -186,7 +186,7 @@ export default class extends mixins(Ws) {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        // transition: background .3s;
 
         &:hover {
           background: rgba(0, 0, 0, .025)
