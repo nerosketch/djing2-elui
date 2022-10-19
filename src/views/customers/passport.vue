@@ -27,7 +27,7 @@
     el-form-item(
       label="Адрес регистрации"
     )
-      addr-field-input(v-model="frmMod.registration_address")
+      addr-field-input(v-model="frmMod.registration_address_id")
         template(#buttons)
           el-tooltip(effect="dark" content="Совпадает с адресом учётной записи")
             el-button(@click="copyFromCustomerAddr" icon='el-icon-document-copy')

@@ -37,7 +37,7 @@
       :close-on-click-modal="false")
       service-accessory(
         v-on:done="srvAccDone"
-        :groupId="$store.state.customer.group"
+        :groupId="$store.state.customer.group_id"
       )
 
     el-dialog(

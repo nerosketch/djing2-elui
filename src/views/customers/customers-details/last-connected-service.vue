@@ -37,13 +37,16 @@ export default class extends Vue {
 
   private async onChangeAutoConnect(v: boolean) {
     this.serviceBlockLoad = true
-    await CustomerModule.PatchCustomer({
-      auto_renewal_service: v
-    })
-    this.serviceBlockLoad = false
-    this.$message.success(
-      this.$tc('customers.autoContinuationSaved')
-    )
+    try {
+      await CustomerModule.PatchCustomer({
+        auto_renewal_service: v
+      })
+      this.$message.success(
+        this.$tc('customers.autoContinuationSaved')
+      )
+    } finally {
+      this.serviceBlockLoad = false
+    }
   }
 
   private lastConnectedExists() {

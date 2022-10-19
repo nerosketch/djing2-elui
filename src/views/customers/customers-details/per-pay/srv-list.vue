@@ -60,7 +60,7 @@ export default class extends Vue {
       const { data } = await getAssignedPeriodicPays(
         this.$store.state.customer.id
       )
-      this.pservices = data as unknown as IPeriodicPayForId[]
+      this.pservices = data.results
     } finally {
       this.loading = false
     }
