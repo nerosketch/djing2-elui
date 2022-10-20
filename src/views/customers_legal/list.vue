@@ -13,8 +13,9 @@
           :disabled="!$perms.customers_legal.change_customerlegalmodel")
 
       template(#username="{row}")
-        router-link.el-link.el-link--primary.is-underline(:to="{ name: 'customerLegalDetail', params: { uid: row.id } }")
-          | {{ row.username }}
+        router-link.el-link.el-link--primary.is-underline(
+          :to="{ name: 'customerLegalDetail', params: { uid: row.id } }"
+        ) {{ row.username }}
 
       el-button(
         icon="el-icon-plus"
@@ -107,22 +108,30 @@ export default class extends Vue {
   ]
 
   private loadCustomersLegal(params?: IDRFRequestListParameters) {
+    const additional = {
+      fields: 'id,username,title,balance,tax_number,post_index,'
+    }
+    if (params) {
+      params = Object.assign(params, additional)
+    } else {
+      params = additional as any
+    }
     return getCustomersLegal(params)
   }
 
   private openEdit(account: ICustomerLegal) {
-    this.dialogVisible = true
     CustomerLegalModule.SET_ALL_CUSTOMER_LEGAL(account)
+    this.dialogVisible = true
   }
 
   private openNew() {
-    this.dialogVisible = true
     CustomerLegalModule.GetInitial()
+    this.dialogVisible = true
   }
 
   private frmAddDone(acc: ICustomerLegal) {
-    this.dialogVisible = false
     this.$refs.table.LoadTableData()
+    this.dialogVisible = false
   }
 
   private frmUpdateDone(acc: ICustomerLegal) {
@@ -143,8 +152,8 @@ export default class extends Vue {
   }
 
   // Breadcrumbs
-  private async setCrumbs() {
-    await BreadcrumbsModule.SetCrumbs([
+  private setCrumbs() {
+    BreadcrumbsModule.SetCrumbs([
       {
         path: '/legal/',
         meta: {
