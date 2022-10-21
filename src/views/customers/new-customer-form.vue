@@ -14,7 +14,7 @@
       el-input(v-model="frmMod.telephone")
 
     el-form-item(:label="$t('groups.group')")
-      groups-choice(v-model="frmMod.group")
+      groups-choice(v-model="frmMod.group_id")
 
     el-form-item(:label="$t('comment')")
       el-input(
