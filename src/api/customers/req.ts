@@ -90,7 +90,7 @@ export const getCurrentService = (id: number): ICustomerServiceAxoisResponseProm
   request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)
 
 export const setServiceGroupAccessory = (groupId: number, services: number[]) =>
-  request.post(`${custApiUrl}/set_service_group_accessory/`, {
+  request.post(`${custApiUrl}set_service_group_accessory/`, {
     group_id: groupId,
     services
   })
