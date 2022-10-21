@@ -64,8 +64,10 @@ export default class extends Vue {
   private localityDetail: IAddressModel | null = null
 
   private async loadLocalityDetail(addrId: number, addrType: number) {
-    const { data } = await getAddressByType(addrId, addrType)
-    this.localityDetail = data
+    if (addrId) {
+      const { data } = await getAddressByType(addrId, addrType)
+      this.localityDetail = data
+    }
   }
 
   created() {

@@ -20,9 +20,9 @@ export interface ICustomer extends IBaseAccount{
   gateway_id: number
   gateway_title?: string
   auto_renewal_service: boolean
-  device_id: number
+  device_id: number | null
   device_comment?: string
-  dev_port_id: number
+  dev_port_id: number | null
   last_connected_service_id: number | null
   last_connected_service_title: string
   current_service_id: number | null

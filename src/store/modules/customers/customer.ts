@@ -34,9 +34,9 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
   gateway_id = 0
   gateway_title = ''
   auto_renewal_service = false
-  device_id = 0
+  device_id: number | null = null
   device_comment = ''
-  dev_port_id = 0
+  dev_port_id: number | null = null
   last_connected_service_id = 0
   last_connected_service_title = ''
   current_service_id = 0
@@ -65,9 +65,9 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.gateway_id = data.gateway_id
     this.gateway_title = data.gateway_title!
     this.auto_renewal_service = data.auto_renewal_service
-    this.device_id = data.device_id!
+    this.device_id = data.device_id
     this.device_comment = data.device_comment!
-    this.dev_port_id = data.dev_port_id!
+    this.dev_port_id = data.dev_port_id
     this.last_connected_service_id = data.last_connected_service_id!
     this.last_connected_service_title = data.last_connected_service_title
     this.current_service_id = data.current_service_id!
@@ -93,9 +93,9 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.gateway_id = 0
     this.gateway_title = ''
     this.auto_renewal_service = false
-    this.device_id = 0
+    this.device_id = null
     this.device_comment = ''
-    this.dev_port_id = 0
+    this.dev_port_id = null
     this.last_connected_service_id = 0!
     this.last_connected_service_title = ''
     this.current_service_id = 0!
@@ -184,7 +184,7 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
   @Action
   public async ClearDevice() {
     const r = await changeCustomer(this.id, {
-      device: null,
+      device_id: null,
       dev_port_id: null
     })
     this.SET_ALL_CUSTOMER(r.data)
