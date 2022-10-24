@@ -162,12 +162,11 @@ export default class extends Vue {
 
   get isStatusSuccess() {
     if (this.onuDetails === null) return false
-    if (this.onuDetails.status === IOnuDetailsStatus.WORKING) return true
-    return false
+    return [IOnuDetailsStatus.WORKING, IOnuDetailsStatus.OK].includes(this.onuDetails.status)
   }
 
   get isStatusError() {
-    return this.onuDetails !== null && this.onuDetails.status !== IOnuDetailsStatus.WORKING
+    return this.onuDetails !== null && !this.isStatusSuccess
   }
 
   get isStatusUnknown() {

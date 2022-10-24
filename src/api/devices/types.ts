@@ -99,6 +99,8 @@ export enum IOnuDetailsStatus {
   LOS = "los",
   SYNC_MIB = "syncMib",
   WORKING = "working",
+  OK = "ok",
+  DOWN = "down",
   DYING_GASP = "dyinggasp",
   AUTH_FAILED = "authFailed",
   OFFLINE = "offline"
