@@ -69,7 +69,7 @@ export default class extends Vue {
 
   private getAllCustomers(params: IDRFRequestListParameters) {
     let newParams = Object.assign(params, {
-      fields: 'id,username,fio,address_title,telephone,balance,group_title'
+      fields: 'id,username,fio,address_title,telephone,balance,group_title,create_date,full_name'
     })
     return this.fetchFunc(newParams)
   }
