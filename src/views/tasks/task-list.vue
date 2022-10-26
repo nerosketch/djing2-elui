@@ -10,7 +10,7 @@
       ref="tbl")
       template(#customer_full_name="{row}")
         router-link.el-link.el-link--primary.is-underline(
-          :to="{ name: 'customerDetails', params: {uid: row.customer_id } }"
+          :to="{ name: 'customerDetails', params: {uid: row.customer } }"
         ) {{ row.customer_full_name }}
 
       template(#id="{row}")
@@ -133,7 +133,7 @@ export default class extends Vue {
 
   private loadTasks(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,customer_id,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
+      params.fields = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
     }
     return getTasks(params, this.tabUrl)
   }
