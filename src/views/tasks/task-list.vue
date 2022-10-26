@@ -10,7 +10,7 @@
       ref="tbl")
       template(#customer_full_name="{row}")
         router-link.el-link.el-link--primary.is-underline(
-          :to="{ name: 'customerDetails', params: {uid: row.customer } }"
+          :to="{ name: 'customerDetails', params: {uid: row.customer_id } }"
         ) {{ row.customer_full_name }}
 
       template(#id="{row}")
