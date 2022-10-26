@@ -19,7 +19,7 @@
 
     el-form-item(:label="$t('tasks.natureOfFracture')")
       task-modes-field-choice(
-        v-model="frmMod.task_mode"
+        v-model="frmMod.task_mode_id"
       )
 
     el-form-item(:label="$t('priority')")
@@ -40,10 +40,10 @@
 
     el-form-item(
       :label="$t('customer')"
-      prop="customer"
+      prop="customer_id"
     )
       customer-field(
-        v-model="frmMod.customer"
+        v-model="frmMod.customer_id"
         :defaultName="$store.state.task.customer_full_name"
       )
 
@@ -131,8 +131,8 @@ export default class extends mixins(FormMixin) {
       descr: TaskModule.descr,
       priority: TaskModule.priority,
       task_state: TaskModule.task_state,
-      task_mode: TaskModule.task_mode,
-      customer: TaskModule.customer,
+      task_mode_id: TaskModule.task_mode,
+      customer_id: TaskModule.customer,
       out_date: TaskModule.out_date || this.initialDate
     }
   }
@@ -147,7 +147,7 @@ export default class extends mixins(FormMixin) {
     recipients: [
       { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
-    customer: [
+    customer_id: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }
     ]
   }
