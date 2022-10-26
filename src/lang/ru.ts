@@ -467,7 +467,6 @@ export default {
   addTheCalculation: 'Добавить учётку',
   addAnAccountingRecord: 'Добавить учётную запись',
   addTheDevice: 'Добавить устройство',
-  addTheTask: 'Добавить задачу',
   addendum: 'Добавление',
   onlyNumber: 'Должно содержать только число',
   houseNum: '№ дома',

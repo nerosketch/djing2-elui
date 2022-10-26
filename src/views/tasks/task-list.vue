@@ -27,7 +27,7 @@
           icon="el-icon-plus"
           @click="openNew"
           :disabled="!$perms.tasks.add_task")
-          | {{ $t('addTheTask') }}
+          | {{ $t('tasks.add') }}
 
         el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
           | {{ $t('field') }}
@@ -64,7 +64,7 @@ export default class extends Vue {
 
   private editFieldsVisible = false
 
-  @Prop({ default: '' })
+  @Prop({ required: true })
   private tabUrl!: string
 
   @Watch('tabUrl')

@@ -467,7 +467,6 @@ export default {
   addTheCalculation: "Add the calculation",
   addAnAccountingRecord: "Add an account",
   addTheDevice: "Add the device",
-  addTheTask: "Add the task",
   addendum: "Addendum",
   onlyNumber: "Only number",
   houseNum: "House num",
