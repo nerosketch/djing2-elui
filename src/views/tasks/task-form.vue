@@ -19,7 +19,7 @@
 
     el-form-item(:label="$t('tasks.natureOfFracture')")
       task-modes-field-choice(
-        v-model="frmMod.task_mode"
+        v-model="frmMod.task_mode_id"
       )
 
     el-form-item(:label="$t('priority')")
@@ -131,7 +131,7 @@ export default class extends mixins(FormMixin) {
       descr: TaskModule.descr,
       priority: TaskModule.priority,
       task_state: TaskModule.task_state,
-      task_mode: TaskModule.task_mode,
+      task_mode_id: TaskModule.task_mode,
       customer_id: TaskModule.customer,
       out_date: TaskModule.out_date || this.initialDate
     }
