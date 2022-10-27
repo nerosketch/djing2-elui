@@ -39,8 +39,8 @@ class Task extends VuexModule implements ITask {
   priority = ITaskPriority.LOW
   out_date = ''
   task_state = ITaskState.NEW
-  task_mode: number | null = null
-  author = 0
+  task_mode_id: number | null = null
+  author_id = 0
   customer = 0
   activeTaskCount = 0
 
@@ -54,15 +54,15 @@ class Task extends VuexModule implements ITask {
     this.time_diff = data.time_diff!
     this.mode_str = data.mode_str!
     this.state_str = data.state_str!
-    this.recipients = data.recipients
+    this.recipients = data.recipients || []
     this.descr = data.descr
     this.priority = data.priority
     this.out_date = data.out_date
     this.task_state = data.task_state
     this.task_state = data.task_state
-    this.task_mode = data.task_mode
-    this.author = data.author
-    this.customer = data.customer!
+    this.task_mode_id = data.task_mode_id
+    this.author_id = data.author_id
+    this.customer = data.customer_id!
   }
 
   @Mutation
@@ -80,8 +80,8 @@ class Task extends VuexModule implements ITask {
     this.priority = ITaskPriority.LOW
     this.out_date = ''
     this.task_state = ITaskState.NEW
-    this.task_mode = null
-    this.author = 0
+    this.task_mode_id = null
+    this.author_id = 0
     this.customer = 0
   }
 

@@ -27,7 +27,7 @@ export default class extends Vue {
 
   private potentialRecipients: IUserProfile[] = []
 
-  private localRecipients: number[] = this.value
+  private localRecipients: number[] = []
 
   @Watch('recipients')
   private onChRecs(recs: IUserProfile[]) {

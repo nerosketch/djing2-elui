@@ -54,8 +54,8 @@ export const getNewTaskInitial = (groupId: number, customerId: number): INewTask
 // IExtraComment
 const baseCommentUrl = '/tasks/comments/'
 
-export const getCommentsWithLogs = (task: number): IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise =>
-  request.get<IExtraCommentCombinedWithTaskStateChangeLog[]>(`${baseCommentUrl}combine_with_logs/`, { params: { task } })
+export const getCommentsWithLogs = (task_id: number): IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise =>
+  request.get<IExtraCommentCombinedWithTaskStateChangeLog[]>(`${baseCommentUrl}combine_with_logs/`, { params: { task_id } })
 
 export const getComment = getObjectDecorator<IExtraComment>(baseCommentUrl)
 
