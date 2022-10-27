@@ -59,6 +59,7 @@ export default class extends Vue {
     } else {
       this.potentialRecipients = this.recipients
     }
+    this.localRecipients = this.value
   }
 }
 </script>

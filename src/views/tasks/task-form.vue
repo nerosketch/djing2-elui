@@ -11,15 +11,22 @@
         maxlength="128"
       )
 
-    el-form-item(:label="$t('implementers')" prop="recipients")
+    p frmMod {{ frmMod }}
+    el-form-item(
+      :label="$t('implementers')"
+      prop="recipients"
+    )
       recipients-field-choice(
         :recipients="recipients"
         v-model="frmMod.recipients"
       )
 
-    el-form-item(:label="$t('tasks.natureOfFracture')")
+    el-form-item(
+      prop="task_mode_id"
+      :label="$t('tasks.natureOfFracture')"
+    )
       task-modes-field-choice(
-        v-model="frmMod.task_mode_id_id"
+        v-model="frmMod.task_mode_id"
       )
 
     el-form-item(:label="$t('priority')")
@@ -47,7 +54,9 @@
         :defaultName="$store.state.task.customer_full_name"
       )
 
-    el-form-item(:label="$t('tasks.relevance')")
+    el-form-item(
+      :label="$t('tasks.relevance')"
+    )
       el-tooltip(
         :content="$t('tasks.relevanceTooltip')"
         placement="right"
@@ -64,23 +73,23 @@
           type="primary"
           @click="onSubmit"
           icon="el-icon-upload"
-          :disabled="isFormUntouched")
-          | {{ $t('save') }}
+          :disabled="isFormUntouched && !isNewTask"
+        ) {{ $t('save') }}
 
         el-button(
           v-if="!isNewTask"
           type="danger"
           icon="el-icon-delete"
           @click="onDel"
-          :disabled="!$perms.tasks.delete_task")
-          | {{ $t('del') }}
+          :disabled="!$perms.tasks.delete_task"
+        ) {{ $t('del') }}
 
         el-button(
           v-if="!isNewTask"
           type="success"
           @click="onFinish"
-          icon="el-icon-check")
-          | {{ $t('complete') }}
+          icon="el-icon-check"
+        ) {{ $t('complete') }}
 </template>
 
 <script lang="ts">
@@ -131,7 +140,7 @@ export default class extends mixins(FormMixin) {
       descr: TaskModule.descr,
       priority: TaskModule.priority,
       task_state: TaskModule.task_state,
-      task_mode_id: TaskModule.task_mode,
+      task_mode_id: TaskModule.task_mode_id,
       customer_id: TaskModule.customer,
       out_date: TaskModule.out_date || this.initialDate
     }
@@ -149,6 +158,9 @@ export default class extends mixins(FormMixin) {
     ],
     customer_id: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }
+    ],
+    task_mode_id: [
+      { required: true, trigger: 'change' }
     ]
   }
 

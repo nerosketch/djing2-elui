@@ -150,8 +150,8 @@ export const setPassportInfo = (customerId: number, info: IPassportInfo): IPassp
 
 // CustomerAttachement
 const CustomerAttachmUrl = '/customers/attachments/'
-export const getAttachments = (customer: number): AxiosPromise<ICustomerAttachement[]> =>
-  request.get<ICustomerAttachement[]>(CustomerAttachmUrl, { params: { customer } })
+export const getAttachments = (customer_id: number): AxiosPromise<ICustomerAttachement[]> =>
+  request.get<ICustomerAttachement[]>(CustomerAttachmUrl, { params: { customer_id } })
 
 export const getAttachment = (id: number): ICustomerAttachementAxoisResponsePromise =>
   request.get<ICustomerAttachement>(`${CustomerAttachmUrl}${id}/`)

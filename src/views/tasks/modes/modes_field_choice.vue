@@ -44,8 +44,8 @@ export default class extends Vue {
   private async loadModes() {
     this.loading = true
     try {
-      const { data } = await getModes() as any
-      this.modes = data
+      const { data } = await getModes()
+      this.modes = data.results
     } finally {
       this.loading = false
     }
