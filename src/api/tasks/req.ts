@@ -43,7 +43,7 @@ export const finishTask = (id: number) =>
   request.get(`${baseTaskUrl}${id}/finish/`)
 
 export const failTask = (id: number) =>
-  request.get(`${baseTaskUrl}${id}/failed/`)
+  request.get(`${baseTaskUrl}${id}/fail/`)
 
 export const remindTask = (id: number) =>
   request.get(`${baseTaskUrl}${id}/remind/`)
