@@ -40,10 +40,10 @@
 
     el-form-item(
       :label="$t('customer')"
-      prop="customer_id"
+      prop="customer"
     )
       customer-field(
-        v-model="frmMod.customer_id"
+        v-model="frmMod.customer"
         :defaultName="$store.state.task.customer_full_name"
       )
 
@@ -132,7 +132,7 @@ export default class extends mixins(FormMixin) {
       priority: TaskModule.priority,
       task_state: TaskModule.task_state,
       task_mode_id: TaskModule.task_mode,
-      customer_id: TaskModule.customer,
+      customer: TaskModule.customer,
       out_date: TaskModule.out_date || this.initialDate
     }
   }
@@ -147,7 +147,7 @@ export default class extends mixins(FormMixin) {
     recipients: [
       { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
-    customer_id: [
+    customer: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }
     ]
   }

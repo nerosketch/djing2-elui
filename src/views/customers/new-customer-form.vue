@@ -13,7 +13,10 @@
     el-form-item(:label="$t('customers.phone')" prop="telephone")
       el-input(v-model="frmMod.telephone")
 
-    el-form-item(:label="$t('groups.group')")
+    el-form-item(
+      prop="group_id"
+      :label="$t('groups.group')"
+    )
       groups-choice(v-model="frmMod.group_id")
 
     el-form-item(:label="$t('comment')")
@@ -45,7 +48,7 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerFrm, ICustomer } from '@/api/customers/types'
-import { latinValidator, telephoneValidator } from '@/utils/validate'
+import { latinValidator, positiveNumberValueAvailable, telephoneValidator } from '@/utils/validate'
 import CustomerFormFio from './customer-form-fio.vue'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
 
@@ -100,6 +103,12 @@ export default class extends Vue {
         required: true,
         message: this.$tc('customers.birthDayValidationMessage'),
         trigger: 'blur'
+      }
+    ],
+    group_id: [
+      {
+        validator: positiveNumberValueAvailable,
+        trigger: 'change'
       }
     ]
   }
