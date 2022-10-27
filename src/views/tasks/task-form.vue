@@ -19,7 +19,7 @@
 
     el-form-item(:label="$t('tasks.natureOfFracture')")
       task-modes-field-choice(
-        v-model="frmMod.task_mode_id"
+        v-model="frmMod.task_mode_id_id"
       )
 
     el-form-item(:label="$t('priority')")
@@ -189,19 +189,22 @@ export default class extends mixins(FormMixin) {
     (this.$refs.form as Form).validate(async valid => {
       if (valid) {
         this.loading = true
-        if (this.isNewTask) {
-          const newTask = await TaskModule.AddTask(this.frmMod)
-          this.$message.success(this.$tc('tasks.targetAdded'))
-          this.$router.push({
-            name: 'taskDetails',
-            params: { taskId: newTask.id.toString() }
-          })
-        } else {
-          await TaskModule.PatchTask(this.frmMod)
-          this.frmInitial = this.fromTaskModule
-          this.$message.success(this.$tc('tasks.targetRetained'))
+        try {
+          if (this.isNewTask) {
+            const newTask = await TaskModule.AddTask(this.frmMod)
+            this.$message.success(this.$tc('tasks.targetAdded'))
+            this.$router.push({
+              name: 'taskDetails',
+              params: { taskId: newTask.id.toString() }
+            })
+          } else {
+            await TaskModule.PatchTask(this.frmMod)
+            this.frmInitial = this.fromTaskModule
+            this.$message.success(this.$tc('tasks.targetRetained'))
+          }
+        } finally {
+          this.loading = false
         }
-        this.loading = false
       } else {
         this.$message.error(this.$tc('fixFormErrs'))
       }
