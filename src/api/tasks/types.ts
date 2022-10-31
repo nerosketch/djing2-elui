@@ -22,7 +22,7 @@ export interface ITask {
   customer_address?: string
   customer_full_name?: string
   customer_uname?: string
-  customer_group?: number
+  customer_group_id?: number
   comment_count?: number
   recipients: number[]
   state_str?: string
@@ -116,6 +116,6 @@ export interface ITaskFinishDocument {
   create_time: string
   finish_time: string
   cost: number
-  task_mode: number
+  task_mode_id: number
   recipients: number[]
 }

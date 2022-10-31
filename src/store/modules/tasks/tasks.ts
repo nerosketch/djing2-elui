@@ -19,11 +19,6 @@ interface GetNewTaskInitialInputParams {
   customerId: number
 }
 
-// const taskFields = ['id', 'author_full_name', 'customer_full_name',
-//   'priority_name', 'time_of_create', 'time_diff', 'mode_str',
-//   'state_str', 'recipients', 'descr', 'priority', 'out_date',
-//   'task_state', 'mode', 'author', 'customer', 'activeTaskCount']
-
 @Module({ dynamic: true, store, name: 'task' })
 class Task extends VuexModule implements ITask {
   id = 0
@@ -41,7 +36,7 @@ class Task extends VuexModule implements ITask {
   task_state = ITaskState.NEW
   task_mode_id: number | null = null
   author_id = 0
-  customer = 0
+  customer_id = 0
   activeTaskCount = 0
 
   @Mutation
@@ -59,10 +54,9 @@ class Task extends VuexModule implements ITask {
     this.priority = data.priority
     this.out_date = data.out_date
     this.task_state = data.task_state
-    this.task_state = data.task_state
     this.task_mode_id = data.task_mode_id
     this.author_id = data.author_id
-    this.customer = data.customer_id!
+    this.customer_id = data.customer_id!
   }
 
   @Mutation
@@ -82,7 +76,7 @@ class Task extends VuexModule implements ITask {
     this.task_state = ITaskState.NEW
     this.task_mode_id = null
     this.author_id = 0
-    this.customer = 0
+    this.customer_id = 0
   }
 
   @Mutation
@@ -97,7 +91,7 @@ class Task extends VuexModule implements ITask {
 
   @Mutation
   public SET_CUSTOMER(uid: number) {
-    this.customer = uid
+    this.customer_id = uid
   }
 
   @Mutation

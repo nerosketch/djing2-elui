@@ -57,7 +57,7 @@ export default class extends Vue {
     return {
       name: 'customerDetails',
       params: {
-        uid: this.$store.state.task.customer
+        uid: this.$store.state.task.customer_id
       }
     }
   }

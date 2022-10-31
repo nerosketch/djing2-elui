@@ -48,10 +48,10 @@
       )
     el-form-item(
       :label="$t('tasks.natureOfFracture')"
-      prop="task_mode"
+      prop="task_mode_id"
     )
       task-modes-field-choice(
-        v-model="frmMod.task_mode"
+        v-model="frmMod.task_mode_id"
       )
     el-form-item(:label="$t('implementers')" prop="recipients")
       recipients-field-choice(
@@ -86,11 +86,11 @@ import { IUserProfile } from '@/api/profiles/types'
 interface IFrmMod {
   code: string
   // act_num: string | null
-  task: number
+  task_id: number
   create_time: string
   finish_time: string
   cost: number
-  task_mode: number
+  task_mode_id: number
   recipients: number[]
 }
 
@@ -115,11 +115,11 @@ export default class extends Vue {
   private frmMod: IFrmMod = {
     code: this.$store.state.taskfinishdoc.code,
     // act_num: this.$store.state.taskfinishdoc.act_num,
-    task: this.$store.state.taskfinishdoc.task,
+    task_id: this.$store.state.taskfinishdoc.task_id,
     create_time: this.$store.state.taskfinishdoc.create_time,
     finish_time: this.$store.state.taskfinishdoc.finish_time,
     cost: this.$store.state.taskfinishdoc.cost,
-    task_mode: this.$store.state.taskfinishdoc.task_mode,
+    task_mode_id: this.$store.state.taskfinishdoc.task_mode_id,
     recipients: this.$store.state.taskfinishdoc.recipients
   }
 
@@ -128,11 +128,11 @@ export default class extends Vue {
     const fm = this.frmMod
     fm.code = finDoc.code
     // fm.act_num = finDoc.act_num
-    fm.task = finDoc.task
+    fm.task_id = finDoc.task_id
     fm.create_time = finDoc.create_time
     fm.finish_time = finDoc.finish_time
     fm.cost = finDoc.cost
-    fm.task_mode = finDoc.task_mode
+    fm.task_mode_id = finDoc.task_mode_id
     fm.recipients = finDoc.recipients
   }
 
@@ -181,7 +181,7 @@ export default class extends Vue {
     recipients: [
       { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
-    task_mode: [
+    task_mode_id: [
       { required: true, validator: positiveNumberValueAvailable, trigger: 'blur' }
     ]
   }

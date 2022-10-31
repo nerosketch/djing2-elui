@@ -77,6 +77,7 @@ export default class extends Vue {
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
   }
 
+  // Duplicate method: @/views/tasks/recipients-field-choice.vue
   protected async loadPotentialRecipients() {
     const { data } = await getActiveProfiles({
       page: 1,

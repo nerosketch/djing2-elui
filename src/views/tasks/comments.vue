@@ -7,7 +7,10 @@
         :comment="comment"
         @delete="delComment")
 
-      comment-change-log.mt5(v-else, :log="comment")
+      comment-change-log.mt5(
+        v-else
+        :log="comment"
+      )
 </template>
 
 <script lang="ts">

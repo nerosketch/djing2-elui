@@ -54,7 +54,7 @@ export default class extends Vue {
     TaskAttachmentModule.AddAttachment({
       title: req.file.name,
       doc_file: req.file,
-      task: this.taskId
+      task_id: this.taskId
     }).then(newAtt => {
       this.addFileListItem(newAtt)
     })

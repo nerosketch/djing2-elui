@@ -54,11 +54,7 @@ export default class extends Vue {
   }
 
   created() {
-    if (this.recipients.length < 1) {
-      this.loadPotentialRecipients()
-    } else {
-      this.potentialRecipients = this.recipients
-    }
+    this.potentialRecipients = this.recipients
     this.localRecipients = this.value
   }
 }

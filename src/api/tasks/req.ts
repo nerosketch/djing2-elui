@@ -78,7 +78,7 @@ export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponse
   const formData = new FormData()
   formData.append('doc_file', newAtt.doc_file)
   formData.append('title', newAtt.title)
-  formData.append('task', newAtt.task)
+  formData.append('task_id', newAtt.task_id)
   return request.post<ITaskDocumentAttachment>(TaskAttachmUrl, formData)
 }
 
