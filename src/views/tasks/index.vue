@@ -37,7 +37,7 @@ export default class extends Vue {
     { title: this.$t('tasks.newChallenges'), name: 'tnew' },
     { title: this.$t('tasks.challengesAchieved'), name: 'tfin' },
     { title: this.$t('tasks.failedChallenges'), name: 'tf' },
-    { title: this.$t('tasks.allTasks'), name: 'tall' },
+    // { title: this.$t('tasks.allTasks'), name: 'tall' },
     { title: this.$t('tasks.allUncompleted'), name: 'tallnew' },
     { title: this.$t('tasks.modes.titlePlural'), name: 'tmodes' }
   ]

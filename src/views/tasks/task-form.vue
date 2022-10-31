@@ -11,7 +11,6 @@
         maxlength="128"
       )
 
-    p frmMod {{ frmMod }}
     el-form-item(
       :label="$t('implementers')"
       prop="recipients"
@@ -47,10 +46,10 @@
 
     el-form-item(
       :label="$t('customer')"
-      prop="customer_id"
+      prop="customer"
     )
       customer-field(
-        v-model="frmMod.customer_id"
+        v-model="frmMod.customer"
         :defaultName="$store.state.task.customer_full_name"
       )
 
@@ -156,7 +155,7 @@ export default class extends mixins(FormMixin) {
     recipients: [
       { required: true, message: this.$tc('tasks.weHaveToChooseOnePerpetrator'), trigger: 'blur' }
     ],
-    customer_id: [
+    customer: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }
     ],
     task_mode_id: [
