@@ -3,7 +3,7 @@
     datatable(
       :columns="tableColumns"
       :getData="loadLog"
-      :heightDiff="202"
+      :heightDiff="209"
       widthStorageNamePrefix="customerFin"
       ref="fintbl")
       template(#author_name="{row}")

@@ -2,7 +2,7 @@
   datatable(
     :columns="tableColumns"
     :getData="loadTLog"
-    :heightDiff="167"
+    :heightDiff="179"
     widthStorageNamePrefix="customerTaskHistory"
     ref="tlogtbl")
     template(#viewbtn="{row}")
