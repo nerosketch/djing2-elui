@@ -87,7 +87,7 @@ export const addBalance = (id: number, dat: IBalanceAmountRequest) =>
   request.post(`${custApiUrl}${id}/add_balance/`, dat)
 
 export const getCurrentService = (id: number): ICustomerServiceAxoisResponsePromise =>
-  request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)
+  request.get<ICustomerService>(`/customer_service/${id}/current_service/`)
 
 export const setServiceGroupAccessory = (groupId: number, services: number[]) =>
   request.post(`${custApiUrl}set_service_group_accessory/`, {
@@ -178,7 +178,7 @@ export const customerServiceTypeReportRequest = (): CustomerServiceTypeReportRes
   request.get<CustomerServiceTypeReportResult>('/customer_service/service_type_report/')
 
 export const customersActivityReportRequest = (): CustomerActivityReportResultAxoisResponsePromise =>
-  request.get<CustomerActivityReportResult>('/customers/activity_report/')
+  request.get<CustomerActivityReportResult>('/customer_service/activity_report/')
 
 // PeriodicPayForId
 const CustomerPPayUrl = '/customers/periodic-pay/'
