@@ -72,7 +72,7 @@ export const getCustomerFormInitial = (): ICustomerAxoisResponsePromise =>
   request.get<ICustomer>(`${custApiUrl}get_initial/`)
 
 export const pickService = (id: number, data: IBuyPayloadType) =>
-  request.post(`${custApiUrl}${id}/pick_service/`, data)
+  request.post(`/customer_service/${id}/pick_service/`, data)
 
 export const makeShot = (id: number, shotId: number) =>
   request.post(`${custApiUrl}${id}/make_shot/`, { shot_id: shotId })
