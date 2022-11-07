@@ -1,10 +1,5 @@
 <template lang="pug">
   div(v-loading)
-    p(v-if="lastConnectedExists()")
-      | {{ $t('customers.serviceLastConnected') }} -
-
-      b {{ $store.state.customer.last_connected_service_title }}
-
     p {{ $t('customers.serviceAutocontinuation') }} -
 
       el-checkbox(
@@ -47,10 +42,6 @@ export default class extends Vue {
     } finally {
       this.serviceBlockLoad = false
     }
-  }
-
-  private lastConnectedExists() {
-    return CustomerModule.last_connected_service_id > 0
   }
 }
 </script>

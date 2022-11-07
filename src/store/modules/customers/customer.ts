@@ -37,8 +37,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
   device_id: number | null = null
   device_comment = ''
   dev_port_id: number | null = null
-  last_connected_service_id = 0
-  last_connected_service_title = ''
   current_service_id = 0
   current_service_title = ''
   service_id = 0
@@ -68,8 +66,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.device_id = data.device_id
     this.device_comment = data.device_comment!
     this.dev_port_id = data.dev_port_id
-    this.last_connected_service_id = data.last_connected_service_id!
-    this.last_connected_service_title = data.last_connected_service_title
     this.current_service_id = data.current_service_id!
     this.current_service_title = data.current_service_title!
     this.service_id = data.service_id!
@@ -96,8 +92,6 @@ class Customer extends BaseProfileVuexModule implements ICustomer {
     this.device_id = null
     this.device_comment = ''
     this.dev_port_id = null
-    this.last_connected_service_id = 0!
-    this.last_connected_service_title = ''
     this.current_service_id = 0!
     this.current_service_title = ''!
     this.service_id = 0

@@ -92,7 +92,6 @@ export default {
     sessionNotFound: "No session",
     sessionDetail: "Details",
     serviceAutocontinuation: "Service extension",
-    serviceLastConnected: "Last service connected",
     autoContinuationSaved: "Extension retained",
     networking: "Network",
     leaseTime: "Wet time",

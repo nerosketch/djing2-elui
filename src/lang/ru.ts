@@ -92,7 +92,6 @@ export default {
     sessionNotFound: 'Нет сессии',
     sessionDetail: 'Детали',
     serviceAutocontinuation: 'Автопродление услуги',
-    serviceLastConnected: 'Последняя подключённая услуга',
     autoContinuationSaved: 'Автопродление сохранено',
     networking: 'Сетевое',
     leaseTime: 'Время аренды',

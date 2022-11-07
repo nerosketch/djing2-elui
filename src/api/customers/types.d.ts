@@ -23,8 +23,6 @@ export interface ICustomer extends IBaseAccount{
   device_id: number | null
   device_comment?: string
   dev_port_id: number | null
-  last_connected_service_id: number | null
-  last_connected_service_title: string
   current_service_id: number | null
   current_service_title?: string | null
   service_id: number | null
@@ -102,7 +100,6 @@ export interface ICustomerService {
   service_id: IService
   start_time: string
   deadline: string
-  last_connected_service_title?: string
 }
 export type ICustomerServiceAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerService>
 
