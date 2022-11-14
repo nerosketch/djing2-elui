@@ -101,7 +101,7 @@ export default class <T> extends Vue {
   @Prop({ default: () => Promise.resolve([]) }) private getData!: (params: IDRFRequestListParameters) => IDRFAxiosResponseListPromise<T>
   @Prop({ default: false }) private loading!: boolean
   @Prop({ default: () => ('') }) private tableRowClassName!: (r: object) => string
-  @Prop({ default: 118 }) private heightDiff!: number
+  @Prop({ default: 123 }) private heightDiff!: number
   @Prop({ default: 'width' }) private widthStorageNamePrefix!: string
   @Prop({ default: false }) private selectable!: boolean
   @Prop({ default: false }) private editFieldsVisible!: boolean
