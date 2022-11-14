@@ -74,7 +74,10 @@ export default class extends Vue {
     // Subscribe for customer update event from server
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER, this.onCustomerServerUpdate)
 
-    this.loadCustomer()
+    this.loaded = false
+    this.loadCustomer().then(() => {
+      this.loaded = true
+    })
 
     this.loadLocalityDetail(this.$store.state.customer.address_id, 4)
   }
@@ -95,9 +98,7 @@ export default class extends Vue {
   }
 
   private async loadCustomer() {
-    this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
-    this.loaded = true
     this.setCrumbs(this.$store.state.customer.address_id)
     document.title = this.$store.state.customer.full_name || this.$tc('customers.customer')
   }
