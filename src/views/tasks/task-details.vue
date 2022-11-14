@@ -7,6 +7,7 @@
         task-form(
           v-if='taskReady'
           :recipients="potentialRecipients"
+          @updated="onUpdatedTask"
         )
     el-col.mt5(:lg='12' :sm='24')
       task-info(
@@ -15,7 +16,10 @@
         :taskId="taskId"
       )
     el-col.mt5(:lg='12' :sm='24')
-      comments(v-if='taskReady')
+      comments(
+        ref="commentsref"
+        v-if='taskReady'
+      )
     el-col.mt5(:lg='12' :sm='24')
       finish-doc-index(
         :recipients="potentialRecipients"
@@ -51,6 +55,10 @@ interface ITaskEventData {
   }
 })
 export default class extends Vue {
+  public readonly $refs!:{
+    commentsref: Comments
+  }
+
   @Prop({ default: 0 })
   private taskId!: number
 
@@ -90,6 +98,10 @@ export default class extends Vue {
     if (dat.task_id === this.taskId) {
       this.loadTask()
     }
+  }
+
+  private onUpdatedTask() {
+    this.$refs.commentsref.loadComments()
   }
 }
 </script>

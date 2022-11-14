@@ -32,7 +32,7 @@ import CommentList from '@/components/comments/list.vue'
 export default class extends Vue {
   private comments: IExtraCommentCombinedWithTaskStateChangeLog[] = []
 
-  private async loadComments() {
+  public async loadComments() {
     const { data } = await getCommentsWithLogs(this.$store.state.task.id)
     this.comments = data
   }

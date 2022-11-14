@@ -208,10 +208,12 @@ export default class extends mixins(FormMixin) {
               name: 'taskDetails',
               params: { taskId: newTask.id.toString() }
             })
+            this.$emit('added')
           } else {
             await TaskModule.PatchTask(this.frmMod)
-            this.frmInitial = this.fromTaskModule
+            this.frmInitial = JSON.parse(JSON.stringify(this.fromTaskModule))
             this.$message.success(this.$tc('tasks.targetRetained'))
+            this.$emit('updated')
           }
         } finally {
           this.loading = false
