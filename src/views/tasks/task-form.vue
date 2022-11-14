@@ -12,7 +12,7 @@
       )
 
     el-form-item(
-      :label="$t('implementers')"
+      :label="$t('tasks.implementers')"
       prop="recipients"
     )
       recipients-field-choice(
@@ -28,7 +28,7 @@
         v-model="frmMod.task_mode_id"
       )
 
-    el-form-item(:label="$t('priority')")
+    el-form-item(:label="$t('tasks.priority')")
       el-select(v-model="frmMod.priority")
         el-option(
           v-for="tt in taskPriorities"

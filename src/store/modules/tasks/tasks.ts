@@ -133,6 +133,7 @@ class Task extends VuexModule implements ITask {
   public async PatchTask(info: any) {
     const { data } = await changeTask(this.id, info)
     this.SET_ALL_TASK(data)
+    return data
   }
 
   @Action

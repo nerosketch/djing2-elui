@@ -34,8 +34,8 @@ import {
   IWsMessageEventTypeEnum
 } from '@/layout/mixin/ws'
 import FinishDocIndex from './finish_doc/index.vue'
-import { getActiveProfiles } from '@/api/profiles/req'
 import { IUserProfile } from '@/api/profiles/types'
+import { loadPotentialRecipients } from './recipients-field-choice.vue'
 
 interface ITaskEventData {
   task_id: number
@@ -69,22 +69,16 @@ export default class extends Vue {
 
   async created() {
     this.taskReady = false
-    await this.loadTask()
     await this.loadPotentialRecipients()
+    await this.loadTask()
     this.taskReady = true
 
     // Subscribe for task update event from server
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATETASK, this.onUpdateTask)
   }
 
-  // Duplicate method: @/views/tasks/recipients-field-choice.vue
   protected async loadPotentialRecipients() {
-    const { data } = await getActiveProfiles({
-      page: 1,
-      page_size: 0,
-      fields: 'id,full_name,username'
-    })
-    this.potentialRecipients = data
+    this.potentialRecipients = await loadPotentialRecipients()
   }
 
   beforeDestroy() {

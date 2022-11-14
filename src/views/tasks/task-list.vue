@@ -33,7 +33,7 @@
           | {{ $t('field') }}
 
     el-dialog(
-      :title="$t('creatingTheChallenge')"
+      :title="$t('tasks.adding')"
       :visible.sync="formDialog"
       :close-on-click-modal="false")
       task-form

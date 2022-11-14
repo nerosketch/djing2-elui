@@ -53,7 +53,7 @@
       task-modes-field-choice(
         v-model="frmMod.task_mode_id"
       )
-    el-form-item(:label="$t('implementers')" prop="recipients")
+    el-form-item(:label="$t('tasks.implementers')" prop="recipients")
       recipients-field-choice(
         :recipients="recipients"
         v-model="frmMod.recipients"

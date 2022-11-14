@@ -1,7 +1,7 @@
 <template lang="pug">
   el-card(shadow="never")
     template(#header)
-      .clearfix {{ $t('targets') }}
+      .clearfix {{ $t('tasks.targets') }}
     p
       b {{ $t('tasks.description') }}
       | {{ $store.state.task.descr }}
@@ -9,13 +9,13 @@
       b {{ $t('tasks.author') }}
       | {{ $store.state.task.author_full_name }}
     p
-      b {{ $t('implementers') }}
+      b {{ $t('tasks.implementers') }}
       ul
         li(v-for="rec in taskRecipients" :key='rec.id') {{ rec.full_name || rec.username }}
-    b {{ $t('priority') }}
+    b {{ $t('tasks.priority') }}
     span {{ $store.state.task.priority_name }}
     br
-    b {{ $t('targetValidUntil') }}
+    b {{ $t('tasks.targetValidUntil') }}
     span {{ $store.state.task.out_date }}
     br
     b {{ $t('dateOfEstablishment') }}
