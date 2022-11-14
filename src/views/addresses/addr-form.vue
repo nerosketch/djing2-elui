@@ -20,7 +20,7 @@
         :level="frmMod.fias_address_level"
       )
 
-    el-form-item(:label="$t('addrs.taoType')" prop="address_type")
+    el-form-item(:label="$t('addrs.aoType')" prop="address_type")
       address-type-choice(v-model="frmMod.address_type")
 
     el-button(
