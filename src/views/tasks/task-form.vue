@@ -169,7 +169,7 @@ export default class extends mixins(FormMixin) {
       { required: true, trigger: 'change' }
     ],
     task_state: [
-      { required: true, trigger: 'change'}
+      { required: true, trigger: 'change' }
     ]
   }
 
