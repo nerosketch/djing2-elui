@@ -36,7 +36,10 @@
           :label="tt.nm"
           :value="tt.v")
 
-    el-form-item(:label="$t('tasks.taskStatus')")
+    el-form-item(
+      :label="$t('tasks.taskStatus')"
+      prop="task_state"
+    )
       el-select(v-model="frmMod.task_state")
         el-option(
           v-for="tt in taskStates"
@@ -114,6 +117,10 @@ import RecipientsFieldChoice from './recipients-field-choice.vue'
   }
 })
 export default class extends mixins(FormMixin) {
+  public readonly $refs!: {
+    form: Form
+  }
+
   @Prop({ default: () => [] })
   private recipients!: IUserProfile[]
 
@@ -147,7 +154,7 @@ export default class extends mixins(FormMixin) {
 
   @Watch('$store.state.task', { deep: true })
   private onUpdateTask() {
-    this.frmMod = this.fromTaskModule
+    this.frmMod = JSON.parse(JSON.stringify(this.fromTaskModule))
     this.frmInitial = Object.assign({}, this.frmMod)
   }
 
@@ -160,6 +167,9 @@ export default class extends mixins(FormMixin) {
     ],
     task_mode_id: [
       { required: true, trigger: 'change' }
+    ],
+    task_state: [
+      { required: true, trigger: 'change'}
     ]
   }
 
@@ -197,7 +207,7 @@ export default class extends mixins(FormMixin) {
   }
 
   private onSubmit() {
-    (this.$refs.form as Form).validate(async valid => {
+    this.$refs.form.validate(async valid => {
       if (valid) {
         this.loading = true
         try {
@@ -217,6 +227,7 @@ export default class extends mixins(FormMixin) {
           }
         } finally {
           this.loading = false
+          this.$refs.form.clearValidate()
         }
       } else {
         this.$message.error(this.$tc('fixFormErrs'))

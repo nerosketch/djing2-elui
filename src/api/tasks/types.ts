@@ -88,7 +88,7 @@ export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResu
 export type INewTaskInitialSimpleResponseResultAxoisResponsePromise = IDRFAxiosResponsePromise<INewTaskInitialSimpleResponseResult>
 
 export interface TaskStatePercentReportTypeCount {
-  mode: string
+  task_mode: string
   task_count: number
 }
 export interface TaskModeReport {
