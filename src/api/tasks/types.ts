@@ -80,7 +80,6 @@ export type ITaskDocumentAttachmentList = IDRFListResponse<ITaskDocumentAttachme
 export type ITaskDocumentAttachmentAxoisResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachment>
 export type ITaskDocumentAttachmentAxiosList = IDRFAxiosResponsePromise<ITaskDocumentAttachmentList>
 
-
 export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResult {
   recipients?: number[]
   task_id?: number

@@ -25,10 +25,9 @@ import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
   }
 })
 export default class extends Vue {
-
   private tabItems: ICustomTabItem[] = [
     { title: this.$t('route.staff'), name: 'profiles' },
-    { title: this.$t('profiles.profileGroups'), name: 'profilegroups' },
+    { title: this.$t('profiles.profileGroups'), name: 'profilegroups' }
   ]
 }
 </script>

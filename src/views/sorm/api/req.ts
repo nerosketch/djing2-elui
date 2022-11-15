@@ -1,5 +1,5 @@
-import { getObjectListDecorator } from "@/api/baseRequests"
-import { ICustomer } from "@/api/customers/types"
+import { getObjectListDecorator } from '@/api/baseRequests'
+import { ICustomer } from '@/api/customers/types'
 
 export const getCustomersWithoutPassports = getObjectListDecorator<ICustomer>('/sorm/passports/')
 export const getCustomersWithoutContracts = getObjectListDecorator<ICustomer>('/sorm/contracts/')

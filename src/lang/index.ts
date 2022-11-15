@@ -31,7 +31,7 @@ const messages = {
   ru: {
     ...ruLocale,
     ...elementRuLocale
-  },
+  }
 }
 
 export const getLocale = () => {

@@ -26,15 +26,14 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
     VlanList,
     PoolList,
     LeaseList,
-    Tabs,
+    Tabs
   }
 })
 export default class extends Vue {
-
   private tabItems: ICustomTabItem[] = [
     { name: 'sessions', title: this.$t('guestSessions') },
     { name: 'pools', title: this.$t('subnets') },
-    { name: 'vlans', title: this.$t('devices.vlanS') },
+    { name: 'vlans', title: this.$t('devices.vlanS') }
   ]
 
   // Breadcrumbs

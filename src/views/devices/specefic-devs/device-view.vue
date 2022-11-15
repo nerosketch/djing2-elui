@@ -70,10 +70,12 @@ export default class extends Vue {
   private onChLocDet(lc: IAddressModel | null) {
     this.setCrumbs(lc)
   }
+
   @Watch('$store.state.devicemodule.address')
   private onChCustomerAddr(addrId: number) {
     this.loadLocalityDetail(addrId, 4)
   }
+
   private async loadLocalityDetail(addrId: number, addrType: number) {
     const { data } = await getAddressByType(addrId, addrType)
     this.localityDetail = data
@@ -110,19 +112,21 @@ export default class extends Vue {
           title: this.$tc('equipment')
         }
       },
-      addr ? {
-        path: { name: 'devicesList', params: { addrId: addr.id } },
-        meta: {
-          hidden: true,
-          title: addr.title
-        }
-      } : {
-        path: '',
-        meta: {
-          hidden: true,
-          title: '-'
-        }
-      },
+      addr
+        ? {
+            path: { name: 'devicesList', params: { addrId: addr.id } },
+            meta: {
+              hidden: true,
+              title: addr.title
+            }
+          }
+        : {
+            path: '',
+            meta: {
+              hidden: true,
+              title: '-'
+            }
+          },
       {
         path: '',
         meta: {

@@ -22,6 +22,7 @@ export default class extends Vue {
   public readonly $refs!: {
     inp: Input
   }
+
   @Prop({ required: true }) private value!: string
 
   private isPlain = true
@@ -43,6 +44,7 @@ export default class extends Vue {
     this.$refs.inp.focus()
     this.$refs.inp.select()
   }
+
   private toPlain() {
     this.isPlain = true
   }

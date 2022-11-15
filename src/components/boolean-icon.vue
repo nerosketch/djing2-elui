@@ -22,7 +22,7 @@ export default class extends Vue {
 
   private get iconColor() {
     return {
-      color: this.value ? 'green' : 'red',
+      color: this.value ? 'green' : 'red'
     }
   }
 }

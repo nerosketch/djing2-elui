@@ -1,5 +1,5 @@
-import { IBaseAccount } from "@/api/base_account";
-import { VuexModule } from "vuex-module-decorators";
+import { IBaseAccount } from '@/api/base_account'
+import { VuexModule } from 'vuex-module-decorators'
 
 export class BaseProfileVuexModule extends VuexModule implements IBaseAccount {
   id = 0

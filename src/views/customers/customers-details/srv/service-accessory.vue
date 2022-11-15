@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { IService, IServiceList } from '@/api/services/types'
+import { IService } from '@/api/services/types'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { getServices } from '@/api/services/req'
 
@@ -42,7 +42,7 @@ export default class extends Vue {
     this.servicesLoading = true
     try {
       const { data } = await getServices({
-        fields: 'id,title',
+        fields: 'id,title'
       } as any) as any
       this.services = data
     } finally {

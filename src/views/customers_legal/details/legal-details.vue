@@ -45,7 +45,7 @@ import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
     LegalForm,
     LegalBankInfo,
     LegalBranches,
-    Tabs,
+    Tabs
   }
 })
 export default class extends Vue {
@@ -66,7 +66,7 @@ export default class extends Vue {
 
   private tabItems: ICustomTabItem[] = [
     { title: this.$t('customers.info'), name: 'info' },
-    { title: this.$t('customersLegal.branches'), name: 'branches' },
+    { title: this.$t('customersLegal.branches'), name: 'branches' }
   ]
 
   created() {

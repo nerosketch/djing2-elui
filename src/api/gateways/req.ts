@@ -12,7 +12,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 const gwUrl = '/gateways/'
 export const getGateways = getObjectListDecorator<IGateway>(gwUrl)
 export const getGateway = getObjectDecorator<IGateway>(gwUrl)

@@ -58,7 +58,7 @@ import { CurrentPermissions } from '@/store/current-user-permissions'
 import 'space-shader-box'
 
 @Component({
-  name: 'Login',
+  name: 'Login'
 })
 export default class extends Vue {
   private $perms!: CurrentPermissions

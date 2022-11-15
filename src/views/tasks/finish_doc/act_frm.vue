@@ -78,7 +78,7 @@ import { TaskFinishDocumentModule } from '@/store/modules/tasks/finish_doc'
 import { ITaskFinishDocument } from '@/api/tasks/types'
 import {
   positiveNumberValueAvailable,
-  positiveValidator,
+  positiveValidator
 } from '@/utils/validate'
 import { IUserProfile } from '@/api/profiles/types'
 
@@ -167,10 +167,10 @@ export default class extends Vue {
       { required: true, trigger: 'blur' }
     ],
     create_time: [
-      { required: true, trigger: 'blur', message: this.$tc('tasks.finishDoc.dateTimeReq') },
+      { required: true, trigger: 'blur', message: this.$tc('tasks.finishDoc.dateTimeReq') }
     ],
     finish_time: [
-      { required: true, trigger: 'blur', message: this.$tc('tasks.finishDoc.dateTimeReq') },
+      { required: true, trigger: 'blur', message: this.$tc('tasks.finishDoc.dateTimeReq') }
     ],
     cost: [
       { required: true, validator: positiveValidator, trigger: 'blur' }

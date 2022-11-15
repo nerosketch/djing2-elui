@@ -17,4 +17,3 @@ const sormRoutes: RouteConfig = {
 }
 
 export default sormRoutes
-

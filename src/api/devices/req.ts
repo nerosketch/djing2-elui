@@ -25,7 +25,7 @@ import {
   IDeviceTypeNameListAxiosPromise,
   IDeviceTypeName,
   IScannedPortAxiosPromise,
-  ISimpleScanPortsResponseResult,
+  ISimpleScanPortsResponseResult
 } from './types'
 import {
   addObjectDecorator,
@@ -35,7 +35,6 @@ import {
 } from '@/api/baseRequests'
 import { IDRFRequestListAddrsParameters } from '@/api/addresses/req'
 import { IGroup } from '@/api/groups/types'
-
 
 const baseDevUrl = '/devices/all/'
 

@@ -96,11 +96,11 @@ class CustomerIpLease extends VuexModule implements ICustomerIpLease {
     return data
   }
 
-  //@Action
-  //public async DelLease(leaseId: number) {
+  // @Action
+  // public async DelLease(leaseId: number) {
   //  await delCustomerIpLease(leaseId)
   //  this.RESET_ALL_LEASE()
-  //}
+  // }
   @Action
   public async ReleaseLease(leaseId: number) {
     const { data } = await releaseCustomerLease(leaseId)

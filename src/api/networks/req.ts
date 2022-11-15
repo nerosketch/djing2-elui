@@ -17,7 +17,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 // VlanIf
 const baseVlanUrl = '/networks/vlan/'
 export const getVlans = getObjectListDecorator<IVlanIf>(baseVlanUrl)
@@ -25,7 +24,6 @@ export const getVlanIf = getObjectDecorator<IVlanIf>(baseVlanUrl)
 export const addVlanIf = addObjectDecorator<IVlanIf>(baseVlanUrl)
 export const changeVlanIf = patchObjectDecorator<IVlanIf>(baseVlanUrl)
 export const delVlanIf = delObjectDecorator<IVlanIf>(baseVlanUrl)
-
 
 // NetworkIpPool
 const baseNetUrl = '/networks/pool/'
@@ -69,4 +67,4 @@ export const freeLeaseSession = (leaseId: number): IDRFAxiosResponsePromise<stri
   request.get(`${baseLeaseUrl}${leaseId}/free_session/`)
 
 export const getGlobalGuestLeases = (params?: IDRFRequestListParameters): ICustomerIpLeaseMixList =>
-  request.get<ICustomerIpLeaseList>(`${baseLeaseUrl}guest_list/`, {params})
+  request.get<ICustomerIpLeaseList>(`${baseLeaseUrl}guest_list/`, { params })

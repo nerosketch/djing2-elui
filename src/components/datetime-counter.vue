@@ -10,10 +10,9 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-
 function date2String(d: Date) {
   const fm = (s: number) => `0${s}`.slice(-2)
-  return `${d.getFullYear()}-${fm(d.getMonth()+1)}-${fm(d.getDate())} ${fm(d.getHours())}:${fm(d.getMinutes())}:${fm(d.getSeconds())}`
+  return `${d.getFullYear()}-${fm(d.getMonth() + 1)}-${fm(d.getDate())} ${fm(d.getHours())}:${fm(d.getMinutes())}:${fm(d.getSeconds())}`
 }
 
 @Component({

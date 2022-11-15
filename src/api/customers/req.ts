@@ -53,7 +53,6 @@ import {
 } from '@/api/baseRequests'
 import { IGroup } from '@/api/groups/types'
 
-
 // ICustomer
 const custApiUrl = '/customers/'
 export const getCustomers = getObjectListDecorator<ICustomer>(custApiUrl)
@@ -63,10 +62,12 @@ export const changeCustomer = patchObjectDecorator<ICustomer>(custApiUrl)
 export const delCustomer = delObjectDecorator<ICustomer>(custApiUrl)
 
 export const findCustomers = (name: string): ICustomerListAxiosResponsePromise =>
-  request.get<ICustomerList>(custApiUrl, { params: {
-    search: name,
-    fields: 'id,full_name'
-  } })
+  request.get<ICustomerList>(custApiUrl, {
+    params: {
+      search: name,
+      fields: 'id,full_name'
+    }
+  })
 
 export const getCustomerFormInitial = (): ICustomerAxoisResponsePromise =>
   request.get<ICustomer>(`${custApiUrl}get_initial/`)

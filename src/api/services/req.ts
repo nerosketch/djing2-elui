@@ -20,7 +20,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 const baseSrvUrl = '/services/'
 
 // IService

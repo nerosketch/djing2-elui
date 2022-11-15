@@ -219,7 +219,7 @@ export default class extends mixins(FormMixin) {
         type: 'error',
         title: this.$tc('attention')
       }
-    ).then(async () => {
+    ).then(async() => {
       await this.finishContract()
       this.$message.success(this.$tc('contractDocs.finishSuccessText'))
     })

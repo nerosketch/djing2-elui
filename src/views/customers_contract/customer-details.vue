@@ -41,6 +41,7 @@ export default class extends Vue {
   public readonly $refs!: {
     tabcont: ContractsTab
   }
+
   @Prop({ default: 0 }) private uid!: number
 
   private newContractFormVisible = false
@@ -49,10 +50,10 @@ export default class extends Vue {
     this.newContractFormVisible = false
     this.$refs.tabcont.loadContracts()
   }
+
   private doneAdd() {
     this.newContractFormVisible = false
     this.$refs.tabcont.loadContracts()
   }
-
 }
 </script>

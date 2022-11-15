@@ -236,7 +236,7 @@ export default {
     full: 'Полный адрес',
     typeOfFiasAddress: 'Тип адреса ФИАС',
     fiasLevel: 'Уровень ФИАС',
-    aoType: 'Тип адресного объекта',
+    aoType: 'Тип адресного объекта'
   },
   tasks: {
     add: 'Добавить задачу',
@@ -310,7 +310,7 @@ export default {
     fiberAddrRequired: 'fiberAddr нужен',
     fiber: 'Глаз',
     signalLevel: 'Уровень сигнала: ',
-    onuStateDescr: 'Состояние onu',
+    onuStateDescr: 'Состояние onu'
   },
   route: {
     staff: 'Cотрудники',
@@ -408,7 +408,7 @@ export default {
   sorm: {
     withoutPassports: 'Без паспортов',
     withoutContracts: 'Без договоров',
-    tooOld: 'Дата рождения',
+    tooOld: 'Дата рождения'
   },
   fin: {
     modifyThePaymentGateway: 'Изменить платёжный шлюз',
@@ -421,7 +421,7 @@ export default {
     incomeReport: 'Отчёт о поступлениях',
     paymentGateway: 'Платёжный шлюз',
     paymentGatewayAdded: 'Платёжный шлюз добавлен',
-    createAPayLock: 'Создать платёжный шлюз',
+    createAPayLock: 'Создать платёжный шлюз'
   },
   noSubscribersFoundOnThePort: 'Абоненты на порту не найдены',
   noSubscribersFound: 'Абоненты не найдены',

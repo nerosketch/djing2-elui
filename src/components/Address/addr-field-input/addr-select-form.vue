@@ -35,7 +35,7 @@ export default class extends Vue {
   private localValue = this.value || 0
 
   private props = {
-    label: (a: IAddressModel) => `${a.fias_address_type_name} ${a.title}`,
+    label: (a: IAddressModel) => `${a.fias_address_type_name} ${a.title}`
   }
 
   private async loadNode(node: AddrTreeNode, resolve: Function) {
@@ -53,7 +53,7 @@ export default class extends Vue {
       const { data } = await getAddresses({
         page: 1,
         page_size: 500,
-        parent_addr_id: parent || 0,
+        parent_addr_id: parent || 0
         // fields: 'id,title,parent_addr_id'
       })
       return data.results
@@ -70,7 +70,6 @@ export default class extends Vue {
     this.localValue = addr.id
   }
 
-
   private saveSelected() {
     this.$emit('done', this.localValue)
   }
@@ -83,5 +82,6 @@ export default class extends Vue {
   @Watch('value')
   private onChVal(v: number) {
     this.localValue = v
-  }}
+  }
+}
 </script>

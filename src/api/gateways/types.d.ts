@@ -18,7 +18,6 @@ export interface IGateway {
   sites?: number[]
 }
 
-
 export interface IGatewayClassChoiceType {
   v: number
   t: string

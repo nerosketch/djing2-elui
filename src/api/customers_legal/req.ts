@@ -10,7 +10,7 @@ import {
 import {
   ICustomerLegal,
   ICustomerLegalAxoisResponsePromise,
-  ICustomerLegalBank,
+  ICustomerLegalBank
 } from './types'
 import {
   addObjectDecorator,
@@ -19,7 +19,6 @@ import {
   getObjectListDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
-
 
 // CustomerLegal model
 const baseCustomerLegalUrl = '/legal/'
@@ -41,11 +40,10 @@ export const getLegalInitial = (): ICustomerLegalAxoisResponsePromise =>
 export const getLegalBranches = (customerLegalId: number, params?: IDRFRequestListParameters) =>
   request.get(`/legal/${customerLegalId}/get_branches/`, { params })
 
-
 // CustomerLegalBank
 const bankUrl = '/legal/bank/'
 export const getLegalBanks = (legalCustomerId: number): IDRFAxiosResponsePromise<ICustomerLegalBank[]> =>
-  request.get<ICustomerLegalBank[]>(bankUrl, {params: {legal_customer: legalCustomerId}})
+  request.get<ICustomerLegalBank[]>(bankUrl, { params: { legal_customer: legalCustomerId } })
 
 export const addLegalBank = addObjectDecorator<ICustomerLegalBank>(bankUrl)
 export const patchLegalBank = patchObjectDecorator<ICustomerLegalBank>(bankUrl)

@@ -19,7 +19,7 @@ div(:class="{'tab-container': !dense}")
 <script lang="ts">
 import { TranslateResult } from 'vue-i18n'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { Dictionary } from "vue-router/types/router"
+import { Dictionary } from 'vue-router/types/router'
 
 export interface ICustomTabItem {
   title: string | TranslateResult

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import {
-  IDevice, IDeviceInterface,
+  IDevice, IDeviceInterface
 } from '@/api/devices/types'
 import {
   getDevice, delDevice,

@@ -27,7 +27,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 // ITask
 const baseTaskUrl = '/tasks/'
 export const getTasks = (params?: IDRFRequestListParameters, url: string = ''): ITaskListAxiosResponsePromise =>

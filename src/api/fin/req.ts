@@ -18,7 +18,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 const pgwUrl = '/fin/base/'
 export const getPayGateways = getObjectListDecorator<IPayBaseGateway>(pgwUrl)
 export const getPayGateway = getObjectDecorator<IPayBaseGateway>(pgwUrl)
@@ -47,10 +46,10 @@ export const delPaymePayGateway = delObjectDecorator<IPayPaymeGateway>(pgwPaymeU
 export const getPayLog = (): IAllTimePayLogListAxiosResponsePromise =>
   request.get<IAllTimePayLogList>(`${pgwUrl}log/`)
 
-export const getPayReport = (params: IPayReportParams, mimeType='application/json'): IPayReportList =>
+export const getPayReport = (params: IPayReportParams, mimeType = 'application/json'): IPayReportList =>
   request.get<IPayReport[]>(`${pgwUrl}pays_report/`, {
     params,
     headers: {
       Accept: mimeType
     }
- })
+  })
