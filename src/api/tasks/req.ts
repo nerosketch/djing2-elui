@@ -6,7 +6,7 @@ import {
   IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise,
   IExtraCommentCombinedWithTaskStateChangeLog,
   IExtraComment,
-  ITaskDocumentAttachmentList, ITaskDocumentAttachmentAxoisResponsePromise,
+  ITaskDocumentAttachmentAxoisResponsePromise,
   ITaskDocumentAttachment,
   INewTaskInitialSimpleResponseResultAxoisResponsePromise,
   INewTaskInitialSimpleResponseResult,
@@ -15,7 +15,9 @@ import {
   TaskModeReport,
   TaskModeReportAxoisResponsePromise,
   ITaskMode,
-  ITaskFinishDocument
+  ITaskFinishDocument,
+  ITaskDocumentAttachmentAxiosList,
+  ITaskDocumentAttachmentList
 } from './types'
 import {
   addObjectDecorator,
@@ -69,8 +71,8 @@ export const delComment = delObjectDecorator<IExtraComment>(baseCommentUrl)
 
 // ITaskDocumentAttachment
 const TaskAttachmUrl = '/tasks/attachment/'
-export const getAttachments = (task_id: number): ITaskDocumentAttachmentList =>
-  request.get<ITaskDocumentAttachment[]>(TaskAttachmUrl, { params: { task_id } })
+export const getAttachments = (task_id: number): ITaskDocumentAttachmentAxiosList =>
+  request.get<ITaskDocumentAttachmentList>(TaskAttachmUrl, { params: { task_id } })
 
 export const getAttachment = getObjectDecorator<ITaskDocumentAttachment>(TaskAttachmUrl)
 

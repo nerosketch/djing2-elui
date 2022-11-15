@@ -70,7 +70,7 @@ export default class extends Vue {
 
   private async loadFileList() {
     const { data } = await getAttachments(this.taskId)
-    for (const el of data) {
+    for (const el of data.results) {
       this.addFileListItem(el)
     }
   }
