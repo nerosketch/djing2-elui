@@ -49,9 +49,7 @@ export default class extends Vue {
   private localityDetail: IAddressModel | null = null
 
   private async getDevice() {
-    if (this.device === null) {
-      this.ready = false
-    }
+    this.ready = false
     try {
       const { data } = await DeviceModule.GetDevice(this.devId)
       this.device = data
