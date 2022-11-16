@@ -235,7 +235,7 @@ export default {
     full: 'Полный адрес',
     typeOfFiasAddress: 'Тип адреса ФИАС',
     fiasLevel: 'Уровень ФИАС',
-    aoType: 'Тип адресного объекта',
+    aoType: 'Тип адресного объекта'
   },
   tasks: {
     add: 'Добавить задачу',
@@ -260,6 +260,10 @@ export default {
     targetRetained: 'Задача сохранена',
     weHaveToChooseOnePerpetrator: 'Надо выбрать хотябы одного исполнителя',
     natureOfFracture: 'Характер поломки: ',
+    implementers: 'Исполнители',
+    targets: 'Детали задачи',
+    priority: 'Приоритет: ',
+    targetValidUntil: 'Задача действительна до: ',
     modes: {
       title: 'Тип задачи',
       titlePlural: 'Типы задач',
@@ -305,7 +309,7 @@ export default {
     fiberAddrRequired: 'fiberAddr нужен',
     fiber: 'Глаз',
     signalLevel: 'Уровень сигнала: ',
-    onuStateDescr: 'Состояние onu',
+    onuStateDescr: 'Состояние onu'
   },
   route: {
     staff: 'Cотрудники',
@@ -403,7 +407,7 @@ export default {
   sorm: {
     withoutPassports: 'Без паспортов',
     withoutContracts: 'Без договоров',
-    tooOld: 'Дата рождения',
+    tooOld: 'Дата рождения'
   },
   fin: {
     modifyThePaymentGateway: 'Изменить платёжный шлюз',
@@ -416,7 +420,7 @@ export default {
     incomeReport: 'Отчёт о поступлениях',
     paymentGateway: 'Платёжный шлюз',
     paymentGatewayAdded: 'Платёжный шлюз добавлен',
-    createAPayLock: 'Создать платёжный шлюз',
+    createAPayLock: 'Создать платёжный шлюз'
   },
   noSubscribersFoundOnThePort: 'Абоненты на порту не найдены',
   noSubscribersFound: 'Абоненты не найдены',
@@ -454,7 +458,6 @@ export default {
   dateOfEstablishment: 'Дата создания: ',
   areUSuretRemoveGroup: 'Действительно удалить группу?',
   birthday: 'День рождения',
-  targets: 'Детали задачи',
   development: 'Development',
   devIdRequired: 'devId необходимо заполнить.',
   dynamic: 'Динамический',
@@ -466,7 +469,6 @@ export default {
   addTheCalculation: 'Добавить учётку',
   addAnAccountingRecord: 'Добавить учётную запись',
   addTheDevice: 'Добавить устройство',
-  addTheTask: 'Добавить задачу',
   addendum: 'Добавление',
   onlyNumber: 'Должно содержать только число',
   houseNum: '№ дома',
@@ -503,7 +505,6 @@ export default {
   conflict: 'ip конфликт',
   andGoIn: 'Ip входа',
   basedOnByte: 'Исходящих байт',
-  implementers: 'Исполнители',
   correctFormsOfError: 'Исправь ошибки формы',
   correct: 'Исправить',
   modificationOfSessions: 'Изменение Сессии',
@@ -666,7 +667,6 @@ export default {
   facilities: 'Принадлежность сайтам',
   webRecordsMaintained: 'Принадлежность учётных записей сайтам сохранена',
   theOwnershipOfTheTypeOfPaymentsToWebsitesIsMaintained: 'Принадлежность вида платежей сайтам сохранена',
-  priority: 'Приоритет: ',
   loss: 'Провалена',
   path: 'путь',
   distributionOfServicesBySubscribers: 'Распределение использования услуг абонентами',
@@ -699,7 +699,6 @@ export default {
   community: 'SNMP Community',
   safe: 'Сохранить',
   keepHimSafe: 'Сохранить ONU',
-  creatingTheChallenge: 'Создание задачи',
   createAMassenger: 'Создать messenger',
   heSInTheEye: 'Список ONU на глазу',
   average: 'Средний',
@@ -772,7 +771,6 @@ export default {
   administrativeServices: 'Является-ли административной услугой.',
   itSAMoronOfControl: 'Является-ли вланом управления.',
   legalAddress: 'Юридический адрес',
-  targetValidUntil: 'Задача действительна до: ',
   theTaskWillBeRemovedNowCarefully: 'Задача сейчас будет удалена, внимательно',
   targetRemoved: 'Задача удалена',
   targetCompleted: 'Задача завершена',

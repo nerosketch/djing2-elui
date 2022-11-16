@@ -140,7 +140,7 @@ export class CurrentPermissions extends VuexModule {
     add_basepaymentmodel: false,
     view_basepaymentmodel: false,
     change_basepaymentmodel: false,
-    delete_basepaymentmodel: false,
+    delete_basepaymentmodel: false
   }
 
   public gateways = {

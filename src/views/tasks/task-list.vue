@@ -10,7 +10,7 @@
       ref="tbl")
       template(#customer_full_name="{row}")
         router-link.el-link.el-link--primary.is-underline(
-          :to="{ name: 'customerDetails', params: {uid: row.customer } }"
+          :to="{ name: 'customerDetails', params: {uid: row.customer_id } }"
         ) {{ row.customer_full_name }}
 
       template(#id="{row}")
@@ -27,13 +27,13 @@
           icon="el-icon-plus"
           @click="openNew"
           :disabled="!$perms.tasks.add_task")
-          | {{ $t('addTheTask') }}
+          | {{ $t('tasks.add') }}
 
         el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")
           | {{ $t('field') }}
 
     el-dialog(
-      :title="$t('creatingTheChallenge')"
+      :title="$t('tasks.adding')"
       :visible.sync="formDialog"
       :close-on-click-modal="false")
       task-form
@@ -64,7 +64,7 @@ export default class extends Vue {
 
   private editFieldsVisible = false
 
-  @Prop({ default: '' })
+  @Prop({ required: true })
   private tabUrl!: string
 
   @Watch('tabUrl')
@@ -133,7 +133,7 @@ export default class extends Vue {
 
   private loadTasks(params?: IDRFRequestListParameters) {
     if (params) {
-      params.fields = 'id,customer,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
+      params.fields = 'id,customer_id,customer_full_name,customer_address,mode_str,descr,state_str,time_of_create,comment_count,priority,is_expired'
     }
     return getTasks(params, this.tabUrl)
   }

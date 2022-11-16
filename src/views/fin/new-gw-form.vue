@@ -34,10 +34,10 @@ export default class extends Vue {
   private gwChoice = 0
 
   private choices = [
-    {val: 0, title: 'Не выбран'},
-    {val: 2, title: 'RNCB'},
-    {val: 3, title: 'All time'},
-    {val: 4, title: 'PayMe'},
+    { val: 0, title: 'Не выбран' },
+    { val: 2, title: 'RNCB' },
+    { val: 3, title: 'All time' },
+    { val: 4, title: 'PayMe' }
   ]
 
   private get frmComponentGetter() {

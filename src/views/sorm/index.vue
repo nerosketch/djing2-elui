@@ -26,15 +26,14 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
     CustomerWithoutPassportList,
     CustomerWithoutContractList,
     CustomerTooOldList,
-    Tabs,
+    Tabs
   }
 })
 export default class extends Vue {
-
   private tabItems: ICustomTabItem[] = [
     { name: 'passport', title: this.$t('sorm.withoutPassports') },
     { name: 'contract', title: this.$t('sorm.withoutContracts') },
-    { name: 'tooold', title: this.$t('sorm.tooOld') },
+    { name: 'tooold', title: this.$t('sorm.tooOld') }
   ]
 
   // Breadcrumbs

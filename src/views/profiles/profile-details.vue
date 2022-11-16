@@ -69,7 +69,7 @@ export default class extends Vue {
     { name: 'activity', title: this.$t('profiles.responsibilityForGroups') },
     { name: 'classperms', title: this.$t('rightsToClassesOfAction') },
     { name: 'timeline', title: this.$t('actionLog') },
-    { name: 'authlog', title: this.$t('authorizationLogs') },
+    { name: 'authlog', title: this.$t('authorizationLogs') }
   ]
 
   created() {

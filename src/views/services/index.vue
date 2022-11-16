@@ -32,7 +32,7 @@ export default class extends Vue {
   private tabItems: ICustomTabItem[] = [
     { name: 'services', title: this.$t('tariffs') },
     { name: 'periodicpays', title: this.$t('recurrentPayments') },
-    { name: 'shots', title: this.$t('singlePayments') },
+    { name: 'shots', title: this.$t('singlePayments') }
   ]
 }
 </script>

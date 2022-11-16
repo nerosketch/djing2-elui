@@ -66,13 +66,12 @@
         shadow="never"
         body-style="padding: 10px;"
       )
-        template(#header)
-          | {{ $t('devices.status') }}
+        template(#header) {{ $t('devices.status') }}
 
           el-link(
             style="float: right"
             icon="el-icon-refresh"
-            @click="refreshDev")
+            @click="getDetails")
 
         p(v-if="$store.getters.isOnuRegistered && macsNotEqual")
           b {{ $t('attention') }}!
@@ -84,6 +83,7 @@
         el-row(
           type="flex"
           v-else-if="$store.getters.isOnuRegistered"
+          v-loading="loading"
         )
           el-col(style="width: 128px;")
             i.icon-big(:class="iconStatusClass")
@@ -149,6 +149,7 @@ export default class extends Vue {
   @Prop({ default: null }) private device!: IDevice | null
   private devFormDialog = false
   private onuDetails: IOnuDetails | null = null
+  private loading = false
 
   get iconStatusClass() {
     return {
@@ -196,8 +197,13 @@ export default class extends Vue {
 
   private async getDetails() {
     if (this.device !== null) {
-      const { data } = await scanPonDetails(this.device.id)
-      this.onuDetails = data
+      this.loading = true
+      try {
+        const { data } = await scanPonDetails(this.device.id)
+        this.onuDetails = data
+      } finally {
+        this.loading = false
+      }
     }
   }
 

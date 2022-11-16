@@ -15,7 +15,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IDRFRequestListParameters } from '@/api/types'
 import { ICustomerIpLease } from '@/api/networks/types'
-import { getCustomerIpLeases, getGlobalGuestLeases } from '@/api/networks/req'
+import { getGlobalGuestLeases } from '@/api/networks/req'
 import BooleanIcon from '@/components/boolean-icon.vue'
 
 class DataTableComp extends DataTable<ICustomerIpLease> {}

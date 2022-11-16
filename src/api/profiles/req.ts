@@ -25,7 +25,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 // IUserProfileLog
 const baseLogUrl = '/profiles/log/'
 export const getProfileLogs = (params?: IDRFRequestListParameters, account?: number): IUserProfileLogListAxiosResponsePromise =>

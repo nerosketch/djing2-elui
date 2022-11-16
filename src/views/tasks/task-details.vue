@@ -7,6 +7,7 @@
         task-form(
           v-if='taskReady'
           :recipients="potentialRecipients"
+          @updated="onUpdatedTask"
         )
     el-col.mt5(:lg='12' :sm='24')
       task-info(
@@ -15,7 +16,10 @@
         :taskId="taskId"
       )
     el-col.mt5(:lg='12' :sm='24')
-      comments(v-if='taskReady')
+      comments(
+        ref="commentsref"
+        v-if='taskReady'
+      )
     el-col.mt5(:lg='12' :sm='24')
       finish-doc-index(
         :recipients="potentialRecipients"
@@ -34,8 +38,8 @@ import {
   IWsMessageEventTypeEnum
 } from '@/layout/mixin/ws'
 import FinishDocIndex from './finish_doc/index.vue'
-import { getActiveProfiles } from '@/api/profiles/req'
 import { IUserProfile } from '@/api/profiles/types'
+import { loadPotentialRecipients } from './recipients-field-choice.vue'
 
 interface ITaskEventData {
   task_id: number
@@ -51,6 +55,10 @@ interface ITaskEventData {
   }
 })
 export default class extends Vue {
+  public readonly $refs!:{
+    commentsref: Comments
+  }
+
   @Prop({ default: 0 })
   private taskId!: number
 
@@ -69,8 +77,8 @@ export default class extends Vue {
 
   async created() {
     this.taskReady = false
-    await this.loadTask()
     await this.loadPotentialRecipients()
+    await this.loadTask()
     this.taskReady = true
 
     // Subscribe for task update event from server
@@ -78,12 +86,7 @@ export default class extends Vue {
   }
 
   protected async loadPotentialRecipients() {
-    const { data } = await getActiveProfiles({
-      page: 1,
-      page_size: 0,
-      fields: 'id,full_name,username'
-    })
-    this.potentialRecipients = data
+    this.potentialRecipients = await loadPotentialRecipients()
   }
 
   beforeDestroy() {
@@ -95,6 +98,10 @@ export default class extends Vue {
     if (dat.task_id === this.taskId) {
       this.loadTask()
     }
+  }
+
+  private onUpdatedTask() {
+    this.$refs.commentsref.loadComments()
   }
 }
 </script>

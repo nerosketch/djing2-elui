@@ -10,8 +10,8 @@ class TaskAttachment extends VuexModule implements ITaskDocumentAttachment {
   title = ''
   doc_file = ''
   create_time = ''
-  author = 0
-  task = 0
+  author_id = 0
+  task_id = 0
 
   @Mutation
   public SET_ALL_ATTACHMENT(data: ITaskDocumentAttachment) {
@@ -19,8 +19,8 @@ class TaskAttachment extends VuexModule implements ITaskDocumentAttachment {
     this.title = data.title
     this.doc_file = data.doc_file
     this.create_time = data.create_time
-    this.author = data.author
-    this.task = data.task
+    this.author_id = data.author_id
+    this.task_id = data.task_id
   }
 
   @Mutation
@@ -29,8 +29,8 @@ class TaskAttachment extends VuexModule implements ITaskDocumentAttachment {
     this.title = ''
     this.doc_file = ''
     this.create_time = ''
-    this.author = 0
-    this.task = 0
+    this.author_id = 0
+    this.task_id = 0
   }
 
   @Action

@@ -33,7 +33,7 @@ const customerRoutes: RouteConfig = {
       component: () => import(/* webpackChunkName: "customerdetails" */ '@/views/customers/customer-details.vue'),
       props: ({ params }) => ({ uid: Number(params.uid || 0) }),
       meta: { hidden: true }
-    },
+    }
   ]
 }
 

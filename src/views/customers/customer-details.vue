@@ -51,7 +51,7 @@ interface ICustomerUpdateEventData {
     Services,
     Finance,
     CustomerTaskHistory,
-    Tabs,
+    Tabs
   }
 })
 export default class extends Vue {
@@ -74,7 +74,10 @@ export default class extends Vue {
     // Subscribe for customer update event from server
     this.$eventHub.$on(IWsMessageEventTypeEnum.UPDATE_CUSTOMER, this.onCustomerServerUpdate)
 
-    this.loadCustomer()
+    this.loaded = false
+    this.loadCustomer().then(() => {
+      this.loaded = true
+    })
 
     this.loadLocalityDetail(this.$store.state.customer.address_id, 4)
   }
@@ -85,6 +88,7 @@ export default class extends Vue {
       this.setCrumbs(lc.id)
     }
   }
+
   @Watch('$store.state.customer.address_id')
   private onChCustomerAddr(addrId: number) {
     this.loadLocalityDetail(addrId, 4)
@@ -95,9 +99,7 @@ export default class extends Vue {
   }
 
   private async loadCustomer() {
-    this.loaded = false
     await CustomerModule.GetCustomer(this.uid)
-    this.loaded = true
     this.setCrumbs(this.$store.state.customer.address_id)
     document.title = this.$store.state.customer.full_name || this.$tc('customers.customer')
   }
@@ -106,7 +108,7 @@ export default class extends Vue {
     { title: this.$t('customers.info'), name: 'info' },
     { title: this.$t('route.services'), name: 'services', disabled: !this.$perms.customers.view_customerservice },
     { title: this.$t('route.finance'), name: 'fin', disabled: !this.$perms.customers.view_customerlog },
-    { title: this.$t('customers.taskHistory'), name: 'history', disabled: !this.$perms.tasks.view_task },
+    { title: this.$t('customers.taskHistory'), name: 'history', disabled: !this.$perms.tasks.view_task }
   ]
 
   private onCustomerServerUpdate(msg: IWsMessage) {
@@ -127,19 +129,21 @@ export default class extends Vue {
           title: this.$tc('addrs.addresses')
         }
       },
-      this.localityDetail ? {
-        path: { name: 'customerList', params: { addrId: this.localityDetail.id } },
-        meta: {
-          hidden: true,
-          title: this.localityDetail.title
-        }
-      } : {
-        path: '',
-        meta: {
-          hidden: true,
-          title: '-'
-        }
-      },
+      this.localityDetail
+        ? {
+            path: { name: 'customerList', params: { addrId: this.localityDetail.id } },
+            meta: {
+              hidden: true,
+              title: this.localityDetail.title
+            }
+          }
+        : {
+            path: '',
+            meta: {
+              hidden: true,
+              title: '-'
+            }
+          },
       {
         path: '',
         meta: {

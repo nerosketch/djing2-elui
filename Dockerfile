@@ -25,7 +25,7 @@ RUN ["mkdir", "-p", "/var/www/media"]
 RUN ["chown", "-R", "nginx.", "/var/www/media"]
 RUN ["chmod", "777", "/var/www/media"]
 
-COPY ["nginx/browsersupp.conf", "nginx/expires-hdrs.conf", "nginx/root_serve.conf", "/etc/nginx/"]
+COPY ["nginx/browsersupp.conf", "nginx/expires-hdrs.conf", "nginx/root_serve.conf", "nginx/nginx.conf", "/etc/nginx/"]
 COPY ["nginx/bad_browser.html", "/var/www/"]
 
 COPY --from=uibuild --chown=nginx:nginx ["/home/node/app/dist", "/var/www/app"]

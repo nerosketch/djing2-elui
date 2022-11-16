@@ -1,12 +1,12 @@
 import request from '@/utils/request'
 import {
   IChoiceItemType,
-  IChoiceItemTypeListAxiosResponsePromise,
+  IChoiceItemTypeListAxiosResponsePromise
 } from '@/api/types'
 import {
   IDynamicField,
   IDynamicFieldSystemTag,
-  IDynamicFieldSystemTagListAxiosResponsePromise,
+  IDynamicFieldSystemTagListAxiosResponsePromise
 } from './types'
 import {
   addObjectDecorator,
@@ -15,7 +15,6 @@ import {
   getObjectListDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
-
 
 // IDynamicField
 const dynamicFieldsUrl = '/dynamicfields/'

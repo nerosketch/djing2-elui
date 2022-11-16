@@ -11,18 +11,24 @@
         maxlength="128"
       )
 
-    el-form-item(:label="$t('implementers')" prop="recipients")
+    el-form-item(
+      :label="$t('tasks.implementers')"
+      prop="recipients"
+    )
       recipients-field-choice(
         :recipients="recipients"
         v-model="frmMod.recipients"
       )
 
-    el-form-item(:label="$t('tasks.natureOfFracture')")
+    el-form-item(
+      prop="task_mode_id"
+      :label="$t('tasks.natureOfFracture')"
+    )
       task-modes-field-choice(
         v-model="frmMod.task_mode_id"
       )
 
-    el-form-item(:label="$t('priority')")
+    el-form-item(:label="$t('tasks.priority')")
       el-select(v-model="frmMod.priority")
         el-option(
           v-for="tt in taskPriorities"
@@ -30,7 +36,10 @@
           :label="tt.nm"
           :value="tt.v")
 
-    el-form-item(:label="$t('tasks.taskStatus')")
+    el-form-item(
+      :label="$t('tasks.taskStatus')"
+      prop="task_state"
+    )
       el-select(v-model="frmMod.task_state")
         el-option(
           v-for="tt in taskStates"
@@ -40,14 +49,16 @@
 
     el-form-item(
       :label="$t('customer')"
-      prop="customer"
+      prop="customer_id"
     )
       customer-field(
-        v-model="frmMod.customer"
+        v-model="frmMod.customer_id"
         :defaultName="$store.state.task.customer_full_name"
       )
 
-    el-form-item(:label="$t('tasks.relevance')")
+    el-form-item(
+      :label="$t('tasks.relevance')"
+    )
       el-tooltip(
         :content="$t('tasks.relevanceTooltip')"
         placement="right"
@@ -64,23 +75,23 @@
           type="primary"
           @click="onSubmit"
           icon="el-icon-upload"
-          :disabled="isFormUntouched")
-          | {{ $t('save') }}
+          :disabled="isFormUntouched && !isNewTask"
+        ) {{ $t('save') }}
 
         el-button(
           v-if="!isNewTask"
           type="danger"
           icon="el-icon-delete"
           @click="onDel"
-          :disabled="!$perms.tasks.delete_task")
-          | {{ $t('del') }}
+          :disabled="!$perms.tasks.delete_task"
+        ) {{ $t('del') }}
 
         el-button(
           v-if="!isNewTask"
           type="success"
           @click="onFinish"
-          icon="el-icon-check")
-          | {{ $t('complete') }}
+          icon="el-icon-check"
+        ) {{ $t('complete') }}
 </template>
 
 <script lang="ts">
@@ -106,6 +117,10 @@ import RecipientsFieldChoice from './recipients-field-choice.vue'
   }
 })
 export default class extends mixins(FormMixin) {
+  public readonly $refs!: {
+    form: Form
+  }
+
   @Prop({ default: () => [] })
   private recipients!: IUserProfile[]
 
@@ -131,15 +146,15 @@ export default class extends mixins(FormMixin) {
       descr: TaskModule.descr,
       priority: TaskModule.priority,
       task_state: TaskModule.task_state,
-      task_mode_id: TaskModule.task_mode,
-      customer: TaskModule.customer,
+      task_mode_id: TaskModule.task_mode_id,
+      customer_id: TaskModule.customer_id,
       out_date: TaskModule.out_date || this.initialDate
     }
   }
 
   @Watch('$store.state.task', { deep: true })
   private onUpdateTask() {
-    this.frmMod = this.fromTaskModule
+    this.frmMod = JSON.parse(JSON.stringify(this.fromTaskModule))
     this.frmInitial = Object.assign({}, this.frmMod)
   }
 
@@ -149,6 +164,12 @@ export default class extends mixins(FormMixin) {
     ],
     customer: [
       { validator: positiveNumberValueAvailable, trigger: 'blur', message: this.$tc('weNeedToPickASubscription') }
+    ],
+    task_mode_id: [
+      { required: true, trigger: 'change' }
+    ],
+    task_state: [
+      { required: true, trigger: 'change' }
     ]
   }
 
@@ -186,22 +207,28 @@ export default class extends mixins(FormMixin) {
   }
 
   private onSubmit() {
-    (this.$refs.form as Form).validate(async valid => {
+    this.$refs.form.validate(async valid => {
       if (valid) {
         this.loading = true
-        if (this.isNewTask) {
-          const newTask = await TaskModule.AddTask(this.frmMod)
-          this.$message.success(this.$tc('tasks.targetAdded'))
-          this.$router.push({
-            name: 'taskDetails',
-            params: { taskId: newTask.id.toString() }
-          })
-        } else {
-          await TaskModule.PatchTask(this.frmMod)
-          this.frmInitial = this.fromTaskModule
-          this.$message.success(this.$tc('tasks.targetRetained'))
+        try {
+          if (this.isNewTask) {
+            const newTask = await TaskModule.AddTask(this.frmMod)
+            this.$message.success(this.$tc('tasks.targetAdded'))
+            this.$router.push({
+              name: 'taskDetails',
+              params: { taskId: newTask.id.toString() }
+            })
+            this.$emit('added')
+          } else {
+            await TaskModule.PatchTask(this.frmMod)
+            this.frmInitial = JSON.parse(JSON.stringify(this.fromTaskModule))
+            this.$message.success(this.$tc('tasks.targetRetained'))
+            this.$emit('updated')
+          }
+        } finally {
+          this.loading = false
+          this.$refs.form.clearValidate()
         }
-        this.loading = false
       } else {
         this.$message.error(this.$tc('fixFormErrs'))
       }

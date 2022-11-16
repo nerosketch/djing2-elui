@@ -8,12 +8,12 @@ class TaskFinishDocument extends VuexModule implements ITaskFinishDocument {
   id = 0
   code = ''
   // act_num: string | null = null
-  author = 0
-  task = 0
+  author_id = 0
+  task_id = 0
   create_time = ''
   finish_time = ''
   cost = 0
-  task_mode = 0
+  task_mode_id = 0
   recipients: number[] = []
 
   @Mutation
@@ -21,12 +21,12 @@ class TaskFinishDocument extends VuexModule implements ITaskFinishDocument {
     this.id = doc.id
     this.code = doc.code
     // this.act_num = doc.act_num
-    this.author = doc.author
-    this.task = doc.task
+    this.author_id = doc.author_id
+    this.task_id = doc.task_id
     this.create_time = doc.create_time
     this.finish_time = doc.finish_time
     this.cost = doc.cost
-    this.task_mode = doc.task_mode
+    this.task_mode_id = doc.task_mode_id
     this.recipients = doc.recipients
   }
 
@@ -35,18 +35,18 @@ class TaskFinishDocument extends VuexModule implements ITaskFinishDocument {
     this.id = 0
     this.code = ''
     // this.act_num = null
-    this.author = 0
-    this.task = 0
+    this.author_id = 0
+    this.task_id = 0
     this.create_time = ''
     this.finish_time = ''
     this.cost = 0
-    this.task_mode = 0
+    this.task_mode_id = 0
     this.recipients = []
   }
 
   @Mutation
   public SET_TASK_FIN_DOC_TASK_ID(taskId: number) {
-    this.task = taskId
+    this.task_id = taskId
   }
 
   @Action
@@ -57,8 +57,8 @@ class TaskFinishDocument extends VuexModule implements ITaskFinishDocument {
     } else {
       this.RESET_ALL_TASK_FINISH_DOC()
       this.SET_TASK_FIN_DOC_TASK_ID(taskId)
-      return doc
     }
+    return doc
   }
 
   @Action

@@ -17,7 +17,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 export const getMessengerTypes = (): IBotTypesAxiosPromise =>
   request.get<IBotType[]>('/messenger/get_bot_types/')
 

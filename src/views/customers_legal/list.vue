@@ -160,7 +160,7 @@ export default class extends Vue {
           hidden: true,
           title: this.$tc('organizations')
         }
-      },
+      }
     ] as any)
   }
   // End Breadcrumbs

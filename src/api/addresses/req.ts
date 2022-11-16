@@ -14,7 +14,7 @@ import {
   IAddrLevelItem,
   IAddrLevelItemsIDRFAxiosResponsePromise,
   IAddrTypeItem,
-  IAddrTypeItemsIDRFAxiosResponsePromise,
+  IAddrTypeItemsIDRFAxiosResponsePromise
 } from './types'
 import {
   addObjectDecorator,
@@ -22,7 +22,6 @@ import {
   getObjectDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
-
 
 export interface IDRFRequestListAddrsParameters extends IDRFRequestListParameters {
   address_type?: number
@@ -43,11 +42,13 @@ export const getAddrTypes = (): IAddressTypeListAxiosResponsePromise =>
   request.get<IAddressType[]>('/addrs/get_addr_types/')
 
 export const getAllChildren = (addr_type: number, parent_addr_id?: number, parent_type?: number): IAddressModelPlainListAxiosResponsePromise =>
-  request.get<IAddressModel[]>('/addrs/get_all_children/', { params: {
-    addr_type,
-    parent_addr_id: parent_addr_id || undefined,
-    parent_type
-  }})
+  request.get<IAddressModel[]>('/addrs/get_all_children/', {
+    params: {
+      addr_type,
+      parent_addr_id: parent_addr_id || undefined,
+      parent_type
+    }
+  })
 
 export const getAddrParent = (id: number): IDRFAxiosResponsePromise<IAddressModel | null> =>
   request.get<IAddressModel | null>(`/addrs/${id}/get_parent/`)
@@ -62,7 +63,7 @@ export const filterByFiasLevel = (level: number, fields?: string): IAddressModel
   request.get<IAddressModel[]>('/addrs/filter_by_fias_level/', { params: { level, fields } })
 
 // export const fetchAddrAutocomplete = (findStr: string): IAddressModelPlainListAxiosResponsePromise =>
-  // request.get<IAddressModel[]>('/addrs/autocomplete/', {params: { search: findStr }})
+// request.get<IAddressModel[]>('/addrs/autocomplete/', {params: { search: findStr }})
 
 export const getAddrFullTitle = (addrId: number): StringAxiosResponsePromise =>
   request.get<string>(`/addrs/${addrId}/get_full_title/`)

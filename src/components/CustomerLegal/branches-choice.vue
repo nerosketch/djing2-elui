@@ -18,9 +18,9 @@ export default class extends Vue {
 
   private localValue = this.value
   private opts = [
-    {id: 1, title: 'opt 1'},
-    {id: 2, title: 'opt 2'},
-    {id: 3, title: 'opt 3'},
+    { id: 1, title: 'opt 1' },
+    { id: 2, title: 'opt 2' },
+    { id: 3, title: 'opt 3' }
   ]
 
   @Watch('localValue')

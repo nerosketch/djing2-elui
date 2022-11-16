@@ -6,7 +6,7 @@ import {
   IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise,
   IExtraCommentCombinedWithTaskStateChangeLog,
   IExtraComment,
-  ITaskDocumentAttachmentList, ITaskDocumentAttachmentAxoisResponsePromise,
+  ITaskDocumentAttachmentAxoisResponsePromise,
   ITaskDocumentAttachment,
   INewTaskInitialSimpleResponseResultAxoisResponsePromise,
   INewTaskInitialSimpleResponseResult,
@@ -15,7 +15,9 @@ import {
   TaskModeReport,
   TaskModeReportAxoisResponsePromise,
   ITaskMode,
-  ITaskFinishDocument
+  ITaskFinishDocument,
+  ITaskDocumentAttachmentAxiosList,
+  ITaskDocumentAttachmentList
 } from './types'
 import {
   addObjectDecorator,
@@ -24,7 +26,6 @@ import {
   getObjectListDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
-
 
 // ITask
 const baseTaskUrl = '/tasks/'
@@ -43,7 +44,7 @@ export const finishTask = (id: number) =>
   request.get(`${baseTaskUrl}${id}/finish/`)
 
 export const failTask = (id: number) =>
-  request.get(`${baseTaskUrl}${id}/failed/`)
+  request.get(`${baseTaskUrl}${id}/fail/`)
 
 export const remindTask = (id: number) =>
   request.get(`${baseTaskUrl}${id}/remind/`)
@@ -54,14 +55,14 @@ export const getNewTaskInitial = (groupId: number, customerId: number): INewTask
 // IExtraComment
 const baseCommentUrl = '/tasks/comments/'
 
-export const getCommentsWithLogs = (task: number): IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise =>
-  request.get<IExtraCommentCombinedWithTaskStateChangeLog[]>(`${baseCommentUrl}combine_with_logs/`, { params: { task } })
+export const getCommentsWithLogs = (task_id: number): IExtraCommentCombinedWithTaskStateChangeLogListAxoisResponsePromise =>
+  request.get<IExtraCommentCombinedWithTaskStateChangeLog[]>(`${baseCommentUrl}combine_with_logs/`, { params: { task_id } })
 
 export const getComment = getObjectDecorator<IExtraComment>(baseCommentUrl)
 
 export const addComment = (text: string, taskId: number): IExtraCommentAxoisResponsePromise =>
   request.post<IExtraComment>(baseCommentUrl, {
-    text, task: taskId
+    text, task_id: taskId
   })
 
 export const changeComment = patchObjectDecorator<IExtraComment>(baseCommentUrl)
@@ -69,8 +70,8 @@ export const delComment = delObjectDecorator<IExtraComment>(baseCommentUrl)
 
 // ITaskDocumentAttachment
 const TaskAttachmUrl = '/tasks/attachment/'
-export const getAttachments = (task: number): ITaskDocumentAttachmentList =>
-  request.get<ITaskDocumentAttachment[]>(TaskAttachmUrl, { params: { task } })
+export const getAttachments = (task_id: number): ITaskDocumentAttachmentAxiosList =>
+  request.get<ITaskDocumentAttachmentList>(TaskAttachmUrl, { params: { task_id } })
 
 export const getAttachment = getObjectDecorator<ITaskDocumentAttachment>(TaskAttachmUrl)
 
@@ -78,7 +79,7 @@ export const addAttachment = (newAtt: any): ITaskDocumentAttachmentAxoisResponse
   const formData = new FormData()
   formData.append('doc_file', newAtt.doc_file)
   formData.append('title', newAtt.title)
-  formData.append('task', newAtt.task)
+  formData.append('task_id', newAtt.task_id)
   return request.post<ITaskDocumentAttachment>(TaskAttachmUrl, formData)
 }
 
@@ -100,7 +101,7 @@ export const changeMode = patchObjectDecorator<ITaskMode>(modeBaseUrl)
 const taskFinishDocBaseUrl = '/tasks/finish_document/'
 export const getTaskFinishDoc = async(taskId: number): Promise<ITaskFinishDocument | null> => {
   const r = await request.get<ITaskFinishDocument[]>(taskFinishDocBaseUrl, {
-    params: { task: taskId }
+    params: { task_id: taskId }
   })
   if (r.status === 200 && r.data.length > 0) {
     return r.data[0]

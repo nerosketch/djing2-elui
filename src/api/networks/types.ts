@@ -9,7 +9,6 @@ export interface IVlanIf {
   sites?: number[]
 }
 
-
 export enum INetworkIpPoolKind {
   NOT_DEFINED = 0,
   INTERNET = 1,

@@ -43,7 +43,7 @@ export default class extends Vue {
   private setBtnStatus(text: string, status: number) {
     this.buttonStatus = status === 1 ? 1 : -1
     this.buttonText = text
-    let tm = setTimeout(() => {
+    const tm = setTimeout(() => {
       this.buttonText = this.$tc('correct')
       this.buttonStatus = 0
       clearTimeout(tm)
