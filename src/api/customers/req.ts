@@ -65,7 +65,7 @@ export const findCustomers = (name: string): ICustomerListAxiosResponsePromise =
   request.get<ICustomerList>(custApiUrl, {
     params: {
       search: name,
-      fields: 'id,full_name'
+      fields: 'id,full_name,username'
     }
   })
 
