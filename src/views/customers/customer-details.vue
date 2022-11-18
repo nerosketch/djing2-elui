@@ -1,7 +1,6 @@
 <template lang="pug">
 tabs(
   :tabs="tabItems"
-  activeTabName="info"
 )
   template(#head)
     span {{ $t('customers.balance') }}:
@@ -9,7 +8,7 @@ tabs(
     span  {{ $t('dateOfEstablishment') }}
     small {{ $store.state.customer.create_date }}
 
-  template(#info)
+  template
     info(v-if="loaded")
   template(#services)
     services(v-if="loaded")
@@ -105,7 +104,7 @@ export default class extends Vue {
   }
 
   private tabItems: ICustomTabItem[] = [
-    { title: this.$t('customers.info'), name: 'info' },
+    { title: this.$t('customers.info') },
     { title: this.$t('route.services'), name: 'services', disabled: !this.$perms.customers.view_customerservice },
     { title: this.$t('route.finance'), name: 'fin', disabled: !this.$perms.customers.view_customerlog },
     { title: this.$t('customers.taskHistory'), name: 'history', disabled: !this.$perms.tasks.view_task }
