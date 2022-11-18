@@ -17,7 +17,8 @@ import {
   ITaskMode,
   ITaskFinishDocument,
   ITaskDocumentAttachmentAxiosList,
-  ITaskDocumentAttachmentList
+  ITaskDocumentAttachmentList,
+  ITaskFinishDocumentList,
 } from './types'
 import {
   addObjectDecorator,
@@ -100,15 +101,14 @@ export const changeMode = patchObjectDecorator<ITaskMode>(modeBaseUrl)
 
 const taskFinishDocBaseUrl = '/tasks/finish_document/'
 export const getTaskFinishDoc = async(taskId: number): Promise<ITaskFinishDocument | null> => {
-  const r = await request.get<ITaskFinishDocument[]>(taskFinishDocBaseUrl, {
+  const r = await request.get<ITaskFinishDocumentList>(taskFinishDocBaseUrl, {
     params: { task_id: taskId }
   })
-  if (r.status === 200 && r.data.length > 0) {
-    return r.data[0]
-  } else {
-    return null
+  if (r.status === 200 && r.data.results.length > 0) {
+    return r.data.results[0]
   }
+  return null
 }
-export const getTaskFinishDocs = getObjectListDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)
+// export const getTaskFinishDocs = getObjectListDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)
 export const addTaskFinishDoc = addObjectDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)
 export const changeTaskFinishDoc = patchObjectDecorator<ITaskFinishDocument>(taskFinishDocBaseUrl)

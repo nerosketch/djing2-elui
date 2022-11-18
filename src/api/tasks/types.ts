@@ -120,3 +120,4 @@ export interface ITaskFinishDocument {
   task_mode_id: number
   recipients: number[]
 }
+export type ITaskFinishDocumentList = IDRFListResponse<ITaskFinishDocument>
