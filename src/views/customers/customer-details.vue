@@ -1,15 +1,13 @@
 <template lang="pug">
-tabs(
-  :tabs="tabItems"
-)
+tabs(:tabs="tabItems")
   template(#head)
     span {{ $t('customers.balance') }}:
     small  {{ $store.state.customer.balance }}.
     span  {{ $t('dateOfEstablishment') }}
     small {{ $store.state.customer.create_date }}
 
-  template
-    info(v-if="loaded")
+  info(v-if="loaded")
+
   template(#services)
     services(v-if="loaded")
   template(#fin)
@@ -20,7 +18,7 @@ tabs(
   template(#additional_tabs)
     slot(name="additional_tabs") def
 
-  slot
+  slot(name='other')
 
 </template>
 

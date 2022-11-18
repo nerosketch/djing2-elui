@@ -1,9 +1,7 @@
 <template lang="pug">
-tabs(
-  :tabs="tabItems"
-)
-  template
-    task-list(tabUrl="get_new")
+tabs(:tabs="tabItems")
+  task-list(tabUrl="get_new")
+
   template(#tfin)
     task-list(tabUrl="get_finished")
   template(#tf)

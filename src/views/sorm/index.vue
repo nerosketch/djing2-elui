@@ -1,9 +1,7 @@
 <template lang="pug">
-tabs(
-  :tabs="tabItems"
-)
-  template
-    customer-without-passport-list
+tabs(:tabs="tabItems")
+  customer-without-passport-list
+
   template(#contract)
     customer-without-contract-list
   template(#tooold)

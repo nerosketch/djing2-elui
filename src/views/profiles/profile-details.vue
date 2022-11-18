@@ -9,8 +9,7 @@
           :tabs="tabItems"
           :dense="true"
         )
-          template
-            profile-form(v-if="ready")
+          profile-form(v-if="ready")
 
           template(#activity)
             group-responsibility(:profileUname="profileUname")

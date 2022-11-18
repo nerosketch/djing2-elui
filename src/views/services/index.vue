@@ -1,9 +1,7 @@
 <template lang="pug">
-tabs(
-  :tabs="tabItems"
-)
-  template
-    service-list
+tabs(:tabs="tabItems")
+  service-list
+
   template(#periodicpays)
     periodic-pay-list
   template(#shots)
