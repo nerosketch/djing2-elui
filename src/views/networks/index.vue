@@ -1,9 +1,8 @@
 <template lang="pug">
   tabs(
     :tabs="tabItems"
-    activeTabName="sessions"
   )
-    template(#sessions)
+    template
       lease-list
     template(#pools)
       pool-list
@@ -31,7 +30,7 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 })
 export default class extends Vue {
   private tabItems: ICustomTabItem[] = [
-    { name: 'sessions', title: this.$t('guestSessions') },
+    { title: this.$t('guestSessions') },
     { name: 'pools', title: this.$t('subnets') },
     { name: 'vlans', title: this.$t('devices.vlanS') }
   ]

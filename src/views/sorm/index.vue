@@ -1,9 +1,8 @@
 <template lang="pug">
 tabs(
   :tabs="tabItems"
-  activeTabName="passport"
 )
-  template(#passport)
+  template
     customer-without-passport-list
   template(#contract)
     customer-without-contract-list
@@ -31,7 +30,7 @@ import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 })
 export default class extends Vue {
   private tabItems: ICustomTabItem[] = [
-    { name: 'passport', title: this.$t('sorm.withoutPassports') },
+    { title: this.$t('sorm.withoutPassports') },
     { name: 'contract', title: this.$t('sorm.withoutContracts') },
     { name: 'tooold', title: this.$t('sorm.tooOld') }
   ]

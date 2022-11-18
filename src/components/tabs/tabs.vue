@@ -5,7 +5,7 @@ div(:class="{'tab-container': !dense}")
     el-tab-pane(
       v-for="(t, i) in tabs"
       :label="t.title"
-      :name="t.name"
+      :name="t.name || 'default'"
       :key="i"
       lazy
     )
@@ -23,7 +23,7 @@ import { Dictionary } from 'vue-router/types/router'
 
 export interface ICustomTabItem {
   title: string | TranslateResult
-  name: string
+  name?: string
   disabled?: boolean
 }
 
@@ -34,16 +34,23 @@ export default class extends Vue {
   @Prop({ required: true })
   private tabs!: ICustomTabItem[]
 
-  @Prop({ required: true })
+  @Prop({ default: 'default' })
   private activeTabName!: string
 
   @Prop({ default: false })
   private dense!: boolean
 
-  private localActiveTab: string = ''
+  private localActiveTab: string = this.activeTabName
 
   @Watch('localActiveTab')
   private onActiveNameChange(value: string) {
+    // if query is empty, and local tab is default tab
+    if (value === this.activeTabName) {
+      if (this.$route.path !== this.$route.fullPath) {
+        this.$router.push(this.$route.path)
+      }
+      return
+    }
     const newPath = `${this.$route.path}?tab=${value}`
     if (newPath !== this.$route.fullPath) {
       this.$router.push(newPath)
@@ -52,17 +59,13 @@ export default class extends Vue {
 
   @Watch('$route.query')
   private onChangedQuery({ tab }: Dictionary<string>) {
-    if (tab && tab !== this.localActiveTab) {
-      this.localActiveTab = tab
-    }
+    this.localActiveTab = tab || this.activeTabName
   }
 
   created() {
-    this.localActiveTab = this.activeTabName
-
     // Init the default selected tab
-    const tab = this.$route.query.tab as string
-    if (tab) {
+    const tab = this.$route.query.tab as string || this.activeTabName
+    if (tab && tab !== this.localActiveTab) {
       this.localActiveTab = tab
     }
   }

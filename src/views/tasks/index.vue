@@ -1,9 +1,8 @@
 <template lang="pug">
 tabs(
   :tabs="tabItems"
-  activeTabName="tnew"
 )
-  template(#tnew)
+  template
     task-list(tabUrl="get_new")
   template(#tfin)
     task-list(tabUrl="get_finished")
@@ -34,7 +33,7 @@ import TaskModeList from './modes/list.vue'
 })
 export default class extends Vue {
   private tabItems: ICustomTabItem[] = [
-    { title: this.$t('tasks.newChallenges'), name: 'tnew' },
+    { title: this.$t('tasks.newChallenges') },
     { title: this.$t('tasks.challengesAchieved'), name: 'tfin' },
     { title: this.$t('tasks.failedChallenges'), name: 'tf' },
     // { title: this.$t('tasks.allTasks'), name: 'tall' },
