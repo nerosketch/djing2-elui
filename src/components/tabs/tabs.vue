@@ -9,11 +9,11 @@ div(:class="{'tab-container': !dense}")
       :key="i"
       lazy
     )
-      slot(:name="t.name")
+      slot(:name="t.name || 'default'")
 
     slot(name="additional_tabs")
 
-  slot
+  slot(name='other')
 </template>
 
 <script lang="ts">

@@ -1,9 +1,7 @@
 <template lang="pug">
-  tabs(
-    :tabs="tabItems"
-  )
-    template
-      lease-list
+  tabs(:tabs="tabItems")
+    lease-list
+
     template(#pools)
       pool-list
     template(#vlans)

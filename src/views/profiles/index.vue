@@ -1,9 +1,7 @@
 <template lang="pug">
-tabs(
-  :tabs="tabItems"
-)
-  template
-    profile-list
+tabs(:tabs="tabItems")
+  profile-list
+
   template(v-if="$perms.is_superuser" #profilegroups)
     group-list
 

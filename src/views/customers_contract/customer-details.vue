@@ -13,14 +13,15 @@
           el-button(@click="newContractFormVisible=true")
             | {{ $t('add') }}
 
-    el-dialog(
-      :visible.sync="newContractFormVisible"
-      :title="$t('contractDocs.addCustomerContract')"
-    )
-      contract-form(
-        @added="doneAdd"
-        @changed="doneChange"
+    template(#other)
+      el-dialog(
+        :visible.sync="newContractFormVisible"
+        :title="$t('contractDocs.addCustomerContract')"
       )
+        contract-form(
+          @added="doneAdd"
+          @changed="doneChange"
+        )
 </template>
 
 <script lang="ts">
