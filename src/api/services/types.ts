@@ -51,3 +51,16 @@ export interface IOneShotPay {
   cost: number
   sites?: number[]
 }
+
+// CustomerServiceConnectingQueueModel
+export interface ICustomerServiceConnectingQueue {
+  customer_id: number
+  service_id: number
+}
+export interface ICustomerServiceConnectingQueueResponse extends ICustomerServiceConnectingQueue {
+  id: number
+  number_queue: number
+  service_title: string
+}
+
+export type ICustomerServiceConnectingQueueListResponsePromise = IDRFAxiosResponsePromise<ICustomerServiceConnectingQueueResponse[]>
