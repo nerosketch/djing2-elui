@@ -1,6 +1,8 @@
 <template lang="pug">
+div
   customer-details(:uid="uid")
     template(#additional_tabs)
+      p newContractFormVisible {{ newContractFormVisible }}
       el-tab-pane(
         :label="$t('contractDocs.customerContract')"
         name="contracts"
@@ -13,15 +15,14 @@
           el-button(@click="newContractFormVisible=true")
             | {{ $t('add') }}
 
-    template(#other)
-      el-dialog(
-        :visible.sync="newContractFormVisible"
-        :title="$t('contractDocs.addCustomerContract')"
-      )
-        contract-form(
-          @added="doneAdd"
-          @changed="doneChange"
-        )
+  el-dialog(
+    :visible.sync="newContractFormVisible"
+    :title="$t('contractDocs.addCustomerContract')"
+  )
+    contract-form(
+      @added="doneAdd"
+      @changed="doneChange"
+    )
 </template>
 
 <script lang="ts">

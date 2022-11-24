@@ -12,8 +12,6 @@ div(:class="{'tab-container': !dense}")
       slot(:name="t.name || 'default'")
 
     slot(name="additional_tabs")
-
-  slot(name='other')
 </template>
 
 <script lang="ts">

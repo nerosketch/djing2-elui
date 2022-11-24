@@ -17,9 +17,6 @@ tabs(:tabs="tabItems")
 
   template(#additional_tabs)
     slot(name="additional_tabs") def
-
-  slot(name='other')
-
 </template>
 
 <script lang="ts">
