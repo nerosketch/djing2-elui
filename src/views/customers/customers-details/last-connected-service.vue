@@ -6,7 +6,7 @@
         v-loading="serviceBlockLoad"
         v-on:change="onChangeAutoConnect"
         v-model="autoRenewalService"
-        :disabled="!$perms.customers.change_customerservice")
+        :disabled="!$perms.services.change_customerservice")
         boolean-icon(v-model="autoRenewalService")
 
     b Service queue

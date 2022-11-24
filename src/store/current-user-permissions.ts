@@ -43,11 +43,6 @@ export class CurrentPermissions extends VuexModule {
     view_customerlog: false,
     delete_customerlog: false,
 
-    view_customerservice: false,
-    change_customerservice: false,
-    add_customerservice: false,
-    delete_customerservice: false,
-
     add_passportinfo: false,
     view_passportinfo: false,
     change_passportinfo: false,
@@ -171,7 +166,12 @@ export class CurrentPermissions extends VuexModule {
     add_periodicpay: false,
     view_periodicpay: false,
     change_periodicpay: false,
-    delete_periodicpay: false
+    delete_periodicpay: false,
+
+    view_customerservice: false,
+    change_customerservice: false,
+    add_customerservice: false,
+    delete_customerservice: false
   }
 
   public addresses = {
