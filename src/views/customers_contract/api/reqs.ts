@@ -28,7 +28,7 @@ export const addContractDoc = (newAtt: any): IDRFAxiosResponsePromise<ICustomerC
   const formData = new FormData()
   formData.append('doc_file', newAtt.doc_file)
   formData.append('title', newAtt.title)
-  formData.append('contract', newAtt.contract)
+  formData.append('contract_id', newAtt.contract)
   return request.post<ICustomerContractAttachment>(baseAttachmentUrl, formData)
 }
 export const delContractDoc = delObjectDecorator<ICustomerContractAttachment>(baseAttachmentUrl)

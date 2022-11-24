@@ -2,7 +2,6 @@
 div
   customer-details(:uid="uid")
     template(#additional_tabs)
-      p newContractFormVisible {{ newContractFormVisible }}
       el-tab-pane(
         :label="$t('contractDocs.customerContract')"
         name="contracts"
