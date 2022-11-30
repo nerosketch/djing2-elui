@@ -61,8 +61,8 @@ export default class extends Vue {
       const { data } = await getServices({
         groups: groupId,
         fields: 'id'
-      } as any)
-      const selectedIds = (data as IService[]).map(s => s.id)
+      })
+      const selectedIds = data.results.map(s => s.id)
       this.selected = this.services.map(s => ({
         id: s.id,
         state: selectedIds.includes(s.id),

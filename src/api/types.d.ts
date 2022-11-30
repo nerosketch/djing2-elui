@@ -9,8 +9,8 @@ export type IDRFListResponse<T> = {
 }
 
 export interface IDRFRequestListParameters {
-  page: number
-  page_size: number
+  page?: number
+  page_size?: number
   ordering?: string
   fields?: string
 }

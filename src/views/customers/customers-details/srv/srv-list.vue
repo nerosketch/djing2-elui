@@ -79,11 +79,9 @@ export default class extends Vue {
     this.loading = true
     try {
       const { data } = await getServices({
-        page: 1,
-        page_size: 0,
         groups: CustomerModule.group_id
       })
-      this.services = data as IService[]
+      this.services = data.results
     } finally {
       this.loading = false
     }

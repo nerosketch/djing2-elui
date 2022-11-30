@@ -29,7 +29,7 @@ export interface IService {
   sites?: number[]
 }
 export type IServiceList = IDRFListResponse<IService>
-export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList> | IDRFAxiosResponsePromise<IService[]>
+export type IServiceListAxiosResponsePromise = IDRFAxiosResponsePromise<IServiceList>
 
 export interface IDRFRequestListParametersService extends IDRFRequestListParameters {
   groups: number
