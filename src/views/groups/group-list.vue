@@ -131,9 +131,6 @@ export default class extends Vue {
   }
 
   private loadGroups(params?: IDRFRequestListParameters) {
-    if (params) {
-      params.fields = 'id,title,sites'
-    }
     return getGroups(params)
   }
 
