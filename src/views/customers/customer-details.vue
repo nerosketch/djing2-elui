@@ -17,9 +17,6 @@ tabs(:tabs="tabItems")
 
   template(#additional_tabs)
     slot(name="additional_tabs") def
-
-  slot(name='other')
-
 </template>
 
 <script lang="ts">
@@ -103,7 +100,7 @@ export default class extends Vue {
 
   private tabItems: ICustomTabItem[] = [
     { title: this.$t('customers.info') },
-    { title: this.$t('route.services'), name: 'services', disabled: !this.$perms.customers.view_customerservice },
+    { title: this.$t('route.services'), name: 'services', disabled: !this.$perms.services.view_customerservice },
     { title: this.$t('route.finance'), name: 'fin', disabled: !this.$perms.customers.view_customerlog },
     { title: this.$t('customers.taskHistory'), name: 'history', disabled: !this.$perms.tasks.view_task }
   ]

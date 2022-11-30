@@ -73,22 +73,22 @@ export const getCustomerFormInitial = (): ICustomerAxoisResponsePromise =>
   request.get<ICustomer>(`${custApiUrl}get_initial/`)
 
 export const pickService = (id: number, data: IBuyPayloadType) =>
-  request.post(`${custApiUrl}${id}/pick_service/`, data)
+  request.post(`/services/customer_service/${id}/pick_service/`, data)
 
 export const makeShot = (id: number, shotId: number) =>
-  request.post(`${custApiUrl}${id}/make_shot/`, { shot_id: shotId })
+  request.post(`/services/shot/${id}/make_shot/`, { shot_id: shotId })
 
 export const getServiceUsers = (serviceId: number): IServiceUserListAxiosResponsePromise =>
   request.get<IServiceUserList>(`${custApiUrl}service_users/`, { params: { service_id: serviceId } })
 
 export const stopService = (id: number) =>
-  request.get(`${custApiUrl}${id}/stop_service/`)
+  request.get(`/services/customer_service/${id}/stop_service/`)
 
 export const addBalance = (id: number, dat: IBalanceAmountRequest) =>
   request.post(`${custApiUrl}${id}/add_balance/`, dat)
 
 export const getCurrentService = (id: number): ICustomerServiceAxoisResponsePromise =>
-  request.get<ICustomerService>(`${custApiUrl}${id}/current_service/`)
+  request.get<ICustomerService>(`/services/customer_service/${id}/current_service/`)
 
 export const setServiceGroupAccessory = (groupId: number, services: number[]) =>
   request.post(`${custApiUrl}set_service_group_accessory/`, {
@@ -109,7 +109,7 @@ export const pingAllIps = (id: number): ISimpleResponseResultAxiosResponsePromis
   request.get<ISimpleResponseResult>(`${custApiUrl}${id}/ping_all_ips/`)
 
 export const makePeriodicPay4Customer = (id: number, req: IPeriodicPayForIdRequest) =>
-  request.post<string>(`${custApiUrl}${id}/make_periodic_pay/`, req)
+  request.post<string>(`/services/periodic-pay/${id}/make_periodic_pay/`, req)
 
 export const generateCustomerPassword = (): AxiosPromise<string> =>
   request.get<string>(`${custApiUrl}generate_password/`)
@@ -176,13 +176,13 @@ export const setCustomerObjectsPerms = (customerId: number, dat: IObjectGroupPer
 export const getCustomerSelectedObjectPerms = (customerId: number, profileGroupId: number): AxiosPromise<number[]> =>
   request.get(`/customers/${customerId}/get_selected_object_perms/${profileGroupId}/`)
 export const customerServiceTypeReportRequest = (): CustomerServiceTypeReportResultAxoisResponsePromise =>
-  request.get<CustomerServiceTypeReportResult>('/customers/service_type_report/')
+  request.get<CustomerServiceTypeReportResult>('/services/customer_service/service_type_report/')
 
 export const customersActivityReportRequest = (): CustomerActivityReportResultAxoisResponsePromise =>
-  request.get<CustomerActivityReportResult>('/customers/activity_report/')
+  request.get<CustomerActivityReportResult>('/services/customer_service/activity_report/')
 
 // PeriodicPayForId
-const CustomerPPayUrl = '/customers/periodic-pay/'
+const CustomerPPayUrl = '/services/periodic-pay/'
 
 export const getAssignedPeriodicPays = (account: number): IPeriodicPayForIdListAxiosResponsePromise =>
   request.get<IPeriodicPayForIdList>(CustomerPPayUrl, { params: { account } })

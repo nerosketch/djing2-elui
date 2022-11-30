@@ -1,29 +1,31 @@
 <template lang="pug">
   div(v-loading)
-    p(v-if="lastConnectedExists()")
-      | {{ $t('customers.serviceLastConnected') }} -
-
-      b {{ $store.state.customer.last_connected_service_title }}
-
     p {{ $t('customers.serviceAutocontinuation') }} -
 
       el-checkbox(
         v-loading="serviceBlockLoad"
         v-on:change="onChangeAutoConnect"
         v-model="autoRenewalService"
-        :disabled="!$perms.customers.change_customerservice")
+        :disabled="!$perms.services.change_customerservice")
         boolean-icon(v-model="autoRenewalService")
+
+    b Service queue
+    customer-queue(
+      :customerId="$store.state.customer.id"
+    )
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import BooleanIcon from '@/components/boolean-icon.vue'
+import CustomerQueue from '@/views/services/customer_queue.vue'
 
 @Component({
   name: 'LastConnectedService',
   components: {
-    BooleanIcon
+    BooleanIcon,
+    CustomerQueue
   }
 })
 export default class extends Vue {
@@ -47,10 +49,6 @@ export default class extends Vue {
     } finally {
       this.serviceBlockLoad = false
     }
-  }
-
-  private lastConnectedExists() {
-    return CustomerModule.last_connected_service_id > 0
   }
 }
 </script>
