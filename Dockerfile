@@ -13,6 +13,7 @@ WORKDIR ${APP_DIR}
 COPY . .
 
 RUN npm install
+RUN npx browserslist@latest --update-db
 RUN npm run build --production
 
 # ------------------------- RELEASE -----------------------------
