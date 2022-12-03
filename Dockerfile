@@ -18,7 +18,7 @@ RUN npm run build --production
 
 # ------------------------- RELEASE -----------------------------
 FROM nginx:alpine AS frontprod
-EXPOSE 80
+EXPOSE 80 443
 
 ENV NGINX_PORT=80
 
