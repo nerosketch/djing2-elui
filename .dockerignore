@@ -5,3 +5,4 @@ dist/
 .git/
 .gitignore
 .gitmodules
+package-lock.json
