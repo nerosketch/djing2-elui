@@ -1,5 +1,5 @@
 # ------------------------- BUILD -------------------------------
-FROM node:10 AS uibuild
+FROM node:10 AS nerosketch/djing2-frontapp
 
 ENV VUE_APP_BASE_API=/api
 ENV DEFAULT_LANG=ru
@@ -17,7 +17,7 @@ RUN npx browserslist@latest --update-db
 RUN npm run build --production
 
 # ------------------------- DEVEL -----------------------------
-FROM uibuild AS uidevel
+FROM nerosketch/djing2-frontapp AS uidevel
 
 ENV PORT=8080
 
