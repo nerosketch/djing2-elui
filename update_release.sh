@@ -9,5 +9,5 @@ if [ $? -eq 1 ]; then
 fi
 
 docker login && \
-docker build -t nerosketch/djing2-frontapp:latest --target nerosketch/djing2-frontapp . && \
+docker build -t nerosketch/djing2-frontapp:latest --target base . && \
 docker push nerosketch/djing2-frontapp:latest
