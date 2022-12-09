@@ -95,7 +95,7 @@ export const scanPonDetails = (devId: number) =>
 export const scanPorts = (devId: number): IScannedPortAxiosPromise =>
   request.get<ISimpleScanPortsResponseResult>(`${baseDevUrl}${devId}/scan_ports/`)
 
-export const scanOnuList = (devId: number, onProgress: (c: ProgressEvent) => void): AxiosPromise<string> =>
+export const scanOnuList = (devId: number, onProgress: (c: any) => void): AxiosPromise<string> =>
   request.get(`${baseDevPonUrl}${devId}/scan_onu_list/`, { onDownloadProgress: onProgress })
 
 export const scanUnitsUnregistered = (devId: number): IUnitUnregisteredListAxiosPromise =>
