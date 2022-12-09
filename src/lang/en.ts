@@ -329,7 +329,12 @@ export default {
   },
   gateways: {
     port: 'Port',
-    wrong_format_ipv4: 'Not the correct format of the IPv4 address.'
+    enabled: 'Enabled',
+    gatewayType: 'Gateway type: ',
+    authLogin: 'Auth login',
+    authPassw: 'Auth password',
+    nasType: 'NAS type',
+    wrong_format_ipv4: 'Not the correct format of the IPv4 address.',
   },
   contractDocs: {
     addDoc: 'Add document',
@@ -518,7 +523,6 @@ export default {
   iNeedADescription: 'I need a description.',
   someOtherProgress: 'Some other progress',
   kbytes: 'Bytes',
-  classOfLock: 'Class of lock: ',
   buttons: 'Buttons',
   userCnt: 'User cnt',
   permcount: 'Perms count',
@@ -537,7 +541,6 @@ export default {
   authorizationLogs: 'Authorization logs',
   actionLog: 'Action log',
   login: 'Login',
-  inletLogin: 'Inlet login',
   laginCanContainLatinSymbolsAndFigures:
     'Lagin can contain Latin symbols and figures',
   loginCanTBeEmpty: "Login can't be empty.",
@@ -618,7 +621,6 @@ export default {
   sendWebHoseUrn: 'Send web hose urn',
   parametersRiver: 'Parameters river',
   password: 'password',
-  inletPassword: 'Inlet password',
   thePasswordCannotBeEmpty: 'The password cannot be empty',
   thePasswordConsistsOfAMinimumOf6Symbols:
     'The password consists of a minimum of 6 symbols',
@@ -724,7 +726,6 @@ export default {
   currentWebHook: 'current web hook:',
   type: 'Type',
   typeOfBean: 'Type of bean',
-  likeUs: 'Like us.',
   typeOfEquipment: 'Type of equipment',
   typeOfField: 'Type of field',
   typeOfNetwork: 'Type of network',
@@ -764,7 +765,7 @@ export default {
   incomingPackets: 'Incoming packets',
   outgoingPackets: 'Outgoing packets',
   bulk: 'Bulk',
-  included: 'Included',
+  enabled: 'Included',
   including: 'Including',
   '2-4094': 'Vlan can be in range 2-40942-4094',
   weReCleared: "We're cleared.",
