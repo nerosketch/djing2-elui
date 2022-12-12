@@ -19,7 +19,7 @@ import {
 class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
   title = ''
   description = ''
-  group = 0
+  group_id = 0
   branches: number[] = []
   balance = 0
   address = 0
@@ -39,7 +39,7 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
     SET_ALL_BASE_PROFILE(this, customer)
     this.title = customer.title
     this.description = customer.description
-    this.group = customer.group
+    this.group_id = customer.group_id
     this.branches = customer.branches
     this.balance = customer.balance
     this.address = customer.address
@@ -60,7 +60,7 @@ class CustomerLegal extends BaseProfileVuexModule implements ICustomerLegal {
     RESET_ALL_BASE_PROFILE(this)
     this.title = ''
     this.description = ''
-    this.group = 0
+    this.group_id = 0
     this.branches = []
     this.balance = 0
     this.address = 0

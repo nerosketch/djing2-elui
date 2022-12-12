@@ -6,7 +6,7 @@ import { IBaseAccount } from '../base_account'
 
 // CustomerLegalModel
 export interface ICustomerLegal extends IBaseAccount {
-  group: number
+  group_id: number
   branches: number[]
   balance: number
   address: number

@@ -15,7 +15,7 @@
       el-input(v-model="frmMod.fio")
 
     el-form-item(:label="$t('group')")
-      groups-choice(v-model="frmMod.group")
+      groups-choice(v-model="frmMod.group_id")
 
     el-form-item(:label="$t('typeOfLegal')" prop="legal_type")
       legal-type-choice(v-model="frmMod.legal_type")
@@ -111,7 +111,7 @@ export default class extends Vue {
     title: string,
     fio: string,
     description: string,
-    group: number | null,
+    group_id: number | null,
     address: number,
     post_index: string,
     delivery_address: number | null,
@@ -127,7 +127,7 @@ export default class extends Vue {
     title: '',
     fio: '',
     description: '',
-    group: null,
+    group_id: null,
     address: 0,
     post_index: '',
     delivery_address: null,
@@ -150,7 +150,7 @@ export default class extends Vue {
     this.frmMod.title = profile.title
     this.frmMod.fio = profile.fio
     this.frmMod.description = profile.description
-    this.frmMod.group = profile.group || null
+    this.frmMod.group_id = profile.group_id || null
     this.frmMod.address = profile.address
     this.frmMod.post_index = profile.post_index
     this.frmMod.delivery_address = profile.delivery_address
