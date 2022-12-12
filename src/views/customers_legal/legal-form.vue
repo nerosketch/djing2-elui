@@ -56,7 +56,7 @@
     el-form-item(label="ОГРН" prop="state_level_reg_number")
       el-input(v-model="frmMod.state_level_reg_number" type="number")
 
-    el-form-item(:label="$t('contractDocs.dateBegin')")
+    el-form-item(:label="$t('contractDocs.dateBegin')" prop="actual_start_time")
       el-date-picker(
         v-model="frmMod.actual_start_time"
         type="date"
@@ -195,6 +195,9 @@ export default class extends Vue {
     legal_type: [
       { required: true, message: this.$tc('theTypeOfLawnIsMandatory'), trigger: 'blur' },
       { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues') }
+    ],
+    actual_start_time: [
+      { required: true, trigger: 'change' }
     ]
   }
 
