@@ -10,9 +10,9 @@ class CustomerAttachement extends VuexModule implements ICustomerAttachement {
   title = ''
   doc_file = ''
   create_time = ''
-  author = 0
+  author_id = 0
   author_name = ''
-  customer = 0
+  customer_id = 0
   customer_name = ''
 
   @Mutation
@@ -21,9 +21,9 @@ class CustomerAttachement extends VuexModule implements ICustomerAttachement {
     this.title = data.title
     this.doc_file = data.doc_file
     this.create_time = data.create_time!
-    this.author = data.author!
+    this.author_id = data.author_id!
     this.author_name = data.author_name!
-    this.customer = data.customer
+    this.customer_id = data.customer_id
     this.customer_name = data.customer_name
   }
 
@@ -33,9 +33,9 @@ class CustomerAttachement extends VuexModule implements ICustomerAttachement {
     this.title = ''
     this.doc_file = ''
     this.create_time = ''
-    this.author = 0
+    this.author_id = 0
     this.author_name = ''
-    this.customer = 0
+    this.customer_id = 0
     this.customer_name = ''
   }
 

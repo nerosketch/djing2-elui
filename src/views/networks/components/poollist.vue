@@ -15,7 +15,8 @@
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
 
-          el-button(icon="el-icon-edit" @click="openEdit(row)")
+          //- el-button(icon="el-icon-edit" @click="openEdit(row)")
+          el-button(icon="el-icon-edit" disabled)
 
           el-button(
             type="danger"
@@ -27,7 +28,7 @@
         el-button(
           icon="el-icon-plus"
           @click="openNew"
-          disabled)
+        )
           | {{ $t('add') }}
 
         el-button(icon="el-icon-s-operation" @click="editFieldsVisible=true")

@@ -6,9 +6,8 @@ import {
   INetworkIpPoolList,
   INetworkIpPoolListAxiosResponsePromise,
   ICustomerIpLease, ICustomerIpLeaseList,
-  ICustomerIpLeaseListAxiosResponsePromise,
   ICustomerIpLeasePingAxoisResponsePromise,
-  ICustomerIpLeasePlainListResponsePromise
+  ICustomerIpLeaseMixList
 } from './types'
 import {
   addObjectDecorator,
@@ -18,7 +17,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 // VlanIf
 const baseVlanUrl = '/networks/vlan/'
 export const getVlans = getObjectListDecorator<IVlanIf>(baseVlanUrl)
@@ -26,7 +24,6 @@ export const getVlanIf = getObjectDecorator<IVlanIf>(baseVlanUrl)
 export const addVlanIf = addObjectDecorator<IVlanIf>(baseVlanUrl)
 export const changeVlanIf = patchObjectDecorator<IVlanIf>(baseVlanUrl)
 export const delVlanIf = delObjectDecorator<IVlanIf>(baseVlanUrl)
-
 
 // NetworkIpPool
 const baseNetUrl = '/networks/pool/'
@@ -49,7 +46,7 @@ export const getFreeIP = (id: number) =>
 const baseLeaseUrl = '/networks/lease/'
 
 // CustomerIpLease
-export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseListAxiosResponsePromise | ICustomerIpLeasePlainListResponsePromise => {
+export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer?: number): ICustomerIpLeaseMixList => {
   if (customer) {
     params = Object.assign({ customer }, params)
   }
@@ -59,10 +56,15 @@ export const getCustomerIpLeases = (params?: IDRFRequestListParameters, customer
 export const getCustomerIpLease = getObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
 export const addCustomerIpLease = addObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
 export const changeCustomerIpLease = patchObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
-export const delCustomerIpLease = delObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
+// export const delCustomerIpLease = delObjectDecorator<ICustomerIpLease>(baseLeaseUrl)
+export const releaseCustomerLease = (leaseId: number): IDRFAxiosResponsePromise<number> =>
+  request.get<number>(`${baseLeaseUrl}${leaseId}/release/`)
 
 export const pingIcmpIpLease = (leaseId: number): ICustomerIpLeasePingAxoisResponsePromise =>
   request.get(`${baseLeaseUrl}${leaseId}/ping_ip/`)
 
 export const freeLeaseSession = (leaseId: number): IDRFAxiosResponsePromise<string> =>
   request.get(`${baseLeaseUrl}${leaseId}/free_session/`)
+
+export const getGlobalGuestLeases = (params?: IDRFRequestListParameters): ICustomerIpLeaseMixList =>
+  request.get<ICustomerIpLeaseList>(`${baseLeaseUrl}guest_list/`, { params })

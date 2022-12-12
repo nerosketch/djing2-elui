@@ -27,7 +27,7 @@
     el-form-item(
       label="Адрес регистрации"
     )
-      addr-field-input(v-model="frmMod.registration_address")
+      addr-field-input(v-model="frmMod.registration_address_id")
         template(#buttons)
           el-tooltip(effect="dark" content="Совпадает с адресом учётной записи")
             el-button(@click="copyFromCustomerAddr" icon='el-icon-document-copy')
@@ -65,7 +65,7 @@ export default class extends Vue {
     distributor: '',
     date_of_acceptance: '',
     division_code: '',
-    registration_address: 0,
+    registration_address_id: 0,
     registration_address_title: ''
   }
 
@@ -141,7 +141,7 @@ export default class extends Vue {
   }
 
   private copyFromCustomerAddr() {
-    this.frmMod.registration_address = CustomerModule.address
+    this.frmMod.registration_address_id = CustomerModule.address_id
   }
 }
 </script>

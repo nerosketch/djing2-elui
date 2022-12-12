@@ -64,7 +64,7 @@
       | {{ $t('add') }}
 
     el-dialog(
-      :title="(isAddNewLease ? $t('add') : $t('change')) + ' ' + $t('customers.minASessionLease')"
+      :title="(isAddNewLease ? $t('add') : $t('change')) + ' ' + $t('customers.sessionLease')"
       :visible.sync="editDialog"
       :close-on-click-modal="false")
       customer-lease-form(
@@ -142,10 +142,16 @@ export default class extends Vue {
       confirmButtonText: this.$tc('yes'),
       cancelButtonText: this.$tc('no')
     }).then(async() => {
-      await CustomerIpLeaseModule.DelLease(lease.id)
-      this.$message.success(
-        this.$tc('nets.ipLeaseSuccessfullyRemoved')
-      )
+      const releasedCount = await CustomerIpLeaseModule.ReleaseLease(lease.id)
+      if (releasedCount > 0) {
+        this.$message.success(
+          this.$tc('nets.ipLeaseSuccessfullyRemoved', 1, [releasedCount])
+        )
+      } else {
+        this.$message.error(
+          this.$tc('nets.ipLeaseNotFound')
+        )
+      }
       this.loadLeases()
     })
   }

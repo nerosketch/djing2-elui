@@ -46,18 +46,16 @@ export default class extends Vue {
   async loadGroups() {
     this.loading = true
     const { data } = await getGroups({
-      page: 1,
-      page_size: 0,
       fields: 'id,title'
     }) as any
-    if (data.length < 1) {
+    if (data.results.length < 1) {
       this.loading = false
       this.$message.error(this.$tc('groups.failed2GetGroups'))
       return
     }
     try {
       const checkedGroups = await getResponsibilityGroups(this.profileUname)
-      this.groups = data.map((grp: IGroup) => Object.assign({
+      this.groups = data.results.map((grp: IGroup) => Object.assign({
         state: checkedGroups.data.includes(grp.id)
       }, grp))
     } finally {

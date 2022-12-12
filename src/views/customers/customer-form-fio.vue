@@ -100,6 +100,7 @@ export default class extends Vue {
   }
 
   private readFio(fullName: string) {
+    if (!fullName) return
     const r = fullName.split(' ')
     if (r.length >= 3) {
       this.frmData.surname = r[0]

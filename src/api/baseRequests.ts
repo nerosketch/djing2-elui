@@ -3,7 +3,7 @@ import {
   IDRFAxiosResponsePromise,
   IDRFListResponse,
   IDRFRequestListParameters
-} from "@/api/types"
+} from '@/api/types'
 
 // Crud operations decorators
 

@@ -2,7 +2,7 @@
   datatable(
     :columns="tableColumns"
     :getData="loadTLog"
-    :heightDiff="167"
+    :heightDiff="179"
     widthStorageNamePrefix="customerTaskHistory"
     ref="tlogtbl")
     template(#viewbtn="{row}")
@@ -69,8 +69,8 @@ export default class extends Vue {
     let r
     if (params) {
       const newParams = Object.assign({
-        customer: CustomerModule.id,
-        fields: 'id,author_uname,descr,state_str,mode_str,time_of_create,comment_count'
+        customer_id: CustomerModule.id,
+        fields: 'id,author_uname,descr,state_str,mode_str,time_of_create,comment_count,customer_id'
       }, params)
       r = await getTasks(newParams)
     } else {

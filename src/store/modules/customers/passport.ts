@@ -11,7 +11,7 @@ class PassportInfo extends VuexModule implements IPassportInfo {
   distributor = ''
   date_of_acceptance = ''
   division_code = ''
-  registration_address = 0
+  registration_address_id = 0
   registration_address_title = ''
 
   @Mutation
@@ -22,7 +22,7 @@ class PassportInfo extends VuexModule implements IPassportInfo {
     this.distributor = data.distributor
     this.date_of_acceptance = data.date_of_acceptance
     this.division_code = data.division_code
-    this.registration_address = data.registration_address
+    this.registration_address_id = data.registration_address_id
     this.registration_address_title = data.registration_address_title
   }
 
@@ -34,7 +34,7 @@ class PassportInfo extends VuexModule implements IPassportInfo {
     this.distributor = ''
     this.date_of_acceptance = ''
     this.division_code = ''
-    this.registration_address = 0
+    this.registration_address_id = 0
     this.registration_address_title = ''
   }
 }

@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { config } from 'vuex-module-decorators'
 
-config.rawError = true
-
 import { IAppState } from './modules/app'
 import { IUserProfile } from '@/api/profiles/types'
+
+config.rawError = true
 
 Vue.use(Vuex)
 

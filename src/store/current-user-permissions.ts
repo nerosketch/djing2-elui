@@ -43,11 +43,6 @@ export class CurrentPermissions extends VuexModule {
     view_customerlog: false,
     delete_customerlog: false,
 
-    view_customerservice: false,
-    change_customerservice: false,
-    add_customerservice: false,
-    delete_customerservice: false,
-
     add_passportinfo: false,
     view_passportinfo: false,
     change_passportinfo: false,
@@ -56,12 +51,7 @@ export class CurrentPermissions extends VuexModule {
     add_customerattachment: false,
     view_customerattachment: false,
     change_customerattachment: false,
-    delete_customerattachment: false,
-
-    add_periodicpayforid: false,
-    view_periodicpayforid: false,
-    change_periodicpayforid: false,
-    delete_periodicpayforid: false
+    delete_customerattachment: false
   }
 
   public customers_legal = {
@@ -140,7 +130,7 @@ export class CurrentPermissions extends VuexModule {
     add_basepaymentmodel: false,
     view_basepaymentmodel: false,
     change_basepaymentmodel: false,
-    delete_basepaymentmodel: false,
+    delete_basepaymentmodel: false
   }
 
   public gateways = {
@@ -171,7 +161,17 @@ export class CurrentPermissions extends VuexModule {
     add_periodicpay: false,
     view_periodicpay: false,
     change_periodicpay: false,
-    delete_periodicpay: false
+    delete_periodicpay: false,
+
+    view_customerservice: false,
+    change_customerservice: false,
+    add_customerservice: false,
+    delete_customerservice: false,
+
+    add_periodicpayforid: false,
+    view_periodicpayforid: false,
+    change_periodicpayforid: false,
+    delete_periodicpayforid: false
   }
 
   public addresses = {

@@ -15,7 +15,7 @@
 <script lang="ts">
 import { getGroups } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
-import { IDRFAxiosResponsePromise, IDRFRequestListParameters } from '@/api/types'
+import { IDRFAxiosResponsePromise, IDRFListResponse, IDRFRequestListParameters } from '@/api/types'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
@@ -27,7 +27,7 @@ export default class extends Vue {
   @Prop({ default: false }) private multiple!: boolean
 
   @Prop({ default: null })
-  private fetchFunction!: (params?: IDRFRequestListParameters) => IDRFAxiosResponsePromise<IGroup[]>
+  private fetchFunction!: (params?: IDRFRequestListParameters) => IDRFAxiosResponsePromise<IDRFListResponse<IGroup>>
 
   private groups: IGroup[] = []
 
@@ -39,11 +39,9 @@ export default class extends Vue {
     this.loading = true
     try {
       const { data } = await (this.fetchFunction || getGroups)({
-        page: 1,
-        page_size: 0,
         fields: 'id,title'
-      }) as any
-      this.groups = data
+      })
+      this.groups = data.results
     } finally {
       this.loading = false
     }

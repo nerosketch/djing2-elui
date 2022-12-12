@@ -214,7 +214,7 @@ export default class extends Vue {
   }
 
   private otherValues(row: IPayReport) {
-    const {summ, pay_count, ...o} = row
+    const { summ, pay_count, ...o } = row
     return Object.entries(o).map(([k, val]) => val).join(', ')
   }
 }

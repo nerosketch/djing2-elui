@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { IService, IServiceList } from '@/api/services/types'
+import { IService } from '@/api/services/types'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { getServices } from '@/api/services/req'
 
@@ -41,7 +41,9 @@ export default class extends Vue {
   private async loadServices() {
     this.servicesLoading = true
     try {
-      const { data } = await getServices() as any
+      const { data } = await getServices({
+        fields: 'id,title'
+      } as any) as any
       this.services = data
     } finally {
       this.servicesLoading = false
@@ -54,18 +56,21 @@ export default class extends Vue {
   }
 
   private async loadSelectedService(groupId: number) {
-    const { data } = await getServices({
-      groups: groupId,
-      fields: 'id',
-      page: 1,
-      page_size: 9999999
-    })
-    const selectedIds = (data as IServiceList).results.map(s => s.id)
-    this.selected = this.services.map(s => ({
-      id: s.id,
-      state: selectedIds.includes(s.id),
-      title: s.title
-    }))
+    this.servicesLoading = true
+    try {
+      const { data } = await getServices({
+        groups: groupId,
+        fields: 'id'
+      })
+      const selectedIds = data.results.map(s => s.id)
+      this.selected = this.services.map(s => ({
+        id: s.id,
+        state: selectedIds.includes(s.id),
+        title: s.title
+      }))
+    } finally {
+      this.servicesLoading = false
+    }
   }
 
   created() {

@@ -54,7 +54,7 @@ export default class extends Vue {
     TaskAttachmentModule.AddAttachment({
       title: req.file.name,
       doc_file: req.file,
-      task: this.taskId
+      task_id: this.taskId
     }).then(newAtt => {
       this.addFileListItem(newAtt)
     })
@@ -70,7 +70,7 @@ export default class extends Vue {
 
   private async loadFileList() {
     const { data } = await getAttachments(this.taskId)
-    for (const el of data) {
+    for (const el of data.results) {
       this.addFileListItem(el)
     }
   }

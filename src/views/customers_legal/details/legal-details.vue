@@ -1,29 +1,25 @@
 <template lang="pug">
-tabs(
-  :tabs="tabItems"
-  activeTabName="info"
-)
+tabs(:tabs="tabItems")
   template(#head)
     span {{ $t('customers.balance') }}:
     small {{ $store.state.customerlegal.balance }}.
     span {{ $t('createDate') }}:
     small {{ $store.state.customerlegal.create_date }}
 
-  template(#info)
-    el-row(:gutter="5")
-      el-col.col_vert_space(:sm="24" :md="12")
-        el-card(shadow="never")
-          template(#header)
-            | {{ $t('customersLegal.changeInfo') }}
+  el-row(:gutter="5")
+    el-col.col_vert_space(:sm="24" :md="12")
+      el-card(shadow="never")
+        template(#header)
+          | {{ $t('customersLegal.changeInfo') }}
 
-          legal-form(v-if="ready")
+        legal-form(v-if="ready")
 
-      el-col.col_vert_space(:sm="24" :md="12")
-        el-card(shadow="never")
-          template(#header)
-            | {{ $t('customersLegal.bank.requisites') }}
+    el-col.col_vert_space(:sm="24" :md="12")
+      el-card(shadow="never")
+        template(#header)
+          | {{ $t('customersLegal.bank.requisites') }}
 
-          legal-bank-info(v-if="ready" :uid="uid")
+        legal-bank-info(v-if="ready" :uid="uid")
 
   template(#branches)
     legal-branches(:customerId="uid")
@@ -45,7 +41,7 @@ import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
     LegalForm,
     LegalBankInfo,
     LegalBranches,
-    Tabs,
+    Tabs
   }
 })
 export default class extends Vue {
@@ -65,8 +61,8 @@ export default class extends Vue {
   }
 
   private tabItems: ICustomTabItem[] = [
-    { title: this.$t('customers.info'), name: 'info' },
-    { title: this.$t('customersLegal.branches'), name: 'branches' },
+    { title: this.$t('customers.info') },
+    { title: this.$t('customersLegal.branches'), name: 'branches' }
   ]
 
   created() {

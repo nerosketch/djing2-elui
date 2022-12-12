@@ -7,11 +7,9 @@
       el-col(:span="18" :xs="24")
         tabs(
           :tabs="tabItems"
-          activeTabName="account"
           :dense="true"
         )
-          template(#account)
-            profile-form(v-if="ready")
+          profile-form(v-if="ready")
 
           template(#activity)
             group-responsibility(:profileUname="profileUname")
@@ -65,11 +63,11 @@ export default class extends Vue {
   private ready = false
 
   private tabItems: ICustomTabItem[] = [
-    { name: 'account', title: this.$t('change') },
+    { title: this.$t('change') },
     { name: 'activity', title: this.$t('profiles.responsibilityForGroups') },
     { name: 'classperms', title: this.$t('rightsToClassesOfAction') },
     { name: 'timeline', title: this.$t('actionLog') },
-    { name: 'authlog', title: this.$t('authorizationLogs') },
+    { name: 'authlog', title: this.$t('authorizationLogs') }
   ]
 
   created() {

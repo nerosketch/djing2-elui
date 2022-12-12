@@ -22,7 +22,7 @@ export interface ITask {
   customer_address?: string
   customer_full_name?: string
   customer_uname?: string
-  customer_group?: number
+  customer_group_id?: number
   comment_count?: number
   recipients: number[]
   state_str?: string
@@ -32,9 +32,9 @@ export interface ITask {
   priority: ITaskPriority
   out_date: string
   task_state: ITaskState
-  task_mode: number | null
-  author: number
-  customer?: number
+  task_mode_id: number | null
+  author_id: number
+  customer_id?: number
   is_expired?: boolean
   activeTaskCount?: number
 }
@@ -50,7 +50,7 @@ export interface IExtraComment {
   author_avatar?: string
   text: string
   date_create: string
-  task: number
+  task_id: number
   can_remove?: boolean
   type?: IExtraCommentChangeLogType
 }
@@ -73,11 +73,12 @@ export interface ITaskDocumentAttachment {
   title: string
   doc_file: string
   create_time: string
-  author: number
-  task: number
+  author_id: number
+  task_id: number
 }
-export type ITaskDocumentAttachmentList = IDRFAxiosResponsePromise<ITaskDocumentAttachment[]>
+export type ITaskDocumentAttachmentList = IDRFListResponse<ITaskDocumentAttachment>
 export type ITaskDocumentAttachmentAxoisResponsePromise = IDRFAxiosResponsePromise<ITaskDocumentAttachment>
+export type ITaskDocumentAttachmentAxiosList = IDRFAxiosResponsePromise<ITaskDocumentAttachmentList>
 
 export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResult {
   recipients?: number[]
@@ -86,7 +87,7 @@ export interface INewTaskInitialSimpleResponseResult extends ISimpleResponseResu
 export type INewTaskInitialSimpleResponseResultAxoisResponsePromise = IDRFAxiosResponsePromise<INewTaskInitialSimpleResponseResult>
 
 export interface TaskStatePercentReportTypeCount {
-  mode: string
+  task_mode: string
   task_count: number
 }
 export interface TaskModeReport {
@@ -111,11 +112,12 @@ export interface ITaskFinishDocument {
   id: number
   code: string
   // act_num: string | null
-  author: number
-  task: number
+  author_id: number
+  task_id: number
   create_time: string
   finish_time: string
   cost: number
-  task_mode: number
+  task_mode_id: number
   recipients: number[]
 }
+export type ITaskFinishDocumentList = IDRFListResponse<ITaskFinishDocument>

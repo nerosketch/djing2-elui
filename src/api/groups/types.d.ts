@@ -3,9 +3,3 @@ export interface IGroup {
   title: string
   sites?: number[]
 }
-
-
-// export interface SetPermissionsRecursiveRequest {
-//   permission_ids: number[]
-//   profile_group: number
-// }

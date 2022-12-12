@@ -1,7 +1,7 @@
 <template lang="pug">
   el-button(
     :icon="defIcon"
-    @click="pingIcmp(row)"
+    @click="pingIcmp"
     :type="defType"
     :loading="loading")
     | {{ btnText }}

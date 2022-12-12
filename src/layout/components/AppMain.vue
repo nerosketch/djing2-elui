@@ -2,8 +2,7 @@
   section.app-main
     breadcrumb.breadcrumb-container
 
-    transition(name="fade-transform" mode="out-in")
-      router-view
+    router-view
 </template>
 
 <script lang="ts">

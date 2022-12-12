@@ -63,6 +63,7 @@ export default class extends Vue {
   @Prop({ default: 0 }) private house!: number
   @Prop({ required: true })
   private fetchGroups!: (params: IDRFRequestListParameters) => void
+
   @Prop({ default: null }) private displayActive!: boolean | null
 
   private streetVal = this.street
@@ -79,9 +80,9 @@ export default class extends Vue {
   private houseAddrType = IAddressEnumTypes.HOUSE
 
   private localDisplayVals = [
-    {value: false, title: 'Отображать не активных'},
-    {value: true, title: 'Отображать активных'},
-    {value: null, title: 'Отображать всех'}
+    { value: false, title: 'Отображать не активных' },
+    { value: true, title: 'Отображать активных' },
+    { value: null, title: 'Отображать всех' }
   ]
 
   @Watch('streetVal')

@@ -55,7 +55,11 @@ export default class extends Vue {
         message: this.$tc('customers.contactPhoneRequired'),
         trigger: 'blur'
       },
-      { validator: telephoneValidator, trigger: 'change' }
+      {
+        validator: telephoneValidator,
+        trigger: 'change',
+        message: this.$tc('customers.contactPhoneRequired')
+      }
     ]
   }
 
@@ -69,7 +73,7 @@ export default class extends Vue {
         this.loading = true
         let tel
         try {
-          const dat = Object.assign(this.frmMod, { customer: this.customer })
+          const dat = Object.assign(this.frmMod, { customer_id: this.customer })
           if (this.isNew) {
             tel = await AdditionalTelephoneModule.AddTelephone(dat)
             this.$message.success(

@@ -12,7 +12,6 @@ import {
   patchObjectDecorator
 } from '@/api/baseRequests'
 
-
 const gwUrl = '/gateways/'
 export const getGateways = getObjectListDecorator<IGateway>(gwUrl)
 export const getGateway = getObjectDecorator<IGateway>(gwUrl)
@@ -22,8 +21,3 @@ export const delGateway = delObjectDecorator<IGateway>(gwUrl)
 
 export const getGwClassChoices = (): IGatewayClassChoiceTypeList =>
   request.get<IGatewayClassChoiceType[]>('/gateways/gateway_class_choices/')
-
-// export const fetchCustomersSrvnetCredentialsbgw = (gwId: number) =>
-//   request.get(`${gwUrl}fetch_customers_srvnet_credentials_by_gw/`, { params: {
-//     gw_id: gwId
-//   }})

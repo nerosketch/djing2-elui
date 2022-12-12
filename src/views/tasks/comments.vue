@@ -7,7 +7,10 @@
         :comment="comment"
         @delete="delComment")
 
-      comment-change-log.mt5(v-else, :log="comment")
+      comment-change-log.mt5(
+        v-else
+        :log="comment"
+      )
 </template>
 
 <script lang="ts">
@@ -29,7 +32,7 @@ import CommentList from '@/components/comments/list.vue'
 export default class extends Vue {
   private comments: IExtraCommentCombinedWithTaskStateChangeLog[] = []
 
-  private async loadComments() {
+  public async loadComments() {
     const { data } = await getCommentsWithLogs(this.$store.state.task.id)
     this.comments = data
   }

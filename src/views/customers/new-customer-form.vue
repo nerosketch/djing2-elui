@@ -13,8 +13,11 @@
     el-form-item(:label="$t('customers.phone')" prop="telephone")
       el-input(v-model="frmMod.telephone")
 
-    el-form-item(:label="$t('groups.group')")
-      groups-choice(v-model="frmMod.group")
+    el-form-item(
+      prop="group_id"
+      :label="$t('groups.group')"
+    )
+      groups-choice(v-model="frmMod.group_id")
 
     el-form-item(:label="$t('comment')")
       el-input(
@@ -45,7 +48,7 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { CustomerModule } from '@/store/modules/customers/customer'
 import { ICustomerFrm, ICustomer } from '@/api/customers/types'
-import { latinValidator, telephoneValidator } from '@/utils/validate'
+import { latinValidator, positiveNumberValueAvailable, telephoneValidator } from '@/utils/validate'
 import CustomerFormFio from './customer-form-fio.vue'
 import GroupsChoice from '@/components/Groups/groups-choice.vue'
 
@@ -67,11 +70,11 @@ export default class extends Vue {
     telephone: '',
     fio: '',
     birth_day: null,
-    group: 0,
-    address: this.selectedAddress,
+    group_id: 0,
+    address_id: this.selectedAddress,
     is_active: false,
     is_dynamic_ip: false,
-    gateway: 0,
+    gateway_id: 0,
     description: ''
   }
 
@@ -101,6 +104,12 @@ export default class extends Vue {
         message: this.$tc('customers.birthDayValidationMessage'),
         trigger: 'blur'
       }
+    ],
+    group_id: [
+      {
+        validator: positiveNumberValueAvailable,
+        trigger: 'change'
+      }
     ]
   }
 
@@ -112,11 +121,11 @@ export default class extends Vue {
       telephone: frm.telephone,
       fio: frm.fio,
       birth_day: frm.birth_day!,
-      group: frm.group || 0,
-      address: frm.address || this.selectedAddress || 0,
+      group_id: frm.group_id || 0,
+      address_id: frm.address_id || this.selectedAddress || 0,
       is_active: frm.is_active,
       is_dynamic_ip: frm.is_dynamic_ip,
-      gateway: frm.gateway,
+      gateway_id: frm.gateway_id,
       description: frm.description
     }
   }

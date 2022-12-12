@@ -13,11 +13,9 @@ export default class extends Vue {
     this.loadingGws = true
     try {
       const { data } = await getGateways({
-        page: 1,
-        page_size: 0,
         fields
-      }) as any
-      this.gwlist = data
+      } as any)
+      this.gwlist = data.results
     } finally {
       this.loadingGws = false
     }

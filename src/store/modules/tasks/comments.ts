@@ -12,7 +12,7 @@ class Comment extends VuexModule implements IExtraComment {
   author_avatar = ''
   text = ''
   date_create = ''
-  task = 0
+  task_id = 0
   can_remove = false
 
   @Mutation
@@ -23,7 +23,7 @@ class Comment extends VuexModule implements IExtraComment {
     this.author_avatar = data.author_avatar!
     this.text = data.text
     this.date_create = data.date_create
-    this.task = data.task
+    this.task_id = data.task_id
     this.can_remove = data.can_remove!
   }
 
@@ -35,7 +35,7 @@ class Comment extends VuexModule implements IExtraComment {
     this.author_avatar = ''
     this.text = ''
     this.date_create = ''
-    this.task = 0
+    this.task_id = 0
     this.can_remove = false
   }
 

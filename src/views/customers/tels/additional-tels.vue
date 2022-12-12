@@ -43,8 +43,8 @@ export default class extends Vue {
   public async loadTels() {
     this.loading = true
     try {
-      const { data } = await getTelephones(CustomerModule.id) as any
-      this.tels = data
+      const { data } = await getTelephones(CustomerModule.id)
+      this.tels = data.results
     } finally {
       this.loading = false
     }

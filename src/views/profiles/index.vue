@@ -1,10 +1,7 @@
 <template lang="pug">
-tabs(
-  :tabs="tabItems"
-  activeTabName="profiles"
-)
-  template(#profiles)
-    profile-list
+tabs(:tabs="tabItems")
+  profile-list
+
   template(v-if="$perms.is_superuser" #profilegroups)
     group-list
 
@@ -25,10 +22,9 @@ import Tabs, { ICustomTabItem } from '@/components/tabs/tabs.vue'
   }
 })
 export default class extends Vue {
-
   private tabItems: ICustomTabItem[] = [
-    { title: this.$t('route.staff'), name: 'profiles' },
-    { title: this.$t('profiles.profileGroups'), name: 'profilegroups' },
+    { title: this.$t('route.staff') },
+    { title: this.$t('profiles.profileGroups'), name: 'profilegroups' }
   ]
 }
 </script>

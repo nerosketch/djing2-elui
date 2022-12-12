@@ -13,8 +13,8 @@
 
         el-col(:span="16")
           device-select(
-            v-model="frmMod.device"
-            :addrId="$store.state.customer.address"
+            v-model="frmMod.device_id"
+            :addrId="$store.state.customer.address_id"
             :initialDevice="devComm")
 
       el-row
@@ -23,8 +23,8 @@
 
         el-col(:span="16")
           selected-dev-port(
-            v-model="frmMod.dev_port"
-            :deviceId="frmMod.device"
+            v-model="frmMod.dev_port_id"
+            :deviceId="frmMod.device_id"
           )
 
       el-row
@@ -40,7 +40,7 @@
             el-button(
               icon="el-icon-view"
               @click="onGo2Dev"
-              :disabled="!frmMod.device")
+              :disabled="!frmMod.device_id")
               | {{ $t('view') }}
 
             el-button(
@@ -64,13 +64,13 @@ export default class extends Vue {
   private isLoading = false
 
   private frmMod = {
-    device: CustomerModule.device,
-    dev_port: CustomerModule.dev_port
+    device_id: CustomerModule.device_id,
+    dev_port_id: CustomerModule.dev_port_id
   }
 
   private get devComm() {
     return {
-      id: CustomerModule.device,
+      id: CustomerModule.device_id,
       comment: CustomerModule.device_comment
     }
   }
@@ -78,8 +78,8 @@ export default class extends Vue {
   @Watch('$store.state.customer.id')
   private onChangedId() {
     this.frmMod = {
-      device: CustomerModule.device,
-      dev_port: CustomerModule.dev_port
+      device_id: CustomerModule.device_id,
+      dev_port_id: CustomerModule.dev_port_id
     }
   }
 
@@ -96,20 +96,22 @@ export default class extends Vue {
     ).then(async() => {
       this.isLoading = true
       const { data } = await CustomerModule.ClearDevice()
-      this.frmMod.device = data.device
-      this.frmMod.dev_port = data.dev_port
+      this.frmMod.device_id = data.device_id
+      this.frmMod.dev_port_id = data.dev_port_id
       this.$emit('done', data)
       this.isLoading = false
     })
   }
 
   private onGo2Dev() {
-    this.$router.push({
-      name: 'device-view',
-      params: {
-        devId: this.frmMod.device.toString()
-      }
-    })
+    if (this.frmMod.device_id) {
+      this.$router.push({
+        name: 'device-view',
+        params: {
+          devId: this.frmMod.device_id.toString()
+        }
+      })
+    }
   }
 }
 </script>

@@ -33,13 +33,13 @@ export default class extends Vue {
   }
 
   private async loadOpts() {
-     this.loading = true
-     try {
-       const { data } = await getLegalTypes()
-       this.opts = data
-     } finally {
-       this.loading = false
-     }
+    this.loading = true
+    try {
+      const { data } = await getLegalTypes()
+      this.opts = data
+    } finally {
+      this.loading = false
+    }
   }
 
   created() {

@@ -1,6 +1,5 @@
 // @import './variables.scss'; // Already imported in style-resources-loader
 // @import './mixins.scss'; // Already imported in style-resources-loader
-@import './transition.scss';
 @import './_markericon.css';
 
 /* Global scss */
@@ -109,7 +108,7 @@ List
 
 .list-item:hover {
     background-color: #F5F7FA;
-    transition: background-color 0.25s ease;
+    // transition: background-color 0.25s ease;
 }
 
 .list-item {

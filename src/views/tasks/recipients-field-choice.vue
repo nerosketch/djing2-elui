@@ -15,6 +15,15 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { getActiveProfiles } from '@/api/profiles/req'
 import { IUserProfile } from '@/api/profiles/types'
 
+export const loadPotentialRecipients = async() => {
+  const { data } = await getActiveProfiles({
+    page: 1,
+    page_size: 0,
+    fields: 'id,full_name,username'
+  })
+  return data
+}
+
 @Component({
   name: 'RecipientsFieldChoice'
 })
@@ -27,11 +36,11 @@ export default class extends Vue {
 
   private potentialRecipients: IUserProfile[] = []
 
-  private localRecipients: number[] = this.value
+  private localRecipients: number[] = []
 
   @Watch('recipients')
-  private onChRecs(recs: IUserProfile[]) {
-    this.potentialRecipients = recs
+  async onChRecs(recs: IUserProfile[]) {
+    if (recs.length > 0) { this.potentialRecipients = recs } else { this.potentialRecipients = await loadPotentialRecipients() }
   }
 
   @Watch('value')
@@ -44,20 +53,13 @@ export default class extends Vue {
     this.$emit('input', recs)
   }
 
-  protected async loadPotentialRecipients() {
-    const { data } = await getActiveProfiles({
-      page: 1,
-      page_size: 0,
-      fields: 'id,full_name,username'
-    })
-    this.potentialRecipients = data
-  }
+  async created() {
+    this.localRecipients = this.value
 
-  created() {
-    if (this.recipients.length < 1) {
-      this.loadPotentialRecipients()
-    } else {
-      this.potentialRecipients = this.recipients
+    if (this.recipients.length > 0) { this.potentialRecipients = this.recipients } else {
+      await loadPotentialRecipients().then(recs => {
+        this.potentialRecipients = recs
+      })
     }
   }
 }

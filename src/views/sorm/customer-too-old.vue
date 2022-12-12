@@ -17,7 +17,6 @@ import BaseCustomerProblemList from './base-customer-problem-list.vue'
   }
 })
 export default class extends Vue {
-
   private getAllCustomers(params: IDRFRequestListParameters) {
     return getCustomersBirthDay(params)
   }

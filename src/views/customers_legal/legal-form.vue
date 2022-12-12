@@ -137,7 +137,7 @@ export default class extends Vue {
     legal_type: 0,
     tax_number: '',
     state_level_reg_number: '',
-    actual_start_time: '',
+    actual_start_time: ''
   }
 
   @Watch('$store.state.customerlegal', { deep: true })
@@ -178,28 +178,28 @@ export default class extends Vue {
       maxLenValidator
     ],
     title: [
-      { required: true, message: this.$tc('nameToBeIndicated'), trigger: 'blur' },
+      { required: true, message: this.$tc('nameToBeIndicated'), trigger: 'blur' }
     ],
     fio: [
-      { required: true, message: this.$tc('directorSFioIsRequired'), trigger: 'blur' },
+      { required: true, message: this.$tc('directorSFioIsRequired'), trigger: 'blur' }
     ],
     tax_number: [
-      { required: true, message: this.$tc('insNeedsToBeFilled'), trigger: 'blur' },
+      { required: true, message: this.$tc('insNeedsToBeFilled'), trigger: 'blur' }
     ],
     address_id: [
       { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedALegalAddress') }
     ],
     state_level_reg_number: [
-      { required: true, message: this.$tc('iWill'), trigger: 'blur' },
+      { required: true, message: this.$tc('iWill'), trigger: 'blur' }
     ],
     legal_type: [
       { required: true, message: this.$tc('theTypeOfLawnIsMandatory'), trigger: 'blur' },
-      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues') },
+      { required: true, validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('weNeedToSelectTheRightTypeOfJuriqueFromTheListOfValues') }
     ]
   }
 
   private get isNew() {
-    return !Boolean(this.$store.state.customerlegal.id)
+    return !this.$store.state.customerlegal.id
   }
 
   private onSubmit() {
@@ -234,11 +234,13 @@ export default class extends Vue {
     this.frmMod.delivery_address_id = this.frmMod.address_id
     this.frmMod.delivery_address_post_index = this.frmMod.post_index
   }
+
   private copyPostAddrFromLegalAddr() {
     if (this.addrCopyDisabled) return
     this.frmMod.post_address_id = this.frmMod.address_id
     this.frmMod.post_post_index = this.frmMod.post_index
   }
+
   get addrCopyDisabled() {
     return !this.frmMod.address_id || !this.frmMod.post_index
   }

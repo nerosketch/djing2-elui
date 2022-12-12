@@ -362,8 +362,8 @@ export default class extends mixins(TableWithAddrMixin) {
     this.sitesDlgProgress = false
   }
 
-  private fetchGroups(params: IDRFRequestListParameters) {
-    return getGroupsWithCustomers(Object.assign(params, {}))
+  private fetchGroups() {
+    return getGroupsWithCustomers()
   }
 }
 </script>

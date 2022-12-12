@@ -37,7 +37,7 @@
       :close-on-click-modal="false")
       service-accessory(
         v-on:done="srvAccDone"
-        :groupId="$store.state.customer.group"
+        :groupId="$store.state.customer.group_id"
       )
 
     el-dialog(
@@ -79,11 +79,9 @@ export default class extends Vue {
     this.loading = true
     try {
       const { data } = await getServices({
-        page: 1,
-        page_size: 0,
-        groups: CustomerModule.group
+        groups: CustomerModule.group_id
       })
-      this.services = data as IService[]
+      this.services = data.results
     } finally {
       this.loading = false
     }
@@ -100,7 +98,7 @@ export default class extends Vue {
 
   buyOpen(s: IService) {
     if (s.cost > CustomerModule.balance) {
-      if(confirm(this.$tc('customers.customerNotEnoughMoneyDoConnectItQuestion'))) {
+      if (confirm(this.$tc('customers.customerNotEnoughMoneyDoConnectItQuestion'))) {
         this.selectedServiceId = s.id
         this.buyDialog = true
       } else {

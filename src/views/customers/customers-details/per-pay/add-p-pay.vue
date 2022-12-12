@@ -42,7 +42,7 @@ export default class extends Vue {
   private deadline = ''
 
   get addDisabledGetter(): boolean {
-    const isRights = this.$perms.customers.add_periodicpayforid
+    const isRights = this.$perms.services.add_periodicpayforid
     const isData = this.pserviceId > 0 && this.deadline !== ''
     return !(isRights && isData)
   }

@@ -25,17 +25,14 @@
             dd {{ gw.ip_port }}
 
             dt
-              b {{ $t('inletLogin') }}
+              b {{ $t('gateways.authLogin') }}
 
             dd {{ gw.auth_login }}
-
-            dt
-              b {{ $t('inletPassword') }}
 
             dd {{ gw.auth_passw }}
 
             dt
-              b {{ $t('likeUs') }}
+              b {{ $t('gateways.nasType') }}
 
             dd {{ gw.gw_type_str }}
 
@@ -46,7 +43,7 @@
               i {{ gw.is_default ? 'Да' : 'Нет' }}
 
             dt
-              b {{ $t('included') }}
+              b {{ $t('gateways.enabled') }}
 
             dd
               i {{ gw.enabled ? 'Да' : 'Нет' }}

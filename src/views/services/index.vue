@@ -1,10 +1,7 @@
 <template lang="pug">
-tabs(
-  :tabs="tabItems"
-  activeTabName="services"
-)
-  template(#services)
-    service-list
+tabs(:tabs="tabItems")
+  service-list
+
   template(#periodicpays)
     periodic-pay-list
   template(#shots)
@@ -30,9 +27,9 @@ import PeriodicPayList from './periodicpay-list.vue'
 })
 export default class extends Vue {
   private tabItems: ICustomTabItem[] = [
-    { name: 'services', title: this.$t('tariffs') },
+    { title: this.$t('tariffs') },
     { name: 'periodicpays', title: this.$t('recurrentPayments') },
-    { name: 'shots', title: this.$t('singlePayments') },
+    { name: 'shots', title: this.$t('singlePayments') }
   ]
 }
 </script>

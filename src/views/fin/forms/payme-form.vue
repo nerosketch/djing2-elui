@@ -52,7 +52,7 @@ export default class extends Vue {
 
   private frmMod = {
     title: '',
-    slug: '',
+    slug: ''
   }
 
   get isNew() {

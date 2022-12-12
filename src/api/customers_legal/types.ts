@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {
-  IDRFAxiosResponsePromise,
+  IDRFAxiosResponsePromise
 } from '@/api/types'
 import { IBaseAccount } from '../base_account'
 
@@ -20,8 +20,8 @@ export interface ICustomerLegal extends IBaseAccount {
 
   legal_type: number
 
-  tax_number: string              // ИНН
-  state_level_reg_number: string  // ОГРН
+  tax_number: string // ИНН
+  state_level_reg_number: string // ОГРН
   actual_start_time: string
   actual_end_time: string | null
   title: string
@@ -38,7 +38,6 @@ export interface ICustomerLegalBank {
   settlement_account: string     // расчётный счёт
 }
 
-
 export interface ICustomerLegalPost {
   id: number
   legal_customer_id: number
@@ -47,14 +46,12 @@ export interface ICustomerLegalPost {
 }
 export type ICustomerLegalPostAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalPost>
 
-
 export interface ICustomerLegalDeliveryAddress {
   id: number
   legal_customer_id: number
   address_id: number
 }
 export type ICustomerLegalDeliveryAddressAxoisResponsePromise = IDRFAxiosResponsePromise<ICustomerLegalDeliveryAddress>
-
 
 export interface ICustomerLegalTelephoneNumber {
   id: number

@@ -10,7 +10,9 @@ import {
   IServiceListAxiosResponsePromise,
   IPeriodicPay,
   IOneShotPay,
-  IDRFRequestListParametersService
+  IDRFRequestListParametersService,
+  ICustomerServiceConnectingQueueListResponsePromise,
+  ICustomerServiceConnectingQueueResponse
 } from './types'
 import {
   addObjectDecorator,
@@ -19,7 +21,6 @@ import {
   getObjectListDecorator,
   patchObjectDecorator
 } from '@/api/baseRequests'
-
 
 const baseSrvUrl = '/services/'
 
@@ -56,3 +57,8 @@ export const getOneShotPay = getObjectDecorator<IOneShotPay>(baseOSPUrl)
 export const addOneShotPay = addObjectDecorator<IOneShotPay>(baseOSPUrl)
 export const changeOneShotPay = patchObjectDecorator<IOneShotPay>(baseOSPUrl)
 export const delOneShotPay = delObjectDecorator<IOneShotPay>(baseOSPUrl)
+
+// CustomerServiceConnectingQueueModel
+const customerQueueUrl = '/services/queue/'
+export const getPendingCustomerServiceQueue = (customerId: number): ICustomerServiceConnectingQueueListResponsePromise =>
+  request.get<ICustomerServiceConnectingQueueResponse[]>(`${customerQueueUrl}pending/${customerId}/`)

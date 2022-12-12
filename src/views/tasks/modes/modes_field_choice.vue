@@ -29,7 +29,7 @@ export default class extends Vue {
   @Prop({ required: true })
   private value!: number
 
-  private localValue = this.value
+  private localValue = 0
 
   @Watch('value')
   private onChVal(v: number) {
@@ -44,8 +44,8 @@ export default class extends Vue {
   private async loadModes() {
     this.loading = true
     try {
-      const { data } = await getModes() as any
-      this.modes = data
+      const { data } = await getModes()
+      this.modes = data.results
     } finally {
       this.loading = false
     }
@@ -53,6 +53,9 @@ export default class extends Vue {
 
   created() {
     this.loadModes()
+    if (this.value) {
+      this.localValue = this.value
+    }
   }
 }
 </script>
