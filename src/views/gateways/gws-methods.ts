@@ -14,7 +14,7 @@ export default class extends Vue {
     try {
       const { data } = await getGateways({
         fields
-      })
+      } as any)
       this.gwlist = data.results
     } finally {
       this.loadingGws = false
