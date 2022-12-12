@@ -39,7 +39,7 @@
               el-dropdown-item(icon='el-icon-s-order') {{ $t('optMenu.reports') }}
             router-link(to="/sites" v-if="$perms.is_superuser")
               el-dropdown-item(icon='el-icon-eleme') {{ $t('optMenu.domains') }}
-            router-link(to='/messenger')
+            //- router-link(to='/messenger')
               el-dropdown-item(icon='el-icon-s-promotion') {{ $t('optMenu.messengers') }}
             router-link(:to="{name: 'profileDetail', params:{ profileUname: $store.state.currentuserprofile.username }}")
               el-dropdown-item(icon='el-icon-s-tools') {{ $t('optMenu.settings') }}

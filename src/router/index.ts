@@ -8,7 +8,7 @@ import deviceRoutes from './modules/devices'
 import taskRoutes from './modules/tasks'
 import profileRoutes from './modules/profiles'
 import finRoutes from './modules/fin'
-import messengerRoutes from './modules/messenger'
+// import messengerRoutes from './modules/messenger'
 import sitesRoutes from './modules/sites'
 import addrRoutes from './modules/addrs'
 import dfRoutes from './modules/dynamicfields'
@@ -135,7 +135,7 @@ export const constantRoutes: RouteConfig [] = [
     ]
   },
   finRoutes,
-  messengerRoutes,
+  // messengerRoutes,
   sitesRoutes,
   addrRoutes,
   dfRoutes,

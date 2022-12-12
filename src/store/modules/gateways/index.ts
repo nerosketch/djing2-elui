@@ -83,16 +83,6 @@ class Gateway extends VuexModule implements IGateway {
     await delGateway(gwId)
     this.RESET_ALL_GATEWAY()
   }
-
-  /*
-  @Action
-  public async FetchCustomerServerNetCredentialsByGw() {
-    if (this.id > 0) {
-      const { data } = await fetchCustomersSrvnetCredentialsbgw(this.id)
-      return data
-    }
-  }
-  */
 }
 
 export const GatewayModule = getModule(Gateway)

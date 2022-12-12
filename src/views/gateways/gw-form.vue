@@ -14,13 +14,13 @@
     el-form-item(:label="$t('gateways.port')")
       el-input(v-model="frmMod.ip_port" type="number")
 
-    el-form-item(:label="$t('inletLogin')" prop="auth_login")
+    el-form-item(:label="$t('gateways.authLogin')" prop="auth_login")
       el-input(v-model="frmMod.auth_login")
 
-    el-form-item(:label="$t('inletPassword')")
+    el-form-item(:label="$t('gateways.authPassw')")
       el-input(v-model="frmMod.auth_passw")
 
-    el-form-item(:label="$t('likeUs')")
+    el-form-item(:label="$t('gateways.nasType')")
       el-select(v-model="frmMod.gw_type")
         el-option(:label="$t('mikrotik')" :value="0")
 
@@ -29,10 +29,10 @@
     el-form-item(:label="$t('default')")
       el-checkbox(v-model="frmMod.is_default")
 
-    el-form-item(:label="$t('included')")
+    el-form-item(:label="$t('gateways.enabled')")
       el-checkbox(v-model="frmMod.enabled")
 
-    el-form-item(:label="$t('classOfLock')")
+    el-form-item(:label="$t('gateways.gatewayType')")
       el-select(v-model="frmMod.gw_class")
         el-option(
           v-for="(gwc, i) in gwClassChoices"
