@@ -260,7 +260,7 @@ export default {
     targetAdded: 'Target added',
     targetRetained: 'Target retained',
     weHaveToChooseOnePerpetrator: 'We have to choose one perpetrator.',
-    natureOfFracture: 'Nature of fracture',
+    natureOfFracture: 'Task type: ',
     implementers: 'Implementers',
     targets: 'Targets',
     priority: 'Priority: ',
