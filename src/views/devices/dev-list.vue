@@ -169,11 +169,13 @@ export default class extends mixins(TableWithAddrMixin) {
     {
       prop: 'comment',
       label: this.$tc('comment'),
+      sortable: true,
       'min-width': 300
     },
     {
       prop: 'ip_address',
       label: this.$tc('ipAddress'),
+      sortable: true,
       'min-width': 120
     },
     {
@@ -184,6 +186,7 @@ export default class extends mixins(TableWithAddrMixin) {
     {
       prop: 'mac_addr',
       label: this.$tc('macAddress'),
+      sortable: true,
       'min-width': 150
     },
     {
@@ -196,6 +199,7 @@ export default class extends mixins(TableWithAddrMixin) {
     },
     {
       prop: 'create_time',
+      sortable: true,
       label: this.$tc('devices.createTime')
     },
     {
