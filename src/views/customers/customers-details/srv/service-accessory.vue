@@ -43,8 +43,8 @@ export default class extends Vue {
     try {
       const { data } = await getServices({
         fields: 'id,title'
-      } as any) as any
-      this.services = data
+      } as any)
+      this.services = data.results
     } finally {
       this.servicesLoading = false
     }
