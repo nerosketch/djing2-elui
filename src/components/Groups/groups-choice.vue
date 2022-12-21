@@ -39,6 +39,8 @@ export default class extends Vue {
     this.loading = true
     try {
       const { data } = await (this.fetchFunction || getGroups)({
+        page: 1,
+        page_size: 1000,
         fields: 'id,title'
       })
       this.groups = data.results
