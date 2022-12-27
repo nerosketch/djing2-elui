@@ -73,7 +73,9 @@ export default class extends Vue {
 
   @Watch('$store.state.devicemodule.address')
   private onChCustomerAddr(addrId: number) {
-    this.loadLocalityDetail(addrId, 4)
+    if (addrId) {
+      this.loadLocalityDetail(addrId, 4)
+    }
   }
 
   private async loadLocalityDetail(addrId: number, addrType: number) {
