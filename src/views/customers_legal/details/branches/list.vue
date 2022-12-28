@@ -42,7 +42,6 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { ICustomer } from '@/api/customers/types'
 import { getLegalBranches } from '@/api/customers_legal/req'
-import { IDRFRequestListParameters } from '@/api/types'
 import AddBranchFrm from './add-branch-frm.vue'
 import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 
@@ -61,15 +60,10 @@ export default class extends Vue {
   private branchFormVisible = false
 
   private async loadBranches(customerId: number) {
-    const params: IDRFRequestListParameters = {
-      page: 0,
-      page_size: 0,
-      fields: 'id,username,full_name,telephone'
-    }
     this.loading = true
     try {
-      const { data } = await getLegalBranches(customerId, params)
-      this.branches = data as ICustomer[]
+      const { data } = await getLegalBranches(customerId)
+      this.branches = data
     } finally {
       this.loading = false
     }
