@@ -38,7 +38,7 @@
       datetime-counter(v-model="frmMod.create_time")
 
     el-form-item(:label="$t('addresses')")
-      addr-field-input(v-model="frmMod.address")
+      addr-field-input(v-model="frmMod.address_id")
 
     el-form-item(:label="$t('snmpInfo')")
       el-input(v-model="frmMod.snmp_extra")
@@ -121,7 +121,7 @@ export default class extends mixins(FormMixin) {
       parent_dev_id: m.parent_dev_id,
       snmp_extra: m.snmp_extra,
       create_time: m.create_time,
-      address: m.address
+      address_id: m.address_id
     }
   }
 

@@ -121,9 +121,6 @@ import {
 } from '@/api/devices/types'
 import {
   getDevices,
-  setDevObjectsPerms,
-  getDevObjectsPerms,
-  getDeviceSelectedObjectPerms,
   getGroupsWithDevices
 } from '@/api/devices/req'
 import DevForm from './dev-form.vue'
@@ -134,8 +131,6 @@ import DataTable, {
 } from '@/components/Datatable/index.vue'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import {
-  IObjectGroupPermsResultStruct,
-  IObjectGroupPermsInitialAxiosResponsePromise,
   IDRFRequestListParameters
 } from '@/api/types'
 import { AddressModule } from '@/store/modules/addresses/address'
@@ -222,7 +217,7 @@ export default class extends mixins(TableWithAddrMixin) {
 
   private loadDevs(params: IDRFRequestListParametersDevGroup) {
     let newPrms: IDRFRequestListFilterParameters = Object.assign(params, {
-      address: this.addrId,
+      address_id: this.addrId,
       fields: 'id,ip_address,comment,dev_type_str,mac_addr,status,is_noticeable,group,create_time'
     })
     const group = this.$route.query.group

@@ -127,7 +127,7 @@ export default class extends Vue {
     parent_dev_id: this.initialParentDev,
     snmp_extra: this.initialSnmpSxtra,
     create_time: null,
-    address: this.initialAddress
+    address_id: this.initialAddress
   }
 
   private onSubmit() {

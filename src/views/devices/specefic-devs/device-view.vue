@@ -71,7 +71,7 @@ export default class extends Vue {
     this.setCrumbs(lc)
   }
 
-  @Watch('$store.state.devicemodule.address')
+  @Watch('$store.state.devicemodule.address_id')
   private onChCustomerAddr(addrId: number) {
     if (addrId) {
       this.loadLocalityDetail(addrId, 4)
