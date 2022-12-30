@@ -15,10 +15,10 @@
           el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
             | C
 
-          el-button(
-            icon="el-icon-lock"
-            @click="openPermsDialog(row)"
-            v-if="$perms.is_superuser")
+          //- el-button(
+          //-   icon="el-icon-lock"
+          //-   @click="openPermsDialog(row)"
+          //-   v-if="$perms.is_superuser")
 
           el-button(icon="el-icon-edit" @click="openEdit(row)")
 
@@ -52,16 +52,16 @@
       :close-on-click-modal="false")
       service-form(v-on:done="frmDone")
 
-    el-dialog(
-      :title="$t('whoHasARightToAService')"
-      :visible.sync="permsDialog"
-      top="5vh"
-      :close-on-click-modal="false")
-      object-perms(
-        v-on:save="changeSrvObjectPerms"
-        :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp"
-        :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
-        :objId="srvIdGetter")
+    //- el-dialog(
+    //-   :title="$t('whoHasARightToAService')"
+    //-   :visible.sync="permsDialog"
+    //-   top="5vh"
+    //-   :close-on-click-modal="false")
+    //-   object-perms(
+    //-     v-on:save="changeSrvObjectPerms"
+    //-     :getGroupObjectPermsFunc="getSrvObjectPermsFunc4Grp"
+    //-     :getSelectedObjectPerms="serviceGetSelectedObjectPerms"
+    //-     :objId="srvIdGetter")
 
     el-dialog(
       :title="$t('facilities')"
@@ -82,10 +82,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { IObjectGroupPermsResultStruct, IObjectGroupPermsInitialAxiosResponsePromise } from '@/api/types'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
 import { IService, IDRFRequestListParametersService } from '@/api/services/types'
-import { getServices, setServiceObjectsPerms, getServiceObjectsPerms, getServiceOSelectedObjectPerms } from '@/api/services/req'
+import { getServices } from '@/api/services/req'
 import { ServiceModule } from '@/store/modules/services/service'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
 import ServiceForm from './service-form.vue'
@@ -161,7 +160,7 @@ export default class extends Vue {
 
   private services: IService[] = []
   private dialogVisible = false
-  private permsDialog = false
+  // private permsDialog = false
   private sitesDlg = false
   private editFieldsVisible = false
   private customerServiceVisible = false
@@ -205,23 +204,23 @@ export default class extends Vue {
     return ServiceModule.id
   }
 
-  private openPermsDialog(s: IService) {
-    ServiceModule.SET_ALL_SERVICE(s)
-    this.permsDialog = true
-  }
+  // private openPermsDialog(s: IService) {
+  //   ServiceModule.SET_ALL_SERVICE(s)
+  //   this.permsDialog = true
+  // }
 
-  private async changeSrvObjectPerms(info: IObjectGroupPermsResultStruct) {
-    await setServiceObjectsPerms(this.srvIdGetter, info)
-    this.permsDialog = false
-  }
+  // private async changeSrvObjectPerms(info: IObjectGroupPermsResultStruct) {
+  //   await setServiceObjectsPerms(this.srvIdGetter, info)
+  //   this.permsDialog = false
+  // }
 
-  private getSrvObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getServiceObjectsPerms(this.srvIdGetter)
-  }
+  // private getSrvObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+  //   return getServiceObjectsPerms(this.srvIdGetter)
+  // }
 
-  private serviceGetSelectedObjectPerms(srvId: number, profileGroupId: number) {
-    return getServiceOSelectedObjectPerms(srvId, profileGroupId)
-  }
+  // private serviceGetSelectedObjectPerms(srvId: number, profileGroupId: number) {
+  //   return getServiceOSelectedObjectPerms(srvId, profileGroupId)
+  // }
 
   private openCustomerServiceListDialog(serviceId: number) {
     this.currentCustomerServiceId = serviceId

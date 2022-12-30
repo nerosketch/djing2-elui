@@ -33,28 +33,26 @@
         v-on:added="frmAddDone"
         v-on:update="frmUpdateDone")
 
-    el-dialog(
-      :title="$t('whoHasTheRightToAnAccount')"
-      :visible.sync="permsDialog"
-      top="5vh"
-      :close-on-click-modal="false")
-      object-perms(
-        v-on:save="changeLegalObjectPerms"
-        :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp"
-        :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms"
-        :objId="$store.state.customerlegal.title")
+    //- el-dialog(
+    //-   :title="$t('whoHasTheRightToAnAccount')"
+    //-   :visible.sync="permsDialog"
+    //-   top="5vh"
+    //-   :close-on-click-modal="false")
+    //-   object-perms(
+    //-     v-on:save="changeLegalObjectPerms"
+    //-     :getGroupObjectPermsFunc="getCustomerLegalObjectPermsFunc4Grp"
+    //-     :getSelectedObjectPerms="CustLegalGetSelectedObjectPerms"
+    //-     :objId="$store.state.customerlegal.title")
 </template>
 
 <script lang="ts">
 import { ICustomerLegal } from '@/api/customers_legal/types'
 import {
   IDRFRequestListParameters,
-  IObjectGroupPermsInitialAxiosResponsePromise,
-  IObjectGroupPermsResultStruct
 } from '@/api/types'
 import DataTable, { DataTableColumnAlign, IDataTableColumn } from '@/components/Datatable/index.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import { getCustomerLegalObjectsPerms, getCustomersLegal } from '@/api/customers_legal/req'
+import { getCustomersLegal } from '@/api/customers_legal/req'
 import LegalForm from './legal-form.vue'
 import { CustomerLegalModule } from '@/store/modules/customers_legal/customer-legal'
 import { BreadcrumbsModule } from '@/store/modules/breadcrumbs'
@@ -75,7 +73,7 @@ export default class extends Vue {
 
   private loading = false
   private dialogVisible = false
-  private permsDialog = false
+  // private permsDialog = false
 
   private tableColumns: IDataTableColumn[] = [
     {
@@ -138,18 +136,18 @@ export default class extends Vue {
     this.dialogVisible = false
   }
 
-  private async changeLegalObjectPerms(info: IObjectGroupPermsResultStruct) {
-    // await setCustomerObjectsPerms(this.customerIdGetter, info)
-    this.permsDialog = false
-  }
+  // private async changeLegalObjectPerms(info: IObjectGroupPermsResultStruct) {
+  //   // await setCustomerObjectsPerms(this.customerIdGetter, info)
+  //   this.permsDialog = false
+  // }
 
-  private getCustomerLegalObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getCustomerLegalObjectsPerms(this.$store.state.customerlegal.id)
-  }
+  // private getCustomerLegalObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+  //   return getCustomerLegalObjectsPerms(this.$store.state.customerlegal.id)
+  // }
 
-  private CustLegalGetSelectedObjectPerms(customerId: number, profileGroupId: number) {
-    // return getCustomerSelectedObjectPerms(customerId, profileGroupId)
-  }
+  // private CustLegalGetSelectedObjectPerms(customerId: number, profileGroupId: number) {
+  //   // return getCustomerSelectedObjectPerms(customerId, profileGroupId)
+  // }
 
   // Breadcrumbs
   private setCrumbs() {

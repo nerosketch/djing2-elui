@@ -39,10 +39,10 @@
               el-button(v-if="$perms.is_superuser" @click="openSitesDlg(row)")
                 | C
 
-              el-button(
-                icon="el-icon-lock"
-                @click="openPermsDialog(row)"
-                v-if="$perms.is_superuser")
+              //- el-button(
+              //-   icon="el-icon-lock"
+              //-   @click="openPermsDialog(row)"
+              //-   v-if="$perms.is_superuser")
 
               el-button(
                 icon="el-icon-edit"
@@ -86,16 +86,16 @@
         v-on:err="dialogNewDev=false"
         :initialAddress="addrId")
 
-    el-dialog(
-      :title="$t('whoHasTheRightToTheDevice')"
-      :visible.sync="permsDialog"
-      top="5vh"
-      :close-on-click-modal="false")
-      object-perms(
-        v-on:save="changeDeviceObjectPerms"
-        :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
-        :getSelectedObjectPerms="deviceGetSelectedObjectPerms"
-        :objId="$store.state.address.title")
+    //- el-dialog(
+    //-   :title="$t('whoHasTheRightToTheDevice')"
+    //-   :visible.sync="permsDialog"
+    //-   top="5vh"
+    //-   :close-on-click-modal="false")
+    //-   object-perms(
+    //-     v-on:save="changeDeviceObjectPerms"
+    //-     :getGroupObjectPermsFunc="getDeviceObjectPermsFunc4Grp"
+    //-     :getSelectedObjectPerms="deviceGetSelectedObjectPerms"
+    //-     :objId="$store.state.address.title")
 
     el-dialog(
       :title="$t('maintenanceOfWebsiteEquipment')"
@@ -162,7 +162,7 @@ export default class extends mixins(TableWithAddrMixin) {
   @Prop({ default: 0 }) private addrId!: number
   private dialogVisible = false
   private dialogNewDev = false
-  private permsDialog = false
+  // private permsDialog = false
   private sitesDlg = false
   private editFieldsVisible = false
   private tableColumns: IDataTableColumn[] = [
@@ -290,23 +290,23 @@ export default class extends mixins(TableWithAddrMixin) {
 
   // End Breadcrumbs
 
-  private async changeDeviceObjectPerms(info: IObjectGroupPermsResultStruct) {
-    await setDevObjectsPerms(this.$store.state.address.title, info)
-    this.permsDialog = false
-  }
+  // private async changeDeviceObjectPerms(info: IObjectGroupPermsResultStruct) {
+  //   await setDevObjectsPerms(this.$store.state.address.title, info)
+  //   this.permsDialog = false
+  // }
 
-  private getDeviceObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getDevObjectsPerms(this.$store.state.address.id)
-  }
+  // private getDeviceObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+  //   return getDevObjectsPerms(this.$store.state.address.id)
+  // }
 
-  private openPermsDialog(d: IDevice) {
-    DeviceModule.GetDevice(d.id)
-    this.permsDialog = true
-  }
+  // private openPermsDialog(d: IDevice) {
+  //   DeviceModule.GetDevice(d.id)
+  //   this.permsDialog = true
+  // }
 
-  private deviceGetSelectedObjectPerms(devId: number, profileGroupId: number) {
-    return getDeviceSelectedObjectPerms(devId, profileGroupId)
-  }
+  // private deviceGetSelectedObjectPerms(devId: number, profileGroupId: number) {
+  //   return getDeviceSelectedObjectPerms(devId, profileGroupId)
+  // }
 
   private devSitesSave(selectedSiteIds: number[]) {
     DeviceModule.PatchDevice({

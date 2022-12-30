@@ -22,7 +22,7 @@
           ref="tbl"
           :selectable="$perms.is_superuser"
           @selection-change="handleSelectionChange")
-          template(v-if="$perms.is_superuser" #id="{row}")
+          //- template(v-if="$perms.is_superuser" #id="{row}")
             slot(name="id" :row="row")
               el-button(
                 v-if="$perms.is_superuser"
@@ -84,17 +84,17 @@
           :close-on-click-modal="false")
           new-customer-form(:selectedAddress="addrId" v-on:done="addFrmDone")
 
-      slot(name="dialog_rights")
-        el-dialog(
-          :title="$t('customers.whoHaveRightsOnCustomer')"
-          :visible.sync="permsDialog"
-          top="5vh"
-          :close-on-click-modal="false")
-          object-perms(
-            v-on:save="changeCustomerObjectPerms"
-            :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
-            :getSelectedObjectPerms="customerGetSelectedObjectPerms"
-            :objId="$store.state.customer.id")
+      //- slot(name="dialog_rights")
+      //-   el-dialog(
+      //-     :title="$t('customers.whoHaveRightsOnCustomer')"
+      //-     :visible.sync="permsDialog"
+      //-     top="5vh"
+      //-     :close-on-click-modal="false")
+      //-     object-perms(
+      //-       v-on:save="changeCustomerObjectPerms"
+      //-       :getGroupObjectPermsFunc="getCustomerObjectPermsFunc4Grp"
+      //-       :getSelectedObjectPerms="customerGetSelectedObjectPerms"
+      //-       :objId="$store.state.customer.id")
 
       slot(name="dialog_sites")
         el-dialog(
@@ -121,17 +121,12 @@ import {
   IDRFAxiosResponsePromise,
   IDRFListResponse,
   IDRFRequestListParameters,
-  IObjectGroupPermsInitialAxiosResponsePromise,
-  IObjectGroupPermsResultStruct
 } from '@/api/types'
 import {
   ICustomer, IDRFRequestListIsActiveFilterParameters
 } from '@/api/customers/types'
 import {
   getCustomers,
-  setCustomerObjectsPerms,
-  getCustomerObjectsPerms,
-  getCustomerSelectedObjectPerms,
   getGroupsWithCustomers
 } from '@/api/customers/req'
 import DataTable, { IDataTableColumn } from '@/components/Datatable/index.vue'
@@ -183,7 +178,7 @@ export default class extends mixins(TableWithAddrMixin) {
   @Prop({ default: 165 }) private heightDiff!: number
 
   private addCustomerDialog = false
-  private permsDialog = false
+  // private permsDialog = false
   private selectedCustomers: number[] = []
   private sitesDlg = false
   private sitesDlgProgress = false
@@ -319,23 +314,23 @@ export default class extends mixins(TableWithAddrMixin) {
     return row.is_active ? '' : 'error-row'
   }
 
-  private async changeCustomerObjectPerms(info: IObjectGroupPermsResultStruct) {
-    await setCustomerObjectsPerms(this.$store.state.customer.id, info)
-    this.permsDialog = false
-  }
+  // private async changeCustomerObjectPerms(info: IObjectGroupPermsResultStruct) {
+  //   await setCustomerObjectsPerms(this.$store.state.customer.id, info)
+  //   this.permsDialog = false
+  // }
 
-  private getCustomerObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
-    return getCustomerObjectsPerms(this.$store.state.customer.id)
-  }
+  // private getCustomerObjectPermsFunc4Grp(): IObjectGroupPermsInitialAxiosResponsePromise {
+  //   return getCustomerObjectsPerms(this.$store.state.customer.id)
+  // }
 
-  private openPermsDialog(c: ICustomer) {
-    CustomerModule.SET_ALL_CUSTOMER(c)
-    this.permsDialog = true
-  }
+  // private openPermsDialog(c: ICustomer) {
+  //   CustomerModule.SET_ALL_CUSTOMER(c)
+  //   this.permsDialog = true
+  // }
 
-  private customerGetSelectedObjectPerms(customerId: number, profileGroupId: number) {
-    return getCustomerSelectedObjectPerms(customerId, profileGroupId)
-  }
+  // private customerGetSelectedObjectPerms(customerId: number, profileGroupId: number) {
+  //   return getCustomerSelectedObjectPerms(customerId, profileGroupId)
+  // }
 
   private handleSelectionChange(customers: ICustomer[]) {
     this.selectedCustomers = customers.map(c => c.id)

@@ -13,10 +13,10 @@
             @click="openSitesDlg(row)"
           ) C
 
-          el-button(
-            icon="el-icon-lock"
-            @click="openPermsDialog(row)"
-            v-if="$perms.is_superuser")
+          //- el-button(
+          //-   icon="el-icon-lock"
+          //-   @click="openPermsDialog(row)"
+          //-   v-if="$perms.is_superuser")
 
           el-button(
             icon="el-icon-edit"
@@ -41,16 +41,16 @@
       :close-on-click-modal="false")
       group-form(v-on:done="frmDone")
 
-    el-dialog(
-      :title="`${$t('whoSEntitledToAGroupOfSubscribers')} \"${GroupTitleGetter}\"`"
-      :visible.sync="permsDialog"
-      top="5vh"
-      :close-on-click-modal="false")
-      object-perms(
-        v-on:save="changeGroupObjectPerms"
-        :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
-        :getSelectedObjectPerms="groupGetSelectedObjectPerms"
-        :objId="groupIdGetter")
+    //- el-dialog(
+    //-   :title="`${$t('whoSEntitledToAGroupOfSubscribers')} \"${GroupTitleGetter}\"`"
+    //-   :visible.sync="permsDialog"
+    //-   top="5vh"
+    //-   :close-on-click-modal="false")
+    //-   object-perms(
+    //-     v-on:save="changeGroupObjectPerms"
+    //-     :getGroupObjectPermsFunc="getGroupObjectPermsFunc4Grp"
+    //-     :getSelectedObjectPerms="groupGetSelectedObjectPerms"
+    //-     :objId="groupIdGetter")
 
     el-dialog(
       :title="$t('facilities')"
@@ -62,8 +62,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { GroupModule } from '@/store/modules/groups/index'
-import { IDRFRequestListParameters, IObjectGroupPermsResultStruct } from '@/api/types'
-import { getGroups, setGroupObjectsPerms, getGroupObjectsPerms, getGroupSelectedObjectPerms } from '@/api/groups/req'
+import { IDRFRequestListParameters } from '@/api/types'
+import { getGroups } from '@/api/groups/req'
 import { IGroup } from '@/api/groups/types'
 import GroupForm from './group-form.vue'
 import DataTable, { IDataTableColumn, DataTableColumnAlign } from '@/components/Datatable/index.vue'
@@ -84,7 +84,7 @@ export default class extends Vue {
   }
 
   private dialogVisible = false
-  private permsDialog = false
+  // private permsDialog = false
   private sitesDlg = false
 
   private tableColumns: IDataTableColumn[] = [
@@ -101,10 +101,6 @@ export default class extends Vue {
       align: DataTableColumnAlign.CENTER
     }
   ]
-
-  get GroupTitleGetter() {
-    return GroupModule.title
-  }
 
   private async openEdit(group: IGroup) {
     await GroupModule.SET_ALL_MGROUP(group)
@@ -162,23 +158,23 @@ export default class extends Vue {
   }
   // End Breadcrumbs
 
-  private openPermsDialog(grp: IGroup) {
-    GroupModule.SET_ALL_MGROUP(grp)
-    this.permsDialog = true
-  }
+  // private openPermsDialog(grp: IGroup) {
+  //   GroupModule.SET_ALL_MGROUP(grp)
+  //   this.permsDialog = true
+  // }
 
-  private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
-    await setGroupObjectsPerms(this.groupIdGetter, info)
-    this.permsDialog = false
-  }
+  // private async changeGroupObjectPerms(info: IObjectGroupPermsResultStruct) {
+  //   await setGroupObjectsPerms(this.groupIdGetter, info)
+  //   this.permsDialog = false
+  // }
 
-  private getGroupObjectPermsFunc4Grp() {
-    return getGroupObjectsPerms(this.groupIdGetter)
-  }
+  // private getGroupObjectPermsFunc4Grp() {
+  //   return getGroupObjectsPerms(this.groupIdGetter)
+  // }
 
-  private groupGetSelectedObjectPerms(grpId: number, profileGroupId: number) {
-    return getGroupSelectedObjectPerms(grpId, profileGroupId)
-  }
+  // private groupGetSelectedObjectPerms(grpId: number, profileGroupId: number) {
+  //   return getGroupSelectedObjectPerms(grpId, profileGroupId)
+  // }
 
   private groupSitesSave(selectedSiteIds: number[]) {
     GroupModule.PatchGroup({
