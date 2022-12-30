@@ -37,8 +37,8 @@ export const getLegalTypes = (): IChoiceItemTypeListAxiosResponsePromise =>
 export const getLegalInitial = (): ICustomerLegalAxoisResponsePromise =>
   request.get<ICustomerLegal>('/legal/get_initial/')
 
-export const getLegalBranches = (customerLegalId: number, params?: IDRFRequestListParameters) =>
-  request.get(`/legal/${customerLegalId}/get_branches/`, { params })
+export const getLegalBranches = (customerLegalId: number) =>
+  request.get(`/legal/${customerLegalId}/get_branches/`)
 
 // CustomerLegalBank
 const bankUrl = '/legal/bank/'

@@ -68,8 +68,8 @@ export default class extends Vue {
   private async loadPService() {
     this.loading = true
     try {
-      const { data } = await getPeriodicPays() as any
-      this.pservices = data as IPeriodicPay[]
+      const { data } = await getPeriodicPays()
+      this.pservices = data.results
     } finally {
       this.loading = false
     }

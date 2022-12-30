@@ -229,12 +229,13 @@ export default class <T> extends Vue {
   }
 
   created() {
+    this.LoadTableData()
+
     this.localCols = this.columns.map(col => Object.assign(col, {
       visible: loadFieldVisibility(this.widthStorageNamePrefix, col),
       colWidth: Number(localStorage.getItem(`${this.widthStorageNamePrefix}_${col.prop}`) || col.width)
     }))
 
-    this.LoadTableData()
     window.addEventListener('resize', this.onWinResize)
     this.onWinResize()
   }

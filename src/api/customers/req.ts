@@ -161,7 +161,7 @@ export const addAttachment = (newAtt: any): ICustomerAttachementAxoisResponsePro
   const formData = new FormData()
   formData.append('doc_file', newAtt.doc_file)
   formData.append('title', newAtt.title)
-  formData.append('customer', newAtt.customer)
+  formData.append('customer_id', newAtt.customer_id)
   return request.post<ICustomerAttachement>(CustomerAttachmUrl, formData)
 }
 

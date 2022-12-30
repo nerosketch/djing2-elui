@@ -52,7 +52,7 @@ export default class extends Vue {
     CustomerAttachementModule.AddCustomerAttachment({
       title: req.file.name,
       doc_file: req.file,
-      customer: this.customerId()
+      customer_id: this.customerId()
     }).then(newAtt => {
       this.addFileListItem(newAtt)
     })
