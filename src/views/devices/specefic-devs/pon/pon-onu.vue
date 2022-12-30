@@ -187,8 +187,8 @@ export default class extends Vue {
       }
       await DeviceModule.DelDevice(this.device.id)
       this.$message.success(this.$tc('deleted'))
-      if (this.device.group && this.device.address) {
-        this.$router.push({ name: 'devicesList', params: { addrId: this.device.address.toString() } })
+      if (this.device.group_id && this.device.address_id) {
+        this.$router.push({ name: 'devicesList', params: { addrId: this.device.address_id.toString() } })
       } else {
         this.$router.push('/devices')
       }

@@ -87,8 +87,8 @@ export default class extends Vue {
     this.getDevice().then(dev => {
       if (dev) {
         document.title = dev.comment || dev.ip_address
-        if (dev.address) {
-          this.loadLocalityDetail(dev.address, 4)
+        if (dev.address_id) {
+          this.loadLocalityDetail(dev.address_id, 4)
         }
       }
     })

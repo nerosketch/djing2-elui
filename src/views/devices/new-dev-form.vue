@@ -28,9 +28,9 @@
     el-form-item(:label="$t('group')" prop='group')
       groups-choice(v-model="frmMod.group")
 
-    el-form-item(:label="$t('devices.parentDevice')" prop="parent_dev")
+    el-form-item(:label="$t('devices.parentDevice')" prop="parent_dev_id")
       device-autocomplete-field(
-        v-model="frmMod.parent_dev"
+        v-model="frmMod.parent_dev_id"
         :defaultName="initialParentDevName"
       )
 
@@ -104,7 +104,7 @@ export default class extends Vue {
       { required: true, message: this.$tc('devices.specifyTheTypeOfDevice'), trigger: 'blur' },
       { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('devices.specifyTheTypeOfDevice') }
     ],
-    parent_dev: [
+    parent_dev_id: [
       { required: true, message: this.$tc('devices.specifyParentDevice'), trigger: 'blur' },
       { validator: positiveNumberValueAvailable, trigger: 'change', message: this.$tc('devices.specifyParentDevice') }
     ],
@@ -124,7 +124,7 @@ export default class extends Vue {
     group: this.initialGroup,
     is_noticeable: this.initialIsNotic,
     man_passw: this.initialManPassw,
-    parent_dev: this.initialParentDev,
+    parent_dev_id: this.initialParentDev,
     snmp_extra: this.initialSnmpSxtra,
     create_time: null,
     address: this.initialAddress

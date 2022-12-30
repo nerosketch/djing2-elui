@@ -12,7 +12,7 @@ import { IPort, IDevTogglePortRequest } from '@/api/devices/types'
 @Module({ dynamic: true, store, name: 'port' })
 class Port extends VuexModule implements IPort {
   public id = 0
-  public device = 0
+  public device_id = 0
   public num = 0
   public descr = ''
   public user_count = 0
@@ -20,7 +20,7 @@ class Port extends VuexModule implements IPort {
   @Mutation
   private RESET_ALL_PORT() {
     this.id = 0
-    this.device = 0
+    this.device_id = 0
     this.num = 0
     this.descr = ''
     this.user_count = 0
@@ -34,7 +34,7 @@ class Port extends VuexModule implements IPort {
   @Mutation
   private SET_ALL_PORT(port: IPort) {
     this.id = port.id
-    this.device = port.device
+    this.device_id = port.device_id
     this.num = port.num
     this.descr = port.descr
     this.user_count = port.user_count

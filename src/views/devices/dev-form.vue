@@ -26,11 +26,11 @@
       el-input(v-model="frmMod.man_passw")
 
     el-form-item(:label="$t('group')")
-      groups-choice(v-model="frmMod.group")
+      groups-choice(v-model="frmMod.group_id")
 
     el-form-item(:label="$t('devices.parentDevice')")
       device-autocomplete-field(
-        v-model="frmMod.parent_dev"
+        v-model="frmMod.parent_dev_id"
         :defaultName="$store.state.devicemodule.parent_dev_name"
       )
 
@@ -115,10 +115,10 @@ export default class extends mixins(FormMixin) {
       mac_addr: m.mac_addr,
       comment: m.comment,
       dev_type: m.dev_type,
-      group: m.group,
+      group_id: m.group_id,
       is_noticeable: m.is_noticeable,
       man_passw: m.man_passw,
-      parent_dev: m.parent_dev,
+      parent_dev_id: m.parent_dev_id,
       snmp_extra: m.snmp_extra,
       create_time: m.create_time,
       address: m.address

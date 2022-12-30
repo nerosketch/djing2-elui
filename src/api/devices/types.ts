@@ -42,7 +42,7 @@ export enum IDevPortState {
 }
 export interface IPort {
   id: number
-  device: number
+  device_id: number
   num: number
   descr: string
   user_count: number
@@ -198,8 +198,8 @@ export interface IDevice {
   dev_type: IDeviceTypeEnum
   dev_type_str?: string
   man_passw: string
-  group: number
-  parent_dev: number
+  group_id: number
+  parent_dev_id: number
   parent_dev_name?: string
   snmp_extra: string
   extra_data: object
@@ -209,7 +209,7 @@ export interface IDevice {
   code: string
   sites?: number[]
   create_time: string
-  address: number | null
+  address_id: number | null
   address_title: string
 }
 export interface IDeviceInterace extends IDevice {

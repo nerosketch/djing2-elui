@@ -354,8 +354,8 @@ export default class extends Vue {
   private devFrmDone(device: IDevice) {
     this.devFormDialog = false
     this.$message.success(this.$tc('successfullyMaintained'))
-    if (device.address) {
-      this.$router.push({ name: 'devicesList', params: { addrId: device.address.toString() } })
+    if (device.address_id) {
+      this.$router.push({ name: 'devicesList', params: { addrId: device.address_id.toString() } })
     }
   }
 

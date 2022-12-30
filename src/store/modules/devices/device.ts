@@ -25,8 +25,8 @@ class Device extends VuexModule implements IDeviceInterface {
   dev_type = 0
   dev_type_str = ''
   man_passw = ''
-  group = 0
-  parent_dev = 0
+  group_id = 0
+  parent_dev_id = 0
   parent_dev_name = ''
   snmp_extra = ''
   extra_data = {}
@@ -36,7 +36,7 @@ class Device extends VuexModule implements IDeviceInterface {
   code = ''
   sites?: number[] = []
   create_time = ''
-  address: number | null = null
+  address_id: number | null = null
   address_title = ''
 
   loadProgress = false
@@ -55,8 +55,8 @@ class Device extends VuexModule implements IDeviceInterface {
     this.dev_type = 0
     this.dev_type_str = ''
     this.man_passw = ''
-    this.group = 0
-    this.parent_dev = 0
+    this.group_id = 0
+    this.parent_dev_id = 0
     this.snmp_extra = ''
     this.extra_data = {}
     this.vlans = []
@@ -65,7 +65,7 @@ class Device extends VuexModule implements IDeviceInterface {
     this.code = ''
     this.sites = []
     this.create_time = ''
-    this.address = null
+    this.address_id = null
     this.address_title = ''
     return this
   }
@@ -79,8 +79,8 @@ class Device extends VuexModule implements IDeviceInterface {
     this.dev_type = data.dev_type
     this.dev_type_str = data.dev_type_str!
     this.man_passw = data.man_passw
-    this.group = data.group
-    this.parent_dev = data.parent_dev
+    this.group_id = data.group_id
+    this.parent_dev_id = data.parent_dev_id
     this.parent_dev_name = data.parent_dev_name!
     this.snmp_extra = data.snmp_extra
     this.extra_data = data.extra_data
@@ -90,7 +90,7 @@ class Device extends VuexModule implements IDeviceInterface {
     this.code = data.code
     this.sites = data.sites
     this.create_time = data.create_time
-    this.address = data.address
+    this.address_id = data.address_id
     this.address_title = data.address_title
     return this
   }
