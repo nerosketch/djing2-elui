@@ -674,7 +674,6 @@ export default {
   distributionOfServicesBySubscribers: 'Распределение использования услуг абонентами',
   edit: 'Редактировать',
   regime: 'Режим',
-  parentDev: 'Родительское устр.: ',
   withAdministrativeServices: 'С административными услугами',
   freeServices: 'С бесплатными услугами',
   withServices: 'С услугой',

@@ -685,7 +685,6 @@ export default {
   distributionOfServicesBySubscribers: 'Distribution of services by subscribers',
   edit: 'Edit',
   regime: 'Regime',
-  parentDev: 'Parent device: ',
   withAdministrativeServices: 'With administrative services',
   freeServices: 'Free services',
   withServices: 'With services',

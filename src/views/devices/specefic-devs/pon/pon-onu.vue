@@ -30,9 +30,9 @@
           | {{ device.comment }}
 
         .text.item.list-item
-          b {{ $t('parentDev') }}
+          b {{ $t('devices.parentDevice') }}
 
-          router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+          router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev_id }}")
             | {{ device.parent_dev_name }}
 
         .text.item.list-item(v-if="device.iface_name")

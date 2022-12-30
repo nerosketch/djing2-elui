@@ -7,9 +7,9 @@
         small {{ ` ${device.ip_address || device.mac_addr} ` }}
 
         template(v-if="device.parent_dev_name")
-          | {{ $t('parentDev') }}
+          | {{ $t('devices.parentDevice') }}
 
-          router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev }}")
+          router-link.el-link.el-link--primary.is-underline(:to="{name: 'device-view', params: { devId: device.parent_dev_id }}")
             | {{ device.parent_dev_name }}
 
         el-button(
